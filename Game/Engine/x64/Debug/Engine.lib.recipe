@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs />
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\SubProject\Game\Output\alpha.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\SubProject\Game\Output\debug_geometry.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\SubProject\Game\Output\forward.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\SubProject\Game\Output\grid.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\SubProject\Game\Output\params.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\SubProject\Game\Output\preview.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
