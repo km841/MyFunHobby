@@ -31,7 +31,7 @@ void Tool::Update()
 	UpdateGui();
 
 	m_pPallete->Update();
-	// This Code
+	// Changed
 }
 
 void Tool::Render()
