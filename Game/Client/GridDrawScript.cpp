@@ -19,13 +19,13 @@ GridDrawScript::~GridDrawScript()
 
 void GridDrawScript::LateUpdate()
 {
-	int32 iWidth = g_pEngine->GetWidth();
-	int32 iHeight = g_pEngine->GetHeight();
+	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 	Vec3 vCamPos = m_pCamera->GetTransform()->GetLocalPosition();
 	
 	GetMeshRenderer()->GetMaterial()->SetFloat(0, m_fThickness);
-	GetMeshRenderer()->GetMaterial()->SetVec2(0, Vec2(iWidth, iHeight));
+	GetMeshRenderer()->GetMaterial()->SetVec2(0, Vec2(fWidth, fHeight));
 	GetMeshRenderer()->GetMaterial()->SetVec2(1, m_vGridOffset);
 	GetMeshRenderer()->GetMaterial()->SetVec3(0, vCamPos);
 }

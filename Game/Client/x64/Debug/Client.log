@@ -1,16 +1,2 @@
-﻿  GridDrawScript.cpp
-C:\MyProject\Game\Client\GridDrawScript.cpp(28,60): warning C4244: '인수': 'int32'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\MyProject\Game\Client\GridDrawScript.cpp(28,52): warning C4244: '인수': 'int32'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-DirectXTex_debug.lib(DirectXTexImage.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexImage.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexDDS.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexDDS.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexTGA.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexTGA.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexWIC.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexWIC.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexD3D11.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexD3D11.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexUtil.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexUtil.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexConvert.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexConvert.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexCompress.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexCompress.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(DirectXTexMipMaps.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(DirectXTexMipMaps.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(BC.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(BC.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(BC4BC5.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(BC4BC5.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-DirectXTex_debug.lib(BC6HBC7.obj) : warning LNK4099: '' PDB를 'DirectXTex_debug.lib(BC6HBC7.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+﻿  ToolScene.cpp
   Client.vcxproj -> C:\MyProject\Game\Output\Client.exe

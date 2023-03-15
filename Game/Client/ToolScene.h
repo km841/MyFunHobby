@@ -1,7 +1,18 @@
 #pragma once
 #include "Scene.h"
 
+enum class DRAWING_TYPE : uint8
+{
+    DRAGGING,
+    POINT,
+};
 
+enum class COLLIDER_TYPE : uint8
+{
+    NONE,
+    WALL,
+    FOOTHOLD,
+};
 
 class ToolScene :
     public Scene
@@ -24,6 +35,7 @@ public:
 
 public:
     void PalleteUpdate();
+    void CreateTile(Vec3 vWorldPos);
 
 private:
     shared_ptr<GameObject> m_pPreviewTile;

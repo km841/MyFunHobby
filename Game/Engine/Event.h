@@ -3,6 +3,7 @@
 enum class EVENT_TYPE
 {
 	SCENE_CHANGE,
+	OBJECT_ADDED_TO_SCENE,
 	END,
 };
 

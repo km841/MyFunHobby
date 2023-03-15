@@ -67,6 +67,9 @@
     <ClInclude Include="GridDrawScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\Game\Object\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -117,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="GridDrawScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\Game\Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

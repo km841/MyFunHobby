@@ -24,6 +24,7 @@
 #include "FadeInOutScript.h"
 
 TitleScene::TitleScene()
+	: Scene(SCENE_TYPE::TITLE)
 {
 }
 

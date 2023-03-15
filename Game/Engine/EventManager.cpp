@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "EventManager.h"
 #include "SceneChangeEvent.h"
+#include "ObjectAddedToSceneEvent.h"
 #include "Scenes.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
@@ -21,6 +22,10 @@ void EventManager::ProcessEvents()
 			// 이 함수는 pEvent를 참조하긴 하지만 소유하지는 않는다
 			ProcessSceneChangeEvent(static_cast<SceneChangeEvent*>(pEvent.get()));
 			break;
+
+		case EVENT_TYPE::OBJECT_ADDED_TO_SCENE:
+			ProcessObjectAddedEvent(static_cast<ObjectAddedToSceneEvent*>(pEvent.get()));
+			break;
 		}
 	}
 }
@@ -28,4 +33,10 @@ void EventManager::ProcessEvents()
 void EventManager::ProcessSceneChangeEvent(SceneChangeEvent* pEvent)
 {
 	GET_SINGLE(Scenes)->ChangeScene(pEvent->GetSceneType());
+}
+
+void EventManager::ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent)
+{
+	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
+	pCurScene->AddGameObject(pEvent->GetGameObject());
 }

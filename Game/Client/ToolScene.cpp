@@ -14,8 +14,13 @@
 #include "Camera.h"
 #include "CameraMoveScript.h"
 #include "GridDrawScript.h"
+#include "ObjectAddedToSceneEvent.h"
+#include "EventManager.h"
+
+#include "Tile.h"
 
 ToolScene::ToolScene()
+	: Scene(SCENE_TYPE::TOOL)
 {
 }
 
@@ -140,6 +145,19 @@ void ToolScene::PalleteUpdate()
 		Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
+
+
+		// 클릭 이벤트에 대한 처리
+		if (false == UTILITY->GetTool()->GetPallete()->IsMouseHovered())
+		{
+			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(UTILITY->GetTool()->GetPallete()->GetDrawingType());
+
+			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+				CreateTile(vWorldPos);
+
+			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+				CreateTile(vWorldPos);
+		}
 	}
 
 	if (IS_PRESS(KEY_TYPE::RBUTTON))
@@ -147,4 +165,25 @@ void ToolScene::PalleteUpdate()
 		UTILITY->GetTool()->GetPallete()->ClearClickedTile();
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
 	}
+}
+
+void ToolScene::CreateTile(Vec3 vWorldPos)
+{
+	shared_ptr<Tile> pTile = Tile::Get();
+
+	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	shared_ptr<Material> pMaterial = m_pPreviewTile->GetMeshRenderer()->GetMaterial()->Clone();
+	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
+	pMaterial->SetShader(pShader);
+	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	pMeshRenderer->SetMaterial(pMaterial);
+	pMeshRenderer->SetMesh(pMesh);
+
+	pTile->AddComponent(pMeshRenderer);
+	pTile->AddComponent(make_shared<Transform>());
+
+	pTile->GetTransform()->SetLocalScale(Vec3(0.03f, 0.03f, 1.f));
+	pTile->GetTransform()->SetLocalPosition(vWorldPos);
+
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
 }

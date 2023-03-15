@@ -21,6 +21,7 @@
 #include "DebugRenderer.h"
 
 TownScene::TownScene()
+	: Scene(SCENE_TYPE::TOWN)
 {
 }
 

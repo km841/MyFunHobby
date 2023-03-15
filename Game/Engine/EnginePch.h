@@ -311,6 +311,19 @@ enum class CONSTANT_BUFFER_TYPE
 	END,
 };
 
+enum class SCENE_TYPE
+{
+	TITLE,
+	TOOL,
+	TOWN,
+	END,
+};
+
+enum
+{
+	SCENE_TYPE_COUNT = SCENE_TYPE::END,
+};
+
 enum
 {
 	CONSTANT_BUFFER_TYPE_COUNT = CONSTANT_BUFFER_TYPE::END,

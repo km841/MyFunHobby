@@ -6,7 +6,8 @@
 #include "Camera.h"
 #include "Physics.h"
 
-Scene::Scene()
+Scene::Scene(SCENE_TYPE eSceneType)
+	: m_eSceneType(eSceneType)
 {
 
 }

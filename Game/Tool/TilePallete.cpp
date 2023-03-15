@@ -5,6 +5,9 @@ TilePallete::TilePallete()
     , m_fSpacing(8.f)
     , m_vWindowPos{}
     , m_iClickedTileIndex(-1)
+    , m_iClickedColliderType(0)
+    , m_iDrawingType(0)
+    , m_bOnMouse(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
     m_vTileWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV.size() / 4.0f)* (m_fTileSize + m_fSpacing));
@@ -23,28 +26,73 @@ void TilePallete::Init(const std::vector<ComPtr<ID3D11ShaderResourceView>>& vSRV
 
 void TilePallete::Update()
 {
-    //m_iClickedIndex = -1;
-    ImGui::Begin("Pallete", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin("Tile Pallete", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
-    if (ImGui::IsWindowFocused()) 
+    ImVec2 vPos = ImGui::GetWindowPos();
+    ImVec2 vSize = ImGui::GetWindowSize();
+    vSize = ImVec2(vPos.x + vSize.x, vPos.y + vSize.y);
+    m_bOnMouse = ImGui::IsMouseHoveringRect(vPos, vSize);
+
+    
+    if (ImGui::IsWindowFocused())
     {
         m_vWindowPos = ImGui::GetWindowPos();
     }
 
     ImGui::SetWindowSize(m_vTileWindowSize);
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
 
+    ColliderTypeUI_Update();
+
+    InsertSeparator();
+
+    DrawingTypeUI_Update();
+
+    InsertSeparator();
+
+    TileButtonUI_Update();
+
+    ImGui::End();
+}
+
+void TilePallete::InsertSeparator()
+{
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+}
+
+void TilePallete::ColliderTypeUI_Update()
+{
+    ImGui::BeginGroup();
+    ImGui::Text("Collider Type");
+    ImGui::RadioButton("None", &m_iClickedColliderType, 0);
+    ImGui::RadioButton("Wall", &m_iClickedColliderType, 1);
+    ImGui::RadioButton("Foothold", &m_iClickedColliderType, 2);
+    ImGui::EndGroup();
+}
+
+void TilePallete::DrawingTypeUI_Update()
+{
+    ImGui::BeginGroup();
+    ImGui::Text("Drawing Mode");
+    ImGui::RadioButton("Dragging", &m_iDrawingType, 0);
+    ImGui::RadioButton("Pen", &m_iDrawingType, 1);
+    ImGui::EndGroup();
+}
+
+void TilePallete::TileButtonUI_Update()
+{
     for (int i = 0; i < m_vSRV.size(); ++i) {
         ImGui::PushID(i);
         ImGui::ImageButton(m_vSRV[i].Get(), ImVec2(m_fTileSize, m_fTileSize));
 
-        if (ImGui::IsItemClicked()) 
+        if (ImGui::IsItemClicked())
         {
             m_iClickedTileIndex = i;
         }
 
         ImGui::PopID();
-        if ((i + 1) % 4 != 0) 
+        if ((i + 1) % 4 != 0)
         {
             ImGui::SameLine(0.0f, m_fSpacing);
         }
@@ -56,6 +104,4 @@ void TilePallete::Update()
             ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + vDelta.x, ImGui::GetCursorPos().y + vDelta.y));
         }
     }
-
-    ImGui::End();
 }

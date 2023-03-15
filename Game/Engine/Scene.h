@@ -1,17 +1,6 @@
 #pragma once
 
-enum class SCENE_TYPE
-{
-    TITLE,
-    TOOL,
-    TOWN,
-    END,
-};
 
-enum
-{
-    SCENE_TYPE_COUNT = SCENE_TYPE::END,
-};
 
 
 class GameObject;
@@ -20,7 +9,7 @@ class Camera;
 class Scene
 {
 public:
-	Scene();
+	Scene(SCENE_TYPE eSceneType);
 	virtual ~Scene();
 
 public:
@@ -35,12 +24,16 @@ public:
     virtual void Enter() { }
     virtual void Exit() { }
 
+    SCENE_TYPE GetSceneType() { return m_eSceneType; }
     void AddGameObject(shared_ptr<GameObject> pGameObject);
 
     const std::vector<shared_ptr<GameObject>>& GetGameObjects() { return m_vGameObjects; }
 
 protected:
     friend class Scenes;
+
+    SCENE_TYPE m_eSceneType;
+
     std::vector<shared_ptr<GameObject>>   m_vGameObjects;
     std::vector<shared_ptr<Camera>>       m_vCameras;
 };

@@ -172,6 +172,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveScript.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="TownScene.h" />
@@ -191,6 +192,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMoveScript.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="ToolScene.cpp" />
     <ClCompile Include="TownScene.cpp" />
