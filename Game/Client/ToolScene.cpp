@@ -104,8 +104,11 @@ void ToolScene::Enter()
 		m_pGrid->AddComponent(make_shared<Transform>());
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Grid");
-		pMeshRenderer->SetMaterial(pMaterial);
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Alpha");
+
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"Grid", L"..\\Resources\\Texture\\Grid.tga");
+		pMaterial->SetTexture(0, pTexture);
+		pMeshRenderer->SetMaterial(pMaterial->Clone());
 
 		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndicesTri(Vec3(GRID_SIZE, GRID_SIZE, 1.f));
 		shared_ptr<Mesh> pMesh = make_shared<Mesh>();
@@ -113,13 +116,12 @@ void ToolScene::Enter()
 		pMeshRenderer->SetMesh(pMesh);
 
 		m_pGrid->AddComponent(pMeshRenderer);
-		m_pGrid->AddComponent(make_shared<GridDrawScript>(m_pMainCamera->GetCamera()));
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2.f, fHeight / 2.f - 32.5f, 1.f));
-		m_pGrid->GetTransform()->SetLocalScale(Vec3(GRID_SIZE, GRID_SIZE, 1.f));
+		m_pGrid->GetTransform()->SetLocalScale(Vec3(3.2f, 3.2f, 1.f));
 		AddGameObject(m_pGrid);
 	}
 }

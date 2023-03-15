@@ -382,7 +382,7 @@ public:\
 				return m_vPool[i];\
 			}\
 		}\
-		m_vPool.emplace_back();\
+		m_vPool.emplace_back(make_shared<name>());\
 		m_vUse.push_back(true);\
 		return m_vPool.back();\
 	}\

@@ -18,7 +18,7 @@ enum
 {
     GRID_SIZE = 1000,
     TILE_SIZE = 64,
-    TILE_HALF_SIZE = 32,
+    TILE_HALF_SIZE = TILE_SIZE / 2,
 };
 
 class ToolScene :

@@ -18,6 +18,7 @@ struct VS_OUT
 
 // Grid Params
 // g_float_0 : Thickness
+// g_float_1 : Camera Speed
 // g_vec2_0  : Resolution
 // g_vec2_1  : Grid Offset
 // g_vec3_0  : Camera Position
@@ -26,12 +27,13 @@ VS_OUT VS_Main(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0;
     
+    float camera_speed = g_float_1;
     float2 resolution = g_vec2_0;
     float3 camera_position = g_vec3_0;
 
     output.pos = mul(float4(_in.pos, 1.f), g_matWVP);
     output.uv = _in.uv;
-    output.worldPos = _in.pos.xy * resolution.xy + (camera_position.xy / 150.f);
+    output.worldPos = _in.pos.xy * resolution.xy + (camera_position.xy / camera_speed * 0.75f);
        
     return output;
 }

@@ -9,6 +9,7 @@
 GridDrawScript::GridDrawScript(shared_ptr<Camera> pCamera)
 	: m_pCamera(pCamera)
 	, m_fThickness(3.f)
+	, m_fCameraSpeed(200.f)
 	, m_vGridOffset{ 102.5f, 102.5f }
 {
 }
@@ -25,6 +26,7 @@ void GridDrawScript::LateUpdate()
 	Vec3 vCamPos = m_pCamera->GetTransform()->GetLocalPosition();
 	
 	GetMeshRenderer()->GetMaterial()->SetFloat(0, m_fThickness);
+	GetMeshRenderer()->GetMaterial()->SetFloat(1, m_fCameraSpeed);
 	GetMeshRenderer()->GetMaterial()->SetVec2(0, Vec2(fWidth, fHeight));
 	GetMeshRenderer()->GetMaterial()->SetVec2(1, m_vGridOffset);
 	GetMeshRenderer()->GetMaterial()->SetVec3(0, vCamPos);
