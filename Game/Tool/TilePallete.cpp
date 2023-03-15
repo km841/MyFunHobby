@@ -7,6 +7,7 @@ TilePallete::TilePallete()
     , m_iClickedTileIndex(-1)
     , m_iClickedColliderType(0)
     , m_iDrawingType(0)
+    , m_iOutputType(0)
     , m_bMouseOver(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
@@ -26,31 +27,23 @@ void TilePallete::Init(const std::vector<ComPtr<ID3D11ShaderResourceView>>& vSRV
 
 void TilePallete::Update()
 {
-    ImGui::Begin("Tile Pallete", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-
-    ImVec2 vPos = ImGui::GetWindowPos();
-    ImVec2 vSize = ImGui::GetWindowSize();
-    vSize = ImVec2(vPos.x + vSize.x, vPos.y + vSize.y);
-    m_bMouseOver = ImGui::IsMouseHoveringRect(vPos, vSize);
-
-    
-    if (ImGui::IsWindowFocused())
+    if (ImGui::Begin("Tile Pallete", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse))
     {
-        m_vWindowPos = ImGui::GetWindowPos();
+        UpdateUIHoverState();
+
+        if (ImGui::IsWindowFocused())
+        {
+            m_vWindowPos = ImGui::GetWindowPos();
+        }
+        ImGui::SetWindowSize(m_vTileWindowSize);
+
+        if (ImGui::BeginTabBar("Tab"))
+        {
+            UpdateOptionSelection();
+            UpdateTileSelection();
+        }
+        ImGui::EndTabBar();
     }
-
-    ImGui::SetWindowSize(m_vTileWindowSize);
-
-    ColliderTypeUI_Update();
-
-    InsertSeparator();
-
-    DrawingTypeUI_Update();
-
-    InsertSeparator();
-
-    TileButtonUI_Update();
-
     ImGui::End();
 }
 
@@ -104,4 +97,48 @@ void TilePallete::TileButtonUI_Update()
             ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + vDelta.x, ImGui::GetCursorPos().y + vDelta.y));
         }
     }
+}
+
+void TilePallete::OutputTypeUI_Update()
+{
+    ImGui::BeginGroup();
+    ImGui::Text("Output Mode");
+    ImGui::RadioButton("Write", &m_iOutputType, 0);
+    ImGui::RadioButton("Erase", &m_iOutputType, 1);
+    ImGui::EndGroup();
+}
+
+void TilePallete::UpdateOptionSelection()
+{
+    if (ImGui::BeginTabItem("Option"))
+    {
+        ColliderTypeUI_Update();
+
+        InsertSeparator();
+
+        DrawingTypeUI_Update();
+
+        InsertSeparator();
+
+        OutputTypeUI_Update();
+
+        ImGui::EndTabItem();
+    }
+}
+
+void TilePallete::UpdateTileSelection()
+{
+    if (ImGui::BeginTabItem("Tile"))
+    {
+        TileButtonUI_Update();
+        ImGui::EndTabItem();
+    }
+}
+
+void TilePallete::UpdateUIHoverState()
+{
+    ImVec2 vPos = ImGui::GetWindowPos();
+    ImVec2 vSize = ImGui::GetWindowSize();
+    vSize = ImVec2(vPos.x + vSize.x, vPos.y + vSize.y);
+    m_bMouseOver = ImGui::IsMouseHoveringRect(vPos, vSize);
 }

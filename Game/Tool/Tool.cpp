@@ -19,11 +19,8 @@ void Tool::Init(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceCon
 
 	m_pPallete = make_shared<TilePallete>();
 
-	
-	// ShaderResourceView로 이루어진 벡터를 전달받는다
+
 	m_pPallete->Init(vSRV);
-
-
 }
 
 void Tool::Update()
@@ -57,10 +54,9 @@ void Tool::InitGui(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11Device
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
-	// Setup Dear ImGui style
+
 	ImGui::StyleColorsDark();
 
-	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(hHwnd);
 	ImGui_ImplDX11_Init(pDevice.Get(), pContext.Get());
 }

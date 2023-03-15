@@ -7,6 +7,12 @@ enum class DRAWING_TYPE : uint8
     POINT,
 };
 
+enum class OUTPUT_TYPE : uint8
+{
+    WRITE,
+    ERASE,
+};
+
 enum class COLLIDER_TYPE : uint8
 {
     NONE,

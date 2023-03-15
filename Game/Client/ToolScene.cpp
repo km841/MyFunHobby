@@ -142,29 +142,39 @@ void ToolScene::PalleteUpdate()
 		const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
 		Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 1.f);
 		Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
-		vWorldPos.z = 1.f;
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
 
 
-		// 클릭 이벤트에 대한 처리
 		if (UTILITY->GetTool()->GetPallete()->IsMouseNotOver())
 		{
 			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(UTILITY->GetTool()->GetPallete()->GetDrawingType());
+			OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(UTILITY->GetTool()->GetPallete()->GetOutputType());
 
-			//타일 위치 보정 
-			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+			if (OUTPUT_TYPE::WRITE == eOutputType)
 			{
-				vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
-				vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
-				CreateTile(vWorldPos);
+				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+				{
+					CreateTile(vWorldPos);
+				}
+
+				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+				{
+					CreateTile(vWorldPos);
+				}
 			}
 
-			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+			else
 			{
-				vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
-				vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
-				CreateTile(vWorldPos);
+				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+				{
+					//EraseTile(vWorldPos);
+				}
+
+				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+				{
+					//EraseTile(vWorldPos);
+				}
 			}
 		}
 	}
@@ -178,6 +188,9 @@ void ToolScene::PalleteUpdate()
 
 void ToolScene::CreateTile(Vec3 vWorldPos)
 {
+	vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
+	vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
+
 	shared_ptr<Tile> pTile = Tile::Get();
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
