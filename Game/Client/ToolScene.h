@@ -14,6 +14,13 @@ enum class COLLIDER_TYPE : uint8
     FOOTHOLD,
 };
 
+enum
+{
+    GRID_SIZE = 1000,
+    TILE_SIZE = 64,
+    TILE_HALF_SIZE = 32,
+};
+
 class ToolScene :
     public Scene
 {

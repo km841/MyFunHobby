@@ -5,7 +5,7 @@
 #include "Timer.h"
 
 CameraMoveScript::CameraMoveScript()
-	:m_fSpeed(1.f)
+	:m_fSpeed(200.f)
 {
 }
 

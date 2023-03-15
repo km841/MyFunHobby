@@ -42,11 +42,11 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float2 resolution = g_vec2_0;
     float2 grid_offset = g_vec2_1;
     
-    const int width = grid_offset.x;
-    const int height = (grid_offset.y * (resolution.y / resolution.x));
+    const int grid_width = grid_offset.x;
+    const int grid_height = (grid_offset.y * (resolution.y / resolution.x));
 
-    if ((abs(_in.worldPos.x % width) <= thickness) || 
-        (abs(_in.worldPos.y % height) <= thickness))
+    if ((abs(_in.worldPos.x % grid_width) <= thickness) ||
+        (abs(_in.worldPos.y % grid_height) <= thickness))
         return float4(1.0f, 1.0f, 1.0f, 1.0f);
     else
         discard;

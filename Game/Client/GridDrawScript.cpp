@@ -9,7 +9,7 @@
 GridDrawScript::GridDrawScript(shared_ptr<Camera> pCamera)
 	: m_pCamera(pCamera)
 	, m_fThickness(3.f)
-	, m_vGridOffset{ 100.f, 100.f }
+	, m_vGridOffset{ 102.5f, 102.5f }
 {
 }
 

@@ -7,7 +7,7 @@ TilePallete::TilePallete()
     , m_iClickedTileIndex(-1)
     , m_iClickedColliderType(0)
     , m_iDrawingType(0)
-    , m_bOnMouse(false)
+    , m_bMouseOver(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
     m_vTileWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV.size() / 4.0f)* (m_fTileSize + m_fSpacing));
@@ -31,7 +31,7 @@ void TilePallete::Update()
     ImVec2 vPos = ImGui::GetWindowPos();
     ImVec2 vSize = ImGui::GetWindowSize();
     vSize = ImVec2(vPos.x + vSize.x, vPos.y + vSize.y);
-    m_bOnMouse = ImGui::IsMouseHoveringRect(vPos, vSize);
+    m_bMouseOver = ImGui::IsMouseHoveringRect(vPos, vSize);
 
     
     if (ImGui::IsWindowFocused())

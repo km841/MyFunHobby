@@ -10,7 +10,7 @@
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
-    , m_eType(PROJECTION_TYPE::PERSPECTIVE)
+    , m_eType(PROJECTION_TYPE::ORTHOGRAPHIC)
     , m_fNear(1.f)
     , m_fFar(1000.f)
     , m_fFov(XM_PI / 4.f)

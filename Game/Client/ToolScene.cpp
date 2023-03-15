@@ -76,10 +76,7 @@ void ToolScene::Enter()
 
 		m_pPreviewTile->AddComponent(pMeshRenderer);
 		m_pPreviewTile->AddComponent(make_shared<Transform>());
-
-		m_pPreviewTile->GetTransform()->SetLocalScale(Vec3(0.03f, 0.03f, 1.f));
-		m_pPreviewTile->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, 1.f));
-		
+		m_pPreviewTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
 
 		AddGameObject(m_pPreviewTile);
 	}
@@ -110,7 +107,7 @@ void ToolScene::Enter()
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Grid");
 		pMeshRenderer->SetMaterial(pMaterial);
 
-		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndicesTri(Vec3(300.f, 300.f, 1.f));
+		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndicesTri(Vec3(GRID_SIZE, GRID_SIZE, 1.f));
 		shared_ptr<Mesh> pMesh = make_shared<Mesh>();
 		pMesh->Init(vVertices, vIndices);
 		pMeshRenderer->SetMesh(pMesh);
@@ -121,8 +118,8 @@ void ToolScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-		m_pGrid->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
+		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 9.f, fHeight / 2.f - 40.f, 1.f));
+		m_pGrid->GetTransform()->SetLocalScale(Vec3(GRID_SIZE, GRID_SIZE, 1.f));
 		AddGameObject(m_pGrid);
 	}
 }
@@ -148,15 +145,24 @@ void ToolScene::PalleteUpdate()
 
 
 		// 클릭 이벤트에 대한 처리
-		if (false == UTILITY->GetTool()->GetPallete()->IsMouseHovered())
+		if (UTILITY->GetTool()->GetPallete()->IsMouseNotOver())
 		{
 			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(UTILITY->GetTool()->GetPallete()->GetDrawingType());
 
+			//타일 위치 보정 
 			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+			{
+				vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
+				vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
 				CreateTile(vWorldPos);
+			}
 
 			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+			{
+				vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
+				vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
 				CreateTile(vWorldPos);
+			}
 		}
 	}
 
@@ -182,7 +188,7 @@ void ToolScene::CreateTile(Vec3 vWorldPos)
 	pTile->AddComponent(pMeshRenderer);
 	pTile->AddComponent(make_shared<Transform>());
 
-	pTile->GetTransform()->SetLocalScale(Vec3(0.03f, 0.03f, 1.f));
+	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
 	pTile->GetTransform()->SetLocalPosition(vWorldPos);
 
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));

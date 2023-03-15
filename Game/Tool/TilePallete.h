@@ -26,7 +26,7 @@ public:
 public:
 	int32 GetClickedTileIndex() { return m_iClickedTileIndex; }
 	void  ClearClickedTile() { m_iClickedTileIndex = -1; }
-	bool IsMouseHovered() { return m_bOnMouse; }
+	bool IsMouseNotOver() { return !m_bMouseOver; }
 
 	uint8 GetClickedColliderType() { return m_iClickedColliderType; }
 	uint8 GetDrawingType() { return m_iDrawingType; }
@@ -45,6 +45,6 @@ private:
 	int32 m_iClickedColliderType;
 	int32 m_iDrawingType;
 
-	bool m_bOnMouse;
+	bool m_bMouseOver;
 };
 
