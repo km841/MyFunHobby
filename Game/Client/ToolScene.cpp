@@ -92,7 +92,7 @@ void ToolScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pMainCamera->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 0.f));
+		m_pMainCamera->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
 		m_pMainCamera->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 		AddGameObject(m_pMainCamera);
 	}
@@ -118,7 +118,7 @@ void ToolScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 9.f, fHeight / 2.f - 40.f, 1.f));
+		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2.f, fHeight / 2.f - 32.5f, 1.f));
 		m_pGrid->GetTransform()->SetLocalScale(Vec3(GRID_SIZE, GRID_SIZE, 1.f));
 		AddGameObject(m_pGrid);
 	}
@@ -140,6 +140,7 @@ void ToolScene::PalleteUpdate()
 		const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
 		Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 1.f);
 		Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
+		vWorldPos.z = 1.f;
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
 

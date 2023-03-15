@@ -31,7 +31,7 @@ VS_OUT VS_Main(VS_IN _in)
 
     output.pos = mul(float4(_in.pos, 1.f), g_matWVP);
     output.uv = _in.uv;
-    output.worldPos = _in.pos.xy * resolution.xy + camera_position.xy;
+    output.worldPos = _in.pos.xy * resolution.xy + (camera_position.xy / 150.f);
        
     return output;
 }
