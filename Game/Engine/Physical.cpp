@@ -40,9 +40,9 @@ void Physical::Update()
 		if (ACTOR_TYPE::CHARACTER == m_eActorType)
 		{
 			PxBoxController* pController = static_cast<PxBoxController*>(m_pController);
-			pController->setHalfSideExtent(pController->getHalfSideExtent() * vScale.x);
-			pController->setHalfHeight(pController->getHalfHeight() * vScale.y);
-			pController->setHalfForwardExtent(pController->getHalfForwardExtent() * vScale.z);
+			pController->setHalfSideExtent(pController->getHalfSideExtent());
+			pController->setHalfHeight(pController->getHalfHeight());
+			pController->setHalfForwardExtent(pController->getHalfForwardExtent());
 		}
 
 		else
@@ -51,14 +51,14 @@ void Physical::Update()
 			{
 			case GEOMETRY_TYPE::BOX:
 			{
-				m_pGeometries->boxGeom.halfExtents = Conv::Vec3ToPxVec3(m_vSize * vScale);
+				m_pGeometries->boxGeom.halfExtents = Conv::Vec3ToPxVec3(m_vSize);
 				ApplyShapeScale();
 			}
 				break;
 			case GEOMETRY_TYPE::CAPSULE:
 			{
-				m_pGeometries->capsuleGeom.radius = m_vSize.x * vScale.x;
-				m_pGeometries->capsuleGeom.radius = m_vSize.y * vScale.y;
+				m_pGeometries->capsuleGeom.radius = m_vSize.x;
+				m_pGeometries->capsuleGeom.halfHeight = m_vSize.y;
 				ApplyShapeScale();
 			}
 				break;
@@ -98,15 +98,14 @@ void Physical::CreatePhysicsProperties(MassProperties massProperties)
 void Physical::CreateGeometry(GEOMETRY_TYPE eGeometryType, Vec3 vShapeSize)
 {
 	m_vSize = vShapeSize;
-	m_vSize *= GetTransform()->GetLocalScale();
 
 	switch (eGeometryType)
 	{
 	case GEOMETRY_TYPE::BOX:
-		CreateBoxGeometry(eGeometryType, vShapeSize);
+		CreateBoxGeometry(eGeometryType, m_vSize);
 		break;
 	case GEOMETRY_TYPE::CAPSULE:
-		CreateCapsuleGeometry(eGeometryType, vShapeSize.x, vShapeSize.y);
+		CreateCapsuleGeometry(eGeometryType, m_vSize.x, m_vSize.y);
 		break;
 	case GEOMETRY_TYPE::PLANE:
 		CreatePlaneGeometry(eGeometryType);
@@ -138,7 +137,14 @@ void Physical::CreateActor()
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
 		break;
 	case ACTOR_TYPE::STATIC:
+	{
 		m_pActor = PHYSICS->createRigidStatic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
+		if (GEOMETRY_TYPE::PLANE == m_eGeometryType)
+		{
+			m_pActor = PHYSICS->createRigidStatic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition()), 
+				PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f))));
+		}
+	}
 		break;
 	case ACTOR_TYPE::KINEMATIC:
 	{
@@ -183,7 +189,11 @@ void Physical::InitializeActor()
 	{
 		PxRigidDynamic* pActor = m_pActor->is<PxRigidDynamic>();
 		pActor->attachShape(*m_pShape);
-		pActor->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z);
+
+		pActor->setRigidDynamicLockFlags(
+			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | 
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | 
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
 	}
 		break;
 
@@ -197,20 +207,23 @@ void Physical::InitializeActor()
 
 	PxRigidActor* pActor = m_pActor->is<PxRigidActor>();
 	pActor->userData = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();
+	pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
 
 void Physical::CreateController()
 {
+	
 	switch (m_eGeometryType)
 	{
 	case GEOMETRY_TYPE::BOX:
 	{
+		Vec3 vSize = m_vSize / 2.f;
+
 		PxBoxControllerDesc desc;
 		desc.setToDefault();
-		// Half Size이므로 2를 곱해서 크기 복원
-		desc.halfSideExtent = m_vSize.x;
-		desc.halfHeight = m_vSize.y;
-		desc.halfForwardExtent = m_vSize.z;
+		desc.halfSideExtent = vSize.x;
+		desc.halfHeight = vSize.y;
+		desc.halfForwardExtent = vSize.z;
 		desc.material = m_pProperties->GetMaterial();
 		m_pController = static_cast<PxBoxController*>(g_pEngine->GetPhysics()->GetEnvironment()->GetControllerManager()->createController(desc));
 	}

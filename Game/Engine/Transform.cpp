@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include "Engine.h"
 #include "Camera.h"
+#include "Physical.h"
 
 Transform::Transform()
 	: Component(COMPONENT_TYPE::TRANSFORM)
@@ -15,35 +16,60 @@ Transform::~Transform()
 
 void Transform::Awake()
 {
-	if (GetPhysical())
-	{
-		m_PxTransform = PxTransform(Conv::Vec3ToPxVec3(m_vLocalScale), PxQuat(PxIdentity));
-	}
 }
 
 void Transform::FinalUpdate()
 {
 	if (GetPhysical())
 	{
-		m_PxTransform.p = Conv::Vec3ToPxVec3(m_vLocalScale);
+		ACTOR_TYPE eActorType = GetPhysical()->GetActorType();
+
+		PxRigidDynamic* pActor = GetPhysical()->GetActor()->is<PxRigidDynamic>();
+		m_PxTransform = pActor->getGlobalPose();
+		PxBounds3 vBounds = pActor->getWorldBounds();
+
+		m_vPxLocalScale = Conv::Vec3ToPxVec3(GetPhysical()->GetGeometrySize());
+		m_vPxLocalRotation = static_cast<PxMat33>(m_PxTransform.q.getNormalized());
+		m_vPxLocalTranslation = m_PxTransform.p;
+
+		Matrix matPxScale = Matrix::CreateScale(Conv::PxVec3ToVec3(m_vPxLocalScale));
+		Matrix matPxRotation = Matrix::CreateRotationZ(m_PxTransform.q.z);
+		Matrix matPxTranslation = Matrix::CreateTranslation(Conv::PxVec3ToVec3(m_vPxLocalTranslation));
+
+		m_matPxWorld = matPxScale * matPxRotation * matPxTranslation;
+
+		Matrix matScale = Matrix::CreateScale(m_vLocalScale);
+		m_matWorld = matScale * matPxRotation * matPxTranslation;
 	}
 
-	Matrix matScale = Matrix::CreateScale(m_vLocalScale);
+	else
+	{
+		Matrix matScale = Matrix::CreateScale(m_vLocalScale);
 
-	Matrix matRotation = Matrix::CreateRotationX(m_vLocalRotation.x);
-	matRotation *= Matrix::CreateRotationY(m_vLocalRotation.y);
-	matRotation *= Matrix::CreateRotationZ(m_vLocalRotation.z);
+		Matrix matRotation = Matrix::CreateRotationX(m_vLocalRotation.x);
+		matRotation *= Matrix::CreateRotationY(m_vLocalRotation.y);
+		matRotation *= Matrix::CreateRotationZ(m_vLocalRotation.z);
 
-	Matrix matTranslation = Matrix::CreateTranslation(m_vLocalTranslation);
+		Matrix matTranslation = Matrix::CreateTranslation(m_vLocalTranslation);
 
-	m_matLocal = matScale * matRotation * matTranslation;
-	m_matWorld = m_matLocal;
+		m_matLocal = matScale * matRotation * matTranslation;
+		m_matWorld = m_matLocal;
+	}
 }
 
 void Transform::PushData(shared_ptr<Camera> pCamera)
 {
 	TransformParams transformParams = {};
 	transformParams.matWVP = m_matWorld * pCamera->GetViewMatrix() * pCamera->GetProjectionMatrix();
+	transformParams.matWVPInv = transformParams.matWVP.Invert();
+
+	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushData(&transformParams, sizeof(transformParams));
+}
+
+void Transform::PxPushData(shared_ptr<Camera> pCamera)
+{
+	TransformParams transformParams = {};
+	transformParams.matWVP = m_matPxWorld * pCamera->GetViewMatrix() * pCamera->GetProjectionMatrix();
 	transformParams.matWVPInv = transformParams.matWVP.Invert();
 
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushData(&transformParams, sizeof(transformParams));

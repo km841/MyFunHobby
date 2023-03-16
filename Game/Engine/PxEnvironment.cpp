@@ -13,6 +13,12 @@ PxEnvironment::~PxEnvironment()
 	if (m_pControllerMgr)
 		m_pControllerMgr->release();
 
+	if (m_pPvd)
+		m_pPvd->release();
+
+	if (m_pTransfort)
+		m_pTransfort->release();
+
 	if (m_pScene)
 		m_pScene->release();
 }
@@ -23,6 +29,8 @@ void PxEnvironment::Init()
 	m_pSetting->CreatePhysics();
 
 	CreateSceneQuery();
+	CreateDebugger("127.0.0.1", 5425); 
+	ConnectDebugger();
 }
 
 void PxEnvironment::CreateControllerManager()
@@ -40,6 +48,28 @@ void PxEnvironment::CreateSceneQuery()
 
 
 
+}
+
+void PxEnvironment::CreateDebugger(const char* szHost, int32 iPort)
+{
+	m_pTransfort = PxDefaultPvdSocketTransportCreate(szHost, iPort, 10);
+	assert(m_pTransfort);
+}
+
+void PxEnvironment::ConnectDebugger()
+{
+	m_pPvd = PxCreatePvd(*m_pSetting->GetFoundation());
+	m_pPvd->connect(*m_pTransfort, PxPvdInstrumentationFlag::eALL);
+}
+
+void PxEnvironment::ConnectDebuggerToScene()
+{
+	m_pSceneClient = m_pScene->getScenePvdClient();
+	assert(m_pSceneClient);
+
+	m_pSceneClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
+	m_pSceneClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
+	m_pSceneClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
 }
 
 void PxEnvironment::CreatePhysicsScene(const PxSceneDesc& sceneDesc)

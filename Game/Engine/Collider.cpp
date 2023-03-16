@@ -74,9 +74,8 @@ void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)
 
 void Collider::CreateDebugBox(Vec3 vHalfSize)
 {
-	auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndices(vHalfSize);
-
 	shared_ptr<Mesh> pMesh = make_shared<Mesh>();
+	auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndices(Vec3(1.f, 1.f, 1.f));
 	pMesh->Init(vVertices, vIndices);
 
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"DebugGeometry");

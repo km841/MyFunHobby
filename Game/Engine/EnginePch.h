@@ -277,6 +277,33 @@ namespace Conv
 
 		return mat;
 	}
+
+	static PxMat44 PxMat33ToPxMat44(PxMat33 pxMatrix)
+	{
+		PxMat44 mat = {};
+
+		mat.column0.x = pxMatrix.column0.x;
+		mat.column0.y = pxMatrix.column0.y;
+		mat.column0.z = pxMatrix.column0.z;
+		mat.column0.w = 0.f;
+
+		mat.column1.x = pxMatrix.column1.x;
+		mat.column1.y = pxMatrix.column1.y;
+		mat.column1.z = pxMatrix.column1.z;
+		mat.column1.w = 0.f;
+
+		mat.column2.x = pxMatrix.column2.x;
+		mat.column2.y = pxMatrix.column2.y;
+		mat.column2.z = pxMatrix.column2.z;
+		mat.column2.w = 0.f;
+
+		mat.column3.x = 0.f;
+		mat.column3.y = 0.f;
+		mat.column3.z = 0.f;
+		mat.column3.w = 1.f;
+
+		return mat;
+	}
 }
 
 

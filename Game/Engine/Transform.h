@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+
 class Camera;
 class Transform :
     public Component
@@ -14,6 +15,7 @@ public:
 
 public:           
     void          PushData(shared_ptr<Camera> pCamera);
+    void          PxPushData(shared_ptr<Camera> pCamera);
        
 public:
     void SetLocalScale(const Vec3& vScale)       
@@ -27,10 +29,7 @@ public:
                   
     void          SetLocalMatrix(const Matrix& matLocal)  { m_matLocal = matLocal; }
     Matrix        GetLocalMatrix()                        { return m_matLocal; }
-                  
-    void          SetPxTransform(PxTransform& pxTrans)    { m_PxTransform = pxTrans; }
-                  
-                  
+                        
     Vec3          GetRight()              { return m_matWorld.Right(); }
     Vec3          GetUp()                 { return m_matWorld.Up(); }
     Vec3          GetLook()               { return m_matWorld.Backward(); }
@@ -41,22 +40,26 @@ public:
 
     const Matrix& GetLocalToWorldMatrix() { return m_matWorld; }
 
-
-
-
     bool IsChangedFlag()  { return m_bChanged; }
     void ChangedFlagOff() { m_bChanged = false; }
 
-
 private:
+
+
     Vec3    m_vLocalScale;
     Vec3    m_vLocalRotation;
     Vec3    m_vLocalTranslation;
 
     Matrix  m_matLocal = {};
     Matrix  m_matWorld = {};
+    Matrix  m_matPxLocal = {};
+    Matrix  m_matPxWorld = {};
 
     PxTransform m_PxTransform;
+
+    PxVec3   m_vPxLocalScale;
+    PxMat33  m_vPxLocalRotation;
+    PxVec3   m_vPxLocalTranslation;
 
     bool m_bChanged;
 };
