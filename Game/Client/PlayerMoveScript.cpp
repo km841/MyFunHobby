@@ -20,35 +20,35 @@ PlayerMoveScript::~PlayerMoveScript()
 void PlayerMoveScript::LateUpdate()
 {
 	PxRigidDynamic* pActor = GetPhysical()->GetActor()->is<PxRigidDynamic>();
-	PxVec3 currVelocity = pActor->getLinearVelocity();
+	PxVec3 vCurrVelocity = pActor->getLinearVelocity();
 
 	if (IS_PRESS(KEY_TYPE::UP))
 	{
-		currVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * m_fSpeed * DELTA_TIME);
+		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * m_fSpeed * DELTA_TIME);
 	}
 
 	if (IS_PRESS(KEY_TYPE::DOWN))
 	{
-		currVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME);
+		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME);
 	}
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
-		currVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME);
+		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME);
 	}
 
 	if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
-		currVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * m_fSpeed * DELTA_TIME);
+		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * m_fSpeed * DELTA_TIME);
 	}
 
-	pActor->setLinearVelocity(currVelocity);
+	pActor->setLinearVelocity(vCurrVelocity);
 
-	PlayerFilterShaders filter = PlayerFilterShaders();
-	
-	PxFilterData filterData = {};
-	filterData.word0 = 1 << 0;
-	filterData.word1 = 1 << 1;
+	//PlayerFilterShaders filter = PlayerFilterShaders();
+	//
+	//PxFilterData filterData = {};
+	//filterData.word0 = 1 << 0;
+	//filterData.word1 = 1 << 1;
 
 	//GetController()->Move(Conv::Vec3ToPxVec3(vPos), &filter, filterData);
 }

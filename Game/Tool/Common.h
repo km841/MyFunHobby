@@ -10,6 +10,7 @@
 #include "imgui.h"
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
+#include "ImGuiFileDialog.h"
 
 #include <vector>
 
@@ -27,6 +28,9 @@ using std::make_shared;
 
 using std::unique_ptr;
 using std::make_unique;
+
+using std::wstring;
+using std::string;
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -52,3 +56,6 @@ public:						  \
 #define GET_SINGLE(type) type::GetInstance()
 
 extern shared_ptr<class Tool> g_pTool;
+
+wstring s2ws(const string& s);
+string ws2s(const wstring& ws);

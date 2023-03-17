@@ -40,10 +40,14 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	PalleteUpdate();
+	//PalleteUpdate();
+	AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
+
+	if (IS_DOWN(KEY_TYPE::ENTER))
+		m_pGrid->FlipState();
 }
 
 void ToolScene::LateUpdate()
@@ -79,6 +83,26 @@ void ToolScene::Enter()
 		m_pPreviewTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
 
 		AddGameObject(m_pPreviewTile);
+	}
+
+	// Atlas Texture
+	{
+		m_pAtlasTexture = GameObject::Get();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Atlas");
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial->Clone());
+		pMeshRenderer->SetMesh(pMesh);
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		m_pAtlasTexture->AddComponent(pMeshRenderer);
+		m_pAtlasTexture->AddComponent(make_shared<Transform>());
+		m_pAtlasTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+
+		AddGameObject(m_pAtlasTexture);
 	}
 
 	// Camera
@@ -124,6 +148,8 @@ void ToolScene::Enter()
 		m_pGrid->GetTransform()->SetLocalScale(Vec3(3.2f, 3.2f, 1.f));
 		AddGameObject(m_pGrid);
 	}
+
+
 }
 
 void ToolScene::Exit()
@@ -145,9 +171,8 @@ void ToolScene::PalleteUpdate()
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
 
-
-		if (UTILITY->GetTool()->GetPallete()->IsMouseNotOver())
-		{
+		if (!IS_UP(KEY_TYPE::LBUTTON) && UTILITY->GetTool()->GetPallete()->IsMouseNotOver())
+		{ 
 			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(UTILITY->GetTool()->GetPallete()->GetDrawingType());
 			OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(UTILITY->GetTool()->GetPallete()->GetOutputType());
 
@@ -208,4 +233,27 @@ void ToolScene::CreateTile(Vec3 vWorldPos)
 	pTile->GetTransform()->SetLocalPosition(vWorldPos);
 
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
+}
+
+void ToolScene::AnimationEditorUpdate()
+{
+	AtlasUpdate();
+	// 텍스쳐 상의 특정 위치를 클릭하면 그 위치에 첫 번째 점이 찍히고, 
+
+
+}
+
+void ToolScene::AtlasUpdate()
+{
+	const wstring& szAtlasTexKey = UTILITY->GetTool()->GetAnimEditor()->GetAtlasTextureKey();
+	const wstring& szAtlasTexPath = UTILITY->GetTool()->GetAnimEditor()->GetAtlasTexturePath();
+
+	if (!szAtlasTexKey.empty() && !szAtlasTexPath.empty())
+	{
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szAtlasTexKey, szAtlasTexPath);
+		assert(pTexture);
+		m_pAtlasTexture->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+		m_pAtlasTexture->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+		UTILITY->GetTool()->GetAnimEditor()->ClearAtlasTexturePath();
+	}
 }

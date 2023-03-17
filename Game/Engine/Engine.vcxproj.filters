@@ -157,6 +157,9 @@
     <ClInclude Include="ObjectAddedToSceneEvent.h">
       <Filter>Object\Event</Filter>
     </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -314,6 +317,9 @@
     </ClCompile>
     <ClCompile Include="ObjectAddedToSceneEvent.cpp">
       <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Object\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

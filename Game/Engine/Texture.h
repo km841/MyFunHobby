@@ -22,6 +22,9 @@ public:
     void CreateFromTexture(TEXTURE_TYPE eType, ComPtr<ID3D11Texture2D> pTexture);
 
 public:
+    Vec3 GetTexSize() { return Vec3(static_cast<float>(m_scratchImage.GetMetadata().width), static_cast<float>(m_scratchImage.GetMetadata().height), 1.f); }
+
+public:
 
     ComPtr<ID3D11Texture2D> GetTex2D() { return m_pTexture; }
 

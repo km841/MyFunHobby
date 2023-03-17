@@ -7,9 +7,8 @@
 #include "Material.h"
 #include "Physical.h"
 
-RigidBody::RigidBody(ACTOR_TYPE eActorType)
+RigidBody::RigidBody()
 	: Component(COMPONENT_TYPE::RIGIDBODY)
-	, m_eActorType(eActorType)
 {
 
 }

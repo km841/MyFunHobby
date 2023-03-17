@@ -1,13 +1,6 @@
 #pragma once
 #include "Common.h"
 
-//enum class COLLIDER_TYPE : uint8
-//{
-//	NONE,
-//	WALL,
-//	FOOTHOLD,
-//};
-
 class TilePallete
 {
 public:

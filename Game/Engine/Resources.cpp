@@ -259,4 +259,14 @@ void Resources::CreateDefaultMaterial()
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"Grid", pMaterial);
 	}
+
+	// Atlas
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Forward");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"Atlas", pMaterial);
+	}
+
 }

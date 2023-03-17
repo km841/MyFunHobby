@@ -110,7 +110,7 @@ void TownScene::Enter()
 		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f)));
 		pGameObject->AddComponent(make_shared<Controller>());
 		pGameObject->AddComponent(make_shared<PlayerMoveScript>());
-		pGameObject->AddComponent(make_shared<RigidBody>(ACTOR_TYPE::DYNAMIC));
+		pGameObject->AddComponent(make_shared<RigidBody>());
 		pGameObject->AddComponent(make_shared<Collider>());
 		pGameObject->AddComponent(make_shared<DebugRenderer>());
 
@@ -118,7 +118,7 @@ void TownScene::Enter()
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 100.f, fHeight / 2.f - 5.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(24.f, 32.f, 1.f));
+		pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
 
 		AddGameObject(pGameObject);
 	}
@@ -146,7 +146,7 @@ void TownScene::Enter()
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
-		pGameObject->AddComponent(make_shared<RigidBody>(ACTOR_TYPE::DYNAMIC));
+		pGameObject->AddComponent(make_shared<RigidBody>());
 		pGameObject->AddComponent(make_shared<Collider>());
 		pGameObject->AddComponent(make_shared<DebugRenderer>());
 
@@ -154,7 +154,7 @@ void TownScene::Enter()
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 30.f, fHeight / 2.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(64.f, 64.f, 1.f));
+		pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
 
 		AddGameObject(pGameObject);
 	}

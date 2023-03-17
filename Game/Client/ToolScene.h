@@ -46,13 +46,18 @@ public:
     virtual void Enter();
     virtual void Exit();
 
-public:
+private:
     void PalleteUpdate();
     void CreateTile(Vec3 vWorldPos);
+
+private:
+    void AnimationEditorUpdate();
+    void AtlasUpdate();
 
 private:
     shared_ptr<GameObject> m_pPreviewTile;
     shared_ptr<GameObject> m_pMainCamera;
     shared_ptr<GameObject> m_pGrid;
+    shared_ptr<GameObject> m_pAtlasTexture;
 };
 

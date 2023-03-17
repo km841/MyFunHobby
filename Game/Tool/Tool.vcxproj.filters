@@ -32,7 +32,16 @@
       <Filter>Tool</Filter>
     </ClInclude>
     <ClInclude Include="TilePallete.h">
-      <Filter>Tool</Filter>
+      <Filter>Tool\TileMapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEditor.h">
+      <Filter>Tool\AnimationTool</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialog.h">
+      <Filter>Utils\ImGuiDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialogConfig.h">
+      <Filter>Utils\ImGuiDialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -64,7 +73,13 @@
       <Filter>Tool</Filter>
     </ClCompile>
     <ClCompile Include="TilePallete.cpp">
-      <Filter>Tool</Filter>
+      <Filter>Tool\TileMapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEditor.cpp">
+      <Filter>Tool\AnimationTool</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFileDialog.cpp">
+      <Filter>Utils\ImGuiDialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +91,15 @@
     </Filter>
     <Filter Include="Utils\ImGui">
       <UniqueIdentifier>{8c590a89-bcca-4dfe-bf88-fef0f6fe6079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool\AnimationTool">
+      <UniqueIdentifier>{1705a37e-2f7d-4f9d-9b6e-7ddbd83ac8bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool\TileMapTool">
+      <UniqueIdentifier>{f12ad988-a17c-4f01-a9d2-426ba5ab1edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\ImGuiDialog">
+      <UniqueIdentifier>{110d45bf-b0f3-4756-a9a7-885f9591eb75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

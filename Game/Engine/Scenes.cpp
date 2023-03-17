@@ -51,7 +51,7 @@ void Scenes::ChangeScene(SCENE_TYPE eSceneType)
 	m_pCurScene->Enter();
 }
 
-Vec3 Scenes::ScreenToWorldPosition(const Vec3& point, shared_ptr<class Camera> pCamera)
+Vec3 Scenes::ScreenToWorldPosition(const Vec3& point, shared_ptr<Camera> pCamera)
 {
 	int32 iWidth  = g_pEngine->GetWidth();
 	int32 iHeight = g_pEngine->GetHeight();
