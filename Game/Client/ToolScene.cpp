@@ -46,7 +46,7 @@ void ToolScene::Update()
 	Scene::Update();
 	UTILITY->ToolUpdate();
 
-	if (IS_DOWN(KEY_TYPE::ENTER))
+	if (IS_DOWN(KEY_TYPE::G))
 		m_pGrid->FlipState();
 }
 
@@ -202,10 +202,10 @@ void ToolScene::PalleteUpdate()
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
 
-		if (!IS_UP(KEY_TYPE::LBUTTON) && UTILITY->GetTool()->GetPallete()->IsMouseNotOver())
+		if (!IS_UP(KEY_TYPE::LBUTTON) && TILEMAP_TOOL->IsMouseNotOver())
 		{ 
-			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(UTILITY->GetTool()->GetPallete()->GetDrawingType());
-			OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(UTILITY->GetTool()->GetPallete()->GetOutputType());
+			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(TILEMAP_TOOL->GetDrawingType());
+			OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(TILEMAP_TOOL->GetOutputType());
 
 			if (OUTPUT_TYPE::WRITE == eOutputType)
 			{
@@ -237,7 +237,7 @@ void ToolScene::PalleteUpdate()
 
 	if (IS_PRESS(KEY_TYPE::RBUTTON))
 	{
-		UTILITY->GetTool()->GetPallete()->ClearClickedTile();
+		TILEMAP_TOOL->ClearClickedTile();
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
 	}
 }
@@ -269,19 +269,17 @@ void ToolScene::CreateTile(Vec3 vWorldPos)
 void ToolScene::AnimationEditorUpdate()
 {
 	SpriteUpdate();
-	// 텍스쳐 상의 특정 위치를 클릭하면 그 위치에 첫 번째 점이 찍히고, 
+	DrawEditorGraphic();
 
-	// 입력 받은 LT Pos와 Size를 참고해서 각 프레임을 나누는 박스를 생성한다.
-	// 박스는 50개 정도를 가지고 있자.
 
-	ApplyEditorData();
+
 
 }
 
 void ToolScene::SpriteUpdate()
 {
-	const wstring& szSpriteTexKey = UTILITY->GetTool()->GetAnimEditor()->GetSpriteTextureKey();
-	const wstring& szSpriteTexPath = UTILITY->GetTool()->GetAnimEditor()->GetSpriteTexturePath();
+	const wstring& szSpriteTexKey = ANIMATION_TOOL->GetSpriteTextureKey();
+	const wstring& szSpriteTexPath = ANIMATION_TOOL->GetSpriteTexturePath();
 
 	if (!szSpriteTexKey.empty() && !szSpriteTexPath.empty())
 	{
@@ -289,16 +287,17 @@ void ToolScene::SpriteUpdate()
 		assert(pTexture);
 		m_pSpriteTexture->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 		m_pSpriteTexture->GetTransform()->SetLocalScale(pTexture->GetTexSize());
-		UTILITY->GetTool()->GetAnimEditor()->ClearAtlasTexturePath();
+		ANIMATION_TOOL->ClearSpriteTexturePath();
 	}
 }
 
-void ToolScene::ApplyEditorData()
+void ToolScene::DrawEditorGraphic()
 {
-	Vec2 vInputLT = Conv::ImVec2ToVec2(UTILITY->GetTool()->GetAnimEditor()->GetSpriteLTPoint());
-	Vec2 vInputSize = Conv::ImVec2ToVec2(UTILITY->GetTool()->GetAnimEditor()->GetSpriteSize());
-	float fInputDuration = UTILITY->GetTool()->GetAnimEditor()->GetDuration();
-	float fOffset = UTILITY->GetTool()->GetAnimEditor()->GetOffset();
+	Vec2 vInputLT = Conv::ImVec2ToVec2(ANIMATION_TOOL->GetSpriteLTPoint());
+	Vec2 vInputSize = Conv::ImVec2ToVec2(ANIMATION_TOOL->GetSpriteSize());
+	float fInputDuration = ANIMATION_TOOL->GetDuration();
+
+	float fOffset = ANIMATION_TOOL->GetOffset();
 
 	Vec3 vSpriteSize = m_pSpriteTexture->GetTransform()->GetLocalScale();
 	Vec3 vSpritePos = m_pSpriteTexture->GetTransform()->GetLocalPosition();
@@ -306,13 +305,52 @@ void ToolScene::ApplyEditorData()
 	float fLTPointX = vSpritePos.x - vSpriteSize.x;
 	float fLTPointY = vSpritePos.y + vSpriteSize.y;
 
-	float fCenterPointX = fLTPointX + vInputSize.x;
-	float fCenterPointY = fLTPointY - vInputSize.y;
-	vSpritePos.x += fOffset;
+	float fCenterPointX = fLTPointX + vInputSize.x + (vInputLT.x * 2.f);
+	float fCenterPointY = fLTPointY - vInputSize.y - (vInputLT.y * 2.f);
 
-	m_vFrameDividers[0]->Enable();
-	m_vFrameDividers[0]->GetTransform()->SetLocalPosition(Vec3(fCenterPointX, fCenterPointY, 1.f));
-	m_vFrameDividers[0]->GetTransform()->SetLocalScale(Vec3(vInputSize.x, vInputSize.y, 1.f));
+	if (0.f < vInputSize.x && 0.f < vInputSize.y)
+	{
+		int32 iSpriteCount = static_cast<int32>(vSpriteSize.x / vInputSize.x);
+		if (FRAME_BOX_COUNT - 1 < iSpriteCount)
+			return;
+
+		for (int32 i = 0; i < FRAME_BOX_COUNT - 1; ++i)
+		{
+			if (i <= iSpriteCount)
+			{
+				m_vFrameDividers[i]->Enable();
+				m_vFrameDividers[i]->GetTransform()->SetLocalPosition(Vec3(fCenterPointX + ((vInputSize.x * 2.f) * i), fCenterPointY, 1.f));
+				m_vFrameDividers[i]->GetTransform()->SetLocalScale(Vec3(vInputSize.x, vInputSize.y, 1.f));
+			}
+
+			else
+			{
+				m_vFrameDividers[i]->Disable();
+			}
+		}
+
+		if (ANIMATION_TOOL->IsReadable())
+		{
+			ANIMATION_TOOL->ClearFrameDataList();
+
+			for (int32 i = 0; i < iSpriteCount + 1; ++i)
+			{
+				FrameData frameData = {};
+				frameData.iFrameCount = iSpriteCount + 1;
+				frameData.fDuration = fInputDuration;
+				frameData.vLTPos = ImVec2(vInputLT.x + (vInputSize.x * i), vInputLT.y);
+				frameData.vSize = ANIMATION_TOOL->GetSpriteSize();
+				frameData.fOffset = fOffset;
+
+				ANIMATION_TOOL->InsertFrameData(frameData);
+			}
+
+			ANIMATION_TOOL->FlipReadableFlag();
+		}
+	}
+
+
 	
-	// Center 위치
+
+	
 }

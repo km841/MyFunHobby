@@ -15,6 +15,7 @@ enum class KEY_TYPE
 	Z = 'Z',
 	C = 'C',
 	N = 'N',
+	G = 'G',
 
 	ENTER = VK_RETURN,
 

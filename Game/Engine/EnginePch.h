@@ -446,6 +446,8 @@ bool m_bUse = false;\
 #define CONTEXT g_pEngine->GetContext()->GetContext()
 #define PHYSICS g_pEngine->GetPhysics()->GetEnvironment()->GetPhysics()
 #define UTILITY g_pEngine->GetUtility()
+#define TILEMAP_TOOL g_pEngine->GetUtility()->GetTool()->GetPallete()
+#define ANIMATION_TOOL g_pEngine->GetUtility()->GetTool()->GetAnimEditor()
 #define POOL g_pEngine->GetObjectPool()
 #define GET_SINGLE(type) type::GetInstance()
 #define CONST_BUFFER(type) g_pEngine->GetCB(type)

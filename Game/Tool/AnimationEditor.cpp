@@ -2,9 +2,12 @@
 
 AnimationEditor::AnimationEditor()
     :m_bHasAtlasTexture(false)
-    , m_vWindowSize(300.f, 800.f)
+    , m_vWindowSize(300.f, 500.f)
     , m_fDuration(0.f)
     , m_fOffset(0.f)
+    , m_iFrameSelector(-1)
+    , m_bReadable(false)
+    , m_CurrFrameData{}
 {
 
 }
@@ -37,6 +40,13 @@ void AnimationEditor::Update()
             ImGuiFileDialog::Instance()->Close();
         }
 
+        ImGui::SameLine();
+
+        if (ImGui::Button("Set"))
+        {
+            FlipReadableFlag();
+        }
+
         // Frame
         InsertSeparator();
 
@@ -55,6 +65,53 @@ void AnimationEditor::Update()
         ImGui::Text("Offset  ");
         ImGui::SameLine();
         ImGui::InputFloat("   ", &m_fOffset);
+
+        InsertSeparator();
+
+        ImGui::Text("Animation Frames:");
+
+        if (ImGui::ListBoxHeader("##items", ImVec2(-1, 100)))
+        {
+            for (int i = 0; i < m_vFrameDataList.size(); i++)
+            {
+                string szLabel = "Animation Frame_" + std::to_string(i);
+                if (ImGui::Selectable(szLabel.c_str(), m_iFrameSelector == i))
+                {
+                    m_iFrameSelector = i;
+
+                    if (!m_vFrameDataList.empty())
+                    {
+                        m_CurrFrameData = m_vFrameDataList[i];
+                    }
+                }
+            }
+            ImGui::ListBoxFooter();
+        }
+
+        InsertSeparator();
+
+        ImGui::Text("Frame LT Pos  ");
+        ImGui::SameLine();
+        ImGui::InputFloat2("     ", &m_CurrFrameData.vLTPos.x);
+
+        ImGui::Text("Frame Size    ");
+        ImGui::SameLine();
+        ImGui::InputFloat2("       ", &m_CurrFrameData.vSize.x);
+
+        ImGui::Text("Frame Duration");
+        ImGui::SameLine();
+        ImGui::InputFloat("          ", &m_CurrFrameData.fDuration);
+
+        ImGui::Text("Frame Offset  ");
+        ImGui::SameLine();
+        ImGui::InputFloat("            ", &m_CurrFrameData.fOffset);
+
     }
     ImGui::End();
 }
+
+void AnimationEditor::InsertFrameData(const FrameData& frameData)
+{
+    m_vFrameDataList.push_back(frameData);
+}
+
