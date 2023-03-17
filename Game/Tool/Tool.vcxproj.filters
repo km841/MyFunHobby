@@ -43,6 +43,9 @@
     <ClInclude Include="ImGuiFileDialogConfig.h">
       <Filter>Utils\ImGuiDialog</Filter>
     </ClInclude>
+    <ClInclude Include="GuiBase.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui.cpp">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="ImGuiFileDialog.cpp">
       <Filter>Utils\ImGuiDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiBase.cpp">
+      <Filter>Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

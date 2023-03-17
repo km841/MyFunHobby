@@ -196,6 +196,23 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"DebugGeometry", pShader);
 	}
 
+	// Frame Divider
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::DEFAULT,
+			D3D_PRIMITIVE_TOPOLOGY_LINESTRIP
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->Init(L"..\\Resources\\Shader\\frame_divider.fx", shaderInfo);
+
+		Add<Shader>(L"FrameDivider", pShader);
+	}
+
 	// Forward
 	{
 		shared_ptr<Shader> pShader = make_shared<Shader>();
@@ -249,6 +266,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"DebugGeometry", pMaterial);
+	}
+
+	// Frame Divider
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"FrameDivider");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"FrameDivider", pMaterial);
 	}
 
 	// Grid

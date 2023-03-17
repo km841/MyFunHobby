@@ -47,13 +47,6 @@ void TilePallete::Update()
     ImGui::End();
 }
 
-void TilePallete::InsertSeparator()
-{
-    ImGui::Spacing();
-    ImGui::Separator();
-    ImGui::Spacing();
-}
-
 void TilePallete::ColliderTypeUI_Update()
 {
     ImGui::BeginGroup();

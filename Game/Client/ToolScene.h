@@ -25,6 +25,7 @@ enum
     GRID_SIZE = 1000,
     TILE_SIZE = 64,
     TILE_HALF_SIZE = TILE_SIZE / 2,
+    FRAME_BOX_COUNT = 50,
 };
 
 class ToolScene :
@@ -52,12 +53,15 @@ private:
 
 private:
     void AnimationEditorUpdate();
-    void AtlasUpdate();
+    void SpriteUpdate();
+    void ApplyEditorData();
 
 private:
     shared_ptr<GameObject> m_pPreviewTile;
     shared_ptr<GameObject> m_pMainCamera;
     shared_ptr<GameObject> m_pGrid;
-    shared_ptr<GameObject> m_pAtlasTexture;
+    shared_ptr<GameObject> m_pSpriteTexture;
+
+    std::vector<shared_ptr<GameObject>> m_vFrameDividers;
 };
 

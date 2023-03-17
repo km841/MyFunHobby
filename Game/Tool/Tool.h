@@ -22,6 +22,7 @@ private:
 	void    InitGui(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);
 	void    UpdateGui();
 	
+	
 
 private:
 	shared_ptr<TilePallete>     m_pPallete;

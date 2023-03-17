@@ -85,9 +85,40 @@ void ToolScene::Enter()
 		AddGameObject(m_pPreviewTile);
 	}
 
-	// Atlas Texture
+
+
+	// Animation Select Box
+	for (int32 i = 0; i < FRAME_BOX_COUNT; ++i)
 	{
-		m_pAtlasTexture = GameObject::Get();
+		shared_ptr<GameObject> pGameObject = GameObject::Get();
+
+		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndices(Vec3(1.f, 1.f, 1.f));
+
+		shared_ptr<Mesh> pMesh = make_shared<Mesh>();
+		pMesh->Init(vVertices, vIndices);
+
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"FrameDivider");
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial->Clone());
+		pMeshRenderer->SetMesh(pMesh);
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pGameObject->AddComponent(pMeshRenderer);
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 1.f));
+
+		pGameObject->Disable();
+		AddGameObject(pGameObject);
+		m_vFrameDividers.push_back(pGameObject);
+	}
+
+	// Sprite Texture
+	{
+		m_pSpriteTexture = GameObject::Get();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Atlas");
@@ -98,11 +129,11 @@ void ToolScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pAtlasTexture->AddComponent(pMeshRenderer);
-		m_pAtlasTexture->AddComponent(make_shared<Transform>());
-		m_pAtlasTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+		m_pSpriteTexture->AddComponent(pMeshRenderer);
+		m_pSpriteTexture->AddComponent(make_shared<Transform>());
+		m_pSpriteTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
 
-		AddGameObject(m_pAtlasTexture);
+		AddGameObject(m_pSpriteTexture);
 	}
 
 	// Camera
@@ -237,23 +268,51 @@ void ToolScene::CreateTile(Vec3 vWorldPos)
 
 void ToolScene::AnimationEditorUpdate()
 {
-	AtlasUpdate();
+	SpriteUpdate();
 	// 텍스쳐 상의 특정 위치를 클릭하면 그 위치에 첫 번째 점이 찍히고, 
 
+	// 입력 받은 LT Pos와 Size를 참고해서 각 프레임을 나누는 박스를 생성한다.
+	// 박스는 50개 정도를 가지고 있자.
+
+	ApplyEditorData();
 
 }
 
-void ToolScene::AtlasUpdate()
+void ToolScene::SpriteUpdate()
 {
-	const wstring& szAtlasTexKey = UTILITY->GetTool()->GetAnimEditor()->GetAtlasTextureKey();
-	const wstring& szAtlasTexPath = UTILITY->GetTool()->GetAnimEditor()->GetAtlasTexturePath();
+	const wstring& szSpriteTexKey = UTILITY->GetTool()->GetAnimEditor()->GetSpriteTextureKey();
+	const wstring& szSpriteTexPath = UTILITY->GetTool()->GetAnimEditor()->GetSpriteTexturePath();
 
-	if (!szAtlasTexKey.empty() && !szAtlasTexPath.empty())
+	if (!szSpriteTexKey.empty() && !szSpriteTexPath.empty())
 	{
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szAtlasTexKey, szAtlasTexPath);
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szSpriteTexKey, szSpriteTexPath);
 		assert(pTexture);
-		m_pAtlasTexture->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
-		m_pAtlasTexture->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+		m_pSpriteTexture->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+		m_pSpriteTexture->GetTransform()->SetLocalScale(pTexture->GetTexSize());
 		UTILITY->GetTool()->GetAnimEditor()->ClearAtlasTexturePath();
 	}
+}
+
+void ToolScene::ApplyEditorData()
+{
+	Vec2 vInputLT = Conv::ImVec2ToVec2(UTILITY->GetTool()->GetAnimEditor()->GetSpriteLTPoint());
+	Vec2 vInputSize = Conv::ImVec2ToVec2(UTILITY->GetTool()->GetAnimEditor()->GetSpriteSize());
+	float fInputDuration = UTILITY->GetTool()->GetAnimEditor()->GetDuration();
+	float fOffset = UTILITY->GetTool()->GetAnimEditor()->GetOffset();
+
+	Vec3 vSpriteSize = m_pSpriteTexture->GetTransform()->GetLocalScale();
+	Vec3 vSpritePos = m_pSpriteTexture->GetTransform()->GetLocalPosition();
+
+	float fLTPointX = vSpritePos.x - vSpriteSize.x;
+	float fLTPointY = vSpritePos.y + vSpriteSize.y;
+
+	float fCenterPointX = fLTPointX + vInputSize.x;
+	float fCenterPointY = fLTPointY - vInputSize.y;
+	vSpritePos.x += fOffset;
+
+	m_vFrameDividers[0]->Enable();
+	m_vFrameDividers[0]->GetTransform()->SetLocalPosition(Vec3(fCenterPointX, fCenterPointY, 1.f));
+	m_vFrameDividers[0]->GetTransform()->SetLocalScale(Vec3(vInputSize.x, vInputSize.y, 1.f));
+	
+	// Center 위치
 }

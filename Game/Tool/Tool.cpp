@@ -52,6 +52,8 @@ void Tool::UpdateGui()
 	ImGui::NewFrame();
 }
 
+
+
 void Tool::InitGui(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext)
 {
 	IMGUI_CHECKVERSION();

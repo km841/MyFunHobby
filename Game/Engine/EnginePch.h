@@ -208,6 +208,11 @@ struct MaterialParams
 
 namespace Conv
 {
+	static Vec2 ImVec2ToVec2(ImVec2 vVec2)
+	{
+		return Vec2(vVec2.x, vVec2.y);
+	}
+
 	static PxVec3 Vec3ToPxVec3(Vec3 vVec3)
 	{
 		return PxVec3(vVec3.x, vVec3.y, vVec3.z);

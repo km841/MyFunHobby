@@ -1,7 +1,9 @@
 #pragma once
 #include "Common.h"
+#include "GuiBase.h"
 
 class TilePallete
+	: public GuiBase
 {
 public:
 	TilePallete();
@@ -22,7 +24,6 @@ public:
 	uint8 GetOutputType()          { return m_iOutputType; }
 
 private:
-	void InsertSeparator();
 	void ColliderTypeUI_Update();
 	void DrawingTypeUI_Update();
 	void TileButtonUI_Update();
