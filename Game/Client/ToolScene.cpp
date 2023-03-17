@@ -311,6 +311,7 @@ void ToolScene::DrawEditorGraphic()
 	if (0.f < vInputSize.x && 0.f < vInputSize.y)
 	{
 		int32 iSpriteCount = static_cast<int32>(vSpriteSize.x / vInputSize.x);
+
 		if (FRAME_BOX_COUNT - 1 < iSpriteCount)
 			return;
 
@@ -336,6 +337,7 @@ void ToolScene::DrawEditorGraphic()
 			for (int32 i = 0; i < iSpriteCount + 1; ++i)
 			{
 				FrameData frameData = {};
+				frameData.szTexKey = ANIMATION_TOOL->GetSpriteTextureKey();
 				frameData.iFrameCount = iSpriteCount + 1;
 				frameData.fDuration = fInputDuration;
 				frameData.vLTPos = ImVec2(vInputLT.x + (vInputSize.x * i), vInputLT.y);
@@ -348,9 +350,4 @@ void ToolScene::DrawEditorGraphic()
 			ANIMATION_TOOL->FlipReadableFlag();
 		}
 	}
-
-
-	
-
-	
 }

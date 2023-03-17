@@ -4,6 +4,7 @@
 
 struct FrameData
 {
+	wstring szTexKey;
 	ImVec2 vLTPos;
 	ImVec2 vSize;
 	float  fDuration;
@@ -55,6 +56,7 @@ private:
 private:
 	ImVec2 m_vWindowSize;
 	wstring m_szSpriteTextureKey;
+	string m_szSpriteTextureKeyStr;
 	wstring m_szSpriteTexturePath;
 
 	ImVec2 m_vLTPos;

@@ -2,7 +2,7 @@
 
 AnimationEditor::AnimationEditor()
     :m_bHasAtlasTexture(false)
-    , m_vWindowSize(300.f, 500.f)
+    , m_vWindowSize(350.f, 500.f)
     , m_fDuration(0.f)
     , m_fOffset(0.f)
     , m_iFrameSelector(-1)
@@ -36,6 +36,7 @@ void AnimationEditor::Update()
             {
                 m_szSpriteTexturePath = s2ws(ImGuiFileDialog::Instance()->GetFilePathName());
                 m_szSpriteTextureKey = fs::path(m_szSpriteTexturePath).filename();
+                m_szSpriteTextureKeyStr = ws2s(m_szSpriteTextureKey);
             }
             ImGuiFileDialog::Instance()->Close();
         }
@@ -50,19 +51,23 @@ void AnimationEditor::Update()
         // Frame
         InsertSeparator();
 
-        ImGui::Text("LT Pos  ");
+        ImGui::Text("Tex Key       ");
+        ImGui::SameLine();
+        ImGui::InputText("                    ", const_cast<char*>(m_szSpriteTextureKeyStr.c_str()), m_szSpriteTextureKeyStr.size());
+
+        ImGui::Text("LT Pos        ");
         ImGui::SameLine();
         ImGui::InputFloat2("", &m_vLTPos.x);
 
-        ImGui::Text("Size    ");
+        ImGui::Text("Size          ");
         ImGui::SameLine();
         ImGui::InputFloat2("  ", &m_vSize.x);
 
-        ImGui::Text("Duration");
+        ImGui::Text("Duration      ");
         ImGui::SameLine();
         ImGui::InputFloat(" ", &m_fDuration);
 
-        ImGui::Text("Offset  ");
+        ImGui::Text("Offset        ");
         ImGui::SameLine();
         ImGui::InputFloat("   ", &m_fOffset);
 
@@ -105,6 +110,14 @@ void AnimationEditor::Update()
         ImGui::Text("Frame Offset  ");
         ImGui::SameLine();
         ImGui::InputFloat("            ", &m_CurrFrameData.fOffset);
+
+        if (ImGui::Button("Edit Data"))
+        {
+            if (!m_vFrameDataList.empty())
+            {
+                m_vFrameDataList[m_iFrameSelector] = m_CurrFrameData;
+            }
+        }
 
     }
     ImGui::End();
