@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="BehaviorComposite.h" />
     <ClInclude Include="BehaviorCondition.h" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="BehaviorComposite.cpp" />
     <ClCompile Include="BehaviorCondition.cpp" />

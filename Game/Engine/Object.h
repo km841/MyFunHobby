@@ -3,6 +3,7 @@
 enum class OBJECT_TYPE : uint8
 {
 	NONE,
+	ANIMATION,
 	GAMEOBJECT,
 	COMPONENT,
 	MATERIAL,

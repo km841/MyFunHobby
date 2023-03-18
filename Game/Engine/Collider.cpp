@@ -30,7 +30,7 @@ void Collider::Awake()
 		CreateDebugGeometry(pPhysical->GetGeometries());
 	}
 
-	m_pCallback = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();
+	//m_pCallback = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();
 }
 
 void Collider::FinalUpdate()

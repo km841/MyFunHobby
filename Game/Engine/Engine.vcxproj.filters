@@ -160,6 +160,9 @@
     <ClInclude Include="Animator.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -320,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

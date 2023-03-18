@@ -8,9 +8,9 @@ public:
 	virtual ~GuiBase();
 
 public:
-	void	InsertSeparator();
+	void	InsertSeparator(); 
 
-private:
-
+protected:
+	ImVec2 m_vWindowSize;
 };
 

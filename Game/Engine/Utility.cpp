@@ -7,6 +7,7 @@
 
 Utility::Utility()
 {
+	m_szTexPath = L"..\\Resources\\Texture\\";
 }
 
 Utility::~Utility()

@@ -9,6 +9,7 @@
 #include "Collider.h"
 #include "RigidBody.h"
 #include "Physical.h"
+#include "Animator.h"
 
 POOL_INIT(GameObject);
 GameObject::GameObject()
@@ -145,6 +146,12 @@ shared_ptr<Camera> GameObject::GetCamera()
 {
 	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::CAMERA);
 	return static_pointer_cast<Camera>(pComponent);
+}
+
+shared_ptr<Animator> GameObject::GetAnimator()
+{
+	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::ANIMATOR);
+	return static_pointer_cast<Animator>(pComponent);
 }
 
 void GameObject::AddComponent(shared_ptr<Component> pComponent)

@@ -55,6 +55,7 @@ private:
     void AnimationEditorUpdate();
     void SpriteUpdate();
     void DrawEditorGraphic();
+    void PlayAnimation();
 
 private:
     shared_ptr<GameObject> m_pPreviewTile;

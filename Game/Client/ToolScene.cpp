@@ -16,6 +16,8 @@
 #include "GridDrawScript.h"
 #include "ObjectAddedToSceneEvent.h"
 #include "EventManager.h"
+#include "Animator.h"
+#include "Animation.h"
 
 #include "Tile.h"
 
@@ -131,6 +133,7 @@ void ToolScene::Enter()
 
 		m_pSpriteTexture->AddComponent(pMeshRenderer);
 		m_pSpriteTexture->AddComponent(make_shared<Transform>());
+		m_pSpriteTexture->AddComponent(make_shared<Animator>());
 		m_pSpriteTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
 
 		AddGameObject(m_pSpriteTexture);
@@ -270,10 +273,7 @@ void ToolScene::AnimationEditorUpdate()
 {
 	SpriteUpdate();
 	DrawEditorGraphic();
-
-
-
-
+	PlayAnimation();
 }
 
 void ToolScene::SpriteUpdate()
@@ -295,9 +295,8 @@ void ToolScene::DrawEditorGraphic()
 {
 	Vec2 vInputLT = Conv::ImVec2ToVec2(ANIMATION_TOOL->GetSpriteLTPoint());
 	Vec2 vInputSize = Conv::ImVec2ToVec2(ANIMATION_TOOL->GetSpriteSize());
+	Vec2 vInputOffset = Conv::ImVec2ToVec2(ANIMATION_TOOL->GetOffset());
 	float fInputDuration = ANIMATION_TOOL->GetDuration();
-
-	float fOffset = ANIMATION_TOOL->GetOffset();
 
 	Vec3 vSpriteSize = m_pSpriteTexture->GetTransform()->GetLocalScale();
 	Vec3 vSpritePos = m_pSpriteTexture->GetTransform()->GetLocalPosition();
@@ -337,17 +336,43 @@ void ToolScene::DrawEditorGraphic()
 			for (int32 i = 0; i < iSpriteCount + 1; ++i)
 			{
 				FrameData frameData = {};
-				frameData.szTexKey = ANIMATION_TOOL->GetSpriteTextureKey();
+				frameData.szName = ANIMATION_TOOL->GetAnimationName();
+				frameData.szTexPath = UTILITY->GetTexPath() + ANIMATION_TOOL->GetSpriteTextureKey();
 				frameData.iFrameCount = iSpriteCount + 1;
 				frameData.fDuration = fInputDuration;
 				frameData.vLTPos = ImVec2(vInputLT.x + (vInputSize.x * i), vInputLT.y);
 				frameData.vSize = ANIMATION_TOOL->GetSpriteSize();
-				frameData.fOffset = fOffset;
+				frameData.vOffset = ANIMATION_TOOL->GetOffset();
 
-				ANIMATION_TOOL->InsertFrameData(frameData);
+				ANIMATION_TOOL->InsertFrameData(frameData);	
 			}
 
 			ANIMATION_TOOL->FlipReadableFlag();
 		}
+	}
+}
+
+void ToolScene::PlayAnimation()
+{
+	// Bool값을 통해 툴의 상태를 확인하고 true라면 정보를 받아온다
+	if (ANIMATION_TOOL->GetAnimPlayingFlag())
+	{
+		auto vFrameDataList = ANIMATION_TOOL->GetFrameDataList();
+		assert(!vFrameDataList.empty());
+		
+		if (!m_pSpriteTexture->GetAnimator()->GetCurAnimation())
+		{
+			Vec3 vSpriteSize = Vec3(vFrameDataList[0].vSize.x, vFrameDataList[0].vSize.y, 1.f);
+			m_pSpriteTexture->GetTransform()->SetLocalScale(vSpriteSize);
+			m_pSpriteTexture->GetAnimator()->CreateAnimation(vFrameDataList);
+			m_pSpriteTexture->GetAnimator()->Play(vFrameDataList[0].szName);
+		}
+
+		else
+		{
+			m_pSpriteTexture->GetAnimator()->GetCurAnimation()->RefreshAnimation(vFrameDataList);
+		}
+
+		ANIMATION_TOOL->FlipAnimPlayingFlag();
 	}
 }

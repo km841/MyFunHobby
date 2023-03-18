@@ -30,9 +30,25 @@ VS_OUT VS_Main(VS_IN _in)
     return output;
 }
 
+// Animation Params
+// g_vec2_0 : LT Pos
+// g_vec2_1 : Sprite size
+// g_vec2_2 : Atlas Size
+// g_vec2_3 : Offset
+
 float4 PS_Main(VS_OUT _in) : SV_Target
 {
-    return g_tex_0.Sample(g_sam_0, _in.uv);
+    float2 vLeftTopPos = g_vec2_0;
+    float2 vSpriteSize = g_vec2_1;
+    float2 vAtlasSize = g_vec2_2;
+    float2 vOffset = g_vec2_3;
+    
+    float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
+    
+    if (vAtlasSize.x < 0.01f)
+        return g_tex_0.Sample(g_sam_0, _in.uv);
+    else
+        return g_tex_0.Sample(g_sam_0, vUV);
 }
 
 #endif

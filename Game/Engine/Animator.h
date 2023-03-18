@@ -2,27 +2,26 @@
 #include "Component.h"
 
 class Texture;
-//struct AnimationData
-//{
-//    wstring           szName;
-//    weak_ptr<Texture> pTexture;
-//    Vec2              vLeftTop;
-//    Vec2              vSpriteSize;
-//
-//
-//};
+class Animation;
 
 class Animator :
-    public Component
+      public Component
+    , public std::enable_shared_from_this<Animator>
 {
+    using AnimationMap = std::map<wstring, shared_ptr<Animation>>;
 public:
     Animator();
     virtual ~Animator();
 
 public:
-    void CreateAnimation();
+    void Update();
+    void CreateAnimation(const std::vector<FrameData> vFrameDataList);
+    void Play(const wstring& szAnimName, bool bLoop = true);
+
+    shared_ptr<Animation> GetCurAnimation() { return m_pCurAnimation; }
 
 private:
-
+    AnimationMap m_mAnimations;
+    shared_ptr<Animation> m_pCurAnimation;
 };
 

@@ -2,18 +2,20 @@
 
 AnimationEditor::AnimationEditor()
     :m_bHasAtlasTexture(false)
-    , m_vWindowSize(350.f, 500.f)
     , m_fDuration(0.f)
-    , m_fOffset(0.f)
     , m_iFrameSelector(-1)
     , m_bReadable(false)
     , m_CurrFrameData{}
+    , m_bLoop(false)
+    , m_bPlaying(false)
+    , m_szName{}
 {
-
+    m_vWindowSize = ImVec2(350.f, 530.f);
 }
 
 AnimationEditor::~AnimationEditor()
 {
+    
 }
 
 void AnimationEditor::Init()
@@ -47,13 +49,18 @@ void AnimationEditor::Update()
         {
             FlipReadableFlag();
         }
+        ImGui::SameLine();
+        if (ImGui::Button("Edit"))
+        {
+            FlipReadableFlag();
+        }
 
         // Frame
         InsertSeparator();
 
-        ImGui::Text("Tex Key       ");
+        ImGui::Text("Name          ");
         ImGui::SameLine();
-        ImGui::InputText("                    ", const_cast<char*>(m_szSpriteTextureKeyStr.c_str()), m_szSpriteTextureKeyStr.size());
+        ImGui::InputText("                    ", m_szName, sizeof(m_szName));
 
         ImGui::Text("LT Pos        ");
         ImGui::SameLine();
@@ -69,7 +76,7 @@ void AnimationEditor::Update()
 
         ImGui::Text("Offset        ");
         ImGui::SameLine();
-        ImGui::InputFloat("   ", &m_fOffset);
+        ImGui::InputFloat2("   ", &m_vOffset.x);
 
         InsertSeparator();
 
@@ -95,6 +102,14 @@ void AnimationEditor::Update()
 
         InsertSeparator();
 
+        ImGui::Text("Animation Name");
+        ImGui::SameLine();
+        ImGui::InputText("     ", const_cast<char*>(ws2s(m_CurrFrameData.szName).c_str()), m_CurrFrameData.szName.size());
+
+        ImGui::Text("Tex Path      ");
+        ImGui::SameLine();
+        ImGui::InputText("     ", const_cast<char*>(ws2s(m_CurrFrameData.szTexPath).c_str()), m_CurrFrameData.szTexPath.size());
+
         ImGui::Text("Frame LT Pos  ");
         ImGui::SameLine();
         ImGui::InputFloat2("     ", &m_CurrFrameData.vLTPos.x);
@@ -109,7 +124,7 @@ void AnimationEditor::Update()
 
         ImGui::Text("Frame Offset  ");
         ImGui::SameLine();
-        ImGui::InputFloat("            ", &m_CurrFrameData.fOffset);
+        ImGui::InputFloat2("            ", &m_CurrFrameData.vOffset.x);
 
         if (ImGui::Button("Edit Data"))
         {
@@ -118,6 +133,25 @@ void AnimationEditor::Update()
                 m_vFrameDataList[m_iFrameSelector] = m_CurrFrameData;
             }
         }
+
+        InsertSeparator();
+
+        ImGui::Text("Animation Test");
+        ImGui::SameLine();
+        if (ImGui::Button("Play"))
+        {
+            m_bPlaying = true;
+
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Stop"))
+        {
+            m_bPlaying = false;
+        }
+        ImGui::SameLine();
+        ImGui::Spacing();
+        ImGui::SameLine();
+        ImGui::Checkbox("Loop", &m_bLoop);
 
     }
     ImGui::End();

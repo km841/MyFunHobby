@@ -3,6 +3,7 @@
 
 enum class COMPONENT_TYPE : uint8
 {
+    ANIMATOR,
 	TRANSFORM,
 	CONTROLLER,
     DEBUG_RENDERER,
@@ -84,6 +85,7 @@ class Collider;
 class RigidBody;
 class Physical;
 class Camera;
+class Animator;
 
 class Component :
     public Object
@@ -108,6 +110,7 @@ public:
 	shared_ptr<RigidBody>			GetRigidBody();
 	shared_ptr<Physical>			GetPhysical();
     shared_ptr<Camera>              GetCamera();
+    shared_ptr<Animator>            GetAnimator();
 
 	COMPONENT_TYPE GetType() { return m_eType; }
 

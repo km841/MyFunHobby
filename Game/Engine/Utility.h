@@ -15,9 +15,11 @@ public:
 public:
 	shared_ptr<Tool> GetTool() { return g_pTool; }
 	wstring			 GetSelectedTileKey();
+	wstring			 GetTexPath() { return m_szTexPath; }
 
 private:
 	std::map<int32, wstring> m_mTileRrcMap;
+	wstring					 m_szTexPath;
 
 };
 

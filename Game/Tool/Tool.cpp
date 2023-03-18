@@ -59,7 +59,6 @@ void Tool::InitGui(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11Device
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
-
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplWin32_Init(hHwnd);

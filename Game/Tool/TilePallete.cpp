@@ -11,7 +11,7 @@ TilePallete::TilePallete()
     , m_bMouseOver(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
-    m_vTileWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV.size() / 4.0f)* (m_fTileSize + m_fSpacing));
+    m_vWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV.size() / 4.0f)* (m_fTileSize + m_fSpacing));
 }
 
 TilePallete::~TilePallete()
@@ -35,7 +35,7 @@ void TilePallete::Update()
         {
             m_vWindowPos = ImGui::GetWindowPos();
         }
-        ImGui::SetWindowSize(m_vTileWindowSize);
+        ImGui::SetWindowSize(m_vWindowSize);
 
         if (ImGui::BeginTabBar("Tab"))
         {

@@ -7,6 +7,8 @@
 #include "Controller.h"
 #include "RigidBody.h"
 #include "Physical.h"
+#include "Camera.h"
+#include "Animator.h"
 
 Component::Component(COMPONENT_TYPE eType)
     : Object(OBJECT_TYPE::COMPONENT)
@@ -51,6 +53,16 @@ shared_ptr<RigidBody> Component::GetRigidBody()
 shared_ptr<Physical> Component::GetPhysical()
 {
     return m_pGameObject.lock()->GetPhysical();
+}
+
+shared_ptr<Camera> Component::GetCamera()
+{
+    return m_pGameObject.lock()->GetCamera();
+}
+
+shared_ptr<Animator> Component::GetAnimator()
+{
+    return m_pGameObject.lock()->GetAnimator();
 }
 
 

@@ -55,6 +55,17 @@ public:						  \
 
 #define GET_SINGLE(type) type::GetInstance()
 
+struct FrameData
+{
+	wstring szName;
+	wstring szTexPath;
+	ImVec2 vLTPos;
+	ImVec2 vSize;
+	ImVec2 vOffset;
+	float  fDuration;
+	int32  iFrameCount;
+};
+
 extern shared_ptr<class Tool> g_pTool;
 
 wstring s2ws(const string& s);
