@@ -24,13 +24,13 @@ public:
 	uint8 GetOutputType()          { return m_iOutputType; }
 
 private:
-	void ColliderTypeUI_Update();
-	void DrawingTypeUI_Update();
-	void TileButtonUI_Update();
-	void OutputTypeUI_Update();
-	void UpdateOptionSelection();
-	void UpdateTileSelection();
-	void UpdateUIHoverState();
+	void  ColliderTypeUI_Update();
+	void  DrawingTypeUI_Update();
+	void  TileButtonUI_Update();
+	void  OutputTypeUI_Update();
+	void  UpdateOptionSelection();
+	void  UpdateTileSelection();
+	void  UpdateUIHoverState();
 
 private:
 	std::vector<ComPtr<ID3D11ShaderResourceView>> m_vSRV;

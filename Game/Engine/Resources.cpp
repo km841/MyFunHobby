@@ -163,7 +163,7 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Alpha", pShader);
 	}
 
-	// Alpha
+	// Preview
 	{
 		ShaderInfo shaderInfo =
 		{
@@ -215,8 +215,16 @@ void Resources::CreateDefaultShader()
 
 	// Forward
 	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->Init(L"..\\Resources\\Shader\\forward.fx");
+		pShader->Init(L"..\\Resources\\Shader\\forward.fx", shaderInfo);
 
 		Add<Shader>(L"Forward", pShader);
 	}

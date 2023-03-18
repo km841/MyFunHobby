@@ -58,6 +58,7 @@ void Animation::PushData()
 	Vec2 vOffset = Vec2(currFrameData.vOffset.x / vSpriteSize.x, currFrameData.vOffset.y / vSpriteSize.y);
 	Vec2 vAtlasSize = Vec2(100.f / vSpriteSize.x, 100.f / vSpriteSize.y);
 
+	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(0, vLTPos);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(1, vSize);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(2, vAtlasSize);

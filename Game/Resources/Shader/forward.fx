@@ -35,6 +35,7 @@ VS_OUT VS_Main(VS_IN _in)
 // g_vec2_1 : Sprite size
 // g_vec2_2 : Atlas Size
 // g_vec2_3 : Offset
+// g_int_0  : Animation Flag
 
 float4 PS_Main(VS_OUT _in) : SV_Target
 {
@@ -42,13 +43,14 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float2 vSpriteSize = g_vec2_1;
     float2 vAtlasSize = g_vec2_2;
     float2 vOffset = g_vec2_3;
+    int    iAnimationFlag = g_int_0;
     
     float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
     
-    if (vAtlasSize.x < 0.01f)
-        return g_tex_0.Sample(g_sam_0, _in.uv);
-    else
+    if (iAnimationFlag == 1)
         return g_tex_0.Sample(g_sam_0, vUV);
+    else
+        return g_tex_0.Sample(g_sam_0, _in.uv);
 }
 
 #endif

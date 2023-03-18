@@ -278,12 +278,11 @@ void ToolScene::AnimationEditorUpdate()
 
 void ToolScene::SpriteUpdate()
 {
-	const wstring& szSpriteTexKey = ANIMATION_TOOL->GetSpriteTextureKey();
 	const wstring& szSpriteTexPath = ANIMATION_TOOL->GetSpriteTexturePath();
 
-	if (!szSpriteTexKey.empty() && !szSpriteTexPath.empty())
+	if (!szSpriteTexPath.empty())
 	{
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szSpriteTexKey, szSpriteTexPath);
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szSpriteTexPath, szSpriteTexPath);
 		assert(pTexture);
 		m_pSpriteTexture->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 		m_pSpriteTexture->GetTransform()->SetLocalScale(pTexture->GetTexSize());
@@ -298,18 +297,18 @@ void ToolScene::DrawEditorGraphic()
 	Vec2 vInputOffset = Conv::ImVec2ToVec2(ANIMATION_TOOL->GetOffset());
 	float fInputDuration = ANIMATION_TOOL->GetDuration();
 
-	Vec3 vSpriteSize = m_pSpriteTexture->GetTransform()->GetLocalScale();
-	Vec3 vSpritePos = m_pSpriteTexture->GetTransform()->GetLocalPosition();
+	Vec3 vTextureSize = m_pSpriteTexture->GetTransform()->GetLocalScale();
+	Vec3 vTexturePos = m_pSpriteTexture->GetTransform()->GetLocalPosition();
 
-	float fLTPointX = vSpritePos.x - vSpriteSize.x;
-	float fLTPointY = vSpritePos.y + vSpriteSize.y;
+	float fLTPointX = vTexturePos.x - vTextureSize.x;
+	float fLTPointY = vTexturePos.y + vTextureSize.y;
 
 	float fCenterPointX = fLTPointX + vInputSize.x + (vInputLT.x * 2.f);
 	float fCenterPointY = fLTPointY - vInputSize.y - (vInputLT.y * 2.f);
 
 	if (0.f < vInputSize.x && 0.f < vInputSize.y)
 	{
-		int32 iSpriteCount = static_cast<int32>(vSpriteSize.x / vInputSize.x);
+		int32 iSpriteCount = static_cast<int32>(vTextureSize.x / vInputSize.x);
 
 		if (FRAME_BOX_COUNT - 1 < iSpriteCount)
 			return;
@@ -318,6 +317,12 @@ void ToolScene::DrawEditorGraphic()
 		{
 			if (i <= iSpriteCount)
 			{
+				if (m_pSpriteTexture->GetAnimator()->GetCurAnimation())
+				{
+					m_vFrameDividers[i]->Disable();
+					continue;
+				}
+
 				m_vFrameDividers[i]->Enable();
 				m_vFrameDividers[i]->GetTransform()->SetLocalPosition(Vec3(fCenterPointX + ((vInputSize.x * 2.f) * i), fCenterPointY, 1.f));
 				m_vFrameDividers[i]->GetTransform()->SetLocalScale(Vec3(vInputSize.x, vInputSize.y, 1.f));
@@ -333,16 +338,22 @@ void ToolScene::DrawEditorGraphic()
 		{
 			ANIMATION_TOOL->ClearFrameDataList();
 
+			wstring szFileName = fs::path(ANIMATION_TOOL->GetSpriteTexturePath()).filename();
+			wstring szPath = UTILITY->GetTexPath() + szFileName;
+			const wstring& szName = ANIMATION_TOOL->GetAnimationName();
+			const ImVec2& vSpriteSize = ANIMATION_TOOL->GetSpriteSize();
+			const ImVec2& vOffset = ANIMATION_TOOL->GetOffset();
+
 			for (int32 i = 0; i < iSpriteCount + 1; ++i)
 			{
 				FrameData frameData = {};
-				frameData.szName = ANIMATION_TOOL->GetAnimationName();
-				frameData.szTexPath = UTILITY->GetTexPath() + ANIMATION_TOOL->GetSpriteTextureKey();
+				frameData.szName = szName;
+				frameData.szTexPath = szPath;
 				frameData.iFrameCount = iSpriteCount + 1;
 				frameData.fDuration = fInputDuration;
 				frameData.vLTPos = ImVec2(vInputLT.x + (vInputSize.x * i), vInputLT.y);
-				frameData.vSize = ANIMATION_TOOL->GetSpriteSize();
-				frameData.vOffset = ANIMATION_TOOL->GetOffset();
+				frameData.vSize = vSpriteSize;
+				frameData.vOffset = vOffset;
 
 				ANIMATION_TOOL->InsertFrameData(frameData);	
 			}
