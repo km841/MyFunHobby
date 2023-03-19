@@ -86,6 +86,7 @@ class RigidBody;
 class Physical;
 class Camera;
 class Animator;
+class PlayerState;
 
 class Component :
     public Object
@@ -113,6 +114,7 @@ public:
     shared_ptr<Animator>            GetAnimator();
 
 	COMPONENT_TYPE GetType() { return m_eType; }
+    PLAYER_STATE   GetPlayerStateEnum();
 
 private:
 	friend class GameObject;

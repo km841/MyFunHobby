@@ -14,14 +14,16 @@ public:
     virtual ~Animator();
 
 public:
-    void Update();
-    void CreateAnimation(const std::vector<FrameData> vFrameDataList);
-    void Play(const wstring& szAnimName, bool bLoop = true);
-
-    shared_ptr<Animation> GetCurAnimation() { return m_pCurAnimation; }
+    void                  Update();
+    void                  CreateAnimation(const std::vector<FrameData> vFrameDataList);
+    void                  Play(const wstring& szName, bool bLoop = true);
+    
+    shared_ptr<Animation> GetActiveAnimation() { return m_pActiveAnimation; }
+    shared_ptr<Animation> FindAnimation(const wstring& szName);
+    void                  AddAnimation(const wstring& szName, shared_ptr<Animation> pAnimation);
 
 private:
-    AnimationMap m_mAnimations;
-    shared_ptr<Animation> m_pCurAnimation;
+    AnimationMap          m_mAnimations;
+    shared_ptr<Animation> m_pActiveAnimation;
 };
 

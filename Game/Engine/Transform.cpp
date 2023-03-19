@@ -24,9 +24,21 @@ void Transform::FinalUpdate()
 	{
 		ACTOR_TYPE eActorType = GetPhysical()->GetActorType();
 
-		PxRigidDynamic* pActor = GetPhysical()->GetActor()->is<PxRigidDynamic>();
-		m_PxTransform = pActor->getGlobalPose();
-		PxBounds3 vBounds = pActor->getWorldBounds();
+		switch (eActorType)
+		{
+			case ACTOR_TYPE::DYNAMIC:
+			{
+				m_PxTransform = GetPhysical()->GetActor()->is<PxRigidDynamic>()->getGlobalPose();
+			}
+				break;
+
+			case ACTOR_TYPE::CHARACTER:
+			{
+				m_PxTransform = GetPhysical()->GetController()->getActor()->getGlobalPose();
+				m_PxTransform.q.z = 0.f;
+			}
+				break;
+		}
 
 		m_vPxLocalScale = Conv::Vec3ToPxVec3(GetPhysical()->GetGeometrySize());
 		m_vPxLocalRotation = static_cast<PxMat33>(m_PxTransform.q.getNormalized());

@@ -8,6 +8,7 @@ AnimationEditor::AnimationEditor()
     , m_CurrFrameData{}
     , m_bLoop(false)
     , m_bPlaying(false)
+    , m_bSpriteUpdate(false)
     , m_szName{}
 {
     m_vWindowSize = ImVec2(350.f, 530.f);
@@ -69,6 +70,8 @@ void AnimationEditor::NewButtonUI_Update()
         if (ImGuiFileDialog::Instance()->IsOk())
         {
             m_szSpriteTexturePath = s2ws(ImGuiFileDialog::Instance()->GetFilePathName());
+            if (!m_szSpriteTexturePath.empty())
+                m_bSpriteUpdate = true;
         }
         ImGuiFileDialog::Instance()->Close();
     }

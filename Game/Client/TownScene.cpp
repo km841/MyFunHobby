@@ -19,6 +19,8 @@
 #include "Player.h"
 #include "SceneChangeEvent.h"
 #include "DebugRenderer.h"
+#include "Animation.h"
+#include "Animator.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -61,121 +63,59 @@ void TownScene::Render()
 
 void TownScene::Enter()
 {
-	// Background
-	{
-		//shared_ptr<GameObject> pGameObject = GameObject::Get();
-
-		//shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-
-		//shared_ptr<Texture> pTexture = make_shared<Texture>();
-		//pTexture->Load(L"..\\Resources\\Texture\\Image_Town.png");
-
-		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
-		//pMaterial->SetTexture(0, pTexture);
-
-		//shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		//pMeshRenderer->SetMaterial(pMaterial);
-		//pMeshRenderer->SetMesh(pMesh);
-
-		//pGameObject->AddComponent(pMeshRenderer);
-		//pGameObject->AddComponent(make_shared<Transform>());
-
-		//float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		//float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		//pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-		//pGameObject->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
-
-		//AddGameObject(pGameObject);
-	}
-
 	// Player
 	{
 		shared_ptr<Player> pGameObject = make_shared<Player>();
-
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Image_LittleBone.tga");
-
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Alpha");
-		pMaterial->SetTexture(0, pTexture);
-
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
 
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f)));
+		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::CHARACTER, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
 		pGameObject->AddComponent(make_shared<Controller>());
 		pGameObject->AddComponent(make_shared<PlayerMoveScript>());
 		pGameObject->AddComponent(make_shared<RigidBody>());
 		pGameObject->AddComponent(make_shared<Collider>());
 		pGameObject->AddComponent(make_shared<DebugRenderer>());
+		pGameObject->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\littlebone_idle.anim");
+		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\littlebone_walk.anim");
+		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
+		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
+		pGameObject->GetAnimator()->Play(L"LittleBone_Walk");
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 100.f, fHeight / 2.f - 5.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 5.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
 
-
-	// NPC
+	// Background
 	{
 		shared_ptr<GameObject> pGameObject = GameObject::Get();
-
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
-
-		shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
-
-		shared_ptr<Material> pMaterial = make_shared<Material>();
-		pMaterial->SetShader(pShader);
+		pTexture->Load(L"..\\Resources\\Texture\\Image_Town.png");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
 		pMaterial->SetTexture(0, pTexture);
-
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
-
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
-		pGameObject->AddComponent(make_shared<RigidBody>());
-		pGameObject->AddComponent(make_shared<Collider>());
-		pGameObject->AddComponent(make_shared<DebugRenderer>());
-
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 30.f, fHeight / 2.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
-
-	// Plane
-	//{
-	//	shared_ptr<GameObject> pGameObject = GameObject::Get();
-	//	pGameObject->AddComponent(make_shared<Transform>());
-	//	pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::PLANE, Vec3(1.f, 1.f, 1.f)));
-	//	pGameObject->AddComponent(make_shared<RigidBody>(ACTOR_TYPE::STATIC));
-	//	pGameObject->AddComponent(make_shared<Collider>());
-	//	pGameObject->AddComponent(make_shared<DebugRenderer>());
-
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 30.f, fHeight / 2.f - 200.f, 1.f));
-	//	pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
-
-	//	AddGameObject(pGameObject);
-	//}
 
 	// Camera
 	{

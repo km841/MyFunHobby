@@ -217,13 +217,11 @@ void Physical::CreateController()
 	{
 	case GEOMETRY_TYPE::BOX:
 	{
-		Vec3 vSize = m_vSize / 2.f;
-
 		PxBoxControllerDesc desc;
 		desc.setToDefault();
-		desc.halfSideExtent = vSize.x;
-		desc.halfHeight = vSize.y;
-		desc.halfForwardExtent = vSize.z;
+		desc.halfSideExtent = m_vSize.x * 1.25f;
+		desc.halfHeight = m_vSize.y * 1.25f;
+		desc.halfForwardExtent = m_vSize.z;
 		desc.material = m_pProperties->GetMaterial();
 		m_pController = static_cast<PxBoxController*>(g_pEngine->GetPhysics()->GetEnvironment()->GetControllerManager()->createController(desc));
 	}

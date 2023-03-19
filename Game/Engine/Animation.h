@@ -7,12 +7,13 @@ class Animation :
 {
 public:
     friend class Animator;
+    Animation();
     Animation(const std::vector<FrameData> vFrameDataList);
     virtual ~Animation();
 
 public:
     void Update();
-    void SetTexture(shared_ptr<Texture> pTexture) { m_pTexture = pTexture; }
+    void SetTexture(shared_ptr<Texture> pTexture)    { m_pTexture  = pTexture; }
     void SetAnimator(shared_ptr<Animator> pAnimator) { m_pAnimator = pAnimator; }
     void PushData();
 
@@ -23,12 +24,12 @@ public:
     virtual void Save(const wstring& szPath);
 
 private:
-    std::vector<FrameData> m_vFrameDataList;
-    weak_ptr<Animator> m_pAnimator;
-    shared_ptr<Texture> m_pTexture;
-    int32 m_iCurFrame;
-    float m_fAccTime;
-    bool  m_bLoop;
-    bool  m_bFinished;
+    std::vector<FrameData>  m_vFrameDataList;
+    weak_ptr<Animator>      m_pAnimator;
+    shared_ptr<Texture>     m_pTexture;
+    int32                   m_iCurFrame;
+    float                   m_fAccTime;
+    bool                    m_bLoop;
+    bool                    m_bFinished;
 };
 

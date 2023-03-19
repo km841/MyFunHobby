@@ -167,15 +167,19 @@
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="FadeInOutScript.h" />
     <ClInclude Include="GridDrawScript.h" />
+    <ClInclude Include="IdleState.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveScript.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="TownScene.h" />
+    <ClInclude Include="WalkState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -183,6 +187,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="FadeInOutScript.cpp" />
     <ClCompile Include="GridDrawScript.cpp" />
+    <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -192,10 +197,13 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMoveScript.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="ToolScene.cpp" />
     <ClCompile Include="TownScene.cpp" />
+    <ClCompile Include="WalkState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

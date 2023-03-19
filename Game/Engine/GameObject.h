@@ -22,11 +22,11 @@ public:
     GameObject();
     virtual ~GameObject();
 
-    void Awake();
-    void Start();
-    void Update();
-    void LateUpdate();
-    void FinalUpdate();
+    virtual void Awake();
+    virtual void Start();
+    virtual void Update();
+    virtual void LateUpdate();
+    virtual void FinalUpdate();
     
     shared_ptr<Component>       GetFixedComponent(COMPONENT_TYPE eType);
     shared_ptr<Transform>       GetTransform();
@@ -44,13 +44,20 @@ public:
     void SetLayerIndex(uint8 iIndex) { m_iLayerIndex = iIndex; }
     uint8 GetLayerIndex() { return m_iLayerIndex; }
 
+    DIRECTION GetDirection()                     { return m_eDirection; }
+    void      SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
+
     void Disable()  { m_bDisable = true; }
     void Enable()   { m_bDisable = false; }
     bool IsEnable() { return !m_bDisable; }
     void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
 
+
+protected:
+    DIRECTION                                                m_eDirection;
+
 private:
-    uint8                                               m_iLayerIndex;
+    uint8                                                    m_iLayerIndex;
     std::array<shared_ptr<Component>, FIXED_COMPONENT_COUNT> m_arrComponents;
     std::vector<shared_ptr<MonoBehaviour>>                   m_vScripts;
     bool                                                     m_bDisable;

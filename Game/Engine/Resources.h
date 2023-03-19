@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Shader.h"
+#include "Animation.h"
 
 
 class Resources
@@ -99,6 +100,8 @@ inline OBJECT_TYPE Resources::GetObjectType()
 		return OBJECT_TYPE::MATERIAL;
 	else if (std::is_same_v<T, Component>)
 		return OBJECT_TYPE::COMPONENT;
+	else if (std::is_same_v<T, Animation>)
+		return OBJECT_TYPE::ANIMATION;
 	else
 		return OBJECT_TYPE::NONE;
 }

@@ -163,6 +163,9 @@
     <ClInclude Include="Animation.h">
       <Filter>Resource</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerChangeStateEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -326,6 +329,9 @@
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerChangeStateEvent.cpp">
+      <Filter>Object\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

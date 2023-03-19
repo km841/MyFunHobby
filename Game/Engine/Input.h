@@ -50,6 +50,7 @@ public:
 	bool GetButtonPress(KEY_TYPE eKey) { return KEY_STATE::PRESS == GetState(eKey); }
 	bool GetButtonDown(KEY_TYPE eKey) { return KEY_STATE::DOWN == GetState(eKey); }
 	bool GetButtonUp(KEY_TYPE eKey) { return KEY_STATE::UP == GetState(eKey); }
+	bool GetButtonNone(KEY_TYPE eKey) { return KEY_STATE::NONE == GetState(eKey); }
 	const POINT& GetMousePos() { return m_MousePos; }
 
 private:

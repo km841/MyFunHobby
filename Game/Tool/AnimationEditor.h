@@ -35,6 +35,9 @@ public:
 	bool						  GetAnimPlayingFlag()	   { return m_bPlaying; }
 	void						  FlipAnimPlayingFlag()	   { m_bPlaying = (m_bPlaying + 1) % 2; }
 	const std::vector<FrameData>& GetFrameDataList()	   { return m_vFrameDataList; }
+	bool						  IsSpriteUpdate()		   { return m_bSpriteUpdate; }
+	void						  SpriteUpdateEnable()     { m_bSpriteUpdate = true; }
+	void						  SpriteUpdateDisable()    { m_bSpriteUpdate = false; }
 	void						  InsertFrameData(const FrameData& frameData);
 
 private:
@@ -56,10 +59,10 @@ private:
 	ImVec2 m_vOffset;
 	float  m_fDuration;
 
+	bool   m_bSpriteUpdate;
 	bool   m_bHasAtlasTexture;
 	bool   m_bReadable;
 	bool   m_bLoop;
-
 	bool   m_bPlaying;
 
 	FrameData m_CurrFrameData;

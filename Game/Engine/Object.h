@@ -1,5 +1,15 @@
 #pragma once
 
+enum class PLAYER_STATE : uint8
+{
+	IDLE,
+	WALK,
+	JUMP,
+
+
+	END,
+};
+
 enum class OBJECT_TYPE : uint8
 {
 	NONE,

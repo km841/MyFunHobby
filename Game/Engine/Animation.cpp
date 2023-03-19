@@ -5,6 +5,17 @@
 #include "Material.h"
 #include "MeshRenderer.h"
 #include "Texture.h"
+#include "Resources.h"
+#include "Transform.h"
+
+Animation::Animation()
+	: Object(OBJECT_TYPE::ANIMATION)
+	, m_bLoop(false)
+	, m_iCurFrame(0)
+	, m_fAccTime(0.f)
+	, m_bFinished(false)
+{
+}
 
 Animation::Animation(const std::vector<FrameData> vFrameDataList)
 	: Object(OBJECT_TYPE::ANIMATION)
@@ -24,6 +35,9 @@ void Animation::Update()
 {
 	PushData();
 
+	ImVec2 vSize = m_vFrameDataList[m_iCurFrame].vSize;
+	m_pAnimator.lock()->GetTransform()->SetLocalScale(Vec3(vSize.x, vSize.y, 1.f));
+
 	if (m_bFinished)
 		return;
 
@@ -32,6 +46,8 @@ void Animation::Update()
 	{
 		m_fAccTime = 0.f;
 		m_iCurFrame++;
+
+
 
 		if (m_iCurFrame >= m_vFrameDataList[0].iFrameCount)
 		{
@@ -57,8 +73,10 @@ void Animation::PushData()
 	Vec2 vSize = Vec2(currFrameData.vSize.x / vSpriteSize.x, currFrameData.vSize.y / vSpriteSize.y);
 	Vec2 vOffset = Vec2(currFrameData.vOffset.x / vSpriteSize.x, currFrameData.vOffset.y / vSpriteSize.y);
 	Vec2 vAtlasSize = Vec2(100.f / vSpriteSize.x, 100.f / vSpriteSize.y);
+	DIRECTION eDirection = m_pAnimator.lock()->GetGameObject()->GetDirection();
 
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
+	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(1, static_cast<uint8>(eDirection));
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(0, vLTPos);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(1, vSize);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(2, vAtlasSize);
@@ -75,6 +93,41 @@ void Animation::RefreshAnimation(const std::vector<FrameData> vFrameDataList)
 
 void Animation::Load(const wstring& szPath)
 {
+	std::wifstream ifs(szPath, std::ios::in);
+
+	int32 iCount = 0;
+	wstring szTexPath, szName;
+
+	ifs >> iCount;
+	ifs.ignore(1);
+
+	assert(iCount != 0);
+
+	getline(ifs, szName);
+	getline(ifs, szTexPath);
+
+	m_vFrameDataList.resize(iCount);
+
+	for (int32 i = 0; i < iCount; ++i)
+	{
+		ifs >> m_vFrameDataList[i].vLTPos.x >> m_vFrameDataList[i].vLTPos.y;
+		ifs.ignore(1);
+		ifs >> m_vFrameDataList[i].vSize.x >> m_vFrameDataList[i].vSize.y;
+		ifs.ignore(1);
+		ifs >> m_vFrameDataList[i].vOffset.x >> m_vFrameDataList[i].vOffset.y;
+		ifs.ignore(1);
+		ifs >> m_vFrameDataList[i].fDuration;
+		ifs.ignore(1);
+
+		m_vFrameDataList[i].szName = szName;
+		m_vFrameDataList[i].szTexPath = szTexPath;
+		m_vFrameDataList[i].iFrameCount = iCount;
+	}
+
+	m_pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
+	assert(m_pTexture);
+
+	ifs.close();
 }
 
 void Animation::Save(const wstring& szPath)

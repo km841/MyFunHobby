@@ -29,6 +29,9 @@
     <Filter Include="소스 파일\Game\Object\Tile">
       <UniqueIdentifier>{92ba6b1f-d19e-4bfa-866e-9693c89ab4f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\PlayerState">
+      <UniqueIdentifier>{29dc6bd7-ed44-4c33-994e-db3783573109}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -69,6 +72,18 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>소스 파일\Game\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkState.h">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +138,18 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\Game\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkState.cpp">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

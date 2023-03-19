@@ -16,6 +16,7 @@ GameObject::GameObject()
 	: Object(OBJECT_TYPE::GAMEOBJECT)
 	, m_iLayerIndex(0)
 	, m_bDisable(false)
+	, m_eDirection(DIRECTION::RIGHT)
 	
 {
 }

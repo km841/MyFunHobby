@@ -2,7 +2,9 @@
 #include "EventManager.h"
 #include "SceneChangeEvent.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "PlayerChangeStateEvent.h"
 #include "Scenes.h"
+#include "StateMachine.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -26,6 +28,10 @@ void EventManager::ProcessEvents()
 		case EVENT_TYPE::OBJECT_ADDED_TO_SCENE:
 			ProcessObjectAddedEvent(static_cast<ObjectAddedToSceneEvent*>(pEvent.get()));
 			break;
+
+		case EVENT_TYPE::PLAYER_CHANGE_STATE:
+			ProcessPlayerChangeStateEvent(static_cast<PlayerChangeStateEvent*>(pEvent.get()));
+			break;
 		}
 	}
 }
@@ -39,4 +45,10 @@ void EventManager::ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent)
 {
 	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
 	pCurScene->AddGameObject(pEvent->GetGameObject());
+}
+
+void EventManager::ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent)
+{
+	shared_ptr<Player> pPlayer = pEvent->GetPlayer();
+	pPlayer->m_pStateMachine->ChangePlayerState(pEvent->GetNextPlayerState());
 }

@@ -36,6 +36,7 @@ VS_OUT VS_Main(VS_IN _in)
 // g_vec2_2 : Atlas Size
 // g_vec2_3 : Offset
 // g_int_0  : Animation Flag
+// g_int_1  : Direction
 
 float4 PS_Main(VS_OUT _in) : SV_Target
 {
@@ -43,14 +44,39 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float2 vSpriteSize = g_vec2_1;
     float2 vAtlasSize = g_vec2_2;
     float2 vOffset = g_vec2_3;
-    int    iAnimationFlag = g_int_0;
+    int iAnimationFlag = g_int_0;
+    int iDirection = g_int_1;
     
-    float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
+    
+    
+    int iRight = 0;
+    int iLeft = 1;
     
     if (iAnimationFlag == 1)
-        return g_tex_0.Sample(g_sam_0, vUV);
+    {
+        float2 vUV;
+        if (iDirection == iLeft)
+        {
+            vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
+        }
+        else if (iDirection == iRight)
+        {
+            vUV = (vLeftTopPos + -vOffset) + (_in.uv * vSpriteSize);
+            vUV.x = 1.f - vUV.x;
+        }
+        
+        float4 vColor = g_tex_0.Sample(g_sam_0, vUV);
+        if (vColor.w == 0)
+            discard;
+        
+        return vColor;
+    }
     else
-        return g_tex_0.Sample(g_sam_0, _in.uv);
+    {
+        float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
+        if (vColor.w == 0)
+            discard;
+        return vColor;
+    }
 }
-
 #endif

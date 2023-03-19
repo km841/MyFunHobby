@@ -278,15 +278,14 @@ void ToolScene::AnimationEditorUpdate()
 
 void ToolScene::SpriteUpdate()
 {
-	const wstring& szSpriteTexPath = ANIMATION_TOOL->GetSpriteTexturePath();
-
-	if (!szSpriteTexPath.empty())
+	if (ANIMATION_TOOL->IsSpriteUpdate())
 	{
+		const wstring& szSpriteTexPath = ANIMATION_TOOL->GetSpriteTexturePath();
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szSpriteTexPath, szSpriteTexPath);
 		assert(pTexture);
 		m_pSpriteTexture->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 		m_pSpriteTexture->GetTransform()->SetLocalScale(pTexture->GetTexSize());
-		ANIMATION_TOOL->ClearSpriteTexturePath();
+		ANIMATION_TOOL->SpriteUpdateDisable();
 	}
 }
 
@@ -317,7 +316,7 @@ void ToolScene::DrawEditorGraphic()
 		{
 			if (i <= iSpriteCount)
 			{
-				if (m_pSpriteTexture->GetAnimator()->GetCurAnimation())
+				if (m_pSpriteTexture->GetAnimator()->GetActiveAnimation())
 				{
 					m_vFrameDividers[i]->Disable();
 					continue;
@@ -338,6 +337,7 @@ void ToolScene::DrawEditorGraphic()
 		{
 			ANIMATION_TOOL->ClearFrameDataList();
 
+			
 			wstring szFileName = fs::path(ANIMATION_TOOL->GetSpriteTexturePath()).filename();
 			wstring szPath = UTILITY->GetTexPath() + szFileName;
 			const wstring& szName = ANIMATION_TOOL->GetAnimationName();
@@ -371,7 +371,7 @@ void ToolScene::PlayAnimation()
 		auto vFrameDataList = ANIMATION_TOOL->GetFrameDataList();
 		assert(!vFrameDataList.empty());
 		
-		if (!m_pSpriteTexture->GetAnimator()->GetCurAnimation())
+		if (!m_pSpriteTexture->GetAnimator()->GetActiveAnimation())
 		{
 			Vec3 vSpriteSize = Vec3(vFrameDataList[0].vSize.x, vFrameDataList[0].vSize.y, 1.f);
 			m_pSpriteTexture->GetTransform()->SetLocalScale(vSpriteSize);
@@ -381,7 +381,7 @@ void ToolScene::PlayAnimation()
 
 		else
 		{
-			m_pSpriteTexture->GetAnimator()->GetCurAnimation()->RefreshAnimation(vFrameDataList);
+			m_pSpriteTexture->GetAnimator()->GetActiveAnimation()->RefreshAnimation(vFrameDataList);
 		}
 
 		ANIMATION_TOOL->FlipAnimPlayingFlag();

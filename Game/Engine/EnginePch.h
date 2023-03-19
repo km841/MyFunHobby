@@ -14,6 +14,7 @@
 #include <mutex>
 #include <queue>
 #include <type_traits>
+#include <optional>
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -351,6 +352,12 @@ enum class SCENE_TYPE
 	END,
 };
 
+enum class DIRECTION
+{
+	LEFT,
+	RIGHT,
+};
+
 enum
 {
 	SCENE_TYPE_COUNT = SCENE_TYPE::END,
@@ -455,6 +462,7 @@ bool m_bUse = false;\
 #define IS_PRESS(key) GET_SINGLE(Input)->GetButtonPress(key)
 #define IS_DOWN(key) GET_SINGLE(Input)->GetButtonDown(key)
 #define IS_UP(key) GET_SINGLE(Input)->GetButtonUp(key)
+#define IS_NONE(key) GET_SINGLE(Input)->GetButtonNone(key)
 
 enum
 {
