@@ -8,7 +8,7 @@
 
 
 PlayerMoveScript::PlayerMoveScript()
-	: m_fSpeed(5.f)
+	: m_fSpeed(10.f)
 {
 
 }
