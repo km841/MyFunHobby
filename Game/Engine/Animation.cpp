@@ -47,8 +47,6 @@ void Animation::Update()
 		m_fAccTime = 0.f;
 		m_iCurFrame++;
 
-
-
 		if (m_iCurFrame >= m_vFrameDataList[0].iFrameCount)
 		{
 			if (m_bLoop)
@@ -66,15 +64,16 @@ void Animation::Update()
 
 void Animation::PushData()
 {
-	FrameData currFrameData = m_vFrameDataList[m_iCurFrame];
-	Vec3 vSpriteSize = m_pTexture->GetTexSize();
+	DIRECTION eDirection = m_pAnimator.lock()->GetGameObject()->GetDirection();
 
+	FrameData currFrameData = m_vFrameDataList[m_iCurFrame];
+
+	Vec3 vSpriteSize = m_pTexture->GetTexSize();
 	Vec2 vLTPos = Vec2(currFrameData.vLTPos.x / vSpriteSize.x, currFrameData.vLTPos.y / vSpriteSize.y);
 	Vec2 vSize = Vec2(currFrameData.vSize.x / vSpriteSize.x, currFrameData.vSize.y / vSpriteSize.y);
 	Vec2 vOffset = Vec2(currFrameData.vOffset.x / vSpriteSize.x, currFrameData.vOffset.y / vSpriteSize.y);
 	Vec2 vAtlasSize = Vec2(100.f / vSpriteSize.x, 100.f / vSpriteSize.y);
-	DIRECTION eDirection = m_pAnimator.lock()->GetGameObject()->GetDirection();
-
+	
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(1, static_cast<uint8>(eDirection));
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(0, vLTPos);

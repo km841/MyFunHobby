@@ -354,8 +354,8 @@ enum class SCENE_TYPE
 
 enum class DIRECTION
 {
-	LEFT,
 	RIGHT,
+	LEFT,
 };
 
 enum

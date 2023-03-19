@@ -22,10 +22,16 @@ SamplerState g_sam_0 : register(s0);
 
 VS_OUT VS_Main(VS_IN _in)
 {
+    int iDirection = g_int_1;
+    
     VS_OUT output = (VS_OUT) 0;
     
     output.pos = mul(float4(_in.pos, 1.f), g_matWVP);
-    output.uv = _in.uv;
+    
+    if (iDirection == 0)
+        output.uv = _in.uv;
+    else if (iDirection == 1)
+        output.uv = float2(1.0f - _in.uv.x, _in.uv.y);
     
     return output;
 }
@@ -48,35 +54,23 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     int iDirection = g_int_1;
     
     
-    
     int iRight = 0;
     int iLeft = 1;
     
+    float4 vColor;
     if (iAnimationFlag == 1)
     {
-        float2 vUV;
-        if (iDirection == iLeft)
-        {
-            vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
-        }
-        else if (iDirection == iRight)
-        {
-            vUV = (vLeftTopPos + -vOffset) + (_in.uv * vSpriteSize);
-            vUV.x = 1.f - vUV.x;
-        }
-        
-        float4 vColor = g_tex_0.Sample(g_sam_0, vUV);
+        float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
+        vColor = g_tex_0.Sample(g_sam_0, vUV);
         if (vColor.w == 0)
             discard;
-        
-        return vColor;
     }
     else
     {
-        float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
+        vColor = g_tex_0.Sample(g_sam_0, _in.uv);
         if (vColor.w == 0)
             discard;
-        return vColor;
     }
+    return vColor;
 }
 #endif

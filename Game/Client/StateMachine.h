@@ -18,10 +18,8 @@ public:
 	void ChangePlayerState(PLAYER_STATE ePlayerState);
 
 private:
-	weak_ptr<Player>	m_pPlayer;
+	weak_ptr<Player>		m_pPlayer;
 	shared_ptr<PlayerState> m_pActiveState;
 	StateMap			    m_mStateMap;
-
-
 };
 
