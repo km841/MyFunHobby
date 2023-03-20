@@ -180,6 +180,7 @@
     <ClInclude Include="Device.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
+    <ClInclude Include="EnumDefine.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FilterShaders.h" />
@@ -194,7 +195,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physical.h" />
     <ClInclude Include="Physics.h" />
-    <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="PhysicsProperties.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PlayerChangeStateEvent.h" />
@@ -256,7 +257,7 @@
     </ClCompile>
     <ClCompile Include="Physical.cpp" />
     <ClCompile Include="Physics.cpp" />
-    <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="PhysicsProperties.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="PlayerChangeStateEvent.cpp" />

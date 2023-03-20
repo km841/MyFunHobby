@@ -3,6 +3,7 @@
 #include "Component.h"
 
 
+
 class DebugRenderer;
 class MeshRenderer;
 class Transform;
@@ -41,23 +42,20 @@ public:
 
     void AddComponent(shared_ptr<Component> pComponent);
 
-    void SetLayerIndex(uint8 iIndex) { m_iLayerIndex = iIndex; }
-    uint8 GetLayerIndex() { return m_iLayerIndex; }
-
-    DIRECTION GetDirection()                     { return m_eDirection; }
-    void      SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
+    LAYER_TYPE GetLayerType()                     { return m_eLayerType; }
+    DIRECTION  GetDirection()                     { return m_eDirection; }
+    void       SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
 
     void Disable()  { m_bDisable = true; }
     void Enable()   { m_bDisable = false; }
     bool IsEnable() { return !m_bDisable; }
     void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
 
-
 protected:
     DIRECTION                                                m_eDirection;
+    LAYER_TYPE                                               m_eLayerType;
 
 private:
-    uint8                                                    m_iLayerIndex;
     std::array<shared_ptr<Component>, FIXED_COMPONENT_COUNT> m_arrComponents;
     std::vector<shared_ptr<MonoBehaviour>>                   m_vScripts;
     bool                                                     m_bDisable;

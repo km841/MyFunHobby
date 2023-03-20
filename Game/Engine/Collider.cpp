@@ -19,6 +19,7 @@ Collider::Collider()
 	m_RaycastHit = {};
 	m_SweepHit = {};
 	m_OverlapHit = {};
+	m_FilterData = {};
 }
 
 Collider::~Collider()
@@ -30,10 +31,12 @@ void Collider::Awake()
 
 	// 렌더링할 물체의 모양을 가진 
 	shared_ptr<Physical> pPhysical = GetPhysical();
+	m_FilterData.word0 = static_cast<PxU32>(GetGameObject()->GetLayerType());
 
 	if (pPhysical)
 	{
 		CreateDebugGeometry(pPhysical->GetGeometries());
+		pPhysical->GetShape()->setSimulationFilterData(m_FilterData);
 	}
 
 	//m_pCallback = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();

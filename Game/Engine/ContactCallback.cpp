@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "ContactCallback.h"
 
-void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs)
+void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pPairs, PxU32 iNbPairs)
 {
-	for (PxU32 i = 0; i < nbPairs; i++)
+	for (PxU32 i = 0; i < iNbPairs; i++)
 	{
-		const PxContactPair& cp = pairs[i];
+		const PxContactPair& cp = pPairs[i];
 
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{

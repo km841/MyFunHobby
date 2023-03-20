@@ -109,7 +109,7 @@
     <ClInclude Include="PxDispatcher.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsManager.h">
+    <ClInclude Include="CollisionManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="PxEnvironmentSetting.h">
@@ -165,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="PlayerChangeStateEvent.h">
       <Filter>Object\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumDefine.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,7 +279,7 @@
     <ClCompile Include="PxEnvironment.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsManager.cpp">
+    <ClCompile Include="CollisionManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="PxEnvironmentSetting.cpp">

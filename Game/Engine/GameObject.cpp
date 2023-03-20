@@ -14,9 +14,9 @@
 POOL_INIT(GameObject);
 GameObject::GameObject()
 	: Object(OBJECT_TYPE::GAMEOBJECT)
-	, m_iLayerIndex(0)
 	, m_bDisable(false)
 	, m_eDirection(DIRECTION::RIGHT)
+	, m_eLayerType(LAYER_TYPE::UNKNOWN)
 	
 {
 }

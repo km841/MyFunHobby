@@ -12,6 +12,7 @@
 Controller::Controller()
 	: Component(COMPONENT_TYPE::CONTROLLER)
 {
+	m_CtlFilters = {};
 }
 
 Controller::~Controller()
@@ -41,15 +42,11 @@ void Controller::FinalUpdate()
 
 void Controller::Move(const PxVec3& vVec, PxQueryFilterCallback* pCallback, PxFilterData filtData)
 {
-	PxControllerFilters filters = {};
-
-	filters.mFilterCallback = pCallback;
-	filters.mFilterData = &filtData;
+	m_CtlFilters.mFilterCallback = pCallback;
+	m_CtlFilters.mFilterData = &filtData;
 	PxController* controller = GetPhysical()->GetController();
-
-	// vVec3는 이동 방향과 속도를 나타낸다
 	if (controller)
 	{
-		controller->move(vVec, 0.001f, DELTA_TIME, filters);
+		controller->move(vVec, 0.001f, DELTA_TIME, m_CtlFilters);
 	}
 }

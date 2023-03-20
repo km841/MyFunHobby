@@ -8,19 +8,6 @@
 #include "Physics.h"
 #include "Utility.h"
 
-enum class LAYER_TYPE
-{
-	PLAYER,
-	MONSTER,
-	END,
-};
-
-enum
-{
-	LAYER_TYPE_COUNT = LAYER_TYPE::END,
-};
-
-
 class GameObject;
 
 class Engine

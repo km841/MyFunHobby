@@ -4,6 +4,7 @@
 
 Monster::Monster()
 {
+	m_eLayerType = LAYER_TYPE::MONSTER;
 }
 
 Monster::~Monster()

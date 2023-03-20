@@ -6,10 +6,12 @@
 #include "Controller.h"
 #include "Physical.h"
 #include "GameObject.h"
+#include "Collider.h"
 
 
 PlayerMoveScript::PlayerMoveScript()
 	: m_fSpeed(10.f)
+	, m_FilterShaders{}
 {
 
 }
@@ -52,11 +54,5 @@ void PlayerMoveScript::LateUpdate()
 	}
 
 	//pActor->setLinearVelocity(vCurrVelocity);
-	PlayerFilterShaders filter = PlayerFilterShaders();
-	
-	PxFilterData filterData = {};
-	filterData.word0 = 1 << 0;
-	filterData.word1 = 1 << 1;
-
-	GetController()->Move(Conv::Vec3ToPxVec3(vPos), &filter, filterData);
+	GetController()->Move(Conv::Vec3ToPxVec3(vPos), &m_FilterShaders, GetCollider()->GetFilterData());
 }

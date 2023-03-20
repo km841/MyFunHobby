@@ -62,6 +62,7 @@ using namespace physx;
 #include "FilterShaders.h"
 #include "ReportCallback.h"
 #include "Common.h"
+#include "EnumDefine.h"
 
 // °¢Á¾ lib
 #pragma comment(lib, "d3d11.lib")
@@ -184,6 +185,7 @@ enum
 {
 	MATERIAL_VALUE_COUNT = 4,
 };
+
 
 struct MaterialParams
 {
@@ -313,62 +315,6 @@ namespace Conv
 }
 
 
-enum class CBV_REGISTER : uint8
-{
-	b0,
-	b1,
-	b2,
-	b3,
-	b4,
-
-
-	END,
-};
-
-enum class SRV_REGISTER : uint8
-{
-	t0,
-	t1,
-	t2,
-	t3,
-	t4,
-
-
-	END,
-};
-
-enum class CONSTANT_BUFFER_TYPE
-{
-	TRANSFORM,
-	MATERIAL,
-	END,
-};
-
-enum class SCENE_TYPE
-{
-	TITLE,
-	TOOL,
-	TOWN,
-	END,
-};
-
-enum class DIRECTION
-{
-	RIGHT,
-	LEFT,
-};
-
-enum
-{
-	SCENE_TYPE_COUNT = SCENE_TYPE::END,
-};
-
-enum
-{
-	CONSTANT_BUFFER_TYPE_COUNT = CONSTANT_BUFFER_TYPE::END,
-	INITIAL_POOL_COUNT = 1000,
-};
-
 #define DECLARE_SINGLE(type)  \
 private:					  \
 	type() {}				  \
@@ -464,11 +410,6 @@ bool m_bUse = false;\
 #define IS_UP(key) GET_SINGLE(Input)->GetButtonUp(key)
 #define IS_NONE(key) GET_SINGLE(Input)->GetButtonNone(key)
 
-enum
-{
-	SWAP_CHAIN_BUFFER_COUNT = 1,
-	CBV_REGISTER_COUNT = CBV_REGISTER::END,
-	SRV_REGISTER_COUNT = SRV_REGISTER::END,
-};
+
 
 extern unique_ptr<class Engine> g_pEngine;

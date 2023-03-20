@@ -7,6 +7,7 @@ Player::Player()
 	: m_ePlayerState(PLAYER_STATE::IDLE)
 {
 	m_pStateMachine = make_unique<StateMachine>();
+	m_eLayerType = LAYER_TYPE::PLAYER;
 }
 
 Player::~Player()

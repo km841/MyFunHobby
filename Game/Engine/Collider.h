@@ -2,6 +2,7 @@
 #include "Component.h"
 
 class ContactCallback;
+
 using RaycastResult = std::pair<bool, Vec3>;
 class Collider :
       public Component
@@ -18,7 +19,9 @@ public:
 
 public:
     const PxRaycastHit& GetRaycastHit() { return m_RaycastHit; }
-    const PxSweepHit&   GetSweepHit()   { return m_SweepHit; }
+    const PxSweepHit&   GetSweepHit()   { return m_SweepHit;   }
+    const PxOverlapHit& GetOverlapHit() { return m_OverlapHit; }
+    const PxFilterData& GetFilterData() { return m_FilterData; }
     RaycastResult       Raycast(Vec3 vOrigin, Vec3 vDir);
 
 private:
@@ -31,8 +34,9 @@ private:
     PxRaycastHit     m_RaycastHit;
     PxSweepHit       m_SweepHit;
     PxOverlapHit     m_OverlapHit;
+    PxFilterData     m_FilterData;
 
-    float m_fRaycastMaxDist;
+    float  m_fRaycastMaxDist;
     uint32 m_fRaycastMaxHit;
 };
 

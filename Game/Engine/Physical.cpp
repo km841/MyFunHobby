@@ -131,6 +131,7 @@ void Physical::CreateShape()
 
 void Physical::CreateActor()
 {
+	CreateShape();
 	switch (m_eActorType)
 	{
 	case ACTOR_TYPE::DYNAMIC:
@@ -157,7 +158,6 @@ void Physical::CreateActor()
 	case ACTOR_TYPE::CHARACTER:
 	{
 		CreateController();
-
 		if (m_pController)
 		{
 			//m_pController->setUserData();
@@ -174,14 +174,6 @@ void Physical::CreateActor()
 
 void Physical::InitializeActor()
 {
-	CreateShape();
-
-	// Collider에서 세팅
-	PxFilterData filterData = {};
-	filterData.word0 = 1 << 1;
-	filterData.word1 = 1 << 0;
-	m_pShape->setSimulationFilterData(filterData);
-
 	switch (m_eActorType)
 	{
 	case ACTOR_TYPE::KINEMATIC:

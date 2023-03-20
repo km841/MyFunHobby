@@ -17,6 +17,6 @@ public:
 	void Move(const PxVec3& vVec, PxQueryFilterCallback* pCallback, PxFilterData filtData);
 
 private:
-	
+	PxControllerFilters m_CtlFilters;
 };
 

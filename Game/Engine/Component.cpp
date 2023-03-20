@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Animator.h"
 #include "Player.h"
+#include "Collider.h"
 
 Component::Component(COMPONENT_TYPE eType)
     : Object(OBJECT_TYPE::COMPONENT)
@@ -64,6 +65,11 @@ shared_ptr<Camera> Component::GetCamera()
 shared_ptr<Animator> Component::GetAnimator()
 {
     return m_pGameObject.lock()->GetAnimator();
+}
+
+shared_ptr<Collider> Component::GetCollider()
+{
+    return m_pGameObject.lock()->GetCollider();
 }
 
 PLAYER_STATE Component::GetPlayerStateEnum()

@@ -112,6 +112,7 @@ public:
 	shared_ptr<Physical>			GetPhysical();
     shared_ptr<Camera>              GetCamera();
     shared_ptr<Animator>            GetAnimator();
+    shared_ptr<Collider>            GetCollider();
 
 	COMPONENT_TYPE GetType() { return m_eType; }
     PLAYER_STATE   GetPlayerStateEnum();
