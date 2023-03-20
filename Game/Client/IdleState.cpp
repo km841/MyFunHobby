@@ -13,18 +13,10 @@ IdleState::IdleState(shared_ptr<Player> pPlayer)
 
 void IdleState::Update()
 {
-	if (IS_PRESS(KEY_TYPE::LEFT))
+	if (IS_DOWN(KEY_TYPE::LEFT) || IS_DOWN(KEY_TYPE::RIGHT))
 	{
 		if (m_pPlayer.lock()->GetPlayerStateEnum() == PLAYER_STATE::IDLE)
 			GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::WALK));
-		m_pPlayer.lock()->SetDirection(DIRECTION::LEFT);
-	}
-
-	else if (IS_PRESS(KEY_TYPE::RIGHT))
-	{
-		if (m_pPlayer.lock()->GetPlayerStateEnum() == PLAYER_STATE::IDLE)
-			GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::WALK));
-		m_pPlayer.lock()->SetDirection(DIRECTION::RIGHT);
 	}
 }
 

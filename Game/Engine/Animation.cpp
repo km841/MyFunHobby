@@ -65,7 +65,6 @@ void Animation::Update()
 void Animation::PushData()
 {
 	DIRECTION eDirection = m_pAnimator.lock()->GetGameObject()->GetDirection();
-
 	FrameData currFrameData = m_vFrameDataList[m_iCurFrame];
 
 	Vec3 vSpriteSize = m_pTexture->GetTexSize();

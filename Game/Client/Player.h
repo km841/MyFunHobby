@@ -25,7 +25,6 @@ public:
 
 
 private:
-	
 	PLAYER_STATE m_ePlayerState;
 	unique_ptr<StateMachine> m_pStateMachine;
 

@@ -4,7 +4,7 @@ class Player;
 class PlayerState
 {
 public:
-	PlayerState(shared_ptr<Player> pGameObject);
+	PlayerState(shared_ptr<Player> pPlayer);
 	virtual ~PlayerState() = default;
 
 public:

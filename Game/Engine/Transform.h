@@ -24,24 +24,26 @@ public:
         m_bChanged = true; 
     }
 
-    void          SetLocalRotation(const Vec3& vRotation) { m_vLocalRotation = vRotation; }
-    void          SetLocalPosition(const Vec3& vPosition) { m_vLocalTranslation = vPosition; }
-                  
-    void          SetLocalMatrix(const Matrix& matLocal)  { m_matLocal = matLocal; }
-    Matrix        GetLocalMatrix()                        { return m_matLocal; }
-                        
-    Vec3          GetRight()              { return m_matWorld.Right(); }
-    Vec3          GetUp()                 { return m_matWorld.Up(); }
-    Vec3          GetLook()               { return m_matWorld.Backward(); }
-                  
-    const Vec3&   GetLocalPosition()      { return m_vLocalTranslation; }
-    const Vec3&   GetLocalRotation()      { return m_vLocalRotation; }
-    const Vec3&   GetLocalScale()         { return m_vLocalScale; }
+    void               SetLocalRotation(const Vec3& vRotation) { m_vLocalRotation = vRotation; }
+    void               SetLocalPosition(const Vec3& vPosition) { m_vLocalTranslation = vPosition; }
+                       
+    void               SetLocalMatrix(const Matrix& matLocal)  { m_matLocal = matLocal; }
+    Matrix             GetLocalMatrix()                        { return m_matLocal; }
+                             
+    Vec3               GetRight()                              { return m_matWorld.Right(); }
+    Vec3               GetUp()                                 { return m_matWorld.Up(); }
+    Vec3               GetLook()                               { return m_matWorld.Backward(); }
+                                                               
+    const Vec3&        GetLocalPosition()                      { return m_vLocalTranslation; }
+    const Vec3&        GetLocalRotation()                      { return m_vLocalRotation; }
+    const Vec3&        GetLocalScale()                         { return m_vLocalScale; }
 
-    const Matrix& GetLocalToWorldMatrix() { return m_matWorld; }
+    const Matrix&      GetLocalToWorldMatrix()                 { return m_matWorld; }
+    const Matrix&      GetPxLocalToWorldMatrix()               { return m_matPxWorld; }
+    const PxTransform& GetPxTransform()                        { return m_PxTransform; }
 
-    bool IsChangedFlag()  { return m_bChanged; }
-    void ChangedFlagOff() { m_bChanged = false; }
+    bool IsChangedFlag()                                       { return m_bChanged; }
+    void ChangedFlagOff()                                      { m_bChanged = false; }
 
 private:
 

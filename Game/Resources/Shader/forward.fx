@@ -51,11 +51,6 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float2 vAtlasSize = g_vec2_2;
     float2 vOffset = g_vec2_3;
     int iAnimationFlag = g_int_0;
-    int iDirection = g_int_1;
-    
-    
-    int iRight = 0;
-    int iLeft = 1;
     
     float4 vColor;
     if (iAnimationFlag == 1)

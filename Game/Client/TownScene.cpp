@@ -86,7 +86,7 @@ void TownScene::Enter()
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\littlebone_walk.anim");
 		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
 		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
-		pGameObject->GetAnimator()->Play(L"LittleBone_Walk");
+		pGameObject->GetAnimator()->Play(L"LittleBone_Idle");
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());

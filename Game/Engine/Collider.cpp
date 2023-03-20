@@ -13,7 +13,12 @@
 Collider::Collider()
 	: Component(COMPONENT_TYPE::COLLIDER)
 	, m_pCallback(nullptr)
+	, m_fRaycastMaxDist(1000.f)
+	, m_fRaycastMaxHit(5)
 {
+	m_RaycastHit = {};
+	m_SweepHit = {};
+	m_OverlapHit = {};
 }
 
 Collider::~Collider()
@@ -22,6 +27,7 @@ Collider::~Collider()
 
 void Collider::Awake()
 {
+
 	// 렌더링할 물체의 모양을 가진 
 	shared_ptr<Physical> pPhysical = GetPhysical();
 
@@ -44,6 +50,50 @@ void Collider::Render()
 
 void Collider::OnCollision()
 {
+}
+
+RaycastResult Collider::Raycast(Vec3 vOrigin, Vec3 vDir)
+{
+	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
+
+	switch (eGeometryType)
+	{
+	case GEOMETRY_TYPE::BOX:
+	{
+		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			Conv::Vec3ToPxVec3(vOrigin),
+			Conv::Vec3ToPxVec3(vDir),
+			boxGeom, GetTransform()->GetPxTransform(),
+			m_fRaycastMaxDist,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			m_fRaycastMaxHit,
+			&m_RaycastHit);
+
+		return RaycastResult(bResult, Conv::PxVec3ToVec3(m_RaycastHit.position));
+	}
+		break;
+
+	case GEOMETRY_TYPE::CAPSULE:
+	{
+		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			Conv::Vec3ToPxVec3(vOrigin),
+			Conv::Vec3ToPxVec3(vDir),
+			capsuleGeom, GetTransform()->GetPxTransform(),
+			m_fRaycastMaxDist,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			m_fRaycastMaxHit,
+			&m_RaycastHit);
+
+		return RaycastResult(bResult, Conv::PxVec3ToVec3(m_RaycastHit.position));
+	}
+		break;
+	}
+
+	return RaycastResult(false, Vec3::Zero);
 }
 
 void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)

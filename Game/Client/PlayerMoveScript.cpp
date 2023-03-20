@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "Controller.h"
 #include "Physical.h"
+#include "GameObject.h"
 
 
 PlayerMoveScript::PlayerMoveScript()
@@ -40,12 +41,14 @@ void PlayerMoveScript::LateUpdate()
 	{
 		//vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME);
 		vPos = GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME;
+		GetGameObject()->SetDirection(DIRECTION::LEFT);
 	}
 
-	if (IS_PRESS(KEY_TYPE::RIGHT))
+	else if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
 		//vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * m_fSpeed * DELTA_TIME);
 		vPos = GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
+		GetGameObject()->SetDirection(DIRECTION::RIGHT);
 	}
 
 	//pActor->setLinearVelocity(vCurrVelocity);

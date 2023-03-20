@@ -191,7 +191,7 @@ void Physical::InitializeActor()
 		pActor->attachShape(*m_pShape);
 
 		pActor->setRigidDynamicLockFlags(
-			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | 
+			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z  | 
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | 
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
 	}
