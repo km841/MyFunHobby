@@ -21,6 +21,9 @@
 #include "DebugRenderer.h"
 #include "Animation.h"
 #include "Animator.h"
+#include "Input.h"
+#include "Monster.h"
+#include "CollisionManager.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -44,6 +47,7 @@ void TownScene::Start()
 void TownScene::Update()
 {
 	Scene::Update();
+
 }
 
 void TownScene::LateUpdate()
@@ -63,6 +67,7 @@ void TownScene::Render()
 
 void TownScene::Enter()
 {
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	// Player
 	{
 		shared_ptr<Player> pGameObject = make_shared<Player>();
@@ -74,7 +79,7 @@ void TownScene::Enter()
 
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::CHARACTER, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
+		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
 		pGameObject->AddComponent(make_shared<Controller>());
 		pGameObject->AddComponent(make_shared<PlayerMoveScript>());
 		pGameObject->AddComponent(make_shared<RigidBody>());
@@ -95,6 +100,41 @@ void TownScene::Enter()
 
 		AddGameObject(pGameObject);
 	}
+
+	//// Monster
+	//{
+	//	shared_ptr<Monster> pGameObject = make_shared<Monster>();
+
+	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+
+	//	shared_ptr<Texture> pTexture = make_shared<Texture>();
+	//	pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
+
+	//	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
+
+	//	shared_ptr<Material> pMaterial = make_shared<Material>();
+	//	pMaterial->SetShader(pShader);
+	//	pMaterial->SetTexture(0, pTexture);
+
+	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	//	pMeshRenderer->SetMaterial(pMaterial);
+	//	pMeshRenderer->SetMesh(pMesh);
+
+	//	pGameObject->AddComponent(pMeshRenderer);
+	//	pGameObject->AddComponent(make_shared<Transform>());
+	//	pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f), MassProperties{ 2.0f, 3.f, 0.1f }));
+	//	pGameObject->AddComponent(make_shared<RigidBody>());
+	//	pGameObject->AddComponent(make_shared<Collider>());
+	//	pGameObject->AddComponent(make_shared<DebugRenderer>());
+
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 30.f, fHeight / 2.f, 1.f));
+	//	pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+
+	//	AddGameObject(pGameObject);
+	//}
 
 	// Background
 	{

@@ -79,3 +79,18 @@ void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 
 	m_vGameObjects.push_back(pGameObject);
 }
+
+std::vector<shared_ptr<GameObject>> Scene::GetGameObjects(LAYER_TYPE eLayerType)
+{
+	std::vector<shared_ptr<GameObject>> vGameObjects;
+
+	for (const auto& pGameObject : m_vGameObjects)
+	{
+		if (eLayerType == pGameObject->GetLayerType())
+		{
+			vGameObjects.push_back(pGameObject);
+		}
+	}
+
+	return vGameObjects;
+}

@@ -5,7 +5,7 @@
 #include "MeshRenderer.h"
 #include "Material.h"
 
-Physical::Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, MassProperties massProperties)
+Physical::Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, const MassProperties& massProperties)
 	:Component(COMPONENT_TYPE::PHYSICAL)
 	,m_eActorType(eActorType)
 	,m_eGeometryType(eGeometryType)
@@ -24,9 +24,11 @@ void Physical::Awake()
 {
 	CreateGeometry(m_eGeometryType, m_vSize);
 	CreateActor();
+	CreateShape();
 
 	if (m_pActor)
 	{
+		InitializeActor();
 		AddActor(m_pActor);
 	}
 }
@@ -52,14 +54,14 @@ void Physical::Update()
 			case GEOMETRY_TYPE::BOX:
 			{
 				m_pGeometries->boxGeom.halfExtents = Conv::Vec3ToPxVec3(m_vSize);
-				ApplyShapeScale();
+				//ApplyShapeScale();
 			}
 				break;
 			case GEOMETRY_TYPE::CAPSULE:
 			{
 				m_pGeometries->capsuleGeom.radius = m_vSize.x;
 				m_pGeometries->capsuleGeom.halfHeight = m_vSize.y;
-				ApplyShapeScale();
+				//ApplyShapeScale();
 			}
 				break;
 			}	
@@ -90,7 +92,7 @@ void Physical::CreatePlaneGeometry(GEOMETRY_TYPE eGeometryType)
 	m_pGeometries = make_shared<Geometries>(eGeometryType);
 }
 
-void Physical::CreatePhysicsProperties(MassProperties massProperties)
+void Physical::CreatePhysicsProperties(const MassProperties& massProperties)
 {
 	m_pProperties = make_shared<PhysicsProperties>(massProperties);
 }
@@ -118,42 +120,34 @@ void Physical::CreateShape()
 	switch (m_eGeometryType)
 	{
 	case GEOMETRY_TYPE::BOX:
-		m_pShape = PHYSICS->createShape(m_pGeometries->boxGeom, *m_pProperties->GetMaterial());
+		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->boxGeom, *m_pProperties->GetMaterial());
 		break;
 	case GEOMETRY_TYPE::CAPSULE:
-		m_pShape = PHYSICS->createShape(m_pGeometries->capsuleGeom, *m_pProperties->GetMaterial());
+		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->capsuleGeom, *m_pProperties->GetMaterial());
 		break;
 	case GEOMETRY_TYPE::PLANE:
-		m_pShape = PHYSICS->createShape(m_pGeometries->planeGeom, *m_pProperties->GetMaterial());
+		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->planeGeom, *m_pProperties->GetMaterial());
 		break;
 	}
 }
 
 void Physical::CreateActor()
 {
-	CreateShape();
+	
 	switch (m_eActorType)
 	{
 	case ACTOR_TYPE::DYNAMIC:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
 		break;
 	case ACTOR_TYPE::STATIC:
-	{
 		m_pActor = PHYSICS->createRigidStatic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
-		if (GEOMETRY_TYPE::PLANE == m_eGeometryType)
-		{
-			m_pActor = PHYSICS->createRigidStatic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition()), 
-				PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f))));
-		}
-	}
 		break;
 	case ACTOR_TYPE::KINEMATIC:
 	{
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
-		PxRigidDynamic* pActor = m_pActor->is<PxRigidDynamic>();
-		pActor->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
+		m_pActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
 	}
-		break;
+	break;
 
 	case ACTOR_TYPE::CHARACTER:
 	{
@@ -163,12 +157,7 @@ void Physical::CreateActor()
 			//m_pController->setUserData();
 		}
 	}
-		break;
-	}
-
-	if (m_pActor)
-	{
-		InitializeActor();
+	break;
 	}
 }
 
@@ -180,7 +169,6 @@ void Physical::InitializeActor()
 	case ACTOR_TYPE::DYNAMIC:
 	{
 		PxRigidDynamic* pActor = m_pActor->is<PxRigidDynamic>();
-		pActor->attachShape(*m_pShape);
 
 		pActor->setRigidDynamicLockFlags(
 			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z  | 
@@ -191,8 +179,6 @@ void Physical::InitializeActor()
 
 	case ACTOR_TYPE::STATIC:
 	{
-		PxRigidStatic* pActor = m_pActor->is<PxRigidStatic>();
-		pActor->attachShape(*m_pShape);
 	}
 		break;
 	}
@@ -200,6 +186,8 @@ void Physical::InitializeActor()
 	PxRigidActor* pActor = m_pActor->is<PxRigidActor>();
 	pActor->userData = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();
 	pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+
+	PxTransform transform = pActor->getGlobalPose();
 }
 
 void Physical::CreateController()
@@ -231,6 +219,9 @@ void Physical::CreateController()
 	}
 
 	m_pController->setPosition(Conv::Vec3ToPxExtendedVec3(GetTransform()->GetLocalPosition()));
+	PxTransform transform = m_pController->getActor()->getGlobalPose();
+	transform.q.z = 0.f;
+	m_pController->getActor()->is<PxRigidDynamic>()->setGlobalPose(transform);	
 }
 
 void Physical::AddActor(PxActor* pActor)

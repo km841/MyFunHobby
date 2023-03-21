@@ -44,6 +44,9 @@ void Controller::Move(const PxVec3& vVec, PxQueryFilterCallback* pCallback, PxFi
 {
 	m_CtlFilters.mFilterCallback = pCallback;
 	m_CtlFilters.mFilterData = &filtData;
+	//PxTransform transform =GetPhysical()->GetController()->getActor()->getGlobalPose();
+	//transform.q.z = 0.f;
+	//GetPhysical()->GetController()->getActor()->setGlobalPose(transform);
 	PxController* controller = GetPhysical()->GetController();
 	if (controller)
 	{

@@ -2,16 +2,16 @@
 #include "Component.h"
 
 class ContactCallback;
-
-using RaycastResult = std::pair<bool, Vec3>;
 class Collider :
       public Component
 {
 public:
     Collider();
     virtual ~Collider();
+
 public:
     virtual void Awake() override;
+    virtual void Update() override;
     virtual void FinalUpdate() override;
     virtual void Render() override;
 
@@ -21,8 +21,9 @@ public:
     const PxRaycastHit& GetRaycastHit() { return m_RaycastHit; }
     const PxSweepHit&   GetSweepHit()   { return m_SweepHit;   }
     const PxOverlapHit& GetOverlapHit() { return m_OverlapHit; }
-    const PxFilterData& GetFilterData() { return m_FilterData; }
+    PxFilterData&       GetFilterData() { return m_FilterData; }
     RaycastResult       Raycast(Vec3 vOrigin, Vec3 vDir);
+    bool                Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform);
 
 private:
     void CreateDebugGeometry(shared_ptr<Geometries> pGeometries);

@@ -28,7 +28,7 @@ void PxEnvironment::Init()
 	m_pSetting->CreateFoundation();
 	m_pSetting->CreatePhysics();
 
-	CreateSceneQuery();
+	
 	CreateDebugger("127.0.0.1", 5425); 
 	ConnectDebugger();
 }
@@ -37,17 +37,6 @@ void PxEnvironment::CreateControllerManager()
 {
 	assert(m_pScene);
 	m_pControllerMgr = PxCreateControllerManager(*m_pScene);
-}
-
-void PxEnvironment::CreateSceneQuery()
-{
-	// PxSceneQuery 내용 초기화
-	m_pSceneQuery = make_shared<PxSceneQuery>();
-
-
-
-
-
 }
 
 void PxEnvironment::CreateDebugger(const char* szHost, int32 iPort)

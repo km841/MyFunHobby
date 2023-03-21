@@ -15,6 +15,7 @@
 #include <queue>
 #include <type_traits>
 #include <optional>
+#include <bitset>
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -88,6 +89,8 @@ using std::weak_ptr;
 
 using std::static_pointer_cast;
 using std::dynamic_pointer_cast;
+
+using RaycastResult = std::pair<bool, Vec3>;
 
 struct WindowInfo
 {
@@ -398,6 +401,7 @@ bool m_bUse = false;\
 #define DEVICE g_pEngine->GetDevice()->GetDevice()
 #define CONTEXT g_pEngine->GetContext()->GetContext()
 #define PHYSICS g_pEngine->GetPhysics()->GetEnvironment()->GetPhysics()
+#define PX_SCENE g_pEngine->GetPhysics()->GetEnvironment()->GetPhysScene()
 #define UTILITY g_pEngine->GetUtility()
 #define TILEMAP_TOOL g_pEngine->GetUtility()->GetTool()->GetPallete()
 #define ANIMATION_TOOL g_pEngine->GetUtility()->GetTool()->GetAnimEditor()

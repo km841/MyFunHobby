@@ -28,6 +28,7 @@ public:
     void AddGameObject(shared_ptr<GameObject> pGameObject);
 
     const std::vector<shared_ptr<GameObject>>& GetGameObjects() { return m_vGameObjects; }
+    std::vector<shared_ptr<GameObject>> GetGameObjects(LAYER_TYPE eLayerType);
 
 protected:
     friend class Scenes;

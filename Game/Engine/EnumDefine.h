@@ -56,18 +56,18 @@ enum
 	INITIAL_POOL_COUNT = 1000,
 };
 
-enum class LAYER_TYPE
+enum class LAYER_TYPE : uint32
 {
-	UNKNOWN = 1 << 0,
-	PLAYER = 1 << 1,
-	MONSTER = 1 << 2,
-
-	END = 1 << 31,
+	UNKNOWN = 0,
+	PLAYER,
+	MONSTER,
+	END = 31,
 };
+
 
 enum
 {
-	LAYER_TYPE_COUNT = 3,
+	LAYER_TYPE_COUNT = LAYER_TYPE::END,
 };
 
 enum

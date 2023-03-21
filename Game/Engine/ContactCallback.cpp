@@ -9,7 +9,7 @@ void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
 
 		if (cp.events & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-			MessageBox(NULL, L"", L"", MB_OK);
+			//MessageBox(NULL, L"", L"", MB_OK);
 		}
 	}
 }

@@ -1,25 +1,7 @@
-﻿  Animation.cpp
-  Animator.cpp
-  Camera.cpp
-  Collider.cpp
+﻿  Collider.cpp
+  CollisionManager.cpp
   Component.cpp
   ContactCallback.cpp
-  Controller.cpp
-  DebugRenderer.cpp
-  Engine.cpp
-  EventManager.cpp
   GameObject.cpp
-  MeshRenderer.cpp
-  MonoBehaviour.cpp
-  Physical.cpp
-  PlayerChangeStateEvent.cpp
-  Resources.cpp
-  RigidBody.cpp
-  Scene.cpp
-  Scenes.cpp
-  Transform.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Utility.cpp
   코드를 생성하고 있습니다...
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

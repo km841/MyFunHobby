@@ -12,7 +12,7 @@ public:
     void Update();
     void Render();
 
-    shared_ptr<Scene> GetActiveScene() { return m_pCurScene; }
+    shared_ptr<Scene> GetActiveScene() { return m_pActiveScene; }
     void              ChangeScene(SCENE_TYPE eSceneType);
 
     Vec3 ScreenToWorldPosition(const Vec3& point, shared_ptr<class Camera> pCamera);
@@ -20,6 +20,6 @@ public:
 private:
     friend class EventManager;
     std::array<shared_ptr<Scene>, SCENE_TYPE_COUNT> m_arrScenes;
-    shared_ptr<Scene>                          m_pCurScene;
+    shared_ptr<Scene>                               m_pActiveScene;
 };
 

@@ -26,7 +26,6 @@ static PxFilterFlags PlayerFilterShader(
 	PxFilterObjectAttributes attributes1, PxFilterData filterData1,
 	PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
 {
-	// let triggers through
 	if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
 	{
 		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
@@ -36,10 +35,13 @@ static PxFilterFlags PlayerFilterShader(
 	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
 	// 두 필터가 서로 충돌플래그가 세워져 있을 경우
-	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+	if ((filterData0.word0 & filterData1.word1) || (filterData1.word0 & filterData0.word1))
+	{
 		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+		return PxFilterFlag::eDEFAULT;
+	}
 
-	return PxFilterFlag::eDEFAULT;
+	return PxFilterFlag::eKILL;
 }
 
 

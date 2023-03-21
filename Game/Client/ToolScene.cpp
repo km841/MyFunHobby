@@ -87,8 +87,6 @@ void ToolScene::Enter()
 		AddGameObject(m_pPreviewTile);
 	}
 
-
-
 	// Animation Select Box
 	for (int32 i = 0; i < FRAME_BOX_COUNT; ++i)
 	{

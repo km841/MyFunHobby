@@ -115,9 +115,6 @@
     <ClInclude Include="PxEnvironmentSetting.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="PxSceneQuery.h">
-      <Filter>Engine\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsScene.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
@@ -286,9 +283,6 @@
       <Filter>Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsScene.cpp">
-      <Filter>Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="PxSceneQuery.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="EventManager.cpp">

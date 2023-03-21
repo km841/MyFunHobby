@@ -8,7 +8,7 @@ class Physical :
     public Component
 {
 public:
-    Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, MassProperties massProperties = MassProperties());
+    Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, const MassProperties& massProperties = MassProperties());
     ~Physical();
 
 public:
@@ -32,14 +32,13 @@ private:
     void          CreatePlaneGeometry(GEOMETRY_TYPE eGeometryType);
     
 private:
-    void          CreatePhysicsProperties(MassProperties massProperties = MassProperties());
+    void          CreatePhysicsProperties(const MassProperties& massProperties = MassProperties());
     void          CreateGeometry(GEOMETRY_TYPE eGeometryType, Vec3 vShapeSize);
     void          CreateShape();
     void          CreateActor();
     void          InitializeActor();
     void          CreateController();
     void          AddActor(PxActor* pActor);
-
     void          ApplyShapeScale();
 
 private:

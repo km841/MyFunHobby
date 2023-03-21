@@ -202,7 +202,6 @@
     <ClInclude Include="PxDispatcher.h" />
     <ClInclude Include="PxEnvironment.h" />
     <ClInclude Include="PxEnvironmentSetting.h" />
-    <ClInclude Include="PxSceneQuery.h" />
     <ClInclude Include="RenderTargetGroup.h" />
     <ClInclude Include="ReportCallback.h" />
     <ClInclude Include="Resources.h" />
@@ -264,7 +263,6 @@
     <ClCompile Include="PxDispatcher.cpp" />
     <ClCompile Include="PxEnvironment.cpp" />
     <ClCompile Include="PxEnvironmentSetting.cpp" />
-    <ClCompile Include="PxSceneQuery.cpp" />
     <ClCompile Include="RenderTargetGroup.cpp" />
     <ClCompile Include="ReportCallback.cpp" />
     <ClCompile Include="Resources.cpp" />

@@ -28,10 +28,8 @@ Collider::~Collider()
 
 void Collider::Awake()
 {
-
-	// 렌더링할 물체의 모양을 가진 
 	shared_ptr<Physical> pPhysical = GetPhysical();
-	m_FilterData.word0 = static_cast<PxU32>(GetGameObject()->GetLayerType());
+	m_FilterData.word0 = 1 << static_cast<uint32>(GetGameObject()->GetLayerType());
 
 	if (pPhysical)
 	{
@@ -42,13 +40,21 @@ void Collider::Awake()
 	//m_pCallback = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();
 }
 
+void Collider::Update()
+{
+	if (GetPhysical())
+	{
+		PxShape* pShape = GetPhysical()->GetShape();
+		GetPhysical()->GetShape()->setSimulationFilterData(m_FilterData);
+	}
+}
+
 void Collider::FinalUpdate()
 {
 }
 
 void Collider::Render()
 {
-
 }
 
 void Collider::OnCollision()
@@ -97,6 +103,30 @@ RaycastResult Collider::Raycast(Vec3 vOrigin, Vec3 vDir)
 	}
 
 	return RaycastResult(false, Vec3::Zero);
+}
+
+bool Collider::Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform)
+{
+	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
+
+	switch (eGeometryType)
+	{
+	case GEOMETRY_TYPE::BOX:
+	{
+		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
+		return PxGeometryQuery::overlap(boxGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+	}
+		break;
+
+	case GEOMETRY_TYPE::CAPSULE:
+	{
+		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
+		return PxGeometryQuery::overlap(capsuleGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+	}
+		break;
+	}
+
+	return false;
 }
 
 void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)

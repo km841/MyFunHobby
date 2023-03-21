@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Player.h"
 #include "EventManager.h"
+#include "CollisionManager.h"
 
 void Engine::Init(const WindowInfo& wInfo)
 {
@@ -74,6 +75,7 @@ void Engine::Update()
 	GET_SINGLE(Input)->Update();
 	GET_SINGLE(Timer)->Update();
 	GET_SINGLE(Scenes)->Update();
+	GET_SINGLE(CollisionManager)->Update();
 	
 	m_pPhysics->Update();
 

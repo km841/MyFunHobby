@@ -12,43 +12,43 @@ void Scenes::Init()
 	m_arrScenes[static_cast<uint8>(SCENE_TYPE::TOWN)] = make_shared<TownScene>();
 	m_arrScenes[static_cast<uint8>(SCENE_TYPE::TOOL)] = make_shared<ToolScene>();
 
-	m_pCurScene = m_arrScenes[static_cast<uint8>(SCENE_TYPE::TITLE)];
-	m_pCurScene->Enter();
+	m_pActiveScene = m_arrScenes[static_cast<uint8>(SCENE_TYPE::TITLE)];
+	m_pActiveScene->Enter();
 }
 
 void Scenes::Awake()
 {
-	m_pCurScene->Awake();
+	m_pActiveScene->Awake();
 }
 
 void Scenes::Start()
 {
-	m_pCurScene->Start();
+	m_pActiveScene->Start();
 }
 
 void Scenes::Update()
 {
-	m_pCurScene->Update();
-	m_pCurScene->LateUpdate();
+	m_pActiveScene->Update();
+	m_pActiveScene->LateUpdate();
 
 	g_pEngine->GetPhysics()->Update();
-	m_pCurScene->FinalUpdate();
+	m_pActiveScene->FinalUpdate();
 }
 
 void Scenes::Render()
 {
-	m_pCurScene->Render();
+	m_pActiveScene->Render();
 }
 
 void Scenes::ChangeScene(SCENE_TYPE eSceneType)
 {
-	if (m_pCurScene)
+	if (m_pActiveScene)
 	{
-		m_pCurScene->Exit();
+		m_pActiveScene->Exit();
 	}
 
-	m_pCurScene = m_arrScenes[static_cast<uint8>(eSceneType)];
-	m_pCurScene->Enter();
+	m_pActiveScene = m_arrScenes[static_cast<uint8>(eSceneType)];
+	m_pActiveScene->Enter();
 }
 
 Vec3 Scenes::ScreenToWorldPosition(const Vec3& point, shared_ptr<Camera> pCamera)

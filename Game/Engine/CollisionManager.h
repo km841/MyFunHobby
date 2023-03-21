@@ -1,10 +1,15 @@
 #pragma once
 class CollisionManager
 {
+	DECLARE_SINGLE(CollisionManager);
 public:
-
+	void SetCollisionGroup(LAYER_TYPE iFirst, LAYER_TYPE iSecond);
+	void Update();
 
 private:
-	std::array<std::array<PxU32, 32>, 32> m_arrLayers;
+	void SetCollisionFlag(int32 iFirst, int32 iSecond);
+
+private:
+	std::array<std::bitset<LAYER_TYPE_COUNT>, LAYER_TYPE_COUNT> m_arrColGroup;
 };
 
