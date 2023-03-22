@@ -437,6 +437,7 @@ public:\
 		{\
 			if (p##name == m_vPool[i])\
 			{\
+				static_pointer_cast<GameObject>(m_vPool[i])->Release();\
 				m_vUse[i] = false;\
 				break;\
 			}\

@@ -50,6 +50,7 @@ public:
     void Enable()   { m_bDisable = false; }
     bool IsEnable() { return !m_bDisable; }
     void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
+    void Release();
 
 protected:
     DIRECTION                                                m_eDirection;

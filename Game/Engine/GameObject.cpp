@@ -170,3 +170,12 @@ void GameObject::AddComponent(shared_ptr<Component> pComponent)
 		m_vScripts.push_back(dynamic_pointer_cast<MonoBehaviour>(pComponent));
 	}
 }
+
+void GameObject::Release()
+{
+	for (int32 i = 0; i < FIXED_COMPONENT_COUNT; ++i)
+	{
+		if (m_arrComponents[i])
+			m_arrComponents[i].reset();
+	}
+}
