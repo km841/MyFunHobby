@@ -179,15 +179,14 @@ void Physical::InitializeActor()
 
 	case ACTOR_TYPE::STATIC:
 	{
+		// TODO
 	}
 		break;
 	}
 
 	PxRigidActor* pActor = m_pActor->is<PxRigidActor>();
-	pActor->userData = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();
+	pActor->userData = GetGameObject().get();
 	pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
-
-	PxTransform transform = pActor->getGlobalPose();
 }
 
 void Physical::CreateController()

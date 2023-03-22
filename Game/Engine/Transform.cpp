@@ -26,6 +26,11 @@ void Transform::FinalUpdate()
 
 		switch (eActorType)
 		{
+			case ACTOR_TYPE::STATIC:
+				m_PxTransform = GetPhysical()->GetActor()->is<PxRigidStatic>()->getGlobalPose();
+				break;
+
+			case ACTOR_TYPE::KINEMATIC:
 			case ACTOR_TYPE::DYNAMIC:
 				m_PxTransform = GetPhysical()->GetActor()->is<PxRigidDynamic>()->getGlobalPose();
 				break;

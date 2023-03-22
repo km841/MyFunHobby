@@ -14,6 +14,10 @@ public:
     void LateUpdate();
     void FinalUpdate();
 
+public:
+    virtual void Save(const wstring& szPath) override;
+    virtual void Load(const wstring& szPath) override;
+
 private:
     DECLARE_POOL(Tile);
 };

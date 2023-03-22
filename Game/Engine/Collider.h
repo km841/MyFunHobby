@@ -15,7 +15,7 @@ public:
     virtual void FinalUpdate() override;
     virtual void Render() override;
 
-    virtual void OnCollision();
+    virtual void OnCollision(shared_ptr<Collider> pOtherCollider);
 
 public:
     const PxRaycastHit& GetRaycastHit() { return m_RaycastHit; }
@@ -24,6 +24,7 @@ public:
     PxFilterData&       GetFilterData() { return m_FilterData; }
     RaycastResult       Raycast(Vec3 vOrigin, Vec3 vDir);
     bool                Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform);
+    bool                ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform);
 
 private:
     void CreateDebugGeometry(shared_ptr<Geometries> pGeometries);
@@ -39,5 +40,8 @@ private:
 
     float  m_fRaycastMaxDist;
     uint32 m_fRaycastMaxHit;
+
+    PxVec3   m_vPenetDir;
+    float  m_fPenetDepth;
 };
 

@@ -160,8 +160,12 @@ void Shader::Init(const wstring& szPath, ShaderInfo shaderInfo, const string& sz
 
 void Shader::Update()
 {
+	CONTEXT->VSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+	CONTEXT->PSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+
 	CONTEXT->IASetPrimitiveTopology(m_shaderInfo.eTopology);
 	CONTEXT->IASetInputLayout(m_pInputLayout.Get());
+
 	CONTEXT->VSSetShader(m_pVertexShader.Get(), nullptr, 0);
 	CONTEXT->PSSetShader(m_pPixelShader.Get(), nullptr, 0);
 
@@ -203,8 +207,6 @@ void Shader::CreateSampler()
 	samplerDesc.Filter = D3D11_FILTER::D3D11_FILTER_COMPARISON_ANISOTROPIC;
 
 	DEVICE->CreateSamplerState(&samplerDesc, m_pSamplerState.GetAddressOf());
-	CONTEXT->VSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
-	CONTEXT->PSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
 }
 
 void Shader::CreateVertexShader(const wstring& szPath, const string& szName, const string& szVersion)

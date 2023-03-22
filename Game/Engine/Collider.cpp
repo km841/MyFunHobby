@@ -15,6 +15,7 @@ Collider::Collider()
 	, m_pCallback(nullptr)
 	, m_fRaycastMaxDist(1000.f)
 	, m_fRaycastMaxHit(5)
+	, m_fPenetDepth(0.f)
 {
 	m_RaycastHit = {};
 	m_SweepHit = {};
@@ -57,8 +58,28 @@ void Collider::Render()
 {
 }
 
-void Collider::OnCollision()
+void Collider::OnCollision(shared_ptr<Collider> pOtherCollider)
 {
+	if (pOtherCollider->GetPhysical())
+	{
+		PxRigidDynamic* pActor = GetPhysical()->GetActor()->is<PxRigidDynamic>();
+		PxRigidDynamic* pOtherActor = pOtherCollider->GetPhysical()->GetActor()->is<PxRigidDynamic>();
+		PxBoxGeometry otherGeom = pOtherCollider->GetPhysical()->GetGeometries()->boxGeom;
+
+		PxTransform myTransform = pActor->getGlobalPose();
+		PxTransform otherTransform = pOtherActor->getGlobalPose();
+
+		if (Overlap(otherGeom, pOtherActor->getGlobalPose()))
+		{
+			if (ComputePenetration(otherGeom, pOtherActor->getGlobalPose()))
+			{
+				PxTransform transform = GetTransform()->GetPxTransform();
+				transform.p += m_vPenetDir * m_fPenetDepth;
+				transform.p.z = 0.f;
+				pActor->setGlobalPose(transform);
+			}
+		}
+	}
 }
 
 RaycastResult Collider::Raycast(Vec3 vOrigin, Vec3 vDir)
@@ -126,6 +147,31 @@ bool Collider::Overlap(const PxGeometry& otherGeom, const PxTransform& otherTran
 		break;
 	}
 
+	return false;
+}
+
+bool Collider::ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform)
+{
+
+	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
+
+	switch (eGeometryType)
+	{
+	case GEOMETRY_TYPE::BOX:
+	{
+		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
+		return PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, boxGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+	}
+	break;
+
+	case GEOMETRY_TYPE::CAPSULE:
+	{
+		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
+		return PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, capsuleGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+	}
+	break;
+	}
+	
 	return false;
 }
 

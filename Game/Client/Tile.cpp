@@ -34,3 +34,12 @@ void Tile::FinalUpdate()
 {
 	GameObject::FinalUpdate();
 }
+
+void Tile::Save(const wstring& szPath)
+{
+	
+}
+
+void Tile::Load(const wstring& szPath)
+{
+}

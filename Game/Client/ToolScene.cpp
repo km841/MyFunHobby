@@ -339,8 +339,8 @@ void ToolScene::DrawEditorGraphic()
 			wstring szFileName = fs::path(ANIMATION_TOOL->GetSpriteTexturePath()).filename();
 			wstring szPath = UTILITY->GetTexPath() + szFileName;
 			const wstring& szName = ANIMATION_TOOL->GetAnimationName();
-			const ImVec2& vSpriteSize = ANIMATION_TOOL->GetSpriteSize();
-			const ImVec2& vOffset = ANIMATION_TOOL->GetOffset();
+			const  ImVec2& vSpriteSize = ANIMATION_TOOL->GetSpriteSize();
+			const  ImVec2& vOffset = ANIMATION_TOOL->GetOffset();
 
 			for (int32 i = 0; i < iSpriteCount + 1; ++i)
 			{
@@ -366,7 +366,7 @@ void ToolScene::PlayAnimation()
 	// Bool값을 통해 툴의 상태를 확인하고 true라면 정보를 받아온다
 	if (ANIMATION_TOOL->GetAnimPlayingFlag())
 	{
-		auto vFrameDataList = ANIMATION_TOOL->GetFrameDataList();
+		const auto& vFrameDataList = ANIMATION_TOOL->GetFrameDataList();
 		assert(!vFrameDataList.empty());
 		
 		if (!m_pSpriteTexture->GetAnimator()->GetActiveAnimation())

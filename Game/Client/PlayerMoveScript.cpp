@@ -28,21 +28,27 @@ void PlayerMoveScript::LateUpdate()
 	PxVec3 vCurrVelocity = pActor->getLinearVelocity();
 	//Vec3 vPos = {};
 
+	PxTransform transform = pActor->getGlobalPose();
+	PxVec3 vCurrPos = transform.p;
+
 	if (IS_PRESS(KEY_TYPE::UP))
 	{
 		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * m_fSpeed * DELTA_TIME);
+		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * m_fSpeed * DELTA_TIME);
 		//vPos = GetTransform()->GetUp() * m_fSpeed * DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::DOWN))
 	{
 		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME);
+		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME);
 		//vPos = GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
 		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME);
+		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME);
 		//vPos = GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME;
 		GetGameObject()->SetDirection(DIRECTION::LEFT);
 	}
@@ -50,10 +56,12 @@ void PlayerMoveScript::LateUpdate()
 	else if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
 		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * m_fSpeed * DELTA_TIME);
+		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * m_fSpeed * DELTA_TIME);
 		//vPos = GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
 		GetGameObject()->SetDirection(DIRECTION::RIGHT);
 	}
-
+	transform.p = vCurrPos;
+	pActor->setKinematicTarget(transform);
 	pActor->setLinearVelocity(vCurrVelocity);
 	//GetController()->Move(Conv::Vec3ToPxVec3(vPos), &m_FilterShaders, GetCollider()->GetFilterData());
 }

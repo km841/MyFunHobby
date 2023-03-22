@@ -115,8 +115,6 @@ void TitleScene::Enter()
 
 	// GameObject를 깨우는 작업
 	Awake();
-
-	//MessageBox(NULL, L"N 키를 누르면 씬을 넘길 수 있습니다", L"Message", MB_OK);
 }
 
 void TitleScene::Exit()
