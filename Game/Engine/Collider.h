@@ -32,7 +32,6 @@ private:
     void CreateDebugCapsule(float fRadius, float fHalfHeight);
 
 private:
-    ContactCallback* m_pCallback;
     PxRaycastHit     m_RaycastHit;
     PxSweepHit       m_SweepHit;
     PxOverlapHit     m_OverlapHit;

@@ -4,6 +4,7 @@
 POOL_INIT(Tile);
 Tile::Tile()
 {
+	m_eLayerType = LAYER_TYPE::TILE;
 }
 
 Tile::~Tile()

@@ -61,6 +61,7 @@ enum class LAYER_TYPE : uint32
 	UNKNOWN = 0,
 	PLAYER,
 	MONSTER,
+	TILE,
 	END = 31,
 };
 

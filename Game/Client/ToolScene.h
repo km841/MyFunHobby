@@ -31,6 +31,7 @@ enum
 class ToolScene :
     public Scene
 {
+    using TileMap = std::map<Vec3, bool>;
 public:
     ToolScene();
     virtual ~ToolScene();
@@ -50,6 +51,8 @@ public:
 private:
     void PalleteUpdate();
     void CreateTile(Vec3 vWorldPos);
+    void EraseTile(Vec3 vWorldPos);
+    bool CheckTileAtClick(Vec3 vWorldPos);
 
 private:
     void AnimationEditorUpdate();
@@ -62,6 +65,10 @@ private:
     shared_ptr<GameObject> m_pMainCamera;
     shared_ptr<GameObject> m_pGrid;
     shared_ptr<GameObject> m_pSpriteTexture;
+
+    TimeCounter m_TileDragHolder;
+    TileMap m_mTileMap;
+
 
     std::vector<shared_ptr<GameObject>> m_vFrameDividers;
 };

@@ -18,12 +18,15 @@
 #include "EventManager.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "Timer.h"
 
 #include "Tile.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
+	, m_TileDragHolder(0.1f)
 {
+	m_TileDragHolder.Start();
 }
 
 ToolScene::~ToolScene()
@@ -42,8 +45,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//PalleteUpdate();
-	AnimationEditorUpdate();
+	PalleteUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -191,50 +194,61 @@ void ToolScene::Exit()
 
 void ToolScene::PalleteUpdate()
 {
+	m_TileDragHolder.Update(DELTA_TIME);
 	wstring szSelectedKey = UTILITY->GetSelectedTileKey();
+
+	const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
+	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 1.f);
+	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
+
 	if (L"FAILURE" != szSelectedKey)
 	{
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(szSelectedKey);
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
-
-		const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
-		Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 1.f);
-		Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
-
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
+	}
 
-		if (!IS_UP(KEY_TYPE::LBUTTON) && TILEMAP_TOOL->IsMouseNotOver())
-		{ 
-			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(TILEMAP_TOOL->GetDrawingType());
-			OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(TILEMAP_TOOL->GetOutputType());
+	if (!IS_UP(KEY_TYPE::LBUTTON) && TILEMAP_TOOL->IsMouseNotOver())
+	{ 
+		DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(TILEMAP_TOOL->GetDrawingType());
+		OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(TILEMAP_TOOL->GetOutputType());
 
-			if (OUTPUT_TYPE::WRITE == eOutputType)
+		if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
+		{
+			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
 			{
-				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+				if (!CheckTileAtClick(vWorldPos) && m_TileDragHolder.IsFinished())
 				{
 					CreateTile(vWorldPos);
-				}
-
-				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
-				{
-					CreateTile(vWorldPos);
+					m_TileDragHolder.Start();
 				}
 			}
 
-			else
+			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
 			{
-				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
-				{
-					//EraseTile(vWorldPos);
-				}
+				if (!CheckTileAtClick(vWorldPos))
+					CreateTile(vWorldPos);
+			}
+		}
 
-				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+		else if (OUTPUT_TYPE::ERASE == eOutputType)
+		{
+			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+			{
+				if (m_TileDragHolder.IsFinished())
 				{
-					//EraseTile(vWorldPos);
+					EraseTile(vWorldPos);
+					m_TileDragHolder.Start();
 				}
+			}
+
+			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+			{
+				EraseTile(vWorldPos);
 			}
 		}
 	}
+	
 
 	if (IS_PRESS(KEY_TYPE::RBUTTON))
 	{
@@ -265,6 +279,39 @@ void ToolScene::CreateTile(Vec3 vWorldPos)
 	pTile->GetTransform()->SetLocalPosition(vWorldPos);
 
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
+	m_mTileMap[vWorldPos] = true;
+}
+
+void ToolScene::EraseTile(Vec3 vWorldPos)
+{
+	vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
+	vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
+
+	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end();)
+	{
+		if (LAYER_TYPE::TILE == (*iter)->GetLayerType() && 
+			(*iter)->GetTransform()->GetLocalPosition() == vWorldPos)
+		{
+			Tile::Release(static_pointer_cast<Tile>(*iter));
+			iter = m_vGameObjects.erase(iter);
+			m_mTileMap[vWorldPos] = false;
+			continue;
+		}
+		iter++;
+	}
+}
+
+bool ToolScene::CheckTileAtClick(Vec3 vWorldPos)
+{
+	vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
+	vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
+
+	auto iter = m_mTileMap.find(vWorldPos);
+	if (m_mTileMap.end() == iter)
+		return false;
+
+	else
+		return m_mTileMap[vWorldPos];
 }
 
 void ToolScene::AnimationEditorUpdate()

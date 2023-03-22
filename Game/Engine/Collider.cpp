@@ -12,7 +12,6 @@
 
 Collider::Collider()
 	: Component(COMPONENT_TYPE::COLLIDER)
-	, m_pCallback(nullptr)
 	, m_fRaycastMaxDist(1000.f)
 	, m_fRaycastMaxHit(5)
 	, m_fPenetDepth(0.f)
@@ -37,8 +36,6 @@ void Collider::Awake()
 		CreateDebugGeometry(pPhysical->GetGeometries());
 		pPhysical->GetShape()->setSimulationFilterData(m_FilterData);
 	}
-
-	//m_pCallback = g_pEngine->GetPhysics()->GetDispatcher()->GetSimulationCallback();
 }
 
 void Collider::Update()
@@ -69,16 +66,16 @@ void Collider::OnCollision(shared_ptr<Collider> pOtherCollider)
 		PxTransform myTransform = pActor->getGlobalPose();
 		PxTransform otherTransform = pOtherActor->getGlobalPose();
 
-		if (Overlap(otherGeom, pOtherActor->getGlobalPose()))
-		{
-			if (ComputePenetration(otherGeom, pOtherActor->getGlobalPose()))
-			{
-				PxTransform transform = GetTransform()->GetPxTransform();
-				transform.p += m_vPenetDir * m_fPenetDepth;
-				transform.p.z = 0.f;
-				pActor->setGlobalPose(transform);
-			}
-		}
+		//if (Overlap(otherGeom, pOtherActor->getGlobalPose()))
+		//{
+		//	if (ComputePenetration(otherGeom, pOtherActor->getGlobalPose()))
+		//	{
+		//		PxTransform transform = GetTransform()->GetPxTransform();
+		//		transform.p += m_vPenetDir * m_fPenetDepth;
+		//		transform.p.z = 0.f;
+		//		pActor->setGlobalPose(transform);
+		//	}
+		//}
 	}
 }
 

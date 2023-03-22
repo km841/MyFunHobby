@@ -122,7 +122,7 @@ void TownScene::Enter()
 
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f), MassProperties(0.5f, 0.2f, 20.f)));
+		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f), MassProperties(0.5f, 0.2f, 15.f)));
 		pGameObject->AddComponent(make_shared<RigidBody>());
 		pGameObject->AddComponent(make_shared<Collider>());
 		pGameObject->AddComponent(make_shared<DebugRenderer>());

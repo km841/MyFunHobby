@@ -317,6 +317,63 @@ namespace Conv
 	}
 }
 
+struct TimeCounter
+{
+public:
+	TimeCounter(float fEndTime)
+		:m_fCurTime(0.f)
+		,m_fEndTime(fEndTime)
+		,m_bIsRunning(false)
+	{}
+
+	void Reset()
+	{
+		m_fCurTime = 0.f;
+		m_bIsRunning = false;
+	}
+
+	void Start()
+	{
+		m_fCurTime = 0.f;
+		m_bIsRunning = true;
+	}
+
+	void Stop()
+	{
+		Reset();
+	}
+
+	void Update(float fDeltaTime)
+	{
+		if (m_bIsRunning)
+		{
+			m_fCurTime += fDeltaTime;
+			if (m_fCurTime > m_fEndTime)
+			{
+				m_fCurTime = m_fEndTime;
+				m_bIsRunning = false;
+			}
+		}
+	}
+
+	bool IsFinished()
+	{
+		return !m_bIsRunning;
+	}
+
+	float GetProgress() const
+	{
+		if (m_fEndTime == 0.f)
+			return 1.f;
+		return m_fCurTime / m_fEndTime;
+	}
+
+private:
+	float m_fCurTime;
+	float m_fEndTime;
+	bool  m_bIsRunning;
+};
+
 
 #define DECLARE_SINGLE(type)  \
 private:					  \
