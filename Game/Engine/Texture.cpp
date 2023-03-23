@@ -31,6 +31,7 @@ void Texture::Load(const wstring& szPath)
 		m_pSRV.GetAddressOf());
 
 	m_pSRV->GetResource(reinterpret_cast<ID3D11Resource**>(m_pTexture.GetAddressOf()));
+	m_szName = szPath;
 }
 
 void Texture::Create(TEXTURE_TYPE eType, uint32 iWidth, uint32 iHeight)

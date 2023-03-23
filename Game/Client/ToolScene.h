@@ -23,15 +23,13 @@ enum class COLLIDER_TYPE : uint8
 enum
 {
     GRID_SIZE = 1000,
-    TILE_SIZE = 64,
-    TILE_HALF_SIZE = TILE_SIZE / 2,
     FRAME_BOX_COUNT = 50,
 };
 
 class ToolScene :
     public Scene
 {
-    using TileMap = std::map<Vec3, bool>;
+    using TileMap = std::map<Vec2, bool>;
 public:
     ToolScene();
     virtual ~ToolScene();
@@ -48,9 +46,15 @@ public:
     virtual void Enter();
     virtual void Exit();
 
+    void LoadTileMap();
+    void EraseTileMap();
+
 private:
     void PalleteUpdate();
+
     void CreateTile(Vec3 vWorldPos);
+    void CreateTile(Vec2 vTileAlignPos, wstring szTexPath);
+
     void EraseTile(Vec3 vWorldPos);
     bool CheckTileAtClick(Vec3 vWorldPos);
 
@@ -71,5 +75,6 @@ private:
 
 
     std::vector<shared_ptr<GameObject>> m_vFrameDividers;
+    TileMapData m_TileMapData;
 };
 

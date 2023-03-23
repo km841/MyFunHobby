@@ -23,9 +23,9 @@ void Utility::Init(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pCo
 	for (const auto& file : fs::directory_iterator(szTileDir))
 	{
 		wstring fileName = file.path().filename().wstring();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(fileName, szTileDir + fileName);
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTileDir + fileName, szTileDir + fileName);
 
-		m_mTileRrcMap[iCount] = fileName;
+		m_mTileRrcMap[iCount] = szTileDir + fileName;
 		vSRV.push_back(pTexture->GetSRV());
 
 		iCount++;

@@ -21,10 +21,15 @@
 #include "Timer.h"
 
 #include "Tile.h"
+#include "PhysicsProperties.h"
+#include "Physical.h"
+#include "Collider.h"
+#include "DebugRenderer.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
 	, m_TileDragHolder(0.1f)
+	, m_TileMapData{}
 {
 	m_TileDragHolder.Start();
 }
@@ -192,9 +197,58 @@ void ToolScene::Exit()
 
 }
 
+void ToolScene::LoadTileMap()
+{
+	uint32 iCount = m_TileMapData.iTileCount;
+	for (uint32 i = 0; i < iCount; ++i)
+	{
+		Vec2 vTilePos = Conv::ImVec2ToVec2(m_TileMapData.vTileData[i].vTilePos);
+		CreateTile(vTilePos, m_TileMapData.vTileData[i].szTexPath);
+	}
+}
+
+void ToolScene::EraseTileMap()
+{
+	for (auto& tile : m_mTileMap)
+	{
+		Vec3 vTilePos = Vec3(tile.first.x, tile.first.y, 1.f);
+		EraseTile(vTilePos);
+	}
+}
+
 void ToolScene::PalleteUpdate()
 {
 	m_TileDragHolder.Update(DELTA_TIME);
+
+	m_TileMapData.vTileData.clear();
+
+	for (auto& pGameObject : m_vGameObjects)
+	{
+		if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+		{
+			shared_ptr<Material> pMaterial = pGameObject->GetMeshRenderer()->GetMaterial();
+			wstring szTexPath = pMaterial->GetTexture(0)->GetName();
+			Vec3 vPos = pGameObject->GetTransform()->GetLocalPosition();
+
+			m_TileMapData.vTileData.push_back(TileData(szTexPath, ImVec2(vPos.x, vPos.y)));
+		}
+	}
+	m_TileMapData.iTileCount = static_cast<uint32>(m_TileMapData.vTileData.size());
+
+	if (TILEMAP_TOOL->IsTileSynced())
+	{
+		UTILITY->GetTool()->GetPallete()->SetTileMapData(m_TileMapData);
+	}
+
+	if (TILEMAP_TOOL->IsTileSend())
+	{
+		m_TileMapData = TILEMAP_TOOL->GetTileMapData();
+		EraseTileMap();
+		LoadTileMap();
+		TILEMAP_TOOL->DisableIsTileSend();
+		TILEMAP_TOOL->EnableTileSync();
+	}
+		
 	wstring szSelectedKey = UTILITY->GetSelectedTileKey();
 
 	const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
@@ -259,8 +313,7 @@ void ToolScene::PalleteUpdate()
 
 void ToolScene::CreateTile(Vec3 vWorldPos)
 {
-	vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
-	vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
+	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
 	shared_ptr<Tile> pTile = Tile::Get();
 
@@ -274,27 +327,67 @@ void ToolScene::CreateTile(Vec3 vWorldPos)
 
 	pTile->AddComponent(pMeshRenderer);
 	pTile->AddComponent(make_shared<Transform>());
+	pTile->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f)));
+	pTile->AddComponent(make_shared<Collider>());
+	pTile->AddComponent(make_shared<DebugRenderer>());
 
 	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-	pTile->GetTransform()->SetLocalPosition(vWorldPos);
+	pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 1.f));
 
+	// 잠들어 있는 Component 깨우기
+	pTile->Awake();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
-	m_mTileMap[vWorldPos] = true;
+
+	m_mTileMap[vTileAlignVec] = true;
+}
+
+void ToolScene::CreateTile(Vec2 vTileAlignVec, wstring szTexPath)
+{
+	shared_ptr<Tile> pTile = Tile::Get();
+
+	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	shared_ptr<Material> pMaterial = make_shared<Material>();
+	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
+	pMaterial->SetShader(pShader);
+
+	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
+	assert(pTexture);
+	pMaterial->SetTexture(0, pTexture);
+
+	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	pMeshRenderer->SetMaterial(pMaterial);
+	pMeshRenderer->SetMesh(pMesh);
+
+	pTile->AddComponent(pMeshRenderer);
+	pTile->AddComponent(make_shared<Transform>());
+	pTile->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f)));
+	pTile->AddComponent(make_shared<Collider>());
+	pTile->AddComponent(make_shared<DebugRenderer>());
+
+	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
+	pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 1.f));
+
+	// 잠들어 있는 Component 깨우기
+	pTile->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
+
+	m_mTileMap[vTileAlignVec] = true;
 }
 
 void ToolScene::EraseTile(Vec3 vWorldPos)
 {
-	vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
-	vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
+	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
 	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end();)
 	{
+		const Vec3& vLocalPos = (*iter)->GetTransform()->GetLocalPosition();
+
 		if (LAYER_TYPE::TILE == (*iter)->GetLayerType() && 
-			(*iter)->GetTransform()->GetLocalPosition() == vWorldPos)
+			(vLocalPos.x == vTileAlignVec.x) && (vLocalPos.y == vTileAlignVec.y))
 		{
 			Tile::Release(static_pointer_cast<Tile>(*iter));
 			iter = m_vGameObjects.erase(iter);
-			m_mTileMap[vWorldPos] = false;
+			m_mTileMap[vTileAlignVec] = false;
 			continue;
 		}
 		iter++;
@@ -303,15 +396,14 @@ void ToolScene::EraseTile(Vec3 vWorldPos)
 
 bool ToolScene::CheckTileAtClick(Vec3 vWorldPos)
 {
-	vWorldPos.x = static_cast<float>(static_cast<int32>((vWorldPos.x / TILE_SIZE)) * TILE_SIZE);
-	vWorldPos.y = static_cast<float>(static_cast<int32>((vWorldPos.y / TILE_SIZE)) * TILE_SIZE);
+	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
-	auto iter = m_mTileMap.find(vWorldPos);
+	auto iter = m_mTileMap.find(vTileAlignVec);
 	if (m_mTileMap.end() == iter)
 		return false;
 
 	else
-		return m_mTileMap[vWorldPos];
+		return m_mTileMap[vTileAlignVec];
 }
 
 void ToolScene::AnimationEditorUpdate()

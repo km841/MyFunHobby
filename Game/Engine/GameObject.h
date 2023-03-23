@@ -2,8 +2,6 @@
 #include "Object.h"
 #include "Component.h"
 
-
-
 class DebugRenderer;
 class MeshRenderer;
 class Transform;
@@ -46,9 +44,9 @@ public:
     DIRECTION  GetDirection()                     { return m_eDirection; }
     void       SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
 
-    void Disable()  { m_bDisable = true; }
-    void Enable()   { m_bDisable = false; }
-    bool IsEnable() { return !m_bDisable; }
+    void Disable()   { m_bDisable = true; }
+    void Enable()    { m_bDisable = false; }
+    bool IsEnable()  { return !m_bDisable; }
     void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
     void Release();
 

@@ -15,6 +15,7 @@ public:
 
     void SetShader(shared_ptr<Shader> pShader) { m_pShader = pShader; }
     void SetTexture(uint8 iIndex, shared_ptr<Texture> pTexture);
+    shared_ptr<Texture> GetTexture(uint8 iIndex) { return m_pTextures[iIndex]; }
 
     void SetInt(uint8 iIndex, int32 iValue) { m_materialParams.SetInt(iIndex, iValue); }
     void SetFloat(uint8 iIndex, float fValue) { m_materialParams.SetFloat(iIndex, fValue); }

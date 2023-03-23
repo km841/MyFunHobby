@@ -9,6 +9,9 @@ TilePallete::TilePallete()
     , m_iDrawingType(0)
     , m_iOutputType(0)
     , m_bMouseOver(false)
+    , m_TileMapData{}
+    , m_bTileSync(true)
+    , m_bTileSend(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
     m_vWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV.size() / 4.0f)* (m_fTileSize + m_fSpacing));
@@ -45,6 +48,11 @@ void TilePallete::Update()
         ImGui::EndTabBar();
     }
     ImGui::End();
+}
+
+void TilePallete::SetTileMapData(const TileMapData& tileMapData)
+{
+    m_TileMapData = tileMapData;
 }
 
 void TilePallete::ColliderTypeUI_Update()
@@ -105,6 +113,80 @@ void TilePallete::UpdateOptionSelection()
 {
     if (ImGui::BeginTabItem("Option"))
     {
+        // 저장, 불러오기
+        if (ImGui::Button("Save"))
+        {
+            assert(m_TileMapData.iTileCount != 0);
+            ImGuiFileDialog::Instance()->OpenDialog("Save", "Save File", ".map", ".");
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("Save"))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                fs::path szPath = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::wofstream ofs(szPath, std::ios::app | std::ios::out);
+
+                uint32 iCount = m_TileMapData.iTileCount;
+                ofs << iCount << L'\n';
+
+                for (uint32 i = 0; i < iCount; ++i)
+                {
+                    ofs << m_TileMapData.vTileData[i].szTexPath << L'\n';
+                    ofs << m_TileMapData.vTileData[i].vTilePos.x << L" " << m_TileMapData.vTileData[i].vTilePos.y << L'\n';
+                }
+
+                ofs.close();
+            }
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        ImGui::SameLine();
+        
+        if (ImGui::Button("Load"))
+        {
+            
+            ImGuiFileDialog::Instance()->OpenDialog("Load", "Load File", ".map", ".");
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("Load"))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                m_bTileSync = false;
+
+                fs::path szPath = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::wifstream ifs(szPath, std::ios::in);
+
+                uint32 iCount = 0;
+                ifs >> iCount;
+
+                ifs.ignore(1);
+
+                assert(iCount != 0);
+                m_TileMapData.vTileData.resize(iCount);
+                m_TileMapData.iTileCount = iCount;
+
+                for (uint32 i = 0; i < iCount; ++i)
+                {
+                    ifs >> m_TileMapData.vTileData[i].szTexPath;
+                    ifs.ignore(1);
+                    ifs >> m_TileMapData.vTileData[i].vTilePos.x >> m_TileMapData.vTileData[i].vTilePos.y;
+                    ifs.ignore(1);
+                }
+
+                ifs.close();
+            }
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        if (!m_bTileSync)
+        {
+            m_bTileSend = true;
+        }
+
+        InsertSeparator();
+
         ColliderTypeUI_Update();
 
         InsertSeparator();

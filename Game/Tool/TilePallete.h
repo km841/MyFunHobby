@@ -23,6 +23,17 @@ public:
 	uint8 GetDrawingType()         { return m_iDrawingType; }
 	uint8 GetOutputType()          { return m_iOutputType; }
 
+	void SetTileMapData(const TileMapData& tileMapData);
+	bool IsTileSynced()   { return m_bTileSync; }
+	void EnableTileSync() { m_bTileSync = true; }
+	void DisableTileSync() { m_bTileSync = false; }
+	
+	bool IsTileSend() { return m_bTileSend; }
+	void EnableIsTileSend() { m_bTileSend = true; }
+	void DisableIsTileSend() { m_bTileSend = false; }
+
+	const TileMapData& GetTileMapData() { return m_TileMapData; }
+
 private:
 	void  ColliderTypeUI_Update();
 	void  DrawingTypeUI_Update();
@@ -46,6 +57,10 @@ private:
 	int32 m_iClickedColliderType;
 	int32 m_iDrawingType;
 	int32 m_iOutputType;
+
+	TileMapData m_TileMapData;
+	bool	    m_bTileSync;
+	bool		m_bTileSend;
 
 	bool m_bMouseOver;
 };

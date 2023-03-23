@@ -212,8 +212,22 @@ struct MaterialParams
 	void SetVec4(uint8 iIndex, Vec4 vValue) { arrVec4Params[iIndex] = vValue; }
 };
 
+enum
+{
+	TILE_SIZE = 64,
+	TILE_HALF_SIZE = TILE_SIZE / 2,
+};
+
 namespace Conv
 {
+	static Vec2 Vec3ToTileAlignVec2(Vec3 vVec3)
+	{
+		Vec2 vTileAlignVec = { vVec3.x, vVec3.y };
+		vTileAlignVec.x = static_cast<float>(static_cast<int32>((vVec3.x / TILE_SIZE)) * TILE_SIZE);
+		vTileAlignVec.y = static_cast<float>(static_cast<int32>((vVec3.y / TILE_SIZE)) * TILE_SIZE);
+		return vTileAlignVec;
+	}
+
 	static Vec2 ImVec2ToVec2(ImVec2 vVec2)
 	{
 		return Vec2(vVec2.x, vVec2.y);

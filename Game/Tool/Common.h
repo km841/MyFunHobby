@@ -66,6 +66,23 @@ struct FrameData
 	int32  iFrameCount;
 };
 
+struct TileData
+{
+	TileData() = default;
+	TileData(const wstring& szTexPath, ImVec2 vTilePos)
+		: szTexPath(szTexPath), vTilePos(vTilePos)
+	{}
+	wstring szTexPath;
+	ImVec2 vTilePos;
+};
+
+struct TileMapData
+{
+	wstring szName;
+	uint32  iTileCount;
+	std::vector<TileData> vTileData;
+};
+
 extern shared_ptr<class Tool> g_pTool;
 
 wstring s2ws(const string& s);

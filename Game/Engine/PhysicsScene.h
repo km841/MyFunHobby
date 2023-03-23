@@ -22,6 +22,6 @@ private:
 	PxSweepBuffer   m_SweepBuffer;
 	PxOverlapBuffer m_OverlapBuffer;
 
-	float m_fMaxDistance;
+	float		    m_fMaxDistance;
 };
 
