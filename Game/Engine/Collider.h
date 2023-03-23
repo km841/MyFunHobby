@@ -15,20 +15,24 @@ public:
     virtual void FinalUpdate() override;
     virtual void Render() override;
 
-    virtual void OnCollision(shared_ptr<Collider> pOtherCollider);
+    void OnCollisionEnter(shared_ptr<Collider> pOtherCollider);
+    void OnCollisionExit(shared_ptr<Collider> pOtherCollider);
+
+    void OnTriggerEnter(shared_ptr<Collider> pOtherCollider);
+    void OnTriggerExit(shared_ptr<Collider> pOtherCollider);
 
 public:
     const PxRaycastHit& GetRaycastHit() { return m_RaycastHit; }
     const PxSweepHit&   GetSweepHit()   { return m_SweepHit;   }
     const PxOverlapHit& GetOverlapHit() { return m_OverlapHit; }
     PxFilterData&       GetFilterData() { return m_FilterData; }
-    RaycastResult       Raycast(Vec3 vOrigin, Vec3 vDir);
+    RaycastResult       Raycast(const Vec3& vOrigin, const Vec3& vDir);
     bool                Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform);
     bool                ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform);
 
 private:
     void CreateDebugGeometry(shared_ptr<Geometries> pGeometries);
-    void CreateDebugBox(Vec3 vHalfSize);
+    void CreateDebugBox(const Vec3& vHalfSize);
     void CreateDebugCapsule(float fRadius, float fHalfHeight);
 
 private:

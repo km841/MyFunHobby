@@ -71,7 +71,7 @@ void Physical::Update()
 	}
 }
 
-void Physical::CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, Vec3 vBoxSize)
+void Physical::CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize)
 {
 	assert(GEOMETRY_TYPE::BOX == eGeometryType);
 	assert(nullptr == m_pGeometries);
@@ -97,7 +97,7 @@ void Physical::CreatePhysicsProperties(const MassProperties& massProperties)
 	m_pProperties = make_shared<PhysicsProperties>(massProperties);
 }
 
-void Physical::CreateGeometry(GEOMETRY_TYPE eGeometryType, Vec3 vShapeSize)
+void Physical::CreateGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vShapeSize)
 {
 	m_vSize = vShapeSize;
 
@@ -129,7 +129,14 @@ void Physical::CreateShape()
 		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->planeGeom, *m_pProperties->GetMaterial());
 		break;
 	}
+
+	if (ACTOR_TYPE::KINEMATIC == m_eActorType)
+	{
+		m_pShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+		m_pShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+	}
 }
+
 
 void Physical::CreateActor()
 {
@@ -174,6 +181,7 @@ void Physical::InitializeActor()
 			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z  | 
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | 
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
+		pActor->setAngularDamping(PX_MAX_F32);
 	}
 		break;
 
@@ -186,7 +194,7 @@ void Physical::InitializeActor()
 
 	PxRigidActor* pActor = m_pActor->is<PxRigidActor>();
 	pActor->userData = GetGameObject().get();
-	pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	//pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
 
 void Physical::CreateController()

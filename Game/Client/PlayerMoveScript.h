@@ -15,6 +15,6 @@ public:
 private:
     PlayerFilterShaders m_FilterShaders;
     float m_fSpeed;
-
+    float m_fJumpSpeed;
 };
 

@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Monster.h"
+#include "Transform.h"
+#include "Physical.h"
+#include "Timer.h"
 
 
 Monster::Monster()
@@ -24,7 +27,6 @@ void Monster::Start()
 void Monster::Update()
 {
 	GameObject::Update();
-
 }
 
 void Monster::LateUpdate()

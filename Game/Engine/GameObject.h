@@ -14,7 +14,7 @@ class Physical;
 class Animator;
 
 class GameObject :
-      public Object
+    public Object
     , public std::enable_shared_from_this<GameObject>
 {
 public:
@@ -26,7 +26,7 @@ public:
     virtual void Update();
     virtual void LateUpdate();
     virtual void FinalUpdate();
-    
+
     shared_ptr<Component>       GetFixedComponent(COMPONENT_TYPE eType);
     shared_ptr<Transform>       GetTransform();
     shared_ptr<MeshRenderer>    GetMeshRenderer();
@@ -40,6 +40,14 @@ public:
 
     void AddComponent(shared_ptr<Component> pComponent);
 
+public:
+    virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) {}
+    virtual void OnCollisionExit(shared_ptr<GameObject> pGameObject) {}
+
+    virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject) {}
+    virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject) {}
+
+public:
     LAYER_TYPE GetLayerType()                     { return m_eLayerType; }
     DIRECTION  GetDirection()                     { return m_eDirection; }
     void       SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }

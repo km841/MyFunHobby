@@ -27,13 +27,13 @@ public:
     shared_ptr<Geometries> GetGeometries()   { return m_pGeometries; }
 
 private:
-    void          CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, Vec3 vBoxSize);
+    void          CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize);
     void          CreateCapsuleGeometry(GEOMETRY_TYPE eGeometryType, float fRadius, float fHalfHeight);
     void          CreatePlaneGeometry(GEOMETRY_TYPE eGeometryType);
     
 private:
     void          CreatePhysicsProperties(const MassProperties& massProperties = MassProperties());
-    void          CreateGeometry(GEOMETRY_TYPE eGeometryType, Vec3 vShapeSize);
+    void          CreateGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vShapeSize);
     void          CreateShape();
     void          CreateActor();
     void          InitializeActor();

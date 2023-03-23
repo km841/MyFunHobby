@@ -223,8 +223,8 @@ namespace Conv
 	static Vec2 Vec3ToTileAlignVec2(Vec3 vVec3)
 	{
 		Vec2 vTileAlignVec = { vVec3.x, vVec3.y };
-		vTileAlignVec.x = static_cast<float>(static_cast<int32>((vVec3.x / TILE_SIZE)) * TILE_SIZE);
-		vTileAlignVec.y = static_cast<float>(static_cast<int32>((vVec3.y / TILE_SIZE)) * TILE_SIZE);
+		vTileAlignVec.x = static_cast<float>(static_cast<int32>((vTileAlignVec.x / TILE_SIZE)) * TILE_SIZE);
+		vTileAlignVec.y = static_cast<float>(static_cast<int32>((vTileAlignVec.y / TILE_SIZE)) * TILE_SIZE);
 		return vTileAlignVec;
 	}
 

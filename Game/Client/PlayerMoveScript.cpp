@@ -8,60 +8,50 @@
 #include "GameObject.h"
 #include "Collider.h"
 #include "Engine.h"
+#include "RigidBody.h"
 
 
 PlayerMoveScript::PlayerMoveScript()
 	: m_fSpeed(10.f)
 	, m_FilterShaders{}
+	, m_fJumpSpeed(100.f)
 {
-
 }
 
 PlayerMoveScript::~PlayerMoveScript()
 {
-
 }
 
 void PlayerMoveScript::LateUpdate()
 {
-	PxRigidDynamic* pActor = GetPhysical()->GetActor()->is<PxRigidDynamic>();
-	PxVec3 vCurrVelocity = pActor->getLinearVelocity();
-	//Vec3 vPos = {};
-
-	PxTransform transform = pActor->getGlobalPose();
-	PxVec3 vCurrPos = transform.p;
+	Vec3 vVelocity = GetRigidBody()->GetVelocity();
 
 	if (IS_PRESS(KEY_TYPE::UP))
 	{
-		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * m_fSpeed * DELTA_TIME);
-		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * m_fSpeed * DELTA_TIME);
-		//vPos = GetTransform()->GetUp() * m_fSpeed * DELTA_TIME;
+		vVelocity += GetTransform()->GetUp() * m_fSpeed * DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::DOWN))
 	{
-		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME);
-		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME);
-		//vPos = GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME;
+		vVelocity += GetTransform()->GetUp() * -m_fSpeed * DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
-		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME);
-		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME);
-		//vPos = GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME;
+		vVelocity += GetTransform()->GetRight() * -m_fSpeed * DELTA_TIME;
 		GetGameObject()->SetDirection(DIRECTION::LEFT);
 	}
 
 	else if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
-		vCurrVelocity += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * m_fSpeed * DELTA_TIME);
-		vCurrPos += Conv::Vec3ToPxVec3(GetTransform()->GetRight() * m_fSpeed * DELTA_TIME);
-		//vPos = GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
+		vVelocity += GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
 		GetGameObject()->SetDirection(DIRECTION::RIGHT);
 	}
-	transform.p = vCurrPos;
-	pActor->setKinematicTarget(transform);
-	pActor->setLinearVelocity(vCurrVelocity);
-	//GetController()->Move(Conv::Vec3ToPxVec3(vPos), &m_FilterShaders, GetCollider()->GetFilterData());
+
+	if (IS_PRESS(KEY_TYPE::C))
+	{
+		vVelocity += GetTransform()->GetUp() * m_fJumpSpeed * DELTA_TIME;
+	}
+	
+	GetRigidBody()->SetVelocity(vVelocity);
 }

@@ -55,31 +55,27 @@ void Collider::Render()
 {
 }
 
-void Collider::OnCollision(shared_ptr<Collider> pOtherCollider)
+void Collider::OnCollisionEnter(shared_ptr<Collider> pOtherCollider)
 {
-	if (pOtherCollider->GetPhysical())
-	{
-		PxRigidDynamic* pActor = GetPhysical()->GetActor()->is<PxRigidDynamic>();
-		PxRigidDynamic* pOtherActor = pOtherCollider->GetPhysical()->GetActor()->is<PxRigidDynamic>();
-		PxBoxGeometry otherGeom = pOtherCollider->GetPhysical()->GetGeometries()->boxGeom;
-
-		PxTransform myTransform = pActor->getGlobalPose();
-		PxTransform otherTransform = pOtherActor->getGlobalPose();
-
-		//if (Overlap(otherGeom, pOtherActor->getGlobalPose()))
-		//{
-		//	if (ComputePenetration(otherGeom, pOtherActor->getGlobalPose()))
-		//	{
-		//		PxTransform transform = GetTransform()->GetPxTransform();
-		//		transform.p += m_vPenetDir * m_fPenetDepth;
-		//		transform.p.z = 0.f;
-		//		pActor->setGlobalPose(transform);
-		//	}
-		//}
-	}
+	GetGameObject()->OnCollisionEnter(pOtherCollider->GetGameObject());
 }
 
-RaycastResult Collider::Raycast(Vec3 vOrigin, Vec3 vDir)
+void Collider::OnCollisionExit(shared_ptr<Collider> pOtherCollider)
+{
+	GetGameObject()->OnCollisionExit(pOtherCollider->GetGameObject());
+}
+
+void Collider::OnTriggerEnter(shared_ptr<Collider> pOtherCollider)
+{
+	GetGameObject()->OnTriggerEnter(pOtherCollider->GetGameObject());
+}
+
+void Collider::OnTriggerExit(shared_ptr<Collider> pOtherCollider)
+{
+	GetGameObject()->OnTriggerExit(pOtherCollider->GetGameObject());
+}
+
+RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir)
 {
 	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
 
@@ -198,7 +194,7 @@ void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)
 	}
 }
 
-void Collider::CreateDebugBox(Vec3 vHalfSize)
+void Collider::CreateDebugBox(const Vec3& vHalfSize)
 {
 	shared_ptr<Mesh> pMesh = make_shared<Mesh>();
 	auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndices(Vec3(1.f, 1.f, 1.f));

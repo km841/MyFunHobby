@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "PlayerState.h"
 #include "StateMachine.h"
+#include "RigidBody.h"
 
 Player::Player()
 	: m_ePlayerState(PLAYER_STATE::IDLE)
@@ -43,4 +44,23 @@ void Player::LateUpdate()
 void Player::FinalUpdate()
 {
 	GameObject::FinalUpdate();
+}
+
+void Player::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
+{
+}
+
+void Player::OnCollisionExit(shared_ptr<GameObject> pGameObject)
+{
+}
+
+void Player::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
+{
+	GetRigidBody()->RemoveGravity();
+	GetRigidBody()->SetVelocity(Vec3::Zero);
+}
+
+void Player::OnTriggerExit(shared_ptr<GameObject> pGameObject)
+{
+	GetRigidBody()->ApplyGravity();
 }

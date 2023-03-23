@@ -311,7 +311,7 @@ void ToolScene::PalleteUpdate()
 	}
 }
 
-void ToolScene::CreateTile(Vec3 vWorldPos)
+void ToolScene::CreateTile(const Vec3& vWorldPos)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
@@ -341,7 +341,7 @@ void ToolScene::CreateTile(Vec3 vWorldPos)
 	m_mTileMap[vTileAlignVec] = true;
 }
 
-void ToolScene::CreateTile(Vec2 vTileAlignVec, wstring szTexPath)
+void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath)
 {
 	shared_ptr<Tile> pTile = Tile::Get();
 
@@ -374,7 +374,7 @@ void ToolScene::CreateTile(Vec2 vTileAlignVec, wstring szTexPath)
 	m_mTileMap[vTileAlignVec] = true;
 }
 
-void ToolScene::EraseTile(Vec3 vWorldPos)
+void ToolScene::EraseTile(const Vec3& vWorldPos)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
@@ -394,7 +394,7 @@ void ToolScene::EraseTile(Vec3 vWorldPos)
 	}
 }
 
-bool ToolScene::CheckTileAtClick(Vec3 vWorldPos)
+bool ToolScene::CheckTileAtClick(const Vec3& vWorldPos)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 

@@ -52,11 +52,11 @@ public:
 private:
     void PalleteUpdate();
 
-    void CreateTile(Vec3 vWorldPos);
-    void CreateTile(Vec2 vTileAlignPos, wstring szTexPath);
+    void CreateTile(const Vec3& vWorldPos);
+    void CreateTile(const Vec2& vTileAlignPos, wstring szTexPath);
 
-    void EraseTile(Vec3 vWorldPos);
-    bool CheckTileAtClick(Vec3 vWorldPos);
+    void EraseTile(const Vec3& vWorldPos);
+    bool CheckTileAtClick(const Vec3& vWorldPos);
 
 private:
     void AnimationEditorUpdate();
@@ -72,9 +72,9 @@ private:
 
     TimeCounter m_TileDragHolder;
     TileMap m_mTileMap;
-
+    TileMapData m_TileMapData;
 
     std::vector<shared_ptr<GameObject>> m_vFrameDividers;
-    TileMapData m_TileMapData;
+    
 };
 

@@ -23,6 +23,12 @@ public:
 	PLAYER_STATE GetPlayerStateEnum()					   { return m_ePlayerState; }
 	void		 SetPlayerState(PLAYER_STATE ePlayerState) { m_ePlayerState = ePlayerState; }
 
+public:
+	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
+	virtual void OnCollisionExit(shared_ptr<GameObject> pGameObject) override;
+	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject) override;
+	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject) override;
+
 
 private:
 	PLAYER_STATE m_ePlayerState;
