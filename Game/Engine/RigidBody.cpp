@@ -39,3 +39,16 @@ void RigidBody::Move()
 	transform.p += Conv::Vec3ToPxVec3(m_vVelocity) * DELTA_TIME;
 	GetPhysical()->GetActor()->is<PxRigidDynamic>()->setKinematicTarget(transform);
 }
+
+void RigidBody::SetVelocity(AXIS eAxis, float fVelocity)
+{
+	switch (eAxis)
+	{
+	case AXIS::X:
+		m_vVelocity.x = fVelocity;
+		break;
+	case AXIS::Y:
+		m_vVelocity.y = fVelocity;
+		break;
+	}
+}

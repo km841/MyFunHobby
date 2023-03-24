@@ -19,8 +19,9 @@ public:
     const Vec3& GetGravityAccel()                  { return m_vGravityAccel;     }
 
     const Vec3& GetVelocity()                      { return m_vVelocity;         }
-    void        SetVelocity(const Vec3& vVelocity) { m_vVelocity = vVelocity;    }
     void        AddVelocity(const Vec3& vVelocity) { m_vVelocity += vVelocity;   }
+    void        SetVelocity(const Vec3& vVelocity) { m_vVelocity = vVelocity;    }
+    void        SetVelocity(AXIS eAxis, float fVelocity);
 
     void        SetMass(float fMass)               { m_fMass = fMass; }
     float       GetMass()                          { return m_fMass;  }

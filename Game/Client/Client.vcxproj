@@ -168,6 +168,8 @@
     <ClInclude Include="FadeInOutScript.h" />
     <ClInclude Include="GridDrawScript.h" />
     <ClInclude Include="IdleState.h" />
+    <ClInclude Include="JumpFallState.h" />
+    <ClInclude Include="JumpRiseState.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
@@ -188,6 +190,8 @@
     <ClCompile Include="FadeInOutScript.cpp" />
     <ClCompile Include="GridDrawScript.cpp" />
     <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="JumpFallState.cpp" />
+    <ClCompile Include="JumpRiseState.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

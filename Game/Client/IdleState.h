@@ -1,6 +1,6 @@
 #pragma once
 #include "PlayerState.h"
-class GameObject;
+class Player;
 class IdleState :
     public PlayerState
 {

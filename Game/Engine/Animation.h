@@ -28,6 +28,7 @@ private:
     weak_ptr<Animator>      m_pAnimator;
     shared_ptr<Texture>     m_pTexture;
     int32                   m_iCurFrame;
+    int32                   m_iSection;
     float                   m_fAccTime;
     bool                    m_bLoop;
     bool                    m_bFinished;

@@ -57,13 +57,13 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     {
         float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
         vColor = g_tex_0.Sample(g_sam_0, vUV);
-        if (vColor.w == 0)
+        if (vColor.a == 0)
             discard;
     }
     else
     {
         vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-        if (vColor.w == 0)
+        if (vColor.a == 0)
             discard;
     }
     return vColor;

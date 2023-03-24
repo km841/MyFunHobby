@@ -4,7 +4,8 @@ enum class PLAYER_STATE : uint8
 {
 	IDLE,
 	WALK,
-	JUMP,
+	JUMP_RISE,
+	JUMP_FALL,
 
 
 	END,

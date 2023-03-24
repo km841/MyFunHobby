@@ -28,13 +28,12 @@ Collider::~Collider()
 
 void Collider::Awake()
 {
-	shared_ptr<Physical> pPhysical = GetPhysical();
 	m_FilterData.word0 = 1 << static_cast<uint32>(GetGameObject()->GetLayerType());
 
-	if (pPhysical)
+	if (GetPhysical())
 	{
-		CreateDebugGeometry(pPhysical->GetGeometries());
-		pPhysical->GetShape()->setSimulationFilterData(m_FilterData);
+		CreateDebugGeometry(GetPhysical()->GetGeometries());
+		GetPhysical()->GetShape()->setSimulationFilterData(m_FilterData);
 	}
 }
 

@@ -45,6 +45,13 @@ enum class DIRECTION
 	LEFT,
 };
 
+enum class AXIS
+{
+	X,
+	Y,
+	Z,
+};
+
 enum
 {
 	SCENE_TYPE_COUNT = SCENE_TYPE::END,

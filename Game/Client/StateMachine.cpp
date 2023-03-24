@@ -4,6 +4,8 @@
 #include "PlayerState.h"
 #include "IdleState.h"
 #include "WalkState.h"
+#include "JumpRiseState.h"
+#include "JumpFallState.h"
 #include "Player.h"
 
 StateMachine::StateMachine()
@@ -14,8 +16,9 @@ void StateMachine::Awake()
 {
 	m_mStateMap[PLAYER_STATE::IDLE] = make_shared<IdleState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::WALK] = make_shared<WalkState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::JUMP_RISE] = make_shared<JumpRiseState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::JUMP_FALL] = make_shared<JumpFallState>(m_pPlayer.lock());
 	
-
 
 	ChangePlayerState(static_pointer_cast<Player>(m_pPlayer.lock())->GetPlayerStateEnum());
 }

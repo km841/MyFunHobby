@@ -85,6 +85,12 @@
     <ClInclude Include="WalkState.h">
       <Filter>소스 파일\Game\Object\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="JumpRiseState.h">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpFallState.h">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -149,6 +155,12 @@
       <Filter>소스 파일\Game\Object\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="WalkState.cpp">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpRiseState.cpp">
+      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpFallState.cpp">
       <Filter>소스 파일\Game\Object\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>

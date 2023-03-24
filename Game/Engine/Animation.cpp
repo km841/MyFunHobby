@@ -14,6 +14,7 @@ Animation::Animation()
 	, m_iCurFrame(0)
 	, m_fAccTime(0.f)
 	, m_bFinished(false)
+	, m_iSection(0)
 {
 }
 
@@ -24,6 +25,7 @@ Animation::Animation(const std::vector<FrameData> vFrameDataList)
 	, m_vFrameDataList(vFrameDataList)
 	, m_fAccTime(0.f)
 	, m_bFinished(false)
+	, m_iSection(0)
 {
 }
 
@@ -51,7 +53,7 @@ void Animation::Update()
 		{
 			if (m_bLoop)
 			{
-				m_iCurFrame = 0;
+				m_iCurFrame = m_iSection;
 			}
 			else
 			{

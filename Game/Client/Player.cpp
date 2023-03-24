@@ -6,6 +6,7 @@
 
 Player::Player()
 	: m_ePlayerState(PLAYER_STATE::IDLE)
+	, m_iTileCollisionCount(0)
 {
 	m_pStateMachine = make_unique<StateMachine>();
 	m_eLayerType = LAYER_TYPE::PLAYER;
@@ -56,11 +57,22 @@ void Player::OnCollisionExit(shared_ptr<GameObject> pGameObject)
 
 void Player::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
-	GetRigidBody()->RemoveGravity();
-	GetRigidBody()->SetVelocity(Vec3::Zero);
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		m_iTileCollisionCount++;
+		GetRigidBody()->RemoveGravity();
+		GetRigidBody()->SetVelocity(Vec3::Zero);
+	}
+
 }
 
 void Player::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
-	GetRigidBody()->ApplyGravity();
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		m_iTileCollisionCount--;
+		if (!m_iTileCollisionCount)
+			GetRigidBody()->ApplyGravity();
+	}
+	
 }
