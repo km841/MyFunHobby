@@ -19,7 +19,23 @@ enum class SRV_REGISTER : uint8
 	t2,
 	t3,
 	t4,
+	t5,
+	t6,
+	t7,
+	t8,
+	t9,
 
+
+	END,
+};
+
+enum class UAV_REGISTER : uint8
+{
+	u0,
+	u1,
+	u2,
+	u3,
+	u4,
 
 	END,
 };

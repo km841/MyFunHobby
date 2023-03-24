@@ -4,7 +4,7 @@
 
 Texture::Texture()
 	: Object(OBJECT_TYPE::TEXTURE)
-	, m_eType(TEXTURE_TYPE::END)
+	, m_eType{}
 {
 }
 
@@ -34,7 +34,7 @@ void Texture::Load(const wstring& szPath)
 	m_szName = szPath;
 }
 
-void Texture::Create(TEXTURE_TYPE eType, uint32 iWidth, uint32 iHeight)
+void Texture::Create(D3D11_BIND_FLAG eType, uint32 iWidth, uint32 iHeight)
 {
 	D3D11_TEXTURE2D_DESC td = { 0 };
 	
@@ -48,21 +48,13 @@ void Texture::Create(TEXTURE_TYPE eType, uint32 iWidth, uint32 iHeight)
 	td.SampleDesc.Quality = 0;
 	td.MipLevels = 1;
 	td.MiscFlags = 0;
+	td.BindFlags = eType;
 
-	switch (eType)
-	{
-	case TEXTURE_TYPE::RENDER_TARGET:
+	if (eType & D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
 		td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		td.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET;
-		break;
-	case TEXTURE_TYPE::SHADER_RESOURCE:
+	
+	if (eType & D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE)
 		td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		td.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE;
-		break;
-	case TEXTURE_TYPE::DEPTH_STENCIL:
-		td.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
-		break;
-	}
 
 	HRESULT hr = DEVICE->CreateTexture2D(&td, nullptr, m_pTexture.GetAddressOf());
 	assert(SUCCEEDED(hr));
@@ -70,27 +62,39 @@ void Texture::Create(TEXTURE_TYPE eType, uint32 iWidth, uint32 iHeight)
 	CreateFromTexture(eType, m_pTexture);
 }
 
-void Texture::CreateFromTexture(TEXTURE_TYPE eType, ComPtr<ID3D11Texture2D> pTexture)
+void Texture::CreateFromTexture(D3D11_BIND_FLAG eType, ComPtr<ID3D11Texture2D> pTexture)
 {
 	m_eType = eType;
 	m_pTexture = pTexture;
 
-	switch (m_eType)
+	if (m_eType & D3D11_BIND_RENDER_TARGET)
 	{
-	case TEXTURE_TYPE::RENDER_TARGET:
-		DEVICE->CreateRenderTargetView(pTexture.Get(), nullptr, m_pRTV.GetAddressOf());
-		break;
-	case TEXTURE_TYPE::SHADER_RESOURCE:
+		HRESULT hr = DEVICE->CreateRenderTargetView(pTexture.Get(), nullptr, m_pRTV.GetAddressOf());
+		assert(SUCCEEDED(hr));
+	}
+
+	if (m_eType & D3D11_BIND_SHADER_RESOURCE)
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC sd = {};
 		sd.Format = m_scratchImage.GetMetadata().format;
 		sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		sd.Texture2D.MipLevels = 1;
-		DEVICE->CreateShaderResourceView(pTexture.Get(), &sd, m_pSRV.GetAddressOf());
+		HRESULT hr = DEVICE->CreateShaderResourceView(pTexture.Get(), &sd, m_pSRV.GetAddressOf());
+		assert(SUCCEEDED(hr));
 	}
-		break;
-	case TEXTURE_TYPE::DEPTH_STENCIL:
-		DEVICE->CreateDepthStencilView(pTexture.Get(), nullptr, m_pDSV.GetAddressOf());
-		break;
+
+	if (m_eType & D3D11_BIND_SHADER_RESOURCE)
+	{
+		HRESULT hr = DEVICE->CreateDepthStencilView(pTexture.Get(), nullptr, m_pDSV.GetAddressOf());
+		assert(SUCCEEDED(hr));
+	}
+
+	if (m_eType & D3D11_BIND_UNORDERED_ACCESS)
+	{
+		D3D11_UNORDERED_ACCESS_VIEW_DESC ud = {};
+		ud.Format = m_scratchImage.GetMetadata().format;
+		ud.ViewDimension = D3D11_UAV_DIMENSION::D3D11_UAV_DIMENSION_TEXTURE2D;
+		HRESULT hr = DEVICE->CreateUnorderedAccessView(pTexture.Get(), nullptr, m_pUAV.GetAddressOf());
+		assert(SUCCEEDED(hr));
 	}
 }

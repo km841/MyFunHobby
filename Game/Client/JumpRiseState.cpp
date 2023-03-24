@@ -26,7 +26,6 @@ void JumpRiseState::Update()
 	const Vec3& vVelocity = m_pPlayer.lock()->GetRigidBody()->GetVelocity();
 	if (vVelocity.y < 0.f)
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_FALL));
-	
 }
 
 void JumpRiseState::Enter()

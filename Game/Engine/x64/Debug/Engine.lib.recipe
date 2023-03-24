@@ -6,6 +6,9 @@
       <FullPath>C:\MyProject\Game\Output\alpha.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\compute.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\debug_geometry.cso</FullPath>
     </ContentFile>
     <ContentFile>

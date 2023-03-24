@@ -16,7 +16,7 @@ void Shader::Load(const wstring& szPath)
 
 }
 
-void Shader::Init(const wstring& szPath, ShaderInfo shaderInfo, const string& szVSFuncName, const string& szPSFuncName)
+void Shader::CreateGraphicsShader(const wstring& szPath, ShaderInfo shaderInfo, const string& szVSFuncName, const string& szPSFuncName)
 {
 	m_shaderInfo = shaderInfo;
 
@@ -156,6 +156,12 @@ void Shader::Init(const wstring& szPath, ShaderInfo shaderInfo, const string& sz
 	}
 #pragma endregion
 
+}
+
+void Shader::CreateComputeShader(const wstring& szPath, const string& szName, const string& szVersion)
+{
+	CreateShader(szPath, szName, szVersion, m_pCSBlob);
+	assert(m_pCSBlob);
 }
 
 void Shader::Update()

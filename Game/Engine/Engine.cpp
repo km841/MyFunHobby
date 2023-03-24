@@ -136,7 +136,7 @@ void Engine::ResizeWindow(int32 iWidth, int32 iHeight)
 void Engine::CreateRenderTargetGroups()
 {
 	shared_ptr<Texture> pDepthStencilTexture = 
-		GET_SINGLE(Resources)->CreateTexture(L"DepthStencil", TEXTURE_TYPE::DEPTH_STENCIL, m_Window.iWidth, m_Window.iHeight);
+		GET_SINGLE(Resources)->CreateTexture(L"DepthStencil", D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL, m_Window.iWidth, m_Window.iHeight);
 
 	float clearColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
 
@@ -149,7 +149,7 @@ void Engine::CreateRenderTargetGroups()
 		HRESULT hr = m_pSwapChain->GetSwapChain()->GetBuffer(i, IID_PPV_ARGS(&pResource));
 		assert(SUCCEEDED(hr));
 
-		vRenderTargetVec[i].pTarget = GET_SINGLE(Resources)->CreateTextureFromResource(name, TEXTURE_TYPE::RENDER_TARGET, pResource);
+		vRenderTargetVec[i].pTarget = GET_SINGLE(Resources)->CreateTextureFromResource(name, D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET, pResource);
 		memcpy(vRenderTargetVec[i].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
 	}
 

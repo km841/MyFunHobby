@@ -70,7 +70,8 @@ public:
     virtual ~Shader();
     virtual void Load(const wstring& szPath) override;
 
-    void Init(const wstring& szPath, ShaderInfo sInfo = ShaderInfo(), const string& szVSFuncName = "VS_Main", const string& szPSFuncName = "PS_Main");
+    void CreateGraphicsShader(const wstring& szPath, ShaderInfo sInfo = ShaderInfo(), const string& szVSFuncName = "VS_Main", const string& szPSFuncName = "PS_Main");
+    void CreateComputeShader(const wstring& szPath, const string& szName, const string& szVersion);
     void Update();
 
 public:
@@ -96,6 +97,7 @@ private:
 
     ComPtr<ID3DBlob>                m_pVSBlob;
     ComPtr<ID3DBlob>                m_pPSBlob;
+    ComPtr<ID3DBlob>                m_pCSBlob;
     ComPtr<ID3DBlob>                m_pErrBlob;
 };
 

@@ -20,7 +20,6 @@ void WalkState::Update()
 
 	if (m_pPlayer.lock()->GetRigidBody()->IsGravityApplied())
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_RISE));
-	
 }
 
 void WalkState::Enter()

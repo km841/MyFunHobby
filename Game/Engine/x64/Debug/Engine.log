@@ -1,7 +1,15 @@
-﻿  CollisionManager.cpp
-  Component.cpp
+﻿  Animation.cpp
+  Animator.cpp
+  BehaviorComposite.cpp
+  Collider.cpp
   Engine.cpp
+  EnginePch.cpp
   EventManager.cpp
-  PlayerChangeStateEvent.cpp
+  FilterShaders.cpp
+  CollisionManager.cpp
+  Resources.cpp
+  Scene.cpp
+  SceneChangeEvent.cpp
+  Utility.cpp
   코드를 생성하고 있습니다...
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

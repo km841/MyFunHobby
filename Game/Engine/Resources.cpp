@@ -11,7 +11,7 @@ void Resources::Init()
 	CreateDefaultMaterial();
 }
 
-shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, TEXTURE_TYPE eType, uint32 iWidth, uint32 iHeight)
+shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, D3D11_BIND_FLAG eType, uint32 iWidth, uint32 iHeight)
 {
 	shared_ptr<Texture> pTexture = make_shared<Texture>();
 	pTexture->Create(eType, iWidth, iHeight);
@@ -20,14 +20,13 @@ shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, TEXTURE_TYPE
 	return pTexture;
 }
 
-shared_ptr<Texture> Resources::CreateTextureFromResource(const wstring& szName, TEXTURE_TYPE eType, ComPtr<ID3D11Texture2D> iTexture)
+shared_ptr<Texture> Resources::CreateTextureFromResource(const wstring& szName, D3D11_BIND_FLAG eType, ComPtr<ID3D11Texture2D> iTexture)
 {
 	shared_ptr<Texture> pTexture = make_shared<Texture>();
 	pTexture->CreateFromTexture(eType, iTexture);
 	Add(szName, pTexture);
 
 	return pTexture;
-
 }
 
 shared_ptr<Mesh> Resources::LoadCubeMesh()
@@ -158,7 +157,7 @@ void Resources::CreateDefaultShader()
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->Init(L"..\\Resources\\Shader\\alpha.fx", shaderInfo);
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\alpha.fx", shaderInfo);
 
 		Add<Shader>(L"Alpha", pShader);
 	}
@@ -174,7 +173,7 @@ void Resources::CreateDefaultShader()
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->Init(L"..\\Resources\\Shader\\preview.fx", shaderInfo);
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\preview.fx", shaderInfo);
 
 		Add<Shader>(L"Preview", pShader);
 	}
@@ -191,7 +190,7 @@ void Resources::CreateDefaultShader()
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->Init(L"..\\Resources\\Shader\\debug_geometry.fx", shaderInfo);
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\debug_geometry.fx", shaderInfo);
 
 		Add<Shader>(L"DebugGeometry", pShader);
 	}
@@ -208,7 +207,7 @@ void Resources::CreateDefaultShader()
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->Init(L"..\\Resources\\Shader\\frame_divider.fx", shaderInfo);
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\frame_divider.fx", shaderInfo);
 
 		Add<Shader>(L"FrameDivider", pShader);
 	}
@@ -224,7 +223,7 @@ void Resources::CreateDefaultShader()
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->Init(L"..\\Resources\\Shader\\forward.fx", shaderInfo);
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\forward.fx", shaderInfo);
 
 		Add<Shader>(L"Forward", pShader);
 	}
@@ -232,9 +231,16 @@ void Resources::CreateDefaultShader()
 	// Grid
 	{
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->Init(L"..\\Resources\\Shader\\grid.fx");
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\grid.fx");
 
 		Add<Shader>(L"Grid", pShader);
+	}
+
+	// Compute
+	{
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateComputeShader(L"..\\Resources\\Shader\\compute.fx", "CS_Main", "cs_5_0");
+		Add<Shader>(L"Compute", pShader);
 	}
 }
 
@@ -301,6 +307,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"Atlas", pMaterial);
+	}
+
+	// Compute
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Compute");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"Compute", pMaterial);
 	}
 
 }
