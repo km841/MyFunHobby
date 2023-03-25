@@ -160,24 +160,32 @@ void Shader::CreateGraphicsShader(const wstring& szPath, ShaderInfo shaderInfo, 
 
 void Shader::CreateComputeShader(const wstring& szPath, const string& szName, const string& szVersion)
 {
+	m_shaderInfo.eShaderType = SHADER_TYPE::COMPUTE;
 	CreateShader(szPath, szName, szVersion, m_pCSBlob);
-	assert(m_pCSBlob);
+	HRESULT hr = DEVICE->CreateComputeShader(m_pCSBlob->GetBufferPointer(), m_pCSBlob->GetBufferSize(), nullptr, &m_pComputeShader);
+	assert(SUCCEEDED(hr));
 }
 
 void Shader::Update()
 {
-	CONTEXT->VSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
-	CONTEXT->PSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+	if (SHADER_TYPE::COMPUTE == m_shaderInfo.eShaderType)
+	{
+		CONTEXT->CSSetShader(m_pComputeShader.Get(), nullptr, 0);
+	}
+	else
+	{
+		CONTEXT->VSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+		CONTEXT->PSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+		CONTEXT->VSSetShader(m_pVertexShader.Get(), nullptr, 0);
+		CONTEXT->PSSetShader(m_pPixelShader.Get(), nullptr, 0);
 
-	CONTEXT->IASetPrimitiveTopology(m_shaderInfo.eTopology);
-	CONTEXT->IASetInputLayout(m_pInputLayout.Get());
+		CONTEXT->IASetPrimitiveTopology(m_shaderInfo.eTopology);
+		CONTEXT->IASetInputLayout(m_pInputLayout.Get());
+		CONTEXT->RSSetState(m_pRasterizerState.Get());
 
-	CONTEXT->VSSetShader(m_pVertexShader.Get(), nullptr, 0);
-	CONTEXT->PSSetShader(m_pPixelShader.Get(), nullptr, 0);
-
-	CONTEXT->RSSetState(m_pRasterizerState.Get());
-	CONTEXT->OMSetDepthStencilState(m_pDepthStencilState.Get(), 0);
-	CONTEXT->OMSetBlendState(m_pBlendState.Get(), nullptr, 0xffffffff);
+		CONTEXT->OMSetDepthStencilState(m_pDepthStencilState.Get(), 0);
+		CONTEXT->OMSetBlendState(m_pBlendState.Get(), nullptr, 0xffffffff);
+	}
 }
 
 void Shader::CreateShader(const wstring& szPath, const string& szName, const string& szVersion, ComPtr<ID3DBlob>& pBlob)

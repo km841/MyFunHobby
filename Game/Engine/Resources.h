@@ -15,8 +15,8 @@ class Resources
 public:
 	void Init();
 
-	shared_ptr<Texture> CreateTexture(const wstring& szName, D3D11_BIND_FLAG eType, uint32 iWidth, uint32 iHeight);
-	shared_ptr<Texture> CreateTextureFromResource(const wstring& szName, D3D11_BIND_FLAG eType, ComPtr<ID3D11Texture2D> iTexture);
+	shared_ptr<Texture> CreateTexture(const wstring& szName, uint32 eType, uint32 iWidth, uint32 iHeight);
+	shared_ptr<Texture> CreateTextureFromResource(const wstring& szName, uint32 eType, ComPtr<ID3D11Texture2D> iTexture);
 
 	template<typename T>
 	shared_ptr<T> Load(const wstring& szKey, const wstring& szPath);

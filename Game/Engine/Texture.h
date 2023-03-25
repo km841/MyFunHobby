@@ -10,8 +10,8 @@ public:
     virtual void Load(const wstring& szPath) override;
 
 public:
-    void Create(D3D11_BIND_FLAG eType, uint32 iWidth, uint32 iHeight);
-    void CreateFromTexture(D3D11_BIND_FLAG eType, ComPtr<ID3D11Texture2D> pTexture);
+    void Create(uint32 eType, uint32 iWidth, uint32 iHeight);
+    void CreateFromTexture(uint32 eType, ComPtr<ID3D11Texture2D> pTexture);
 
 public:
     Vec3 GetTexSize() { return Vec3(static_cast<float>(m_scratchImage.GetMetadata().width), static_cast<float>(m_scratchImage.GetMetadata().height), 1.f); }
@@ -26,7 +26,7 @@ public:
     ComPtr<ID3D11UnorderedAccessView> GetUAV()   { return m_pUAV; }
 
 private:
-    D3D11_BIND_FLAG                     m_eType;
+    uint32                              m_eType;
 
     ScratchImage                        m_scratchImage;
     ComPtr<ID3D11Texture2D>             m_pTexture;

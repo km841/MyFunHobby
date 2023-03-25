@@ -15,22 +15,58 @@ Material::~Material()
 {
 }
 
-void Material::PushData()
+void Material::PushGraphicData()
+{
+	CONST_BUFFER(CONSTANT_BUFFER_TYPE::MATERIAL)->PushData(&m_materialParams, sizeof(m_materialParams));
+
+	SHADER_TYPE eShaderType = m_pShader->GetShaderType();
+
+	for (uint32 i = 0; i < m_pTextures.size(); ++i)
+	{
+		if (nullptr == m_pTextures[i])
+		{
+			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+		}
+
+		else
+		{
+			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				m_pTextures[i]->GetSRV().GetAddressOf());
+		}
+
+	}
+	
+	m_pShader->Update();
+}
+
+void Material::PushComputeData()
 {
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::MATERIAL)->PushData(&m_materialParams, sizeof(m_materialParams));
 
 	for (uint32 i = 0; i < m_pTextures.size(); ++i)
 	{
 		if (nullptr == m_pTextures[i])
-			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1, 
-				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+		{
+			CONTEXT->CSSetUnorderedAccessViews(static_cast<uint8>(UAV_REGISTER::u0) + i, 1,
+				reinterpret_cast<ID3D11UnorderedAccessView**>(&m_ppNullptr), 0);
+		}
 
 		else
-			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1, 
-				m_pTextures[i]->GetSRV().GetAddressOf());
+		{
+			CONTEXT->CSSetUnorderedAccessViews(static_cast<uint8>(UAV_REGISTER::u0) + i, 1,
+				m_pTextures[i]->GetUAV().GetAddressOf(), 0);
+		}
 	}
 
 	m_pShader->Update();
+}
+
+void Material::Dispatch(uint32 iCountX, uint32 iCountY, uint32 iCountZ)
+{
+	PushComputeData();
+	CONTEXT->Dispatch(iCountX, iCountY, iCountZ);
+	ClearComputeData();
 }
 
 void Material::SetTexture(uint8 iIndex, shared_ptr<Texture> pTexture)
@@ -48,4 +84,13 @@ shared_ptr<Material> Material::Clone()
 	pMaterial->m_pTextures = m_pTextures;
 
 	return pMaterial;
+}
+
+void Material::ClearComputeData()
+{
+	for (uint32 i = 0; i < m_pTextures.size(); ++i)
+	{
+		CONTEXT->CSSetUnorderedAccessViews(static_cast<uint8>(UAV_REGISTER::u0) + i, 1,
+			reinterpret_cast<ID3D11UnorderedAccessView**>(&m_ppNullptr), 0);
+	}
 }

@@ -11,7 +11,9 @@ public:
     Material();
     virtual ~Material();
 
-    void PushData();
+    void PushGraphicData();
+    void PushComputeData();
+    void Dispatch(uint32 iCountX, uint32 iCountY, uint32 iCountZ);
 
     void SetShader(shared_ptr<Shader> pShader) { m_pShader = pShader; }
     void SetTexture(uint8 iIndex, shared_ptr<Texture> pTexture);
@@ -25,6 +27,8 @@ public:
     void SetVec4(uint8 iIndex, Vec4 vValue) { m_materialParams.SetVec4(iIndex, vValue); }
 
     shared_ptr<Material> Clone();
+
+    void ClearComputeData();
 
 private:
     shared_ptr<Shader>      m_pShader;

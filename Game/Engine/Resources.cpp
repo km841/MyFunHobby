@@ -11,7 +11,7 @@ void Resources::Init()
 	CreateDefaultMaterial();
 }
 
-shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, D3D11_BIND_FLAG eType, uint32 iWidth, uint32 iHeight)
+shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, uint32 eType, uint32 iWidth, uint32 iHeight)
 {
 	shared_ptr<Texture> pTexture = make_shared<Texture>();
 	pTexture->Create(eType, iWidth, iHeight);
@@ -20,7 +20,7 @@ shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, D3D11_BIND_F
 	return pTexture;
 }
 
-shared_ptr<Texture> Resources::CreateTextureFromResource(const wstring& szName, D3D11_BIND_FLAG eType, ComPtr<ID3D11Texture2D> iTexture)
+shared_ptr<Texture> Resources::CreateTextureFromResource(const wstring& szName, uint32 eType, ComPtr<ID3D11Texture2D> iTexture)
 {
 	shared_ptr<Texture> pTexture = make_shared<Texture>();
 	pTexture->CreateFromTexture(eType, iTexture);

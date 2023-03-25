@@ -18,7 +18,7 @@ MeshRenderer::~MeshRenderer()
 void MeshRenderer::Render(shared_ptr<Camera> pCamera)
 {
 	GetTransform()->PushData(pCamera);
-	m_pMaterial->PushData();
+	m_pMaterial->PushGraphicData();
 
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->Mapping();
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::MATERIAL)->Mapping();

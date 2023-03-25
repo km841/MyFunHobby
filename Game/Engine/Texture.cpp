@@ -34,13 +34,12 @@ void Texture::Load(const wstring& szPath)
 	m_szName = szPath;
 }
 
-void Texture::Create(D3D11_BIND_FLAG eType, uint32 iWidth, uint32 iHeight)
+void Texture::Create(uint32 eType, uint32 iWidth, uint32 iHeight)
 {
 	D3D11_TEXTURE2D_DESC td = { 0 };
 	
 	td.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 	td.CPUAccessFlags = 0;
-	td.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
 	td.Width = iWidth;
 	td.Height = iHeight;
 	td.ArraySize = 1;
@@ -50,22 +49,24 @@ void Texture::Create(D3D11_BIND_FLAG eType, uint32 iWidth, uint32 iHeight)
 	td.MiscFlags = 0;
 	td.BindFlags = eType;
 
-	if (eType & D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
+	if (eType & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
+		td.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
+	else
 		td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	
-	if (eType & D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE)
-		td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-
 	HRESULT hr = DEVICE->CreateTexture2D(&td, nullptr, m_pTexture.GetAddressOf());
 	assert(SUCCEEDED(hr));
 
 	CreateFromTexture(eType, m_pTexture);
 }
 
-void Texture::CreateFromTexture(D3D11_BIND_FLAG eType, ComPtr<ID3D11Texture2D> pTexture)
+void Texture::CreateFromTexture(uint32 eType, ComPtr<ID3D11Texture2D> pTexture)
 {
 	m_eType = eType;
 	m_pTexture = pTexture;
+
+	D3D11_TEXTURE2D_DESC td = {};
+	m_pTexture->GetDesc(&td);
 
 	if (m_eType & D3D11_BIND_RENDER_TARGET)
 	{
@@ -76,23 +77,24 @@ void Texture::CreateFromTexture(D3D11_BIND_FLAG eType, ComPtr<ID3D11Texture2D> p
 	if (m_eType & D3D11_BIND_SHADER_RESOURCE)
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC sd = {};
-		sd.Format = m_scratchImage.GetMetadata().format;
+		sd.Format = td.Format;
 		sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		sd.Texture2D.MipLevels = 1;
+
 		HRESULT hr = DEVICE->CreateShaderResourceView(pTexture.Get(), &sd, m_pSRV.GetAddressOf());
 		assert(SUCCEEDED(hr));
 	}
 
-	if (m_eType & D3D11_BIND_SHADER_RESOURCE)
+	if (m_eType & D3D11_BIND_DEPTH_STENCIL)
 	{
 		HRESULT hr = DEVICE->CreateDepthStencilView(pTexture.Get(), nullptr, m_pDSV.GetAddressOf());
 		assert(SUCCEEDED(hr));
 	}
 
-	if (m_eType & D3D11_BIND_UNORDERED_ACCESS)
+	if (m_eType & D3D11_BIND_UNORDERED_ACCESS)	
 	{
 		D3D11_UNORDERED_ACCESS_VIEW_DESC ud = {};
-		ud.Format = m_scratchImage.GetMetadata().format;
+		ud.Format = td.Format;
 		ud.ViewDimension = D3D11_UAV_DIMENSION::D3D11_UAV_DIMENSION_TEXTURE2D;
 		HRESULT hr = DEVICE->CreateUnorderedAccessView(pTexture.Get(), nullptr, m_pUAV.GetAddressOf());
 		assert(SUCCEEDED(hr));

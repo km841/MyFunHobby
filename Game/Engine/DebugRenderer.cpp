@@ -19,7 +19,7 @@ DebugRenderer::~DebugRenderer()
 void DebugRenderer::Render(shared_ptr<Camera> pCamera)
 {
 	GetTransform()->PxPushData(pCamera);
-	m_pMaterial->PushData();
+	m_pMaterial->PushGraphicData();
 
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->Mapping();
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::MATERIAL)->Mapping();

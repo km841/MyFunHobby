@@ -71,12 +71,15 @@ public:
     virtual void Load(const wstring& szPath) override;
 
     void CreateGraphicsShader(const wstring& szPath, ShaderInfo sInfo = ShaderInfo(), const string& szVSFuncName = "VS_Main", const string& szPSFuncName = "PS_Main");
-    void CreateComputeShader(const wstring& szPath, const string& szName, const string& szVersion);
     void Update();
 
 public:
+    void CreateComputeShader(const wstring& szPath, const string& szName, const string& szVersion);
     void CreateVertexShader(const wstring& szPath, const string& szName, const string& szVersion);
     void CreatePixelShader(const wstring& szPath, const string& szName, const string& szVersion);
+
+public:
+    SHADER_TYPE GetShaderType() { return m_shaderInfo.eShaderType; }
 
 private:
     void CreateShader(const wstring& szPath, const string& szName, const string& szVersion, ComPtr<ID3DBlob>& pBlob);
@@ -87,6 +90,7 @@ private:
 
     ComPtr<ID3D11VertexShader>      m_pVertexShader;
     ComPtr<ID3D11PixelShader>       m_pPixelShader;
+    ComPtr<ID3D11ComputeShader>     m_pComputeShader;
 
     ComPtr<ID3D11InputLayout>       m_pInputLayout;
     ComPtr<ID3D11SamplerState>      m_pSamplerState;

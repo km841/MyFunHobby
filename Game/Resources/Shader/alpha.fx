@@ -32,10 +32,10 @@ float4 PS_Main(VS_OUT _in) : SV_Target
 {
     float4 color = g_tex_0.Sample(g_sam_0, _in.uv);
     
-    if (color.a == 0)
-    {
-        discard;
-    }
+    //if (color.a == 0)
+    //{
+    //    discard;
+    //}
     
     return color;
 }

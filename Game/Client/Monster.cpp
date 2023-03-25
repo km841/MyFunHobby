@@ -3,6 +3,9 @@
 #include "Transform.h"
 #include "Physical.h"
 #include "Timer.h"
+#include "MeshRenderer.h"
+#include "Material.h"
+#include "Texture.h"
 
 
 Monster::Monster()

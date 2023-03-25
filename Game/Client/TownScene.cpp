@@ -47,7 +47,6 @@ void TownScene::Start()
 void TownScene::Update()
 {
 	Scene::Update();
-
 }
 
 void TownScene::LateUpdate()
@@ -110,14 +109,29 @@ void TownScene::Enter()
 		AddGameObject(pGameObject);
 	}
 
+	// Compute Shader
+	{
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
+
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
+
+		pMaterial->SetTexture(0, pTexture);
+		pMaterial->Dispatch(1, 1024, 1);
+
+		GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
+	}
+
 	// Monster
 	{
 		shared_ptr<Monster> pGameObject = make_shared<Monster>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
+		//shared_ptr<Texture> pTexture = make_shared<Texture>();
+		//pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
+
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"ComputeTexture");
 
 		shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
 
@@ -140,10 +154,12 @@ void TownScene::Enter()
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 30.f, fHeight / 2.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+		pGameObject->GetTransform()->SetLocalScale(Vec3(110.f, 110.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
+
+
 
 	// Background
 	//{
