@@ -27,11 +27,15 @@ void Material::PushGraphicData()
 		{
 			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
 				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+			CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
 		}
 
 		else
 		{
 			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				m_pTextures[i]->GetSRV().GetAddressOf());
+			CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
 				m_pTextures[i]->GetSRV().GetAddressOf());
 		}
 
@@ -64,6 +68,7 @@ void Material::PushComputeData()
 
 void Material::Dispatch(uint32 iCountX, uint32 iCountY, uint32 iCountZ)
 {
+	PushGraphicData();
 	PushComputeData();
 	CONTEXT->Dispatch(iCountX, iCountY, iCountZ);
 	ClearComputeData();

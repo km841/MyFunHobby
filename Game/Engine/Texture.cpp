@@ -32,11 +32,13 @@ void Texture::Load(const wstring& szPath)
 
 	m_pSRV->GetResource(reinterpret_cast<ID3D11Resource**>(m_pTexture.GetAddressOf()));
 	m_szName = szPath;
+	m_vTexSize = Vec3(static_cast<float>(m_scratchImage.GetMetadata().width), static_cast<float>(m_scratchImage.GetMetadata().height), 1.f);
 }
 
 void Texture::Create(uint32 eType, uint32 iWidth, uint32 iHeight)
 {
 	D3D11_TEXTURE2D_DESC td = { 0 };
+	m_vTexSize = Vec3(iWidth, iHeight, 1.f);
 	
 	td.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 	td.CPUAccessFlags = 0;

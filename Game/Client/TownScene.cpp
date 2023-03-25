@@ -112,13 +112,15 @@ void TownScene::Enter()
 	// Compute Shader
 	{
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
-
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
 
+		shared_ptr<Texture> pNoiseTexture = GET_SINGLE(Resources)->Load<Texture>(L"NoiseTexture", L"..\\Resources\\Texture\\Image_NoiseTexture.tga");
 		pMaterial->SetTexture(0, pTexture);
-		pMaterial->Dispatch(1, 1024, 1);
+		pMaterial->SetTexture(1, pNoiseTexture);
+		pMaterial->SetVec3(0, pNoiseTexture->GetTexSize());
 
+		pMaterial->Dispatch(1, 1024, 1);
 		GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
 	}
 

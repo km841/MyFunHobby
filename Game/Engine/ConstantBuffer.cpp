@@ -31,6 +31,7 @@ void ConstantBuffer::Mapping()
 {
 	CONTEXT->VSSetConstantBuffers(static_cast<uint8>(m_eReg), 1, m_pBuffer.GetAddressOf());
 	CONTEXT->PSSetConstantBuffers(static_cast<uint8>(m_eReg), 1, m_pBuffer.GetAddressOf());
+	CONTEXT->CSSetConstantBuffers(static_cast<uint8>(m_eReg), 1, m_pBuffer.GetAddressOf());
 }
 
 void ConstantBuffer::PushData(void* pData, uint32 iSize)

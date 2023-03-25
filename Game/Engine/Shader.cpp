@@ -171,6 +171,7 @@ void Shader::Update()
 	if (SHADER_TYPE::COMPUTE == m_shaderInfo.eShaderType)
 	{
 		CONTEXT->CSSetShader(m_pComputeShader.Get(), nullptr, 0);
+		CONTEXT->CSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
 	}
 	else
 	{
