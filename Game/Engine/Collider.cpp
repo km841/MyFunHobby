@@ -12,7 +12,7 @@
 
 Collider::Collider()
 	: Component(COMPONENT_TYPE::COLLIDER)
-	, m_fRaycastMaxDist(1000.f)
+	, m_fMaxDist(1000.f)
 	, m_fRaycastMaxHit(5)
 	, m_fPenetDepth(0.f)
 {
@@ -88,7 +88,7 @@ RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir)
 			Conv::Vec3ToPxVec3(vOrigin),
 			Conv::Vec3ToPxVec3(vDir),
 			boxGeom, GetTransform()->GetPxTransform(),
-			m_fRaycastMaxDist,
+			m_fMaxDist,
 			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
 			m_fRaycastMaxHit,
 			&m_RaycastHit);
@@ -105,7 +105,7 @@ RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir)
 			Conv::Vec3ToPxVec3(vOrigin),
 			Conv::Vec3ToPxVec3(vDir),
 			capsuleGeom, GetTransform()->GetPxTransform(),
-			m_fRaycastMaxDist,
+			m_fMaxDist,
 			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
 			m_fRaycastMaxHit,
 			&m_RaycastHit);
@@ -142,6 +142,35 @@ bool Collider::Overlap(const PxGeometry& otherGeom, const PxTransform& otherTran
 	return false;
 }
 
+bool Collider::Sweep( const PxGeometry& otherGeom, const PxTransform& otherTransform)
+{
+	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
+	const Vec3& vMyPos = GetTransform()->GetLocalPosition();
+	const PxVec3& vOtherPos = otherTransform.p;
+
+	const PxVec3& vDir = vOtherPos - Conv::Vec3ToPxVec3(vMyPos);
+	PxVec3 vUnitDir = vDir.getNormalized();
+
+	switch (eGeometryType)
+	{
+	case GEOMETRY_TYPE::BOX:
+	{
+		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
+		return PxGeometryQuery::sweep(vUnitDir, m_fMaxDist, boxGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform, m_SweepHit);
+	}
+	break;
+
+	case GEOMETRY_TYPE::CAPSULE:
+	{
+		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
+		return PxGeometryQuery::sweep(vUnitDir, m_fMaxDist, capsuleGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform, m_SweepHit);
+	}
+	break;
+	}
+
+	return false;
+}
+
 bool Collider::ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform)
 {
 
@@ -165,6 +194,31 @@ bool Collider::ComputePenetration(const PxGeometry& otherGeom, const PxTransform
 	}
 	
 	return false;
+}
+
+COLLISION_SIDE Collider::ComputeCollisionSide(shared_ptr<GameObject> pGameObject)
+{
+	const PxVec3& vMyPos = GetTransform()->GetPxTransform().p;
+	const PxVec3& vOtherPos = pGameObject->GetTransform()->GetPxTransform().p;
+
+	PxVec3 vDir = vMyPos - vOtherPos;
+	if (vDir.x > vDir.y)
+	{
+		if (vDir.x > 0.f)
+			return COLLISION_SIDE::RIGHT;
+		else
+			return COLLISION_SIDE::LEFT;
+	}
+
+	else
+	{
+		if (vDir.y > 0.f)
+			return COLLISION_SIDE::TOP;
+		else
+			return COLLISION_SIDE::BOTTOM;
+	}
+
+	return COLLISION_SIDE::NONE;
 }
 
 void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)

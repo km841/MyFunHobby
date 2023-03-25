@@ -38,7 +38,7 @@ void Texture::Load(const wstring& szPath)
 void Texture::Create(uint32 eType, uint32 iWidth, uint32 iHeight)
 {
 	D3D11_TEXTURE2D_DESC td = { 0 };
-	m_vTexSize = Vec3(iWidth, iHeight, 1.f);
+	m_vTexSize = Vec3(static_cast<float>(iWidth), static_cast<float>(iHeight), 1.f);
 	
 	td.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 	td.CPUAccessFlags = 0;

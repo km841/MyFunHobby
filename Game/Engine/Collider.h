@@ -28,7 +28,9 @@ public:
     PxFilterData&       GetFilterData() { return m_FilterData; }
     RaycastResult       Raycast(const Vec3& vOrigin, const Vec3& vDir);
     bool                Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform);
+    bool                Sweep(const PxGeometry& otherGeom, const PxTransform& otherTransform);
     bool                ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform);
+    COLLISION_SIDE      ComputeCollisionSide(shared_ptr<GameObject> pGameObject);
 
 private:
     void CreateDebugGeometry(shared_ptr<Geometries> pGeometries);
@@ -41,7 +43,7 @@ private:
     PxOverlapHit     m_OverlapHit;
     PxFilterData     m_FilterData;
 
-    float  m_fRaycastMaxDist;
+    float  m_fMaxDist;
     uint32 m_fRaycastMaxHit;
 
     PxVec3   m_vPenetDir;

@@ -43,8 +43,8 @@ void PlayerMoveScript::LateUpdate()
 
 	if (IS_DOWN(KEY_TYPE::C))
 	{
-		if (PLAYER_STATE::JUMP_RISE != GetTransform()->GetPlayerStateEnum() &&
-			PLAYER_STATE::JUMP_FALL != GetTransform()->GetPlayerStateEnum())
+		//if (PLAYER_STATE::JUMP_RISE != GetTransform()->GetPlayerStateEnum() &&
+		//	PLAYER_STATE::JUMP_FALL != GetTransform()->GetPlayerStateEnum())
 		{
 			vVelocity = GetTransform()->GetUp() * m_fJumpSpeed;
 			GetRigidBody()->AddVelocity(vVelocity);

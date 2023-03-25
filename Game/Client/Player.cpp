@@ -3,6 +3,9 @@
 #include "PlayerState.h"
 #include "StateMachine.h"
 #include "RigidBody.h"
+#include "Physical.h"
+#include "Transform.h"
+#include "Collider.h"
 
 Player::Player()
 	: m_ePlayerState(PLAYER_STATE::IDLE)
@@ -73,6 +76,9 @@ void Player::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 		m_iTileCollisionCount--;
 		if (!m_iTileCollisionCount)
 			GetRigidBody()->ApplyGravity();
+
+		if (0 > m_iTileCollisionCount)
+			m_iTileCollisionCount = 0;
 	}
 	
 }

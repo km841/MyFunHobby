@@ -50,8 +50,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//PalleteUpdate();
-	AnimationEditorUpdate();
+	PalleteUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -184,7 +184,7 @@ void ToolScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2.f, fHeight / 2.f - 32.5f, 1.f));
+		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2.f, fHeight / 2.f - 32.5f, 50.f));
 		m_pGrid->GetTransform()->SetLocalScale(Vec3(3.2f, 3.2f, 1.f));
 		AddGameObject(m_pGrid);
 	}

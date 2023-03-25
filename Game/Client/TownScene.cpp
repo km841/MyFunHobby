@@ -111,17 +111,17 @@ void TownScene::Enter()
 
 	// Compute Shader
 	{
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
+		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
+		//shared_ptr<Texture> pTexture = make_shared<Texture>();
+		//pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
 
-		shared_ptr<Texture> pNoiseTexture = GET_SINGLE(Resources)->Load<Texture>(L"NoiseTexture", L"..\\Resources\\Texture\\Image_NoiseTexture.tga");
-		pMaterial->SetTexture(0, pTexture);
-		pMaterial->SetTexture(1, pNoiseTexture);
-		pMaterial->SetVec3(0, pNoiseTexture->GetTexSize());
+		//shared_ptr<Texture> pNoiseTexture = GET_SINGLE(Resources)->Load<Texture>(L"NoiseTexture", L"..\\Resources\\Texture\\Image_NoiseTexture.tga");
+		//pMaterial->SetTexture(0, pTexture);
+		//pMaterial->SetTexture(1, pNoiseTexture);
+		//pMaterial->SetVec3(0, pNoiseTexture->GetTexSize());
 
-		pMaterial->Dispatch(1, 1024, 1);
-		GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
+		//pMaterial->Dispatch(1, 1024, 1);
+		//GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
 	}
 
 	// Monster
@@ -129,12 +129,10 @@ void TownScene::Enter()
 		shared_ptr<Monster> pGameObject = make_shared<Monster>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
 
-		//shared_ptr<Texture> pTexture = make_shared<Texture>();
-		//pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
-
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"ComputeTexture");
-
+		//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"ComputeTexture");
 		shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
 
 		shared_ptr<Material> pMaterial = make_shared<Material>();
@@ -156,33 +154,33 @@ void TownScene::Enter()
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 30.f, fHeight / 2.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(110.f, 110.f, 1.f));
+		pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
 
 		AddGameObject(pGameObject);
 	}
 
 
 
-	// Background
-	//{
-	//	shared_ptr<GameObject> pGameObject = GameObject::Get();
-	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	//	shared_ptr<Texture> pTexture = make_shared<Texture>();
-	//	pTexture->Load(L"..\\Resources\\Texture\\Image_Town.png");
-	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
-	//	pMaterial->SetTexture(0, pTexture);
-	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	//	pMeshRenderer->SetMaterial(pMaterial);
-	//	pMeshRenderer->SetMesh(pMesh);
-	//	pGameObject->AddComponent(pMeshRenderer);
-	//	pGameObject->AddComponent(make_shared<Transform>());
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-	//	pGameObject->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
+	//Background
+	{
+		shared_ptr<GameObject> pGameObject = GameObject::Get();
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Load(L"..\\Resources\\Texture\\Image_Town.png");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
+		pMaterial->SetTexture(0, pTexture);
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+		pGameObject->AddComponent(pMeshRenderer);
+		pGameObject->AddComponent(make_shared<Transform>());
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 50.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
 
-	//	AddGameObject(pGameObject);
-	//}
+		AddGameObject(pGameObject);
+	}
 
 	// Camera
 	{

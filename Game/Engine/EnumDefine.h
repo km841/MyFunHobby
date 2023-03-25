@@ -61,6 +61,15 @@ enum class DIRECTION
 	LEFT,
 };
 
+enum class COLLISION_SIDE
+{
+	TOP,
+	BOTTOM,
+	LEFT,
+	RIGHT,
+	NONE,
+};
+
 enum class AXIS
 {
 	X,
