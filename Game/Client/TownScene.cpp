@@ -24,7 +24,7 @@
 #include "Input.h"
 #include "Monster.h"
 #include "CollisionManager.h"
-#include "FadeInOutScript.h"
+#include "CameraFadeInOutScript.h"
 #include "UI.h"
 
 TownScene::TownScene()
@@ -241,7 +241,7 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pUI->AddComponent(make_shared<FadeInOutScript>(m_vCameras[1]));
+		pUI->AddComponent(make_shared<CameraFadeInOutScript>(m_vCameras[1]));
 
 		pUI->GetTransform()->SetLocalScale(Vec3(1600.f, 900.f, 10.f));
 		pUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));

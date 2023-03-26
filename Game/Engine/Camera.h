@@ -33,7 +33,6 @@ public:
     void            DisableAllCullingMask();
     void            EnableAllCullingMask();
 
-
 private:
     PROJECTION_TYPE m_eType;
 

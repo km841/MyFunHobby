@@ -13,13 +13,11 @@
 #include "Scenes.h"
 #include "Camera.h"
 #include "CameraMoveScript.h"
-#include "GridDrawScript.h"
 #include "ObjectAddedToSceneEvent.h"
 #include "EventManager.h"
 #include "Animator.h"
 #include "Animation.h"
 #include "Timer.h"
-
 #include "Tile.h"
 #include "PhysicsProperties.h"
 #include "Physical.h"

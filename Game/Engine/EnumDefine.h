@@ -117,3 +117,9 @@ enum class CAMERA_EFFECT : uint8
 	FADE_IN,
 	FADE_OUT,
 };
+
+enum class FADE_TYPE : uint8
+{
+	FADE_IN,
+	FADE_OUT,
+};

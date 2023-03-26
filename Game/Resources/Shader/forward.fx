@@ -43,6 +43,7 @@ VS_OUT VS_Main(VS_IN _in)
 // g_vec2_3 : Offset
 // g_int_0  : Animation Flag
 // g_int_1  : Direction
+// g_float_0: Ratio
 
 float4 PS_Main(VS_OUT _in) : SV_Target
 {
@@ -52,6 +53,8 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float2 vOffset = g_vec2_3;
     int iAnimationFlag = g_int_0;
     
+    float fRatio = g_float_0;
+    
     float4 vColor;
     if (iAnimationFlag == 1)
     {
@@ -59,12 +62,19 @@ float4 PS_Main(VS_OUT _in) : SV_Target
         vColor = g_tex_0.Sample(g_sam_0, vUV);
         if (vColor.a == 0)
             discard;
+        
+        if (vColor.a == 1 && fRatio > 0.f)
+            vColor.a = 1.f * fRatio;
+         
     }
     else
     {
         vColor = g_tex_0.Sample(g_sam_0, _in.uv);
         if (vColor.a == 0)
             discard;
+        
+        if (vColor.a == 1 && fRatio > 0.f)
+            vColor.a = 1.f * fRatio;
     }
     return vColor;
 }

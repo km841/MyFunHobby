@@ -62,12 +62,12 @@ void Camera::Render()
             if (pGameObject->GetMeshRenderer())
             {
                 if (pGameObject->IsEnable())
+                {
                     pGameObject->GetMeshRenderer()->Render(shared_from_this());
 
+                    if (pGameObject->GetDebugRenderer())
+                        pGameObject->GetDebugRenderer()->Render(shared_from_this());
 
-                if (pGameObject->GetDebugRenderer())
-                {
-                    pGameObject->GetDebugRenderer()->Render(shared_from_this());
                 }
             }
         }

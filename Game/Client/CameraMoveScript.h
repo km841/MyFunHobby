@@ -7,10 +7,8 @@ public:
     CameraMoveScript();
     virtual ~CameraMoveScript();
 
-
 public:
     virtual void LateUpdate() override;
-
 
 private:
     float m_fSpeed;

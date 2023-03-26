@@ -165,12 +165,12 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CameraMoveScript.h" />
-    <ClInclude Include="FadeInOutScript.h" />
-    <ClInclude Include="GridDrawScript.h" />
+    <ClInclude Include="CameraFadeInOutScript.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="JumpFallState.h" />
     <ClInclude Include="JumpRiseState.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="ObjectFadeInOutScript.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveScript.h" />
@@ -188,12 +188,12 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="FadeInOutScript.cpp" />
-    <ClCompile Include="GridDrawScript.cpp" />
+    <ClCompile Include="CameraFadeInOutScript.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="JumpFallState.cpp" />
     <ClCompile Include="JumpRiseState.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="ObjectFadeInOutScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

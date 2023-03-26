@@ -1,5 +1,5 @@
-#ifndef _FORWARD_FX_
-#define _FORWARD_FX_
+#ifndef _FADE_IN_OUT_FX_
+#define _FADE_IN_OUT_FX_
 
 #include "params.fx"
 

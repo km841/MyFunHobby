@@ -21,9 +21,9 @@
 #include "Input.h"
 #include "SceneChangeEvent.h"
 #include "UI.h"
-#include "FadeInOutScript.h"
+#include "CameraFadeInOutScript.h"
+#include "ObjectFadeInOutScript.h"
 
-#include "FadeInOutScript.h"
 
 TitleScene::TitleScene()
 	: Scene(SCENE_TYPE::TITLE)
@@ -73,30 +73,59 @@ void TitleScene::Enter()
 {
 	// Background
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UI);
+		m_pBackground = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Image_Title.png");
+		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleBG.tga");
 
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 	
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
 
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
+		m_pBackground->AddComponent(pMeshRenderer);
+		m_pBackground->AddComponent(make_shared<Transform>());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(900.f, 450.f, 1.f));
+		m_pBackground->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
+		m_pBackground->GetTransform()->SetLocalScale(Vec3(900.f, 450.f, 1.f));
 
-		AddGameObject(pGameObject);
+		AddGameObject(m_pBackground);
+	}
+
+	// Logo
+	{
+		m_pLogo = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleLogo.tga");
+
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		pMaterial->SetTexture(0, pTexture);
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		m_pLogo->AddComponent(pMeshRenderer);
+		m_pLogo->AddComponent(make_shared<Transform>());
+		m_pLogo->AddComponent(make_shared<ObjectFadeInOutScript>(3.f, FADE_TYPE::FADE_IN, 0.f));
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		m_pLogo->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 150.f, 90.f));
+		m_pLogo->GetTransform()->SetLocalScale(pTexture->GetTexSize() * 2.f / 3.f);
+
+		AddGameObject(m_pLogo);
 	}
 
 	// Camera
@@ -155,7 +184,7 @@ void TitleScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pUI->AddComponent(make_shared<FadeInOutScript>(m_vCameras[1]));
+		pUI->AddComponent(make_shared<CameraFadeInOutScript>(m_vCameras[1]));
 
 		pUI->GetTransform()->SetLocalScale(Vec3(1600.f, 900.f, 50.f));
 		pUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));

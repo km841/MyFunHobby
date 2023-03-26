@@ -338,6 +338,7 @@ public:
 		:m_fCurTime(0.f)
 		,m_fEndTime(fEndTime)
 		,m_bIsRunning(false)
+		,m_bUnuseFlag(false)
 	{}
 
 	void Reset()
@@ -359,6 +360,9 @@ public:
 
 	void Update(float fDeltaTime)
 	{
+		if (m_bUnuseFlag)
+			return;
+
 		if (m_bIsRunning)
 		{
 			m_fCurTime += fDeltaTime;
@@ -368,6 +372,11 @@ public:
 				m_bIsRunning = false;
 			}
 		}
+	}
+
+	bool IsRunning()
+	{
+		return m_bIsRunning;
 	}
 
 	bool IsFinished()
@@ -382,10 +391,21 @@ public:
 		return m_fCurTime / m_fEndTime;
 	}
 
+	void Disable()
+	{
+		m_bUnuseFlag = true;
+	}
+
+	bool GetUnusedFlag()
+	{
+		return m_bUnuseFlag;
+	}
+
 private:
 	float m_fCurTime;
 	float m_fEndTime;
 	bool  m_bIsRunning;
+	bool  m_bUnuseFlag;
 };
 
 

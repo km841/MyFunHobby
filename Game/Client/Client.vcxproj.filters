@@ -52,7 +52,7 @@
     <ClInclude Include="CameraMoveScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
-    <ClInclude Include="FadeInOutScript.h">
+    <ClInclude Include="CameraFadeInOutScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -69,9 +69,6 @@
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>소스 파일\Game\Object\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="GridDrawScript.h">
-      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>소스 파일\Game\Object\Tile</Filter>
@@ -96,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>소스 파일\Game\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFadeInOutScript.h">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +127,7 @@
     <ClCompile Include="CameraMoveScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
-    <ClCompile Include="FadeInOutScript.cpp">
+    <ClCompile Include="CameraFadeInOutScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -144,9 +144,6 @@
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>소스 파일\Game\Object\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="GridDrawScript.cpp">
-      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\Game\Object\Tile</Filter>
@@ -171,6 +168,9 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>소스 파일\Game\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFadeInOutScript.cpp">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
