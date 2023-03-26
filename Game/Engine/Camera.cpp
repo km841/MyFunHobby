@@ -48,20 +48,26 @@ void Camera::FinalUpdate()
 void Camera::Render()
 {
     shared_ptr<Scene> pCurScene = GET_SINGLE(Scenes)->GetActiveScene();
-    const std::vector<shared_ptr<GameObject>>& vGameObjects = pCurScene->GetGameObjects();
 
-    for (const shared_ptr<GameObject>& pGameObject : vGameObjects)
+    for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
     {
-        if (pGameObject->GetMeshRenderer())
+        const std::vector<shared_ptr<GameObject>>& vGameObjects = pCurScene->GetGameObjects(static_cast<LAYER_TYPE>(i));
+
+        for (const shared_ptr<GameObject>& pGameObject : vGameObjects)
         {
-            if (pGameObject->IsEnable())
-                pGameObject->GetMeshRenderer()->Render(shared_from_this());
-
-
-            if (pGameObject->GetDebugRenderer())
+            if (pGameObject->GetMeshRenderer())
             {
-                pGameObject->GetDebugRenderer()->Render(shared_from_this());
+                if (pGameObject->IsEnable())
+                    pGameObject->GetMeshRenderer()->Render(shared_from_this());
+
+
+                if (pGameObject->GetDebugRenderer())
+                {
+                    pGameObject->GetDebugRenderer()->Render(shared_from_this());
+                }
             }
         }
     }
+
+
 }

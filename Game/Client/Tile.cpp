@@ -3,8 +3,8 @@
 
 POOL_INIT(Tile);
 Tile::Tile()
+	: GameObject(LAYER_TYPE::TILE)
 {
-	m_eLayerType = LAYER_TYPE::TILE;
 }
 
 Tile::~Tile()

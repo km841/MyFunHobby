@@ -9,6 +9,7 @@
 #include "Material.h"
 #include "Resources.h"
 #include "DebugRenderer.h"
+#include "Timer.h"
 
 Collider::Collider()
 	: Component(COMPONENT_TYPE::COLLIDER)
@@ -41,7 +42,6 @@ void Collider::Update()
 {
 	if (GetPhysical())
 	{
-		PxShape* pShape = GetPhysical()->GetShape();
 		GetPhysical()->GetShape()->setSimulationFilterData(m_FilterData);
 	}
 }
@@ -74,21 +74,26 @@ void Collider::OnTriggerExit(shared_ptr<Collider> pOtherCollider)
 	GetGameObject()->OnTriggerExit(pOtherCollider->GetGameObject());
 }
 
-RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir)
+RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_ptr<GameObject> pGameObject, float fMaxDistance)
 {
 	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
+	if (!pGameObject->GetPhysical())
+	{
+		return RaycastResult(false, Vec3::Zero);
+	}
 
 	switch (eGeometryType)
 	{
 	case GEOMETRY_TYPE::BOX:
 	{
-		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
+		PxBoxGeometry boxGeom = pGameObject->GetPhysical()->GetGeometries()->boxGeom;
+		PxTransform transform = pGameObject->GetTransform()->GetPxTransform();
 
 		bool bResult = PxGeometryQuery::raycast(
 			Conv::Vec3ToPxVec3(vOrigin),
 			Conv::Vec3ToPxVec3(vDir),
-			boxGeom, GetTransform()->GetPxTransform(),
-			m_fMaxDist,
+			boxGeom, transform,
+			fMaxDistance,
 			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
 			m_fRaycastMaxHit,
 			&m_RaycastHit);
@@ -99,12 +104,13 @@ RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir)
 
 	case GEOMETRY_TYPE::CAPSULE:
 	{
-		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
+		PxCapsuleGeometry capsuleGeom = pGameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+		PxTransform transform = pGameObject->GetTransform()->GetPxTransform();
 
 		bool bResult = PxGeometryQuery::raycast(
 			Conv::Vec3ToPxVec3(vOrigin),
 			Conv::Vec3ToPxVec3(vDir),
-			capsuleGeom, GetTransform()->GetPxTransform(),
+			capsuleGeom, transform,
 			m_fMaxDist,
 			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
 			m_fRaycastMaxHit,
@@ -196,29 +202,36 @@ bool Collider::ComputePenetration(const PxGeometry& otherGeom, const PxTransform
 	return false;
 }
 
-COLLISION_SIDE Collider::ComputeCollisionSide(shared_ptr<GameObject> pGameObject)
+bool Collider::IsCollisionFromTop(shared_ptr<GameObject> pGameObject)
 {
 	const PxVec3& vMyPos = GetTransform()->GetPxTransform().p;
+	const Vec3& vMySize = GetPhysical()->GetGeometrySize();
+
 	const PxVec3& vOtherPos = pGameObject->GetTransform()->GetPxTransform().p;
+	const Vec3& vOtherSize = pGameObject->GetPhysical()->GetGeometrySize();
 
-	PxVec3 vDir = vMyPos - vOtherPos;
-	if (vDir.x > vDir.y)
+	Vec3 vLeftBottom = Vec3(vMyPos.x - vMySize.x, vMyPos.y - vMySize.y, 1.f);
+	Vec3 vRightBottom = Vec3(vMyPos.x + vMySize.x, vMyPos.y - vMySize.y, 1.f);
+
+	// 이 두 점 중 하나가 타일의 위쪽에 닿으면 충돌 처리
+
+	float fTolerance = 10.f;
+
+	// 타일의 x 범위
+	Vec3 vOtherLeftTop = Vec3(vOtherPos.x - vOtherSize.x + fTolerance, vOtherPos.y + vOtherSize.y, 1.f);
+	Vec3 vOtherRightTop = Vec3(vOtherPos.x + vOtherSize.x - fTolerance, vOtherPos.y + vOtherSize.y, 1.f);
+
+
+	if (fabs(vLeftBottom.y - vOtherLeftTop.y) < fTolerance)
 	{
-		if (vDir.x > 0.f)
-			return COLLISION_SIDE::RIGHT;
-		else
-			return COLLISION_SIDE::LEFT;
+		if ((vLeftBottom.x >= vOtherLeftTop.x && vLeftBottom.x <= vOtherRightTop.x) ||
+			(vRightBottom.x >= vOtherLeftTop.x && vRightBottom.x <= vOtherRightTop.x))
+		{
+			return true;
+		}
 	}
 
-	else
-	{
-		if (vDir.y > 0.f)
-			return COLLISION_SIDE::TOP;
-		else
-			return COLLISION_SIDE::BOTTOM;
-	}
-
-	return COLLISION_SIDE::NONE;
+	return false;
 }
 
 void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)

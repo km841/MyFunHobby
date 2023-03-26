@@ -80,7 +80,7 @@ void ToolScene::Enter()
 {
 	// Preview Tile
 	{
-		m_pPreviewTile = GameObject::Get();
+		m_pPreviewTile = make_shared<GameObject>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Preview");
@@ -98,7 +98,7 @@ void ToolScene::Enter()
 	// Animation Select Box
 	for (int32 i = 0; i < FRAME_BOX_COUNT; ++i)
 	{
-		shared_ptr<GameObject> pGameObject = GameObject::Get();
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>();
 
 		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndices(Vec3(1.f, 1.f, 1.f));
 
@@ -126,7 +126,7 @@ void ToolScene::Enter()
 
 	// Sprite Texture
 	{
-		m_pSpriteTexture = GameObject::Get();
+		m_pSpriteTexture = make_shared<GameObject>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Atlas");
@@ -147,7 +147,7 @@ void ToolScene::Enter()
 
 	// Camera
 	{
-		m_pMainCamera = GameObject::Get();
+		m_pMainCamera = make_shared<GameObject>();
 
 		m_pMainCamera->AddComponent(make_shared<Transform>());
 		m_pMainCamera->AddComponent(make_shared<Camera>());
@@ -163,7 +163,7 @@ void ToolScene::Enter()
 
 	// Grid
 	{
-		m_pGrid = GameObject::Get();
+		m_pGrid = make_shared<GameObject>();
 
 		m_pGrid->AddComponent(make_shared<Transform>());
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -188,8 +188,6 @@ void ToolScene::Enter()
 		m_pGrid->GetTransform()->SetLocalScale(Vec3(3.2f, 3.2f, 1.f));
 		AddGameObject(m_pGrid);
 	}
-
-
 }
 
 void ToolScene::Exit()
@@ -222,17 +220,17 @@ void ToolScene::PalleteUpdate()
 
 	m_TileMapData.vTileData.clear();
 
-	for (auto& pGameObject : m_vGameObjects)
-	{
-		if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
-		{
-			shared_ptr<Material> pMaterial = pGameObject->GetMeshRenderer()->GetMaterial();
-			wstring szTexPath = pMaterial->GetTexture(0)->GetName();
-			Vec3 vPos = pGameObject->GetTransform()->GetLocalPosition();
+	auto& vTileGroup = m_vGameObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
 
-			m_TileMapData.vTileData.push_back(TileData(szTexPath, ImVec2(vPos.x, vPos.y)));
-		}
+	for (auto& pTile : vTileGroup)
+	{
+		shared_ptr<Material> pMaterial = pTile->GetMeshRenderer()->GetMaterial();
+		wstring szTexPath = pMaterial->GetTexture(0)->GetName();
+		Vec3 vPos = pTile->GetTransform()->GetLocalPosition();
+
+		m_TileMapData.vTileData.push_back(TileData(szTexPath, ImVec2(vPos.x, vPos.y)));	
 	}
+
 	m_TileMapData.iTileCount = static_cast<uint32>(m_TileMapData.vTileData.size());
 
 	if (TILEMAP_TOOL->IsTileSynced())
@@ -378,7 +376,9 @@ void ToolScene::EraseTile(const Vec3& vWorldPos)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
-	for (auto iter = m_vGameObjects.begin(); iter != m_vGameObjects.end();)
+	auto& vTileGroup = m_vGameObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
+
+	for (auto iter = vTileGroup.begin(); iter != vTileGroup.end();)
 	{
 		const Vec3& vLocalPos = (*iter)->GetTransform()->GetLocalPosition();
 
@@ -386,7 +386,7 @@ void ToolScene::EraseTile(const Vec3& vWorldPos)
 			(vLocalPos.x == vTileAlignVec.x) && (vLocalPos.y == vTileAlignVec.y))
 		{
 			Tile::Release(static_pointer_cast<Tile>(*iter));
-			iter = m_vGameObjects.erase(iter);
+			iter = vTileGroup.erase(iter);
 			m_mTileMap[vTileAlignVec] = false;
 			continue;
 		}

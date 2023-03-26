@@ -25,12 +25,12 @@ void PhysicsScene::RemoveActor(PxActor* pActor)
 	m_pScene->removeActor(*pActor);
 }
 
-RaycastResult PhysicsScene::Raycast(Vec3 vOrigin, Vec3 vDir)
+RaycastResult PhysicsScene::Raycast(Vec3 vOrigin, Vec3 vDir, float fMaxDistance)
 {
 	bool bResult = m_pScene->raycast(
 		Conv::Vec3ToPxVec3(vOrigin),
 		Conv::Vec3ToPxVec3(vDir),
-		m_fMaxDistance,
+		fMaxDistance,
 		m_RaycastBuffer);
 
 	return RaycastResult(bResult, Conv::PxVec3ToVec3(m_RaycastBuffer.block.position));

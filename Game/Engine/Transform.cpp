@@ -16,6 +16,8 @@ Transform::~Transform()
 
 void Transform::Awake()
 {
+	m_PxTransform.p = Conv::Vec3ToPxVec3(m_vLocalTranslation);
+	m_PxTransform.q = PxQuat(PxIdentity);
 }
 
 void Transform::FinalUpdate()

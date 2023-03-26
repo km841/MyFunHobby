@@ -9,6 +9,7 @@ public:
 
 public:
 	virtual void Update() { }
+	bool CheckGrounded();
 
 public:
 	virtual void Enter() = 0;

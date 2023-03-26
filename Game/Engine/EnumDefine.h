@@ -88,7 +88,7 @@ enum
 	INITIAL_POOL_COUNT = 1000,
 };
 
-enum class LAYER_TYPE : uint32
+enum class LAYER_TYPE : uint8
 {
 	UNKNOWN = 0,
 	PLAYER,

@@ -6,6 +6,11 @@
 #include "EventManager.h"
 #include "PlayerChangeStateEvent.h"
 #include "RigidBody.h"
+#include "Transform.h"
+#include "Physical.h"
+#include "Collider.h"
+#include "Scenes.h"
+#include "Engine.h"
 
 JumpFallState::JumpFallState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -14,13 +19,15 @@ JumpFallState::JumpFallState(shared_ptr<Player> pPlayer)
 
 void JumpFallState::Update()
 {
-	if (!m_pPlayer.lock()->GetRigidBody()->IsGravityApplied())
+	if (CheckGrounded())
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::IDLE));
+	
 }
 
 void JumpFallState::Enter()
 {
 	m_pPlayer.lock()->GetAnimator()->Play(L"LittleBone_JumpFall", true, 2);
+	m_pPlayer.lock()->GetRigidBody()->ApplyGravity();
 }
 
 void JumpFallState::Exit()

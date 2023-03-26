@@ -140,7 +140,6 @@ void Physical::CreateShape()
 
 void Physical::CreateActor()
 {
-	
 	switch (m_eActorType)
 	{
 	case ACTOR_TYPE::DYNAMIC:
@@ -261,5 +260,5 @@ void Physical::ApplyShapeScale()
 		pActor->attachShape(*m_pShape);
 	}
 	break;
-	}
+	}	
 }

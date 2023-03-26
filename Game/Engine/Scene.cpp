@@ -26,46 +26,61 @@ Scene::~Scene()
 
 void Scene::Awake()
 {
-	for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects)
+	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
 	{
-		if (pGameObject)
-			pGameObject->Awake();
+		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Awake();
+		}
 	}
 }
 
 void Scene::Start()
 {
-	for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects)
+	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
 	{
-		if (pGameObject)
-			pGameObject->Start();
+		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Start();
+		}
 	}
 }
 
 void Scene::Update()
 {
-	for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects)
+	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
 	{
-		if (pGameObject)
-			pGameObject->Update();
+		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Update();
+		}
 	}
 }
 
 void Scene::LateUpdate()
 {
-	for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects)
+	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
 	{
-		if (pGameObject)
-			pGameObject->LateUpdate();
+		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->LateUpdate();
+		}
 	}
 }
 
 void Scene::FinalUpdate()
 {
-	for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects)
+	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
 	{
-		if (pGameObject)
-			pGameObject->FinalUpdate();
+		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->FinalUpdate();
+		}
 	}
 }
 
@@ -85,22 +100,14 @@ void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 	if (pGameObject->GetCamera())
 		m_vCameras.push_back(pGameObject->GetCamera());
 
-	m_vGameObjects.push_back(pGameObject);
+	LAYER_TYPE eLayerType = pGameObject->GetLayerType();
+	m_vGameObjects[static_cast<uint8>(eLayerType)].push_back(pGameObject);
 }
 
-std::vector<shared_ptr<GameObject>> Scene::GetGameObjects(LAYER_TYPE eLayerType)
+std::vector<shared_ptr<GameObject>>& Scene::GetGameObjects(LAYER_TYPE eLayerType)
 {
-	std::vector<shared_ptr<GameObject>> vGameObjects;
-
-	for (const auto& pGameObject : m_vGameObjects)
-	{
-		if (eLayerType == pGameObject->GetLayerType())
-		{
-			vGameObjects.push_back(pGameObject);
-		}
-	}
-
-	return vGameObjects;
+	assert(static_cast<uint8>(eLayerType) < LAYER_TYPE_COUNT);
+	return m_vGameObjects[static_cast<uint8>(eLayerType)];
 }
 
 void Scene::Load(const wstring& szPath)

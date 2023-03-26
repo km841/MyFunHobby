@@ -13,7 +13,7 @@ public:
 	void RemoveActor(PxActor* pActor);
 
 public:
-	RaycastResult Raycast(Vec3 vOrigin, Vec3 vDir);
+	RaycastResult Raycast(Vec3 vOrigin, Vec3 vDir, float fMaxDistance);
 
 private:
 	PxScene* m_pScene;

@@ -9,8 +9,8 @@
 
 
 Monster::Monster()
+	: GameObject(LAYER_TYPE::MONSTER)
 {
-	m_eLayerType = LAYER_TYPE::MONSTER;
 }
 
 Monster::~Monster()

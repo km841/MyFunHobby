@@ -27,8 +27,7 @@ public:
     SCENE_TYPE GetSceneType() { return m_eSceneType; }
     void AddGameObject(shared_ptr<GameObject> pGameObject);
 
-    const std::vector<shared_ptr<GameObject>>& GetGameObjects() { return m_vGameObjects; }
-    std::vector<shared_ptr<GameObject>> GetGameObjects(LAYER_TYPE eLayerType);
+    std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
 
 public:
     virtual void Load(const wstring& szPath);
@@ -37,8 +36,7 @@ protected:
     friend class Scenes;
 
     SCENE_TYPE m_eSceneType;
-
-    std::vector<shared_ptr<GameObject>>   m_vGameObjects;
-    std::vector<shared_ptr<Camera>>       m_vCameras;
+    std::array<std::vector<shared_ptr<GameObject>>, LAYER_TYPE_COUNT> m_vGameObjects;
+    std::vector<shared_ptr<Camera>>                                   m_vCameras;
 };
 

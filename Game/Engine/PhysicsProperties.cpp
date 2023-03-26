@@ -26,7 +26,6 @@ void PhysicsProperties::ApplyToShape(PxShape* pShape)
 
 		pShape->setMaterials(&m_pMaterial, 1);
 	}
-	
 }
 
 void PhysicsProperties::Save(const wstring& szPath)

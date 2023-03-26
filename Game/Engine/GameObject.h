@@ -18,7 +18,7 @@ class GameObject :
     , public std::enable_shared_from_this<GameObject>
 {
 public:
-    GameObject();
+    GameObject(LAYER_TYPE eLayerType = LAYER_TYPE::UNKNOWN);
     virtual ~GameObject();
 
     virtual void Awake();
@@ -67,6 +67,6 @@ private:
     std::vector<shared_ptr<MonoBehaviour>>                   m_vScripts;
     bool                                                     m_bDisable;
 
-    DECLARE_POOL(GameObject);
+    //DECLARE_POOL(GameObject);
 };
 

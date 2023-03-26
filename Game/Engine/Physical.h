@@ -22,7 +22,7 @@ public:
     ACTOR_TYPE             GetActorType()    { return m_eActorType; }
     GEOMETRY_TYPE          GetGeometryType() { return m_eGeometryType; }
     PxShape*               GetShape()        { return m_pShape; }
-    Vec3                   GetGeometrySize() { return m_vSize; }
+    const Vec3&            GetGeometrySize() { return m_vSize; }
 
     shared_ptr<Geometries> GetGeometries()   { return m_pGeometries; }
 

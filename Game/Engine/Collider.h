@@ -26,11 +26,11 @@ public:
     const PxSweepHit&   GetSweepHit()   { return m_SweepHit;   }
     const PxOverlapHit& GetOverlapHit() { return m_OverlapHit; }
     PxFilterData&       GetFilterData() { return m_FilterData; }
-    RaycastResult       Raycast(const Vec3& vOrigin, const Vec3& vDir);
+    RaycastResult       Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_ptr<GameObject> pGameObject, float fMaxDistance);
     bool                Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform);
     bool                Sweep(const PxGeometry& otherGeom, const PxTransform& otherTransform);
     bool                ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform);
-    COLLISION_SIDE      ComputeCollisionSide(shared_ptr<GameObject> pGameObject);
+    bool                IsCollisionFromTop(shared_ptr<GameObject> pGameObject);
 
 private:
     void CreateDebugGeometry(shared_ptr<Geometries> pGeometries);

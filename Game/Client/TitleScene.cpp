@@ -71,7 +71,7 @@ void TitleScene::Enter()
 {
 	// Background
 	{
-		shared_ptr<GameObject> pGameObject = GameObject::Get();
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 
@@ -99,7 +99,7 @@ void TitleScene::Enter()
 
 	// Camera
 	{
-		shared_ptr<GameObject> pGameObject = GameObject::Get();
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>();
 
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
