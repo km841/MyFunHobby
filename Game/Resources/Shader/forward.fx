@@ -60,20 +60,20 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     {
         float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
         vColor = g_tex_0.Sample(g_sam_0, vUV);
-        if (vColor.a == 0)
-            discard;
+        //if (vColor.a == 0)
+        //    discard;
         
-        if (vColor.a == 1 && fRatio > 0.f)
+        if (vColor.a > 0.f && fRatio > 0.f)
             vColor.a = 1.f * fRatio;
          
     }
     else
     {
         vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-        if (vColor.a == 0)
-            discard;
+        //if (vColor.a == 0)
+        //    discard;
         
-        if (vColor.a == 1 && fRatio > 0.f)
+        if (vColor.a > 0.f && fRatio > 0.f)
             vColor.a = 1.f * fRatio;
     }
     return vColor;

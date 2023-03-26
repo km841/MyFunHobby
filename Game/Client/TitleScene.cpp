@@ -117,7 +117,7 @@ void TitleScene::Enter()
 
 		m_pLogo->AddComponent(pMeshRenderer);
 		m_pLogo->AddComponent(make_shared<Transform>());
-		m_pLogo->AddComponent(make_shared<ObjectFadeInOutScript>(3.f, FADE_TYPE::FADE_IN, 0.f));
+		m_pLogo->AddComponent(make_shared<ObjectFadeInOutScript>(1.f, FADE_TYPE::FADE_IN, 1.5f));
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
