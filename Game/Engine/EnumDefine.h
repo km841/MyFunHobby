@@ -94,6 +94,7 @@ enum class LAYER_TYPE : uint8
 	PLAYER,
 	MONSTER,
 	TILE,
+	UI = 30,
 	END = 31,
 };
 
@@ -108,4 +109,11 @@ enum
 	SWAP_CHAIN_BUFFER_COUNT = 1,
 	CBV_REGISTER_COUNT = CBV_REGISTER::END,
 	SRV_REGISTER_COUNT = SRV_REGISTER::END,
+};
+
+enum class CAMERA_EFFECT : uint8
+{
+	NONE,
+	FADE_IN,
+	FADE_OUT,
 };

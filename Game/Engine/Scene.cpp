@@ -136,7 +136,7 @@ void Scene::Load(const wstring& szPath)
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = make_shared<Material>();
-		shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
+		shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
 		pMaterial->SetShader(pShader);
 
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
@@ -154,7 +154,7 @@ void Scene::Load(const wstring& szPath)
 		pTile->AddComponent(make_shared<DebugRenderer>());
 
 		pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 1.f));
+		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 100.f));
 
 		// 잠들어 있는 Component 깨우기
 		pTile->Awake();

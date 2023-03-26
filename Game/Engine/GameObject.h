@@ -18,7 +18,7 @@ class GameObject :
     , public std::enable_shared_from_this<GameObject>
 {
 public:
-    GameObject(LAYER_TYPE eLayerType = LAYER_TYPE::UNKNOWN);
+    GameObject(LAYER_TYPE eLayerType);
     virtual ~GameObject();
 
     virtual void Awake();

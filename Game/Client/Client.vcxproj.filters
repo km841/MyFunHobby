@@ -32,6 +32,9 @@
     <Filter Include="소스 파일\Game\Object\PlayerState">
       <UniqueIdentifier>{29dc6bd7-ed44-4c33-994e-db3783573109}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\UI">
+      <UniqueIdentifier>{4c13a6af-7bda-4ff7-9d02-d64bf7fb6290}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -90,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="JumpFallState.h">
       <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>소스 파일\Game\Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +168,9 @@
     </ClCompile>
     <ClCompile Include="JumpFallState.cpp">
       <Filter>소스 파일\Game\Object\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>소스 파일\Game\Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

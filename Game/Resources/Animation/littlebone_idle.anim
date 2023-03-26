@@ -1,6 +1,6 @@
 3
 Idle
-..\Resources\Texture\Sprite_LittleBone_Idle.tga
+..\Resources\Texture\Sprites\LittleBone\Sprite_LittleBone_Idle.tga
 0 0
 42.67 37
 0 0
@@ -15,7 +15,7 @@ Idle
 0.15
 3
 idle
-..\Resources\Texture\Sprite_LittleBone_Idle.tga
+..\Resources\Texture\Sprites\LittleBone\Sprite_LittleBone_Idle.tga
 0 0
 42.67 37
 0 0

@@ -375,9 +375,6 @@
     <FxCompile Include="..\Resources\Shader\forward.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\alpha.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="..\Resources\Shader\params.fx">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -387,13 +384,13 @@
     <FxCompile Include="..\Resources\Shader\preview.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\grid.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
     <FxCompile Include="..\Resources\Shader\frame_divider.fx">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\compute.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\fade_in_out.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

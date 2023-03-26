@@ -181,6 +181,7 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="TownScene.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="WalkState.h" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +208,7 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="ToolScene.cpp" />
     <ClCompile Include="TownScene.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="WalkState.cpp" />
   </ItemGroup>
   <ItemGroup>

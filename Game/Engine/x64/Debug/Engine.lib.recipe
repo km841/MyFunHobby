@@ -3,22 +3,19 @@
   <ProjectOutputs />
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\MyProject\Game\Output\alpha.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\compute.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\MyProject\Game\Output\debug_geometry.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\fade_in_out.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\forward.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\MyProject\Game\Output\frame_divider.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\MyProject\Game\Output\grid.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\MyProject\Game\Output\params.cso</FullPath>

@@ -25,6 +25,15 @@ public:
 
     void            Render();
 
+    void            SetCameraEffect(CAMERA_EFFECT eCameraEffect) { m_eCameraEffect = eCameraEffect; }
+    CAMERA_EFFECT   GetCameraEffect() { return m_eCameraEffect; }
+    void            RemoveCameraEffect() { m_eCameraEffect = CAMERA_EFFECT::NONE; }
+    
+    void            SetCullingMask(LAYER_TYPE eLayerType, bool bFlag);
+    void            DisableAllCullingMask();
+    void            EnableAllCullingMask();
+
+
 private:
     PROJECTION_TYPE m_eType;
 
@@ -35,5 +44,9 @@ private:
 
     Matrix          m_matView;
     Matrix          m_matProjection;
+
+    uint32          m_iCullingMask;
+
+    CAMERA_EFFECT   m_eCameraEffect;
 };
 

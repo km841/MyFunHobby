@@ -18,7 +18,7 @@ bool PlayerState::CheckGrounded()
 	Vec3 vMyPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
 	const Vec3& vMySize = m_pPlayer.lock()->GetPhysical()->GetGeometrySize();
 
-	Vec3 vFootPos = Vec3(vMyPos.x, vMyPos.y - vMySize.y, 1.f);
+	Vec3 vFootPos = Vec3(vMyPos.x, vMyPos.y - vMySize.y, vMyPos.z);
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 
 	RaycastResult bRaycastResult = {};

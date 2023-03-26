@@ -15,7 +15,8 @@ Camera::Camera()
     , m_fFar(1000.f)
     , m_fFov(XM_PI / 4.f)
     , m_fScale(1.f)
-
+    , m_eCameraEffect(CAMERA_EFFECT::NONE)
+    , m_iCullingMask(0)
 {
 }
 
@@ -51,6 +52,9 @@ void Camera::Render()
 
     for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
     {
+        if (m_iCullingMask & (1 << i))
+            continue;
+
         const std::vector<shared_ptr<GameObject>>& vGameObjects = pCurScene->GetGameObjects(static_cast<LAYER_TYPE>(i));
 
         for (const shared_ptr<GameObject>& pGameObject : vGameObjects)
@@ -70,4 +74,25 @@ void Camera::Render()
     }
 
 
+}
+
+void Camera::SetCullingMask(LAYER_TYPE eLayerType, bool bFlag)
+{
+    if (bFlag)
+        m_iCullingMask |= 1 << static_cast<uint8>(eLayerType);
+    else
+        m_iCullingMask &= ~(1 << static_cast<uint8>(eLayerType));
+}
+
+void Camera::DisableAllCullingMask()
+{
+    m_iCullingMask = 0;
+}
+
+void Camera::EnableAllCullingMask()
+{
+    for (int32 i = 0; i < LAYER_TYPE_COUNT - 1; ++i)
+    {
+        m_iCullingMask |= 1 << i;
+    }
 }

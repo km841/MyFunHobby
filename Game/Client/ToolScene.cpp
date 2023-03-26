@@ -80,7 +80,7 @@ void ToolScene::Enter()
 {
 	// Preview Tile
 	{
-		m_pPreviewTile = make_shared<GameObject>();
+		m_pPreviewTile = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Preview");
@@ -98,7 +98,7 @@ void ToolScene::Enter()
 	// Animation Select Box
 	for (int32 i = 0; i < FRAME_BOX_COUNT; ++i)
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>();
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 
 		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndices(Vec3(1.f, 1.f, 1.f));
 
@@ -126,7 +126,7 @@ void ToolScene::Enter()
 
 	// Sprite Texture
 	{
-		m_pSpriteTexture = make_shared<GameObject>();
+		m_pSpriteTexture = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Atlas");
@@ -147,7 +147,7 @@ void ToolScene::Enter()
 
 	// Camera
 	{
-		m_pMainCamera = make_shared<GameObject>();
+		m_pMainCamera = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 
 		m_pMainCamera->AddComponent(make_shared<Transform>());
 		m_pMainCamera->AddComponent(make_shared<Camera>());
@@ -163,12 +163,12 @@ void ToolScene::Enter()
 
 	// Grid
 	{
-		m_pGrid = make_shared<GameObject>();
+		m_pGrid = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 
 		m_pGrid->AddComponent(make_shared<Transform>());
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Alpha");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
 
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"Grid", L"..\\Resources\\Texture\\Grid.tga");
 		pMaterial->SetTexture(0, pTexture);
@@ -250,7 +250,7 @@ void ToolScene::PalleteUpdate()
 	wstring szSelectedKey = UTILITY->GetSelectedTileKey();
 
 	const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
-	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 1.f);
+	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 100.f);
 	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
 
 	if (L"FAILURE" != szSelectedKey)
@@ -317,7 +317,7 @@ void ToolScene::CreateTile(const Vec3& vWorldPos)
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = m_pPreviewTile->GetMeshRenderer()->GetMaterial()->Clone();
-	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
+	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
 	pMaterial->SetShader(pShader);
 	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 	pMeshRenderer->SetMaterial(pMaterial);
@@ -330,7 +330,7 @@ void ToolScene::CreateTile(const Vec3& vWorldPos)
 	pTile->AddComponent(make_shared<DebugRenderer>());
 
 	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-	pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 1.f));
+	pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 100.f));
 
 	// 잠들어 있는 Component 깨우기
 	pTile->Awake();
@@ -345,7 +345,7 @@ void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath)
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = make_shared<Material>();
-	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Alpha");
+	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
 	pMaterial->SetShader(pShader);
 
 	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
@@ -363,7 +363,7 @@ void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath)
 	pTile->AddComponent(make_shared<DebugRenderer>());
 
 	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-	pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 1.f));
+	pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 100.f));
 
 	// 잠들어 있는 Component 깨우기
 	pTile->Awake();

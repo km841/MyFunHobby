@@ -146,22 +146,6 @@ shared_ptr<Mesh> Resources::LoadRectMesh()
 
 void Resources::CreateDefaultShader()
 {
-	// Alpha
-	{
-		ShaderInfo shaderInfo =
-		{
-			SHADER_TYPE::FORWARD,
-			DEPTH_STENCIL_TYPE::LESS,
-			RASTERIZER_TYPE::CULL_BACK,
-			BLEND_TYPE::ALPHA_BLEND
-		};
-
-		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\alpha.fx", shaderInfo);
-
-		Add<Shader>(L"Alpha", pShader);
-	}
-
 	// Preview
 	{
 		ShaderInfo shaderInfo =
@@ -228,12 +212,20 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Forward", pShader);
 	}
 
-	// Grid
+	// Forward
 	{
-		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\grid.fx");
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
 
-		Add<Shader>(L"Grid", pShader);
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\fade_in_out.fx", shaderInfo);
+
+		Add<Shader>(L"FadeInOut", pShader);
 	}
 
 	// Compute
@@ -246,15 +238,6 @@ void Resources::CreateDefaultShader()
 
 void Resources::CreateDefaultMaterial()
 {
-	// Alpha
-	{
-		shared_ptr<Material> pMaterial = make_shared<Material>();
-		shared_ptr<Shader> pShader = Get<Shader>(L"Alpha");
-		pMaterial->SetShader(pShader);
-
-		Add<Material>(L"Alpha", pMaterial);
-	}
-
 	// Preview
 	{
 		shared_ptr<Material> pMaterial = make_shared<Material>();
@@ -291,15 +274,6 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"FrameDivider", pMaterial);
 	}
 
-	// Grid
-	{
-		shared_ptr<Material> pMaterial = make_shared<Material>();
-		shared_ptr<Shader> pShader = Get<Shader>(L"Grid");
-
-		pMaterial->SetShader(pShader);
-		Add<Material>(L"Grid", pMaterial);
-	}
-
 	// Atlas
 	{
 		shared_ptr<Material> pMaterial = make_shared<Material>();
@@ -316,6 +290,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"Compute", pMaterial);
+	}
+
+	// Fade In / Out
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"FadeInOut");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"FadeInOut", pMaterial);
 	}
 
 }

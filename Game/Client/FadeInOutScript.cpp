@@ -4,11 +4,13 @@
 #include "GameObject.h"
 #include "MeshRenderer.h"
 #include "Material.h"
+#include "Camera.h"
 
-FadeInOutScript::FadeInOutScript()
+FadeInOutScript::FadeInOutScript(shared_ptr<Camera> pCamera)
 	: m_fAccTime(0.f)
 	, m_fMaxTime(3.f)
-	, m_bState(true)
+	, m_ePrevCameraEffect(CAMERA_EFFECT::NONE)
+	, m_pCamera(pCamera)
 {
 }
 
@@ -18,25 +20,46 @@ FadeInOutScript::~FadeInOutScript()
 
 void FadeInOutScript::LateUpdate()
 {	
-	if (m_bState)
+	CAMERA_EFFECT eCameraEffect = m_pCamera.lock()->GetCameraEffect();
+
+	if (m_ePrevCameraEffect != eCameraEffect)
+	{
+		switch (eCameraEffect)
+		{
+		case CAMERA_EFFECT::FADE_IN:
+			m_fAccTime = m_fMaxTime;
+			break;
+		case CAMERA_EFFECT::FADE_OUT:
+			m_fAccTime = 0.f;
+			break;
+		}
+	}
+
+	if (CAMERA_EFFECT::FADE_OUT == eCameraEffect)
 	{
 		if (m_fAccTime < m_fMaxTime)
 			m_fAccTime += DELTA_TIME;
-		
-		else
-			m_bState = false;
+
+		float fRatio = m_fAccTime / m_fMaxTime;
+
+		if (fRatio > 1.f)
+			fRatio = 1.f;
+
+		GetGameObject()->GetMeshRenderer()->GetMaterial()->SetFloat(0, fRatio);
 	}
 
-	else
+	else if (CAMERA_EFFECT::FADE_IN == eCameraEffect)
 	{
 		if (m_fAccTime > 0.f)
 			m_fAccTime -= DELTA_TIME;
-		
-		else
-			m_bState = true;
+
+		float fRatio = m_fAccTime / m_fMaxTime;
+
+		if (fRatio < 0.f)
+			fRatio = 0.f;
+
+		GetGameObject()->GetMeshRenderer()->GetMaterial()->SetFloat(0, fRatio);
 	}
 
-	float fRatio = m_fAccTime / m_fMaxTime;
-
-	GetGameObject()->GetMeshRenderer()->GetMaterial()->SetFloat(0, fRatio);
+	m_ePrevCameraEffect = eCameraEffect;
 }
