@@ -138,7 +138,7 @@ void Engine::CreateRenderTargetGroups()
 	shared_ptr<Texture> pDepthStencilTexture = 
 		GET_SINGLE(Resources)->CreateTexture(L"DepthStencil", D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL, m_Window.iWidth, m_Window.iHeight);
 
-	float clearColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	std::vector<RenderTarget> vRenderTargetVec(SWAP_CHAIN_BUFFER_COUNT);
 	for (uint32 i = 0; i < SWAP_CHAIN_BUFFER_COUNT; ++i)

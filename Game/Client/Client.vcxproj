@@ -170,11 +170,13 @@
     <ClInclude Include="JumpFallState.h" />
     <ClInclude Include="JumpRiseState.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="NPC_Wizard.h" />
     <ClInclude Include="ObjectFadeInOutScript.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveScript.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="PlayerTrackingScript.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Tile.h" />
@@ -183,6 +185,8 @@
     <ClInclude Include="TownScene.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="WalkState.h" />
+    <ClInclude Include="NPC_Witch.h" />
+    <ClInclude Include="NPC_Wolf.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -193,6 +197,7 @@
     <ClCompile Include="JumpFallState.cpp" />
     <ClCompile Include="JumpRiseState.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="NPC_Wizard.cpp" />
     <ClCompile Include="ObjectFadeInOutScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -203,6 +208,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMoveScript.cpp" />
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="PlayerTrackingScript.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -210,6 +216,8 @@
     <ClCompile Include="TownScene.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="WalkState.cpp" />
+    <ClCompile Include="NPC_Witch.cpp" />
+    <ClCompile Include="NPC_Wolf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

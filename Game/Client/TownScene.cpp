@@ -26,6 +26,10 @@
 #include "CollisionManager.h"
 #include "CameraFadeInOutScript.h"
 #include "UI.h"
+#include "PlayerTrackingScript.h"
+#include "NPC_Witch.h"
+#include "NPC_Wolf.h"
+#include "NPC_Wizard.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -68,7 +72,7 @@ void TownScene::Render()
 
 void TownScene::Enter()
 {
-	Load(L"..\\Resources\\Map\\DefaultMap.map");
+	//Load(L"..\\Resources\\Map\\DefaultMap.map");
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
@@ -92,10 +96,10 @@ void TownScene::Enter()
 		pGameObject->AddComponent(make_shared<DebugRenderer>());
 		pGameObject->AddComponent(make_shared<Animator>());
 
-		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\littlebone_idle.anim");
-		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\littlebone_walk.anim");
-		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpRise", L"..\\Resources\\Animation\\littlebone_jump_rise.anim");
-		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpFall", L"..\\Resources\\Animation\\littlebone_jump_fall.anim");
+		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\LittleBone\\littlebone_idle.anim");
+		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\LittleBone\\littlebone_walk.anim");
+		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpRise", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_rise.anim");
+		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpFall", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_fall.anim");
 
 		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
 		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
@@ -109,6 +113,23 @@ void TownScene::Enter()
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 5.f, 100.f));
 
 		AddGameObject(pGameObject);
+	}
+
+	// Ground
+	{
+		shared_ptr<GameObject> pGround = make_shared<GameObject>(LAYER_TYPE::TILE);
+		pGround->AddComponent(make_shared<Transform>());
+		pGround->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(1600.f, 400.f, 1.f)));
+		pGround->AddComponent(make_shared<Collider>());
+		pGround->AddComponent(make_shared<DebugRenderer>());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 630.f, 100.f));
+		pGround->GetTransform()->SetLocalScale(Vec3(1600.f, 450.f, 1.f));
+
+		AddGameObject(pGround);
 	}
 
 	// Compute Shader
@@ -147,7 +168,7 @@ void TownScene::Enter()
 
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f), MassProperties(10.f, 10.f, 10.f)));
+		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f)));
 		pGameObject->AddComponent(make_shared<RigidBody>());
 		pGameObject->AddComponent(make_shared<Collider>());
 		pGameObject->AddComponent(make_shared<DebugRenderer>());
@@ -155,19 +176,19 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 30.f, fHeight / 2.f, 100.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 250.f, fHeight / 2.f, 100.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(110.f, 110.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
 
-	//Background
+	//Background_1
 	{
 		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Image_Town.png");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
+		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_TownMap.tga");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
@@ -182,6 +203,27 @@ void TownScene::Enter()
 		AddGameObject(pGameObject);
 	}
 
+	//Background_2
+	{
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_TownMap.tga");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		pMaterial->SetTexture(0, pTexture);
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+		pGameObject->AddComponent(pMeshRenderer);
+		pGameObject->AddComponent(make_shared<Transform>());
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1600.f, fHeight / 2.f, 150.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
+
+		AddGameObject(pGameObject);
+	}
+
 	// Camera
 	{
 		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
@@ -189,6 +231,7 @@ void TownScene::Enter()
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
 		pGameObject->AddComponent(make_shared<CameraMoveScript>());
+		pGameObject->AddComponent(make_shared<PlayerTrackingScript>(static_pointer_cast<Player>(m_vGameObjects[static_cast<uint8>(LAYER_TYPE::PLAYER)][0])));
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -247,6 +290,96 @@ void TownScene::Enter()
 		pUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
 
 		AddGameObject(pUI);
+	}
+
+	// NPC_Witch
+	{
+		shared_ptr<NPC_Witch> pWitch = make_shared<NPC_Witch>();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pWitch->AddComponent(pMeshRenderer);
+		pWitch->AddComponent(make_shared<Transform>());
+		pWitch->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(400.f, 120.f, 1.f)));
+		pWitch->AddComponent(make_shared<RigidBody>());
+		pWitch->AddComponent(make_shared<Collider>());
+		pWitch->AddComponent(make_shared<DebugRenderer>());
+		pWitch->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Witch_Idle", L"..\\Resources\\Animation\\Witch\\witch_idle.anim");
+		pWitch->GetAnimator()->AddAnimation(L"Witch_Idle", pAnimation);
+		pWitch->GetAnimator()->Play(L"Witch_Idle");
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pWitch->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 75.f, 100.f));
+
+		AddGameObject(pWitch);
+	}
+
+	// NPC_Wolf
+	{
+		shared_ptr<NPC_Witch> pWolf = make_shared<NPC_Witch>();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pWolf->AddComponent(pMeshRenderer);
+		pWolf->AddComponent(make_shared<Transform>());
+		pWolf->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(217.f, 144.f, 1.f)));
+		pWolf->AddComponent(make_shared<RigidBody>());
+		pWolf->AddComponent(make_shared<Collider>());
+		pWolf->AddComponent(make_shared<DebugRenderer>());
+		pWolf->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Wolf_Idle", L"..\\Resources\\Animation\\Wolf\\wolf_idle.anim");
+		pWolf->GetAnimator()->AddAnimation(L"Wolf_Idle", pAnimation);
+		pWolf->GetAnimator()->Play(L"Wolf_Idle");
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pWolf->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 50.f, 100.f));
+
+		AddGameObject(pWolf);
+	}
+
+	// NPC_Wizard
+	{
+		shared_ptr<NPC_Wizard> pWizard = make_shared<NPC_Wizard>();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pWizard->AddComponent(pMeshRenderer);
+		pWizard->AddComponent(make_shared<Transform>());
+		pWizard->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(221.f, 151.f, 1.f)));
+		pWizard->AddComponent(make_shared<RigidBody>());
+		pWizard->AddComponent(make_shared<Collider>());
+		pWizard->AddComponent(make_shared<DebugRenderer>());
+		pWizard->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Wizard_Idle", L"..\\Resources\\Animation\\Wizard\\wizard_idle.anim");
+		pWizard->GetAnimator()->AddAnimation(L"Wizard_Idle", pAnimation);
+		pWizard->GetAnimator()->Play(L"Wizard_Idle");
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pWizard->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1700.f, fHeight / 2.f - 50.f, 100.f));
+
+		AddGameObject(pWizard);
 	}
 
 	m_vCameras[1]->SetCameraEffect(CAMERA_EFFECT::FADE_IN);

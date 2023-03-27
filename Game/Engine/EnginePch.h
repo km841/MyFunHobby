@@ -329,6 +329,18 @@ namespace Conv
 
 		return mat;
 	}
+
+	static wstring AbsolutePathToRelativePath(const wstring& szAbsolutePath)
+	{
+		wstring szResourcesPath = L"..\\Resources\\";
+		
+		uint32 iSplitPoint = szAbsolutePath.find(L"Texture\\");
+		assert(iSplitPoint != wstring::npos);
+
+		wstring szResultPath = szResourcesPath + szAbsolutePath.substr(iSplitPoint);
+
+		return szResultPath;
+	}
 }
 
 struct TimeCounter

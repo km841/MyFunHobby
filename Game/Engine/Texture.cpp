@@ -16,19 +16,25 @@ void Texture::Load(const wstring& szPath)
 {
 	wstring ext = fs::path(szPath).extension();
 
-	if (ext == L".dds" || ext == L".DDS")
-		LoadFromDDSFile(szPath.c_str(), DDS_FLAGS_NONE, nullptr, m_scratchImage);
-	else if (ext == L".tga" || ext == L".TGA")
-		LoadFromTGAFile(szPath.c_str(), nullptr, m_scratchImage);
-	else // png, jpg, jpeg, bmp
-		LoadFromWICFile(szPath.c_str(), WIC_FLAGS_NONE, nullptr, m_scratchImage);
+	HRESULT hr = 0;
 
-	CreateShaderResourceView(
+	if (ext == L".dds" || ext == L".DDS")
+		hr = LoadFromDDSFile(szPath.c_str(), DDS_FLAGS_NONE, nullptr, m_scratchImage);
+	else if (ext == L".tga" || ext == L".TGA")
+		hr = LoadFromTGAFile(szPath.c_str(), nullptr, m_scratchImage);
+	else // png, jpg, jpeg, bmp
+		hr = LoadFromWICFile(szPath.c_str(), WIC_FLAGS_NONE, nullptr, m_scratchImage);
+
+	assert(SUCCEEDED(hr));
+
+	hr = CreateShaderResourceView(
 		DEVICE.Get(),
 		m_scratchImage.GetImages(),
 		m_scratchImage.GetImageCount(),
 		m_scratchImage.GetMetadata(),
 		m_pSRV.GetAddressOf());
+
+	assert(SUCCEEDED(hr));
 
 	m_pSRV->GetResource(reinterpret_cast<ID3D11Resource**>(m_pTexture.GetAddressOf()));
 	m_szName = szPath;

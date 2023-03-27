@@ -93,6 +93,7 @@ enum class LAYER_TYPE : uint8
 	UNKNOWN = 0,
 	PLAYER,
 	MONSTER,
+	NPC,
 	TILE,
 	UI = 30,
 	END = 31,

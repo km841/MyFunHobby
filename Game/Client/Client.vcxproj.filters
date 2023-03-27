@@ -29,11 +29,29 @@
     <Filter Include="소스 파일\Game\Object\Tile">
       <UniqueIdentifier>{92ba6b1f-d19e-4bfa-866e-9693c89ab4f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Object\PlayerState">
-      <UniqueIdentifier>{29dc6bd7-ed44-4c33-994e-db3783573109}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Object\UI">
       <UniqueIdentifier>{4c13a6af-7bda-4ff7-9d02-d64bf7fb6290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player">
+      <UniqueIdentifier>{d32af7bc-5083-40f7-bd53-577b7c68ed1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\PlayerState">
+      <UniqueIdentifier>{29dc6bd7-ed44-4c33-994e-db3783573109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster">
+      <UniqueIdentifier>{60e7220b-7105-43b7-a499-d256b2ce880f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\NPC">
+      <UniqueIdentifier>{1cb0ad20-7bc8-437e-9956-2390b27ed836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\NPC\Witch">
+      <UniqueIdentifier>{fc303369-8c48-4fc7-add8-538e5c5aa1ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\NPC\Wolf">
+      <UniqueIdentifier>{25cc5e85-b53e-4ac6-b311-ebaf8d5a9db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\NPC\Wizard">
+      <UniqueIdentifier>{23c026cc-b94a-487e-99e2-6e2cad1048df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,9 +73,6 @@
     <ClInclude Include="CameraFadeInOutScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\Game\Object\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>소스 파일\Game\Scene</Filter>
     </ClInclude>
@@ -67,35 +82,50 @@
     <ClInclude Include="ToolScene.h">
       <Filter>소스 파일\Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>소스 파일\Game\Object\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>소스 파일\Game\Object\Tile</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="IdleState.h">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="WalkState.h">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="JumpRiseState.h">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="JumpFallState.h">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>소스 파일\Game\Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="ObjectFadeInOutScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTrackingScript.h">
+      <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC_Witch.h">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Witch</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC_Wolf.h">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Wolf</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC_Wizard.h">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Wizard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +160,6 @@
     <ClCompile Include="CameraFadeInOutScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\Game\Object\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>소스 파일\Game\Scene</Filter>
     </ClCompile>
@@ -142,35 +169,50 @@
     <ClCompile Include="ToolScene.cpp">
       <Filter>소스 파일\Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>소스 파일\Game\Object\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\Game\Object\Tile</Filter>
     </ClCompile>
     <ClCompile Include="PlayerState.cpp">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="IdleState.cpp">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="StateMachine.cpp">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="WalkState.cpp">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="JumpRiseState.cpp">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="JumpFallState.cpp">
-      <Filter>소스 파일\Game\Object\PlayerState</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>소스 파일\Game\Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="ObjectFadeInOutScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTrackingScript.cpp">
+      <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC_Witch.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Witch</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC_Wolf.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Wolf</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC_Wizard.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Wizard</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

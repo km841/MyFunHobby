@@ -59,17 +59,15 @@ void Camera::Render()
 
         for (const shared_ptr<GameObject>& pGameObject : vGameObjects)
         {
-            if (pGameObject->GetMeshRenderer())
+            if (pGameObject->IsEnable())
             {
-                if (pGameObject->IsEnable())
-                {
+                if (pGameObject->GetMeshRenderer())
                     pGameObject->GetMeshRenderer()->Render(shared_from_this());
 
-                    if (pGameObject->GetDebugRenderer())
-                        pGameObject->GetDebugRenderer()->Render(shared_from_this());
-
-                }
+                if (pGameObject->GetDebugRenderer())
+                    pGameObject->GetDebugRenderer()->Render(shared_from_this());
             }
+
         }
     }
 

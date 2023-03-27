@@ -48,8 +48,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	PalleteUpdate();
-	//AnimationEditorUpdate();
+	//PalleteUpdate();
+	AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -114,7 +114,7 @@ void ToolScene::Enter()
 
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 1.f));
 
 		pGameObject->Disable();
@@ -138,7 +138,7 @@ void ToolScene::Enter()
 		m_pSpriteTexture->AddComponent(pMeshRenderer);
 		m_pSpriteTexture->AddComponent(make_shared<Transform>());
 		m_pSpriteTexture->AddComponent(make_shared<Animator>());
-		m_pSpriteTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+		m_pSpriteTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
 
 		AddGameObject(m_pSpriteTexture);
 	}
@@ -182,7 +182,7 @@ void ToolScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2.f, fHeight / 2.f - 32.5f, 50.f));
+		m_pGrid->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2.f, fHeight / 2.f - 32.5f, 150.f));
 		m_pGrid->GetTransform()->SetLocalScale(Vec3(3.2f, 3.2f, 1.f));
 		AddGameObject(m_pGrid);
 	}
@@ -449,7 +449,7 @@ void ToolScene::DrawEditorGraphic()
 
 		for (int32 i = 0; i < FRAME_BOX_COUNT - 1; ++i)
 		{
-			if (i <= iSpriteCount)
+			if (i < iSpriteCount)
 			{
 				if (m_pSpriteTexture->GetAnimator()->GetActiveAnimation())
 				{
@@ -472,19 +472,17 @@ void ToolScene::DrawEditorGraphic()
 		{
 			ANIMATION_TOOL->ClearFrameDataList();
 
-			
-			wstring szFileName = fs::path(ANIMATION_TOOL->GetSpriteTexturePath()).filename();
-			wstring szPath = UTILITY->GetTexPath() + szFileName;
+			wstring szPath = Conv::AbsolutePathToRelativePath(ANIMATION_TOOL->GetSpriteTexturePath());
 			const wstring& szName = ANIMATION_TOOL->GetAnimationName();
 			const  ImVec2& vSpriteSize = ANIMATION_TOOL->GetSpriteSize();
 			const  ImVec2& vOffset = ANIMATION_TOOL->GetOffset();
 
-			for (int32 i = 0; i < iSpriteCount + 1; ++i)
+			for (int32 i = 0; i < iSpriteCount; ++i)
 			{
 				FrameData frameData = {};
 				frameData.szName = szName;
 				frameData.szTexPath = szPath;
-				frameData.iFrameCount = iSpriteCount + 1;
+				frameData.iFrameCount = iSpriteCount;
 				frameData.fDuration = fInputDuration;
 				frameData.vLTPos = ImVec2(vInputLT.x + (vInputSize.x * i), vInputLT.y);
 				frameData.vSize = vSpriteSize;
