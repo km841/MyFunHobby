@@ -14,7 +14,7 @@ Camera::Camera()
     , m_fNear(1.f)
     , m_fFar(1000.f)
     , m_fFov(XM_PI / 4.f)
-    , m_fScale(1.f)
+    , m_fScale(1.25f)
     , m_eCameraEffect(CAMERA_EFFECT::NONE)
     , m_iCullingMask(0)
 {
@@ -42,7 +42,7 @@ void Camera::FinalUpdate()
     }
     else
     {
-        m_matProjection = XMMatrixOrthographicLH(fWidth, fHeight, m_fNear, m_fFar);
+        m_matProjection = XMMatrixOrthographicLH(fWidth / m_fScale, fHeight / m_fScale, m_fNear, m_fFar);
     }
 }
 

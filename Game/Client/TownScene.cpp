@@ -127,7 +127,7 @@ void TownScene::Enter()
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 630.f, 100.f));
-		pGround->GetTransform()->SetLocalScale(Vec3(1600.f, 450.f, 1.f));
+		pGround->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 
 		AddGameObject(pGround);
 	}
