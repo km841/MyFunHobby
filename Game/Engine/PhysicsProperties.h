@@ -29,11 +29,11 @@ public:
     virtual void Load(const wstring& szPath) override;
 
 public:
-    PxMaterial* GetMaterial() { return m_pMaterial; }
+    FORCEINLINE PxMaterial* GetMaterial() { return m_pMaterial; }
 
-    float GetStaticFriction() { return m_fStaticFriction; }
-    float GetDynamicFriction() { return m_fDynamicFriction; }
-    float GetRestitution() { return m_fRestitution; }
+    FORCEINLINE float GetStaticFriction() { return m_fStaticFriction; }
+    FORCEINLINE float GetDynamicFriction() { return m_fDynamicFriction; }
+    FORCEINLINE float GetRestitution() { return m_fRestitution; }
 
     void SetStaticFriction(float fFriction);
     void SetDynamicFriction(float fFriction);

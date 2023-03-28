@@ -13,9 +13,9 @@ public:
 	void			 ToolRender();
 
 public:
-	shared_ptr<Tool> GetTool() { return g_pTool; }
-	wstring			 GetSelectedTileKey();
-	wstring			 GetTexPath() { return m_szTexPath; }
+	FORCEINLINE shared_ptr<Tool> GetTool()    const { return g_pTool; }
+	FORCEINLINE wstring			 GetTexPath() const { return m_szTexPath; }
+	wstring						 GetSelectedTileKey();
 
 private:
 	std::map<int32, wstring> m_mTileRrcMap;

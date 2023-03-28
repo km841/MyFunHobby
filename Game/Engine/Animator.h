@@ -18,7 +18,7 @@ public:
     void                  CreateAnimation(const std::vector<FrameData> vFrameDataList);
     void                  Play(const wstring& szName, bool bLoop = true, uint32 iSection = 0);
     
-    shared_ptr<Animation> GetActiveAnimation() { return m_pActiveAnimation; }
+    FORCEINLINE shared_ptr<Animation> GetActiveAnimation() const { return m_pActiveAnimation; }
     shared_ptr<Animation> FindAnimation(const wstring& szName);
     void                  AddAnimation(const wstring& szName, shared_ptr<Animation> pAnimation);
 

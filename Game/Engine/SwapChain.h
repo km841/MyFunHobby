@@ -6,13 +6,13 @@ public:
 	~SwapChain();
 
 public:
-	void						   Init(const WindowInfo& wInfo, ComPtr<ID3D11Device> pDevice, ComPtr<IDXGIFactory> pDxgi);
-	ComPtr<IDXGISwapChain>		   GetSwapChain() { return m_pSwapChain; }
-	void						   Present();
-	void						   CreateSwapChain(const WindowInfo& wInfo, ComPtr<ID3D11Device> pDevice, ComPtr<IDXGIFactory> pDxgi);
-	void						   CreateRTV();
+	void									   Init(const WindowInfo& wInfo, ComPtr<ID3D11Device> pDevice, ComPtr<IDXGIFactory> pDxgi);
+	void									   Present();
+	void									   CreateSwapChain(const WindowInfo& wInfo, ComPtr<ID3D11Device> pDevice, ComPtr<IDXGIFactory> pDxgi);
+	void									   CreateRTV();
 
-	ComPtr<ID3D11RenderTargetView> GetRTV() { return m_pRTV; }
+	FORCEINLINE ComPtr<IDXGISwapChain>		   GetSwapChain() const { return m_pSwapChain; }
+	FORCEINLINE ComPtr<ID3D11RenderTargetView> GetRTV()		  const { return m_pRTV; }
 	
 private:
 	ComPtr<IDXGISwapChain>		   m_pSwapChain;

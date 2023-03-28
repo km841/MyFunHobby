@@ -5,7 +5,7 @@ class CameraFadeInOutScript :
     public MonoBehaviour
 {
 public:
-    CameraFadeInOutScript(shared_ptr<Camera> pCamera);
+    explicit CameraFadeInOutScript(shared_ptr<Camera> pCamera);
     virtual ~CameraFadeInOutScript();
 
 public:

@@ -5,7 +5,7 @@ class WalkState :
     public PlayerState
 {
 public:
-    WalkState(shared_ptr<Player> pPlayer);
+    explicit WalkState(shared_ptr<Player> pPlayer);
     virtual ~WalkState() = default;
 
 

@@ -8,15 +8,15 @@ class Animation :
 public:
     friend class Animator;
     Animation();
-    Animation(const std::vector<FrameData> vFrameDataList);
+    explicit Animation(const std::vector<FrameData> vFrameDataList);
     virtual ~Animation();
 
 public:
     void Update();
-    void SetTexture(shared_ptr<Texture> pTexture)    { m_pTexture  = pTexture; }
-    void SetAnimator(shared_ptr<Animator> pAnimator) { m_pAnimator = pAnimator; }
-    void PushData();
+    FORCEINLINE void SetTexture(shared_ptr<Texture> pTexture)    { m_pTexture  = pTexture; }
+    FORCEINLINE void SetAnimator(shared_ptr<Animator> pAnimator) { m_pAnimator = pAnimator; }
 
+    void PushData();
     void RefreshAnimation(const std::vector<FrameData> vFrameDataList);
 
 public:

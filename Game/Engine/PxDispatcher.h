@@ -9,8 +9,10 @@ public:
 	~PxDispatcher();
 
 public:
-	PxDefaultCpuDispatcher* GetCpuDispatcher() { return m_pCpuDispatcher; }
-	ContactCallback*		GetSimulationCallback() { return m_pCallback; }
+	FORCEINLINE PxDefaultCpuDispatcher* GetCpuDispatcher() { return m_pCpuDispatcher; }
+	FORCEINLINE ContactCallback*		GetSimulationCallback() { return m_pCallback; }
+
+public:
 	void					CreateCpuDispatcher();
 
 private:

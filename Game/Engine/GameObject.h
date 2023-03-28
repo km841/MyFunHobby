@@ -48,18 +48,18 @@ public:
     virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject) {}
 
 public:
-    OBJECT_LEVEL_TYPE GetLevelType()                     { return m_eLevelType; }
-    LAYER_TYPE        GetLayerType()                     { return m_eLayerType; }
-    DIRECTION         GetDirection()                     { return m_eDirection; }
-    void              SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
+    FORCEINLINE OBJECT_LEVEL_TYPE GetLevelType()                     { return m_eLevelType; }
+    FORCEINLINE LAYER_TYPE        GetLayerType()                     { return m_eLayerType; }
+    FORCEINLINE DIRECTION         GetDirection()                     { return m_eDirection; }
+    FORCEINLINE void              SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
 
-    Status&     GetStatus()                        { return m_Status; }
+    FORCEINLINE Status&     GetStatus()                              { return m_Status; }
     
 
-    void Disable()   { m_bDisable = true; }
-    void Enable()    { m_bDisable = false; }
-    bool IsEnable()  { return !m_bDisable; }
-    void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
+    FORCEINLINE void Disable()   { m_bDisable = true; }
+    FORCEINLINE void Enable()    { m_bDisable = false; }
+    FORCEINLINE bool IsEnable()  { return !m_bDisable; }
+    FORCEINLINE void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
     void Release();
 
 protected:

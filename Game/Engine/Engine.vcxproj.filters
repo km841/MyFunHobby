@@ -341,9 +341,6 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{7cc1f700-d7d3-48b9-952e-19c6333f924e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{abffbd3c-ea98-4231-b801-ae8359b60f82}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{3ce1e22d-d582-4c47-b470-fe12d7838ff6}</UniqueIdentifier>
     </Filter>
@@ -364,6 +361,9 @@
     </Filter>
     <Filter Include="Object\AI">
       <UniqueIdentifier>{208c972e-e79e-40e9-9ed5-739836fb686c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{abffbd3c-ea98-4231-b801-ae8359b60f82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ class Physical :
     public Component
 {
 public:
-    Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, const MassProperties& massProperties = MassProperties());
+    explicit Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, const MassProperties& massProperties = MassProperties());
     ~Physical();
 
 public:
@@ -16,14 +16,13 @@ public:
     virtual void Update() override;
 
 public:
-    PxController*          GetController()   { return m_pController; }
-    PxActor*               GetActor()        { return m_pActor; }
-    ACTOR_TYPE             GetActorType()    { return m_eActorType; }
-    GEOMETRY_TYPE          GetGeometryType() { return m_eGeometryType; }
-    PxShape*               GetShape()        { return m_pShape; }
-    const Vec3&            GetGeometrySize() { return m_vSize; }
-
-    shared_ptr<Geometries> GetGeometries()   { return m_pGeometries; }
+    FORCEINLINE PxController*          GetController()   const { return m_pController; }
+    FORCEINLINE PxActor*               GetActor()        const { return m_pActor; }
+    FORCEINLINE ACTOR_TYPE             GetActorType()    const { return m_eActorType; }
+    FORCEINLINE GEOMETRY_TYPE          GetGeometryType() const { return m_eGeometryType; }
+    FORCEINLINE PxShape*               GetShape()        const { return m_pShape; }
+    FORCEINLINE const Vec3&            GetGeometrySize() const { return m_vSize; }
+    FORCEINLINE shared_ptr<Geometries> GetGeometries()   const { return m_pGeometries; }
 
 private:
     void          CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize);

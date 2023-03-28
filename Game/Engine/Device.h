@@ -9,8 +9,8 @@ public:
 public:
 	void Init(ComPtr<ID3D11Device> pDevice);
 
-	ComPtr<ID3D11Device> GetDevice() { return m_pDevice; }
-	ComPtr<IDXGIFactory> GetDXGI() { return m_pDxgi; }
+	FORCEINLINE ComPtr<ID3D11Device> GetDevice() { return m_pDevice; }
+	FORCEINLINE ComPtr<IDXGIFactory> GetDXGI() { return m_pDxgi; }
 
 private:
 	ComPtr<ID3D11Device> m_pDevice;

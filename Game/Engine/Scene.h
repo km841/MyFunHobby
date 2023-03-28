@@ -24,7 +24,7 @@ public:
     virtual void Enter() { }
     virtual void Exit() { }
 
-    SCENE_TYPE                           GetSceneType() { return m_eSceneType; }
+    FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
     void                                 AddObjectAtSortedIndex(shared_ptr<GameObject> pGameObject);
 

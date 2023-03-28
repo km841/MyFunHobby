@@ -15,8 +15,8 @@ public:
 	void    Render();
 	LRESULT DispatchWndMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-	shared_ptr<TilePallete>     GetPallete() { return m_pPallete; }
-	shared_ptr<AnimationEditor> GetAnimEditor() { return m_pAnimEditor; }
+	FORCEINLINE shared_ptr<TilePallete>     GetPallete() { return m_pPallete; }
+	FORCEINLINE shared_ptr<AnimationEditor> GetAnimEditor() { return m_pAnimEditor; }
 
 private:
 	void    InitGui(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);

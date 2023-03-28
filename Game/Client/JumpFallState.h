@@ -5,7 +5,7 @@ class JumpFallState :
     public PlayerState
 {
 public:
-    JumpFallState(shared_ptr<Player> pPlayer);
+    explicit JumpFallState(shared_ptr<Player> pPlayer);
     virtual ~JumpFallState() = default;
 
 

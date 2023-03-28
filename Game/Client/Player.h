@@ -22,8 +22,8 @@ public:
 	void FinalUpdate();
 
 public:
-	PLAYER_STATE GetPlayerStateEnum()					   { return m_ePlayerState; }
-	void		 SetPlayerStateEnum(PLAYER_STATE ePlayerState) { m_ePlayerState = ePlayerState; }
+	FORCEINLINE PLAYER_STATE GetPlayerStateEnum()					       { return m_ePlayerState; }
+	FORCEINLINE void		 SetPlayerStateEnum(PLAYER_STATE ePlayerState) { m_ePlayerState = ePlayerState; }
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;

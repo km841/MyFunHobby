@@ -14,16 +14,14 @@ public:
     void CreateFromTexture(uint32 eType, ComPtr<ID3D11Texture2D> pTexture);
 
 public:
-    Vec3 GetTexSize() { return m_vTexSize; }
+    FORCEINLINE Vec3 GetTexSize() { return m_vTexSize; }
 
 public:
-
-    ComPtr<ID3D11Texture2D>           GetTex2D() { return m_pTexture; }
-
-    ComPtr<ID3D11RenderTargetView>    GetRTV()   { return m_pRTV; }
-    ComPtr<ID3D11ShaderResourceView>  GetSRV()   { return m_pSRV; }
-    ComPtr<ID3D11DepthStencilView>    GetDSV()   { return m_pDSV; }
-    ComPtr<ID3D11UnorderedAccessView> GetUAV()   { return m_pUAV; }
+    FORCEINLINE ComPtr<ID3D11Texture2D>           GetTex2D() const { return m_pTexture; }
+    FORCEINLINE ComPtr<ID3D11RenderTargetView>    GetRTV()   const { return m_pRTV; }
+    FORCEINLINE ComPtr<ID3D11ShaderResourceView>  GetSRV()   const { return m_pSRV; }
+    FORCEINLINE ComPtr<ID3D11DepthStencilView>    GetDSV()   const { return m_pDSV; }
+    FORCEINLINE ComPtr<ID3D11UnorderedAccessView> GetUAV()   const { return m_pUAV; }
 
 private:
     uint32                              m_eType;

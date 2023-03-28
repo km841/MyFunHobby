@@ -16,18 +16,17 @@ public:
     virtual ~Camera();
 
     virtual void    FinalUpdate() override;
-
-    void            SetProjectionType(PROJECTION_TYPE eType) { m_eType = eType; }
-    PROJECTION_TYPE GetProjectionType() { return m_eType; }
-
-    const Matrix&   GetViewMatrix() { return m_matView; }
-    const Matrix&   GetProjectionMatrix() { return m_matProjection; }
-
     void            Render();
 
-    void            SetCameraEffect(CAMERA_EFFECT eCameraEffect) { m_eCameraEffect = eCameraEffect; }
-    CAMERA_EFFECT   GetCameraEffect() { return m_eCameraEffect; }
-    void            RemoveCameraEffect() { m_eCameraEffect = CAMERA_EFFECT::NONE; }
+    FORCEINLINE void             SetProjectionType(PROJECTION_TYPE eType)     { m_eType = eType; }
+    FORCEINLINE PROJECTION_TYPE  GetProjectionType()   const                  { return m_eType; }
+
+    FORCEINLINE const Matrix&    GetViewMatrix()       const                  { return m_matView; }
+    FORCEINLINE const Matrix&    GetProjectionMatrix() const                  { return m_matProjection; }
+
+    FORCEINLINE CAMERA_EFFECT    GetCameraEffect()     const                  { return m_eCameraEffect; }
+    FORCEINLINE void             SetCameraEffect(CAMERA_EFFECT eCameraEffect) { m_eCameraEffect = eCameraEffect; }
+    FORCEINLINE void             RemoveCameraEffect() { m_eCameraEffect = CAMERA_EFFECT::NONE; }
     
     void            SetCullingMask(LAYER_TYPE eLayerType, bool bFlag);
     void            DisableAllCullingMask();

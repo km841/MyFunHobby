@@ -39,10 +39,10 @@ public:
 	Object(OBJECT_TYPE eType);
 	virtual ~Object();
 
-	void SetName(const wstring& szName) { m_szName = szName; }
-	const wstring& GetName() { return m_szName; }
+	FORCEINLINE void SetName(const wstring& szName) { m_szName = szName; }
+	FORCEINLINE const wstring& GetName() const { return m_szName; }
 
-	OBJECT_TYPE GetType() { return m_eType; }
+	FORCEINLINE OBJECT_TYPE GetType() const { return m_eType; }
 
 protected:
 	friend class Resources;

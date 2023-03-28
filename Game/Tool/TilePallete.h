@@ -15,24 +15,24 @@ public:
 
 
 public:
-	int32 GetClickedTileIndex()    { return m_iClickedTileIndex; }
-	void  ClearClickedTile()       { m_iClickedTileIndex = -1; }
-	bool  IsMouseNotOver()         { return !m_bMouseOver; }
-	 
-	uint8 GetClickedColliderType() { return m_iClickedColliderType; }
-	uint8 GetDrawingType()         { return m_iDrawingType; }
-	uint8 GetOutputType()          { return m_iOutputType; }
+	FORCEINLINE int32 GetClickedTileIndex() const    { return m_iClickedTileIndex; }
+	FORCEINLINE void  ClearClickedTile()			 { m_iClickedTileIndex = -1; }
+	FORCEINLINE bool  IsMouseNotOver() const		 { return !m_bMouseOver; }
+											   
+	FORCEINLINE uint8 GetClickedColliderType() const { return m_iClickedColliderType; }
+	FORCEINLINE uint8 GetDrawingType() const		 { return m_iDrawingType; }
+	FORCEINLINE uint8 GetOutputType() const			 { return m_iOutputType; }
+
+	FORCEINLINE bool IsTileSynced()	const			 { return m_bTileSync; }
+	FORCEINLINE void EnableTileSync()				 { m_bTileSync = true; }
+	FORCEINLINE void DisableTileSync()				 { m_bTileSync = false; }
+
+	FORCEINLINE bool IsTileSend() const				 { return m_bTileSend; }
+	FORCEINLINE void EnableIsTileSend()			 	 { m_bTileSend = true; }
+	FORCEINLINE void DisableIsTileSend()		 	 { m_bTileSend = false; }
 
 	void SetTileMapData(const TileMapData& tileMapData);
-	bool IsTileSynced()   { return m_bTileSync; }
-	void EnableTileSync() { m_bTileSync = true; }
-	void DisableTileSync() { m_bTileSync = false; }
-	
-	bool IsTileSend() { return m_bTileSend; }
-	void EnableIsTileSend() { m_bTileSend = true; }
-	void DisableIsTileSend() { m_bTileSend = false; }
-
-	const TileMapData& GetTileMapData() { return m_TileMapData; }
+	FORCEINLINE const TileMapData& GetTileMapData() { return m_TileMapData; }
 
 private:
 	void  ColliderTypeUI_Update();

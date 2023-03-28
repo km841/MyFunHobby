@@ -26,18 +26,18 @@ public:
 
 
 public:
-	shared_ptr<Device>				GetDevice() { return m_pDevice; }
-	shared_ptr<Context>				GetContext() { return m_pContext; }
-	shared_ptr<SwapChain>			GetSwapChain() { return m_pSwapChain; }
-	shared_ptr<Physics>				GetPhysics() { return m_pPhysics; }
-	shared_ptr<Utility>				GetUtility() { return m_pUtility; }
-	shared_ptr<ConstantBuffer>		GetCB(CONSTANT_BUFFER_TYPE eType) { return m_arrCBGroups[static_cast<uint8>(eType)]; }
-	shared_ptr<RenderTargetGroup>	GetRTGroup(RENDER_TARGET_GROUP_TYPE eType) { return m_arrRTGroups[static_cast<uint8>(eType)]; }
+	FORCEINLINE shared_ptr<Device>				GetDevice()	const						{ return m_pDevice; }
+	FORCEINLINE shared_ptr<Context>				GetContext() const						{ return m_pContext; }
+	FORCEINLINE shared_ptr<SwapChain>			GetSwapChain() const					{ return m_pSwapChain; }
+	FORCEINLINE shared_ptr<Physics>				GetPhysics() const						{ return m_pPhysics; }
+	FORCEINLINE shared_ptr<Utility>				GetUtility() const						{ return m_pUtility; }
+	FORCEINLINE shared_ptr<ConstantBuffer>		GetCB(CONSTANT_BUFFER_TYPE eType) const { return m_arrCBGroups[static_cast<uint8>(eType)]; }
+	FORCEINLINE shared_ptr<RenderTargetGroup>	GetRTGroup(RENDER_TARGET_GROUP_TYPE eType) const { return m_arrRTGroups[static_cast<uint8>(eType)]; }
 
-	int32   GetWidth()  { return m_Window.iWidth; }
-	int32   GetHeight() { return m_Window.iHeight; }
-	HWND    GetHwnd()   { return m_Window.hHwnd; }
-	HMODULE GetModule() { return m_hModule; }
+	FORCEINLINE int32   GetWidth()  const { return m_Window.iWidth; }
+	FORCEINLINE int32   GetHeight() const { return m_Window.iHeight; }
+	FORCEINLINE HWND    GetHwnd()   const { return m_Window.hHwnd; }
+	FORCEINLINE HMODULE GetModule() const { return m_hModule; }
 
 private:
 	void ResizeWindow(int32 iWidth, int32 iHeight);

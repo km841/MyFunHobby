@@ -7,8 +7,8 @@ public:
 	void   Init();
 	void   Update();
 
-	uint32 GetFPS() { return m_iFPS; }
-	float  GetDeltaTime() { return m_fDeltaTime; }
+	FORCEINLINE uint32 GetFPS()       const { return m_iFPS; }
+	FORCEINLINE float  GetDeltaTime() const { return m_fDeltaTime; }
 
 private:
 	uint32 m_iFPS;

@@ -5,7 +5,7 @@ class IdleState :
     public PlayerState
 {
 public:
-    IdleState(shared_ptr<Player> pPlayer);
+    explicit IdleState(shared_ptr<Player> pPlayer);
     virtual ~IdleState() = default;
 
 

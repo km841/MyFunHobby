@@ -47,14 +47,14 @@ public:
 	void Init(HWND hHwnd);
 	void Update();
 
-	bool GetButtonPress(KEY_TYPE eKey) { return KEY_STATE::PRESS == GetState(eKey); }
-	bool GetButtonDown(KEY_TYPE eKey) { return KEY_STATE::DOWN == GetState(eKey); }
-	bool GetButtonUp(KEY_TYPE eKey) { return KEY_STATE::UP == GetState(eKey); }
-	bool GetButtonNone(KEY_TYPE eKey) { return KEY_STATE::NONE == GetState(eKey); }
-	const POINT& GetMousePos() { return m_MousePos; }
+	bool GetButtonPress(KEY_TYPE eKey)     const { return KEY_STATE::PRESS == GetState(eKey); }
+	bool GetButtonDown(KEY_TYPE eKey)      const { return KEY_STATE::DOWN == GetState(eKey); }
+	bool GetButtonUp(KEY_TYPE eKey)        const { return KEY_STATE::UP == GetState(eKey); }
+	bool GetButtonNone(KEY_TYPE eKey)      const { return KEY_STATE::NONE == GetState(eKey); }
+	FORCEINLINE const POINT& GetMousePos() const { return m_MousePos; }
 
 private:
-	inline KEY_STATE GetState(KEY_TYPE eKeyType) { return m_vStates[static_cast<uint8>(eKeyType)]; }
+	FORCEINLINE KEY_STATE GetState(KEY_TYPE eKeyType) const { return m_vStates[static_cast<uint8>(eKeyType)]; }
 
 	
 

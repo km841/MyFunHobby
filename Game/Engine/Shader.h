@@ -79,7 +79,7 @@ public:
     void CreatePixelShader(const wstring& szPath, const string& szName, const string& szVersion);
 
 public:
-    SHADER_TYPE GetShaderType() { return m_shaderInfo.eShaderType; }
+    FORCEINLINE SHADER_TYPE GetShaderType() const { return m_shaderInfo.eShaderType; }
 
 private:
     void CreateShader(const wstring& szPath, const string& szName, const string& szVersion, ComPtr<ID3DBlob>& pBlob);

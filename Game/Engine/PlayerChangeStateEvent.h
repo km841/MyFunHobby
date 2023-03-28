@@ -6,7 +6,7 @@ class PlayerChangeStateEvent :
 {
 public:
     PlayerChangeStateEvent(shared_ptr<Player> pPlayer, PLAYER_STATE eNextPlayerState);
-    PLAYER_STATE GetNextPlayerState() { return m_eNextPlayerState; }
+    FORCEINLINE PLAYER_STATE GetNextPlayerState() { return m_eNextPlayerState; }
     shared_ptr<Player> GetPlayer() { return std::move(m_pPlayer); }
 
 public:

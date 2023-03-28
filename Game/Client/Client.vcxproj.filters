@@ -62,7 +62,7 @@
     <Filter Include="소스 파일\Game\Object\Interface\UI">
       <UniqueIdentifier>{4c13a6af-7bda-4ff7-9d02-d64bf7fb6290}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Object\GameObject\Player\HUD">
+    <Filter Include="소스 파일\Game\Object\Interface\HUD\PlayerHUD">
       <UniqueIdentifier>{5b020193-7e23-49ab-8859-bf7bfcb84664}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -146,13 +146,13 @@
       <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
     </ClInclude>
     <ClInclude Include="PlayerInterfaceHUD.h">
-      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClInclude>
     <ClInclude Include="HealthBarHUD.h">
-      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClInclude>
     <ClInclude Include="SkulHeadHUD.h">
-      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHealthBarShowScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
@@ -251,13 +251,13 @@
       <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
     </ClCompile>
     <ClCompile Include="PlayerInterfaceHUD.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClCompile>
     <ClCompile Include="HealthBarHUD.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClCompile>
     <ClCompile Include="SkulHeadHUD.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHealthBarShowScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>

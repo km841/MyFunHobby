@@ -5,27 +5,27 @@ class RigidBody :
     public Component
 {
 public:
-    RigidBody(bool bGravityApplied = false);
+    explicit RigidBody(bool bGravityApplied = false);
     virtual ~RigidBody();
 
     virtual void Awake() override;
     virtual void FinalUpdate() override;
 
 public:
-    bool        IsGravityApplied()                 { return m_bGravityApplied;   }
-    void        ApplyGravity()                     { m_bGravityApplied = true;   }
-    void        RemoveGravity()                    { m_bGravityApplied = false;  }
+    FORCEINLINE bool        IsGravityApplied() const           { return m_bGravityApplied;   }
+    FORCEINLINE const Vec3& GetGravityAccel()  const           { return m_vGravityAccel;     }
+    FORCEINLINE const Vec3& GetVelocity() const                { return m_vVelocity;         }
+    FORCEINLINE float       GetMass() const                    { return m_fMass;  }
 
-    const Vec3& GetGravityAccel()                  { return m_vGravityAccel;     }
-
-    const Vec3& GetVelocity()                      { return m_vVelocity;         }
-    float       GetVelocity(AXIS eAxis);
-    void        AddVelocity(const Vec3& vVelocity) { m_vVelocity += vVelocity;   }
-    void        SetVelocity(const Vec3& vVelocity) { m_vVelocity = vVelocity;    }
-    void        SetVelocity(AXIS eAxis, float fVelocity);
-
-    void        SetMass(float fMass)               { m_fMass = fMass; }
-    float       GetMass()                          { return m_fMass;  }
+    FORCEINLINE void        ApplyGravity()                     { m_bGravityApplied = true;   }
+    FORCEINLINE void        RemoveGravity()                    { m_bGravityApplied = false;  }
+    FORCEINLINE void        AddVelocity(const Vec3& vVelocity) { m_vVelocity += vVelocity;   }
+    FORCEINLINE void        SetVelocity(const Vec3& vVelocity) { m_vVelocity = vVelocity;    }
+    FORCEINLINE void        SetMass(float fMass)               { m_fMass = fMass; }
+    
+public:
+    float                   GetVelocity(AXIS eAxis);
+    void                    SetVelocity(AXIS eAxis, float fVelocity);
 
 private:
     void        Move();

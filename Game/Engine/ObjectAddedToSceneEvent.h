@@ -9,7 +9,7 @@ class ObjectAddedToSceneEvent :
 public:
     ObjectAddedToSceneEvent(shared_ptr<GameObject> pGameObject, SCENE_TYPE eSceneType);
     shared_ptr<GameObject> GetGameObject() { return std::move(m_pGameObject); }
-    SCENE_TYPE GetSceneType() { return m_eSceneType; }
+    FORCEINLINE SCENE_TYPE GetSceneType() { return m_eSceneType; }
 
 private:
     shared_ptr<GameObject> m_pGameObject;

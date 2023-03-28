@@ -114,12 +114,12 @@ public:
     shared_ptr<Animator>            GetAnimator();
     shared_ptr<Collider>            GetCollider();
 
-	COMPONENT_TYPE GetType() { return m_eType; }
+	FORCEINLINE COMPONENT_TYPE GetType() const { return m_eType; }
     PLAYER_STATE   GetPlayerStateEnum();
 
 private:
 	friend class GameObject;
-	void SetGameObject(shared_ptr<GameObject> pGameObject) { m_pGameObject = pGameObject; }
+	FORCEINLINE void SetGameObject(shared_ptr<GameObject> pGameObject) { m_pGameObject = pGameObject; }
 
 protected:
 	COMPONENT_TYPE		 m_eType;

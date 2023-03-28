@@ -6,7 +6,7 @@ class PlayerTrackingScript :
     public MonoBehaviour
 {
 public:
-    PlayerTrackingScript(shared_ptr<Player> pPlayer);
+    explicit PlayerTrackingScript(shared_ptr<Player> pPlayer);
     virtual ~PlayerTrackingScript();
 
 public:

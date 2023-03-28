@@ -2,11 +2,11 @@
 class PhysicsScene
 {
 public:
-	PhysicsScene(PxScene* pScene);
+	explicit PhysicsScene(PxScene* pScene);
 	~PhysicsScene();
 
 public:
-	PxScene* GetScene() { return m_pScene; }
+	FORCEINLINE PxScene* GetScene() { return m_pScene; }
 
 public:
 	void AddActor(PxActor* pActor);

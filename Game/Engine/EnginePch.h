@@ -227,7 +227,7 @@ struct Status
 	void PlayerDefaultSetting()
 	{
 		iMaxHP = 100;
-		iCurHP = iMaxHP;
+		iCurHP = 100;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -258,7 +258,7 @@ struct Status
 	float GetHPRatio()
 	{
 		assert(iMaxHP > 0);
-		return (iCurHP / iMaxHP);
+		return static_cast<float>(iCurHP / static_cast<float>(iMaxHP));
 	}
 
 	bool IsAlive() { return bAlive; }
@@ -395,7 +395,7 @@ namespace Conv
 	{
 		wstring szResourcesPath = L"..\\Resources\\";
 		
-		uint32 iSplitPoint = szAbsolutePath.find(L"Texture\\");
+		uint32 iSplitPoint = static_cast<uint32>(szAbsolutePath.find(L"Texture\\"));
 		assert(iSplitPoint != wstring::npos);
 
 		wstring szResultPath = szResourcesPath + szAbsolutePath.substr(iSplitPoint);

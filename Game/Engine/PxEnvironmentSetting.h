@@ -6,14 +6,14 @@ public:
 	~PxEnvironmentSetting();
 
 public:
-	PxFoundation*			GetFoundation() { return m_pFoundation; }
-	PxPhysics*				GetPhysics() { return m_pPhysics; }
+	FORCEINLINE PxFoundation*			GetFoundation() { return m_pFoundation; }
+	FORCEINLINE PxPhysics*				GetPhysics() { return m_pPhysics; }
+	FORCEINLINE PxDefaultAllocator&		GetAllocator() { return m_allocCallback; }
+	FORCEINLINE PxDefaultErrorCallback& GetErrorCallback() { return m_errorCallback; }
 
+public:
 	void					CreateFoundation();
 	void					CreatePhysics();
-
-	PxDefaultAllocator&		GetAllocator() { return m_allocCallback; }
-	PxDefaultErrorCallback& GetErrorCallback() { return m_errorCallback; }
 
 private:
 	PxDefaultAllocator		m_allocCallback;
