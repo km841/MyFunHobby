@@ -14,8 +14,8 @@ StateMachine::StateMachine()
 
 void StateMachine::Awake()
 {
-	m_mStateMap[PLAYER_STATE::IDLE] = make_shared<IdleState>(m_pPlayer.lock());
-	m_mStateMap[PLAYER_STATE::WALK] = make_shared<WalkState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::IDLE]		 = make_shared<IdleState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::WALK]      = make_shared<WalkState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::JUMP_RISE] = make_shared<JumpRiseState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::JUMP_FALL] = make_shared<JumpFallState>(m_pPlayer.lock());
 	
@@ -40,5 +40,5 @@ void StateMachine::ChangePlayerState(PLAYER_STATE ePlayerState)
 	m_pActiveState = iter->second;
 	m_pActiveState->Enter();
 
-	m_pPlayer.lock()->SetPlayerState(ePlayerState);
+	m_pPlayer.lock()->SetPlayerStateEnum(ePlayerState);
 }

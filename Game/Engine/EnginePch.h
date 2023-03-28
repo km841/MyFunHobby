@@ -212,6 +212,67 @@ struct MaterialParams
 	void SetVec4(uint8 iIndex, Vec4 vValue) { arrVec4Params[iIndex] = vValue; }
 };
 
+struct Status
+{
+	Status()
+		: iMaxHP(0)
+		, iCurHP(0)
+		, iAttack(0)
+		, iShield(0)
+		, iDefence(0)
+		, iSpeed(0)
+		, bAlive(true)
+	{}
+
+	void PlayerDefaultSetting()
+	{
+		iMaxHP = 100;
+		iCurHP = iMaxHP;
+		iShield = 0;
+		iAttack = 1;
+		iDefence = 1;
+		iSpeed = 1;
+		bAlive = true;
+	}
+
+	void TakeDamage(int32 iDamage)
+	{
+		assert(iDamage > 0);
+		if (bAlive)
+			iCurHP -= iDamage;
+
+		if (iCurHP <= iDamage)
+		{
+			iCurHP = 0;
+			bAlive = false;
+		}
+	}
+
+	void IncreaseHP(int32 iHeal)
+	{
+		iCurHP += iHeal;
+		if (iCurHP > iMaxHP)
+			iCurHP = iMaxHP;
+	}
+
+	float GetHPRatio()
+	{
+		assert(iMaxHP > 0);
+		return (iCurHP / iMaxHP);
+	}
+
+	bool IsAlive() { return bAlive; }
+
+public:
+	int32 iMaxHP;
+	int32 iCurHP;
+	int32 iShield;
+	int32 iAttack;
+	int32 iDefence;
+	int32 iSpeed;
+	bool  bAlive;
+};
+
 enum
 {
 	TILE_SIZE = 64,
@@ -517,7 +578,5 @@ bool m_bUse = false;\
 #define IS_DOWN(key) GET_SINGLE(Input)->GetButtonDown(key)
 #define IS_UP(key) GET_SINGLE(Input)->GetButtonUp(key)
 #define IS_NONE(key) GET_SINGLE(Input)->GetButtonNone(key)
-
-
 
 extern unique_ptr<class Engine> g_pEngine;

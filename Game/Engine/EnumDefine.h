@@ -95,6 +95,7 @@ enum class LAYER_TYPE : uint8
 	MONSTER,
 	NPC,
 	TILE,
+	HUD = 29,
 	UI = 30,
 	END = 31,
 };
@@ -123,4 +124,13 @@ enum class FADE_TYPE : uint8
 {
 	FADE_IN,
 	FADE_OUT,
+};
+
+enum class OBJECT_LEVEL_TYPE : uint8
+{
+	OBJECT_LEVEL_1,
+	OBJECT_LEVEL_2,
+	OBJECT_LEVEL_3,
+	OBJECT_LEVEL_4,
+	OBJECT_LEVEL_5,
 };

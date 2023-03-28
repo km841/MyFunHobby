@@ -13,7 +13,7 @@ RigidBody::RigidBody(bool bGravityApplied)
 	, m_bGravityApplied(bGravityApplied)
 	, m_fMass(1.f)
 {
-	m_vGravityAccel = Vec3(0.f, -9.81f * 100.f, 0.f);
+	m_vGravityAccel = Vec3(0.f, -9.81f * 250.f, 0.f);
 	m_vVelocity = Vec3::Zero;
 }
 
@@ -38,6 +38,23 @@ void RigidBody::Move()
 	PxTransform transform = GetTransform()->GetPxTransform();
 	transform.p += Conv::Vec3ToPxVec3(m_vVelocity) * DELTA_TIME;
 	GetPhysical()->GetActor()->is<PxRigidDynamic>()->setKinematicTarget(transform);
+}
+
+
+float RigidBody::GetVelocity(AXIS eAxis)
+{
+	switch (eAxis)
+	{
+	case AXIS::X:
+		return m_vVelocity.x;
+	case AXIS::Y:
+		return m_vVelocity.y;
+	case AXIS::Z:
+		return m_vVelocity.z;
+	}
+
+	assert(nullptr);
+	return PX_MAX_F32;
 }
 
 void RigidBody::SetVelocity(AXIS eAxis, float fVelocity)

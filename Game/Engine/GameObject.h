@@ -48,9 +48,13 @@ public:
     virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject) {}
 
 public:
-    LAYER_TYPE GetLayerType()                     { return m_eLayerType; }
-    DIRECTION  GetDirection()                     { return m_eDirection; }
-    void       SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
+    OBJECT_LEVEL_TYPE GetLevelType()                     { return m_eLevelType; }
+    LAYER_TYPE        GetLayerType()                     { return m_eLayerType; }
+    DIRECTION         GetDirection()                     { return m_eDirection; }
+    void              SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
+
+    Status&     GetStatus()                        { return m_Status; }
+    
 
     void Disable()   { m_bDisable = true; }
     void Enable()    { m_bDisable = false; }
@@ -61,12 +65,12 @@ public:
 protected:
     DIRECTION                                                m_eDirection;
     LAYER_TYPE                                               m_eLayerType;
+    OBJECT_LEVEL_TYPE                                        m_eLevelType;
+    Status						                             m_Status;
 
 private:
     std::array<shared_ptr<Component>, FIXED_COMPONENT_COUNT> m_arrComponents;
     std::vector<shared_ptr<MonoBehaviour>>                   m_vScripts;
     bool                                                     m_bDisable;
-
-    //DECLARE_POOL(GameObject);
 };
 

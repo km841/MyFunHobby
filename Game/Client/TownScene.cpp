@@ -30,6 +30,11 @@
 #include "NPC_Witch.h"
 #include "NPC_Wolf.h"
 #include "NPC_Wizard.h"
+#include "NPC_Ogre.h"
+#include "PlayerInterfaceHUD.h"
+#include "HealthBarHUD.h"
+#include "SkulHeadHUD.h"
+#include "PlayerHealthBarShowScript.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -77,42 +82,122 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
 
+	shared_ptr<Player> pPlayer = nullptr;
 	// Player
 	{
-		shared_ptr<Player> pGameObject = make_shared<Player>();
+		pPlayer = make_shared<Player>();
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
 
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
-		pGameObject->AddComponent(make_shared<Controller>());
-		pGameObject->AddComponent(make_shared<PlayerMoveScript>());
-		pGameObject->AddComponent(make_shared<RigidBody>(true));
-		pGameObject->AddComponent(make_shared<Collider>());
-		pGameObject->AddComponent(make_shared<DebugRenderer>());
-		pGameObject->AddComponent(make_shared<Animator>());
+		pPlayer->AddComponent(pMeshRenderer);
+		pPlayer->AddComponent(make_shared<Transform>());
+		pPlayer->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
+		pPlayer->AddComponent(make_shared<Controller>());
+		pPlayer->AddComponent(make_shared<PlayerMoveScript>());
+		pPlayer->AddComponent(make_shared<RigidBody>(true));
+		pPlayer->AddComponent(make_shared<Collider>());
+		pPlayer->AddComponent(make_shared<DebugRenderer>());
+		pPlayer->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\LittleBone\\littlebone_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\LittleBone\\littlebone_walk.anim");
 		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpRise", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_rise.anim");
 		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpFall", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_fall.anim");
 
-		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
-		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
-		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_JumpRise", pJumpRiseAnimation);
-		pGameObject->GetAnimator()->AddAnimation(L"LittleBone_JumpFall", pJumpFallAnimation);
-		pGameObject->GetAnimator()->Play(L"LittleBone_Idle");
+		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
+		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
+		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpRise", pJumpRiseAnimation);
+		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpFall", pJumpFallAnimation);
+		pPlayer->GetAnimator()->Play(L"LittleBone_Idle");
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 5.f, 100.f));
+		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 5.f, 100.f));
 
-		AddGameObject(pGameObject);
+		AddGameObject(pPlayer);
+	}
+
+
+	shared_ptr<PlayerInterfaceHUD> pInterfaceHUD = nullptr;
+	// Player Interface HUD
+	{
+		pInterfaceHUD = make_shared<PlayerInterfaceHUD>();
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"PlayerInterfaceHUD", L"..\\Resources\\Texture\\HUD\\HUD_Player_Normal_Frame.tga");
+		pMaterial->SetTexture(0, pTexture);
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pInterfaceHUD->AddComponent(pMeshRenderer);
+		pInterfaceHUD->AddComponent(make_shared<Transform>());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pInterfaceHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 80.f));
+		pInterfaceHUD->GetTransform()->SetLocalScale(Vec3(203.f, 66.f, 1.f));
+
+		AddGameObject(pInterfaceHUD);
+	}
+
+	// Skul Head HUD
+	{
+		shared_ptr<SkulHeadHUD> pSkulHeadHUD = make_shared<SkulHeadHUD>();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBoneHeadHUD", L"..\\Resources\\Texture\\HUD\\HUD_Skul_Head.tga");
+		pMaterial->SetTexture(0, pTexture);
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pSkulHeadHUD->AddComponent(pMeshRenderer);
+		pSkulHeadHUD->AddComponent(make_shared<Transform>());
+		pSkulHeadHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pSkulHeadHUD->GetTransform()->SetLocalPosition(Vec3(-145.f, 18.f, -10.f));
+		pSkulHeadHUD->GetTransform()->SetLocalScale(Vec3(45.f, 45.f, 0.f));
+
+		AddGameObject(pSkulHeadHUD);
+	}
+
+	// Health Bar HUD
+	{
+		shared_ptr<HealthBarHUD> pHealthBarHUD = make_shared<HealthBarHUD>();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"HP")->Clone();
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HealthBarHUD", L"..\\Resources\\Texture\\HUD\\HealthBar\\HUD_Player_HealthBar.tga");
+		pMaterial->SetTexture(0, pTexture);
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pHealthBarHUD->AddComponent(pMeshRenderer);
+		pHealthBarHUD->AddComponent(make_shared<PlayerHealthBarShowScript>(pPlayer));
+		pHealthBarHUD->AddComponent(make_shared<Transform>());
+		pHealthBarHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pHealthBarHUD->GetTransform()->SetLocalPosition(Vec3(1.f, -32.5f, -10.f));
+		pHealthBarHUD->GetTransform()->SetLocalScale(Vec3(115.f, 8.f, 1.f));
+
+		AddGameObject(pHealthBarHUD);
 	}
 
 	// Ground
@@ -134,53 +219,53 @@ void TownScene::Enter()
 
 	// Compute Shader
 	{
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
+		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
+		//shared_ptr<Texture> pTexture = make_shared<Texture>();
+		//pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
 
-		shared_ptr<Texture> pNoiseTexture = GET_SINGLE(Resources)->Load<Texture>(L"NoiseTexture", L"..\\Resources\\Texture\\Image_NoiseTexture.tga");
-		pMaterial->SetTexture(0, pTexture);
-		pMaterial->SetTexture(1, pNoiseTexture);
-		pMaterial->SetVec3(0, pNoiseTexture->GetTexSize());
+		//shared_ptr<Texture> pNoiseTexture = GET_SINGLE(Resources)->Load<Texture>(L"NoiseTexture", L"..\\Resources\\Texture\\Image_NoiseTexture.tga");
+		//pMaterial->SetTexture(0, pTexture);
+		//pMaterial->SetTexture(1, pNoiseTexture);
+		//pMaterial->SetVec3(0, pNoiseTexture->GetTexSize());
 
-		pMaterial->Dispatch(1, 1024, 1);
-		GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
+		//pMaterial->Dispatch(1, 1024, 1);
+		//GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
 	}
 
 	// Monster
-	{
-		shared_ptr<Monster> pGameObject = make_shared<Monster>();
+	//{
+	//	shared_ptr<Monster> pGameObject = make_shared<Monster>();
 
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		//shared_ptr<Texture> pTexture = make_shared<Texture>();
-		//pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
+	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	//	shared_ptr<Texture> pTexture = make_shared<Texture>();
+	//	pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
 
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"ComputeTexture");
-		shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
+	//	//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"ComputeTexture");
+	//	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
 
-		shared_ptr<Material> pMaterial = make_shared<Material>();
-		pMaterial->SetShader(pShader);
-		pMaterial->SetTexture(0, pTexture);
+	//	shared_ptr<Material> pMaterial = make_shared<Material>();
+	//	pMaterial->SetShader(pShader);
+	//	pMaterial->SetTexture(0, pTexture);
 
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
+	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	//	pMeshRenderer->SetMaterial(pMaterial);
+	//	pMeshRenderer->SetMesh(pMesh);
 
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f)));
-		pGameObject->AddComponent(make_shared<RigidBody>());
-		pGameObject->AddComponent(make_shared<Collider>());
-		pGameObject->AddComponent(make_shared<DebugRenderer>());
+	//	pGameObject->AddComponent(pMeshRenderer);
+	//	pGameObject->AddComponent(make_shared<Transform>());
+	//	pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f)));
+	//	pGameObject->AddComponent(make_shared<RigidBody>());
+	//	pGameObject->AddComponent(make_shared<Collider>());
+	//	pGameObject->AddComponent(make_shared<DebugRenderer>());
 
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 250.f, fHeight / 2.f, 100.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(110.f, 110.f, 1.f));
+	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 250.f, fHeight / 2.f, 100.f));
+	//	pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
 
-		AddGameObject(pGameObject);
-	}
+	//	AddGameObject(pGameObject);
+	//}
 
 	//Background_1
 	{
@@ -241,6 +326,7 @@ void TownScene::Enter()
 		AddGameObject(pGameObject);
 
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, true);
 	}
 
 
@@ -260,6 +346,7 @@ void TownScene::Enter()
 
 		pGameObject->GetCamera()->EnableAllCullingMask();
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, false);
 	}
 
 	// Fade In/Out Object
@@ -352,6 +439,36 @@ void TownScene::Enter()
 		AddGameObject(pWolf);
 	}
 
+	// NPC_Ogre
+	{
+		shared_ptr<NPC_Ogre> pOgre = make_shared<NPC_Ogre>();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pOgre->AddComponent(pMeshRenderer);
+		pOgre->AddComponent(make_shared<Transform>());
+		pOgre->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(227.f, 151.f, 1.f)));
+		pOgre->AddComponent(make_shared<RigidBody>());
+		pOgre->AddComponent(make_shared<Collider>());
+		pOgre->AddComponent(make_shared<DebugRenderer>());
+		pOgre->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Ogre_Idle", L"..\\Resources\\Animation\\Ogre\\ogre_idle.anim");
+		pOgre->GetAnimator()->AddAnimation(L"Ogre_Idle", pAnimation);
+		pOgre->GetAnimator()->Play(L"Ogre_Idle");
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pOgre->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1200.f, fHeight / 2.f - 50.f, 100.f));
+
+		AddGameObject(pOgre);
+	}
+
 	// NPC_Wizard
 	{
 		shared_ptr<NPC_Wizard> pWizard = make_shared<NPC_Wizard>();
@@ -377,10 +494,12 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pWizard->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1700.f, fHeight / 2.f - 50.f, 100.f));
+		pWizard->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2000.f, fHeight / 2.f - 50.f, 100.f));
 
 		AddGameObject(pWizard);
 	}
+
+
 
 	m_vCameras[1]->SetCameraEffect(CAMERA_EFFECT::FADE_IN);
 

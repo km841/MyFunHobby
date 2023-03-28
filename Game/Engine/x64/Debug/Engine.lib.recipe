@@ -18,6 +18,9 @@
       <FullPath>C:\MyProject\Game\Output\frame_divider.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\hp.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\params.cso</FullPath>
     </ContentFile>
     <ContentFile>

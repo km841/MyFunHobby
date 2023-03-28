@@ -13,7 +13,6 @@ public:
 
 public:
     virtual void Awake() override;
-
     virtual void Update() override;
 
 public:

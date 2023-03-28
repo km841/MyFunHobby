@@ -24,8 +24,9 @@ public:
     virtual void Enter() { }
     virtual void Exit() { }
 
-    SCENE_TYPE GetSceneType() { return m_eSceneType; }
-    void AddGameObject(shared_ptr<GameObject> pGameObject);
+    SCENE_TYPE                           GetSceneType() { return m_eSceneType; }
+    void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
+    void                                 AddObjectAtSortedIndex(shared_ptr<GameObject> pGameObject);
 
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
 
@@ -39,4 +40,3 @@ protected:
     std::array<std::vector<shared_ptr<GameObject>>, LAYER_TYPE_COUNT> m_vGameObjects;
     std::vector<shared_ptr<Camera>>                                   m_vCameras;
 };
-

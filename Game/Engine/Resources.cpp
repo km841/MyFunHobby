@@ -212,7 +212,7 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Forward", pShader);
 	}
 
-	// Forward
+	// Fade In / Out
 	{
 		ShaderInfo shaderInfo =
 		{
@@ -226,6 +226,22 @@ void Resources::CreateDefaultShader()
 		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\fade_in_out.fx", shaderInfo);
 
 		Add<Shader>(L"FadeInOut", pShader);
+	}
+
+	// Health Bar
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\hp.fx", shaderInfo);
+
+		Add<Shader>(L"HP", pShader);
 	}
 
 	// Compute
@@ -299,6 +315,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"FadeInOut", pMaterial);
+	}
+
+	// Fade In / Out
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"HP");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"HP", pMaterial);
 	}
 
 }

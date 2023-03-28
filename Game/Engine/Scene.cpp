@@ -13,6 +13,8 @@
 #include "DebugRenderer.h"
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "HUD.h"
+#include "UI.h"
 
 Scene::Scene(SCENE_TYPE eSceneType)
 	: m_eSceneType(eSceneType)
@@ -102,6 +104,19 @@ void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 
 	LAYER_TYPE eLayerType = pGameObject->GetLayerType();
 	m_vGameObjects[static_cast<uint8>(eLayerType)].push_back(pGameObject);
+}
+
+void Scene::AddObjectAtSortedIndex(shared_ptr<GameObject> pGameObject)
+{
+	LAYER_TYPE eLayerType = pGameObject->GetLayerType();
+	auto& vLayer = m_vGameObjects[static_cast<uint8>(eLayerType)];
+	auto fnPred = [&](shared_ptr<GameObject> pObject1, shared_ptr<GameObject> pObject2)
+	{
+		return (pObject1->GetLevelType() > pObject2->GetLevelType());
+	};
+	assert(std::is_sorted(vLayer.begin(), vLayer.end(), fnPred));
+	const auto pInsertIter = std::lower_bound(vLayer.begin(), vLayer.end(), pGameObject, fnPred);
+	vLayer.insert(pInsertIter, pGameObject);
 }
 
 std::vector<shared_ptr<GameObject>>& Scene::GetGameObjects(LAYER_TYPE eLayerType)

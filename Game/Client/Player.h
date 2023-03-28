@@ -3,6 +3,7 @@
 
 class PlayerState;
 class StateMachine;
+class PlayerInterfaceHUD;
 
 class Player :
 	  public GameObject
@@ -22,7 +23,7 @@ public:
 
 public:
 	PLAYER_STATE GetPlayerStateEnum()					   { return m_ePlayerState; }
-	void		 SetPlayerState(PLAYER_STATE ePlayerState) { m_ePlayerState = ePlayerState; }
+	void		 SetPlayerStateEnum(PLAYER_STATE ePlayerState) { m_ePlayerState = ePlayerState; }
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
@@ -32,11 +33,8 @@ public:
 
 
 private:
-	PLAYER_STATE m_ePlayerState;
-	unique_ptr<StateMachine> m_pStateMachine;
-	int32		 m_iTileCollisionCount;
-
-
-
+	unique_ptr<StateMachine>	   m_pStateMachine;
+	PLAYER_STATE				   m_ePlayerState;
+	
 };
 

@@ -45,8 +45,12 @@ public:
     bool IsChangedFlag()                                       { return m_bChanged; }
     void ChangedFlagOff()                                      { m_bChanged = false; }
 
-private:
+public:
+    weak_ptr<Transform> GetParent() { return m_pParent; }
+    void                SetParent(shared_ptr<Transform> pParent) { m_pParent = pParent; }
 
+private:
+    weak_ptr<Transform> m_pParent;
 
     Vec3    m_vLocalScale;
     Vec3    m_vLocalRotation;

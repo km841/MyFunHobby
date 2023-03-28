@@ -393,5 +393,8 @@
     <FxCompile Include="..\Resources\Shader\fade_in_out.fx">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="..\Resources\Shader\hp.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

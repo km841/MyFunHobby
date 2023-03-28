@@ -29,9 +29,6 @@
     <Filter Include="소스 파일\Game\Object\Tile">
       <UniqueIdentifier>{92ba6b1f-d19e-4bfa-866e-9693c89ab4f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Object\UI">
-      <UniqueIdentifier>{4c13a6af-7bda-4ff7-9d02-d64bf7fb6290}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Object\GameObject\Player">
       <UniqueIdentifier>{d32af7bc-5083-40f7-bd53-577b7c68ed1e}</UniqueIdentifier>
     </Filter>
@@ -52,6 +49,21 @@
     </Filter>
     <Filter Include="소스 파일\Game\Object\GameObject\NPC\Wizard">
       <UniqueIdentifier>{23c026cc-b94a-487e-99e2-6e2cad1048df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\NPC\Ogre">
+      <UniqueIdentifier>{00d31e4f-11c8-423c-8940-933c3be5ad99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface">
+      <UniqueIdentifier>{179e66dc-56bf-461b-ab75-734e561369e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\HUD">
+      <UniqueIdentifier>{765e6938-0ce0-41fd-a279-5e650c757440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\UI">
+      <UniqueIdentifier>{4c13a6af-7bda-4ff7-9d02-d64bf7fb6290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\HUD">
+      <UniqueIdentifier>{5b020193-7e23-49ab-8859-bf7bfcb84664}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +116,7 @@
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>소스 파일\Game\Object\UI</Filter>
+      <Filter>소스 파일\Game\Object\Interface\UI</Filter>
     </ClInclude>
     <ClInclude Include="ObjectFadeInOutScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
@@ -126,6 +138,24 @@
     </ClInclude>
     <ClInclude Include="NPC_Wizard.h">
       <Filter>소스 파일\Game\Object\GameObject\NPC\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC_Ogre.h">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Ogre</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInterfaceHUD.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBarHUD.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="SkulHeadHUD.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHealthBarShowScript.h">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,7 +221,7 @@
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>소스 파일\Game\Object\UI</Filter>
+      <Filter>소스 파일\Game\Object\Interface\UI</Filter>
     </ClCompile>
     <ClCompile Include="ObjectFadeInOutScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
@@ -213,6 +243,24 @@
     </ClCompile>
     <ClCompile Include="NPC_Wizard.cpp">
       <Filter>소스 파일\Game\Object\GameObject\NPC\Wizard</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC_Ogre.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInterfaceHUD.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBarHUD.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="SkulHeadHUD.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHealthBarShowScript.cpp">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

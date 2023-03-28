@@ -8,9 +8,9 @@ public:
 	~Utility();
 
 public:
-	void Init(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);
-	void ToolUpdate();
-	void ToolRender();
+	void			 Init(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);
+	void			 ToolUpdate();
+	void			 ToolRender();
 
 public:
 	shared_ptr<Tool> GetTool() { return g_pTool; }

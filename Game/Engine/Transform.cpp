@@ -70,6 +70,15 @@ void Transform::FinalUpdate()
 		m_matLocal = matScale * matRotation * matTranslation;
 		m_matWorld = m_matLocal;
 	}
+
+	if (m_pParent.lock())
+	{
+		Matrix matParentMatrix = m_pParent.lock()->GetLocalToWorldMatrix();
+		matParentMatrix._11 = 1.f;
+		matParentMatrix._22 = 1.f;
+		matParentMatrix._33 = 1.f;
+		m_matWorld *= matParentMatrix;
+	}
 }
 
 void Transform::PushData(shared_ptr<Camera> pCamera)

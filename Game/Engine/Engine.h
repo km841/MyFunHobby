@@ -20,10 +20,10 @@ public:
 	void Render();
 	void RenderBegin();
 	void RenderEnd();
-
 	void Destroy();
 
 	void ShowFPS();
+
 
 public:
 	shared_ptr<Device>				GetDevice() { return m_pDevice; }

@@ -11,12 +11,12 @@
 #include "Physical.h"
 #include "Animator.h"
 
-//POOL_INIT(GameObject);
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
 	, m_bDisable(false)
 	, m_eDirection(DIRECTION::RIGHT)
 	, m_eLayerType(eLayerType)
+	, m_eLevelType(OBJECT_LEVEL_TYPE::OBJECT_LEVEL_1)
 	
 {
 }

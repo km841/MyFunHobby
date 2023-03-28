@@ -13,7 +13,7 @@
 
 PlayerMoveScript::PlayerMoveScript()
 	: m_fSpeed(10.f)
-	, m_fJumpSpeed(20.f)
+	, m_fJumpSpeed(30.f)
 	, m_FilterShaders{}
 {
 }

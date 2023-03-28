@@ -6,12 +6,13 @@
 #include "Physical.h"
 #include "Transform.h"
 #include "Collider.h"
+#include "PlayerInterfaceHUD.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
 	, m_ePlayerState(PLAYER_STATE::IDLE)
-	, m_iTileCollisionCount(0)
 {
+	m_Status.PlayerDefaultSetting();
 	m_pStateMachine = make_unique<StateMachine>();
 }
 
