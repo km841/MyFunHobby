@@ -134,3 +134,10 @@ enum class OBJECT_LEVEL_TYPE : uint8
 	OBJECT_LEVEL_4,
 	OBJECT_LEVEL_5,
 };
+
+enum class UI_TYPE : uint8
+{
+	INVENTORY,
+	DIALOGUE,
+	MENU,
+};

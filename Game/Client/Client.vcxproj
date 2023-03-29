@@ -166,6 +166,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="CameraFadeInOutScript.h" />
+    <ClInclude Include="DialogueUI.h" />
     <ClInclude Include="HealthBarHUD.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CameraFadeInOutScript.cpp" />
+    <ClCompile Include="DialogueUI.cpp" />
     <ClCompile Include="HealthBarHUD.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />

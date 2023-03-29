@@ -8,11 +8,11 @@ c:\myproject\game\tool\x64\debug\imgui_impl_win32.obj
 c:\myproject\game\tool\x64\debug\imgui_impl_dx11.obj
 c:\myproject\game\tool\x64\debug\imgui_draw.obj
 c:\myproject\game\tool\x64\debug\imgui_demo.obj
-c:\myproject\game\tool\x64\debug\imgui.obj
-c:\myproject\game\tool\x64\debug\common.obj
 c:\myproject\game\tool\x64\debug\imguifiledialog.obj
-c:\myproject\game\tool\x64\debug\animationeditor.obj
+c:\myproject\game\tool\x64\debug\imgui.obj
 c:\myproject\game\tool\x64\debug\guibase.obj
+c:\myproject\game\tool\x64\debug\common.obj
+c:\myproject\game\tool\x64\debug\animationeditor.obj
 c:\myproject\game\output\tool.lib
 c:\myproject\game\tool\x64\debug\tool.tlog\cl.command.1.tlog
 c:\myproject\game\tool\x64\debug\tool.tlog\cl.read.1.tlog

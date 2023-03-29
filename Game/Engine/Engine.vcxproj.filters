@@ -166,6 +166,9 @@
     <ClInclude Include="EnumDefine.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="PlayerChangeStateEvent.cpp">
       <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

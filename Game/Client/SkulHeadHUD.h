@@ -1,6 +1,6 @@
 #pragma once
 #include "HUD.h"
-class Player;
+
 class SkulHeadHUD :
     public HUD
 {

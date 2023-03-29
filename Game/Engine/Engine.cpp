@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "EventManager.h"
 #include "CollisionManager.h"
+#include "UIManager.h"
 
 void Engine::Init(const WindowInfo& wInfo)
 {
@@ -66,6 +67,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	GET_SINGLE(Scenes)->Init();
 	GET_SINGLE(Timer)->Init();
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
+	GET_SINGLE(UIManager)->Init();
 }
 
 void Engine::Update()

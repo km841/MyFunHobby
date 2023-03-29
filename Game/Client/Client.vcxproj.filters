@@ -65,6 +65,9 @@
     <Filter Include="소스 파일\Game\Object\Interface\HUD\PlayerHUD">
       <UniqueIdentifier>{5b020193-7e23-49ab-8859-bf7bfcb84664}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\UI\DialogueUI">
+      <UniqueIdentifier>{2a6933c7-74ea-47f0-8b41-af81ff389fdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -156,6 +159,9 @@
     </ClInclude>
     <ClInclude Include="PlayerHealthBarShowScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogueUI.h">
+      <Filter>소스 파일\Game\Object\Interface\UI\DialogueUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +267,9 @@
     </ClCompile>
     <ClCompile Include="PlayerHealthBarShowScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogueUI.cpp">
+      <Filter>소스 파일\Game\Object\Interface\UI\DialogueUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

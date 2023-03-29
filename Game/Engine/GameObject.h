@@ -53,7 +53,7 @@ public:
     FORCEINLINE DIRECTION         GetDirection()                     { return m_eDirection; }
     FORCEINLINE void              SetDirection(DIRECTION eDirection) { m_eDirection = eDirection; }
 
-    FORCEINLINE Status&     GetStatus()                              { return m_Status; }
+    FORCEINLINE Status*           GetStatus()                        { return &m_Status; }
     
 
     FORCEINLINE void Disable()   { m_bDisable = true; }

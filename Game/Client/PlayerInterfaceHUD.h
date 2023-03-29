@@ -1,9 +1,6 @@
 #pragma once
 #include "HUD.h"
 
-class Player;
-class HealthBarHUD;
-class SkulHeadHUD;
 class PlayerInterfaceHUD :
     public HUD
 {

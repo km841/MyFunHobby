@@ -9,6 +9,8 @@
 #include "Collider.h"
 #include "Engine.h"
 #include "RigidBody.h"
+#include "UIManager.h"
+#include "DialogueUI.h"
 
 
 PlayerMoveScript::PlayerMoveScript()
@@ -38,7 +40,7 @@ void PlayerMoveScript::LateUpdate()
 	{
 		vVelocity = GetTransform()->GetRight() * m_fSpeed;
 		GetGameObject()->SetDirection(DIRECTION::RIGHT);
-		GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+		GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);	
 	}
 
 	if (IS_DOWN(KEY_TYPE::C))
@@ -48,6 +50,17 @@ void PlayerMoveScript::LateUpdate()
 		{
 			vVelocity = GetTransform()->GetUp() * m_fJumpSpeed;
 			GetRigidBody()->AddVelocity(vVelocity);
+
+			// Test Code
+			GetGameObject()->GetStatus()->TakeDamage(1);
+
+			GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
+			if (GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
+				GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
+		
+			else
+				GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Enable();
+			
 		}
 	}
 }

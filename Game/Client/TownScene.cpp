@@ -1,40 +1,55 @@
 #include "pch.h"
 #include "TownScene.h"
-#include "GameObject.h"
-#include "MeshRenderer.h"
-#include "Mesh.h"
-#include "Material.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "Transform.h"
-#include "Camera.h"
-#include "CameraMoveScript.h"
 #include "Engine.h"
-#include "Resources.h"
-#include "Controller.h"
-#include "PlayerMoveScript.h"
-#include "RigidBody.h"
-#include "Collider.h"
-#include "Physical.h"
-#include "Player.h"
+#include "GameObject.h"
+
+/* Event */
 #include "SceneChangeEvent.h"
-#include "DebugRenderer.h"
-#include "Animation.h"
-#include "Animator.h"
-#include "Input.h"
-#include "Monster.h"
-#include "CollisionManager.h"
+
+/* Interface */
+#include "PlayerInterfaceHUD.h"
+#include "HealthBarHUD.h"
+#include "SkulHeadHUD.h"
+#include "DialogueUI.h"
+
+/* Script */
+#include "PlayerHealthBarShowScript.h"
 #include "CameraFadeInOutScript.h"
-#include "UI.h"
 #include "PlayerTrackingScript.h"
+#include "CameraMoveScript.h"
+#include "PlayerMoveScript.h"
+
+/* Manager */
+#include "Resources.h"
+#include "Input.h"
+#include "CollisionManager.h"
+#include "UIManager.h"
+
+/* GameObject */
+#include "Player.h"
+#include "Monster.h"
 #include "NPC_Witch.h"
 #include "NPC_Wolf.h"
 #include "NPC_Wizard.h"
 #include "NPC_Ogre.h"
-#include "PlayerInterfaceHUD.h"
-#include "HealthBarHUD.h"
-#include "SkulHeadHUD.h"
-#include "PlayerHealthBarShowScript.h"
+
+/* Resources */
+#include "Animation.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "Shader.h"
+#include "Texture.h"
+
+/* Component */
+#include "MeshRenderer.h"
+#include "Transform.h"
+#include "Camera.h"
+#include "Controller.h"
+#include "RigidBody.h"
+#include "Collider.h"
+#include "Physical.h"
+#include "DebugRenderer.h"
+#include "Animator.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -204,14 +219,14 @@ void TownScene::Enter()
 	{
 		shared_ptr<GameObject> pGround = make_shared<GameObject>(LAYER_TYPE::TILE);
 		pGround->AddComponent(make_shared<Transform>());
-		pGround->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(1600.f, 400.f, 1.f)));
+		pGround->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(2400.f, 400.f, 1.f)));
 		pGround->AddComponent(make_shared<Collider>());
 		pGround->AddComponent(make_shared<DebugRenderer>());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 630.f, 100.f));
+		pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 650.f, 100.f));
 		pGround->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 
 		AddGameObject(pGround);
@@ -267,12 +282,12 @@ void TownScene::Enter()
 	//	AddGameObject(pGameObject);
 	//}
 
-	//Background_1
+	//Background
 	{
 		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_TownMap.tga");
+		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town.tga");
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -282,32 +297,12 @@ void TownScene::Enter()
 		pGameObject->AddComponent(make_shared<Transform>());
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 150.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f, 140.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 450.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
 
-	//Background_2
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_TownMap.tga");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		pMaterial->SetTexture(0, pTexture);
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1600.f, fHeight / 2.f, 150.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
-
-		AddGameObject(pGameObject);
-	}
 
 	// Camera
 	{
@@ -325,8 +320,8 @@ void TownScene::Enter()
 		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 		AddGameObject(pGameObject);
 
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, true);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
 	}
 
 
@@ -345,39 +340,11 @@ void TownScene::Enter()
 		AddGameObject(pGameObject);
 
 		pGameObject->GetCamera()->EnableAllCullingMask();
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, false);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
 	}
 
-	// Fade In/Out Object
-	{
-		shared_ptr<UI> pUI = make_shared<UI>();
 
-		pUI->AddComponent(make_shared<Transform>());
-		
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"FadeInOut");
-		
-		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndicesTri(Vec3(1.f, 1.f, 1.f));
-		shared_ptr<Mesh> pMesh = make_shared<Mesh>();
-
-		pMesh->Init(vVertices, vIndices);
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pUI->AddComponent(pMeshRenderer);
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		pUI->AddComponent(make_shared<CameraFadeInOutScript>(m_vCameras[1]));
-
-		pUI->GetTransform()->SetLocalScale(Vec3(1600.f, 900.f, 10.f));
-		pUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-
-		AddGameObject(pUI);
-	}
 
 	// NPC_Witch
 	{
@@ -404,7 +371,7 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pWitch->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 75.f, 100.f));
+		pWitch->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 115.f, 110.f));
 
 		AddGameObject(pWitch);
 	}
@@ -434,7 +401,7 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pWolf->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 50.f, 100.f));
+		pWolf->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 80.f, 110.f));
 
 		AddGameObject(pWolf);
 	}
@@ -464,7 +431,7 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pOgre->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1200.f, fHeight / 2.f - 50.f, 100.f));
+		pOgre->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1200.f, fHeight / 2.f - 70.f, 110.f));
 
 		AddGameObject(pOgre);
 	}
@@ -494,12 +461,47 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pWizard->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2000.f, fHeight / 2.f - 50.f, 100.f));
+		pWizard->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 2000.f, fHeight / 2.f - 70.f, 110.f));
 
 		AddGameObject(pWizard);
 	}
 
 
+	
+	AddGameObject(GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE));
+	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
+	
+
+
+	// Fade In/Out Object
+	{
+		shared_ptr<UI> pUI = make_shared<UI>();
+
+		pUI->AddComponent(make_shared<Transform>());
+
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"FadeInOut");
+
+		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndicesTri(Vec3(1.f, 1.f, 1.f));
+		shared_ptr<Mesh> pMesh = make_shared<Mesh>();
+
+		pMesh->Init(vVertices, vIndices);
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pUI->AddComponent(pMeshRenderer);
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pUI->AddComponent(make_shared<CameraFadeInOutScript>(m_vCameras[1]));
+
+		pUI->GetTransform()->SetLocalScale(Vec3(1600.f, 900.f, 10.f));
+		pUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+
+		AddGameObject(pUI);
+	}
 
 	m_vCameras[1]->SetCameraEffect(CAMERA_EFFECT::FADE_IN);
 
