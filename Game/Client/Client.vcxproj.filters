@@ -163,6 +163,12 @@
     <ClInclude Include="DialogueUI.h">
       <Filter>소스 파일\Game\Object\Interface\UI\DialogueUI</Filter>
     </ClInclude>
+    <ClInclude Include="AttackAState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -270,6 +276,12 @@
     </ClCompile>
     <ClCompile Include="DialogueUI.cpp">
       <Filter>소스 파일\Game\Object\Interface\UI\DialogueUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackAState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackBState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

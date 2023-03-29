@@ -52,14 +52,14 @@ void PlayerMoveScript::LateUpdate()
 			GetRigidBody()->AddVelocity(vVelocity);
 
 			// Test Code
-			GetGameObject()->GetStatus()->TakeDamage(1);
+			//GetGameObject()->GetStatus()->TakeDamage(1);
 
-			GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
-			if (GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
-				GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
+			//GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
+			//if (GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
+			//	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
 		
-			else
-				GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Enable();
+			//else
+			//	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Enable();
 			
 		}
 	}

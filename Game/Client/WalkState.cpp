@@ -25,6 +25,10 @@ void WalkState::Update()
 
 	if (!CheckGrounded())
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_RISE));
+
+	if (IS_DOWN(KEY_TYPE::X))
+		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::ATTACK_A));
+	
 }
 
 void WalkState::Enter()

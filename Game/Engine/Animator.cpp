@@ -39,6 +39,8 @@ void Animator::Play(const wstring& szName, bool bLoop, uint32 iSection)
 	assert(pAnimation);
 
 	m_pActiveAnimation = pAnimation;
+
+	m_pActiveAnimation->Reset();
 	m_pActiveAnimation->m_bLoop = bLoop;
 	m_pActiveAnimation->m_iSection = iSection;
 }

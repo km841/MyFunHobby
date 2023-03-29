@@ -164,6 +164,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AttackAState.h" />
+    <ClInclude Include="AttackBState.h" />
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="CameraFadeInOutScript.h" />
     <ClInclude Include="DialogueUI.h" />
@@ -197,6 +199,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AttackAState.cpp" />
+    <ClCompile Include="AttackBState.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CameraFadeInOutScript.cpp" />

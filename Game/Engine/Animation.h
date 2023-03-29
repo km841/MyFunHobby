@@ -13,11 +13,15 @@ public:
 
 public:
     void Update();
-    FORCEINLINE void SetTexture(shared_ptr<Texture> pTexture)    { m_pTexture  = pTexture; }
-    FORCEINLINE void SetAnimator(shared_ptr<Animator> pAnimator) { m_pAnimator = pAnimator; }
+    FORCEINLINE void  SetTexture(shared_ptr<Texture> pTexture)    { m_pTexture  = pTexture; }
+    FORCEINLINE void  SetAnimator(shared_ptr<Animator> pAnimator) { m_pAnimator = pAnimator; }
+    FORCEINLINE bool  IsFinished()           { return m_bFinished; }
+    float GetAnimationProgress();
 
+    void Reset();
     void PushData();
     void RefreshAnimation(const std::vector<FrameData> vFrameDataList);
+
 
 public:
     virtual void Load(const wstring& szPath);

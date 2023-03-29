@@ -64,6 +64,20 @@ void Animation::Update()
 	
 }
 
+float Animation::GetAnimationProgress()
+{
+	assert(!m_vFrameDataList.empty());
+	assert(0 != m_vFrameDataList[0].iFrameCount);
+
+	return m_iCurFrame / static_cast<float>(m_vFrameDataList[0].iFrameCount);
+}
+
+void Animation::Reset()
+{
+	m_iCurFrame = 0;
+	m_bFinished = false;
+}
+
 void Animation::PushData()
 {
 	DIRECTION eDirection = m_pAnimator.lock()->GetGameObject()->GetDirection();

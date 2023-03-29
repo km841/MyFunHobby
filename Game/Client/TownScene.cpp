@@ -121,11 +121,16 @@ void TownScene::Enter()
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\LittleBone\\littlebone_walk.anim");
 		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpRise", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_rise.anim");
 		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpFall", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_fall.anim");
+		shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackA", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_a.anim");
+		shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackB", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_b.anim");
+		
 
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpRise", pJumpRiseAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpFall", pJumpFallAnimation);
+		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_AttackA", pAttackA_Animation);
+		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_AttackB", pAttackB_Animation);
 		pPlayer->GetAnimator()->Play(L"LittleBone_Idle");
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
