@@ -3,6 +3,9 @@
   <ProjectOutputs />
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\afterimage.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\compute.cso</FullPath>
     </ContentFile>
     <ContentFile>

@@ -26,6 +26,7 @@ public:
 public:
     float                   GetVelocity(AXIS eAxis);
     void                    SetVelocity(AXIS eAxis, float fVelocity);
+    void                    AddVelocity(AXIS eAxis, float fVelocity);
 
 private:
     void        Move();

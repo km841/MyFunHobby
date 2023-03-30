@@ -47,6 +47,10 @@ void Animation::Update()
 	if (m_vFrameDataList[m_iCurFrame].fDuration < m_fAccTime)
 	{
 		m_fAccTime = 0.f;
+
+		if (1 == m_vFrameDataList[0].iFrameCount)
+			return;
+
 		m_iCurFrame++;
 
 		if (m_iCurFrame >= m_vFrameDataList[0].iFrameCount)
@@ -88,7 +92,7 @@ void Animation::PushData()
 	Vec2 vSize = Vec2(currFrameData.vSize.x / vSpriteSize.x, currFrameData.vSize.y / vSpriteSize.y);
 	Vec2 vOffset = Vec2(currFrameData.vOffset.x / vSpriteSize.x, currFrameData.vOffset.y / vSpriteSize.y);
 	Vec2 vAtlasSize = Vec2(100.f / vSpriteSize.x, 100.f / vSpriteSize.y);
-	
+
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(1, static_cast<uint8>(eDirection));
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(0, vLTPos);

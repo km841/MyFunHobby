@@ -68,6 +68,9 @@
     <Filter Include="소스 파일\Game\Object\Interface\UI\DialogueUI">
       <UniqueIdentifier>{2a6933c7-74ea-47f0-8b41-af81ff389fdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\AfterImage">
+      <UniqueIdentifier>{4fdb1f0b-0541-4f1f-a174-2074906fad54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -174,6 +177,12 @@
     </ClInclude>
     <ClInclude Include="DashState.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="AfterImage.h">
+      <Filter>소스 파일\Game\Object\GameObject\AfterImage</Filter>
+    </ClInclude>
+    <ClInclude Include="AfterImageDrawScript.h">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +303,12 @@
     </ClCompile>
     <ClCompile Include="DashState.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="AfterImage.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\AfterImage</Filter>
+    </ClCompile>
+    <ClCompile Include="AfterImageDrawScript.cpp">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

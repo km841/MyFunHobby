@@ -7,6 +7,8 @@
 #include "Collider.h"
 #include "Scenes.h"
 #include "Engine.h"
+#include "EventManager.h"
+#include "PlayerChangeStateEvent.h"
 
 PlayerState::PlayerState(shared_ptr<Player> pPlayer)
 	:m_pPlayer(pPlayer)
@@ -22,7 +24,7 @@ bool PlayerState::CheckGrounded()
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 
 	RaycastResult bRaycastResult = {};
-	Vec3 vBtmDir = Vec3(0.f, -1.f, 0.f);
+	Vec3 vBtmDir = -VEC3_UP_NORMAL;
 
 	for (const auto& pGameObject : vGameObjects)
 	{
@@ -33,5 +35,10 @@ bool PlayerState::CheckGrounded()
 	}
 
 	return false;
+}
+
+void PlayerState::AddChangeStateEvent(PLAYER_STATE ePlayerState)
+{
+	GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), ePlayerState));
 }
 

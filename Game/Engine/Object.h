@@ -1,42 +1,5 @@
 #pragma once
 
-enum class PLAYER_STATE : uint8
-{
-	IDLE,
-	WALK,
-	JUMP_RISE,
-	JUMP_FALL,
-	JUMP_ATTACK,
-	ATTACK_A,
-	ATTACK_B,
-	ATTACK_C,
-	DASH,
-
-	END,
-};
-
-enum class OBJECT_TYPE : uint8
-{
-	NONE,
-	ANIMATION,
-	GAMEOBJECT,
-	COMPONENT,
-	MATERIAL,
-	MESH,
-	SHADER,
-	TEXTURE,
-	PROPERTIES,
-
-	END
-};
-
-
-enum
-{
-	OBJECT_TYPE_COUNT = static_cast<uint8>(OBJECT_TYPE::END),
-};
-
-
 class Object
 {
 public:

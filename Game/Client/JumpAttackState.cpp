@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Animation.h"
 #include "Animator.h"
+#include "Input.h"
 
 JumpAttackState::JumpAttackState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -15,13 +16,19 @@ void JumpAttackState::Update()
 {
 	if (m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->IsFinished())
 	{
-		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_RISE));
+		AddChangeStateEvent(PLAYER_STATE::JUMP_RISE);
 		return;
 	}
 
 	if (CheckGrounded())
 	{
-		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::IDLE));
+		AddChangeStateEvent(PLAYER_STATE::IDLE);
+		return;
+	}
+
+	if (IS_PRESS(KEY_TYPE::Z))
+	{
+		AddChangeStateEvent(PLAYER_STATE::DASH);
 		return;
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
+#include "Player.h"
 
-class Player;
 class PlayerState
 {
 public:
@@ -10,6 +10,7 @@ public:
 public:
 	virtual void Update() { }
 	bool CheckGrounded();
+	void AddChangeStateEvent(PLAYER_STATE ePlayerState);
 
 public:
 	virtual void Enter() = 0;

@@ -250,6 +250,22 @@ void Resources::CreateDefaultShader()
 		pShader->CreateComputeShader(L"..\\Resources\\Shader\\compute.fx", "CS_Main", "cs_5_0");
 		Add<Shader>(L"Compute", pShader);
 	}
+
+	// AfterImage
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\afterimage.fx", shaderInfo);
+
+		Add<Shader>(L"AfterImage", pShader);
+	}
 }
 
 void Resources::CreateDefaultMaterial()
@@ -324,6 +340,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"HP", pMaterial);
+	}
+
+	// AfterImage
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"AfterImage");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"AfterImage", pMaterial);
 	}
 
 }

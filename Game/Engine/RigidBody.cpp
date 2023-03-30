@@ -66,3 +66,16 @@ void RigidBody::SetVelocity(AXIS eAxis, float fVelocity)
 		break;
 	}
 }
+
+void RigidBody::AddVelocity(AXIS eAxis, float fVelocity)
+{
+	switch (eAxis)
+	{
+	case AXIS::X:
+		m_vVelocity.x += fVelocity;
+		break;
+	case AXIS::Y:
+		m_vVelocity.y += fVelocity;
+		break;
+	}
+}

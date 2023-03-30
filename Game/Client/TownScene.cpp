@@ -121,6 +121,7 @@ void TownScene::Enter()
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\LittleBone\\littlebone_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\LittleBone\\littlebone_walk.anim");
+		shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Dash", L"..\\Resources\\Animation\\LittleBone\\littlebone_dash.anim");
 		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpRise", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_rise.anim");
 		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpFall", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_fall.anim");
 		shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpAttack", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_attack.anim");
@@ -129,6 +130,7 @@ void TownScene::Enter()
 		
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
+		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Dash", pDashAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpRise", pJumpRiseAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpFall", pJumpFallAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpAttack", pJumpAttackAnimation);

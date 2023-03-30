@@ -21,13 +21,19 @@ void JumpFallState::Update()
 {
 	if (IS_PRESS(KEY_TYPE::X))
 	{
-		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_ATTACK));
+		AddChangeStateEvent(PLAYER_STATE::JUMP_ATTACK);
 		return;
 	}
 
 	if (CheckGrounded())
 	{
-		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::IDLE));
+		AddChangeStateEvent(PLAYER_STATE::IDLE);
+		return;
+	}
+
+	if (IS_PRESS(KEY_TYPE::Z))
+	{
+		AddChangeStateEvent(PLAYER_STATE::DASH);
 		return;
 	}
 }
@@ -35,7 +41,6 @@ void JumpFallState::Update()
 void JumpFallState::Enter()
 {
 	m_pPlayer.lock()->GetAnimator()->Play(L"LittleBone_JumpFall", true, 2);
-	m_pPlayer.lock()->GetRigidBody()->ApplyGravity();
 }
 
 void JumpFallState::Exit()

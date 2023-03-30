@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "MeshRenderer.h"
 #include "DebugRenderer.h"
+#include "AfterImage.h"
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
@@ -57,6 +58,9 @@ void Camera::Render()
 
         const std::vector<shared_ptr<GameObject>>& vGameObjects = pCurScene->GetGameObjects(static_cast<LAYER_TYPE>(i));
 
+        // AfterImage is not constrained by the scene
+        const std::vector<shared_ptr<AfterImage>>& vAfterImages = Scene::GetAfterImages();
+
         for (const shared_ptr<GameObject>& pGameObject : vGameObjects)
         {
             if (pGameObject->IsEnable())
@@ -67,7 +71,16 @@ void Camera::Render()
                 if (pGameObject->GetDebugRenderer())
                     pGameObject->GetDebugRenderer()->Render(shared_from_this());
             }
+        }
 
+        // AfterImage is not constrained by the scene
+        for (const shared_ptr<AfterImage> pAfterImage : vAfterImages)
+        {
+            if (pAfterImage->IsEnable())
+            {
+                if (pAfterImage->GetMeshRenderer())
+                    pAfterImage->GetMeshRenderer()->Render(shared_from_this());
+            }
         }
     }
 

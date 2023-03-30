@@ -36,6 +36,5 @@ public:
 private:
 	shared_ptr<StateMachine>	   m_pStateMachine;
 	PLAYER_STATE				   m_ePlayerState;
-	
 };
 

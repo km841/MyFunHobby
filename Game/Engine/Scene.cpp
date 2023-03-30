@@ -15,6 +15,9 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "HUD.h"
 #include "UI.h"
+#include "AfterImage.h"
+
+std::vector<shared_ptr<AfterImage>> Scene::s_vAfterImages;
 
 Scene::Scene(SCENE_TYPE eSceneType)
 	: m_eSceneType(eSceneType)
@@ -36,6 +39,12 @@ void Scene::Awake()
 				pGameObject->Awake();
 		}
 	}
+
+	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	{
+		if (pAfterImage)
+			pAfterImage->Awake();
+	}
 }
 
 void Scene::Start()
@@ -47,6 +56,12 @@ void Scene::Start()
 			if (pGameObject)
 				pGameObject->Start();
 		}
+	}
+
+	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	{
+		if (pAfterImage)
+			pAfterImage->Start();
 	}
 }
 
@@ -60,6 +75,12 @@ void Scene::Update()
 				pGameObject->Update();
 		}
 	}
+
+	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	{
+		if (pAfterImage)
+			pAfterImage->Update();
+	}
 }
 
 void Scene::LateUpdate()
@@ -72,6 +93,12 @@ void Scene::LateUpdate()
 				pGameObject->LateUpdate();
 		}
 	}
+
+	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	{
+		if (pAfterImage)
+			pAfterImage->LateUpdate();
+	}
 }
 
 void Scene::FinalUpdate()
@@ -83,6 +110,12 @@ void Scene::FinalUpdate()
 			if (pGameObject)
 				pGameObject->FinalUpdate();
 		}
+	}
+
+	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	{
+		if (pAfterImage)
+			pAfterImage->FinalUpdate();
 	}
 }
 

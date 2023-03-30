@@ -163,6 +163,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AfterImage.h" />
+    <ClInclude Include="AfterImageDrawScript.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AttackAState.h" />
     <ClInclude Include="AttackBState.h" />
@@ -200,6 +202,8 @@
     <ClInclude Include="NPC_Wolf.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AfterImage.cpp" />
+    <ClCompile Include="AfterImageDrawScript.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AttackAState.cpp" />
     <ClCompile Include="AttackBState.cpp" />

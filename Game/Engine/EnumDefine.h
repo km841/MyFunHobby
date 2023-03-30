@@ -95,6 +95,7 @@ enum class LAYER_TYPE : uint8
 	MONSTER,
 	NPC,
 	TILE,
+	AFTER_IMAGE,
 	HUD = 29,
 	UI = 30,
 	END = 31,
@@ -140,4 +141,40 @@ enum class UI_TYPE : uint8
 	INVENTORY,
 	DIALOGUE,
 	MENU,
+};
+
+enum class PLAYER_STATE : uint8
+{
+	IDLE,
+	WALK,
+	JUMP_RISE,
+	JUMP_FALL,
+	JUMP_ATTACK,
+	ATTACK_A,
+	ATTACK_B,
+	ATTACK_C,
+	DASH,
+
+	END,
+};
+
+enum class OBJECT_TYPE : uint8
+{
+	NONE,
+	ANIMATION,
+	GAMEOBJECT,
+	COMPONENT,
+	MATERIAL,
+	MESH,
+	SHADER,
+	TEXTURE,
+	PROPERTIES,
+
+	END
+};
+
+
+enum
+{
+	OBJECT_TYPE_COUNT = static_cast<uint8>(OBJECT_TYPE::END),
 };
