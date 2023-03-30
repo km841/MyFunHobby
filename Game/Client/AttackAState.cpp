@@ -21,14 +21,23 @@ AttackAState::AttackAState(shared_ptr<Player> pPlayer)
 void AttackAState::Update()
 {
 	if (m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->IsFinished())
+	{
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::IDLE));
+		return;
+	}
 	
 	float fRatio = m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->GetAnimationProgress();
-	if (fRatio >= 0.6f && IS_DOWN(KEY_TYPE::X))
+	if (fRatio >= 0.6f && IS_PRESS(KEY_TYPE::X))
+	{
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::ATTACK_B));
+		return;
+	}
 	
 	if (!CheckGrounded())
+	{
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_RISE));
+		return;
+	}
 }
 
 void AttackAState::Enter()

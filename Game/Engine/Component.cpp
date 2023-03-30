@@ -11,6 +11,7 @@
 #include "Animator.h"
 #include "Player.h"
 #include "Collider.h"
+#include "Movement.h"
 
 Component::Component(COMPONENT_TYPE eType)
     : Object(OBJECT_TYPE::COMPONENT)
@@ -72,11 +73,12 @@ shared_ptr<Collider> Component::GetCollider()
     return m_pGameObject.lock()->GetCollider();
 }
 
+shared_ptr<Movement> Component::GetMovement()
+{
+    return m_pGameObject.lock()->GetMovement();
+}
+
 PLAYER_STATE Component::GetPlayerStateEnum()
 {
     return static_pointer_cast<Player>(m_pGameObject.lock())->GetPlayerStateEnum();
 }
-
-
-
-

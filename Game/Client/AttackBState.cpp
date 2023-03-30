@@ -21,7 +21,9 @@ AttackBState::AttackBState(shared_ptr<Player> pPlayer)
 void AttackBState::Update()
 {
 	if (m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->IsFinished())
+	{
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::IDLE));
+	}
 	
 	if (!CheckGrounded())
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_RISE));

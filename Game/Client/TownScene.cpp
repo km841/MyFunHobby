@@ -50,6 +50,7 @@
 #include "Physical.h"
 #include "DebugRenderer.h"
 #include "Animator.h"
+#include "Movement.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -116,6 +117,7 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Collider>());
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
 		pPlayer->AddComponent(make_shared<Animator>());
+		pPlayer->AddComponent(make_shared<Movement>());
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\LittleBone\\littlebone_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\LittleBone\\littlebone_walk.anim");
@@ -124,7 +126,6 @@ void TownScene::Enter()
 		shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackA", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_a.anim");
 		shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackB", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_b.anim");
 		
-
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
 		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpRise", pJumpRiseAnimation);
@@ -316,7 +317,7 @@ void TownScene::Enter()
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
 		pGameObject->AddComponent(make_shared<CameraMoveScript>());
-		pGameObject->AddComponent(make_shared<PlayerTrackingScript>(static_pointer_cast<Player>(m_vGameObjects[static_cast<uint8>(LAYER_TYPE::PLAYER)][0])));
+		pGameObject->AddComponent(make_shared<PlayerTrackingScript>(pPlayer));
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -471,13 +472,9 @@ void TownScene::Enter()
 		AddGameObject(pWizard);
 	}
 
-
-	
 	AddGameObject(GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE));
 	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
 	
-
-
 	// Fade In/Out Object
 	{
 		shared_ptr<UI> pUI = make_shared<UI>();

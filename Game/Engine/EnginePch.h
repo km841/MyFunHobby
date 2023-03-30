@@ -578,5 +578,7 @@ bool m_bUse = false;\
 #define IS_DOWN(key) GET_SINGLE(Input)->GetButtonDown(key)
 #define IS_UP(key) GET_SINGLE(Input)->GetButtonUp(key)
 #define IS_NONE(key) GET_SINGLE(Input)->GetButtonNone(key)
+#define VEC3_RIGHT_NORMAL Vec3(1.f, 0.f, 0.f)
+#define VEC3_UP_NORMAL Vec3(0.f, 1.f, 0.f)
 
 extern unique_ptr<class Engine> g_pEngine;

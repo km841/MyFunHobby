@@ -13,7 +13,7 @@ Player::Player()
 	, m_ePlayerState(PLAYER_STATE::IDLE)
 {
 	m_Status.PlayerDefaultSetting();
-	m_pStateMachine = make_unique<StateMachine>();
+	m_pStateMachine = make_shared<StateMachine>();
 }
 
 Player::~Player()
@@ -49,6 +49,11 @@ void Player::LateUpdate()
 void Player::FinalUpdate()
 {
 	GameObject::FinalUpdate();
+}
+
+void Player::ChangePlayerState(PLAYER_STATE ePlayerState)
+{
+	m_pStateMachine->ChangePlayerState(ePlayerState);
 }
 
 void Player::OnCollisionEnter(shared_ptr<GameObject> pGameObject)

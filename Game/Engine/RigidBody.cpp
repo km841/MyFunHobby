@@ -7,13 +7,14 @@
 #include "Material.h"
 #include "Physical.h"
 #include "Timer.h"
+#include "Engine.h"
 
 RigidBody::RigidBody(bool bGravityApplied)
 	: Component(COMPONENT_TYPE::RIGIDBODY)
 	, m_bGravityApplied(bGravityApplied)
 	, m_fMass(1.f)
 {
-	m_vGravityAccel = Vec3(0.f, -9.81f * 250.f, 0.f);
+	m_vGravityAccel = Vec3(0.f, -7.81f, 0.f);
 	m_vVelocity = Vec3::Zero;
 }
 
@@ -28,16 +29,12 @@ void RigidBody::Awake()
 void RigidBody::FinalUpdate()
 {
 	if (m_bGravityApplied)
-		m_vVelocity += m_vGravityAccel * DELTA_TIME;
-
-	Move();
+		m_vVelocity += m_vGravityAccel;
 }
 
 void RigidBody::Move()
 {
-	PxTransform transform = GetTransform()->GetPxTransform();
-	transform.p += Conv::Vec3ToPxVec3(m_vVelocity) * DELTA_TIME;
-	GetPhysical()->GetActor()->is<PxRigidDynamic>()->setKinematicTarget(transform);
+
 }
 
 

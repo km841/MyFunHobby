@@ -50,5 +50,5 @@ void EventManager::ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent)
 void EventManager::ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent)
 {
 	shared_ptr<Player> pPlayer = pEvent->GetPlayer();
-	pPlayer->m_pStateMachine->ChangePlayerState(pEvent->GetNextPlayerState());
+	pPlayer->ChangePlayerState(pEvent->GetNextPlayerState());
 }

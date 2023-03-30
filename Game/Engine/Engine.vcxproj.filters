@@ -169,6 +169,9 @@
     <ClInclude Include="UIManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Movement.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -335,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Movement.cpp">
+      <Filter>Object\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

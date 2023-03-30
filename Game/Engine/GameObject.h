@@ -12,6 +12,7 @@ class Collider;
 class RigidBody;
 class Physical;
 class Animator;
+class Movement;
 
 class GameObject :
     public Object
@@ -37,6 +38,7 @@ public:
     shared_ptr<Controller>      GetController();
     shared_ptr<Camera>          GetCamera();
     shared_ptr<Animator>        GetAnimator();
+    shared_ptr<Movement>        GetMovement();
 
     void AddComponent(shared_ptr<Component> pComponent);
 

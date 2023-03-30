@@ -14,8 +14,8 @@
 
 
 PlayerMoveScript::PlayerMoveScript()
-	: m_fSpeed(10.f)
-	, m_fJumpSpeed(30.f)
+	: m_fSpeed(400.f)
+	, m_fJumpSpeed(1500.f)
 	, m_FilterShaders{}
 {
 }
@@ -31,24 +31,24 @@ void PlayerMoveScript::LateUpdate()
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
-		vVelocity = GetTransform()->GetRight() * -m_fSpeed;
+		vVelocity = VEC3_RIGHT_NORMAL * -m_fSpeed;
 		GetGameObject()->SetDirection(DIRECTION::LEFT);
 		GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
 	}
 
 	else if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
-		vVelocity = GetTransform()->GetRight() * m_fSpeed;
+		vVelocity = VEC3_RIGHT_NORMAL * m_fSpeed;
 		GetGameObject()->SetDirection(DIRECTION::RIGHT);
-		GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);	
+		GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
 	}
 
 	if (IS_DOWN(KEY_TYPE::C))
 	{
-		if (PLAYER_STATE::JUMP_RISE != GetTransform()->GetPlayerStateEnum() &&
-			PLAYER_STATE::JUMP_FALL != GetTransform()->GetPlayerStateEnum())
+		if (PLAYER_STATE::JUMP_RISE != GetPlayerStateEnum() &&
+			PLAYER_STATE::JUMP_FALL != GetPlayerStateEnum())
 		{
-			vVelocity = GetTransform()->GetUp() * m_fJumpSpeed;
+			vVelocity = VEC3_UP_NORMAL * m_fJumpSpeed;
 			GetRigidBody()->AddVelocity(vVelocity);
 
 			// Test Code

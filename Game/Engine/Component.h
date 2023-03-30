@@ -9,6 +9,7 @@ enum class COMPONENT_TYPE : uint8
     DEBUG_RENDERER,
 	MESH_RENDERER,
 	RIGIDBODY,
+    MOVEMENT,
 	CAMERA,
 	PHYSICAL,
 	COLLIDER,
@@ -87,6 +88,7 @@ class Physical;
 class Camera;
 class Animator;
 class PlayerState;
+class Movement;
 
 class Component :
     public Object
@@ -113,6 +115,7 @@ public:
     shared_ptr<Camera>              GetCamera();
     shared_ptr<Animator>            GetAnimator();
     shared_ptr<Collider>            GetCollider();
+    shared_ptr<Movement>            GetMovement();
 
 	FORCEINLINE COMPONENT_TYPE GetType() const { return m_eType; }
     PLAYER_STATE   GetPlayerStateEnum();

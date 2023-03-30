@@ -10,6 +10,7 @@
 #include "RigidBody.h"
 #include "Physical.h"
 #include "Animator.h"
+#include "Movement.h"
 
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -153,6 +154,12 @@ shared_ptr<Animator> GameObject::GetAnimator()
 {
 	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::ANIMATOR);
 	return static_pointer_cast<Animator>(pComponent);
+}
+
+shared_ptr<Movement> GameObject::GetMovement()
+{
+	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::MOVEMENT);
+	return static_pointer_cast<Movement>(pComponent);
 }
 
 void GameObject::AddComponent(shared_ptr<Component> pComponent)
