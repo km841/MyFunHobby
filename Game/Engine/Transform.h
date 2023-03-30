@@ -42,8 +42,8 @@ public:
     FORCEINLINE void ChangedFlagOff()                                            { m_bChanged = false; }
 
     Vec3             GetRight() { return m_matWorld.Right(); }
-    Vec3             GetUp() { return m_matWorld.Up(); }
-    Vec3             GetLook() { return m_matWorld.Backward(); }
+    Vec3             GetUp()    { return m_matWorld.Up(); }
+    Vec3             GetLook()  { return m_matWorld.Backward(); }
 
 public:
     FORCEINLINE weak_ptr<Transform> GetParent()                            const { return m_pParent; }

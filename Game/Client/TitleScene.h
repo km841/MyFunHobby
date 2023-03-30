@@ -20,8 +20,6 @@ public:
     virtual void Exit();
 
 private:
-
-
     shared_ptr<GameObject> m_pBackground;
     shared_ptr<GameObject> m_pLogo;
 };

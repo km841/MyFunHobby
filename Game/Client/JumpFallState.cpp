@@ -19,8 +19,17 @@ JumpFallState::JumpFallState(shared_ptr<Player> pPlayer)
 
 void JumpFallState::Update()
 {
+	if (IS_PRESS(KEY_TYPE::X))
+	{
+		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::JUMP_ATTACK));
+		return;
+	}
+
 	if (CheckGrounded())
+	{
 		GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), PLAYER_STATE::IDLE));
+		return;
+	}
 }
 
 void JumpFallState::Enter()

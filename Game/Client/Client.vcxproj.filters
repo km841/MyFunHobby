@@ -106,9 +106,6 @@
     <ClInclude Include="IdleState.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
-    </ClInclude>
     <ClInclude Include="WalkState.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
@@ -169,6 +166,15 @@
     <ClInclude Include="AttackBState.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="JumpAttackState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="DashState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -218,9 +224,6 @@
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="IdleState.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="WalkState.cpp">
@@ -281,6 +284,15 @@
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="AttackBState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpAttackState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="DashState.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>

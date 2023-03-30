@@ -6,10 +6,11 @@ enum class PLAYER_STATE : uint8
 	WALK,
 	JUMP_RISE,
 	JUMP_FALL,
+	JUMP_ATTACK,
 	ATTACK_A,
 	ATTACK_B,
 	ATTACK_C,
-
+	DASH,
 
 	END,
 };

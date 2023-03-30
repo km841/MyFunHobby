@@ -29,9 +29,7 @@ bool PlayerState::CheckGrounded()
 		bRaycastResult = m_pPlayer.lock()->GetCollider()->Raycast(vFootPos, vBtmDir, pGameObject, 0.1f);
 
 		if (bRaycastResult.first)
-		{
 			return true;
-		}
 	}
 
 	return false;
