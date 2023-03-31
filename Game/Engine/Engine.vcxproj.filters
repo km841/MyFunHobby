@@ -172,6 +172,9 @@
     <ClInclude Include="Movement.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Cemetery.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -341,6 +344,9 @@
     </ClCompile>
     <ClCompile Include="Movement.cpp">
       <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Cemetery.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

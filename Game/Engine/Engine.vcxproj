@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -52,7 +52,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -172,6 +172,7 @@
     <ClInclude Include="BehaviorNode.h" />
     <ClInclude Include="BehaviorTask.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cemetery.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="BehaviorNode.cpp" />
     <ClCompile Include="BehaviorTask.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cemetery.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />

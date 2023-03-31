@@ -10,6 +10,7 @@
 JumpAttackState::JumpAttackState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 {
+	m_ePlayerState = PLAYER_STATE::JUMP_ATTACK;
 }
 
 void JumpAttackState::Update()

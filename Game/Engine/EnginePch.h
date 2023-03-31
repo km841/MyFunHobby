@@ -258,7 +258,7 @@ struct Status
 	float GetHPRatio()
 	{
 		assert(iMaxHP > 0);
-		return static_cast<float>(iCurHP / static_cast<float>(iMaxHP));
+		return iCurHP / static_cast<float>(iMaxHP);
 	}
 
 	bool IsAlive() { return bAlive; }

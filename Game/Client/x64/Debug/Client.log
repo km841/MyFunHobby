@@ -1,5 +1,46 @@
 ﻿  pch.cpp
-  unity_GE8Q7QPOH2PZWF2G.cpp
+  AfterImage.cpp
+  AfterImageDrawScript.cpp
+  Application.cpp
+  AttackAState.cpp
+  AttackBState.cpp
+  CameraMoveScript.cpp
+  Client.cpp
+  CameraFadeInOutScript.cpp
+  DashState.cpp
+  DialogueUI.cpp
+  HealthBarHUD.cpp
+  HUD.cpp
+  IdleState.cpp
+  LittleBone.cpp
+  Skul.cpp
+  JumpAttackState.cpp
+  JumpFallState.cpp
+  JumpRiseState.cpp
+  Monster.cpp
+  NPC_Ogre.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  NPC_Wizard.cpp
+  ObjectFadeInOutScript.cpp
+  Player.cpp
+  PlayerHealthBarShowScript.cpp
+  PlayerInterfaceHUD.cpp
+  PlayerMoveScript.cpp
+  PlayerState.cpp
+  PlayerTrackingScript.cpp
+  SkulHeadHUD.cpp
+  SkulSkill.cpp
+  StateMachine.cpp
+  Tile.cpp
+  TitleScene.cpp
+  ToolScene.cpp
+  TownScene.cpp
+  UI.cpp
+  WalkState.cpp
+  NPC_Witch.cpp
+  NPC_Wolf.cpp
+  코드를 생성하고 있습니다...
 DirectXTex_debug.lib(DirectXTexImage.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_debug.lib(DirectXTexImage.obj)' 또는 'C:\MyProject\Game\Output\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 DirectXTex_debug.lib(DirectXTexDDS.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_debug.lib(DirectXTexDDS.obj)' 또는 'C:\MyProject\Game\Output\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 DirectXTex_debug.lib(DirectXTexTGA.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_debug.lib(DirectXTexTGA.obj)' 또는 'C:\MyProject\Game\Output\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.

@@ -19,5 +19,6 @@ public:
 
 protected:
 	weak_ptr<Player> m_pPlayer;
+	PLAYER_STATE m_ePlayerState;
 };
 

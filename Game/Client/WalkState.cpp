@@ -15,7 +15,7 @@
 WalkState::WalkState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 {
-
+	m_ePlayerState = PLAYER_STATE::WALK;
 }
 
 void WalkState::Update()

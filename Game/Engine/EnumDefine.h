@@ -181,3 +181,36 @@ enum
 	PLAYER_STATE_COUNT = static_cast<uint8>(PLAYER_STATE::END),
 	OBJECT_TYPE_COUNT = static_cast<uint8>(OBJECT_TYPE::END),
 };
+
+enum class SKUL_TYPE
+{
+	LITTLE_BONE,
+};
+
+enum class SKUL_GRADE
+{
+	NORMAL,
+	RARE,
+	UNIQUE,
+	REGENDARY,
+};
+
+enum class SKUL_POS
+{
+	FIRST,
+	SECOND,
+	END,
+};
+
+enum class SKUL_SKILL_POS
+{
+	FIRST,
+	SECOND,
+	END,
+};
+
+enum
+{
+	PLAYER_MAX_SKULS = SKUL_POS::END,
+	SKUL_MAX_SKILLS = SKUL_SKILL_POS::END,
+};

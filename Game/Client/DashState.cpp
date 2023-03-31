@@ -26,6 +26,7 @@ DashState::DashState(shared_ptr<Player> pPlayer)
 	, m_iAfterImageMaxCount(4)
 	, m_fAfterImageTimeOffset(0.25f)
 {
+	m_ePlayerState = PLAYER_STATE::DASH;
 }
 
 void DashState::Awake()

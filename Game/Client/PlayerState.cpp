@@ -11,7 +11,8 @@
 #include "PlayerChangeStateEvent.h"
 
 PlayerState::PlayerState(shared_ptr<Player> pPlayer)
-	:m_pPlayer(pPlayer)
+	: m_pPlayer(pPlayer)
+	, m_ePlayerState(PLAYER_STATE::END)
 {
 }
 

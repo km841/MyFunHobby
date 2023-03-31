@@ -12,7 +12,7 @@ public:
     MeshRenderer();
     virtual ~MeshRenderer();
 
-                void                 Render(shared_ptr<Camera> pCamera);
+    void                             Render(shared_ptr<Camera> pCamera);
                          
     FORCEINLINE void                 SetMaterial(shared_ptr<Material> pMaterial) { m_pMaterial = pMaterial; }
     FORCEINLINE shared_ptr<Material> GetMaterial() const                         { return m_pMaterial; }

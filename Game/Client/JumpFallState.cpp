@@ -15,6 +15,7 @@
 JumpFallState::JumpFallState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 {
+	m_ePlayerState = PLAYER_STATE::JUMP_FALL;
 }
 
 void JumpFallState::Update()

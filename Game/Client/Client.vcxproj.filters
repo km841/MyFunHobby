@@ -71,6 +71,12 @@
     <Filter Include="소스 파일\Game\Object\GameObject\AfterImage">
       <UniqueIdentifier>{4fdb1f0b-0541-4f1f-a174-2074906fad54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul">
+      <UniqueIdentifier>{66ca4511-7790-4a9b-ac02-a5c7d028dd64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\SkulSkill">
+      <UniqueIdentifier>{48bc2974-d38c-4d15-87e3-4a7f7d44ef53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -183,6 +189,15 @@
     </ClInclude>
     <ClInclude Include="AfterImageDrawScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Skul.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul</Filter>
+    </ClInclude>
+    <ClInclude Include="LittleBone.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul</Filter>
+    </ClInclude>
+    <ClInclude Include="SkulSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\SkulSkill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +324,15 @@
     </ClCompile>
     <ClCompile Include="AfterImageDrawScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Skul.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul</Filter>
+    </ClCompile>
+    <ClCompile Include="LittleBone.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul</Filter>
+    </ClCompile>
+    <ClCompile Include="SkulSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\SkulSkill</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

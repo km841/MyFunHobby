@@ -15,6 +15,7 @@
 IdleState::IdleState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 {
+	m_ePlayerState = PLAYER_STATE::IDLE;
 }
 
 void IdleState::Update()

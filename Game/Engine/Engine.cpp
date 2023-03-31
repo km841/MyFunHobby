@@ -9,6 +9,7 @@
 #include "EventManager.h"
 #include "CollisionManager.h"
 #include "UIManager.h"
+#include "Cemetery.h"
 
 void Engine::Init(const WindowInfo& wInfo)
 {
@@ -65,6 +66,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	GET_SINGLE(Timer)->Init();
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
 	GET_SINGLE(UIManager)->Init();
+	GET_SINGLE(Cemetery)->Init();
 }
 
 void Engine::Update()

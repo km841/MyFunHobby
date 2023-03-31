@@ -16,6 +16,7 @@
 AttackBState::AttackBState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 {
+	m_ePlayerState = PLAYER_STATE::ATTACK_B;
 }
 
 void AttackBState::Update()

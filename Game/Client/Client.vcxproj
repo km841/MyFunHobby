@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -52,7 +52,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -177,6 +177,8 @@
     <ClInclude Include="HealthBarHUD.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
+    <ClInclude Include="LittleBone.h" />
+    <ClInclude Include="Skul.h" />
     <ClInclude Include="JumpAttackState.h" />
     <ClInclude Include="JumpFallState.h" />
     <ClInclude Include="JumpRiseState.h" />
@@ -193,6 +195,7 @@
     <ClInclude Include="PlayerTrackingScript.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SkulHeadHUD.h" />
+    <ClInclude Include="SkulSkill.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScene.h" />
@@ -217,6 +220,8 @@
     <ClCompile Include="HealthBarHUD.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="LittleBone.cpp" />
+    <ClCompile Include="Skul.cpp" />
     <ClCompile Include="JumpAttackState.cpp" />
     <ClCompile Include="JumpFallState.cpp" />
     <ClCompile Include="JumpRiseState.cpp" />
@@ -237,6 +242,7 @@
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerTrackingScript.cpp" />
     <ClCompile Include="SkulHeadHUD.cpp" />
+    <ClCompile Include="SkulSkill.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />

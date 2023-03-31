@@ -31,7 +31,6 @@ public:
 
 protected:
     friend class Scenes;
-
     SCENE_TYPE m_eSceneType;
 
     std::array<std::vector<shared_ptr<GameObject>>, SCENE_OBJECT_TYPE_COUNT> m_vSceneObjects;

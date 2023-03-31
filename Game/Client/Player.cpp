@@ -7,6 +7,7 @@
 #include "Transform.h"
 #include "Collider.h"
 #include "PlayerInterfaceHUD.h"
+#include "Skul.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -54,6 +55,42 @@ void Player::FinalUpdate()
 void Player::ChangePlayerState(PLAYER_STATE ePlayerState)
 {
 	m_pStateMachine->ChangePlayerState(ePlayerState);
+}
+
+
+shared_ptr<Skul> Player::ObtainSkul(shared_ptr<Skul> pSkul)
+{
+	if (!m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)])
+	{
+		m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)] = pSkul;
+		pSkul->SetSkulPos(SKUL_POS::SECOND);
+	}
+	else
+	{
+		shared_ptr<Skul> pDropSkul = m_pActiveSkul;
+		pSkul->SetSkulPos(pDropSkul->GetSkulPos());
+		m_pActiveSkul = pSkul;
+		return pDropSkul;
+	}
+
+	return nullptr;
+}
+
+void Player::SwapSkul()
+{
+	if (!m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)])
+		return;
+
+	SKUL_POS eSkulPos = m_pActiveSkul->GetSkulPos();
+	switch (eSkulPos)
+	{
+	case SKUL_POS::FIRST:
+		m_pActiveSkul = m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)];
+		break;
+	case SKUL_POS::SECOND:
+		m_pActiveSkul = m_arrSkuls[static_cast<uint8>(SKUL_POS::FIRST)];
+		break;
+	}
 }
 
 void Player::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
