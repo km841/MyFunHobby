@@ -5,12 +5,17 @@
 #include "AfterImage.h"
 #include "MeshRenderer.h"
 #include "Material.h"
+#include "Animator.h"
+#include "Animation.h"
+#include "Texture.h"
+#include "Transform.h"
+#include "Resources.h"
 
 AfterImageDrawScript::AfterImageDrawScript(shared_ptr<Player> pPlayer)
 	: m_pPlayer(pPlayer)
-	, m_tcDuration(0.5f)
+	, m_tcDuration(0.3f)
+	, m_bTrigger(false)
 {
-	m_tcDuration.Disable();
 }
 
 AfterImageDrawScript::~AfterImageDrawScript()
@@ -21,29 +26,42 @@ void AfterImageDrawScript::LateUpdate()
 {
 	shared_ptr<AfterImage> pAfterImage = static_pointer_cast<AfterImage>(GetGameObject());
 
-	if (pAfterImage->IsTrigger())
+	if (m_bTrigger != pAfterImage->IsEnable())
 	{
 		m_tcDuration.Start();
-		pAfterImage->Check();
+		m_bTrigger = true;
 	}
 
-	// 1. 트리거를 켜준다
-	// 2. 타이머를 켜고 트리거 Off
-	// 3. 트리거가 켜진 것은 Enable되었다는 의미이므로, 타이머가 돈다
-	// 4. 타이머의 Progress에 따라 상수 버퍼에 0~1의 값 전달
-	// 5. 0~1의 값으로 서서히 투명해지며, 0이 되면 Disable된다.
-
-	if (GetGameObject()->IsEnable())
+	if (pAfterImage->IsEnable())
 	{
 		m_tcDuration.Update(DELTA_TIME);
 
+		const FrameData& currFrameData = pAfterImage->GetFrameData();
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(currFrameData.szTexPath, currFrameData.szTexPath);
+		assert(pTexture);
+
+		DIRECTION eDirection = pAfterImage->GetDirection();
+		Vec3 vSpriteSize = pTexture->GetTexSize();
+		Vec2 vLTPos = Vec2(currFrameData.vLTPos.x / vSpriteSize.x, currFrameData.vLTPos.y / vSpriteSize.y);
+		Vec2 vSize = Vec2(currFrameData.vSize.x / vSpriteSize.x, currFrameData.vSize.y / vSpriteSize.y);
+		Vec2 vOffset = Vec2(currFrameData.vOffset.x / vSpriteSize.x, currFrameData.vOffset.y / vSpriteSize.y);
+		Vec2 vAtlasSize = Vec2(100.f / vSpriteSize.x, 100.f / vSpriteSize.y);
 		float fProgress = m_tcDuration.GetProgress();
-		GetMeshRenderer()->GetMaterial()->SetFloat(0, fProgress);
+		
+		GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
+		GetMeshRenderer()->GetMaterial()->SetInt(1, static_cast<uint8>(eDirection));
+		GetMeshRenderer()->GetMaterial()->SetVec2(0, vLTPos);
+		GetMeshRenderer()->GetMaterial()->SetVec2(1, vSize);
+		GetMeshRenderer()->GetMaterial()->SetVec2(2, vAtlasSize);
+		GetMeshRenderer()->GetMaterial()->SetVec2(3, vOffset);
+		GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+		GetMeshRenderer()->GetMaterial()->SetFloat(0, 1.f - fProgress);
+
 		if (m_tcDuration.IsFinished())
 		{
+			pAfterImage->Disable();
 			m_tcDuration.Stop();
-			m_tcDuration.Disable();
-			GetGameObject()->Disable();
+			m_bTrigger = false;
 		}
 	}
 }

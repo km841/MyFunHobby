@@ -70,10 +70,10 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     else
     {
         vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-        if (vColor.a <= 0.1f)
+        if (vColor.a <= 0.01f)
             discard;
         
-        if (vColor.a > 0.f && fRatio > 0.f)
+        if (vColor.a > 0.f && fRatio >= 0.f)
             vColor.a = 1.f * fRatio;
     }
     

@@ -95,7 +95,8 @@ enum class LAYER_TYPE : uint8
 	MONSTER,
 	NPC,
 	TILE,
-	AFTER_IMAGE,
+	SCENE_OBJECT_END = 27,
+	AFTER_IMAGE = 28,
 	HUD = 29,
 	UI = 30,
 	END = 31,
@@ -105,6 +106,8 @@ enum class LAYER_TYPE : uint8
 enum
 {
 	LAYER_TYPE_COUNT = LAYER_TYPE::END,
+	GLOBAL_OBJECT_TYPE_COUNT = LAYER_TYPE_COUNT - static_cast<uint8>(LAYER_TYPE::SCENE_OBJECT_END) - 1,
+	SCENE_OBJECT_TYPE_COUNT = LAYER_TYPE_COUNT - GLOBAL_OBJECT_TYPE_COUNT,
 };
 
 enum
@@ -152,7 +155,6 @@ enum class PLAYER_STATE : uint8
 	JUMP_ATTACK,
 	ATTACK_A,
 	ATTACK_B,
-	ATTACK_C,
 	DASH,
 
 	END,
@@ -176,5 +178,6 @@ enum class OBJECT_TYPE : uint8
 
 enum
 {
+	PLAYER_STATE_COUNT = static_cast<uint8>(PLAYER_STATE::END),
 	OBJECT_TYPE_COUNT = static_cast<uint8>(OBJECT_TYPE::END),
 };

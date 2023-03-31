@@ -8,6 +8,7 @@ public:
 	virtual ~PlayerState() = default;
 
 public:
+	virtual void Awake()  { }
 	virtual void Update() { }
 	bool CheckGrounded();
 	void AddChangeStateEvent(PLAYER_STATE ePlayerState);

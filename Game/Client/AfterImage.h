@@ -13,14 +13,12 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
-
 public:
-    FORCEINLINE void Show()      { m_bShowTrigger = true; }
-    FORCEINLINE void Check()     { m_bShowTrigger = false; }
-    FORCEINLINE bool IsTrigger() { return m_bShowTrigger; }
+    FORCEINLINE void             SetFrameData(const FrameData& frameData) { m_FrameData = frameData; }
+    FORCEINLINE const FrameData& GetFrameData() { return m_FrameData; }
 
 private:
-    bool m_bShowTrigger;
+    FrameData m_FrameData;
 
 private:
     DECLARE_POOL(AfterImage);

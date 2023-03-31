@@ -27,7 +27,7 @@ void AttackAState::Update()
 	}
 	
 	float fRatio = m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->GetAnimationProgress();
-	if (fRatio >= 0.6f && IS_PRESS(KEY_TYPE::X))
+	if (fRatio >= 0.75f && IS_PRESS(KEY_TYPE::X))
 	{
 		AddChangeStateEvent(PLAYER_STATE::ATTACK_B);
 		return;

@@ -17,33 +17,20 @@
 #include "MeshRenderer.h"
 #include "Resources.h"
 #include "AfterImageDrawScript.h"
-
+#include "Scene.h"
 
 DashState::DashState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 	, m_tcDuration(0.2f)
 	, m_fDashSpeed(1000.f)
 	, m_iAfterImageMaxCount(4)
+	, m_fAfterImageTimeOffset(0.25f)
 {
-	for (int32 i = 0; i < m_iAfterImageMaxCount; ++i)
-	{
-		shared_ptr<AfterImage> pAfterImage = AfterImage::Get();
-		
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"AfterImage")->Clone();
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+}
 
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pAfterImage->AddComponent(pMeshRenderer);
-		pAfterImage->AddComponent(make_shared<Transform>());
-		pAfterImage->AddComponent(make_shared<AfterImageDrawScript>(m_pPlayer.lock()));
-		m_vAfterImages.push_back(pAfterImage);
-
-		pAfterImage->Disable();
-		Scene::AddAfterImage(pAfterImage);
-	}
+void DashState::Awake()
+{
+	CreateAndAddAfterImagesToScene();
 }
 
 void DashState::Update()
@@ -56,13 +43,11 @@ void DashState::Update()
 	}
 
 	float fProgress = m_tcDuration.GetProgress();
-	float fElapsedTimeMin = 0.25f;
 	for (int32 i = 0; i < m_iAfterImageMaxCount; ++i)
 	{
-		if (fProgress < fElapsedTimeMin + (i * fElapsedTimeMin) && !m_vAfterImages[i]->IsEnable())
+		if ((fProgress >= m_fAfterImageTimeOffset + (i * m_fAfterImageTimeOffset)) && !m_vAfterImages[i]->IsEnable())
 		{
-			m_vAfterImages[i]->Show();
-			m_vAfterImages[i]->Enable();
+			EnableAndInitAfterImage(m_vAfterImages[i]);
 		}
 	}
 }
@@ -90,4 +75,45 @@ void DashState::Enter()
 void DashState::Exit()
 {
 	m_tcDuration.Stop();
+}
+
+void DashState::EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage)
+{
+	pAfterImage.lock()->Enable();
+
+	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
+	pAfterImage.lock()->GetTransform()->SetLocalPosition(vPlayerPos);
+
+	const Vec3& vPlayerScale = m_pPlayer.lock()->GetTransform()->GetLocalScale();
+	pAfterImage.lock()->GetTransform()->SetLocalScale(vPlayerScale);
+
+	int32 iCurFrame = m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->GetCurFrame();
+	const FrameData& frameData = m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->GetFrameDataList()[iCurFrame];
+
+	pAfterImage.lock()->SetFrameData(frameData);
+	pAfterImage.lock()->SetDirection(m_pPlayer.lock()->GetDirection());
+}
+
+void DashState::CreateAndAddAfterImagesToScene()
+{
+	shared_ptr<Scene> pActiveScene = GET_SINGLE(Scenes)->GetActiveScene();
+	for (int32 i = 0; i < m_iAfterImageMaxCount; ++i)
+	{
+		shared_ptr<AfterImage> pAfterImage = AfterImage::Get();
+
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"AfterImage")->Clone();
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pAfterImage->AddComponent(pMeshRenderer);
+		pAfterImage->AddComponent(make_shared<Transform>());
+		pAfterImage->AddComponent(make_shared<AfterImageDrawScript>(m_pPlayer.lock()));
+		m_vAfterImages.push_back(pAfterImage);
+
+		pAfterImage->Disable();
+		pActiveScene->AddGameObject(pAfterImage);
+	}
 }

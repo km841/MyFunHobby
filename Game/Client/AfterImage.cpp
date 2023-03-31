@@ -4,7 +4,6 @@
 POOL_INIT(AfterImage);
 AfterImage::AfterImage()
 	: GameObject(LAYER_TYPE::AFTER_IMAGE)
-	, m_bShowTrigger(false)
 {
 }
 
@@ -36,3 +35,4 @@ void AfterImage::FinalUpdate()
 {
 	GameObject::FinalUpdate();
 }
+

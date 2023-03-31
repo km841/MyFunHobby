@@ -17,7 +17,7 @@
 #include "UI.h"
 #include "AfterImage.h"
 
-std::vector<shared_ptr<AfterImage>> Scene::s_vAfterImages;
+std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 
 Scene::Scene(SCENE_TYPE eSceneType)
 	: m_eSceneType(eSceneType)
@@ -31,91 +31,106 @@ Scene::~Scene()
 
 void Scene::Awake()
 {
-	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
 	{
-		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
 		{
 			if (pGameObject)
 				pGameObject->Awake();
 		}
 	}
 
-	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
 	{
-		if (pAfterImage)
-			pAfterImage->Awake();
+		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Awake();
+		}
 	}
 }
 
 void Scene::Start()
 {
-	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
 	{
-		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
 		{
 			if (pGameObject)
 				pGameObject->Start();
 		}
 	}
 
-	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
 	{
-		if (pAfterImage)
-			pAfterImage->Start();
+		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Start();
+		}
 	}
 }
 
 void Scene::Update()
 {
-	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
 	{
-		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
 		{
 			if (pGameObject)
 				pGameObject->Update();
 		}
 	}
 
-	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
 	{
-		if (pAfterImage)
-			pAfterImage->Update();
+		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Update();
+		}
 	}
 }
 
 void Scene::LateUpdate()
 {
-	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
 	{
-		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
 		{
 			if (pGameObject)
 				pGameObject->LateUpdate();
 		}
 	}
 
-	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
 	{
-		if (pAfterImage)
-			pAfterImage->LateUpdate();
+		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->LateUpdate();
+		}
 	}
 }
 
 void Scene::FinalUpdate()
 {
-	for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
 	{
-		for (const shared_ptr<GameObject>& pGameObject : m_vGameObjects[i])
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
 		{
 			if (pGameObject)
 				pGameObject->FinalUpdate();
 		}
 	}
 
-	for (const shared_ptr<AfterImage> pAfterImage : s_vAfterImages)
+	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
 	{
-		if (pAfterImage)
-			pAfterImage->FinalUpdate();
+		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->FinalUpdate();
+		}
 	}
 }
 
@@ -135,27 +150,25 @@ void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 	if (pGameObject->GetCamera())
 		m_vCameras.push_back(pGameObject->GetCamera());
 
-	LAYER_TYPE eLayerType = pGameObject->GetLayerType();
-	m_vGameObjects[static_cast<uint8>(eLayerType)].push_back(pGameObject);
-}
+	uint8 iLayerType = static_cast<uint8>(pGameObject->GetLayerType());
 
-void Scene::AddObjectAtSortedIndex(shared_ptr<GameObject> pGameObject)
-{
-	LAYER_TYPE eLayerType = pGameObject->GetLayerType();
-	auto& vLayer = m_vGameObjects[static_cast<uint8>(eLayerType)];
-	auto fnPred = [&](shared_ptr<GameObject> pObject1, shared_ptr<GameObject> pObject2)
-	{
-		return (pObject1->GetLevelType() > pObject2->GetLevelType());
-	};
-	assert(std::is_sorted(vLayer.begin(), vLayer.end(), fnPred));
-	const auto pInsertIter = std::lower_bound(vLayer.begin(), vLayer.end(), pGameObject, fnPred);
-	vLayer.insert(pInsertIter, pGameObject);
+	if (iLayerType < SCENE_OBJECT_TYPE_COUNT)
+		m_vSceneObjects[iLayerType].push_back(pGameObject);
+
+	else
+		s_vGlobalObjects[iLayerType - SCENE_OBJECT_TYPE_COUNT].push_back(pGameObject);
 }
 
 std::vector<shared_ptr<GameObject>>& Scene::GetGameObjects(LAYER_TYPE eLayerType)
 {
-	assert(static_cast<uint8>(eLayerType) < LAYER_TYPE_COUNT);
-	return m_vGameObjects[static_cast<uint8>(eLayerType)];
+	uint8 iLayerType = static_cast<uint8>(eLayerType);
+	assert(iLayerType < LAYER_TYPE_COUNT);
+
+
+	if (iLayerType < SCENE_OBJECT_TYPE_COUNT)
+		return m_vSceneObjects[iLayerType];
+	else
+		return s_vGlobalObjects[iLayerType - SCENE_OBJECT_TYPE_COUNT];
 }
 
 void Scene::Load(const wstring& szPath)

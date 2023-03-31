@@ -14,5 +14,7 @@ public:
 private:
     weak_ptr<Player> m_pPlayer;
     TimeCounter      m_tcDuration;
+
+    bool             m_bTrigger;
 };
 

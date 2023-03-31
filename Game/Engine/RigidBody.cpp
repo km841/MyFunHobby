@@ -14,7 +14,7 @@ RigidBody::RigidBody(bool bGravityApplied)
 	, m_bGravityApplied(bGravityApplied)
 	, m_fMass(1.f)
 {
-	m_vGravityAccel = Vec3(0.f, -7.81f, 0.f);
+	m_vGravityAccel = Vec3(0.f, -9.81f / 2.f, 0.f);
 	m_vVelocity = Vec3::Zero;
 }
 

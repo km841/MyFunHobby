@@ -27,8 +27,11 @@ void StateMachine::Awake()
 	m_mStateMap[PLAYER_STATE::JUMP_ATTACK] = make_shared<JumpAttackState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::DASH]		   = make_shared<DashState>(m_pPlayer.lock());
 
+	for (int32 i = 0; i < PLAYER_STATE_COUNT; ++i)
+	{
+		m_mStateMap[static_cast<PLAYER_STATE>(i)]->Awake();
+	}
 	
-
 	ChangePlayerState(static_pointer_cast<Player>(m_pPlayer.lock())->GetPlayerStateEnum());
 }
 

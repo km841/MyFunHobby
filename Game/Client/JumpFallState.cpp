@@ -19,6 +19,13 @@ JumpFallState::JumpFallState(shared_ptr<Player> pPlayer)
 
 void JumpFallState::Update()
 {
+	const Vec3& vVelocity = m_pPlayer.lock()->GetRigidBody()->GetVelocity();
+	if (vVelocity.y > 0.f)
+	{
+		AddChangeStateEvent(PLAYER_STATE::JUMP_RISE);
+		return;
+	}
+
 	if (IS_PRESS(KEY_TYPE::X))
 	{
 		AddChangeStateEvent(PLAYER_STATE::JUMP_ATTACK);

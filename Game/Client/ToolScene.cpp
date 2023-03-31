@@ -218,7 +218,7 @@ void ToolScene::PalleteUpdate()
 
 	m_TileMapData.vTileData.clear();
 
-	auto& vTileGroup = m_vGameObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
+	auto& vTileGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
 
 	for (auto& pTile : vTileGroup)
 	{
@@ -374,7 +374,7 @@ void ToolScene::EraseTile(const Vec3& vWorldPos)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
-	auto& vTileGroup = m_vGameObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
+	auto& vTileGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
 
 	for (auto iter = vTileGroup.begin(); iter != vTileGroup.end();)
 	{

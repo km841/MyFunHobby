@@ -14,8 +14,11 @@ public:
 public:
     void Update();
     FORCEINLINE void  SetTexture(shared_ptr<Texture> pTexture)    { m_pTexture  = pTexture; }
+    FORCEINLINE shared_ptr<Texture> GetTexture()                  { return m_pTexture; }
     FORCEINLINE void  SetAnimator(shared_ptr<Animator> pAnimator) { m_pAnimator = pAnimator; }
-    FORCEINLINE bool  IsFinished()           { return m_bFinished; }
+    FORCEINLINE bool  IsFinished()                                { return m_bFinished; }
+    FORCEINLINE const std::vector<FrameData>& GetFrameDataList()  { return m_vFrameDataList; }
+    FORCEINLINE int32 GetCurFrame() { return m_iCurFrame; }
     float GetAnimationProgress();
 
     void Reset();

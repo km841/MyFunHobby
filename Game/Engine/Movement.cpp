@@ -27,7 +27,9 @@ void Movement::FinalUpdate()
 
 	if (PLAYER_STATE::ATTACK_A == GetPlayerStateEnum() || 
 		PLAYER_STATE::ATTACK_B == GetPlayerStateEnum())
+	{
 		return;
+	}
 
 	Move(vVelocity);
 }

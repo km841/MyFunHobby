@@ -424,11 +424,13 @@ public:
 	{
 		m_fCurTime = 0.f;
 		m_bIsRunning = true;
+		m_bUnuseFlag = false;
 	}
 
 	void Stop()
 	{
 		Reset();
+		m_bUnuseFlag = true;
 	}
 
 	void Update(float fDeltaTime)
@@ -461,12 +463,18 @@ public:
 	{
 		if (m_fEndTime == 0.f)
 			return 1.f;
-		return m_fCurTime / m_fEndTime;
+
+		return std::clamp(m_fCurTime / m_fEndTime, 0.f, 1.f);
 	}
 
 	void Disable()
 	{
 		m_bUnuseFlag = true;
+	}
+
+	void Enable()
+	{
+		m_bUnuseFlag = false;
 	}
 
 	bool GetUnusedFlag()
