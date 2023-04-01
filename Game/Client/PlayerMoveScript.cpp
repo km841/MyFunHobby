@@ -53,7 +53,9 @@ void PlayerMoveScript::LateUpdate()
 	if (IS_DOWN(KEY_TYPE::A))
 	{
 		weak_ptr<SkulSkill> pFirstSkill = pPlayer->GetActiveSkul()->GetSkill(SKILL_INDEX::FIRST).lock();
-		if (pFirstSkill.lock() && pFirstSkill.lock()->IsActive())
+		if (pFirstSkill.lock() && 
+			pFirstSkill.lock()->IsActive() && 
+			pFirstSkill.lock()->IsCondition(pPlayer->GetActiveSkul()))
 		{
 			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::FIRST);
 			pPlayer->GetActiveSkul()->EnableSkillActiveFlag();
@@ -63,7 +65,9 @@ void PlayerMoveScript::LateUpdate()
 	if (IS_DOWN(KEY_TYPE::S))
 	{
 		weak_ptr<SkulSkill> pSecondSkill = pPlayer->GetActiveSkul()->GetSkill(SKILL_INDEX::SECOND).lock();
-		if (pSecondSkill.lock() && pSecondSkill.lock()->IsActive())
+		if (pSecondSkill.lock() && 
+			pSecondSkill.lock()->IsActive() && 
+			pSecondSkill.lock()->IsCondition(pPlayer->GetActiveSkul()))
 		{
 			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::SECOND);
 			pPlayer->GetActiveSkul()->EnableSkillActiveFlag();

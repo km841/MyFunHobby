@@ -57,7 +57,10 @@ void Animation::Update()
 		{
 			if (m_bLoop)
 			{
-				m_iCurFrame = m_iSection;
+				if (0 > m_iSection)
+					m_iCurFrame = m_vFrameDataList[0].iFrameCount + m_iSection;
+				else
+					m_iCurFrame = m_iSection;
 			}
 			else
 			{

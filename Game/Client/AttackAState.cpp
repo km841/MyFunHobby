@@ -21,13 +21,13 @@ AttackAState::AttackAState(shared_ptr<Player> pPlayer)
 
 void AttackAState::Update()
 {
-	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation()->IsFinished())
+	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->IsFinished())
 	{
 		AddChangeStateEvent(PLAYER_STATE::IDLE);
 		return;
 	}
 	
-	float fRatio = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation()->GetAnimationProgress();
+	float fRatio = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetAnimationProgress();
 	if (fRatio >= 0.75f && IS_PRESS(KEY_TYPE::X))
 	{
 		AddChangeStateEvent(PLAYER_STATE::ATTACK_B);
@@ -49,7 +49,7 @@ void AttackAState::Update()
 
 void AttackAState::Enter()
 {
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState, false);
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::ATTACK_A, false);
 }
 
 void AttackAState::Exit()

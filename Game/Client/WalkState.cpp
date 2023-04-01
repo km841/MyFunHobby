@@ -32,6 +32,12 @@ void WalkState::Update()
 		return;
 	}
 
+	if (m_pPlayer.lock()->GetActiveSkul()->IsSkillActiveFlag())
+	{
+		AddChangeStateEvent(PLAYER_STATE::SKILL);
+		return;
+	}
+
 	if (IS_PRESS(KEY_TYPE::X))
 	{
 		AddChangeStateEvent(PLAYER_STATE::ATTACK_A);
@@ -49,7 +55,7 @@ void WalkState::Update()
 void WalkState::Enter()
 {
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState);
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::WALK);
 }
 
 void WalkState::Exit()

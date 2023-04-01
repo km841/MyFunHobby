@@ -10,21 +10,30 @@ SkillState::SkillState(shared_ptr<Player> pPlayer)
 
 void SkillState::Update()
 {
-	// Skul이 스킬을 사용하면, 해당 스킬이 세팅되고, 그 스킬의 지속시간동안 유지된다.
-	// ActiveSkill이 세팅되고, SkillState로 전이되어야 한다
-	// if (ActiveSkul->ActiveSkill->IsFinished())
-	//   ChangeState(Idle)
-	// else
-	//	 ActiveSkul->ActiveSkill->Update()
-	// 
+	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
+	if (pActiveSkill.lock()->IsFinished())
+	{
+		AddChangeStateEvent(PLAYER_STATE::IDLE);
+	}
+	else
+	{
+		pActiveSkill.lock()->Update();
+	}
 }
 
 void SkillState::Enter()
 {
-	// 스컬이 사용한 스킬의 애니메이션이 출력
+	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
+	const wstring& szName = pActiveSkill.lock()->GetAnimationName();
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(szName, true, END_POINT);
+
+	pActiveSkill.lock()->Activate();
 }
 
 void SkillState::Exit()
 {
+	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
 	m_pPlayer.lock()->GetActiveSkul()->DisableSkillActiveFlag();
+
+	pActiveSkill.lock()->DeActivate();
 }

@@ -9,25 +9,25 @@ LittleBone::LittleBone()
 
 void LittleBone::Awake()
 {
-	GameObject::Awake();
+	Skul::Awake();
 }
 
 void LittleBone::Start()
 {
-	GameObject::Start();
+	Skul::Start();
 }
 
 void LittleBone::Update()
 {
-	GameObject::Update();
+	Skul::Update();
 }
 
 void LittleBone::LateUpdate()
 {
-	GameObject::LateUpdate();
+	Skul::LateUpdate();
 }
 
 void LittleBone::FinalUpdate()
 {
-	GameObject::FinalUpdate();
+	Skul::FinalUpdate();
 }

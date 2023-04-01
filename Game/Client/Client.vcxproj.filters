@@ -199,7 +199,7 @@
     <ClInclude Include="LittleBone.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone</Filter>
     </ClInclude>
-    <ClInclude Include="SkullThrow.h">
+    <ClInclude Include="SkullThrowSkill.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Skill</Filter>
     </ClInclude>
     <ClInclude Include="SkillState.h">
@@ -340,7 +340,7 @@
     <ClCompile Include="LittleBone.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone</Filter>
     </ClCompile>
-    <ClCompile Include="SkullThrow.cpp">
+    <ClCompile Include="SkullThrowSkill.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Skill</Filter>
     </ClCompile>
     <ClCompile Include="SkillState.cpp">

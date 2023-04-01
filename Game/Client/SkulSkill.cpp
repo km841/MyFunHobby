@@ -1,10 +1,17 @@
 #include "pch.h"
 #include "SkulSkill.h"
+#include "Clock.h"
 
 SkulSkill::SkulSkill(float fCooldown, float fDuration)
-	: GameObject(LAYER_TYPE::UNKNOWN)
-	, m_eSkillIndex(SKILL_INDEX::END)
+	: m_eSkillIndex(SKILL_INDEX::END)
 	, m_tCooldown(fCooldown)
 	, m_tDuration(fDuration)
 {
 }
+
+void SkulSkill::UpdateSkillCooldown()
+{
+	m_tCooldown.Update(DELTA_TIME);
+}
+
+

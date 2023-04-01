@@ -12,29 +12,33 @@ public:
 	virtual ~Skul() = default;
 
 public:
-	virtual void Awake() override { }
-	virtual void Start() override { }
-	virtual void Update() override { }
-	virtual void LateUpdate() override { }
-	virtual void FinalUpdate() override { }
+	virtual void Awake() override;
+	virtual void Start() override;
+	virtual void Update() override;
+	virtual void LateUpdate() override;
+	virtual void FinalUpdate() override;
 
 public:
 	FORCEINLINE SKUL_INDEX			GetSkulIndex()				           { return m_eSkulIndex;     }
-	FORCEINLINE void				SetSkulIndex(SKUL_INDEX eSkulIndex)    { m_eSkulIndex = eSkulIndex; }
 	FORCEINLINE SKUL_GRADE			GetSkulGrade()						   { return m_eSkulGrade;   }
+	FORCEINLINE void				SetSkulIndex(SKUL_INDEX eSkulIndex)    { m_eSkulIndex = eSkulIndex; }
 	FORCEINLINE bool				IsSkillActiveFlag()					   { return m_bSkillActiveFlag; }
 	FORCEINLINE void				DisableSkillActiveFlag()			   { m_bSkillActiveFlag = false; }
 	FORCEINLINE void				EnableSkillActiveFlag()				   { m_bSkillActiveFlag = true; }
 	FORCEINLINE weak_ptr<SkulSkill> GetActiveSkill()					   { return m_pActiveSkill; }
 	FORCEINLINE weak_ptr<SkulSkill> GetSkill(SKILL_INDEX eSkillIndex)	   { return m_arrSkills[static_cast<uint8>(eSkillIndex)]; }
-	shared_ptr<Animation> GetActiveAnimation();
+	weak_ptr<Animation>				GetActiveAnimation();
+
 	void SetPlayer(shared_ptr<Player> pPlayer);
 	void SetActiveSkill(SKILL_INDEX eSkillIndex);
+	void ObtainSkill(shared_ptr<SkulSkill> pSkulSkill);
+	void SkillCooldownUpdate();
 
 public:
 	// Helper Functions
 	void AddAnimation(PLAYER_STATE ePlayerState, const wstring& szName, shared_ptr<Animation> pAnimation);
 	void PlayAnimation(PLAYER_STATE ePlayerState, bool bLoop = true, int32 iSection = 0);
+	void PlayAnimation(const wstring& szName, bool bLoop = true, int32 iSection = 0);
 	
 private:
 	const wstring& GetStateToName(PLAYER_STATE ePlayerState);

@@ -57,7 +57,7 @@ void DashState::Enter()
 {
 	m_tDuration.Start();
 
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState, false);
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::DASH, false);
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 
@@ -84,8 +84,8 @@ void DashState::EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage)
 
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
 	const Vec3& vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
-	int32 iCurFrame = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation()->GetCurFrame();
-	const FrameData& frameData = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation()->GetFrameDataList()[iCurFrame];
+	int32 iCurFrame = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetCurFrame();
+	const FrameData& frameData = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetFrameDataList()[iCurFrame];
 
 	pAfterImage.lock()->GetTransform()->SetLocalPosition(vPlayerPos);
 	pAfterImage.lock()->GetTransform()->SetLocalScale(vPlayerScale);

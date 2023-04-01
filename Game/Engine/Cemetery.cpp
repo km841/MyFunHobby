@@ -8,6 +8,7 @@
 #include "MeshRenderer.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "SkullThrowSkill.h"
 
 
 void Cemetery::Init()
@@ -28,7 +29,6 @@ void Cemetery::CreateSkul()
 	{
 		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>();
 		pLittleBone->AddComponent(make_shared<Animator>());
-		
 		
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
@@ -56,6 +56,17 @@ void Cemetery::CreateSkul()
 		pLittleBone->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"LittleBone_JumpAttack", pJumpAttackAnimation);
 		pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_A, L"LittleBone_AttackA", pAttackA_Animation);
 		pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_B, L"LittleBone_AttackB", pAttackB_Animation);
+
+		// Skull Throw Skill
+		{
+			shared_ptr<SkullThrowSkill> pThrowSkill = make_shared<SkullThrowSkill>();
+			wstring szAnimationName = L"LittleBone_Throw";
+			pThrowSkill->SetAnimationName(szAnimationName);
+			shared_ptr<Animation> pThrowAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_throw.anim");
+			pThrowSkill->SetAnimation(pThrowAnimation);
+
+			pLittleBone->ObtainSkill(pThrowSkill);
+		}
 
 		m_mSkulMap[SKUL_TYPE::LITTLE_BONE] = pLittleBone;
 	}

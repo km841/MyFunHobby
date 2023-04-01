@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Player.h"
 #include "Transform.h"
+#include "SkulSkill.h"
 
 Skul::Skul(SKUL_GRADE eSkulGrade)
 	: GameObject(LAYER_TYPE::UNKNOWN)
@@ -11,6 +12,32 @@ Skul::Skul(SKUL_GRADE eSkulGrade)
 	, m_eSkulGrade(eSkulGrade)
 	, m_bSkillActiveFlag(false)
 {
+}
+
+void Skul::Awake()
+{
+	GameObject::Awake();
+}
+
+void Skul::Start()
+{
+	GameObject::Start();
+}
+
+void Skul::Update()
+{
+	GameObject::Update();
+	SkillCooldownUpdate();
+}
+
+void Skul::LateUpdate()
+{
+	GameObject::LateUpdate();
+}
+
+void Skul::FinalUpdate()
+{
+	GameObject::FinalUpdate();
 }
 
 void Skul::SetPlayer(shared_ptr<Player> pPlayer)
@@ -42,13 +69,54 @@ void Skul::PlayAnimation(PLAYER_STATE ePlayerState, bool bLoop, int32 iSection)
 	GetAnimator()->Play(szName, bLoop, iSection);
 }
 
+void Skul::PlayAnimation(const wstring& szName, bool bLoop, int32 iSection)
+{
+	assert(GetAnimator());
+	assert(GetAnimator()->FindAnimation(szName));
+	GetAnimator()->Play(szName, bLoop, iSection);
+}
+
 void Skul::SetActiveSkill(SKILL_INDEX eSkillIndex)
 {
 	assert(m_arrSkills[static_cast<uint8>(eSkillIndex)]);
 	m_pActiveSkill = m_arrSkills[static_cast<uint8>(eSkillIndex)];
 }
 
-shared_ptr<Animation> Skul::GetActiveAnimation()
+void Skul::ObtainSkill(shared_ptr<SkulSkill> pSkulSkill)
+{
+	assert(pSkulSkill);
+	if (!m_arrSkills[static_cast<uint8>(SKILL_INDEX::FIRST)])
+	{
+		const wstring& szName = pSkulSkill->GetAnimationName();
+		GetAnimator()->AddAnimation(szName, pSkulSkill->GetAnimation().lock());
+
+		m_arrSkills[static_cast<uint8>(SKILL_INDEX::FIRST)] = pSkulSkill;
+		m_arrSkills[static_cast<uint8>(SKILL_INDEX::FIRST)]->SetSkillIndex(SKILL_INDEX::FIRST);
+
+
+	}
+	else if (!m_arrSkills[static_cast<uint8>(SKILL_INDEX::SECOND)])
+	{
+		const wstring& szName = pSkulSkill->GetAnimationName();
+		GetAnimator()->AddAnimation(szName, pSkulSkill->GetAnimation().lock());
+
+		m_arrSkills[static_cast<uint8>(SKILL_INDEX::SECOND)] = pSkulSkill;
+		m_arrSkills[static_cast<uint8>(SKILL_INDEX::SECOND)]->SetSkillIndex(SKILL_INDEX::SECOND);
+	}
+	else
+		assert(nullptr);
+}
+
+void Skul::SkillCooldownUpdate()
+{
+	for (int32 i = 0; i < MAX_SKILLS; ++i)
+	{
+		if (m_arrSkills[i] && !m_arrSkills[i]->IsActive())
+			m_arrSkills[i]->UpdateSkillCooldown();
+	}
+}
+
+weak_ptr<Animation> Skul::GetActiveAnimation()
 {
 	assert(GetAnimator());
 	assert(GetAnimator()->GetActiveAnimation());

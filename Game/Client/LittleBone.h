@@ -15,6 +15,9 @@ public:
 	virtual void FinalUpdate() override;
 
 public:
+	FORCEINLINE bool HasHead() { return m_bHasHead; }
+
+public:
 	bool m_bHasHead;
 };
 

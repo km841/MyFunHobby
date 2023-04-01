@@ -15,7 +15,7 @@ JumpAttackState::JumpAttackState(shared_ptr<Player> pPlayer)
 
 void JumpAttackState::Update()
 {
-	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation()->IsFinished())
+	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->IsFinished())
 	{
 		AddChangeStateEvent(PLAYER_STATE::JUMP_RISE);
 		return;
@@ -36,7 +36,7 @@ void JumpAttackState::Update()
 
 void JumpAttackState::Enter()
 {
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState, false);
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::JUMP_ATTACK, false);
 }
 
 void JumpAttackState::Exit()
