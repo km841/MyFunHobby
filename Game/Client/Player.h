@@ -39,8 +39,7 @@ public:
 
 private:
 	std::array<shared_ptr<Skul>, PLAYER_MAX_SKULS> m_arrSkuls;
-	shared_ptr<Skul>							   m_pActiveSkul;
-
+	shared_ptr<Skul>			   m_pActiveSkul;
 	shared_ptr<StateMachine>	   m_pStateMachine;
 	PLAYER_STATE				   m_ePlayerState;
 };

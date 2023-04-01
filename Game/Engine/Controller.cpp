@@ -4,7 +4,7 @@
 #include "Material.h"
 #include "GameObject.h"
 #include "Engine.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "Transform.h"
 #include "Physical.h"
 

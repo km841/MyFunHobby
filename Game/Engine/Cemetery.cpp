@@ -4,6 +4,11 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "Resources.h"
+#include "Transform.h"
+#include "MeshRenderer.h"
+#include "Material.h"
+#include "Mesh.h"
+
 
 void Cemetery::Init()
 {
@@ -23,6 +28,16 @@ void Cemetery::CreateSkul()
 	{
 		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>();
 		pLittleBone->AddComponent(make_shared<Animator>());
+		
+		
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pLittleBone->AddComponent(pMeshRenderer);
+		pLittleBone->AddComponent(make_shared<Transform>());
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\LittleBone\\littlebone_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\LittleBone\\littlebone_walk.anim");
@@ -33,14 +48,14 @@ void Cemetery::CreateSkul()
 		shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackA", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_a.anim");
 		shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackB", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_b.anim");
 
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_Dash", pDashAnimation);
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_JumpRise", pJumpRiseAnimation);
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_JumpFall", pJumpFallAnimation);
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_JumpAttack", pJumpAttackAnimation);
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_AttackA", pAttackA_Animation);
-		pLittleBone->GetAnimator()->AddAnimation(L"LittleBone_AttackB", pAttackB_Animation);
+		pLittleBone->AddAnimation(PLAYER_STATE::IDLE, L"LittleBone_Idle", pIdleAnimation);
+		pLittleBone->AddAnimation(PLAYER_STATE::WALK, L"LittleBone_Walk", pWalkAnimation);
+		pLittleBone->AddAnimation(PLAYER_STATE::DASH, L"LittleBone_Dash", pDashAnimation);
+		pLittleBone->AddAnimation(PLAYER_STATE::JUMP_RISE, L"LittleBone_JumpRise", pJumpRiseAnimation);
+		pLittleBone->AddAnimation(PLAYER_STATE::JUMP_FALL, L"LittleBone_JumpFall", pJumpFallAnimation);
+		pLittleBone->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"LittleBone_JumpAttack", pJumpAttackAnimation);
+		pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_A, L"LittleBone_AttackA", pAttackA_Animation);
+		pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_B, L"LittleBone_AttackB", pAttackB_Animation);
 
 		m_mSkulMap[SKUL_TYPE::LITTLE_BONE] = pLittleBone;
 	}

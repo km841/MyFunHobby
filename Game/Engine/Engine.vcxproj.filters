@@ -67,7 +67,7 @@
     <ClInclude Include="Camera.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="Clock.h">
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -243,7 +243,7 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Object\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
+    <ClCompile Include="Clock.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">

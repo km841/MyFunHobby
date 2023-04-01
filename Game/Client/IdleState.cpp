@@ -47,7 +47,7 @@ void IdleState::Update()
 
 void IdleState::Enter()
 {
-	m_pPlayer.lock()->GetAnimator()->Play(L"LittleBone_Idle");
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState);
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 }

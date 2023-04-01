@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CameraFadeInOutScript.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "GameObject.h"
 #include "MeshRenderer.h"
 #include "Material.h"

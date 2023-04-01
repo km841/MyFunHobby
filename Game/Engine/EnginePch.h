@@ -281,6 +281,14 @@ enum
 
 namespace Conv
 {
+	template<typename T, typename U>
+	static shared_ptr<T> BaseToDeclare(shared_ptr<U> pBase)
+	{
+		if constexpr (!std::is_base_of_v<U, T>)
+			assert(nullptr);
+		return dynamic_pointer_cast<T>(pBase);
+	}
+
 	static Vec2 Vec3ToTileAlignVec2(Vec3 vVec3)
 	{
 		Vec2 vTileAlignVec = { vVec3.x, vVec3.y };
@@ -404,10 +412,10 @@ namespace Conv
 	}
 }
 
-struct TimeCounter
+struct Timer
 {
 public:
-	TimeCounter(float fEndTime)
+	Timer(float fEndTime)
 		:m_fCurTime(0.f)
 		,m_fEndTime(fEndTime)
 		,m_bIsRunning(false)
@@ -581,7 +589,7 @@ bool m_bUse = false;\
 #define POOL g_pEngine->GetObjectPool()
 #define GET_SINGLE(type) type::GetInstance()
 #define CONST_BUFFER(type) g_pEngine->GetCB(type)
-#define DELTA_TIME GET_SINGLE(Timer)->GetDeltaTime()
+#define DELTA_TIME GET_SINGLE(Clock)->GetDeltaTime()
 #define IS_PRESS(key) GET_SINGLE(Input)->GetButtonPress(key)
 #define IS_DOWN(key) GET_SINGLE(Input)->GetButtonDown(key)
 #define IS_UP(key) GET_SINGLE(Input)->GetButtonUp(key)

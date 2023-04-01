@@ -4,6 +4,6 @@
 SkulSkill::SkulSkill(float fCooldown)
 	: GameObject(LAYER_TYPE::UNKNOWN)
 	, m_eSkillPos(SKUL_SKILL_POS::FIRST)
-	, m_tcCooldown(fCooldown)
+	, m_tCooldown(fCooldown)
 {
 }

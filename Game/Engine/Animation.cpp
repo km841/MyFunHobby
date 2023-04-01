@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Animation.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "Animator.h"
 #include "Material.h"
 #include "MeshRenderer.h"
@@ -35,13 +35,13 @@ Animation::~Animation()
 
 void Animation::Update()
 {
-	PushData();
-
 	ImVec2 vSize = m_vFrameDataList[m_iCurFrame].vSize;
 	m_pAnimator.lock()->GetTransform()->SetLocalScale(Vec3(vSize.x, vSize.y, 1.f));
 
 	if (m_bFinished)
 		return;
+
+	PushData();
 
 	m_fAccTime += DELTA_TIME;
 	if (m_vFrameDataList[m_iCurFrame].fDuration < m_fAccTime)

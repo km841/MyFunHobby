@@ -15,7 +15,7 @@ JumpAttackState::JumpAttackState(shared_ptr<Player> pPlayer)
 
 void JumpAttackState::Update()
 {
-	if (m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->IsFinished())
+	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation()->IsFinished())
 	{
 		AddChangeStateEvent(PLAYER_STATE::JUMP_RISE);
 		return;
@@ -36,7 +36,7 @@ void JumpAttackState::Update()
 
 void JumpAttackState::Enter()
 {
-	m_pPlayer.lock()->GetAnimator()->Play(L"LittleBone_JumpAttack", false);
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState, false);
 }
 
 void JumpAttackState::Exit()

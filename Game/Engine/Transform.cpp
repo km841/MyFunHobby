@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "Camera.h"
 #include "Physical.h"
+#include "GameObject.h"
 
 Transform::Transform()
 	: Component(COMPONENT_TYPE::TRANSFORM)
@@ -78,6 +79,7 @@ void Transform::FinalUpdate()
 		matParentMatrix._22 = 1.f;
 		matParentMatrix._33 = 1.f;
 		m_matWorld *= matParentMatrix;
+		GetGameObject()->SetDirection(m_pParent.lock()->GetGameObject()->GetDirection());
 	}
 }
 

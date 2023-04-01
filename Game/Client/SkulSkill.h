@@ -20,6 +20,6 @@ public:
 
 protected:
 	SKUL_SKILL_POS m_eSkillPos;
-	TimeCounter m_tcCooldown;
+	Timer m_tCooldown;
 };
 

@@ -9,7 +9,7 @@
 #include "Material.h"
 #include "Resources.h"
 #include "DebugRenderer.h"
-#include "Timer.h"
+#include "Clock.h"
 
 Collider::Collider()
 	: Component(COMPONENT_TYPE::COLLIDER)

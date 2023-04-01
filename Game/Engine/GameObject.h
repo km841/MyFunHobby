@@ -61,6 +61,7 @@ public:
     FORCEINLINE void Disable()   { m_bDisable = true; }
     FORCEINLINE void Enable()    { m_bDisable = false; }
     FORCEINLINE bool IsEnable()  { return !m_bDisable; }
+    FORCEINLINE bool IsDisable()  { return m_bDisable; }
     FORCEINLINE void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
     void Release();
 

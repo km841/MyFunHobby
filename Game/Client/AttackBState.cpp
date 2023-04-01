@@ -21,7 +21,7 @@ AttackBState::AttackBState(shared_ptr<Player> pPlayer)
 
 void AttackBState::Update()
 {
-	if (m_pPlayer.lock()->GetAnimator()->GetActiveAnimation()->IsFinished())
+	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation()->IsFinished())
 	{
 		AddChangeStateEvent(PLAYER_STATE::IDLE);
 		return;
@@ -42,7 +42,7 @@ void AttackBState::Update()
 
 void AttackBState::Enter()
 {
-	m_pPlayer.lock()->GetAnimator()->Play(L"LittleBone_AttackB", false);
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState, false);
 }
 
 void AttackBState::Exit()

@@ -6,7 +6,7 @@
 #include "MeshRenderer.h"
 #include "Material.h"
 #include "Physical.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "Engine.h"
 
 RigidBody::RigidBody(bool bGravityApplied)

@@ -17,7 +17,7 @@
 #include "EventManager.h"
 #include "Animator.h"
 #include "Animation.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "Tile.h"
 #include "PhysicsProperties.h"
 #include "Physical.h"
@@ -26,10 +26,10 @@
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
-	, m_TileDragHolder(0.1f)
+	, m_tTileDragHolder(0.1f)
 	, m_TileMapData{}
 {
-	m_TileDragHolder.Start();
+	m_tTileDragHolder.Start();
 }
 
 ToolScene::~ToolScene()
@@ -214,7 +214,7 @@ void ToolScene::EraseTileMap()
 
 void ToolScene::PalleteUpdate()
 {
-	m_TileDragHolder.Update(DELTA_TIME);
+	m_tTileDragHolder.Update(DELTA_TIME);
 
 	m_TileMapData.vTileData.clear();
 
@@ -267,10 +267,10 @@ void ToolScene::PalleteUpdate()
 		{
 			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
 			{
-				if (!CheckTileAtClick(vWorldPos) && m_TileDragHolder.IsFinished())
+				if (!CheckTileAtClick(vWorldPos) && m_tTileDragHolder.IsFinished())
 				{
 					CreateTile(vWorldPos);
-					m_TileDragHolder.Start();
+					m_tTileDragHolder.Start();
 				}
 			}
 
@@ -285,10 +285,10 @@ void ToolScene::PalleteUpdate()
 		{
 			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
 			{
-				if (m_TileDragHolder.IsFinished())
+				if (m_tTileDragHolder.IsFinished())
 				{
 					EraseTile(vWorldPos);
-					m_TileDragHolder.Start();
+					m_tTileDragHolder.Start();
 				}
 			}
 

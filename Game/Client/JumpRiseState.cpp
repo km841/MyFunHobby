@@ -48,7 +48,7 @@ void JumpRiseState::Update()
 
 void JumpRiseState::Enter()
 {
-	m_pPlayer.lock()->GetAnimator()->Play(L"LittleBone_JumpRise");
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState);
 	m_pPlayer.lock()->GetRigidBody()->ApplyGravity();
 }
 

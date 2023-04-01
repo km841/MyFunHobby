@@ -24,6 +24,7 @@
 #include "Input.h"
 #include "CollisionManager.h"
 #include "UIManager.h"
+#include "Cemetery.h"
 
 /* GameObject */
 #include "Player.h"
@@ -102,41 +103,14 @@ void TownScene::Enter()
 	// Player
 	{
 		pPlayer = make_shared<Player>();
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pPlayer->AddComponent(pMeshRenderer);
 		pPlayer->AddComponent(make_shared<Transform>());
 		pPlayer->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
-		pPlayer->AddComponent(make_shared<Controller>());
 		pPlayer->AddComponent(make_shared<PlayerMoveScript>());
 		pPlayer->AddComponent(make_shared<RigidBody>(true));
 		pPlayer->AddComponent(make_shared<Collider>());
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
-		pPlayer->AddComponent(make_shared<Animator>());
 		pPlayer->AddComponent(make_shared<Movement>());
-
-		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Idle", L"..\\Resources\\Animation\\LittleBone\\littlebone_idle.anim");
-		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Walk", L"..\\Resources\\Animation\\LittleBone\\littlebone_walk.anim");
-		shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_Dash", L"..\\Resources\\Animation\\LittleBone\\littlebone_dash.anim");
-		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpRise", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_rise.anim");
-		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpFall", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_fall.anim");
-		shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpAttack", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_attack.anim");
-		shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackA", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_a.anim");
-		shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackB", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_b.anim");
-		
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Idle", pIdleAnimation);
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Walk", pWalkAnimation);
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_Dash", pDashAnimation);
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpRise", pJumpRiseAnimation);
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpFall", pJumpFallAnimation);
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_JumpAttack", pJumpAttackAnimation);
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_AttackA", pAttackA_Animation);
-		pPlayer->GetAnimator()->AddAnimation(L"LittleBone_AttackB", pAttackB_Animation);
-		pPlayer->GetAnimator()->Play(L"LittleBone_Idle");
+		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::LITTLE_BONE));
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());

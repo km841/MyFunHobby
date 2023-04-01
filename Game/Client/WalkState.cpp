@@ -49,7 +49,7 @@ void WalkState::Update()
 void WalkState::Enter()
 {
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
-	m_pPlayer.lock()->GetAnimator()->Play(L"LittleBone_Walk");
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(m_ePlayerState);
 }
 
 void WalkState::Exit()

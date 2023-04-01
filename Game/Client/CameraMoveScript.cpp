@@ -2,7 +2,7 @@
 #include "CameraMoveScript.h"
 #include "Transform.h"
 #include "Input.h"
-#include "Timer.h"
+#include "Clock.h"
 
 CameraMoveScript::CameraMoveScript()
 	:m_fSpeed(500.f)

@@ -6,7 +6,7 @@
 #include "Texture.h"
 #include "Engine.h"
 #include "Transform.h"
-#include "Timer.h"
+#include "Clock.h"
 
 PlayerHealthBarShowScript::PlayerHealthBarShowScript(shared_ptr<Player> pPlayer)
 	: m_pPlayer(pPlayer)

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "PlayerMoveScript.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "Input.h"
 #include "Transform.h"
 #include "Controller.h"

@@ -7,6 +7,8 @@
 #include "GameObject.h"
 #include "MeshRenderer.h"
 #include "DebugRenderer.h"
+#include "Player.h"
+#include "Skul.h"
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
@@ -60,6 +62,14 @@ void Camera::Render()
         {
             if (pGameObject->IsEnable())
             {
+                if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+                {
+                    weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
+                    if (pActiveSkul.lock())
+                        pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
+                    continue;
+                }
+
                 if (pGameObject->GetMeshRenderer())
                     pGameObject->GetMeshRenderer()->Render(shared_from_this());
 

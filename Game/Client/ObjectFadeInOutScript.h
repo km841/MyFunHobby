@@ -12,7 +12,7 @@ public:
 
 private:
     FADE_TYPE m_eFadeType;
-    TimeCounter m_tcStayTime;
-    TimeCounter m_tcDuration;
+    Timer     m_tStayTime;
+    Timer     m_tDuration;
 };
 

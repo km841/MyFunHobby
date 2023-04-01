@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "AfterImageDrawScript.h"
 #include "Player.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "AfterImage.h"
 #include "MeshRenderer.h"
 #include "Material.h"
@@ -13,7 +13,7 @@
 
 AfterImageDrawScript::AfterImageDrawScript(shared_ptr<Player> pPlayer)
 	: m_pPlayer(pPlayer)
-	, m_tcDuration(0.3f)
+	, m_tDuration(0.3f)
 	, m_bTrigger(false)
 {
 }
@@ -28,13 +28,13 @@ void AfterImageDrawScript::LateUpdate()
 
 	if (m_bTrigger != pAfterImage->IsEnable())
 	{
-		m_tcDuration.Start();
+		m_tDuration.Start();
 		m_bTrigger = true;
 	}
 
 	if (pAfterImage->IsEnable())
 	{
-		m_tcDuration.Update(DELTA_TIME);
+		m_tDuration.Update(DELTA_TIME);
 
 		const FrameData& currFrameData = pAfterImage->GetFrameData();
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(currFrameData.szTexPath, currFrameData.szTexPath);
@@ -46,7 +46,7 @@ void AfterImageDrawScript::LateUpdate()
 		Vec2 vSize = Vec2(currFrameData.vSize.x / vSpriteSize.x, currFrameData.vSize.y / vSpriteSize.y);
 		Vec2 vOffset = Vec2(currFrameData.vOffset.x / vSpriteSize.x, currFrameData.vOffset.y / vSpriteSize.y);
 		Vec2 vAtlasSize = Vec2(100.f / vSpriteSize.x, 100.f / vSpriteSize.y);
-		float fProgress = m_tcDuration.GetProgress();
+		float fProgress = m_tDuration.GetProgress();
 		
 		GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
 		GetMeshRenderer()->GetMaterial()->SetInt(1, static_cast<uint8>(eDirection));
@@ -57,10 +57,10 @@ void AfterImageDrawScript::LateUpdate()
 		GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 		GetMeshRenderer()->GetMaterial()->SetFloat(0, 1.f - fProgress);
 
-		if (m_tcDuration.IsFinished())
+		if (m_tDuration.IsFinished())
 		{
 			pAfterImage->Disable();
-			m_tcDuration.Stop();
+			m_tDuration.Stop();
 			m_bTrigger = false;
 		}
 	}

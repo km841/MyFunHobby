@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "Skul.h"
 
 class PlayerState
 {
@@ -10,6 +11,8 @@ public:
 public:
 	virtual void Awake()  { }
 	virtual void Update() { }
+
+public:
 	bool CheckGrounded();
 	void AddChangeStateEvent(PLAYER_STATE ePlayerState);
 

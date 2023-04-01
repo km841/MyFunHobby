@@ -8,6 +8,7 @@
 #include "Collider.h"
 #include "PlayerInterfaceHUD.h"
 #include "Skul.h"
+#include "Cemetery.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -24,32 +25,34 @@ Player::~Player()
 void Player::Awake()
 {
 	GameObject::Awake();
-
-	shared_ptr<GameObject> pParent = shared_from_this();
-	m_pStateMachine->SetPlayer(static_pointer_cast<Player>(pParent));
-
+	m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
+	m_pActiveSkul->Awake();
 	m_pStateMachine->Awake();
 }
 
 void Player::Start()
 {
 	GameObject::Start();
+	m_pActiveSkul->Start();
 }
 
 void Player::Update()
 {
 	GameObject::Update();
+	m_pActiveSkul->Update();
 	m_pStateMachine->Update();
 }
 
 void Player::LateUpdate()
 {
 	GameObject::LateUpdate();
+	m_pActiveSkul->LateUpdate();
 }
 
 void Player::FinalUpdate()
 {
 	GameObject::FinalUpdate();
+	m_pActiveSkul->FinalUpdate();
 }
 
 void Player::ChangePlayerState(PLAYER_STATE ePlayerState)
@@ -60,11 +63,21 @@ void Player::ChangePlayerState(PLAYER_STATE ePlayerState)
 
 shared_ptr<Skul> Player::ObtainSkul(shared_ptr<Skul> pSkul)
 {
-	if (!m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)])
+	if (!m_pActiveSkul)
+	{
+		m_arrSkuls[static_cast<uint8>(SKUL_POS::FIRST)] = pSkul;
+		m_pActiveSkul = pSkul;
+		m_pActiveSkul->SetSkulPos(SKUL_POS::FIRST);
+		m_pActiveSkul->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
+	}
+
+	else if (!m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)])
 	{
 		m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)] = pSkul;
 		pSkul->SetSkulPos(SKUL_POS::SECOND);
+		pSkul->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
 	}
+
 	else
 	{
 		shared_ptr<Skul> pDropSkul = m_pActiveSkul;

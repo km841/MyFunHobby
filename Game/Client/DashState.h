@@ -22,7 +22,7 @@ private:
     void CreateAndAddAfterImagesToScene();
 
 private:
-    TimeCounter m_tcDuration;
+    Timer m_tDuration;
     float m_fDashSpeed;
     float m_fAfterImageTimeOffset;
 

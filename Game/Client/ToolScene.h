@@ -70,7 +70,7 @@ private:
     shared_ptr<GameObject> m_pGrid;
     shared_ptr<GameObject> m_pSpriteTexture;
 
-    TimeCounter m_TileDragHolder;
+    Timer m_tTileDragHolder;
     TileMap m_mTileMap;
     TileMapData m_TileMapData;
 

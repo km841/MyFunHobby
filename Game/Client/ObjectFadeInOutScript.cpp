@@ -2,14 +2,14 @@
 #include "ObjectFadeInOutScript.h"
 #include "MeshRenderer.h"
 #include "Material.h"
-#include "Timer.h"
+#include "Clock.h"
 
 ObjectFadeInOutScript::ObjectFadeInOutScript(float fDuration, FADE_TYPE eFadeType, float fStayTime)
 	: m_eFadeType(eFadeType)
-	, m_tcStayTime(fStayTime)
-	, m_tcDuration(fDuration)
+	, m_tStayTime(fStayTime)
+	, m_tDuration(fDuration)
 {
-	m_tcStayTime.Start();
+	m_tStayTime.Start();
 }
 
 ObjectFadeInOutScript::~ObjectFadeInOutScript()
@@ -18,9 +18,9 @@ ObjectFadeInOutScript::~ObjectFadeInOutScript()
 
 void ObjectFadeInOutScript::LateUpdate()
 {
-	m_tcStayTime.Update(DELTA_TIME);
+	m_tStayTime.Update(DELTA_TIME);
 
-	if (!m_tcStayTime.IsFinished())
+	if (!m_tStayTime.IsFinished())
 	{
 		switch (m_eFadeType)
 		{
@@ -35,30 +35,30 @@ void ObjectFadeInOutScript::LateUpdate()
 
 	else
 	{
-		if (!m_tcStayTime.GetUnusedFlag())
+		if (!m_tStayTime.GetUnusedFlag())
 		{
-			m_tcStayTime.Disable();
-			m_tcDuration.Start();
+			m_tStayTime.Disable();
+			m_tDuration.Start();
 		}
 
-		m_tcDuration.Update(DELTA_TIME);
+		m_tDuration.Update(DELTA_TIME);
 
-		if (!m_tcDuration.IsFinished())
+		if (!m_tDuration.IsFinished())
 		{
 			switch (m_eFadeType)
 			{
 			case FADE_TYPE::FADE_IN:
-				GetMeshRenderer()->GetMaterial()->SetFloat(0, m_tcDuration.GetProgress());
+				GetMeshRenderer()->GetMaterial()->SetFloat(0, m_tDuration.GetProgress());
 				break;
 			case FADE_TYPE::FADE_OUT:
-				GetMeshRenderer()->GetMaterial()->SetFloat(0, 1.f - m_tcDuration.GetProgress());
+				GetMeshRenderer()->GetMaterial()->SetFloat(0, 1.f - m_tDuration.GetProgress());
 				break;
 			}
 		}
 
 		else
 		{
-			m_tcDuration.Disable();
+			m_tDuration.Disable();
 		}
 	}
 

@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "Resources.h"
 #include "Scenes.h"
-#include "Timer.h"
+#include "Clock.h"
 #include "Input.h"
 #include "Physics.h"
 #include "Player.h"
@@ -63,7 +63,7 @@ void Engine::Init(const WindowInfo& wInfo)
 
 	GET_SINGLE(Resources)->Init();
 	GET_SINGLE(Scenes)->Init();
-	GET_SINGLE(Timer)->Init();
+	GET_SINGLE(Clock)->Init();
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
 	GET_SINGLE(UIManager)->Init();
 	GET_SINGLE(Cemetery)->Init();
@@ -74,7 +74,7 @@ void Engine::Update()
 	// ImGui Update
 
 	GET_SINGLE(Input)->Update();
-	GET_SINGLE(Timer)->Update();
+	GET_SINGLE(Clock)->Update();
 	GET_SINGLE(Scenes)->Update();
 	GET_SINGLE(CollisionManager)->Update();
 	
@@ -115,7 +115,7 @@ void Engine::Destroy()
 
 void Engine::ShowFPS()
 {
-	uint32 fps = GET_SINGLE(Timer)->GetFPS();
+	uint32 fps = GET_SINGLE(Clock)->GetFPS();
 
 	WCHAR text[100] = L"";
 	::wsprintf(text, L"FPS : %d", fps);
