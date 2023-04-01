@@ -66,8 +66,10 @@ void Camera::Render()
                 {
                     weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
                     if (pActiveSkul.lock())
+                    {
                         pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
-                    continue;
+                        continue;
+                    }
                 }
 
                 if (pGameObject->GetMeshRenderer())

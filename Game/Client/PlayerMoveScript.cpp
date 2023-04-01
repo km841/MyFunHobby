@@ -11,6 +11,9 @@
 #include "RigidBody.h"
 #include "UIManager.h"
 #include "DialogueUI.h"
+#include "Player.h"
+#include "Skul.h"
+#include "SkulSkill.h"
 
 
 PlayerMoveScript::PlayerMoveScript()
@@ -27,11 +30,12 @@ PlayerMoveScript::~PlayerMoveScript()
 void PlayerMoveScript::LateUpdate()
 {
 	Vec3 vVelocity = {};
+	shared_ptr<Player> pPlayer = static_pointer_cast<Player>(GetGameObject());
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
 		vVelocity = VEC3_RIGHT_NORMAL * -m_fSpeed;
-		GetGameObject()->SetDirection(DIRECTION::LEFT);
+		pPlayer->SetDirection(DIRECTION::LEFT);
 
 		if (PLAYER_STATE::DASH != GetPlayerStateEnum())
 			GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
@@ -40,10 +44,30 @@ void PlayerMoveScript::LateUpdate()
 	else if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
 		vVelocity = VEC3_RIGHT_NORMAL * m_fSpeed;
-		GetGameObject()->SetDirection(DIRECTION::RIGHT);
+		pPlayer->SetDirection(DIRECTION::RIGHT);
 
 		if (PLAYER_STATE::DASH != GetPlayerStateEnum())
 			GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+	}
+
+	if (IS_DOWN(KEY_TYPE::A))
+	{
+		weak_ptr<SkulSkill> pFirstSkill = pPlayer->GetActiveSkul()->GetSkill(SKILL_INDEX::FIRST).lock();
+		if (pFirstSkill.lock() && pFirstSkill.lock()->IsActive())
+		{
+			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::FIRST);
+			pPlayer->GetActiveSkul()->EnableSkillActiveFlag();
+		}
+	}
+
+	if (IS_DOWN(KEY_TYPE::S))
+	{
+		weak_ptr<SkulSkill> pSecondSkill = pPlayer->GetActiveSkul()->GetSkill(SKILL_INDEX::SECOND).lock();
+		if (pSecondSkill.lock() && pSecondSkill.lock()->IsActive())
+		{
+			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::SECOND);
+			pPlayer->GetActiveSkul()->EnableSkillActiveFlag();
+		}
 	}
 
 	if (IS_DOWN(KEY_TYPE::C))

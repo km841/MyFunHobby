@@ -13,6 +13,10 @@ void Clock::Update()
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&iCurrentCount));
 
 	m_fDeltaTime = (iCurrentCount - m_iPrevCount) / static_cast<float>(m_iFrequency);
+
+	if (m_fDeltaTime > (1.f / 60.f))
+		m_fDeltaTime = (1.f / 60.f);
+
 	m_iPrevCount = iCurrentCount;
 
 	m_iFrameCount++;

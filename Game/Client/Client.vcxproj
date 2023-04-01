@@ -178,6 +178,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LittleBone.h" />
+    <ClInclude Include="SkillState.h" />
     <ClInclude Include="Skul.h" />
     <ClInclude Include="JumpAttackState.h" />
     <ClInclude Include="JumpFallState.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="PlayerTrackingScript.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SkulHeadHUD.h" />
+    <ClInclude Include="SkullThrow.h" />
     <ClInclude Include="SkulSkill.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Tile.h" />
@@ -221,6 +223,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LittleBone.cpp" />
+    <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="Skul.cpp" />
     <ClCompile Include="JumpAttackState.cpp" />
     <ClCompile Include="JumpFallState.cpp" />
@@ -242,6 +245,7 @@
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerTrackingScript.cpp" />
     <ClCompile Include="SkulHeadHUD.cpp" />
+    <ClCompile Include="SkullThrow.cpp" />
     <ClCompile Include="SkulSkill.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Tile.cpp" />

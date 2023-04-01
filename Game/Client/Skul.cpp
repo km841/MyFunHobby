@@ -7,8 +7,9 @@
 
 Skul::Skul(SKUL_GRADE eSkulGrade)
 	: GameObject(LAYER_TYPE::UNKNOWN)
-	, m_eSkulPos(SKUL_POS::FIRST)
+	, m_eSkulIndex(SKUL_INDEX::END)
 	, m_eSkulGrade(eSkulGrade)
+	, m_bSkillActiveFlag(false)
 {
 }
 
@@ -39,6 +40,12 @@ void Skul::PlayAnimation(PLAYER_STATE ePlayerState, bool bLoop, int32 iSection)
 	const wstring& szName = GetStateToName(ePlayerState);
 	assert(GetAnimator()->FindAnimation(szName));
 	GetAnimator()->Play(szName, bLoop, iSection);
+}
+
+void Skul::SetActiveSkill(SKILL_INDEX eSkillIndex)
+{
+	assert(m_arrSkills[static_cast<uint8>(eSkillIndex)]);
+	m_pActiveSkill = m_arrSkills[static_cast<uint8>(eSkillIndex)];
 }
 
 shared_ptr<Animation> Skul::GetActiveAnimation()

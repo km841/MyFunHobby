@@ -13,5 +13,8 @@ public:
 	virtual void Update() override;
 	virtual void LateUpdate() override;
 	virtual void FinalUpdate() override;
+
+public:
+	bool m_bHasHead;
 };
 

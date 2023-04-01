@@ -4,7 +4,7 @@ class SkulSkill :
     public GameObject
 {
 public:
-	explicit SkulSkill(float fCooldown);
+	explicit SkulSkill(float fCooldown, float fDuration);
 	virtual ~SkulSkill() = default;
 
 public:
@@ -15,11 +15,16 @@ public:
 	virtual void FinalUpdate() override { }
 
 public:
-	FORCEINLINE SKUL_SKILL_POS GetSkillPos() { return m_eSkillPos; }
-	FORCEINLINE void SetSkillPos(SKUL_SKILL_POS eSkillPos) { m_eSkillPos = eSkillPos; }
+	FORCEINLINE SKILL_INDEX GetSkillIndex()						   { return m_eSkillIndex;        }
+	FORCEINLINE void		SetSkillIndex(SKILL_INDEX eSkillIndex) { m_eSkillIndex = eSkillIndex; }
+
+public:
+	bool  IsActive()			{ return m_tCooldown.IsFinished();  }
+	float GetCooldownProgress() { return m_tCooldown.GetProgress(); }
 
 protected:
-	SKUL_SKILL_POS m_eSkillPos;
-	Timer m_tCooldown;
+	SKILL_INDEX    m_eSkillIndex;
+	Timer		   m_tCooldown;
+	Timer		   m_tDuration;
 };
 

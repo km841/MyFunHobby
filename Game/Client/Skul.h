@@ -19,26 +19,34 @@ public:
 	virtual void FinalUpdate() override { }
 
 public:
-	FORCEINLINE SKUL_POS   GetSkulPos()					   { return m_eSkulPos; }
-	FORCEINLINE void	   SetSkulPos(SKUL_POS eSkulPos)   { m_eSkulPos = eSkulPos; }
-	FORCEINLINE SKUL_GRADE GetSkulGrade()				   { return m_eSkulGrade; }
-	void SetPlayer(shared_ptr<Player> pPlayer);
+	FORCEINLINE SKUL_INDEX			GetSkulIndex()				           { return m_eSkulIndex;     }
+	FORCEINLINE void				SetSkulIndex(SKUL_INDEX eSkulIndex)    { m_eSkulIndex = eSkulIndex; }
+	FORCEINLINE SKUL_GRADE			GetSkulGrade()						   { return m_eSkulGrade;   }
+	FORCEINLINE bool				IsSkillActiveFlag()					   { return m_bSkillActiveFlag; }
+	FORCEINLINE void				DisableSkillActiveFlag()			   { m_bSkillActiveFlag = false; }
+	FORCEINLINE void				EnableSkillActiveFlag()				   { m_bSkillActiveFlag = true; }
+	FORCEINLINE weak_ptr<SkulSkill> GetActiveSkill()					   { return m_pActiveSkill; }
+	FORCEINLINE weak_ptr<SkulSkill> GetSkill(SKILL_INDEX eSkillIndex)	   { return m_arrSkills[static_cast<uint8>(eSkillIndex)]; }
 	shared_ptr<Animation> GetActiveAnimation();
+	void SetPlayer(shared_ptr<Player> pPlayer);
+	void SetActiveSkill(SKILL_INDEX eSkillIndex);
 
 public:
 	// Helper Functions
 	void AddAnimation(PLAYER_STATE ePlayerState, const wstring& szName, shared_ptr<Animation> pAnimation);
 	void PlayAnimation(PLAYER_STATE ePlayerState, bool bLoop = true, int32 iSection = 0);
 	
-
 private:
 	const wstring& GetStateToName(PLAYER_STATE ePlayerState);
 
 protected:
+	bool											   m_bSkillActiveFlag;
 	weak_ptr<Player>								   m_pPlayer;
 	SKUL_GRADE										   m_eSkulGrade;
-	SKUL_POS										   m_eSkulPos;
+	SKUL_INDEX										   m_eSkulIndex;
+
+	weak_ptr<SkulSkill>								   m_pActiveSkill;
 	std::map<PLAYER_STATE, wstring>					   m_mStateToNameMap;
-	std::array<shared_ptr<SkulSkill>, SKUL_MAX_SKILLS> m_arrSkills;
+	std::array<shared_ptr<SkulSkill>, MAX_SKILLS>	   m_arrSkills;
 };
 

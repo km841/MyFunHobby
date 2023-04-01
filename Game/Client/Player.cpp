@@ -25,8 +25,9 @@ Player::~Player()
 void Player::Awake()
 {
 	GameObject::Awake();
-	m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
 	m_pActiveSkul->Awake();
+
+	m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
 	m_pStateMachine->Awake();
 }
 
@@ -65,23 +66,23 @@ shared_ptr<Skul> Player::ObtainSkul(shared_ptr<Skul> pSkul)
 {
 	if (!m_pActiveSkul)
 	{
-		m_arrSkuls[static_cast<uint8>(SKUL_POS::FIRST)] = pSkul;
+		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::FIRST)] = pSkul;
 		m_pActiveSkul = pSkul;
-		m_pActiveSkul->SetSkulPos(SKUL_POS::FIRST);
+		m_pActiveSkul->SetSkulIndex(SKUL_INDEX::FIRST);
 		m_pActiveSkul->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
 	}
 
-	else if (!m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)])
+	else if (!m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)])
 	{
-		m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)] = pSkul;
-		pSkul->SetSkulPos(SKUL_POS::SECOND);
+		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)] = pSkul;
+		pSkul->SetSkulIndex(SKUL_INDEX::SECOND);
 		pSkul->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
 	}
 
 	else
 	{
 		shared_ptr<Skul> pDropSkul = m_pActiveSkul;
-		pSkul->SetSkulPos(pDropSkul->GetSkulPos());
+		pSkul->SetSkulIndex(pDropSkul->GetSkulIndex());
 		m_pActiveSkul = pSkul;
 		return pDropSkul;
 	}
@@ -91,17 +92,17 @@ shared_ptr<Skul> Player::ObtainSkul(shared_ptr<Skul> pSkul)
 
 void Player::SwapSkul()
 {
-	if (!m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)])
+	if (!m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)])
 		return;
 
-	SKUL_POS eSkulPos = m_pActiveSkul->GetSkulPos();
+	SKUL_INDEX eSkulPos = m_pActiveSkul->GetSkulIndex();
 	switch (eSkulPos)
 	{
-	case SKUL_POS::FIRST:
-		m_pActiveSkul = m_arrSkuls[static_cast<uint8>(SKUL_POS::SECOND)];
+	case SKUL_INDEX::FIRST:
+		m_pActiveSkul = m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)];
 		break;
-	case SKUL_POS::SECOND:
-		m_pActiveSkul = m_arrSkuls[static_cast<uint8>(SKUL_POS::FIRST)];
+	case SKUL_INDEX::SECOND:
+		m_pActiveSkul = m_arrSkuls[static_cast<uint8>(SKUL_INDEX::FIRST)];
 		break;
 	}
 }

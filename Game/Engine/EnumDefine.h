@@ -91,11 +91,11 @@ enum
 enum class LAYER_TYPE : uint8
 {
 	UNKNOWN = 0,
-	PLAYER,
 	MONSTER,
 	NPC,
 	TILE,
-	SCENE_OBJECT_END = 27,
+	SCENE_OBJECT_END = 26,
+	PLAYER = 27,
 	AFTER_IMAGE = 28,
 	HUD = 29,
 	UI = 30,
@@ -156,6 +156,7 @@ enum class PLAYER_STATE : uint8
 	ATTACK_A,
 	ATTACK_B,
 	DASH,
+	SKILL,
 
 	END,
 };
@@ -195,14 +196,14 @@ enum class SKUL_GRADE
 	REGENDARY,
 };
 
-enum class SKUL_POS
+enum class SKUL_INDEX
 {
 	FIRST,
 	SECOND,
 	END,
 };
 
-enum class SKUL_SKILL_POS
+enum class SKILL_INDEX
 {
 	FIRST,
 	SECOND,
@@ -211,6 +212,6 @@ enum class SKUL_SKILL_POS
 
 enum
 {
-	PLAYER_MAX_SKULS = SKUL_POS::END,
-	SKUL_MAX_SKILLS = SKUL_SKILL_POS::END,
+	MAX_SKULS = SKUL_INDEX::END,
+	MAX_SKILLS = SKILL_INDEX::END,
 };

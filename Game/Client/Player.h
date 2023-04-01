@@ -27,7 +27,6 @@ public:
 	FORCEINLINE shared_ptr<Skul> GetActiveSkul()							   { return m_pActiveSkul; }
 
 	void			 ChangePlayerState(PLAYER_STATE ePlayerState);
-
 	shared_ptr<Skul> ObtainSkul(shared_ptr<Skul> pSkul);
 	void			 SwapSkul();
 
@@ -38,9 +37,9 @@ public:
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject) override;
 
 private:
-	std::array<shared_ptr<Skul>, PLAYER_MAX_SKULS> m_arrSkuls;
-	shared_ptr<Skul>			   m_pActiveSkul;
-	shared_ptr<StateMachine>	   m_pStateMachine;
-	PLAYER_STATE				   m_ePlayerState;
+	std::array<shared_ptr<Skul>, MAX_SKULS> m_arrSkuls;
+	shared_ptr<Skul>						m_pActiveSkul;
+	shared_ptr<StateMachine>				m_pStateMachine;
+	PLAYER_STATE							m_ePlayerState;
 };
 

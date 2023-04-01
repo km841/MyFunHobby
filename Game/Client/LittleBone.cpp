@@ -3,6 +3,7 @@
 
 LittleBone::LittleBone()
 	: Skul(SKUL_GRADE::NORMAL)
+	, m_bHasHead(true)
 {
 }
 
