@@ -29,6 +29,9 @@
     <ContentFile>
       <FullPath>C:\MyProject\Game\Output\preview.cso</FullPath>
     </ContentFile>
+    <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\skillbox.cso</FullPath>
+    </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />

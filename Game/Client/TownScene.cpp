@@ -11,6 +11,7 @@
 #include "HealthBarHUD.h"
 #include "SkulHeadHUD.h"
 #include "DialogueUI.h"
+#include "SkillBoxHUD.h"
 
 /* Script */
 #include "PlayerHealthBarShowScript.h"
@@ -18,6 +19,7 @@
 #include "PlayerTrackingScript.h"
 #include "CameraMoveScript.h"
 #include "PlayerMoveScript.h"
+#include "PlayerFirstSkillShowScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -152,7 +154,7 @@ void TownScene::Enter()
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBoneHeadHUD", L"..\\Resources\\Texture\\HUD\\HUD_Skul_Head.tga");
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBoneHeadHUD", L"..\\Resources\\Texture\\HUD\\LittleBone\\HUD_Skul_Head.tga");
 		pMaterial->SetTexture(0, pTexture);
 
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -197,6 +199,31 @@ void TownScene::Enter()
 		pHealthBarHUD->GetTransform()->SetLocalScale(Vec3(115.f, 8.f, 1.f));
 
 		AddGameObject(pHealthBarHUD);
+	}
+
+	// Skill Box HUD
+	{
+		shared_ptr<SkillBoxHUD> pSkillBoxHUD = make_shared<SkillBoxHUD>();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"SkillBox")->Clone();
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pSkillBoxHUD->AddComponent(pMeshRenderer);
+		pSkillBoxHUD->AddComponent(make_shared<PlayerFirstSkillShowScript>(pPlayer));
+		pSkillBoxHUD->AddComponent(make_shared<Transform>());
+		pSkillBoxHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pSkillBoxHUD->GetTransform()->SetLocalPosition(Vec3(-63.f, 11.5f, -10.f));
+		pSkillBoxHUD->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
+
+		AddGameObject(pSkillBoxHUD);
 	}
 
 	// Ground

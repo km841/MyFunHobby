@@ -2,6 +2,7 @@
 class GameObject;
 class Animation;
 class Skul;
+class Texture;
 class SkulSkill
 {
 public:
@@ -24,6 +25,8 @@ public:
 	FORCEINLINE void				  SetAnimation(shared_ptr<Animation> pAnimation)    { m_pAnimation = pAnimation; }
 	FORCEINLINE void				  SetSkul(shared_ptr<Skul> pSkul)					{ m_pSkul = pSkul; }
 	FORCEINLINE weak_ptr<Skul>		  GetSkul()										    { return m_pSkul.lock(); }
+	FORCEINLINE weak_ptr<Texture>	  GetTexture()										{ return m_pTexture; }
+	FORCEINLINE void				  SetTexture(shared_ptr<Texture> pTexture)			{ m_pTexture = pTexture; }
 
 	void Activate()									   { m_tDuration.Start(); }
 	void DeActivate()								   { m_tCooldown.Start(); }
@@ -38,6 +41,7 @@ public:
 protected:
 	std::function<bool(weak_ptr<GameObject>)> m_fnCondition;
 	shared_ptr<Animation>					  m_pAnimation;
+	shared_ptr<Texture>						  m_pTexture;
 	wstring									  m_szAnimationName;
 	SKILL_INDEX								  m_eSkillIndex;
 	Timer									  m_tCooldown;

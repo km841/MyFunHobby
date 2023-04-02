@@ -11,25 +11,25 @@ HealthBarHUD::~HealthBarHUD()
 
 void HealthBarHUD::Awake()
 {
-	GameObject::Awake();
+	HUD::Awake();
 }
 
 void HealthBarHUD::Start()
 {
-	GameObject::Start();
+	HUD::Start();
 }
 
 void HealthBarHUD::Update()
 {
-	GameObject::Update();
+	HUD::Update();
 }
 
 void HealthBarHUD::LateUpdate()
 {
-	GameObject::LateUpdate();
+	HUD::LateUpdate();
 }
 
 void HealthBarHUD::FinalUpdate()
 {
-	GameObject::FinalUpdate();
+	HUD::FinalUpdate();
 }

@@ -266,6 +266,22 @@ void Resources::CreateDefaultShader()
 
 		Add<Shader>(L"AfterImage", pShader);
 	}
+
+	// SkillBox
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\skillbox.fx", shaderInfo);
+
+		Add<Shader>(L"SkillBox", pShader);
+	}
 }
 
 void Resources::CreateDefaultMaterial()
@@ -349,6 +365,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"AfterImage", pMaterial);
+	}
+
+	// SkillBox
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"SkillBox");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"SkillBox", pMaterial);
 	}
 
 }

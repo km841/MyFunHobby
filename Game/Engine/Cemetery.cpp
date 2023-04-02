@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "SkullThrowSkill.h"
 #include "ReturnHeadScript.h"
+#include "Texture.h"
 
 
 void Cemetery::Init()
@@ -89,10 +90,15 @@ void Cemetery::CreateSkul()
 		// Skull Throw Skill
 		{
 			shared_ptr<SkullThrowSkill> pThrowSkill = make_shared<SkullThrowSkill>();
+
 			wstring szAnimationName = L"LittleBone_Throw";
 			pThrowSkill->SetAnimationName(szAnimationName);
+
 			shared_ptr<Animation> pThrowAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_throw.anim");
 			pThrowSkill->SetAnimation(pThrowAnimation);
+
+			shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Throw", L"..\\Resources\\Texture\\HUD\\LittleBone\\HUD_SkullThrow.tga");
+			pThrowSkill->SetTexture(pTexture);
 
 			pLittleBone->ObtainSkill(pThrowSkill);
 		}

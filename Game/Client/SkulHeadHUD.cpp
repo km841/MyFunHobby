@@ -11,25 +11,25 @@ SkulHeadHUD::~SkulHeadHUD()
 
 void SkulHeadHUD::Awake()
 {
-	GameObject::Awake();
+	HUD::Awake();
 }
 
 void SkulHeadHUD::Start()
 {
-	GameObject::Start();
+	HUD::Start();
 }
 
 void SkulHeadHUD::Update()
 {
-	GameObject::Update();
+	HUD::Update();
 }
 
 void SkulHeadHUD::LateUpdate()
 {
-	GameObject::LateUpdate();
+	HUD::LateUpdate();
 }
 
 void SkulHeadHUD::FinalUpdate()
 {
-	GameObject::FinalUpdate();
+	HUD::FinalUpdate();
 }

@@ -178,7 +178,9 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LittleBone.h" />
+    <ClInclude Include="PlayerFirstSkillShowScript.h" />
     <ClInclude Include="ReturnHeadScript.h" />
+    <ClInclude Include="SkillBoxHUD.h" />
     <ClInclude Include="SkillState.h" />
     <ClInclude Include="Skul.h" />
     <ClInclude Include="JumpAttackState.h" />
@@ -224,7 +226,9 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LittleBone.cpp" />
+    <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
     <ClCompile Include="ReturnHeadScript.cpp" />
+    <ClCompile Include="SkillBoxHUD.cpp" />
     <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="Skul.cpp" />
     <ClCompile Include="JumpAttackState.cpp" />

@@ -5,7 +5,7 @@
 #include "LittleBone.h"
 
 SkullThrowSkill::SkullThrowSkill()
-	: SkulSkill(3.0f, 0.5f)
+	: SkulSkill(3.0f, 0.25f)
 {
 	CreateConditionFunction();
 }
