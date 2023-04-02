@@ -16,6 +16,7 @@ public:
 public:
     virtual void Enter() override;
     virtual void Exit()  override;
+    virtual void PlayAnimation() override;
 
 private:
     void EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage);

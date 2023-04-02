@@ -48,9 +48,14 @@ void JumpFallState::Update()
 
 void JumpFallState::Enter()
 {
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::JUMP_FALL, true, 2);
+	PlayAnimation();
 }
 
 void JumpFallState::Exit()
 {
+}
+
+void JumpFallState::PlayAnimation()
+{
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::JUMP_FALL, true, 2);
 }

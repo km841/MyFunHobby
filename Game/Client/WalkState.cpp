@@ -55,9 +55,15 @@ void WalkState::Update()
 void WalkState::Enter()
 {
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::WALK);
+	PlayAnimation();
+	
 }
 
 void WalkState::Exit()
 {
+}
+
+void WalkState::PlayAnimation()
+{
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::WALK);
 }

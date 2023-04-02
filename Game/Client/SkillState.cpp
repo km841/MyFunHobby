@@ -23,10 +23,9 @@ void SkillState::Update()
 
 void SkillState::Enter()
 {
+	PlayAnimation();
 	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
-	const wstring& szName = pActiveSkill.lock()->GetAnimationName();
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(szName, true, END_POINT);
-
+	pActiveSkill.lock()->Enter();
 	pActiveSkill.lock()->Activate();
 }
 
@@ -35,5 +34,13 @@ void SkillState::Exit()
 	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
 	m_pPlayer.lock()->GetActiveSkul()->DisableSkillActiveFlag();
 
+	pActiveSkill.lock()->Exit();
 	pActiveSkill.lock()->DeActivate();
+}
+
+void SkillState::PlayAnimation()
+{
+	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
+	const wstring& szName = pActiveSkill.lock()->GetAnimationName();
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(szName, true, END_POINT);
 }

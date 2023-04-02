@@ -212,7 +212,15 @@ enum class SKILL_INDEX
 
 enum
 {
+	MAX_ENUMS = 8,
 	MAX_SKULS = SKUL_INDEX::END,
 	MAX_SKILLS = SKILL_INDEX::END,
 	END_POINT = -1,
+
+};
+
+enum class LITTLE_BONE_STATE
+{
+	HAS_HEAD,
+	NO_HEAD,
 };

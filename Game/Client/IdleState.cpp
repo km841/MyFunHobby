@@ -53,11 +53,16 @@ void IdleState::Update()
 
 void IdleState::Enter()
 {
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::IDLE);
+	PlayAnimation();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 }
 
 void IdleState::Exit()
 {
+}
+
+void IdleState::PlayAnimation()
+{
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::IDLE);
 }

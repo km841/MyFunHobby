@@ -19,6 +19,7 @@ public:
 public:
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;
+	virtual void PlayAnimation() = 0;
 
 protected:
 	weak_ptr<Player> m_pPlayer;

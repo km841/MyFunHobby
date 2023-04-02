@@ -107,6 +107,11 @@ void Player::SwapSkul()
 	}
 }
 
+void Player::RefreshAnimation()
+{
+	m_pStateMachine->GetActiveState().lock()->PlayAnimation();
+}
+
 void Player::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
 }

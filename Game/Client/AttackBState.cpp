@@ -42,9 +42,14 @@ void AttackBState::Update()
 
 void AttackBState::Enter()
 {
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::ATTACK_B, false);
+	PlayAnimation();
 }
 
 void AttackBState::Exit()
 {
+}
+
+void AttackBState::PlayAnimation()
+{
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::ATTACK_B, false);
 }

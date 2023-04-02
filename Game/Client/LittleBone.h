@@ -15,9 +15,11 @@ public:
 	virtual void FinalUpdate() override;
 
 public:
-	FORCEINLINE bool HasHead() { return m_bHasHead; }
+	FORCEINLINE bool HasHead()  { return m_eLittleBoneState == LITTLE_BONE_STATE::HAS_HEAD; }
+	void LoseHead();
+	void GetHead();
 
-public:
-	bool m_bHasHead;
+private:
+	LITTLE_BONE_STATE m_eLittleBoneState;
 };
 

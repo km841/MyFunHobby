@@ -48,10 +48,15 @@ void JumpRiseState::Update()
 
 void JumpRiseState::Enter()
 {
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::JUMP_RISE);
+	PlayAnimation();
 	m_pPlayer.lock()->GetRigidBody()->ApplyGravity();
 }
 
 void JumpRiseState::Exit()
 {
+}
+
+void JumpRiseState::PlayAnimation()
+{
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::JUMP_RISE);
 }

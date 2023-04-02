@@ -36,9 +36,14 @@ void JumpAttackState::Update()
 
 void JumpAttackState::Enter()
 {
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::JUMP_ATTACK, false);
+	PlayAnimation();
 }
 
 void JumpAttackState::Exit()
 {
+}
+
+void JumpAttackState::PlayAnimation()
+{
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::JUMP_ATTACK, false);
 }

@@ -3,8 +3,9 @@
 
 LittleBone::LittleBone()
 	: Skul(SKUL_GRADE::NORMAL)
-	, m_bHasHead(true)
+	, m_eLittleBoneState(LITTLE_BONE_STATE::HAS_HEAD)
 {
+	SetEnumIndex(static_cast<uint8>(m_eLittleBoneState));
 }
 
 void LittleBone::Awake()
@@ -30,4 +31,16 @@ void LittleBone::LateUpdate()
 void LittleBone::FinalUpdate()
 {
 	Skul::FinalUpdate();
+}
+
+void LittleBone::LoseHead()
+{
+	m_eLittleBoneState = LITTLE_BONE_STATE::NO_HEAD;
+	SetEnumIndex(static_cast<uint8>(m_eLittleBoneState));
+}
+
+void LittleBone::GetHead()
+{
+	m_eLittleBoneState = LITTLE_BONE_STATE::HAS_HEAD;
+	SetEnumIndex(static_cast<uint8>(m_eLittleBoneState));
 }

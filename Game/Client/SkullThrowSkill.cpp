@@ -13,8 +13,6 @@ SkullThrowSkill::SkullThrowSkill()
 void SkullThrowSkill::Update()
 {
 	m_tDuration.Update(DELTA_TIME);
-
-	// Throw Head!
 }
 
 void SkullThrowSkill::CreateConditionFunction()
@@ -24,4 +22,15 @@ void SkullThrowSkill::CreateConditionFunction()
 		weak_ptr<LittleBone> pLittleBone = static_pointer_cast<LittleBone>(pGameObject.lock());
 		return pLittleBone.lock()->HasHead();
 	};
+}
+
+void SkullThrowSkill::Enter()
+{
+	// Throw Head!
+	static_pointer_cast<LittleBone>(m_pSkul.lock())->LoseHead();
+}
+
+void SkullThrowSkill::Exit()
+{
+	
 }

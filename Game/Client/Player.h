@@ -29,6 +29,7 @@ public:
 	void			 ChangePlayerState(PLAYER_STATE ePlayerState);
 	shared_ptr<Skul> ObtainSkul(shared_ptr<Skul> pSkul);
 	void			 SwapSkul();
+	void			 RefreshAnimation(); 
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;

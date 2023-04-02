@@ -57,7 +57,7 @@ void DashState::Enter()
 {
 	m_tDuration.Start();
 
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::DASH, false);
+	PlayAnimation();
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 
@@ -76,6 +76,11 @@ void DashState::Enter()
 void DashState::Exit()
 {
 	m_tDuration.Stop();
+}
+
+void DashState::PlayAnimation()
+{
+	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(PLAYER_STATE::DASH, false);
 }
 
 void DashState::EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage)
