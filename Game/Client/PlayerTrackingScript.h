@@ -6,7 +6,7 @@ class PlayerTrackingScript :
     public MonoBehaviour
 {
 public:
-    explicit PlayerTrackingScript(shared_ptr<Player> pPlayer);
+    explicit PlayerTrackingScript(shared_ptr<Player> pPlayer, float fDepth = 1.f);
     virtual ~PlayerTrackingScript();
 
 public:
@@ -14,5 +14,6 @@ public:
 
 private:
     weak_ptr<Player> m_pPlayer;
+    float m_fDepth;
 };
 

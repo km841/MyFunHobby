@@ -20,6 +20,7 @@
 #include "CameraMoveScript.h"
 #include "PlayerMoveScript.h"
 #include "PlayerFirstSkillShowScript.h"
+#include "BackgroundMoveScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -245,7 +246,7 @@ void TownScene::Enter()
 	}
 
 	// Compute Shader
-	{
+	//{
 		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
 		//shared_ptr<Texture> pTexture = make_shared<Texture>();
 		//pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
@@ -257,41 +258,6 @@ void TownScene::Enter()
 
 		//pMaterial->Dispatch(1, 1024, 1);
 		//GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
-	}
-
-	// Monster
-	//{
-	//	shared_ptr<Monster> pGameObject = make_shared<Monster>();
-
-	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	//	shared_ptr<Texture> pTexture = make_shared<Texture>();
-	//	pTexture->Load(L"..\\Resources\\Texture\\Image_NPC.tga");
-
-	//	//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"ComputeTexture");
-	//	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
-
-	//	shared_ptr<Material> pMaterial = make_shared<Material>();
-	//	pMaterial->SetShader(pShader);
-	//	pMaterial->SetTexture(0, pTexture);
-
-	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	//	pMeshRenderer->SetMaterial(pMaterial);
-	//	pMeshRenderer->SetMesh(pMesh);
-
-	//	pGameObject->AddComponent(pMeshRenderer);
-	//	pGameObject->AddComponent(make_shared<Transform>());
-	//	pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(110.f, 110.f, 1.f)));
-	//	pGameObject->AddComponent(make_shared<RigidBody>());
-	//	pGameObject->AddComponent(make_shared<Collider>());
-	//	pGameObject->AddComponent(make_shared<DebugRenderer>());
-
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 250.f, fHeight / 2.f, 100.f));
-	//	pGameObject->GetTransform()->SetLocalScale(pTexture->GetTexSize());
-
-	//	AddGameObject(pGameObject);
 	//}
 
 	//Background
@@ -299,7 +265,32 @@ void TownScene::Enter()
 		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town.tga");
+		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Back.tga");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		pMaterial->SetTexture(0, pTexture);
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+		pGameObject->AddComponent(pMeshRenderer);
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->AddComponent(make_shared<RigidBody>());
+		pGameObject->AddComponent(make_shared<Movement>());
+		pGameObject->AddComponent(make_shared<BackgroundMoveScript>(pPlayer));
+		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(1.f, 1.f, 1.f)));
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f + 100.f, 140.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 350.f, 1.f));
+
+		AddGameObject(pGameObject);
+	}
+
+	//Background_Bridge
+	{
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Bridge.tga");
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -309,8 +300,31 @@ void TownScene::Enter()
 		pGameObject->AddComponent(make_shared<Transform>());
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f, 140.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 450.f, 1.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 65.f, 130.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 400.f, 1.f));
+
+		AddGameObject(pGameObject);
+	}
+
+	//Background_Surrounding
+	{
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Surrounding.tga");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		pMaterial->SetTexture(0, pTexture);
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+		pGameObject->AddComponent(pMeshRenderer);
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->AddComponent(make_shared<PlayerTrackingScript>(pPlayer, 90.f));
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 20.f, 90.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(680.f, 400.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}

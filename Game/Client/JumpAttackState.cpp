@@ -27,6 +27,12 @@ void JumpAttackState::Update()
 		return;
 	}
 
+	if (m_pPlayer.lock()->GetActiveSkul()->IsSkillActiveFlag())
+	{
+		AddChangeStateEvent(PLAYER_STATE::SKILL);
+		return;
+	}
+
 	if (IS_PRESS(KEY_TYPE::Z))
 	{
 		AddChangeStateEvent(PLAYER_STATE::DASH);

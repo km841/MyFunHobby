@@ -33,6 +33,12 @@ void JumpRiseState::Update()
 		return;
 	}
 
+	if (m_pPlayer.lock()->GetActiveSkul()->IsSkillActiveFlag())
+	{
+		AddChangeStateEvent(PLAYER_STATE::SKILL);
+		return;
+	}
+
 	if (CheckGrounded())
 	{
 		AddChangeStateEvent(PLAYER_STATE::IDLE);
