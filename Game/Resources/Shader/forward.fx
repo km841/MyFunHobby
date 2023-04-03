@@ -43,6 +43,7 @@ VS_OUT VS_Main(VS_IN _in)
 // g_vec2_3 : Offset
 // g_int_0  : Animation Flag
 // g_int_1  : Direction
+// g_int_2  : Current Frame
 // g_float_0: Ratio
 
 float4 PS_Main(VS_OUT _in) : SV_Target

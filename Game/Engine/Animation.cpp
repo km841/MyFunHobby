@@ -98,6 +98,7 @@ void Animation::PushData()
 
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(1, static_cast<uint8>(eDirection));
+	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetInt(2, m_iCurFrame);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(0, vLTPos);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(1, vSize);
 	m_pAnimator.lock()->GetMeshRenderer()->GetMaterial()->SetVec2(2, vAtlasSize);

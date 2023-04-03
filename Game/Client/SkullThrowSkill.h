@@ -14,6 +14,6 @@ public:
 	virtual void Exit() override;
 
 private:
-
+	float m_fThrowSpeed;
 };
 

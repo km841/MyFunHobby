@@ -23,7 +23,7 @@ void Physics::Init()
 
 	m_pDispatcher->CreateCpuDispatcher();
 	PxSceneDesc sceneDesc(m_pEnvironment->GetPhysics()->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -9.81f * 10.f, 0.0f);
 	sceneDesc.cpuDispatcher = m_pDispatcher->GetCpuDispatcher();
 	sceneDesc.filterShader = PlayerFilterShader;
 	sceneDesc.simulationEventCallback = m_pDispatcher->GetSimulationCallback();

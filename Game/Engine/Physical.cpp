@@ -180,7 +180,7 @@ void Physical::InitializeActor()
 			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z  | 
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | 
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
-		pActor->setAngularDamping(PX_MAX_F32);
+		//pActor->setAngularDamping(PX_MAX_F32);
 	}
 		break;
 

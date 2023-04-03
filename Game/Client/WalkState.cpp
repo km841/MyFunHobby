@@ -56,7 +56,6 @@ void WalkState::Enter()
 {
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 	PlayAnimation();
-	
 }
 
 void WalkState::Exit()

@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "AfterImage.h"
 
-POOL_INIT(AfterImage);
 AfterImage::AfterImage()
 	: GameObject(LAYER_TYPE::AFTER_IMAGE)
 {

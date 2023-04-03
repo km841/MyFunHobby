@@ -12,6 +12,7 @@ public:
     virtual void FinalUpdate() override;
 
 public:
+    FORCEINLINE bool        IsAccelerating() const             { return fabs(m_vVelocity.Length()) > 0.f; }
     FORCEINLINE bool        IsGravityApplied() const           { return m_bGravityApplied;   }
     FORCEINLINE const Vec3& GetGravityAccel()  const           { return m_vGravityAccel;     }
     FORCEINLINE const Vec3& GetVelocity() const                { return m_vVelocity;         }

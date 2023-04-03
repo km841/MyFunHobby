@@ -34,10 +34,15 @@ VS_OUT VS_Main(VS_IN _in)
 // g_float_0 : Skill Cooldown Progress
 // g_int_0   : IsActive (bool)
 
+
 float4 PS_Main(VS_OUT _in) : SV_Target
 {
     float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-    bool bIsActive = g_int_0;
+    
+    if (vColor.a < 0.1f)
+        discard;
+    
+    bool bIsActive = g_int_3;
     float fCooldownProgress = g_float_0;
     float fPI = 3.1415926535f;
     
@@ -54,13 +59,13 @@ float4 PS_Main(VS_OUT _in) : SV_Target
             fRadian = (2.f * fPI) - fRadian;
         
         float fCooltimeToRadian = fCooldownProgress * (fPI * 2.f);
+        float fGrayScale = (vColor.r + vColor.g + vColor.b) / 3.f;
+        vColor.xyz = float3(fGrayScale, fGrayScale, fGrayScale);
+        
         if (fCooltimeToRadian < fRadian)
             vColor.xyz /= 5.f;
     }
-    
-    if (vColor.a < 0.1f)
-        discard;
-       
+ 
     return vColor;
 }
 #endif

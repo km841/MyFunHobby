@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SkillState.h"
 #include "SkulSkill.h"
+#include "Animation.h"
 
 SkillState::SkillState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -25,6 +26,7 @@ void SkillState::Enter()
 {
 	PlayAnimation();
 	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
+
 	pActiveSkill.lock()->Enter();
 	pActiveSkill.lock()->Activate();
 }

@@ -19,8 +19,5 @@ public:
 
 private:
     FrameData m_FrameData;
-
-private:
-    DECLARE_POOL(AfterImage);
 };
 

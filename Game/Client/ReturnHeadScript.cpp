@@ -3,10 +3,11 @@
 #include "LittleBone.h"
 #include "Clock.h"
 #include "Player.h"
+#include "PlayerProjectile.h"
 
 ReturnHeadScript::ReturnHeadScript(weak_ptr<LittleBone> pLittleBone)
 	: m_pLittleBone(pLittleBone)
-	, m_tDuration(3.f)
+	, m_tDuration(6.f)
 {
 	m_tDuration.Disable();
 }
@@ -33,8 +34,9 @@ void ReturnHeadScript::LateUpdate()
 
 	else if (!bUnusedFlag && m_tDuration.IsFinished())
 	{
-		m_pLittleBone.lock()->GetHead();
+		m_pLittleBone.lock()->PickUpHead();
 		m_pLittleBone.lock()->RefreshAnimation();
+		m_pLittleBone.lock()->GetHeadProjectile().lock()->Disable();
 
 		m_tDuration.Disable();
 	}

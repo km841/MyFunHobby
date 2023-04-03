@@ -30,12 +30,12 @@ void Transform::FinalUpdate()
 		switch (eActorType)
 		{
 			case ACTOR_TYPE::STATIC:
-				m_PxTransform = GetPhysical()->GetActor()->is<PxRigidStatic>()->getGlobalPose();
+				m_PxTransform = GetPhysical()->GetActor<PxRigidStatic>()->getGlobalPose();
 				break;
 
 			case ACTOR_TYPE::KINEMATIC:
 			case ACTOR_TYPE::DYNAMIC:
-				m_PxTransform = GetPhysical()->GetActor()->is<PxRigidDynamic>()->getGlobalPose();
+				m_PxTransform = GetPhysical()->GetActor<PxRigidDynamic>()->getGlobalPose();
 				break;
 
 			case ACTOR_TYPE::CHARACTER:
@@ -49,7 +49,7 @@ void Transform::FinalUpdate()
 		m_vPxLocalTranslation = m_PxTransform.p;
 
 		Matrix matPxScale = Matrix::CreateScale(Conv::PxVec3ToVec3(m_vPxLocalScale));
-		Matrix matPxRotation = Matrix::CreateRotationZ(m_PxTransform.q.z);
+		Matrix matPxRotation = Matrix::CreateRotationZ(m_PxTransform.q.z + m_vLocalRotation.z);
 		Matrix matPxTranslation = Matrix::CreateTranslation(Conv::PxVec3ToVec3(m_vPxLocalTranslation));
 
 		m_matPxWorld = matPxScale * matPxRotation * matPxTranslation;

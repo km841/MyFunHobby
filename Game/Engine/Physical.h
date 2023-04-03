@@ -17,12 +17,19 @@ public:
 
 public:
     FORCEINLINE PxController*          GetController()   const { return m_pController; }
-    FORCEINLINE PxActor*               GetActor()        const { return m_pActor; }
     FORCEINLINE ACTOR_TYPE             GetActorType()    const { return m_eActorType; }
     FORCEINLINE GEOMETRY_TYPE          GetGeometryType() const { return m_eGeometryType; }
     FORCEINLINE PxShape*               GetShape()        const { return m_pShape; }
     FORCEINLINE const Vec3&            GetGeometrySize() const { return m_vSize; }
     FORCEINLINE shared_ptr<Geometries> GetGeometries()   const { return m_pGeometries; }
+
+    template<typename T>
+    T* GetActor() const 
+    { 
+        T* pActor = m_pActor->is<T>();
+        assert(pActor);
+        return pActor;
+    }
 
 private:
     void          CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize);
@@ -43,8 +50,7 @@ private:
     ACTOR_TYPE                    m_eActorType;
     GEOMETRY_TYPE                 m_eGeometryType;
                                                             
-    Vec3                          m_vSize;
-                                  
+    Vec3                          m_vSize;          
     PxActor*                      m_pActor;
     PxShape*                      m_pShape;
     PxController*                 m_pController;

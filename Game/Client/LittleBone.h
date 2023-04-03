@@ -1,5 +1,6 @@
 #pragma once
 #include "Skul.h"
+class PlayerProjectile;
 class LittleBone :
     public Skul
 {
@@ -16,10 +17,16 @@ public:
 
 public:
 	FORCEINLINE bool HasHead()  { return m_eLittleBoneState == LITTLE_BONE_STATE::HAS_HEAD; }
+	FORCEINLINE weak_ptr<PlayerProjectile> GetHeadProjectile() { return m_pHead; }
 	void LoseHead();
-	void GetHead();
+	void PickUpHead();
+
+
+private:
+	void CreateHeadAndAddedToScene();
 
 private:
 	LITTLE_BONE_STATE m_eLittleBoneState;
+	shared_ptr<PlayerProjectile> m_pHead;
 };
 

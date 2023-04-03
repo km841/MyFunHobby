@@ -68,7 +68,6 @@ void Camera::Render()
                     if (pActiveSkul.lock())
                     {
                         pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
-                        continue;
                     }
                 }
 

@@ -13,5 +13,8 @@ public:
 
 private:
     weak_ptr<Player> m_pPlayer;
+    bool m_bPrevFlag;
+    bool m_bFlag;
+    bool m_bAnimationFlag;
 };
 
