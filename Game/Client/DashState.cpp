@@ -18,6 +18,7 @@
 #include "Resources.h"
 #include "AfterImageDrawScript.h"
 #include "Scene.h"
+#include "GlobalEffect.h"
 
 DashState::DashState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -71,6 +72,8 @@ void DashState::Enter()
 		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, -m_fDashSpeed);
 		break;
 	}
+
+	EnablePlayerDashEffect();
 }
 
 void DashState::Exit()
@@ -119,4 +122,21 @@ void DashState::CreateAndAddAfterImagesToScene()
 		pAfterImage->Disable();
 		pActiveScene->AddGameObject(pAfterImage);
 	}
+}
+
+void DashState::EnablePlayerDashEffect()
+{
+	float fDistance = 70.f;
+	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
+
+	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
+	const Vec3 vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
+
+	vPlayerPos.x += iDirection ? fDistance : -fDistance;
+	vPlayerPos.y -= vPlayerScale.y / 2.f;
+
+	m_pPlayer.lock()->GetDashEffect()->Enable();
+	m_pPlayer.lock()->GetDashEffect()->GetTransform()->SetLocalPosition(vPlayerPos);
+	m_pPlayer.lock()->GetDashEffect()->SetDirection(m_pPlayer.lock()->GetDirection());
+	m_pPlayer.lock()->GetDashEffect()->GetAnimator()->Play(L"DashSmoke_Small", false);
 }

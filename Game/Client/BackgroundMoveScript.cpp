@@ -23,7 +23,7 @@ void BackgroundMoveScript::LateUpdate()
 			PLAYER_STATE::SKILL != m_pPlayer.lock()->GetPlayerStateEnum())
 		{
 			float fVelocity = m_pPlayer.lock()->GetRigidBody()->GetVelocity(AXIS::X);
-			GetRigidBody()->SetVelocity(AXIS::X, fVelocity / 10.f);
+			GetRigidBody()->SetVelocity(AXIS::X, fVelocity / 5.f);
 		}
 
 		else

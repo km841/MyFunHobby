@@ -35,11 +35,11 @@ Animation::~Animation()
 
 void Animation::Update()
 {
-	ImVec2 vSize = m_vFrameDataList[m_iCurFrame].vSize;
-	m_pAnimator.lock()->GetTransform()->SetLocalScale(Vec3(vSize.x, vSize.y, 1.f));
-
 	if (m_bFinished)
 		return;
+
+	ImVec2 vSize = m_vFrameDataList[m_iCurFrame].vSize;
+	m_pAnimator.lock()->GetTransform()->SetLocalScale(Vec3(vSize.x, vSize.y, 1.f));
 
 	PushData();
 

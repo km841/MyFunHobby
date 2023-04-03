@@ -4,7 +4,7 @@
 class PlayerState;
 class StateMachine;
 class Skul;
-
+class GlobalEffect;
 class Player :
 	  public GameObject
 {
@@ -22,9 +22,10 @@ public:
 	void FinalUpdate();
 
 public:
-	FORCEINLINE PLAYER_STATE	 GetPlayerStateEnum()					       { return m_ePlayerState; }
-	FORCEINLINE void			 SetPlayerStateEnum(PLAYER_STATE ePlayerState) { m_ePlayerState = ePlayerState; }
-	FORCEINLINE shared_ptr<Skul> GetActiveSkul()							   { return m_pActiveSkul; }
+	FORCEINLINE PLAYER_STATE			 GetPlayerStateEnum()					       { return m_ePlayerState; }
+	FORCEINLINE void					 SetPlayerStateEnum(PLAYER_STATE ePlayerState) { m_ePlayerState = ePlayerState; }
+	FORCEINLINE shared_ptr<Skul>		 GetActiveSkul()							   { return m_pActiveSkul; }
+	FORCEINLINE shared_ptr<GlobalEffect> GetDashEffect()							   { return m_pDashEffect; }
 
 	void			 ChangePlayerState(PLAYER_STATE ePlayerState);
 	shared_ptr<Skul> ObtainSkul(shared_ptr<Skul> pSkul);
@@ -38,8 +39,12 @@ public:
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject) override;
 
 private:
+	void CreateDashSmokeAndAddedToScene();
+
+private:
 	std::array<shared_ptr<Skul>, MAX_SKULS> m_arrSkuls;
 	shared_ptr<Skul>						m_pActiveSkul;
+	shared_ptr<GlobalEffect>				m_pDashEffect;
 	shared_ptr<StateMachine>				m_pStateMachine;
 	PLAYER_STATE							m_ePlayerState;
 };

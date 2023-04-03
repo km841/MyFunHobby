@@ -21,6 +21,7 @@ public:
 private:
     void EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage);
     void CreateAndAddAfterImagesToScene();
+    void EnablePlayerDashEffect();
 
 private:
     Timer m_tDuration;

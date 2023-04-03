@@ -9,6 +9,17 @@
 #include "PlayerInterfaceHUD.h"
 #include "Skul.h"
 #include "Cemetery.h"
+#include "EventManager.h"
+#include "ObjectAddedToSceneEvent.h"
+#include "GlobalEffect.h"
+#include "Scene.h"
+#include "Scenes.h"
+#include "Material.h"
+#include "Mesh.h"
+#include "MeshRenderer.h"
+#include "Resources.h"
+#include "Animator.h"
+#include "Animation.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -27,6 +38,7 @@ void Player::Awake()
 	GameObject::Awake();
 	m_pActiveSkul->Awake();
 
+	CreateDashSmokeAndAddedToScene();
 	m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
 	m_pStateMachine->Awake();
 }
@@ -126,4 +138,28 @@ void Player::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 
 void Player::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
+}
+
+void Player::CreateDashSmokeAndAddedToScene()
+{
+	m_pDashEffect = make_shared<GlobalEffect>();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+
+	m_pDashEffect->AddComponent(make_shared<Transform>());
+	m_pDashEffect->AddComponent(make_shared<Animator>());
+
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DashSmoke_Small", L"..\\Resources\\Animation\\SkulCommon\\common_dashsmoke_small.anim");
+	m_pDashEffect->GetAnimator()->AddAnimation(L"DashSmoke_Small", pAnimation);
+	
+	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+
+	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	pMeshRenderer->SetMaterial(pMaterial);
+	pMeshRenderer->SetMesh(pMesh);
+	m_pDashEffect->AddComponent(pMeshRenderer);
+	
+	m_pDashEffect->Awake();
+	m_pDashEffect->Disable();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pDashEffect, eSceneType));
 }
