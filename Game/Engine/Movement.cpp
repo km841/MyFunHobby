@@ -5,6 +5,7 @@
 #include "Clock.h"
 #include "Physical.h"
 #include "Engine.h"
+#include "Player.h"
 
 Movement::Movement()
 	: Component(COMPONENT_TYPE::MOVEMENT)
@@ -25,13 +26,15 @@ void Movement::FinalUpdate()
 	if (Vec3::Zero == vVelocity)
 		return;
 
-	if (PLAYER_STATE::ATTACK_A == GetPlayerStateEnum() || 
-		PLAYER_STATE::ATTACK_B == GetPlayerStateEnum())
-		return;
+	if (LAYER_TYPE::PLAYER == GetGameObject()->GetLayerType())
+	{
+		if (PLAYER_STATE::ATTACK_A == GetPlayerStateEnum() ||
+			PLAYER_STATE::ATTACK_B == GetPlayerStateEnum())
+			return;
 
-	if (PLAYER_STATE::SKILL == GetPlayerStateEnum())
-		return;
-
+		if (PLAYER_STATE::SKILL == GetPlayerStateEnum())
+			return;
+	}
 	Move(vVelocity);
 }
 

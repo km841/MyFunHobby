@@ -180,6 +180,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LittleBone.h" />
+    <ClInclude Include="LittleBoneHead.h" />
     <ClInclude Include="PlayerFirstSkillShowScript.h" />
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="ReturnHeadScript.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LittleBone.cpp" />
+    <ClCompile Include="LittleBoneHead.cpp" />
     <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="ReturnHeadScript.cpp" />

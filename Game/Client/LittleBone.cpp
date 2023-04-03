@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "LittleBone.h"
-#include "PlayerProjectile.h"
+#include "LittleBoneHead.h"
 #include "Physical.h"
 #include "Transform.h"
 #include "RigidBody.h"
@@ -65,7 +65,7 @@ void LittleBone::PickUpHead()
 
 void LittleBone::CreateHeadAndAddedToScene()
 {
-	m_pHead = make_shared<PlayerProjectile>();
+	m_pHead = make_shared<LittleBoneHead>();
 	m_pHead->Disable();
 
 	m_pHead->AddComponent(make_shared<Transform>());
@@ -74,7 +74,7 @@ void LittleBone::CreateHeadAndAddedToScene()
 	m_pHead->AddComponent(make_shared<DebugRenderer>());
 	m_pHead->AddComponent(make_shared<RigidBody>());
 	m_pHead->AddComponent(make_shared<Movement>());
-	m_pHead->AddComponent(make_shared< RotateHeadScript>(m_pHead));
+	m_pHead->AddComponent(make_shared<RotateHeadScript>(m_pHead));
 
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Head", L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Head.tga");
