@@ -100,10 +100,11 @@ void TownScene::Enter()
 	//Load(L"..\\Resources\\Map\\DefaultMap.map");
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::PLAYER);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
+	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::NPC);
+	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::NPC, LAYER_TYPE::PLAYER);
+	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::PLAYER);
+	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
 
 	shared_ptr<Player> pPlayer = nullptr;
 	// Player
@@ -171,7 +172,7 @@ void TownScene::Enter()
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
+		
 		pSkulHeadHUD->GetTransform()->SetLocalPosition(Vec3(-145.f, 18.f, -10.f));
 		pSkulHeadHUD->GetTransform()->SetLocalScale(Vec3(45.f, 45.f, 0.f));
 
@@ -406,7 +407,7 @@ void TownScene::Enter()
 
 	// NPC_Wolf
 	{
-		shared_ptr<NPC_Witch> pWolf = make_shared<NPC_Witch>();
+		shared_ptr<NPC_Wolf> pWolf = make_shared<NPC_Wolf>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
@@ -416,7 +417,7 @@ void TownScene::Enter()
 
 		pWolf->AddComponent(pMeshRenderer);
 		pWolf->AddComponent(make_shared<Transform>());
-		pWolf->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(217.f, 144.f, 1.f)));
+		pWolf->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(217.f, 144.f, 1.f)));
 		pWolf->AddComponent(make_shared<RigidBody>());
 		pWolf->AddComponent(make_shared<Collider>());
 		pWolf->AddComponent(make_shared<DebugRenderer>());
@@ -429,7 +430,7 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pWolf->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 80.f, 110.f));
+		pWolf->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 80.f, 100.5f));
 
 		AddGameObject(pWolf);
 	}

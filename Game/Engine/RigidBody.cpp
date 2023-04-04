@@ -28,6 +28,12 @@ void RigidBody::Awake()
 
 void RigidBody::FinalUpdate()
 {
+	if (PLAYER_STATE::SKILL == GetPlayerStateEnum())
+	{
+		m_vVelocity.y = 0.f;
+		return;
+	}
+
 	if (m_bGravityApplied)
 		m_vVelocity += m_vGravityAccel;
 }

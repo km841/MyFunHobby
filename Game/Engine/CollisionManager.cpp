@@ -30,7 +30,7 @@ void CollisionManager::Update()
 
 void CollisionManager::SetCollisionFlag(int32 iFirst, int32 iSecond)
 {
-	auto&& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(static_cast<LAYER_TYPE>(iFirst));
+	auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(static_cast<LAYER_TYPE>(iFirst));
 	for (const auto& pGameObject : vGameObjects)
 	{
 		if (pGameObject->GetCollider())

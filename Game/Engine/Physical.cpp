@@ -193,7 +193,7 @@ void Physical::InitializeActor()
 
 	PxRigidActor* pActor = m_pActor->is<PxRigidActor>();
 	pActor->userData = GetGameObject().get();
-	//pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
 
 void Physical::CreateController()
