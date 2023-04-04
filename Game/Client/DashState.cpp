@@ -64,16 +64,8 @@ void DashState::Enter()
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 
-	DIRECTION ePlayerDir = m_pPlayer.lock()->GetDirection();
-	switch (ePlayerDir)
-	{
-	case DIRECTION::RIGHT:
-		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, m_fDashSpeed);
-		break;
-	case DIRECTION::LEFT:
-		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, -m_fDashSpeed);
-		break;
-	}
+	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
+	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, iDirection ? -m_fDashSpeed : m_fDashSpeed);
 
 	EnableAndInitDashSmokeEffect();
 }

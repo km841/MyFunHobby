@@ -56,6 +56,11 @@ void JumpFallState::Update()
 		AddChangeStateEvent(PLAYER_STATE::DASH);
 		return;
 	}
+
+	if (IS_DOWN(KEY_TYPE::C) && m_pPlayer.lock()->GetJumpCount())
+	{
+		EnableAndInitJumpSmokeEffect();
+	}
 }
 
 void JumpFallState::Enter()

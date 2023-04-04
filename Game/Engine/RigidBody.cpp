@@ -8,13 +8,14 @@
 #include "Physical.h"
 #include "Clock.h"
 #include "Engine.h"
+#include "GameObject.h"
 
 RigidBody::RigidBody(bool bGravityApplied)
 	: Component(COMPONENT_TYPE::RIGIDBODY)
 	, m_bGravityApplied(bGravityApplied)
 	, m_fMass(1.f)
 {
-	m_vGravityAccel = Vec3(0.f, -9.81f / 2.f, 0.f);
+	m_vGravityAccel = Vec3(0.f, -4500.f, 0.f);
 	m_vVelocity = Vec3::Zero;
 }
 
@@ -28,14 +29,17 @@ void RigidBody::Awake()
 
 void RigidBody::FinalUpdate()
 {
-	if (PLAYER_STATE::SKILL == GetPlayerStateEnum())
+	if (LAYER_TYPE::PLAYER == GetGameObject()->GetLayerType())
 	{
-		m_vVelocity.y = 0.f;
-		return;
+		if (PLAYER_STATE::SKILL == GetPlayerStateEnum())
+		{
+			m_vVelocity.y = 0.f;
+			return;
+		}
 	}
 
 	if (m_bGravityApplied)
-		m_vVelocity += m_vGravityAccel;
+		m_vVelocity += m_vGravityAccel * DELTA_TIME;
 }
 
 void RigidBody::Move()

@@ -19,7 +19,7 @@
 
 PlayerMoveScript::PlayerMoveScript()
 	: m_fSpeed(400.f)
-	, m_fJumpSpeed(1000.f)
+	, m_fJumpSpeed(1300.f)
 	, m_FilterShaders{}
 {
 }
@@ -82,12 +82,6 @@ void PlayerMoveScript::LateUpdate()
 			vVelocity = VEC3_UP_NORMAL * m_fJumpSpeed;
 			GetRigidBody()->SetVelocity(vVelocity);
 			pPlayer->DecreaseJumpCount();
-
-			if (PLAYER_STATE::JUMP_RISE == pPlayer->GetPlayerStateEnum() ||
-				PLAYER_STATE::JUMP_FALL == pPlayer->GetPlayerStateEnum())
-			{
-				pPlayer->GetPlayerState().lock()->EnableAndInitJumpSmokeEffect();
-			}
 		}
 
 		// Test Code

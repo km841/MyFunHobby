@@ -122,7 +122,7 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 5.f, 100.f));
+		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 100.f, 100.f));
 
 		AddGameObject(pPlayer);
 	}
@@ -212,6 +212,8 @@ void TownScene::Enter()
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"SkillBox")->Clone();
+		//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"SkillBoxLight", L"..\\Resources\\Texture\\HUD\\Image_SkillBox_Light1.tga");
+		//pMaterial->SetTexture(1, pTexture);
 
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);

@@ -39,7 +39,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
 {
     float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
     
-    if (vColor.a < 0.1f)
+    if (vColor.a == 0.0f)
         discard;
     
     bool bIsActive = g_int_3;
