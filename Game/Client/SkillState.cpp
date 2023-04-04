@@ -11,10 +11,11 @@ SkillState::SkillState(shared_ptr<Player> pPlayer)
 
 void SkillState::Update()
 {
+	// Path State ÀüÀÌ
 	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
 	if (pActiveSkill.lock()->IsFinished())
 	{
-		AddChangeStateEvent(PLAYER_STATE::IDLE);
+		AddChangeStateEvent(PLAYER_STATE::PATH);
 	}
 	else
 	{

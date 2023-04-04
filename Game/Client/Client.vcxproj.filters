@@ -247,6 +247,9 @@
     <ClInclude Include="LittleBoneHead.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone</Filter>
     </ClInclude>
+    <ClInclude Include="PathState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -411,6 +414,9 @@
     </ClCompile>
     <ClCompile Include="LittleBoneHead.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone</Filter>
+    </ClCompile>
+    <ClCompile Include="PathState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

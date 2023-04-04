@@ -38,9 +38,11 @@ void DashState::Awake()
 void DashState::Update()
 {
 	m_tDuration.Update(DELTA_TIME);
+
+	// Path State ÀüÀÌ
 	if (m_tDuration.IsFinished())
 	{
-		AddChangeStateEvent(PLAYER_STATE::IDLE);
+		AddChangeStateEvent(PLAYER_STATE::PATH);
 		return;
 	}
 
@@ -73,12 +75,13 @@ void DashState::Enter()
 		break;
 	}
 
-	EnablePlayerDashEffect();
+	EnableAndInitDashSmokeEffect();
 }
 
 void DashState::Exit()
 {
 	m_tDuration.Stop();
+	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 }
 
 void DashState::PlayAnimation()
@@ -124,7 +127,7 @@ void DashState::CreateAndAddAfterImagesToScene()
 	}
 }
 
-void DashState::EnablePlayerDashEffect()
+void DashState::EnableAndInitDashSmokeEffect()
 {
 	float fDistance = 70.f;
 	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
@@ -135,8 +138,8 @@ void DashState::EnablePlayerDashEffect()
 	vPlayerPos.x += iDirection ? fDistance : -fDistance;
 	vPlayerPos.y -= vPlayerScale.y / 2.f;
 
-	m_pPlayer.lock()->GetDashEffect()->Enable();
-	m_pPlayer.lock()->GetDashEffect()->GetTransform()->SetLocalPosition(vPlayerPos);
-	m_pPlayer.lock()->GetDashEffect()->SetDirection(m_pPlayer.lock()->GetDirection());
-	m_pPlayer.lock()->GetDashEffect()->GetAnimator()->Play(L"DashSmoke_Small", false);
+	m_pPlayer.lock()->GetDashSmokeEffect()->Enable();
+	m_pPlayer.lock()->GetDashSmokeEffect()->GetTransform()->SetLocalPosition(vPlayerPos);
+	m_pPlayer.lock()->GetDashSmokeEffect()->SetDirection(m_pPlayer.lock()->GetDirection());
+	m_pPlayer.lock()->GetDashSmokeEffect()->GetAnimator()->Play(L"DashSmoke_Small", false);
 }

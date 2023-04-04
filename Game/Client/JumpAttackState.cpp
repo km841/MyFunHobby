@@ -15,24 +15,28 @@ JumpAttackState::JumpAttackState(shared_ptr<Player> pPlayer)
 
 void JumpAttackState::Update()
 {
+	// Path State 전이
 	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->IsFinished())
 	{
-		AddChangeStateEvent(PLAYER_STATE::JUMP_RISE);
+		AddChangeStateEvent(PLAYER_STATE::PATH);
 		return;
 	}
 
+	// Idle State 전이
 	if (CheckGrounded())
 	{
 		AddChangeStateEvent(PLAYER_STATE::IDLE);
 		return;
 	}
 
+	// Skill State 전이
 	if (m_pPlayer.lock()->GetActiveSkul()->IsSkillActiveFlag())
 	{
 		AddChangeStateEvent(PLAYER_STATE::SKILL);
 		return;
 	}
 
+	// Dash State 전이
 	if (IS_PRESS(KEY_TYPE::Z))
 	{
 		AddChangeStateEvent(PLAYER_STATE::DASH);

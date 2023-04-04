@@ -20,30 +20,35 @@ IdleState::IdleState(shared_ptr<Player> pPlayer)
 
 void IdleState::Update()
 {
+	// Walk State 전이
 	if (IS_PRESS(KEY_TYPE::LEFT) || IS_PRESS(KEY_TYPE::RIGHT))
 	{
 		AddChangeStateEvent(PLAYER_STATE::WALK);
 		return;
 	}
 
+	// Jump Rise State 전이
 	if (!CheckGrounded())
 	{
 		AddChangeStateEvent(PLAYER_STATE::JUMP_RISE);
 		return;
 	}
 
+	// Skill State 전이
 	if (m_pPlayer.lock()->GetActiveSkul()->IsSkillActiveFlag())
 	{
 		AddChangeStateEvent(PLAYER_STATE::SKILL);
 		return;
 	}
 
+	// Attack A State 전이
 	if (IS_PRESS(KEY_TYPE::X))
 	{
 		AddChangeStateEvent(PLAYER_STATE::ATTACK_A);
 		return;
 	}
 
+	// Dash State 전이
 	if (IS_PRESS(KEY_TYPE::Z))
 	{
 		AddChangeStateEvent(PLAYER_STATE::DASH);
@@ -56,6 +61,8 @@ void IdleState::Enter()
 	PlayAnimation();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
+
+	m_pPlayer.lock()->RefreshJumpCount();
 }
 
 void IdleState::Exit()

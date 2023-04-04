@@ -14,11 +14,12 @@
 #include "Player.h"
 #include "Skul.h"
 #include "SkulSkill.h"
+#include "PlayerState.h"
 
 
 PlayerMoveScript::PlayerMoveScript()
 	: m_fSpeed(400.f)
-	, m_fJumpSpeed(1300.f)
+	, m_fJumpSpeed(1000.f)
 	, m_FilterShaders{}
 {
 }
@@ -76,9 +77,18 @@ void PlayerMoveScript::LateUpdate()
 
 	if (IS_DOWN(KEY_TYPE::C))
 	{
+		if (pPlayer->GetJumpCount() && PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum())
+		{
+			vVelocity = VEC3_UP_NORMAL * m_fJumpSpeed;
+			GetRigidBody()->SetVelocity(vVelocity);
+			pPlayer->DecreaseJumpCount();
 
-		vVelocity = VEC3_UP_NORMAL * m_fJumpSpeed;
-		GetRigidBody()->SetVelocity(vVelocity);
+			if (PLAYER_STATE::JUMP_RISE == pPlayer->GetPlayerStateEnum() ||
+				PLAYER_STATE::JUMP_FALL == pPlayer->GetPlayerStateEnum())
+			{
+				pPlayer->GetPlayerState().lock()->EnableAndInitJumpSmokeEffect();
+			}
+		}
 
 		// Test Code
 		//GetGameObject()->GetStatus()->TakeDamage(1);

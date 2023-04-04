@@ -21,31 +21,36 @@ AttackAState::AttackAState(shared_ptr<Player> pPlayer)
 
 void AttackAState::Update()
 {
+	// Path State 전이
 	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->IsFinished())
 	{
-		AddChangeStateEvent(PLAYER_STATE::IDLE);
+		AddChangeStateEvent(PLAYER_STATE::PATH);
 		return;
 	}
-	
-	float fRatio = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetAnimationProgress();
-	if (fRatio >= 0.75f && IS_PRESS(KEY_TYPE::X))
+
+	// Attack B State 전이
+	float fProgress = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetAnimationProgress();
+	if (fProgress >= 0.75f && IS_PRESS(KEY_TYPE::X))
 	{
 		AddChangeStateEvent(PLAYER_STATE::ATTACK_B);
 		return;
 	}
 	
+	// Jump Rise State 전이
 	if (!CheckGrounded())
 	{
 		AddChangeStateEvent(PLAYER_STATE::JUMP_RISE);
 		return;
 	}
 
+	// Skill State 전이
 	if (m_pPlayer.lock()->GetActiveSkul()->IsSkillActiveFlag())
 	{
 		AddChangeStateEvent(PLAYER_STATE::SKILL);
 		return;
 	}
 
+	// Dash State 전이
 	if (IS_PRESS(KEY_TYPE::Z))
 	{
 		AddChangeStateEvent(PLAYER_STATE::DASH);

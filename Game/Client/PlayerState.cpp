@@ -9,6 +9,8 @@
 #include "Engine.h"
 #include "EventManager.h"
 #include "PlayerChangeStateEvent.h"
+#include "GlobalEffect.h"
+#include "Animator.h"
 
 PlayerState::PlayerState(shared_ptr<Player> pPlayer)
 	: m_pPlayer(pPlayer)
@@ -43,3 +45,14 @@ void PlayerState::AddChangeStateEvent(PLAYER_STATE ePlayerState)
 	GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(m_pPlayer.lock(), ePlayerState));
 }
 
+void PlayerState::EnableAndInitJumpSmokeEffect()
+{
+	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
+	const Vec3 vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
+
+	vPlayerPos.y -= vPlayerScale.y / 2.f + 10.f;
+
+	m_pPlayer.lock()->GetJumpSmokeEffect()->Enable();
+	m_pPlayer.lock()->GetJumpSmokeEffect()->GetTransform()->SetLocalPosition(vPlayerPos);
+	m_pPlayer.lock()->GetJumpSmokeEffect()->GetAnimator()->Play(L"DoubleJumpSmoke", false);
+}

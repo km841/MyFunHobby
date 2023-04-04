@@ -24,6 +24,7 @@
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
 	, m_ePlayerState(PLAYER_STATE::IDLE)
+	, m_iJumpCount(2)
 {
 	m_Status.PlayerDefaultSetting();
 	m_pStateMachine = make_shared<StateMachine>();
@@ -39,6 +40,8 @@ void Player::Awake()
 	m_pActiveSkul->Awake();
 
 	CreateDashSmokeAndAddedToScene();
+	CreateJumpSmokeAndAddedToScene();
+
 	m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
 	m_pStateMachine->Awake();
 }
@@ -66,6 +69,12 @@ void Player::FinalUpdate()
 {
 	GameObject::FinalUpdate();
 	m_pActiveSkul->FinalUpdate();
+}
+
+weak_ptr<PlayerState> Player::GetPlayerState()
+{
+	assert(m_pStateMachine->GetActiveState().lock());
+	return m_pStateMachine->GetActiveState().lock();
 }
 
 void Player::ChangePlayerState(PLAYER_STATE ePlayerState)
@@ -142,14 +151,14 @@ void Player::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 
 void Player::CreateDashSmokeAndAddedToScene()
 {
-	m_pDashEffect = make_shared<GlobalEffect>();
+	m_pDashSmoke = make_shared<GlobalEffect>();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
-	m_pDashEffect->AddComponent(make_shared<Transform>());
-	m_pDashEffect->AddComponent(make_shared<Animator>());
+	m_pDashSmoke->AddComponent(make_shared<Transform>());
+	m_pDashSmoke->AddComponent(make_shared<Animator>());
 
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DashSmoke_Small", L"..\\Resources\\Animation\\SkulCommon\\common_dashsmoke_small.anim");
-	m_pDashEffect->GetAnimator()->AddAnimation(L"DashSmoke_Small", pAnimation);
+	m_pDashSmoke->GetAnimator()->AddAnimation(L"DashSmoke_Small", pAnimation);
 	
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
@@ -157,9 +166,33 @@ void Player::CreateDashSmokeAndAddedToScene()
 	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 	pMeshRenderer->SetMaterial(pMaterial);
 	pMeshRenderer->SetMesh(pMesh);
-	m_pDashEffect->AddComponent(pMeshRenderer);
+	m_pDashSmoke->AddComponent(pMeshRenderer);
 	
-	m_pDashEffect->Awake();
-	m_pDashEffect->Disable();
-	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pDashEffect, eSceneType));
+	m_pDashSmoke->Awake();
+	m_pDashSmoke->Disable();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pDashSmoke, eSceneType));
+}
+
+void Player::CreateJumpSmokeAndAddedToScene()
+{
+	m_pJumpSmoke = make_shared<GlobalEffect>();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+
+	m_pJumpSmoke->AddComponent(make_shared<Transform>());
+	m_pJumpSmoke->AddComponent(make_shared<Animator>());
+
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DoubleJumpSmoke", L"..\\Resources\\Animation\\SkulCommon\\common_doublejumpsmoke.anim");
+	m_pJumpSmoke->GetAnimator()->AddAnimation(L"DoubleJumpSmoke", pAnimation);
+
+	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+
+	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	pMeshRenderer->SetMaterial(pMaterial);
+	pMeshRenderer->SetMesh(pMesh);
+	m_pJumpSmoke->AddComponent(pMeshRenderer);
+
+	m_pJumpSmoke->Awake();
+	m_pJumpSmoke->Disable();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pJumpSmoke, eSceneType));
 }
