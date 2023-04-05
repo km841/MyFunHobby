@@ -16,7 +16,7 @@ public:
     virtual ~Camera();
 
     virtual void    FinalUpdate() override;
-    void            Render();
+    void            Render(SHADER_TYPE eShaderType);
 
     FORCEINLINE void             SetProjectionType(PROJECTION_TYPE eType)     { m_eType = eType; }
     FORCEINLINE PROJECTION_TYPE  GetProjectionType()   const                  { return m_eType; }

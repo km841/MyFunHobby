@@ -15,9 +15,10 @@ public:
     void PushComputeData();
     void Dispatch(uint32 iCountX, uint32 iCountY, uint32 iCountZ);
 
-    void SetTexture(uint8 iIndex, shared_ptr<Texture> pTexture);
-    void SetShader(shared_ptr<Shader> pShader)   { m_pShader = pShader; }
-    shared_ptr<Texture> GetTexture(uint8 iIndex) { return m_pTextures[iIndex]; }
+    FORCEINLINE void                SetShader(shared_ptr<Shader> pShader)   { m_pShader = pShader; }
+    FORCEINLINE shared_ptr<Shader>  GetShader()                             { return m_pShader; }
+    FORCEINLINE shared_ptr<Texture> GetTexture(uint8 iIndex)                { return m_pTextures[iIndex]; }
+    void                            SetTexture(uint8 iIndex, shared_ptr<Texture> pTexture);
 
     void SetInt(uint8 iIndex, int32 iValue)      { m_materialParams.SetInt(iIndex, iValue); }
     void SetFloat(uint8 iIndex, float fValue)    { m_materialParams.SetFloat(iIndex, fValue); }

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "TownScene.h"
 #include "Engine.h"
-#include "GameObject.h"
+
 
 /* Event */
 #include "SceneChangeEvent.h"
@@ -30,6 +30,7 @@
 #include "Cemetery.h"
 
 /* GameObject */
+#include "GameObject.h"
 #include "Player.h"
 #include "Monster.h"
 #include "NPC_Witch.h"
@@ -44,7 +45,7 @@
 #include "Shader.h"
 #include "Texture.h"
 
-/* Component */
+/* Components */
 #include "MeshRenderer.h"
 #include "Transform.h"
 #include "Camera.h"

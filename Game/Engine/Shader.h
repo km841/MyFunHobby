@@ -2,14 +2,7 @@
 #include "Object.h"
 
 
-enum class SHADER_TYPE : uint8
-{
-    DEFERRED,
-    FORWARD,
-    LIGHTING,
-    PARTICLE,
-    COMPUTE,
-};
+
 
 
 enum class DEPTH_STENCIL_TYPE : uint8

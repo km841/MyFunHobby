@@ -12,6 +12,8 @@ enum class RENDER_TARGET_GROUP_TYPE : uint8
 enum
 {
 	RENDER_TARGET_GROUP_TYPE_COUNT = RENDER_TARGET_GROUP_TYPE::END,
+	G_BUGGER_GROUP_COUNT = 2,
+	SWAP_CHAIN_BUFFER_COUNT = 1,
 };
 
 struct RenderTarget
@@ -26,6 +28,7 @@ public:
 	void Create(RENDER_TARGET_GROUP_TYPE eType, std::vector<RenderTarget>& vRTVec, shared_ptr<Texture> pDSTexture);
 
 	void OMSetRenderTarget();
+	void OMSetRenderTarget(int32 iIndex);
 	void ClearRenderTargetView();
 
 private:

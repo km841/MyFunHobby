@@ -105,6 +105,14 @@ enum class LAYER_TYPE : uint8
 	END = 31,
 };
 
+enum class SHADER_TYPE : uint8
+{
+	FORWARD,
+	DEFERRED,
+	LIGHTING,
+	PARTICLE,
+	COMPUTE,
+};
 
 enum
 {
@@ -115,7 +123,6 @@ enum
 
 enum
 {
-	SWAP_CHAIN_BUFFER_COUNT = 1,
 	CBV_REGISTER_COUNT = CBV_REGISTER::END,
 	SRV_REGISTER_COUNT = SRV_REGISTER::END,
 };

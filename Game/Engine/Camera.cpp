@@ -9,6 +9,8 @@
 #include "DebugRenderer.h"
 #include "Player.h"
 #include "Skul.h"
+#include "Material.h"
+#include "Shader.h"
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
@@ -48,7 +50,7 @@ void Camera::FinalUpdate()
     }
 }
 
-void Camera::Render()
+void Camera::Render(SHADER_TYPE eShaderType)
 {
     shared_ptr<Scene> pCurScene = GET_SINGLE(Scenes)->GetActiveScene();
 
@@ -62,25 +64,34 @@ void Camera::Render()
         {
             if (pGameObject->IsEnable())
             {
-                if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
-                {
-                    weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
-                    if (pActiveSkul.lock())
-                    {
-                        pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
-                    }
-                }
 
                 if (pGameObject->GetMeshRenderer())
-                    pGameObject->GetMeshRenderer()->Render(shared_from_this());
+                {
+                    if (eShaderType != pGameObject->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType())
+                        continue;
+
+                    if (pGameObject->GetMeshRenderer())
+                        pGameObject->GetMeshRenderer()->Render(shared_from_this());
+                }
+                else
+                {
+                    if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+                    {
+                        weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
+                        if (pActiveSkul.lock())
+                        {
+                            if (eShaderType != pActiveSkul.lock()->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType())
+                                continue;
+                            pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
+                        }
+                    }
+                }
 
                 if (pGameObject->GetDebugRenderer())
                     pGameObject->GetDebugRenderer()->Render(shared_from_this());
             }
         }
     }
-
-
 }
 
 void Camera::SetCullingMask(LAYER_TYPE eLayerType, bool bFlag)

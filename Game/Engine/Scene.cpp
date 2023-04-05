@@ -136,13 +136,29 @@ void Scene::FinalUpdate()
 
 void Scene::Render()
 {
-	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->ClearRenderTargetView();
-	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget();
+	shared_ptr<Camera> pMainCamera = m_vCameras[0];
 
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->ClearRenderTargetView();
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->ClearRenderTargetView();
+
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
+	pMainCamera->Render(SHADER_TYPE::DEFERRED);
+
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
+	Render_Final();
+
+	pMainCamera->Render(SHADER_TYPE::FORWARD);
 	for (const shared_ptr<Camera>& pCamera : m_vCameras)
 	{
-		pCamera->Render();
+		if (pMainCamera == pCamera)
+			continue;
+
+		pCamera->Render(SHADER_TYPE::FORWARD);
 	}
+}
+
+void Scene::Render_Final()
+{
 }
 
 void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)

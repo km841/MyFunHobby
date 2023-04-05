@@ -15,8 +15,13 @@ void RenderTargetGroup::OMSetRenderTarget()
 {
 	for (uint32 i = 0; i < m_iRTCount; ++i)
 	{
-		CONTEXT->OMSetRenderTargets(1, m_vRTVec[i].pTarget->GetRTV().GetAddressOf(), m_pDSTexture->GetDSV().Get());
+		CONTEXT->OMSetRenderTargets(i, m_vRTVec[i].pTarget->GetRTV().GetAddressOf(), m_pDSTexture->GetDSV().Get());
 	}
+}
+
+void RenderTargetGroup::OMSetRenderTarget(int32 iIndex)
+{
+	CONTEXT->OMSetRenderTargets(iIndex, m_vRTVec[0].pTarget->GetRTV().GetAddressOf(), m_pDSTexture->GetDSV().Get());
 }
 
 void RenderTargetGroup::ClearRenderTargetView()

@@ -420,5 +420,8 @@
     <FxCompile Include="..\Resources\Shader\skillbox.fx">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="..\Resources\Shader\deferred.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
