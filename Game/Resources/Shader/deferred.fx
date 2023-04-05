@@ -17,7 +17,6 @@ struct VS_OUT
 
 Texture2D g_tex_0 : register(t0);
 Texture2D g_tex_1 : register(t1);
-
 SamplerState g_sam_0 : register(s0);
 
 VS_OUT VS_Main(VS_IN _in)
@@ -86,8 +85,8 @@ PS_OUT PS_Main(VS_OUT _in)
             vColor.a = 1.f * fRatio;
     }
     
-    output.vPosition = _in.pos;
-    output.vColor = vColor;
+    output.vPosition = float4(_in.pos.xyz, 0.f);
+    output.vColor = float4(vColor.xyz, 1.f);
     
     return output;
 }

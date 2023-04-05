@@ -212,6 +212,21 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Forward", pShader);
 	}
 
+	// Deferred
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::DEFERRED,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_NONE,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\deferred.fx", shaderInfo);
+		Add<Shader>(L"Deferred", pShader);
+	}
+
 	// Fade In / Out
 	{
 		ShaderInfo shaderInfo =
@@ -282,6 +297,22 @@ void Resources::CreateDefaultShader()
 
 		Add<Shader>(L"SkillBox", pShader);
 	}
+
+	// Final
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::LIGHTING,
+			DEPTH_STENCIL_TYPE::NO_DEPTH_TEST_NO_WRITE,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::DEFAULT
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\final.fx", shaderInfo);
+
+		Add<Shader>(L"Final", pShader);
+	}
 }
 
 void Resources::CreateDefaultMaterial()
@@ -302,6 +333,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"Forward", pMaterial);
+	}
+
+	// Deferred
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Deferred");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"Deferred", pMaterial);
 	}
 	
 	// Debug Geometry
@@ -374,6 +414,18 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"SkillBox", pMaterial);
+	}
+
+	// Final
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Final");
+		pMaterial->SetShader(pShader);
+
+		pMaterial->SetTexture(0, GET_SINGLE(Resources)->Get<Texture>(L"PositionTarget"));
+		pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
+
+		Add<Material>(L"Final", pMaterial);
 	}
 
 }

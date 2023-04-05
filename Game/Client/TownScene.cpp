@@ -498,6 +498,32 @@ void TownScene::Enter()
 		AddGameObject(pWizard);
 	}
 
+	// Test HUD
+	//{
+	//	shared_ptr<HUD> pHUD = make_shared<HUD>();
+
+	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget");
+	//	pMaterial->SetTexture(0, pTexture);
+
+	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	//	pMeshRenderer->SetMaterial(pMaterial);
+	//	pMeshRenderer->SetMesh(pMesh);
+
+	//	pHUD->AddComponent(pMeshRenderer);
+	//	pHUD->AddComponent(make_shared<Transform>());
+	//	pHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 600.f, fHeight / 2.f, 10.f));
+	//	pHUD->GetTransform()->SetLocalScale(Vec3(200.f, 112.f, 1.f));
+
+	//	AddGameObject(pHUD);
+	//}
+
 	AddGameObject(GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE));
 	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
 	

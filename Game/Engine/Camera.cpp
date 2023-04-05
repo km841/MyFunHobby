@@ -32,8 +32,6 @@ void Camera::FinalUpdate()
 {
     shared_ptr<Transform> pTransform = GetTransform();
     Matrix matWorld = pTransform->GetLocalToWorldMatrix();
-
-    // Scale값이 1이여야 값이 제대로 나온다.
     Matrix matWorldInv = matWorld.Invert();
     m_matView = matWorldInv;
 
