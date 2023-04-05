@@ -272,7 +272,7 @@ void TownScene::Enter()
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Back.tga");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
@@ -297,7 +297,7 @@ void TownScene::Enter()
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Bridge.tga");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
@@ -383,7 +383,7 @@ void TownScene::Enter()
 		shared_ptr<NPC_Witch> pWitch = make_shared<NPC_Witch>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
@@ -413,7 +413,7 @@ void TownScene::Enter()
 		shared_ptr<NPC_Wolf> pWolf = make_shared<NPC_Wolf>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
@@ -443,7 +443,7 @@ void TownScene::Enter()
 		shared_ptr<NPC_Ogre> pOgre = make_shared<NPC_Ogre>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
@@ -473,7 +473,7 @@ void TownScene::Enter()
 		shared_ptr<NPC_Wizard> pWizard = make_shared<NPC_Wizard>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
@@ -498,7 +498,7 @@ void TownScene::Enter()
 		AddGameObject(pWizard);
 	}
 
-	// Test HUD
+	 //Test HUD
 	//{
 	//	shared_ptr<HUD> pHUD = make_shared<HUD>();
 

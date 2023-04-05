@@ -47,8 +47,8 @@ VS_OUT VS_Main(VS_IN _in)
 
 struct PS_OUT
 {
-    float4 vPosition : SV_Target0;
-    float4 vColor : SV_Target1;
+    float4 vColor : SV_Target0;
+    float4 vPosition : SV_Target1;
 };
 
 PS_OUT PS_Main(VS_OUT _in)
@@ -85,8 +85,8 @@ PS_OUT PS_Main(VS_OUT _in)
             vColor.a = 1.f * fRatio;
     }
     
-    output.vPosition = float4(_in.pos.xyz, 0.f);
-    output.vColor = float4(vColor.xyz, 1.f);
+    output.vPosition = float4(_in.pos.xyz, 1.f);
+    output.vColor = vColor;
     
     return output;
 }

@@ -219,7 +219,7 @@ void Resources::CreateDefaultShader()
 			SHADER_TYPE::DEFERRED,
 			DEPTH_STENCIL_TYPE::LESS,
 			RASTERIZER_TYPE::CULL_NONE,
-			BLEND_TYPE::ALPHA_BLEND
+			BLEND_TYPE::ONE_TO_ONE_BLEND
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();

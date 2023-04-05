@@ -159,27 +159,27 @@ void Engine::CreateRenderTargetGroups()
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)]->Create(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN, vRenderTargetVec, pDepthStencilTexture);
 	}
 
-	// G-Buffer
-	//{
-	//	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	//	std::vector<RenderTarget> vRenderTargetVec(G_BUGGER_GROUP_COUNT);
+	 //G-Buffer
+	{
+		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		std::vector<RenderTarget> vRenderTargetVec(G_BUGGER_GROUP_COUNT);
 
-	//	vRenderTargetVec[0].pTarget = GET_SINGLE(Resources)->CreateTexture(
-	//		L"PositionTarget",
-	//		D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
-	//		m_Window.iWidth, m_Window.iHeight);
+		vRenderTargetVec[0].pTarget = GET_SINGLE(Resources)->CreateTexture(
+			L"PositionTarget",
+			D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
+			m_Window.iWidth, m_Window.iHeight);
 
-	//	vRenderTargetVec[1].pTarget = GET_SINGLE(Resources)->CreateTexture(
-	//		L"DiffuseTarget",
-	//		D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
-	//		m_Window.iWidth, m_Window.iHeight);
+		vRenderTargetVec[1].pTarget = GET_SINGLE(Resources)->CreateTexture(
+			L"DiffuseTarget",
+			D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
+			m_Window.iWidth, m_Window.iHeight);
 
-	//	memcpy(vRenderTargetVec[0].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
-	//	memcpy(vRenderTargetVec[1].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
+		memcpy(vRenderTargetVec[0].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
+		memcpy(vRenderTargetVec[1].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
 
-	//	m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)] = make_shared<RenderTargetGroup>();
-	//	m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, vRenderTargetVec, pDepthStencilTexture);
-	//}
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)] = make_shared<RenderTargetGroup>();
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, vRenderTargetVec, pDepthStencilTexture);
+	}
 
 }
 

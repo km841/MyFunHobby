@@ -23,7 +23,7 @@ SamplerState g_sam_0 : register(s0);
 VS_OUT VS_Main(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0;
-    output.pos = mul(float4(_in.pos * 2.f, 1.f), g_matWVP);
+    output.pos = float4(_in.pos, 1.f);
     output.uv = _in.uv;
     
     return output;
