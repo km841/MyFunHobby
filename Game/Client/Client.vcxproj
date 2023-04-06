@@ -176,6 +176,7 @@
     <ClInclude Include="DashState.h" />
     <ClInclude Include="DialogueUI.h" />
     <ClInclude Include="GlobalEffect.h" />
+    <ClInclude Include="GlobalEffectSettingScript.h" />
     <ClInclude Include="HealthBarHUD.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="DashState.cpp" />
     <ClCompile Include="DialogueUI.cpp" />
     <ClCompile Include="GlobalEffect.cpp" />
+    <ClCompile Include="GlobalEffectSettingScript.cpp" />
     <ClCompile Include="HealthBarHUD.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />

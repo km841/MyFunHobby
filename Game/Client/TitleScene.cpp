@@ -80,7 +80,7 @@ void TitleScene::Enter()
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleBG.tga");
 
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 	
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();

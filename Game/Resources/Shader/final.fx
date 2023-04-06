@@ -17,6 +17,7 @@ struct VS_OUT
 
 Texture2D g_tex_0 : register(t0);
 Texture2D g_tex_1 : register(t1);
+Texture2D g_tex_2 : register(t2);
 
 SamplerState g_sam_0 : register(s0);
 

@@ -250,6 +250,9 @@
     <ClInclude Include="PathState.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalEffectSettingScript.h">
+      <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -417,6 +420,9 @@
     </ClCompile>
     <ClCompile Include="PathState.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalEffectSettingScript.cpp">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,10 +13,14 @@ void RenderTargetGroup::Create(RENDER_TARGET_GROUP_TYPE eType, std::vector<Rende
 
 void RenderTargetGroup::OMSetRenderTarget()
 {
+	ID3D11RenderTargetView* ppRenderTargets[G_BUGGER_GROUP_COUNT] = {};
+
 	for (uint32 i = 0; i < m_iRTCount; ++i)
 	{
-		CONTEXT->OMSetRenderTargets(i, m_vRTVec[i].pTarget->GetRTV().GetAddressOf(), m_pDSTexture->GetDSV().Get());
+		ppRenderTargets[i] = m_vRTVec[i].pTarget->GetRTV().Get();
 	}
+
+	CONTEXT->OMSetRenderTargets(G_BUGGER_GROUP_COUNT, ppRenderTargets, m_pDSTexture->GetDSV().Get());
 }
 
 void RenderTargetGroup::OMSetRenderTarget(int32 iIndex)

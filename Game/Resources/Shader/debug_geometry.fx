@@ -15,6 +15,8 @@ struct VS_OUT
     float2 uv : TEXCOORD;
 };
 
+
+
 VS_OUT VS_Main(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0;
@@ -28,8 +30,18 @@ VS_OUT VS_Main(VS_IN _in)
 Texture2D g_tex_0 : register(t0);
 SamplerState g_sam_0 : register(s0);
 
-float4 PS_Main(VS_OUT _in) : SV_Target
+struct PS_OUT
 {
-    return float4(0.f, 1.f, 0.f, 1.f);
+    float4 vPosition : SV_Target0;
+    float4 vColor : SV_Target1;
+    float4 vEffectColor : SV_Target2;
+};
+
+PS_OUT PS_Main(VS_OUT _in) : SV_Target
+{
+    PS_OUT output = (PS_OUT) 0;
+    output.vColor = float4(0.f, 1.f, 0.f, 1.f);
+    
+    return output;
 }
 #endif

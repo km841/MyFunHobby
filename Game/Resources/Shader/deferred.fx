@@ -47,8 +47,9 @@ VS_OUT VS_Main(VS_IN _in)
 
 struct PS_OUT
 {
-    float4 vColor : SV_Target0;
-    float4 vPosition : SV_Target1;
+    float4 vPosition : SV_Target0;
+    float4 vColor : SV_Target1;
+    float4 vEffectColor : SV_Target2;
 };
 
 PS_OUT PS_Main(VS_OUT _in)
@@ -60,11 +61,12 @@ PS_OUT PS_Main(VS_OUT _in)
     float2 vAtlasSize = g_vec2_2;
     float2 vOffset = g_vec2_3;
     int iAnimationFlag = g_int_0;
+    int iEffectFlag = g_int_3;
     
     float fRatio = g_float_0;
     
     float4 vColor;
-    if (iAnimationFlag == 1)
+    if (iAnimationFlag)
     {
         float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
         vColor = g_tex_0.Sample(g_sam_0, vUV);
@@ -72,9 +74,8 @@ PS_OUT PS_Main(VS_OUT _in)
             discard;
         
         if (vColor.a > 0.f && fRatio > 0.f)
-            vColor.a = 1.f * fRatio;    
+            vColor.a = 1.f * fRatio;
     }
-    
     else
     {
         vColor = g_tex_0.Sample(g_sam_0, _in.uv);
@@ -85,9 +86,9 @@ PS_OUT PS_Main(VS_OUT _in)
             vColor.a = 1.f * fRatio;
     }
     
-    output.vPosition = float4(_in.pos.xyz, 1.f);
+    output.vPosition = float4(_in.pos.xyz, 0.f);
     output.vColor = vColor;
-    
+   
     return output;
 }
 #endif

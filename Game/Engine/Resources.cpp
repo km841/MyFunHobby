@@ -424,6 +424,7 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetTexture(0, GET_SINGLE(Resources)->Get<Texture>(L"PositionTarget"));
 		pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
+		pMaterial->SetTexture(2, GET_SINGLE(Resources)->Get<Texture>(L"EffectTarget"));
 
 		Add<Material>(L"Final", pMaterial);
 	}

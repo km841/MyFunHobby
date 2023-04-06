@@ -21,6 +21,7 @@
 #include "PlayerMoveScript.h"
 #include "PlayerFirstSkillShowScript.h"
 #include "BackgroundMoveScript.h"
+#include "GlobalEffectSettingScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -37,6 +38,7 @@
 #include "NPC_Wolf.h"
 #include "NPC_Wizard.h"
 #include "NPC_Ogre.h"
+#include "GlobalEffect.h"
 
 /* Resources */
 #include "Animation.h"
@@ -233,6 +235,38 @@ void TownScene::Enter()
 
 		AddGameObject(pSkillBoxHUD);
 	}
+
+	// EffectTest
+	//{
+	//	shared_ptr<GlobalEffect> pGlobalEffect = make_shared<GlobalEffect>();
+
+	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
+	//	//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"SkillBoxLight", L"..\\Resources\\Texture\\HUD\\Image_SkillBox_Light1.tga");
+	//	//pMaterial->SetTexture(1, pTexture);
+
+	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	//	pMeshRenderer->SetMaterial(pMaterial);
+	//	pMeshRenderer->SetMesh(pMesh);
+
+	//	pGlobalEffect->AddComponent(pMeshRenderer);
+	//	pGlobalEffect->AddComponent(make_shared<Transform>());
+	//	pGlobalEffect->AddComponent(make_shared<Animator>());
+	//	pGlobalEffect->AddComponent(make_shared<GlobalEffectSettingScript>());
+
+
+	//	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Cooldown_Completion", L"..\\Resources\\Animation\\SkillBox\\cooldown_completion.anim");
+	//	pGlobalEffect->GetAnimator()->AddAnimation(L"Cooldown_Completion", pAnimation);
+	//	pGlobalEffect->GetAnimator()->Play(L"Cooldown_Completion");
+
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	//	pGlobalEffect->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 80.f));
+	//	pGlobalEffect->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
+
+	//	AddGameObject(pGlobalEffect);
+	//}
 
 	// Ground
 	{

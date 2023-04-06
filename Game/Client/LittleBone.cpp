@@ -76,7 +76,7 @@ void LittleBone::CreateHeadAndAddedToScene()
 	m_pHead->AddComponent(make_shared<Movement>());
 	m_pHead->AddComponent(make_shared<RotateHeadScript>(m_pHead));
 
-	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Head", L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Head.tga");
 	pMaterial->SetTexture(0, pTexture);
 
