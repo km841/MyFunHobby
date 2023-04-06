@@ -15,6 +15,9 @@
       <FullPath>C:\MyProject\Game\Output\deferred.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\effect.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\fade_in_out.cso</FullPath>
     </ContentFile>
     <ContentFile>

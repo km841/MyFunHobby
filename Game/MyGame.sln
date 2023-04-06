@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcx
 		{2B4BFC92-3241-4964-863A-DF658DCB2AC4} = {2B4BFC92-3241-4964-863A-DF658DCB2AC4}
 	EndProjectSection
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{33761668-7634-490E-B636-0EAE5CFCEE95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -47,6 +49,10 @@ Global
 		{A95257F6-1803-4DA1-B88B-4F63F43E3B3B}.Release|x64.Build.0 = Release|x64
 		{A95257F6-1803-4DA1-B88B-4F63F43E3B3B}.Release|x86.ActiveCfg = Release|Win32
 		{A95257F6-1803-4DA1-B88B-4F63F43E3B3B}.Release|x86.Build.0 = Release|Win32
+		{33761668-7634-490E-B636-0EAE5CFCEE95}.Debug|x64.ActiveCfg = Debug
+		{33761668-7634-490E-B636-0EAE5CFCEE95}.Debug|x86.ActiveCfg = Debug
+		{33761668-7634-490E-B636-0EAE5CFCEE95}.Release|x64.ActiveCfg = Release
+		{33761668-7634-490E-B636-0EAE5CFCEE95}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

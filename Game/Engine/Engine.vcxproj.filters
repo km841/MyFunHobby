@@ -426,5 +426,8 @@
     <FxCompile Include="..\Resources\Shader\final.fx">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="..\Resources\Shader\effect.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

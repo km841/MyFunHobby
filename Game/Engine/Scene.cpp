@@ -149,6 +149,7 @@ void Scene::Render()
 	// Light Rendering
 	// TODO
 
+	Render_Effect();
 	// Merge
 	Render_Final();
 
@@ -163,6 +164,24 @@ void Scene::Render()
 
 		pCamera->Render(SHADER_TYPE::FORWARD);
 	}
+}
+
+void Scene::Render_Effect()
+{
+	auto& vEffects = GetGameObjects(LAYER_TYPE::GLOBAL_EFFECT);
+	
+	for (const auto& pEffect : vEffects)
+	{
+		if (pEffect->IsEnable())
+		{
+			if (pEffect->GetMeshRenderer())
+			{
+				pEffect->GetMeshRenderer()->Render(m_vCameras[0]);
+			}
+		}
+
+	}
+
 }
 
 void Scene::Render_Final()

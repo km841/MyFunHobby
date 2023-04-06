@@ -298,6 +298,22 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"SkillBox", pShader);
 	}
 
+	// Effect
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::LIGHTING,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_NONE,
+			BLEND_TYPE::ONE_TO_ONE_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\effect.fx", shaderInfo);
+
+		Add<Shader>(L"Effect", pShader);
+	}
+
 	// Final
 	{
 		ShaderInfo shaderInfo =
@@ -414,6 +430,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"SkillBox", pMaterial);
+	}
+
+	// Effect
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Effect");
+		pMaterial->SetShader(pShader);
+		
+		Add<Material>(L"Effect", pMaterial);
 	}
 
 	// Final
