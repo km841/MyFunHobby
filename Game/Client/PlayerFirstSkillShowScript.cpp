@@ -7,12 +7,14 @@
 #include "Material.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "SkillBoxHUD.h"
+#include "InterfaceEffect.h"
 
-PlayerFirstSkillShowScript::PlayerFirstSkillShowScript(shared_ptr<Player> pPlayer)
+PlayerFirstSkillShowScript::PlayerFirstSkillShowScript(shared_ptr<Player> pPlayer, shared_ptr<SkillBoxHUD> pHUD)
 	: m_pPlayer(pPlayer)
+	, m_pHUD(pHUD)
 	, m_bFlag(false)
 	, m_bPrevFlag(true)
-	, m_bAnimationFlag(false)
 {
 }
 
@@ -36,26 +38,21 @@ void PlayerFirstSkillShowScript::LateUpdate()
 
 		if (!m_bPrevFlag && (m_bPrevFlag != m_bFlag))
 		{
-			m_bAnimationFlag = true;
-			// 
-			// Animation Play 하면 자동으로 Animation Flag가 넘어간다.
-			// 애니메이션이 끝날 때까지 애니메이션 전달
-			
-			//GetAnimator()->Play(L"", false);
-			// 처음 2프레임은 기존 텍스쳐와 겹쳐서 출력된다.
-		}
+			m_pHUD.lock()->GetCompletionEffect().lock()->Enable();
+			m_pHUD.lock()->GetCompletionEffect().lock()->GetAnimator()->Play(L"Cooldown_Completion", false);
 
-		if (m_bAnimationFlag)
+		}
+		else
 		{
-			
-
+			if (m_pHUD.lock()->GetCompletionEffect().lock()->GetAnimator()->GetActiveAnimation())
+			{
+				if (m_pHUD.lock()->GetCompletionEffect().lock()->GetAnimator()->GetActiveAnimation()->IsFinished())
+					m_pHUD.lock()->GetCompletionEffect().lock()->Disable();
+			}
 
 		}
 
-		
 
-		// 쿨타임이 완료된 시점이라면? 애니메이션 출력
-		//1. 텍스쳐 1번 인덱스로 빛 텍스쳐를 전달한다
 
 
 

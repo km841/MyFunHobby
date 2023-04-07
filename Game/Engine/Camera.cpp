@@ -57,9 +57,6 @@ void Camera::Render(SHADER_TYPE eShaderType)
         if (m_iCullingMask & (1 << i))
             continue;
 
-        if (LAYER_TYPE::GLOBAL_EFFECT == static_cast<LAYER_TYPE>(i))
-            continue;
-
         const std::vector<shared_ptr<GameObject>>& vGameObjects = pCurScene->GetGameObjects(static_cast<LAYER_TYPE>(i));
         for (const shared_ptr<GameObject>& pGameObject : vGameObjects)
         {

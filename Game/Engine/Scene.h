@@ -21,12 +21,11 @@ public:
 public:
     virtual void Enter() { }
     virtual void Exit() { }
-
-    void Render_Effect();
     void Render_Final();
 
     FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
+    void                                 AddFrontGameObject(shared_ptr<GameObject> pGameObject);
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
 
 

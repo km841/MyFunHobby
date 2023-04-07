@@ -1,11 +1,12 @@
 #pragma once
 #include "MonoBehaviour.h"
 class Player;
+class SkillBoxHUD;
 class PlayerFirstSkillShowScript :
     public MonoBehaviour
 {
 public:
-    explicit PlayerFirstSkillShowScript(shared_ptr<Player> pPlayer);
+    explicit PlayerFirstSkillShowScript(shared_ptr<Player> pPlayer, shared_ptr<SkillBoxHUD> pHUD);
     virtual ~PlayerFirstSkillShowScript();
 
 public:
@@ -13,8 +14,8 @@ public:
 
 private:
     weak_ptr<Player> m_pPlayer;
+    weak_ptr<SkillBoxHUD> m_pHUD;
     bool m_bPrevFlag;
     bool m_bFlag;
-    bool m_bAnimationFlag;
 };
 

@@ -89,11 +89,11 @@
     <Filter Include="소스 파일\Game\Object\GameObject\AfterImage\Script">
       <UniqueIdentifier>{92e8da48-c419-4d3c-8622-c1110799d93c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Object\GameObject\GlobalEffect">
-      <UniqueIdentifier>{03fabbba-0469-450c-bbca-b9d6b999572f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Object\GameObject\Projectile">
       <UniqueIdentifier>{c143f685-c59e-49dc-a0f1-830d92c4bf1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Effect">
+      <UniqueIdentifier>{f96d1817-aa83-4019-bf20-af2d9ac12e5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -232,9 +232,6 @@
     <ClInclude Include="PlayerFirstSkillShowScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalEffect.h">
-      <Filter>소스 파일\Game\Object\GameObject\GlobalEffect</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerProjectile.h">
       <Filter>소스 파일\Game\Object\GameObject\Projectile</Filter>
     </ClInclude>
@@ -252,6 +249,12 @@
     </ClInclude>
     <ClInclude Include="GlobalEffectSettingScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceEffect.h">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalEffect.h">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -403,9 +406,6 @@
     <ClCompile Include="PlayerFirstSkillShowScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
     </ClCompile>
-    <ClCompile Include="GlobalEffect.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\GlobalEffect</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerProjectile.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Projectile</Filter>
     </ClCompile>
@@ -423,6 +423,12 @@
     </ClCompile>
     <ClCompile Include="GlobalEffectSettingScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceEffect.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalEffect.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

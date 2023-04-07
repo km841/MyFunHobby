@@ -180,6 +180,7 @@
     <ClInclude Include="HealthBarHUD.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
+    <ClInclude Include="InterfaceEffect.h" />
     <ClInclude Include="LittleBone.h" />
     <ClInclude Include="LittleBoneHead.h" />
     <ClInclude Include="PathState.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="HealthBarHUD.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="InterfaceEffect.cpp" />
     <ClCompile Include="LittleBone.cpp" />
     <ClCompile Include="LittleBoneHead.cpp" />
     <ClCompile Include="PathState.cpp" />

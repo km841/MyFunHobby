@@ -1,6 +1,6 @@
 #pragma once
 #include "HUD.h"
-class GlobalEffect;
+class InterfaceEffect;
 class SkillBoxHUD :
     public HUD
 {
@@ -16,7 +16,13 @@ public:
     virtual void FinalUpdate();
 
 private:
-    shared_ptr<GlobalEffect> m_pGlobalEffect;
+    void CreateAndAddCompletionEffectToScene();
+
+public:
+    weak_ptr<InterfaceEffect> GetCompletionEffect() { return m_pCompletionEffect; }
+
+private:
+    shared_ptr<InterfaceEffect> m_pCompletionEffect;
 
 };
 
