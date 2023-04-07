@@ -161,7 +161,7 @@ void Player::CreateDashSmokeAndAddedToScene()
 	m_pDashSmoke->GetAnimator()->AddAnimation(L"DashSmoke_Small", pAnimation);
 	
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Effect")->Clone();
+	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 
 	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 	pMeshRenderer->SetMaterial(pMaterial);
@@ -185,7 +185,7 @@ void Player::CreateJumpSmokeAndAddedToScene()
 	m_pJumpSmoke->GetAnimator()->AddAnimation(L"DoubleJumpSmoke", pAnimation);
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Effect")->Clone();
+	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 
 	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 	pMeshRenderer->SetMaterial(pMaterial);

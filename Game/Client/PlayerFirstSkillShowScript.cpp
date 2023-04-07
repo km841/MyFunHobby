@@ -51,11 +51,6 @@ void PlayerFirstSkillShowScript::LateUpdate()
 			}
 
 		}
-
-
-
-
-
 		m_bPrevFlag = m_bFlag;
 	}
 }
