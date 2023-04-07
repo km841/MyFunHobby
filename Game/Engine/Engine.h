@@ -26,12 +26,12 @@ public:
 
 
 public:
-	FORCEINLINE shared_ptr<Device>				GetDevice()	const						{ return m_pDevice; }
-	FORCEINLINE shared_ptr<Context>				GetContext() const						{ return m_pContext; }
-	FORCEINLINE shared_ptr<SwapChain>			GetSwapChain() const					{ return m_pSwapChain; }
-	FORCEINLINE shared_ptr<Physics>				GetPhysics() const						{ return m_pPhysics; }
-	FORCEINLINE shared_ptr<Utility>				GetUtility() const						{ return m_pUtility; }
-	FORCEINLINE shared_ptr<ConstantBuffer>		GetCB(CONSTANT_BUFFER_TYPE eType) const { return m_arrCBGroups[static_cast<uint8>(eType)]; }
+	FORCEINLINE shared_ptr<Device>				GetDevice()	const								 { return m_pDevice; }
+	FORCEINLINE shared_ptr<Context>				GetContext() const								 { return m_pContext; }
+	FORCEINLINE shared_ptr<SwapChain>			GetSwapChain() const							 { return m_pSwapChain; }
+	FORCEINLINE shared_ptr<Physics>				GetPhysics() const								 { return m_pPhysics; }
+	FORCEINLINE shared_ptr<Utility>				GetUtility() const								 { return m_pUtility; }
+	FORCEINLINE shared_ptr<ConstantBuffer>		GetCB(CONSTANT_BUFFER_TYPE eType) const			 { return m_arrCBGroups[static_cast<uint8>(eType)]; }
 	FORCEINLINE shared_ptr<RenderTargetGroup>	GetRTGroup(RENDER_TARGET_GROUP_TYPE eType) const { return m_arrRTGroups[static_cast<uint8>(eType)]; }
 
 	FORCEINLINE int32   GetWidth()  const { return m_Window.iWidth; }

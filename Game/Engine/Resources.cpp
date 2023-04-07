@@ -304,8 +304,8 @@ void Resources::CreateDefaultShader()
 		{
 			SHADER_TYPE::LIGHTING,
 			DEPTH_STENCIL_TYPE::LESS,
-			RASTERIZER_TYPE::CULL_NONE,
-			BLEND_TYPE::ONE_TO_ONE_BLEND
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::DEFAULT
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
@@ -437,6 +437,7 @@ void Resources::CreateDefaultMaterial()
 		shared_ptr<Material> pMaterial = make_shared<Material>();
 		shared_ptr<Shader> pShader = Get<Shader>(L"Effect");
 		pMaterial->SetShader(pShader);
+
 		
 		Add<Material>(L"Effect", pMaterial);
 	}

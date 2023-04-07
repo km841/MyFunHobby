@@ -36,8 +36,10 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     
     float4 vColor = g_tex_1.Sample(g_sam_0, _in.uv);
     float4 vEffectColor = g_tex_2.Sample(g_sam_0, _in.uv);
+   
+
     
-    
-    return vColor;
+    return vColor + vEffectColor;
+
 }
 #endif

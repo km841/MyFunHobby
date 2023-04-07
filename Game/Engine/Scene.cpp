@@ -141,6 +141,7 @@ void Scene::Render()
 	// RenderTarget Clear
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->ClearRenderTargetView();
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->ClearRenderTargetView();
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::EFFECT)->ClearRenderTargetView();
 
 	// Deferred Rendering
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
@@ -149,11 +150,14 @@ void Scene::Render()
 	// Light Rendering
 	// TODO
 
+	// Effect Rendering
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::EFFECT)->ClearRenderTargetView();
 	Render_Effect();
+
 	// Merge
 	Render_Final();
 
-	//// Forward Rendering
+	// Forward Rendering
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
 	pMainCamera->Render(SHADER_TYPE::FORWARD);
 
@@ -168,16 +172,15 @@ void Scene::Render()
 
 void Scene::Render_Effect()
 {
-	auto& vEffects = GetGameObjects(LAYER_TYPE::GLOBAL_EFFECT);
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::EFFECT)->OMSetRenderTarget();
+	const auto& vEffects = GetGameObjects(LAYER_TYPE::GLOBAL_EFFECT);
 	
 	for (const auto& pEffect : vEffects)
 	{
 		if (pEffect->IsEnable())
 		{
 			if (pEffect->GetMeshRenderer())
-			{
-				pEffect->GetMeshRenderer()->Render(m_vCameras[0]);
-			}
+				pEffect->GetMeshRenderer()->Render(m_vCameras[0]);	
 		}
 
 	}

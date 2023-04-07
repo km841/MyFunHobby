@@ -241,11 +241,11 @@ void TownScene::Enter()
 		shared_ptr<GlobalEffect> pGlobalEffect = make_shared<GlobalEffect>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Effect")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"SkillBoxLight", L"..\\Resources\\Texture\\HUD\\Image_SkillBox_Light1.tga");
 		//pMaterial->SetTexture(1, pTexture);
 
-		pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
+		//pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
 
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
@@ -540,7 +540,7 @@ void TownScene::Enter()
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget");
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"EffectTarget");
 		pMaterial->SetTexture(0, pTexture);
 
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();

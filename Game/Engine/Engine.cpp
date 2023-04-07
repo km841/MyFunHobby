@@ -174,17 +174,27 @@ void Engine::CreateRenderTargetGroups()
 			D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
 			m_Window.iWidth, m_Window.iHeight);
 
-		vRenderTargetVec[2].pTarget = GET_SINGLE(Resources)->CreateTexture(
+		memcpy(vRenderTargetVec[0].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
+		memcpy(vRenderTargetVec[1].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
+
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)] = make_shared<RenderTargetGroup>();
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, vRenderTargetVec, pDepthStencilTexture);
+	}
+
+	// Effect
+	{
+		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		std::vector<RenderTarget> vRenderTargetVec(EFFECT_BUFFER_COUNT);
+
+		vRenderTargetVec[0].pTarget = GET_SINGLE(Resources)->CreateTexture(
 			L"EffectTarget",
 			D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
 			m_Window.iWidth, m_Window.iHeight);
 
 		memcpy(vRenderTargetVec[0].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
-		memcpy(vRenderTargetVec[1].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
-		memcpy(vRenderTargetVec[2].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
 
-		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)] = make_shared<RenderTargetGroup>();
-		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, vRenderTargetVec, pDepthStencilTexture);
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::EFFECT)] = make_shared<RenderTargetGroup>();
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::EFFECT)]->Create(RENDER_TARGET_GROUP_TYPE::EFFECT, vRenderTargetVec, pDepthStencilTexture);
 	}
 
 }
