@@ -4,6 +4,7 @@
 class SkulSkill;
 class Animation;
 class Player;
+class Texture;
 class Skul :
 	public GameObject
 {
@@ -19,15 +20,17 @@ public:
 	virtual void FinalUpdate() override;
 
 public:
-	FORCEINLINE SKUL_INDEX			GetSkulIndex()				           { return m_eSkulIndex;     }
-	FORCEINLINE SKUL_GRADE			GetSkulGrade()						   { return m_eSkulGrade;   }
-	FORCEINLINE void				SetSkulIndex(SKUL_INDEX eSkulIndex)    { m_eSkulIndex = eSkulIndex; }
-	FORCEINLINE bool				IsSkillActiveFlag()					   { return m_bSkillActiveFlag; }
-	FORCEINLINE void				DisableSkillActiveFlag()			   { m_bSkillActiveFlag = false; }
-	FORCEINLINE void				EnableSkillActiveFlag()				   { m_bSkillActiveFlag = true; }
-	FORCEINLINE weak_ptr<SkulSkill> GetActiveSkill()					   { return m_pActiveSkill; }
-	FORCEINLINE weak_ptr<SkulSkill> GetSkill(SKILL_INDEX eSkillIndex)	   { return m_arrSkills[static_cast<uint8>(eSkillIndex)]; }
-	FORCEINLINE weak_ptr<Player>	GetPlayer()							   { return m_pPlayer.lock(); }
+	FORCEINLINE SKUL_INDEX			GetSkulIndex()									{ return m_eSkulIndex;     }
+	FORCEINLINE SKUL_GRADE			GetSkulGrade()									{ return m_eSkulGrade;   }
+	FORCEINLINE void				SetSkulIndex(SKUL_INDEX eSkulIndex)				{ m_eSkulIndex = eSkulIndex; }
+	FORCEINLINE bool				IsSkillActiveFlag()								{ return m_bSkillActiveFlag; }
+	FORCEINLINE void				DisableSkillActiveFlag()						{ m_bSkillActiveFlag = false; }
+	FORCEINLINE void				EnableSkillActiveFlag()							{ m_bSkillActiveFlag = true; }
+	FORCEINLINE weak_ptr<SkulSkill> GetActiveSkill()								{ return m_pActiveSkill; }
+	FORCEINLINE weak_ptr<SkulSkill> GetSkill(SKILL_INDEX eSkillIndex)				{ return m_arrSkills[static_cast<uint8>(eSkillIndex)]; }
+	FORCEINLINE weak_ptr<Player>	GetPlayer()										{ return m_pPlayer.lock(); }
+	FORCEINLINE weak_ptr<Texture>	GetThumnailImage()								{ return m_pThumnailImage; }
+	FORCEINLINE void			    SetThumnailImage(shared_ptr<Texture> pTexture)	{ m_pThumnailImage = pTexture; }
 
 public:
 	weak_ptr<Animation>				GetActiveAnimation();
@@ -62,5 +65,6 @@ protected:
 	weak_ptr<SkulSkill>								   m_pActiveSkill;
 	std::vector<std::map<PLAYER_STATE, wstring>>	   m_vStateToNameMaps;
 	std::array<shared_ptr<SkulSkill>, MAX_SKILLS>	   m_arrSkills;
+	shared_ptr<Texture>								   m_pThumnailImage;
 };
 

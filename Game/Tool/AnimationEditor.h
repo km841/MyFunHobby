@@ -38,6 +38,7 @@ public:
 	FORCEINLINE bool						  IsSpriteUpdate() const		 { return m_bSpriteUpdate; }
 	void									  SpriteUpdateEnable()			 { m_bSpriteUpdate = true; }
 	void									  SpriteUpdateDisable()			 { m_bSpriteUpdate = false; }
+
 	void									  InsertFrameData(const FrameData& frameData);
 
 private:
@@ -64,6 +65,7 @@ private:
 	bool   m_bReadable;
 	bool   m_bLoop;
 	bool   m_bPlaying;
+	bool   m_bAllChange;
 
 	FrameData m_CurrFrameData;
 	std::vector<FrameData> m_vFrameDataList;

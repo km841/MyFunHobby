@@ -11,6 +11,7 @@
 #include "SkullThrowSkill.h"
 #include "ReturnHeadScript.h"
 #include "Texture.h"
+#include "HighWarlock.h"
 
 
 void Cemetery::Init()
@@ -41,7 +42,6 @@ void Cemetery::CreateSkul()
 		pLittleBone->AddComponent(pMeshRenderer);
 		pLittleBone->AddComponent(make_shared<ReturnHeadScript>(pLittleBone));
 		pLittleBone->AddComponent(make_shared<Transform>());
-
 
 		uint8 iHasHeadEnum = static_cast<uint8>(LITTLE_BONE_STATE::HAS_HEAD);
 		// Has Head Animation
@@ -103,6 +103,50 @@ void Cemetery::CreateSkul()
 			pLittleBone->ObtainSkill(pThrowSkill);
 		}
 
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Thumnail", L"..\\Resources\\Texture\\HUD\\LittleBone\\Image_LittleBone_Thumnail.tga");
+		pLittleBone->SetThumnailImage(pTexture);
+
 		m_mSkulMap[SKUL_TYPE::LITTLE_BONE] = pLittleBone;
+	}
+
+
+
+	// High Warlock
+	{
+		shared_ptr<HighWarlock> pHighWarlock = make_shared<HighWarlock>();
+		pHighWarlock->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pHighWarlock->AddComponent(pMeshRenderer);
+		pHighWarlock->AddComponent(make_shared<Transform>());
+
+		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Idle", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_idle.anim");
+		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Walk", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_walk.anim");
+		shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Walk", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_dash.anim");
+		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_JumpRise", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_jump_rise.anim");
+		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_JumpFall", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_jump_fall.anim");
+		shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_JumpAttack", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_jump_attack.anim");
+		shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackA", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_a.anim");
+		shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackB", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_b.anim");
+
+		pHighWarlock->AddAnimation(PLAYER_STATE::IDLE, L"HighWarlock_Idle", pIdleAnimation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::WALK, L"HighWarlock_Walk", pWalkAnimation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::DASH, L"HighWarlock_Dash", pDashAnimation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_RISE, L"HighWarlock_JumpRise", pJumpRiseAnimation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_FALL, L"HighWarlock_JumpFall", pJumpFallAnimation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"HighWarlock_JumpAttack", pJumpAttackAnimation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_A, L"HighWarlock_AttackA", pAttackA_Animation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_B, L"HighWarlock_AttackB", pAttackB_Animation);
+
+
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Thumnail", L"..\\Resources\\Texture\\HUD\\HighWarlock\\Image_HighWarlock_Thumnail.png");
+		pHighWarlock->SetThumnailImage(pTexture);
+
+		m_mSkulMap[SKUL_TYPE::HIGH_WARLOCK] = pHighWarlock;
 	}
 }

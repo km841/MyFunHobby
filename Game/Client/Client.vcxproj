@@ -178,6 +178,7 @@
     <ClInclude Include="GlobalEffect.h" />
     <ClInclude Include="GlobalEffectSettingScript.h" />
     <ClInclude Include="HealthBarHUD.h" />
+    <ClInclude Include="HighWarlock.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="InterfaceEffect.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="PathState.h" />
     <ClInclude Include="PlayerFirstSkillShowScript.h" />
     <ClInclude Include="PlayerProjectile.h" />
+    <ClInclude Include="PlayerSkulThumnailScript.h" />
     <ClInclude Include="ReturnHeadScript.h" />
     <ClInclude Include="RotateHeadScript.h" />
     <ClInclude Include="SkillBoxHUD.h" />
@@ -234,6 +236,7 @@
     <ClCompile Include="GlobalEffect.cpp" />
     <ClCompile Include="GlobalEffectSettingScript.cpp" />
     <ClCompile Include="HealthBarHUD.cpp" />
+    <ClCompile Include="HighWarlock.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="InterfaceEffect.cpp" />
@@ -242,6 +245,7 @@
     <ClCompile Include="PathState.cpp" />
     <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
+    <ClCompile Include="PlayerSkulThumnailScript.cpp" />
     <ClCompile Include="ReturnHeadScript.cpp" />
     <ClCompile Include="RotateHeadScript.cpp" />
     <ClCompile Include="SkillBoxHUD.cpp" />

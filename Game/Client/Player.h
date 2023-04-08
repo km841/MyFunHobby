@@ -55,7 +55,6 @@ private:
 	shared_ptr<GlobalEffect>				m_pJumpSmoke;
 	shared_ptr<StateMachine>				m_pStateMachine;
 	PLAYER_STATE							m_ePlayerState;
-
 	int32									m_iJumpCount;
 };
 

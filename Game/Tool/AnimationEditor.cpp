@@ -10,6 +10,7 @@ AnimationEditor::AnimationEditor()
     , m_bPlaying(false)
     , m_bSpriteUpdate(false)
     , m_szName{}
+    , m_bAllChange(false)
 {
     m_vWindowSize = ImVec2(350.f, 530.f);
 }
@@ -63,7 +64,7 @@ void AnimationEditor::InsertFrameData(const FrameData& frameData)
 void AnimationEditor::NewButtonUI_Update()
 {
     if (ImGui::Button("New"))
-        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".tga,.png", ".");
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".png,.tga", ".");
 
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey"))
     {
@@ -229,11 +230,22 @@ void AnimationEditor::EditUI_Update()
     ImGui::SameLine();
     ImGui::InputFloat2("            ", &m_CurrFrameData.vOffset.x);
 
+    ImGui::Text("Duration All Change");
+    ImGui::SameLine();
+    ImGui::Checkbox("                       ", &m_bAllChange);
+
     if (ImGui::Button("Edit Data"))
     {
         if (!m_vFrameDataList.empty())
         {
             m_vFrameDataList[m_iFrameSelector] = m_CurrFrameData;
+
+            if (m_bAllChange)
+            {
+                for (auto& frameData : m_vFrameDataList)
+                    frameData.fDuration = m_CurrFrameData.fDuration;
+            }
+
         }
     }
 }

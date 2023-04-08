@@ -22,6 +22,7 @@
 #include "PlayerFirstSkillShowScript.h"
 #include "BackgroundMoveScript.h"
 #include "GlobalEffectSettingScript.h"
+#include "PlayerSkulThumnailScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -120,7 +121,7 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Collider>());
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
 		pPlayer->AddComponent(make_shared<Movement>());
-		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::LITTLE_BONE));
+		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::HIGH_WARLOCK));
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -162,8 +163,6 @@ void TownScene::Enter()
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBoneHeadHUD", L"..\\Resources\\Texture\\HUD\\LittleBone\\HUD_Skul_Head.tga");
-		pMaterial->SetTexture(0, pTexture);
 
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
@@ -171,6 +170,7 @@ void TownScene::Enter()
 
 		pSkulHeadHUD->AddComponent(pMeshRenderer);
 		pSkulHeadHUD->AddComponent(make_shared<Transform>());
+		pSkulHeadHUD->AddComponent(make_shared<PlayerSkulThumnailScript>(pPlayer, pSkulHeadHUD));
 		pSkulHeadHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -215,8 +215,6 @@ void TownScene::Enter()
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"SkillBox")->Clone();
-		//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"SkillBoxLight", L"..\\Resources\\Texture\\HUD\\Image_SkillBox_Light1.tga");
-		//pMaterial->SetTexture(1, pTexture);
 
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);

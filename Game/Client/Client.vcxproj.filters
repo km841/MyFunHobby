@@ -95,6 +95,15 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Effect">
       <UniqueIdentifier>{f96d1817-aa83-4019-bf20-af2d9ac12e5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock">
+      <UniqueIdentifier>{d0c6ae4c-7d14-404f-886e-899933cbecff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill">
+      <UniqueIdentifier>{16d4f415-3df6-43d1-ba17-3d6a968824f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Script">
+      <UniqueIdentifier>{4b5f0fb2-f7a3-407c-90d8-3db889b5c965}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -255,6 +264,12 @@
     </ClInclude>
     <ClInclude Include="GlobalEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="HighWarlock.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSkulThumnailScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -429,6 +444,12 @@
     </ClCompile>
     <ClCompile Include="GlobalEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="HighWarlock.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSkulThumnailScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

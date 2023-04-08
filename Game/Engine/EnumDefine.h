@@ -198,6 +198,7 @@ enum
 enum class SKUL_TYPE
 {
 	LITTLE_BONE,
+	HIGH_WARLOCK,
 };
 
 enum class SKUL_GRADE
