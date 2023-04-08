@@ -95,4 +95,9 @@ void PlayerMoveScript::LateUpdate()
 		//else
 		//	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Enable();
 	}
+
+	if (IS_DOWN(KEY_TYPE::SPACE))
+	{
+		pPlayer->SwapSkul();
+	}
 }

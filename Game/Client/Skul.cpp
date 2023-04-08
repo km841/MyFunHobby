@@ -29,7 +29,6 @@ void Skul::Start()
 void Skul::Update()
 {
 	GameObject::Update();
-	SkillCooldownUpdate();
 }
 
 void Skul::LateUpdate()

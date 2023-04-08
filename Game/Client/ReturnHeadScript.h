@@ -13,6 +13,5 @@ public:
 
 private:
     weak_ptr<LittleBone> m_pLittleBone;
-    Timer m_tDuration;
 };
 

@@ -40,7 +40,6 @@ void PlayerFirstSkillShowScript::LateUpdate()
 		{
 			m_pHUD.lock()->GetCompletionEffect().lock()->Enable();
 			m_pHUD.lock()->GetCompletionEffect().lock()->GetAnimator()->Play(L"Cooldown_Completion", false);
-
 		}
 		else
 		{

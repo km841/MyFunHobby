@@ -208,7 +208,7 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerTrackingScript.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SkulHeadHUD.h" />
+    <ClInclude Include="SkulThumnailHUD.h" />
     <ClInclude Include="SkullThrowSkill.h" />
     <ClInclude Include="SkulSkill.h" />
     <ClInclude Include="StateMachine.h" />
@@ -270,7 +270,7 @@
     <ClCompile Include="PlayerMoveScript.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerTrackingScript.cpp" />
-    <ClCompile Include="SkulHeadHUD.cpp" />
+    <ClCompile Include="SkulThumnailHUD.cpp" />
     <ClCompile Include="SkullThrowSkill.cpp" />
     <ClCompile Include="SkulSkill.cpp" />
     <ClCompile Include="StateMachine.cpp" />

@@ -1,12 +1,12 @@
 #pragma once
 #include "MonoBehaviour.h"
 class Player;
-class SkulHeadHUD;
+class SkulThumnailHUD;
 class PlayerSkulThumnailScript :
     public MonoBehaviour
 {
 public:
-    explicit PlayerSkulThumnailScript(shared_ptr<Player> pPlayer, shared_ptr<SkulHeadHUD> pSkulHeadHUD);
+    explicit PlayerSkulThumnailScript(shared_ptr<Player> pPlayer, shared_ptr<SkulThumnailHUD> pSkulHeadHUD);
     virtual ~PlayerSkulThumnailScript();
 
 public:
@@ -14,6 +14,6 @@ public:
 
 private:
     weak_ptr<Player> m_pPlayer;
-    weak_ptr<SkulHeadHUD> m_pSkulHeadHUD;
+    weak_ptr<SkulThumnailHUD> m_pSkulThumnailHUD;
 };
 

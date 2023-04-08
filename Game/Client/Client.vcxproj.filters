@@ -181,7 +181,7 @@
     <ClInclude Include="HealthBarHUD.h">
       <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClInclude>
-    <ClInclude Include="SkulHeadHUD.h">
+    <ClInclude Include="SkulThumnailHUD.h">
       <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClInclude>
     <ClInclude Include="DialogueUI.h">
@@ -361,7 +361,7 @@
     <ClCompile Include="HealthBarHUD.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClCompile>
-    <ClCompile Include="SkulHeadHUD.cpp">
+    <ClCompile Include="SkulThumnailHUD.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClCompile>
     <ClCompile Include="DialogueUI.cpp">

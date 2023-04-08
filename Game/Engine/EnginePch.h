@@ -474,6 +474,11 @@ public:
 
 		return std::clamp(m_fCurTime / m_fEndTime, 0.f, 1.f);
 	}
+	
+	void SetProgress(float fProgress)
+	{
+		m_fCurTime = m_fEndTime * fProgress;
+	}
 
 	void Disable()
 	{

@@ -57,6 +57,7 @@ void Player::Update()
 	GameObject::Update();
 	m_pActiveSkul->Update();
 	m_pStateMachine->Update();
+	SkulCooldownUpdate();
 }
 
 void Player::LateUpdate()
@@ -131,6 +132,18 @@ void Player::SwapSkul()
 void Player::RefreshAnimation()
 {
 	m_pStateMachine->GetActiveState().lock()->PlayAnimation();
+}
+
+void Player::SkulCooldownUpdate()
+{
+	for (uint8 i = 0; i < MAX_SKULS; ++i)
+	{
+		if (m_arrSkuls[i])
+		{
+			m_arrSkuls[i]->SkillCooldownUpdate();
+			m_arrSkuls[i]->LateUpdate();
+		}
+	}
 }
 
 void Player::OnCollisionEnter(shared_ptr<GameObject> pGameObject)

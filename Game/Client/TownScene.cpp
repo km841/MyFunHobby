@@ -9,7 +9,7 @@
 /* Interface */
 #include "PlayerInterfaceHUD.h"
 #include "HealthBarHUD.h"
-#include "SkulHeadHUD.h"
+#include "SkulThumnailHUD.h"
 #include "DialogueUI.h"
 #include "SkillBoxHUD.h"
 
@@ -121,6 +121,7 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Collider>());
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
 		pPlayer->AddComponent(make_shared<Movement>());
+		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::LITTLE_BONE));
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::HIGH_WARLOCK));
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -157,9 +158,9 @@ void TownScene::Enter()
 		AddGameObject(pInterfaceHUD);
 	}
 
-	// Skul Head HUD
+	// Skul Thumnail HUD
 	{
-		shared_ptr<SkulHeadHUD> pSkulHeadHUD = make_shared<SkulHeadHUD>();
+		shared_ptr<SkulThumnailHUD> pSkulThumnailHUD = make_shared<SkulThumnailHUD>();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
@@ -168,18 +169,18 @@ void TownScene::Enter()
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
 
-		pSkulHeadHUD->AddComponent(pMeshRenderer);
-		pSkulHeadHUD->AddComponent(make_shared<Transform>());
-		pSkulHeadHUD->AddComponent(make_shared<PlayerSkulThumnailScript>(pPlayer, pSkulHeadHUD));
-		pSkulHeadHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+		pSkulThumnailHUD->AddComponent(pMeshRenderer);
+		pSkulThumnailHUD->AddComponent(make_shared<Transform>());
+		pSkulThumnailHUD->AddComponent(make_shared<PlayerSkulThumnailScript>(pPlayer, pSkulThumnailHUD));
+		pSkulThumnailHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 		
-		pSkulHeadHUD->GetTransform()->SetLocalPosition(Vec3(-145.f, 18.f, -10.f));
-		pSkulHeadHUD->GetTransform()->SetLocalScale(Vec3(45.f, 45.f, 0.f));
+		pSkulThumnailHUD->GetTransform()->SetLocalPosition(Vec3(-145.f, 18.f, -10.f));
+		pSkulThumnailHUD->GetTransform()->SetLocalScale(Vec3(45.f, 45.f, 0.f));
 
-		AddGameObject(pSkulHeadHUD);
+		AddGameObject(pSkulThumnailHUD);
 	}
 
 	// Health Bar HUD

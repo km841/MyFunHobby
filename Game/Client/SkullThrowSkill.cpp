@@ -34,7 +34,6 @@ void SkullThrowSkill::Enter()
 {
 	weak_ptr<LittleBone> pLittleBone = static_pointer_cast<LittleBone>(m_pSkul.lock());
 	weak_ptr<PlayerProjectile> pProjectile = pLittleBone.lock()->GetHeadProjectile();
-	pLittleBone.lock()->LoseHead();
 
 	const Vec3& vLittleBonePos = pLittleBone.lock()->GetTransform()->GetLocalPosition();
 	PxTransform pxTransform = pLittleBone.lock()->GetPlayer().lock()->GetPhysical()->GetActor<PxRigidDynamic>()->getGlobalPose();

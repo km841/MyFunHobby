@@ -37,6 +37,7 @@ public:
 	shared_ptr<Skul>	  ObtainSkul(shared_ptr<Skul> pSkul);
 	void				  SwapSkul();
 	void				  RefreshAnimation(); 
+	void			      SkulCooldownUpdate();
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
