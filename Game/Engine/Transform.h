@@ -67,6 +67,8 @@ private:
     PxMat33  m_vPxLocalRotation;
     PxVec3   m_vPxLocalTranslation;
 
+    Vec2     m_vGlobalOffset;
+
     bool m_bChanged;
 };
 

@@ -27,6 +27,7 @@ public:
 	FORCEINLINE void				DisableSkillActiveFlag()						{ m_bSkillActiveFlag = false; }
 	FORCEINLINE void				EnableSkillActiveFlag()							{ m_bSkillActiveFlag = true; }
 	FORCEINLINE weak_ptr<SkulSkill> GetActiveSkill()								{ return m_pActiveSkill; }
+	FORCEINLINE weak_ptr<SkulSkill> GetSwapSkill()									{ return m_pSwapSkill; }
 	FORCEINLINE weak_ptr<SkulSkill> GetSkill(SKILL_INDEX eSkillIndex)				{ return m_arrSkills[static_cast<uint8>(eSkillIndex)]; }
 	FORCEINLINE weak_ptr<Player>	GetPlayer()										{ return m_pPlayer.lock(); }
 	FORCEINLINE weak_ptr<Texture>	GetThumnailImage()								{ return m_pThumnailImage; }
@@ -38,6 +39,7 @@ public:
 	void							SetPlayer(shared_ptr<Player> pPlayer);
 	void							SetActiveSkill(SKILL_INDEX eSkillIndex);
 	void							ObtainSkill(shared_ptr<SkulSkill> pSkulSkill);
+	void							SetSwapSkill(shared_ptr<SkulSkill> pSkulSkill);
 	void							SkillCooldownUpdate();
 	void							RefreshAnimation();
 
@@ -63,6 +65,7 @@ protected:
 	uint8											   m_iEnumIndex;
 
 	weak_ptr<SkulSkill>								   m_pActiveSkill;
+	shared_ptr<SkulSkill>							   m_pSwapSkill;
 	std::vector<std::map<PLAYER_STATE, wstring>>	   m_vStateToNameMaps;
 	std::array<shared_ptr<SkulSkill>, MAX_SKILLS>	   m_arrSkills;
 	shared_ptr<Texture>								   m_pThumnailImage;

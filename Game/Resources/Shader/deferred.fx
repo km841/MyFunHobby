@@ -24,7 +24,6 @@ VS_OUT VS_Main(VS_IN _in)
     int iDirection = g_int_1;
     
     VS_OUT output = (VS_OUT) 0;
-    
     output.pos = mul(float4(_in.pos, 1.f), g_matWVP);
     
     if (iDirection == 0)

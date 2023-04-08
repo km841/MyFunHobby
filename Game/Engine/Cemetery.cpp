@@ -12,6 +12,8 @@
 #include "ReturnHeadScript.h"
 #include "Texture.h"
 #include "HighWarlock.h"
+#include "HighWarlockSwapSkill.h"
+#include "LittleBoneSwapSkill.h"
 
 
 void Cemetery::Init()
@@ -103,6 +105,19 @@ void Cemetery::CreateSkul()
 			pLittleBone->ObtainSkill(pThrowSkill);
 		}
 
+		// LittleBone Swap Skill
+		{
+			shared_ptr<LittleBoneSwapSkill> pSwapSkill = make_shared<LittleBoneSwapSkill>();
+
+			wstring szAnimationName = L"LittleBone_Swap";
+			pSwapSkill->SetAnimationName(szAnimationName);
+
+			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_switch.anim");
+			pSwapSkill->SetAnimation(pSwapAnimation);
+
+			pLittleBone->SetSwapSkill(pSwapSkill);
+		}
+
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Thumnail", L"..\\Resources\\Texture\\HUD\\LittleBone\\Image_LittleBone_Thumnail.tga");
 		pLittleBone->SetThumnailImage(pTexture);
 
@@ -142,6 +157,19 @@ void Cemetery::CreateSkul()
 		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"HighWarlock_JumpAttack", pJumpAttackAnimation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_A, L"HighWarlock_AttackA", pAttackA_Animation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_B, L"HighWarlock_AttackB", pAttackB_Animation);
+
+		// HighWarlock Swap Skill
+		{
+			shared_ptr<HighWarlockSwapSkill> pSwapSkill = make_shared<HighWarlockSwapSkill>();
+
+			wstring szAnimationName = L"HighWarlock_Swap";
+			pSwapSkill->SetAnimationName(szAnimationName);
+
+			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_switch.anim");
+			pSwapSkill->SetAnimation(pSwapAnimation);
+
+			pHighWarlock->SetSwapSkill(pSwapSkill);
+		}
 
 
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Thumnail", L"..\\Resources\\Texture\\HUD\\HighWarlock\\Image_HighWarlock_Thumnail.png");

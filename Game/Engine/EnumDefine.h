@@ -169,6 +169,7 @@ enum class PLAYER_STATE : uint8
 	DASH,
 	SKILL,
 	PATH,
+	SWAP,
 
 	END,
 };

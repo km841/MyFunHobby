@@ -43,6 +43,13 @@ void JumpFallState::Update()
 		return;
 	}
 
+	// Swap State 전이
+	if (m_pPlayer.lock()->IsSwapActiveFlag())
+	{
+		AddChangeStateEvent(PLAYER_STATE::SWAP);
+		return;
+	}
+
 	// Idle State 전이
 	if (CheckGrounded())
 	{

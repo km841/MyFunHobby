@@ -36,6 +36,13 @@ void JumpAttackState::Update()
 		return;
 	}
 
+	// Swap State 전이
+	if (m_pPlayer.lock()->IsSwapActiveFlag())
+	{
+		AddChangeStateEvent(PLAYER_STATE::SWAP);
+		return;
+	}
+
 	// Dash State 전이
 	if (IS_PRESS(KEY_TYPE::Z))
 	{

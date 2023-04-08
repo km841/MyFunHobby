@@ -12,7 +12,7 @@ AnimationEditor::AnimationEditor()
     , m_szName{}
     , m_bAllChange(false)
 {
-    m_vWindowSize = ImVec2(350.f, 530.f);
+    m_vWindowSize = ImVec2(350.f, 650.f);
 }
 
 AnimationEditor::~AnimationEditor()

@@ -41,6 +41,13 @@ void IdleState::Update()
 		return;
 	}
 
+	// Swap State 전이
+	if (m_pPlayer.lock()->IsSwapActiveFlag())
+	{
+		AddChangeStateEvent(PLAYER_STATE::SWAP);
+		return;
+	}
+
 	// Attack A State 전이
 	if (IS_PRESS(KEY_TYPE::X))
 	{

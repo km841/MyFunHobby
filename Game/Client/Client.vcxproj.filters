@@ -271,6 +271,15 @@
     <ClInclude Include="PlayerSkulThumnailScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
     </ClInclude>
+    <ClInclude Include="SwapState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="LittleBoneSwapSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="HighWarlockSwapSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -450,6 +459,15 @@
     </ClCompile>
     <ClCompile Include="PlayerSkulThumnailScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="SwapState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="LittleBoneSwapSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="HighWarlockSwapSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

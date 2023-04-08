@@ -30,7 +30,9 @@ public:
 	FORCEINLINE int32					 GetJumpCount()								   { return m_iJumpCount; }
 	FORCEINLINE void					 DecreaseJumpCount()						   { m_iJumpCount -= 1; }
 	FORCEINLINE void					 RefreshJumpCount()							   { m_iJumpCount = 2; }
-
+	FORCEINLINE void					 EnableSwapActiveFlag()						   { m_bSwapActiveFlag = true; }
+	FORCEINLINE void					 DisableSwapActiveFlag()					   { m_bSwapActiveFlag = false; }
+	FORCEINLINE bool					 IsSwapActiveFlag()							   { return m_bSwapActiveFlag; }
 
 	weak_ptr<PlayerState> GetPlayerState();
 	void				  ChangePlayerState(PLAYER_STATE ePlayerState);
@@ -38,6 +40,7 @@ public:
 	void				  SwapSkul();
 	void				  RefreshAnimation(); 
 	void			      SkulCooldownUpdate();
+	
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
@@ -57,5 +60,7 @@ private:
 	shared_ptr<StateMachine>				m_pStateMachine;
 	PLAYER_STATE							m_ePlayerState;
 	int32									m_iJumpCount;
+
+	bool								    m_bSwapActiveFlag;
 };
 

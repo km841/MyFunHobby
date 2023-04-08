@@ -18,12 +18,13 @@ public:
     FORCEINLINE void  SetAnimator(shared_ptr<Animator> pAnimator) { m_pAnimator = pAnimator; }
     FORCEINLINE bool  IsFinished()                                { return m_bFinished; }
     FORCEINLINE const std::vector<FrameData>& GetFrameDataList()  { return m_vFrameDataList; }
-    FORCEINLINE int32 GetCurFrame() { return m_iCurFrame; }
+    FORCEINLINE int32 GetCurFrame()                               { return m_iCurFrame; }
     float GetAnimationProgress();
 
     void Reset();
     void PushData();
     void RefreshAnimation(const std::vector<FrameData> vFrameDataList);
+
 
 
 public:

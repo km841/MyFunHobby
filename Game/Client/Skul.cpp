@@ -29,6 +29,7 @@ void Skul::Start()
 void Skul::Update()
 {
 	GameObject::Update();
+	SkillCooldownUpdate();
 }
 
 void Skul::LateUpdate()
@@ -109,6 +110,15 @@ void Skul::ObtainSkill(shared_ptr<SkulSkill> pSkulSkill)
 	}
 	else
 		assert(nullptr);
+}
+
+void Skul::SetSwapSkill(shared_ptr<SkulSkill> pSwapSkill)
+{
+	assert(pSwapSkill);
+	m_pSwapSkill = pSwapSkill;
+
+	const wstring& szName = pSwapSkill->GetAnimationName();
+	GetAnimator()->AddAnimation(szName, pSwapSkill->GetAnimation().lock());
 }
 
 void Skul::SkillCooldownUpdate()

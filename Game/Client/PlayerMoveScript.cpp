@@ -98,6 +98,7 @@ void PlayerMoveScript::LateUpdate()
 
 	if (IS_DOWN(KEY_TYPE::SPACE))
 	{
-		pPlayer->SwapSkul();
+		// 스왑 쿨타임 확인
+		pPlayer->EnableSwapActiveFlag();
 	}
 }

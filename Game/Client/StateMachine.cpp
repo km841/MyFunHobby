@@ -12,6 +12,7 @@
 #include "DashState.h"
 #include "SkillState.h"
 #include "PathState.h"
+#include "SwapState.h"
 #include "Player.h"
 
 StateMachine::StateMachine()
@@ -30,6 +31,7 @@ void StateMachine::Awake()
 	m_mStateMap[PLAYER_STATE::DASH]		   = make_shared<DashState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::SKILL]	   = make_shared<SkillState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::PATH]		   = make_shared<PathState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::SWAP]		   = make_shared<SwapState>(m_pPlayer.lock());
 
 	for (int32 i = 0; i < PLAYER_STATE_COUNT; ++i)
 	{

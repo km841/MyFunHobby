@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "Physical.h"
 #include "GameObject.h"
+#include "Animator.h"
+#include "Animation.h"
 
 Transform::Transform()
 	: Component(COMPONENT_TYPE::TRANSFORM)
@@ -35,7 +37,9 @@ void Transform::FinalUpdate()
 
 			case ACTOR_TYPE::KINEMATIC:
 			case ACTOR_TYPE::DYNAMIC:
+			{
 				m_PxTransform = GetPhysical()->GetActor<PxRigidDynamic>()->getGlobalPose();
+			}
 				break;
 
 			case ACTOR_TYPE::CHARACTER:
@@ -44,18 +48,23 @@ void Transform::FinalUpdate()
 				break;
 		}
 
+
 		m_vPxLocalScale = Conv::Vec3ToPxVec3(GetPhysical()->GetGeometrySize());
 		m_vPxLocalRotation = static_cast<PxMat33>(m_PxTransform.q.getNormalized());
 		m_vPxLocalTranslation = m_PxTransform.p;
+
 
 		Matrix matPxScale = Matrix::CreateScale(Conv::PxVec3ToVec3(m_vPxLocalScale));
 		Matrix matPxRotation = Matrix::CreateRotationZ(m_PxTransform.q.z + m_vLocalRotation.z);
 		Matrix matPxTranslation = Matrix::CreateTranslation(Conv::PxVec3ToVec3(m_vPxLocalTranslation));
 
+		Vec3 vLocalTranslation = Vec3(m_PxTransform.p.x + m_vGlobalOffset.x, m_PxTransform.p.y + m_vGlobalOffset.y, m_PxTransform.p.z);
+		Matrix matTranslation = Matrix::CreateTranslation(vLocalTranslation);
+
 		m_matPxWorld = matPxScale * matPxRotation * matPxTranslation;
 
 		Matrix matScale = Matrix::CreateScale(m_vLocalScale);
-		m_matWorld = matScale * matPxRotation * matPxTranslation;
+		m_matWorld = matScale * matPxRotation * matTranslation;
 	}
 
 	else

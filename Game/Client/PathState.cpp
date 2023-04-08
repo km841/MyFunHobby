@@ -37,6 +37,14 @@ void PathState::Enter()
 		return;
 	}
 
+	// Swap State ÀüÀÌ
+	if (m_pPlayer.lock()->IsSwapActiveFlag())
+	{
+		AddChangeStateEvent(PLAYER_STATE::SWAP);
+		return;
+	}
+
+
 	assert(nullptr);
 }
 

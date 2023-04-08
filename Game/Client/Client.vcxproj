@@ -179,11 +179,13 @@
     <ClInclude Include="GlobalEffectSettingScript.h" />
     <ClInclude Include="HealthBarHUD.h" />
     <ClInclude Include="HighWarlock.h" />
+    <ClInclude Include="HighWarlockSwapSkill.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="InterfaceEffect.h" />
     <ClInclude Include="LittleBone.h" />
     <ClInclude Include="LittleBoneHead.h" />
+    <ClInclude Include="LittleBoneSwapSkill.h" />
     <ClInclude Include="PathState.h" />
     <ClInclude Include="PlayerFirstSkillShowScript.h" />
     <ClInclude Include="PlayerProjectile.h" />
@@ -212,6 +214,7 @@
     <ClInclude Include="SkullThrowSkill.h" />
     <ClInclude Include="SkulSkill.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="SwapState.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="ToolScene.h" />
@@ -237,11 +240,13 @@
     <ClCompile Include="GlobalEffectSettingScript.cpp" />
     <ClCompile Include="HealthBarHUD.cpp" />
     <ClCompile Include="HighWarlock.cpp" />
+    <ClCompile Include="HighWarlockSwapSkill.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="InterfaceEffect.cpp" />
     <ClCompile Include="LittleBone.cpp" />
     <ClCompile Include="LittleBoneHead.cpp" />
+    <ClCompile Include="LittleBoneSwapSkill.cpp" />
     <ClCompile Include="PathState.cpp" />
     <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
@@ -274,6 +279,7 @@
     <ClCompile Include="SkullThrowSkill.cpp" />
     <ClCompile Include="SkulSkill.cpp" />
     <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="SwapState.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="ToolScene.cpp" />

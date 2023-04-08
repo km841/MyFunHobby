@@ -25,6 +25,7 @@ Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
 	, m_ePlayerState(PLAYER_STATE::IDLE)
 	, m_iJumpCount(2)
+	, m_bSwapActiveFlag(false)
 {
 	m_Status.PlayerDefaultSetting();
 	m_pStateMachine = make_shared<StateMachine>();
@@ -136,13 +137,17 @@ void Player::RefreshAnimation()
 
 void Player::SkulCooldownUpdate()
 {
-	for (uint8 i = 0; i < MAX_SKULS; ++i)
+	SKUL_INDEX eSkulIndex = m_pActiveSkul->GetSkulIndex();
+	switch (eSkulIndex)
 	{
-		if (m_arrSkuls[i])
-		{
-			m_arrSkuls[i]->SkillCooldownUpdate();
-			m_arrSkuls[i]->LateUpdate();
-		}
+	case SKUL_INDEX::FIRST:
+		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)]->SkillCooldownUpdate();
+		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)]->LateUpdate();
+		break;
+	case SKUL_INDEX::SECOND:
+		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::FIRST)]->SkillCooldownUpdate();
+		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::FIRST)]->LateUpdate();
+		break;
 	}
 }
 
