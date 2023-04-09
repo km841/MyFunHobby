@@ -38,8 +38,11 @@ public:
     FORCEINLINE const Matrix&      GetPxLocalToWorldMatrix() const               { return m_matPxWorld; }
     FORCEINLINE const PxTransform& GetPxTransform() const                        { return m_PxTransform; }
 
-    FORCEINLINE bool IsChangedFlag() const                                       { return m_bChanged; }
-    FORCEINLINE void ChangedFlagOff()                                            { m_bChanged = false; }
+    FORCEINLINE void               SetGlobalOffset(const Vec2& vOffset)          { m_vGlobalOffset = vOffset; }
+    FORCEINLINE const Vec2&        GetGlobalOffset()                             { return m_vGlobalOffset; }
+
+    FORCEINLINE bool               IsChangedFlag() const                         { return m_bChanged; }
+    FORCEINLINE void               ChangedFlagOff()                              { m_bChanged = false; }
 
     Vec3             GetRight() { return m_matWorld.Right(); }
     Vec3             GetUp()    { return m_matWorld.Up(); }

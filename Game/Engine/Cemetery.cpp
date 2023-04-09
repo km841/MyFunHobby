@@ -9,7 +9,6 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "SkullThrowSkill.h"
-#include "ReturnHeadScript.h"
 #include "Texture.h"
 #include "HighWarlock.h"
 #include "HighWarlockSwapSkill.h"
@@ -42,8 +41,8 @@ void Cemetery::CreateSkul()
 		pMeshRenderer->SetMesh(pMesh);
 
 		pLittleBone->AddComponent(pMeshRenderer);
-		pLittleBone->AddComponent(make_shared<ReturnHeadScript>(pLittleBone));
 		pLittleBone->AddComponent(make_shared<Transform>());
+		pLittleBone->GetTransform()->SetGlobalOffset(Vec2(0.f, -20.f));
 
 		uint8 iHasHeadEnum = static_cast<uint8>(LITTLE_BONE_STATE::HAS_HEAD);
 		// Has Head Animation
@@ -112,7 +111,7 @@ void Cemetery::CreateSkul()
 			wstring szAnimationName = L"LittleBone_Swap";
 			pSwapSkill->SetAnimationName(szAnimationName);
 
-			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_switch.anim");
+			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_swap.anim");
 			pSwapSkill->SetAnimation(pSwapAnimation);
 
 			pLittleBone->SetSwapSkill(pSwapSkill);
@@ -139,6 +138,7 @@ void Cemetery::CreateSkul()
 
 		pHighWarlock->AddComponent(pMeshRenderer);
 		pHighWarlock->AddComponent(make_shared<Transform>());
+		pHighWarlock->GetTransform()->SetGlobalOffset(Vec2(0.f, 10.f));
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Idle", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Walk", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_walk.anim");
@@ -161,13 +161,6 @@ void Cemetery::CreateSkul()
 		// HighWarlock Swap Skill
 		{
 			shared_ptr<HighWarlockSwapSkill> pSwapSkill = make_shared<HighWarlockSwapSkill>();
-
-			wstring szAnimationName = L"HighWarlock_Swap";
-			pSwapSkill->SetAnimationName(szAnimationName);
-
-			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_switch.anim");
-			pSwapSkill->SetAnimation(pSwapAnimation);
-
 			pHighWarlock->SetSwapSkill(pSwapSkill);
 		}
 

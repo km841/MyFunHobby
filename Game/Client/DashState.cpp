@@ -89,7 +89,9 @@ void DashState::EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage)
 	const Vec3& vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
 	int32 iCurFrame = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetCurFrame();
 	const FrameData& frameData = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetFrameDataList()[iCurFrame];
+	const Vec2& vGlobalOffset = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetGlobalOffset();
 
+	pAfterImage.lock()->GetTransform()->SetGlobalOffset(vGlobalOffset);
 	pAfterImage.lock()->GetTransform()->SetLocalPosition(vPlayerPos);
 	pAfterImage.lock()->GetTransform()->SetLocalScale(vPlayerScale);
 	pAfterImage.lock()->SetFrameData(frameData);
@@ -111,6 +113,8 @@ void DashState::CreateAndAddAfterImagesToScene()
 
 		pAfterImage->AddComponent(pMeshRenderer);
 		pAfterImage->AddComponent(make_shared<Transform>());
+		
+
 		pAfterImage->AddComponent(make_shared<AfterImageDrawScript>(m_pPlayer.lock()));
 		m_vAfterImages.push_back(pAfterImage);
 
@@ -125,12 +129,14 @@ void DashState::EnableAndInitDashSmokeEffect()
 	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
 
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
-	const Vec3 vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
+	const Vec3& vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
+	const Vec2& vGlobalOffset = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetGlobalOffset();
 
 	vPlayerPos.x += iDirection ? fDistance : -fDistance;
 	vPlayerPos.y -= vPlayerScale.y / 2.f;
 
 	m_pPlayer.lock()->GetDashSmokeEffect()->Enable();
+	m_pPlayer.lock()->GetDashSmokeEffect()->GetTransform()->SetGlobalOffset(vGlobalOffset);
 	m_pPlayer.lock()->GetDashSmokeEffect()->GetTransform()->SetLocalPosition(vPlayerPos);
 	m_pPlayer.lock()->GetDashSmokeEffect()->SetDirection(m_pPlayer.lock()->GetDirection());
 	m_pPlayer.lock()->GetDashSmokeEffect()->GetAnimator()->Play(L"DashSmoke_Small", false);

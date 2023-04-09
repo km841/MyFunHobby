@@ -16,6 +16,7 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "RotateHeadScript.h"
+#include "Player.h"
 
 LittleBone::LittleBone()
 	: Skul(SKUL_GRADE::NORMAL)
@@ -61,6 +62,16 @@ void LittleBone::PickUpHead()
 {
 	m_eLittleBoneState = LITTLE_BONE_STATE::HAS_HEAD;
 	SetEnumIndex(static_cast<uint8>(m_eLittleBoneState));
+}
+
+void LittleBone::CooldownCompletionCallback(SKILL_INDEX eSkillIndex)
+{
+	if (SKILL_INDEX::FIRST == eSkillIndex)
+	{
+		PickUpHead();
+		m_pPlayer.lock()->RefreshAnimation();
+	}
+
 }
 
 void LittleBone::CreateHeadAndAddedToScene()

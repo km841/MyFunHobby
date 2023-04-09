@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "GlobalEffect.h"
+#include "Clock.h"
 
-GlobalEffect::GlobalEffect()
+GlobalEffect::GlobalEffect(float fEndTime)
 	: GameObject(LAYER_TYPE::GLOBAL_EFFECT)
+	, m_tDuration(fEndTime)
 {
 }
 
@@ -23,6 +25,8 @@ void GlobalEffect::Start()
 void GlobalEffect::Update()
 {
 	GameObject::Update();
+	if (m_tDuration.IsRunning())
+		m_tDuration.Update(DELTA_TIME);
 }
 
 void GlobalEffect::LateUpdate()

@@ -419,7 +419,7 @@ public:
 		:m_fCurTime(0.f)
 		,m_fEndTime(fEndTime)
 		,m_bIsRunning(false)
-		,m_bUnuseFlag(false)
+		,m_bUnuseFlag(true)
 	{}
 
 	void Reset()
@@ -455,6 +455,11 @@ public:
 				m_bIsRunning = false;
 			}
 		}
+	}
+
+	void SetEndTime(float fEndTime)
+	{
+		m_fEndTime = fEndTime;
 	}
 
 	bool IsRunning()

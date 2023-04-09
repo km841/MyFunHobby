@@ -4,7 +4,7 @@ class GlobalEffect :
     public GameObject
 {
 public:
-    GlobalEffect();
+    GlobalEffect(float fEndTime = 0.f);
     virtual ~GlobalEffect();
 
 public:
@@ -14,7 +14,10 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
-private:
+public:
+    Timer& GetTimer() { return m_tDuration; }
 
+private:
+    Timer m_tDuration;
 };
 

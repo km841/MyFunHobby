@@ -190,7 +190,6 @@
     <ClInclude Include="PlayerFirstSkillShowScript.h" />
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerSkulThumnailScript.h" />
-    <ClInclude Include="ReturnHeadScript.h" />
     <ClInclude Include="RotateHeadScript.h" />
     <ClInclude Include="SkillBoxHUD.h" />
     <ClInclude Include="SkillState.h" />
@@ -251,7 +250,6 @@
     <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerSkulThumnailScript.cpp" />
-    <ClCompile Include="ReturnHeadScript.cpp" />
     <ClCompile Include="RotateHeadScript.cpp" />
     <ClCompile Include="SkillBoxHUD.cpp" />
     <ClCompile Include="SkillState.cpp" />

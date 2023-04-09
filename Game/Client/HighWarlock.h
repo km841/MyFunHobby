@@ -1,5 +1,6 @@
 #pragma once
 #include "Skul.h"
+class GlobalEffect;
 class HighWarlock :
     public Skul
 {
@@ -14,7 +15,15 @@ public:
 	virtual void LateUpdate() override;
 	virtual void FinalUpdate() override;
 
-private:
+public:
+	FORCEINLINE weak_ptr<GlobalEffect> GetAbyssField() { return m_pAbyssField; }
+	void ActiveAbyssField();
+	void DeActiveAbyssField();
 
+private:
+	void CreateEffectAndAddedToScene();
+
+private:
+	shared_ptr<GlobalEffect> m_pAbyssField;
 };
 

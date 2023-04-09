@@ -21,9 +21,12 @@ public:
 	void LoseHead();
 	void PickUpHead();
 
+public:
+	virtual void CooldownCompletionCallback(SKILL_INDEX eSkillIndex) override;
 
 private:
 	void CreateHeadAndAddedToScene();
+	
 
 private:
 	LITTLE_BONE_STATE m_eLittleBoneState;

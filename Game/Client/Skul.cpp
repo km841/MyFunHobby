@@ -116,9 +116,14 @@ void Skul::SetSwapSkill(shared_ptr<SkulSkill> pSwapSkill)
 {
 	assert(pSwapSkill);
 	m_pSwapSkill = pSwapSkill;
+	m_pSwapSkill->SetSkul(Conv::BaseToDeclare<Skul>(shared_from_this()));
 
-	const wstring& szName = pSwapSkill->GetAnimationName();
-	GetAnimator()->AddAnimation(szName, pSwapSkill->GetAnimation().lock());
+	if (pSwapSkill->GetAnimation().lock())
+	{
+		const wstring& szName = pSwapSkill->GetAnimationName();
+		GetAnimator()->AddAnimation(szName, pSwapSkill->GetAnimation().lock());
+	}
+
 }
 
 void Skul::SkillCooldownUpdate()
@@ -126,7 +131,14 @@ void Skul::SkillCooldownUpdate()
 	for (int32 i = 0; i < MAX_SKILLS; ++i)
 	{
 		if (m_arrSkills[i] && !m_arrSkills[i]->IsActive())
+		{
 			m_arrSkills[i]->UpdateSkillCooldown();
+			if (m_arrSkills[i]->IsActive())
+			{
+				// Callback
+				CooldownCompletionCallback(static_cast<SKILL_INDEX>(i));
+			}
+		}
 	}
 }
 

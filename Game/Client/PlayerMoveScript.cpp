@@ -36,19 +36,25 @@ void PlayerMoveScript::LateUpdate()
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
 		vVelocity = VEC3_RIGHT_NORMAL * -m_fSpeed;
-		pPlayer->SetDirection(DIRECTION::LEFT);
-
-		if (PLAYER_STATE::DASH != GetPlayerStateEnum())
+		
+		if (PLAYER_STATE::DASH != GetPlayerStateEnum() &&
+			PLAYER_STATE::SWAP != GetPlayerStateEnum())
+		{
+			pPlayer->SetDirection(DIRECTION::LEFT);
 			GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+		}
 	}
 
 	else if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
 		vVelocity = VEC3_RIGHT_NORMAL * m_fSpeed;
-		pPlayer->SetDirection(DIRECTION::RIGHT);
-
-		if (PLAYER_STATE::DASH != GetPlayerStateEnum())
+		
+		if (PLAYER_STATE::DASH != GetPlayerStateEnum() &&
+			PLAYER_STATE::SWAP != GetPlayerStateEnum())
+		{
+			pPlayer->SetDirection(DIRECTION::RIGHT);
 			GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+		}
 	}
 
 	if (IS_DOWN(KEY_TYPE::A))

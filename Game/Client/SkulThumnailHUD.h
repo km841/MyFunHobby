@@ -1,6 +1,7 @@
 #pragma once
 #include "HUD.h"
 
+class InterfaceEffect;
 class SkulThumnailHUD :
     public HUD
 {
@@ -16,6 +17,12 @@ public:
     virtual void FinalUpdate();
 
 private:
+    void CreateAndAddCompletionEffectToScene();
 
+public:
+    weak_ptr<InterfaceEffect> GetCompletionEffect() { return m_pCompletionEffect; }
+
+private:
+    shared_ptr<InterfaceEffect> m_pCompletionEffect;
 };
 

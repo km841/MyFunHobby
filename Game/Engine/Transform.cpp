@@ -75,7 +75,8 @@ void Transform::FinalUpdate()
 		matRotation *= Matrix::CreateRotationY(m_vLocalRotation.y);
 		matRotation *= Matrix::CreateRotationZ(m_vLocalRotation.z);
 
-		Matrix matTranslation = Matrix::CreateTranslation(m_vLocalTranslation);
+		Vec3 vLocalTranslation = Vec3(m_vLocalTranslation.x + m_vGlobalOffset.x, m_vLocalTranslation.y + m_vGlobalOffset.y, m_vLocalTranslation.z);
+		Matrix matTranslation = Matrix::CreateTranslation(vLocalTranslation);
 
 		m_matLocal = matScale * matRotation * matTranslation;
 		m_matWorld = m_matLocal;

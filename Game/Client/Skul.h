@@ -44,6 +44,9 @@ public:
 	void							RefreshAnimation();
 
 public:
+	virtual void					CooldownCompletionCallback(SKILL_INDEX eSkillIndex) { }
+
+public:
 	// Helper Functions
 	void AddAnimation(PLAYER_STATE ePlayerState, const wstring& szName, shared_ptr<Animation> pAnimation, uint8 iEnum = 0);
 	void PlayAnimation(PLAYER_STATE ePlayerState, bool bLoop = true, int32 iSection = 0);

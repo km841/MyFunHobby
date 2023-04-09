@@ -23,7 +23,7 @@ enum class COLLIDER_TYPE : uint8
 enum
 {
     GRID_SIZE = 1000,
-    FRAME_BOX_COUNT = 50,
+    FRAME_BOX_COUNT = 100,
 };
 
 class ToolScene :

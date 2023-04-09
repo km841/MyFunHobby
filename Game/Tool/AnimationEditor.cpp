@@ -243,7 +243,9 @@ void AnimationEditor::EditUI_Update()
             if (m_bAllChange)
             {
                 for (auto& frameData : m_vFrameDataList)
+                {
                     frameData.fDuration = m_CurrFrameData.fDuration;
+                }
             }
 
         }
