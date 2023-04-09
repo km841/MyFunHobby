@@ -9,7 +9,7 @@
 #include "Collider.h"
 #include "Engine.h"
 #include "RigidBody.h"
-#include "UIManager.h"
+#include "InterfaceManager.h"
 #include "DialogueUI.h"
 #include "Player.h"
 #include "Skul.h"
@@ -104,7 +104,7 @@ void PlayerMoveScript::LateUpdate()
 
 	if (IS_DOWN(KEY_TYPE::SPACE))
 	{
-		// 스왑 쿨타임 확인
-		pPlayer->EnableSwapActiveFlag();
+		if (pPlayer->IsSwapPossible())
+			pPlayer->EnableSwapActiveFlag();
 	}
 }

@@ -7,9 +7,10 @@
 #include "Engine.h"
 #include "Transform.h"
 #include "Clock.h"
+#include "HealthBarHUD.h"
 
-PlayerHealthBarShowScript::PlayerHealthBarShowScript(shared_ptr<Player> pPlayer)
-	: m_pPlayer(pPlayer)
+PlayerHealthBarShowScript::PlayerHealthBarShowScript(shared_ptr<HealthBarHUD> pHealthBar)
+	: m_pHealthBar(pHealthBar)
 {
 }
 
@@ -19,7 +20,7 @@ PlayerHealthBarShowScript::~PlayerHealthBarShowScript()
 
 void PlayerHealthBarShowScript::LateUpdate()
 {
-	float fRatio = m_pPlayer.lock()->GetStatus()->GetHPRatio();
+	float fRatio = m_pHealthBar.lock()->GetPlayer().lock()->GetStatus()->GetHPRatio();
 
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());

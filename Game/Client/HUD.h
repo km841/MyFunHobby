@@ -1,8 +1,8 @@
 #pragma once
-#include "GameObject.h"
-
+#include "Interface.h"
+class Player;
 class HUD :
-    public GameObject
+    public Interface
 {
 public:
     HUD();
@@ -16,9 +16,11 @@ public:
     virtual void FinalUpdate();
 
 public:
+    FORCEINLINE void             SetPlayer(shared_ptr<Player> pPlayer) { m_pPlayer = pPlayer; }
+    FORCEINLINE weak_ptr<Player> GetPlayer() { return m_pPlayer; }
 
-
-private:
+protected:
+    weak_ptr<Player> m_pPlayer;
 
 };
 

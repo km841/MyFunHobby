@@ -1,5 +1,6 @@
 #pragma once
 #include "HUD.h"
+class Player;
 class HealthBarHUD :
     public HUD
 {
@@ -13,8 +14,10 @@ public:
     virtual void Update();
     virtual void LateUpdate();
     virtual void FinalUpdate();
+    
+
 
 private:
-
+    
 };
 

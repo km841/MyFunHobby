@@ -28,7 +28,7 @@
 #include "Resources.h"
 #include "Input.h"
 #include "CollisionManager.h"
-#include "UIManager.h"
+#include "InterfaceManager.h"
 #include "Cemetery.h"
 
 /* GameObject */
@@ -132,108 +132,14 @@ void TownScene::Enter()
 		AddGameObject(pPlayer);
 	}
 
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR)->SetPlayer(pPlayer);
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST)->SetPlayer(pPlayer);
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL)->SetPlayer(pPlayer);
 
-	shared_ptr<PlayerInterfaceHUD> pInterfaceHUD = nullptr;
-	// Player Interface HUD
-	{
-		pInterfaceHUD = make_shared<PlayerInterfaceHUD>();
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"PlayerInterfaceHUD", L"..\\Resources\\Texture\\HUD\\HUD_Player_Normal_Frame.tga");
-		pMaterial->SetTexture(0, pTexture);
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pInterfaceHUD->AddComponent(pMeshRenderer);
-		pInterfaceHUD->AddComponent(make_shared<Transform>());
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		pInterfaceHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 80.f));
-		pInterfaceHUD->GetTransform()->SetLocalScale(Vec3(203.f, 66.f, 1.f));
-
-		AddGameObject(pInterfaceHUD);
-	}
-
-	// Skul Thumnail HUD
-	{
-		shared_ptr<SkulThumnailHUD> pSkulThumnailHUD = make_shared<SkulThumnailHUD>();
-
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pSkulThumnailHUD->AddComponent(pMeshRenderer);
-		pSkulThumnailHUD->AddComponent(make_shared<Transform>());
-		pSkulThumnailHUD->AddComponent(make_shared<PlayerSkulThumnailScript>(pPlayer, pSkulThumnailHUD));
-		pSkulThumnailHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-		
-		pSkulThumnailHUD->GetTransform()->SetLocalPosition(Vec3(-145.f, 18.f, -10.f));
-		pSkulThumnailHUD->GetTransform()->SetLocalScale(Vec3(45.f, 45.f, 0.f));
-
-		AddGameObject(pSkulThumnailHUD);
-	}
-
-	// Health Bar HUD
-	{
-		shared_ptr<HealthBarHUD> pHealthBarHUD = make_shared<HealthBarHUD>();
-
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"HP")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HealthBarHUD", L"..\\Resources\\Texture\\HUD\\HealthBar\\HUD_Player_HealthBar.tga");
-		pMaterial->SetTexture(0, pTexture);
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pHealthBarHUD->AddComponent(pMeshRenderer);
-		pHealthBarHUD->AddComponent(make_shared<PlayerHealthBarShowScript>(pPlayer));
-		pHealthBarHUD->AddComponent(make_shared<Transform>());
-		pHealthBarHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		pHealthBarHUD->GetTransform()->SetLocalPosition(Vec3(1.f, -32.5f, -10.f));
-		pHealthBarHUD->GetTransform()->SetLocalScale(Vec3(115.f, 8.f, 1.f));
-
-		AddGameObject(pHealthBarHUD);
-	}
-
-	// Skill Box HUD
-	{
-		shared_ptr<SkillBoxHUD> pSkillBoxHUD = make_shared<SkillBoxHUD>();
-
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"SkillBox")->Clone();
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pSkillBoxHUD->AddComponent(pMeshRenderer);
-		pSkillBoxHUD->AddComponent(make_shared<PlayerFirstSkillShowScript>(pPlayer, pSkillBoxHUD));
-		pSkillBoxHUD->AddComponent(make_shared<Transform>());
-		pSkillBoxHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		pSkillBoxHUD->GetTransform()->SetLocalPosition(Vec3(-63.f, 11.5f, -10.f));
-		pSkillBoxHUD->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
-
-		AddGameObject(pSkillBoxHUD);
-	}
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_INTERFACE));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL));
 
 	// EffectTest
 	//{
@@ -563,8 +469,8 @@ void TownScene::Enter()
 	//	AddGameObject(pHUD);
 	//}
 
-	AddGameObject(GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE));
-	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE));
+	GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE)->Disable();
 	
 	// Fade In/Out Object
 	{

@@ -72,3 +72,9 @@ void SkillBoxHUD::CreateAndAddCompletionEffectToScene()
 
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pCompletionEffect, eSceneType));
 }
+
+void SkillBoxHUD::PlayCompletionAnimation()
+{
+	m_pCompletionEffect->Enable();
+	m_pCompletionEffect->GetAnimator()->Play(L"Cooldown_Completion", false);
+}

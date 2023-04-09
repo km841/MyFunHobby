@@ -166,7 +166,7 @@
     <ClInclude Include="EnumDefine.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
+    <ClInclude Include="InterfaceManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Movement.h">
@@ -339,7 +339,7 @@
     <ClCompile Include="PlayerChangeStateEvent.cpp">
       <Filter>Object\Event</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
+    <ClCompile Include="InterfaceManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="Movement.cpp">
@@ -417,7 +417,7 @@
     <FxCompile Include="..\Resources\Shader\afterimage.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\skillbox.fx">
+    <FxCompile Include="..\Resources\Shader\cooldown.fx">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\deferred.fx">

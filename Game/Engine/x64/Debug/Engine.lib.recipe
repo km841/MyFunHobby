@@ -39,7 +39,7 @@
       <FullPath>C:\MyProject\Game\Output\preview.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\MyProject\Game\Output\skillbox.cso</FullPath>
+      <FullPath>C:\MyProject\Game\Output\cooldown.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

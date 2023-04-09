@@ -103,7 +103,7 @@ void DashState::CreateAndAddAfterImagesToScene()
 	shared_ptr<Scene> pActiveScene = GET_SINGLE(Scenes)->GetActiveScene();
 	for (int32 i = 0; i < m_iAfterImageMaxCount; ++i)
 	{
-		shared_ptr<AfterImage> pAfterImage = make_shared<AfterImage>();
+		shared_ptr<AfterImage> pAfterImage = make_shared<AfterImage>(AFTERIMAGE_TYPE::DASH);
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"AfterImage")->Clone();
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 

@@ -33,6 +33,8 @@ public:
 	FORCEINLINE void					 EnableSwapActiveFlag()						   { m_bSwapActiveFlag = true; }
 	FORCEINLINE void					 DisableSwapActiveFlag()					   { m_bSwapActiveFlag = false; }
 	FORCEINLINE bool					 IsSwapActiveFlag()							   { return m_bSwapActiveFlag; }
+	FORCEINLINE bool					 IsSwapPossible()							   { return m_tSwapCooldown.IsFinished(); }
+	FORCEINLINE float					 GetSwapCooldownProgress()					   { return m_tSwapCooldown.GetProgress(); }
 
 	weak_ptr<PlayerState> GetPlayerState();
 	void				  ChangePlayerState(PLAYER_STATE ePlayerState);
@@ -61,6 +63,7 @@ private:
 	PLAYER_STATE							m_ePlayerState;
 	int32									m_iJumpCount;
 
+	Timer									m_tSwapCooldown;
 	bool								    m_bSwapActiveFlag;
 };
 

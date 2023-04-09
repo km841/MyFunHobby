@@ -1,6 +1,7 @@
 #pragma once
 #include "HUD.h"
 class InterfaceEffect;
+class Player;
 class SkillBoxHUD :
     public HUD
 {
@@ -16,13 +17,13 @@ public:
     virtual void FinalUpdate();
 
 private:
-    void CreateAndAddCompletionEffectToScene();
+    void                         CreateAndAddCompletionEffectToScene();
 
 public:
-    weak_ptr<InterfaceEffect> GetCompletionEffect() { return m_pCompletionEffect; }
+    weak_ptr<InterfaceEffect>    GetCompletionEffect() { return m_pCompletionEffect; }
+    void PlayCompletionAnimation();
 
 private:
     shared_ptr<InterfaceEffect> m_pCompletionEffect;
-
 };
 

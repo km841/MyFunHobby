@@ -43,6 +43,7 @@ VS_OUT VS_Main(VS_IN _in)
 // g_vec2_3 : Offset
 // g_int_0  : Animation Flag
 // g_int_1  : Direction
+// g_int_2  : AfterImage Type
 // g_float_0: Ratio
 
 float4 PS_Main(VS_OUT _in) : SV_Target
@@ -52,11 +53,12 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float2 vAtlasSize = g_vec2_2;
     float2 vOffset = g_vec2_3;
     int iAnimationFlag = g_int_0;
+    int iAfterImageType = g_int_2;
     
     float fRatio = g_float_0;
     
     float4 vColor;
-    if (iAnimationFlag == 1)
+    if (iAnimationFlag)
     {
         float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
         vColor = g_tex_0.Sample(g_sam_0, vUV);
@@ -77,7 +79,11 @@ float4 PS_Main(VS_OUT _in) : SV_Target
             vColor.a = 1.f * fRatio;
     }
     
-    vColor.rgb = float3(0.f, 0.f, 0.f);
+    if (iAfterImageType)
+        vColor.rgb = float3(0.63f, 0.13f, 0.75f);
+    else
+        vColor.rgb = float3(0.f, 0.f, 0.f);
+    
     return vColor;
 }
 #endif

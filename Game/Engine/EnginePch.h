@@ -419,31 +419,33 @@ public:
 		:m_fCurTime(0.f)
 		,m_fEndTime(fEndTime)
 		,m_bIsRunning(false)
-		,m_bUnuseFlag(true)
+		,m_bIsFinished(true)
 	{}
 
 	void Reset()
 	{
 		m_fCurTime = 0.f;
 		m_bIsRunning = false;
+		m_bIsFinished = false;
 	}
 
 	void Start()
 	{
 		m_fCurTime = 0.f;
 		m_bIsRunning = true;
-		m_bUnuseFlag = false;
+		m_bIsFinished = false;
 	}
 
 	void Stop()
 	{
-		Reset();
-		m_bUnuseFlag = true;
+		m_fCurTime = 0.f;
+		m_bIsRunning = false;
+		m_bIsFinished = false;
 	}
 
 	void Update(float fDeltaTime)
 	{
-		if (m_bUnuseFlag)
+		if (m_bIsFinished)
 			return;
 
 		if (m_bIsRunning)
@@ -452,7 +454,7 @@ public:
 			if (m_fCurTime > m_fEndTime)
 			{
 				m_fCurTime = m_fEndTime;
-				m_bIsRunning = false;
+				m_bIsFinished = true;
 			}
 		}
 	}
@@ -469,7 +471,7 @@ public:
 
 	bool IsFinished()
 	{
-		return !m_bIsRunning;
+		return m_bIsFinished;
 	}
 
 	float GetProgress() const
@@ -485,26 +487,11 @@ public:
 		m_fCurTime = m_fEndTime * fProgress;
 	}
 
-	void Disable()
-	{
-		m_bUnuseFlag = true;
-	}
-
-	void Enable()
-	{
-		m_bUnuseFlag = false;
-	}
-
-	bool GetUnusedFlag()
-	{
-		return m_bUnuseFlag;
-	}
-
 private:
 	float m_fCurTime;
 	float m_fEndTime;
 	bool  m_bIsRunning;
-	bool  m_bUnuseFlag;
+	bool  m_bIsFinished;
 };
 
 

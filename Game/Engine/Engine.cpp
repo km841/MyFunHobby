@@ -8,7 +8,7 @@
 #include "Player.h"
 #include "EventManager.h"
 #include "CollisionManager.h"
-#include "UIManager.h"
+#include "InterfaceManager.h"
 #include "Cemetery.h"
 
 void Engine::Init(const WindowInfo& wInfo)
@@ -65,7 +65,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	GET_SINGLE(Scenes)->Init();
 	GET_SINGLE(Clock)->Init();
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
-	GET_SINGLE(UIManager)->Init();
+	GET_SINGLE(InterfaceManager)->Init();
 	GET_SINGLE(Cemetery)->Init();
 }
 

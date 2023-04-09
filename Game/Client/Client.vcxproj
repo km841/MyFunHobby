@@ -182,6 +182,7 @@
     <ClInclude Include="HighWarlockSwapSkill.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="InterfaceEffect.h" />
     <ClInclude Include="LittleBone.h" />
     <ClInclude Include="LittleBoneHead.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="HighWarlockSwapSkill.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="InterfaceEffect.cpp" />
     <ClCompile Include="LittleBone.cpp" />
     <ClCompile Include="LittleBoneHead.cpp" />

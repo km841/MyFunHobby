@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObject.h"
+#include "Interface.h"
 class UI :
-    public GameObject
+    public Interface
 {
 public:
     UI();

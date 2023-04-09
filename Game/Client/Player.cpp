@@ -20,12 +20,14 @@
 #include "Resources.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "Clock.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
 	, m_ePlayerState(PLAYER_STATE::IDLE)
 	, m_iJumpCount(2)
 	, m_bSwapActiveFlag(false)
+	, m_tSwapCooldown(5.f)
 {
 	m_Status.PlayerDefaultSetting();
 	m_pStateMachine = make_shared<StateMachine>();
@@ -65,6 +67,10 @@ void Player::Update()
 	GameObject::Update();
 	m_pActiveSkul->Update();
 	m_pStateMachine->Update();
+
+	if (m_tSwapCooldown.IsRunning())
+		m_tSwapCooldown.Update(DELTA_TIME);
+
 	SkulCooldownUpdate();
 }
 
@@ -135,6 +141,8 @@ void Player::SwapSkul()
 		m_pActiveSkul = m_arrSkuls[static_cast<uint8>(SKUL_INDEX::FIRST)];
 		break;
 	}
+
+	m_tSwapCooldown.Start();
 }
 
 void Player::RefreshAnimation()

@@ -150,11 +150,41 @@ enum class OBJECT_LEVEL_TYPE : uint8
 	OBJECT_LEVEL_5,
 };
 
+enum class INTERFACE_TYPE : uint8
+{
+	INVENTORY,
+	DIALOGUE,
+	MENU,
+	//---------------
+	PLAYER_INTERFACE,
+	PLAYER_HEALTH_BAR,
+	PLAYER_SKILL_BOX_FIRST,
+	PLAYER_SKUL_THUMNAIL,
+	END,
+};
+
 enum class UI_TYPE : uint8
 {
 	INVENTORY,
 	DIALOGUE,
 	MENU,
+	END,
+};
+
+enum class HUD_TYPE : uint8
+{
+	PLAYER_INTERFACE,
+	PLAYER_HEALTH_BAR,
+	PLAYER_SKILL_BOX_FIRST,
+	PLAYER_SKUL_THUMNAIL,
+	END,
+};
+
+
+enum
+{
+	UI_MAX_COUNT = UI_TYPE::END,
+	HUD_MAX_COUNT = HUD_TYPE::END
 };
 
 enum class PLAYER_STATE : uint8
@@ -237,4 +267,10 @@ enum class LITTLE_BONE_STATE
 {
 	HAS_HEAD,
 	NO_HEAD,
+};
+
+enum class AFTERIMAGE_TYPE
+{
+	DASH,
+	SWAP,
 };

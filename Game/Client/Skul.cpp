@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Transform.h"
 #include "SkulSkill.h"
+#include "InterfaceManager.h"
+#include "SkillBoxHUD.h"
 
 Skul::Skul(SKUL_GRADE eSkulGrade)
 	: GameObject(LAYER_TYPE::UNKNOWN)
@@ -135,8 +137,7 @@ void Skul::SkillCooldownUpdate()
 			m_arrSkills[i]->UpdateSkillCooldown();
 			if (m_arrSkills[i]->IsActive())
 			{
-				// Callback
-				CooldownCompletionCallback(static_cast<SKILL_INDEX>(i));
+				CooldownCompletion(static_cast<SKILL_INDEX>(i));
 			}
 		}
 	}
@@ -145,6 +146,24 @@ void Skul::SkillCooldownUpdate()
 void Skul::RefreshAnimation()
 {
 	m_pPlayer.lock()->RefreshAnimation();
+}
+
+void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)
+{
+	switch (eSkillIndex)
+	{
+	case SKILL_INDEX::FIRST:
+	{
+		weak_ptr<Interface> pInterface = GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST);
+		assert(pInterface.lock());
+		static_pointer_cast<SkillBoxHUD>(pInterface.lock())->PlayCompletionAnimation();
+	}
+	break;
+	case SKILL_INDEX::SECOND:
+		break;
+	}
+
+	CooldownCompletionCallback(eSkillIndex);
 }
 
 weak_ptr<Animation> Skul::GetActiveAnimation()

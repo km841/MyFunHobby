@@ -6,7 +6,7 @@ class PlayerSkulThumnailScript :
     public MonoBehaviour
 {
 public:
-    explicit PlayerSkulThumnailScript(shared_ptr<Player> pPlayer, shared_ptr<SkulThumnailHUD> pSkulHeadHUD);
+    explicit PlayerSkulThumnailScript(shared_ptr<SkulThumnailHUD> pSkulHeadHUD);
     virtual ~PlayerSkulThumnailScript();
 
 public:

@@ -2,7 +2,7 @@
 #include "UI.h"
 
 UI::UI()
-	: GameObject(LAYER_TYPE::UI)
+	: Interface(LAYER_TYPE::UI)
 {
 }
 
@@ -12,25 +12,25 @@ UI::~UI()
 
 void UI::Awake()
 {
-	GameObject::Awake();
+	Interface::Awake();
 }
 
 void UI::Start()
 {
-	GameObject::Start();
+	Interface::Start();
 }
 
 void UI::Update()
 {
-	GameObject::Update();
+	Interface::Update();
 }
 
 void UI::LateUpdate()
 {
-	GameObject::LateUpdate();
+	Interface::LateUpdate();
 }
 
 void UI::FinalUpdate()
 {
-	GameObject::FinalUpdate();
+	Interface::FinalUpdate();
 }

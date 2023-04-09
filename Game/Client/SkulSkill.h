@@ -28,15 +28,15 @@ public:
 	FORCEINLINE weak_ptr<Texture>	  GetTexture()										{ return m_pTexture; }
 	FORCEINLINE void				  SetTexture(shared_ptr<Texture> pTexture)			{ m_pTexture = pTexture; }
 
-	void Activate()									   { m_tDuration.Start(); }
-	void DeActivate()								   { m_tCooldown.Start(); }
-	bool IsCondition(weak_ptr<GameObject> pGameObject) { return m_fnCondition(pGameObject.lock()); }
+	void							  Activate()										{ m_tDuration.Start(); }
+	void							  DeActivate()										{ m_tCooldown.Start(); }
+	bool							  IsCondition(weak_ptr<GameObject> pGameObject)		{ return m_fnCondition(pGameObject.lock()); }
 
 public:
-	bool  IsActive()			{ return m_tCooldown.IsFinished(); }
-	bool  IsFinished()			{ return m_tDuration.IsFinished(); }
-	float GetCooldownProgress() { return m_tCooldown.GetProgress(); }
-	void  UpdateSkillCooldown();
+	bool							  IsActive()										{ return m_tCooldown.IsFinished(); }
+	bool							  IsFinished()										{ return m_tDuration.IsFinished(); }
+	float							  GetCooldownProgress()								{ return m_tCooldown.GetProgress(); }
+	void							  UpdateSkillCooldown();
 
 protected:
 	std::function<bool(weak_ptr<GameObject>)> m_fnCondition;

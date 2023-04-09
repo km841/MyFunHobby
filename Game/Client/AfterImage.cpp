@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "AfterImage.h"
 
-AfterImage::AfterImage()
+AfterImage::AfterImage(AFTERIMAGE_TYPE eAfterImageType)
 	: GameObject(LAYER_TYPE::AFTER_IMAGE)
+	, m_eAfterImageType(eAfterImageType)
 {
 }
 

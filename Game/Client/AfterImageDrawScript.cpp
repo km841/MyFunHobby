@@ -40,6 +40,7 @@ void AfterImageDrawScript::LateUpdate()
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(currFrameData.szTexPath, currFrameData.szTexPath);
 		assert(pTexture);
 
+		AFTERIMAGE_TYPE eAfterImageType = pAfterImage->GetAfterImageType();
 		DIRECTION eDirection = pAfterImage->GetDirection();
 		Vec3 vSpriteSize = pTexture->GetTexSize();
 		Vec2 vLTPos = Vec2(currFrameData.vLTPos.x / vSpriteSize.x, currFrameData.vLTPos.y / vSpriteSize.y);
@@ -50,6 +51,7 @@ void AfterImageDrawScript::LateUpdate()
 		
 		GetMeshRenderer()->GetMaterial()->SetInt(0, 1);
 		GetMeshRenderer()->GetMaterial()->SetInt(1, static_cast<uint8>(eDirection));
+		GetMeshRenderer()->GetMaterial()->SetInt(2, static_cast<uint8>(eAfterImageType));
 		GetMeshRenderer()->GetMaterial()->SetVec2(0, vLTPos);
 		GetMeshRenderer()->GetMaterial()->SetVec2(1, vSize);
 		GetMeshRenderer()->GetMaterial()->SetVec2(2, vAtlasSize);

@@ -10,9 +10,8 @@
 #include "SkillBoxHUD.h"
 #include "InterfaceEffect.h"
 
-PlayerFirstSkillShowScript::PlayerFirstSkillShowScript(shared_ptr<Player> pPlayer, shared_ptr<SkillBoxHUD> pHUD)
-	: m_pPlayer(pPlayer)
-	, m_pHUD(pHUD)
+PlayerFirstSkillShowScript::PlayerFirstSkillShowScript(shared_ptr<SkillBoxHUD> pHUD)
+	: m_pHUD(pHUD)
 	, m_bFlag(false)
 	, m_bPrevFlag(true)
 {
@@ -24,7 +23,7 @@ PlayerFirstSkillShowScript::~PlayerFirstSkillShowScript()
 
 void PlayerFirstSkillShowScript::LateUpdate()
 {
-	weak_ptr<SkulSkill> pFirstSkill = m_pPlayer.lock()->GetActiveSkul()->GetSkill(SKILL_INDEX::FIRST);
+	weak_ptr<SkulSkill> pFirstSkill = m_pHUD.lock()->GetPlayer().lock()->GetActiveSkul()->GetSkill(SKILL_INDEX::FIRST);
 	if (pFirstSkill.lock())
 	{
 		m_bFlag = pFirstSkill.lock()->IsActive();
@@ -35,21 +34,5 @@ void PlayerFirstSkillShowScript::LateUpdate()
 		GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture.lock());
 		GetMeshRenderer()->GetMaterial()->SetFloat(0, fCooldownProgress);
 		GetMeshRenderer()->GetMaterial()->SetInt(3, static_cast<int32>(bActive));
-
-		if (!m_bPrevFlag && (m_bPrevFlag != m_bFlag))
-		{
-			m_pHUD.lock()->GetCompletionEffect().lock()->Enable();
-			m_pHUD.lock()->GetCompletionEffect().lock()->GetAnimator()->Play(L"Cooldown_Completion", false);
-		}
-		else
-		{
-			if (m_pHUD.lock()->GetCompletionEffect().lock()->GetAnimator()->GetActiveAnimation())
-			{
-				if (m_pHUD.lock()->GetCompletionEffect().lock()->GetAnimator()->GetActiveAnimation()->IsFinished())
-					m_pHUD.lock()->GetCompletionEffect().lock()->Disable();
-			}
-
-		}
-		m_bPrevFlag = m_bFlag;
 	}
 }

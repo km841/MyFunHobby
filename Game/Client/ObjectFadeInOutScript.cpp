@@ -35,9 +35,8 @@ void ObjectFadeInOutScript::LateUpdate()
 
 	else
 	{
-		if (!m_tStayTime.GetUnusedFlag())
+		if (m_tStayTime.IsFinished() && !m_tDuration.IsRunning())
 		{
-			m_tStayTime.Disable();
 			m_tDuration.Start();
 		}
 
@@ -54,11 +53,6 @@ void ObjectFadeInOutScript::LateUpdate()
 				GetMeshRenderer()->GetMaterial()->SetFloat(0, 1.f - m_tDuration.GetProgress());
 				break;
 			}
-		}
-
-		else
-		{
-			m_tDuration.Disable();
 		}
 	}
 

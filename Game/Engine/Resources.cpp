@@ -282,7 +282,7 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"AfterImage", pShader);
 	}
 
-	// SkillBox
+	// Cooldown
 	{
 		ShaderInfo shaderInfo =
 		{
@@ -293,9 +293,9 @@ void Resources::CreateDefaultShader()
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\skillbox.fx", shaderInfo);
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\cooldown.fx", shaderInfo);
 
-		Add<Shader>(L"SkillBox", pShader);
+		Add<Shader>(L"Cooldown", pShader);
 	}
 
 	// Effect
@@ -423,13 +423,13 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"AfterImage", pMaterial);
 	}
 
-	// SkillBox
+	// Cooldown
 	{
 		shared_ptr<Material> pMaterial = make_shared<Material>();
-		shared_ptr<Shader> pShader = Get<Shader>(L"SkillBox");
+		shared_ptr<Shader> pShader = Get<Shader>(L"Cooldown");
 
 		pMaterial->SetShader(pShader);
-		Add<Material>(L"SkillBox", pMaterial);
+		Add<Material>(L"Cooldown", pMaterial);
 	}
 
 	// Effect

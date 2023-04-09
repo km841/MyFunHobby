@@ -36,14 +36,15 @@ public:
 public:
 	weak_ptr<Animation>				GetActiveAnimation();
 	
-	void							SetPlayer(shared_ptr<Player> pPlayer);
 	void							SetActiveSkill(SKILL_INDEX eSkillIndex);
+	void							SetPlayer(shared_ptr<Player> pPlayer);
 	void							ObtainSkill(shared_ptr<SkulSkill> pSkulSkill);
 	void							SetSwapSkill(shared_ptr<SkulSkill> pSkulSkill);
 	void							SkillCooldownUpdate();
 	void							RefreshAnimation();
 
 public:
+	void							CooldownCompletion(SKILL_INDEX eSkillIndex);
 	virtual void					CooldownCompletionCallback(SKILL_INDEX eSkillIndex) { }
 
 public:
@@ -51,7 +52,6 @@ public:
 	void AddAnimation(PLAYER_STATE ePlayerState, const wstring& szName, shared_ptr<Animation> pAnimation, uint8 iEnum = 0);
 	void PlayAnimation(PLAYER_STATE ePlayerState, bool bLoop = true, int32 iSection = 0);
 	void PlayAnimation(const wstring& szName, bool bLoop = true, int32 iSection = 0);
-
 
 private:
 	const wstring& GetStateToName(PLAYER_STATE ePlayerState);
@@ -61,16 +61,21 @@ protected:
 	FORCEINLINE uint8	GetEnumIndex()				   { return m_iEnumIndex; }
 
 protected:
-	bool											   m_bSkillActiveFlag;
 	weak_ptr<Player>								   m_pPlayer;
+
+	// About Enums
 	SKUL_GRADE										   m_eSkulGrade;
 	SKUL_INDEX										   m_eSkulIndex;
 	uint8											   m_iEnumIndex;
 
+	// About Skill
+	std::array<shared_ptr<SkulSkill>, MAX_SKILLS>	   m_arrSkills;
+	bool											   m_bSkillActiveFlag;
 	weak_ptr<SkulSkill>								   m_pActiveSkill;
 	shared_ptr<SkulSkill>							   m_pSwapSkill;
+
+	
 	std::vector<std::map<PLAYER_STATE, wstring>>	   m_vStateToNameMaps;
-	std::array<shared_ptr<SkulSkill>, MAX_SKILLS>	   m_arrSkills;
 	shared_ptr<Texture>								   m_pThumnailImage;
 };
 

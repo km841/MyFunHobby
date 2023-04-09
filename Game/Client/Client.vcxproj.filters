@@ -277,6 +277,9 @@
     <ClInclude Include="HighWarlockSwapSkill.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>소스 파일\Game\Object\Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -462,6 +465,9 @@
     </ClCompile>
     <ClCompile Include="HighWarlockSwapSkill.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>소스 파일\Game\Object\Interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

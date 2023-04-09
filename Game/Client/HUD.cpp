@@ -2,7 +2,7 @@
 #include "HUD.h"
 
 HUD::HUD()
-	: GameObject(LAYER_TYPE::HUD)
+	: Interface(LAYER_TYPE::HUD)
 {
 }
 
@@ -12,25 +12,25 @@ HUD::~HUD()
 
 void HUD::Awake()
 {
-	GameObject::Awake();
+	Interface::Awake();
 }
 
 void HUD::Start()
 {
-	GameObject::Start();
+	Interface::Start();
 }
 
 void HUD::Update()
 {
-	GameObject::Update();
+	Interface::Update();
 }
 
 void HUD::LateUpdate()
 {
-	GameObject::LateUpdate();
+	Interface::LateUpdate();
 }
 
 void HUD::FinalUpdate()
 {
-	GameObject::FinalUpdate();
+	Interface::FinalUpdate();
 }
