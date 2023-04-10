@@ -34,10 +34,20 @@ void JumpRiseState::Update()
 		AddChangeStateEvent(PLAYER_STATE::JUMP_ATTACK);
 		return;
 	}
+
 	// Skill State ÀüÀÌ
 	if (m_pPlayer.lock()->GetActiveSkul()->IsSkillActiveFlag())
 	{
-		AddChangeStateEvent(PLAYER_STATE::SKILL);
+		SKILL_TYPE eSkillType = m_pPlayer.lock()->GetActiveSkul()->GetSkillActiveType();
+		switch (eSkillType)
+		{
+		case SKILL_TYPE::INSTANT:
+			AddChangeStateEvent(PLAYER_STATE::SKILL);
+			break;
+		case SKILL_TYPE::CHARGING:
+			AddChangeStateEvent(PLAYER_STATE::CHARGING);
+			break;
+		}
 		return;
 	}
 

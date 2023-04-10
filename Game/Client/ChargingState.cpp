@@ -3,6 +3,7 @@
 #include "Clock.h"
 #include "Input.h"
 #include "SkulSkill.h"
+#include "RigidBody.h"
 
 ChargingState::ChargingState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -38,6 +39,12 @@ void ChargingState::Update()
 			AddChangeStateEvent(PLAYER_STATE::SKILL);
 		}
 	}
+
+	if (CheckGrounded())
+	{
+		m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
+		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+	}
 }
 
 void ChargingState::Enter()
@@ -46,10 +53,13 @@ void ChargingState::Enter()
 
 	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
 	tChargingDuration.SetEndTime(pActiveSkill.lock()->GetMaxChargingTime());
+
+	m_pPlayer.lock()->GetStatus()->fSpeed /= 2.f;
 }
 
 void ChargingState::Exit()
 {
+	m_pPlayer.lock()->GetStatus()->fSpeed *= 2.f;
 }
 
 void ChargingState::PlayAnimation()

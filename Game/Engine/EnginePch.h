@@ -220,7 +220,7 @@ struct Status
 		, iAttack(0)
 		, iShield(0)
 		, iDefence(0)
-		, iSpeed(0)
+		, fSpeed(0)
 		, bAlive(true)
 	{}
 
@@ -231,7 +231,7 @@ struct Status
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
-		iSpeed = 1;
+		fSpeed = 400.f;
 		bAlive = true;
 	}
 
@@ -269,7 +269,7 @@ public:
 	int32 iShield;
 	int32 iAttack;
 	int32 iDefence;
-	int32 iSpeed;
+	float fSpeed;
 	bool  bAlive;
 };
 

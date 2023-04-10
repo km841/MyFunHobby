@@ -26,5 +26,8 @@ private:
 
 private:
 	shared_ptr<GlobalEffect> m_pAbyssField;
+	shared_ptr<GlobalEffect> m_pChargingEffect;
+	shared_ptr<GlobalEffect> m_pChargedEffect;
+
 };
 

@@ -47,8 +47,6 @@ void SwapState::Update()
 
 	if (CheckGrounded())
 	{
-		// 임시 코드
-		//m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 		m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 	}
 }

@@ -35,7 +35,8 @@ void PlayerMoveScript::LateUpdate()
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
-		vVelocity = VEC3_RIGHT_NORMAL * -m_fSpeed;
+		
+		vVelocity = VEC3_RIGHT_NORMAL * -pPlayer->GetStatus()->fSpeed;
 		
 		if (PLAYER_STATE::DASH != GetPlayerStateEnum() &&
 			PLAYER_STATE::SWAP != GetPlayerStateEnum())
@@ -47,8 +48,8 @@ void PlayerMoveScript::LateUpdate()
 
 	else if (IS_PRESS(KEY_TYPE::RIGHT))
 	{
-		vVelocity = VEC3_RIGHT_NORMAL * m_fSpeed;
-		
+		vVelocity = VEC3_RIGHT_NORMAL * pPlayer->GetStatus()->fSpeed;
+	
 		if (PLAYER_STATE::DASH != GetPlayerStateEnum() &&
 			PLAYER_STATE::SWAP != GetPlayerStateEnum())
 		{
@@ -100,6 +101,12 @@ void PlayerMoveScript::LateUpdate()
 		
 		//else
 		//	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Enable();
+	}
+
+	if (IS_NONE(KEY_TYPE::LEFT) && IS_NONE(KEY_TYPE::RIGHT))
+	{
+		if (PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum())
+			GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 	}
 
 	if (IS_DOWN(KEY_TYPE::SPACE))
