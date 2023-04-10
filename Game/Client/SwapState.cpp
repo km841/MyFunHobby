@@ -14,6 +14,11 @@
 #include "GlobalEffect.h"
 #include "Transform.h"
 #include "Scenes.h"
+#include "EventManager.h"
+#include "Transform.h"
+#include "ObjectAddedToSceneEvent.h"
+#include "Animator.h"
+#include "Animation.h"
 
 SwapState::SwapState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -23,6 +28,7 @@ SwapState::SwapState(shared_ptr<Player> pPlayer)
 void SwapState::Awake()
 {
 	CreateAndAddAfterImageToScene();
+	CreateAndAddSwapEffectToScene();
 }
 
 void SwapState::Update()
@@ -50,6 +56,7 @@ void SwapState::Update()
 void SwapState::Enter()
 {
 	EnableAndInitAfterImage();
+	EnableAndInitSwapEffect();
 
 	m_pPlayer.lock()->SwapSkul();
 	PlayAnimation();
@@ -76,6 +83,7 @@ void SwapState::PlayAnimation()
 	{
 		m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(szName, true);
 	}
+
 }
 
 void SwapState::CreateAndAddAfterImageToScene()
@@ -98,6 +106,32 @@ void SwapState::CreateAndAddAfterImageToScene()
 	pActiveScene->AddGameObject(m_pAfterImage);
 }
 
+void SwapState::CreateAndAddSwapEffectToScene()
+{
+	m_pSwapEffect = make_shared<GlobalEffect>();
+	m_pSwapEffect->AddComponent(make_shared<Transform>());
+	m_pSwapEffect->AddComponent(make_shared<Animator>());
+
+	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+
+	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	pMeshRenderer->SetMaterial(pMaterial);
+	pMeshRenderer->SetMesh(pMesh);
+
+	const Vec3& vPlayerPos = m_pPlayer.lock()->GetTransform()->GetLocalPosition();
+
+	m_pSwapEffect->GetTransform()->SetLocalPosition(vPlayerPos);
+	m_pSwapEffect->AddComponent(pMeshRenderer);
+
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Swap_Particle", L"..\\Resources\\Animation\\SkulCommon\\swap_particle.anim");
+	m_pSwapEffect->GetAnimator()->AddAnimation(L"Swap_Particle", pAnimation);
+
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pSwapEffect, eSceneType));
+}
+
 void SwapState::EnableAndInitAfterImage()
 {
 	m_pAfterImage->Enable();
@@ -113,4 +147,21 @@ void SwapState::EnableAndInitAfterImage()
 	m_pAfterImage->GetTransform()->SetLocalScale(vPlayerScale);
 	m_pAfterImage->SetFrameData(frameData);
 	m_pAfterImage->SetDirection(m_pPlayer.lock()->GetDirection());
+}
+
+void SwapState::EnableAndInitSwapEffect()
+{
+	float fDistance = 30.f;
+
+	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
+	const Vec3& vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
+	const Vec2& vGlobalOffset = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetGlobalOffset();
+
+	vPlayerPos.x -= fDistance;
+	vPlayerPos.y += vPlayerScale.y / 3.f;
+
+	m_pSwapEffect->Enable();
+	m_pSwapEffect->GetTransform()->SetGlobalOffset(vGlobalOffset);
+	m_pSwapEffect->GetTransform()->SetLocalPosition(vPlayerPos);
+	m_pSwapEffect->GetAnimator()->Play(L"Swap_Particle", false);
 }

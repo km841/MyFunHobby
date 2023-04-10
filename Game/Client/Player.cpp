@@ -21,6 +21,8 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "Clock.h"
+#include "SkulThumnailHUD.h"
+#include "InterfaceManager.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -68,9 +70,7 @@ void Player::Update()
 	m_pActiveSkul->Update();
 	m_pStateMachine->Update();
 
-	if (m_tSwapCooldown.IsRunning())
-		m_tSwapCooldown.Update(DELTA_TIME);
-
+	SwapCooldownUpdate();
 	SkulCooldownUpdate();
 }
 
@@ -163,6 +163,22 @@ void Player::SkulCooldownUpdate()
 		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::FIRST)]->SkillCooldownUpdate();
 		m_arrSkuls[static_cast<uint8>(SKUL_INDEX::FIRST)]->LateUpdate();
 		break;
+	}
+}
+
+void Player::SwapCooldownUpdate()
+{
+	if (!IsSwapPossible())
+	{
+		m_tSwapCooldown.Update(DELTA_TIME);
+		if (IsSwapPossible())
+		{
+			weak_ptr<Interface> pInterface = GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::PLAYER_SKUL_THUMNAIL);
+			if (pInterface.lock())
+			{
+				static_pointer_cast<SkulThumnailHUD>(pInterface.lock())->PlayCompletionAnimation();
+			}
+		}
 	}
 }
 

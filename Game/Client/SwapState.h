@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerState.h"
 class Player;
+class GlobalEffect;
 class AfterImage;
 class SwapState :
     public PlayerState
@@ -21,9 +22,13 @@ public:
 
 public:
     void CreateAndAddAfterImageToScene();
+    void CreateAndAddSwapEffectToScene();
     void EnableAndInitAfterImage();
+    void EnableAndInitSwapEffect();
 
 private:
     shared_ptr<AfterImage> m_pAfterImage;
+    shared_ptr<GlobalEffect> m_pSwapEffect;
+
 };
 

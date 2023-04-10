@@ -41,7 +41,9 @@ public:
 	shared_ptr<Skul>	  ObtainSkul(shared_ptr<Skul> pSkul);
 	void				  SwapSkul();
 	void				  RefreshAnimation(); 
+
 	void			      SkulCooldownUpdate();
+	void			      SwapCooldownUpdate();
 	
 
 public:
