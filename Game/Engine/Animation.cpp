@@ -113,6 +113,7 @@ void Animation::RefreshAnimation(const std::vector<FrameData> vFrameDataList)
 	m_bFinished = false;
 }
 
+
 void Animation::Load(const wstring& szPath)
 {
 	std::wifstream ifs(szPath, std::ios::in);

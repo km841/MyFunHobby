@@ -7,11 +7,11 @@ class SkulSkill
 {
 public:
 	friend class Skul;
-	SkulSkill(float fCooldown, float fDuration);
+	SkulSkill(SKILL_TYPE eSkillType, float fCooldown, float fDuration);
 	virtual ~SkulSkill() = default;
 
 public:
-	virtual void Update() = 0;
+	virtual void Update();
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;
 	virtual void CreateConditionFunction() = 0;
@@ -27,6 +27,11 @@ public:
 	FORCEINLINE weak_ptr<Skul>		  GetSkul()										    { return m_pSkul.lock(); }
 	FORCEINLINE weak_ptr<Texture>	  GetTexture()										{ return m_pTexture; }
 	FORCEINLINE void				  SetTexture(shared_ptr<Texture> pTexture)			{ m_pTexture = pTexture; }
+	FORCEINLINE void				  StoreChargingProgress(float fProgress)			{ m_fChargingProgress = fProgress; }
+	FORCEINLINE void				  SetMaxChargingTime(float fMaxTime)				{ m_fMaxChargingTime = fMaxTime; }
+	FORCEINLINE float				  GetMaxChargingTime()								{ return m_fMaxChargingTime; }
+	FORCEINLINE SKILL_TYPE			  GetSkillType()									{ return m_eSkillType; }
+	FORCEINLINE void				  SetSkillType(SKILL_TYPE eSkillType)				{ m_eSkillType = eSkillType; }
 
 	void							  Activate()										{ m_tDuration.Start(); }
 	void							  DeActivate()										{ m_tCooldown.Start(); }
@@ -44,8 +49,12 @@ protected:
 	shared_ptr<Texture>						  m_pTexture;
 	wstring									  m_szAnimationName;
 	SKILL_INDEX								  m_eSkillIndex;
+	SKILL_TYPE								  m_eSkillType;
 	Timer									  m_tCooldown;
 	Timer									  m_tDuration;
 	weak_ptr<Skul>							  m_pSkul;
+
+	float									  m_fChargingProgress;
+	float									  m_fMaxChargingTime;
 };
 

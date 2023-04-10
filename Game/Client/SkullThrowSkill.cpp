@@ -10,7 +10,7 @@
 #include "RigidBody.h"
 
 SkullThrowSkill::SkullThrowSkill()
-	: SkulSkill(6.0f, 0.25f)
+	: SkulSkill(SKILL_TYPE::INSTANT, 6.0f, 0.25f)
 	, m_fThrowSpeed(500.f)
 {
 	CreateConditionFunction();
@@ -18,7 +18,7 @@ SkullThrowSkill::SkullThrowSkill()
 
 void SkullThrowSkill::Update()
 {
-	m_tDuration.Update(DELTA_TIME);
+	SkulSkill::Update();
 }
 
 void SkullThrowSkill::CreateConditionFunction()

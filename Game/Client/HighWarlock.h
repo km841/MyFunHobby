@@ -1,6 +1,7 @@
 #pragma once
 #include "Skul.h"
 class GlobalEffect;
+class AbyssMeteor;
 class HighWarlock :
     public Skul
 {

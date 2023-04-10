@@ -6,13 +6,13 @@
 #include "GlobalEffect.h"
 
 HighWarlockSwapSkill::HighWarlockSwapSkill()
-	: SkulSkill(0.f, 0.f)
+	: SkulSkill(SKILL_TYPE::INSTANT, 0.f, 0.f)
 {
 }
 
 void HighWarlockSwapSkill::Update()
 {
-	m_tDuration.Update(DELTA_TIME);
+	SkulSkill::Update();
 }
 
 void HighWarlockSwapSkill::CreateConditionFunction()

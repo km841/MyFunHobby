@@ -23,15 +23,16 @@ public:
 	FORCEINLINE SKUL_INDEX			GetSkulIndex()									{ return m_eSkulIndex;     }
 	FORCEINLINE SKUL_GRADE			GetSkulGrade()									{ return m_eSkulGrade;   }
 	FORCEINLINE void				SetSkulIndex(SKUL_INDEX eSkulIndex)				{ m_eSkulIndex = eSkulIndex; }
-	FORCEINLINE bool				IsSkillActiveFlag()								{ return m_bSkillActiveFlag; }
-	FORCEINLINE void				DisableSkillActiveFlag()						{ m_bSkillActiveFlag = false; }
-	FORCEINLINE void				EnableSkillActiveFlag()							{ m_bSkillActiveFlag = true; }
+	FORCEINLINE bool				IsSkillActiveFlag()								{ return SKILL_TYPE::NONE != m_bSkillActiveType; }
+	FORCEINLINE SKILL_TYPE			GetSkillActiveType()							{ return m_bSkillActiveType; }
 	FORCEINLINE weak_ptr<SkulSkill> GetActiveSkill()								{ return m_pActiveSkill; }
 	FORCEINLINE weak_ptr<SkulSkill> GetSwapSkill()									{ return m_pSwapSkill; }
 	FORCEINLINE weak_ptr<SkulSkill> GetSkill(SKILL_INDEX eSkillIndex)				{ return m_arrSkills[static_cast<uint8>(eSkillIndex)]; }
 	FORCEINLINE weak_ptr<Player>	GetPlayer()										{ return m_pPlayer.lock(); }
 	FORCEINLINE weak_ptr<Texture>	GetThumnailImage()								{ return m_pThumnailImage; }
 	FORCEINLINE void			    SetThumnailImage(shared_ptr<Texture> pTexture)	{ m_pThumnailImage = pTexture; }
+	FORCEINLINE void				DisableSkillActiveFlag()						{ m_bSkillActiveType = SKILL_TYPE::NONE; }
+	FORCEINLINE void				EnableSkillActiveFlag(SKILL_TYPE eSkillType)	{ m_bSkillActiveType = eSkillType; }
 
 public:
 	weak_ptr<Animation>				GetActiveAnimation();
@@ -70,7 +71,7 @@ protected:
 
 	// About Skill
 	std::array<shared_ptr<SkulSkill>, MAX_SKILLS>	   m_arrSkills;
-	bool											   m_bSkillActiveFlag;
+	SKILL_TYPE										   m_bSkillActiveType;
 	weak_ptr<SkulSkill>								   m_pActiveSkill;
 	shared_ptr<SkulSkill>							   m_pSwapSkill;
 

@@ -65,7 +65,7 @@ void PlayerMoveScript::LateUpdate()
 			pFirstSkill.lock()->IsCondition(pPlayer->GetActiveSkul()))
 		{
 			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::FIRST);
-			pPlayer->GetActiveSkul()->EnableSkillActiveFlag();
+			pPlayer->GetActiveSkul()->EnableSkillActiveFlag(pFirstSkill.lock()->GetSkillType());
 		}
 	}
 
@@ -77,7 +77,7 @@ void PlayerMoveScript::LateUpdate()
 			pSecondSkill.lock()->IsCondition(pPlayer->GetActiveSkul()))
 		{
 			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::SECOND);
-			pPlayer->GetActiveSkul()->EnableSkillActiveFlag();
+			pPlayer->GetActiveSkul()->EnableSkillActiveFlag(pSecondSkill.lock()->GetSkillType());
 		}
 	}
 

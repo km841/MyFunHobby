@@ -13,6 +13,7 @@
 #include "HighWarlock.h"
 #include "HighWarlockSwapSkill.h"
 #include "LittleBoneSwapSkill.h"
+#include "AbyssMeteorSkill.h"
 
 
 void Cemetery::Init()
@@ -148,6 +149,7 @@ void Cemetery::CreateSkul()
 		shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_JumpAttack", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_jump_attack.anim");
 		shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackA", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_a.anim");
 		shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackB", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_b.anim");
+		shared_ptr<Animation> pCharging_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Charging", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_charging.anim");
 
 		pHighWarlock->AddAnimation(PLAYER_STATE::IDLE, L"HighWarlock_Idle", pIdleAnimation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::WALK, L"HighWarlock_Walk", pWalkAnimation);
@@ -157,11 +159,28 @@ void Cemetery::CreateSkul()
 		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"HighWarlock_JumpAttack", pJumpAttackAnimation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_A, L"HighWarlock_AttackA", pAttackA_Animation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_B, L"HighWarlock_AttackB", pAttackB_Animation);
+		pHighWarlock->AddAnimation(PLAYER_STATE::CHARGING, L"HighWarlock_Charging", pCharging_Animation);
 
 		// HighWarlock Swap Skill
 		{
 			shared_ptr<HighWarlockSwapSkill> pSwapSkill = make_shared<HighWarlockSwapSkill>();
 			pHighWarlock->SetSwapSkill(pSwapSkill);
+		}
+
+		// AbyssMeteor Skill
+		{
+			shared_ptr<AbyssMeteorSkill> pAbyssMeteorSkill = make_shared<AbyssMeteorSkill>();
+
+			shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_AbyssMeteor", L"..\\Resources\\Texture\\HUD\\HighWarlock\\HUD_AbyssMeteor.png");
+			pAbyssMeteorSkill->SetTexture(pTexture);
+
+			wstring szAnimationName = L"HighWarlock_AbyssMeteor";
+			pAbyssMeteorSkill->SetAnimationName(szAnimationName);
+
+			shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\HighWarlock\\highwarlock_skill.anim");
+			pAbyssMeteorSkill->SetAnimation(pAnimation);
+
+			pHighWarlock->ObtainSkill(pAbyssMeteorSkill);
 		}
 
 

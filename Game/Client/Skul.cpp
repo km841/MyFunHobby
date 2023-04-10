@@ -12,7 +12,7 @@ Skul::Skul(SKUL_GRADE eSkulGrade)
 	: GameObject(LAYER_TYPE::UNKNOWN)
 	, m_eSkulIndex(SKUL_INDEX::END)
 	, m_eSkulGrade(eSkulGrade)
-	, m_bSkillActiveFlag(false)
+	, m_bSkillActiveType(SKILL_TYPE::NONE)
 	, m_iEnumIndex(0)
 {
 	m_vStateToNameMaps.resize(MAX_ENUMS);
@@ -93,8 +93,12 @@ void Skul::ObtainSkill(shared_ptr<SkulSkill> pSkulSkill)
 	if (!m_arrSkills[static_cast<uint8>(SKILL_INDEX::FIRST)])
 	{
 		pSkulSkill->SetSkul(Conv::BaseToDeclare<Skul>(shared_from_this()));
-		const wstring& szName = pSkulSkill->GetAnimationName();
-		GetAnimator()->AddAnimation(szName, pSkulSkill->GetAnimation().lock());
+
+		if (pSkulSkill->GetAnimation().lock())
+		{
+			const wstring& szName = pSkulSkill->GetAnimationName();
+			GetAnimator()->AddAnimation(szName, pSkulSkill->GetAnimation().lock());
+		}
 
 		m_arrSkills[static_cast<uint8>(SKILL_INDEX::FIRST)] = pSkulSkill;
 		m_arrSkills[static_cast<uint8>(SKILL_INDEX::FIRST)]->SetSkillIndex(SKILL_INDEX::FIRST);

@@ -180,6 +180,13 @@ enum class HUD_TYPE : uint8
 	END,
 };
 
+enum class SKILL_TYPE : uint8
+{
+	NONE,
+	INSTANT,
+	CHARGING,
+};
+
 
 enum
 {
@@ -200,6 +207,7 @@ enum class PLAYER_STATE : uint8
 	SKILL,
 	PATH,
 	SWAP,
+	CHARGING,
 
 	END,
 };

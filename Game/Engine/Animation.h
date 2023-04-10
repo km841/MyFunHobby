@@ -25,8 +25,6 @@ public:
     void PushData();
     void RefreshAnimation(const std::vector<FrameData> vFrameDataList);
 
-
-
 public:
     virtual void Load(const wstring& szPath);
     virtual void Save(const wstring& szPath);

@@ -45,5 +45,9 @@ void SkillState::PlayAnimation()
 {
 	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
 	const wstring& szName = pActiveSkill.lock()->GetAnimationName();
-	m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(szName, true, END_POINT);
+
+	if (pActiveSkill.lock() && !szName.empty())
+	{
+		m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(szName, true, END_POINT);
+	}
 }

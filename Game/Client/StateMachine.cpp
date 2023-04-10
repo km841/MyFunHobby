@@ -14,6 +14,7 @@
 #include "PathState.h"
 #include "SwapState.h"
 #include "Player.h"
+#include "ChargingState.h"
 
 StateMachine::StateMachine()
 {
@@ -32,6 +33,7 @@ void StateMachine::Awake()
 	m_mStateMap[PLAYER_STATE::SKILL]	   = make_shared<SkillState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::PATH]		   = make_shared<PathState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::SWAP]		   = make_shared<SwapState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::CHARGING]	   = make_shared<ChargingState>(m_pPlayer.lock());
 
 	for (int32 i = 0; i < PLAYER_STATE_COUNT; ++i)
 	{

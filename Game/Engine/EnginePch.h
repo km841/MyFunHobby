@@ -281,6 +281,13 @@ enum
 
 namespace Conv
 {
+	static wstring AddressToWstring(void* pAddress)
+	{
+		assert(pAddress);
+		uint64 iAddress = reinterpret_cast<uint64>(pAddress);
+		return std::to_wstring(iAddress);
+	}
+
 	template<typename T, typename U>
 	static shared_ptr<T> BaseToDeclare(shared_ptr<U> pBase)
 	{
