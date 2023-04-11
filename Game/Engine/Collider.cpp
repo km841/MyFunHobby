@@ -74,12 +74,12 @@ void Collider::OnTriggerExit(shared_ptr<Collider> pOtherCollider)
 	GetGameObject()->OnTriggerExit(pOtherCollider->GetGameObject());
 }
 
-RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_ptr<GameObject> pGameObject, float fMaxDistance)
+bool Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_ptr<GameObject> pGameObject, float fMaxDistance)
 {
 	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
 	if (!pGameObject->GetPhysical())
 	{
-		return RaycastResult(false, Vec3::Zero);
+		return false;
 	}
 
 	switch (eGeometryType)
@@ -98,7 +98,7 @@ RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_pt
 			m_fRaycastMaxHit,
 			&m_RaycastHit);
 
-		return RaycastResult(bResult, Conv::PxVec3ToVec3(m_RaycastHit.position));
+		return bResult;
 	}
 		break;
 
@@ -116,12 +116,12 @@ RaycastResult Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_pt
 			m_fRaycastMaxHit,
 			&m_RaycastHit);
 
-		return RaycastResult(bResult, Conv::PxVec3ToVec3(m_RaycastHit.position));
+		return bResult;
 	}
 		break;
 	}
 
-	return RaycastResult(false, Vec3::Zero);
+	return false;
 }
 
 bool Collider::Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform)
@@ -177,29 +177,39 @@ bool Collider::Sweep( const PxGeometry& otherGeom, const PxTransform& otherTrans
 	return false;
 }
 
-bool Collider::ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform)
+Vec3 Collider::ComputePenetration(shared_ptr<GameObject> pGameObject)
 {
-
 	GEOMETRY_TYPE eGeometryType = GetPhysical()->GetGeometryType();
+	if (!pGameObject->GetPhysical())
+		return Vec3::Zero;
 
 	switch (eGeometryType)
 	{
 	case GEOMETRY_TYPE::BOX:
 	{
 		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
-		return PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, boxGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+		PxBoxGeometry otherGeom = pGameObject->GetPhysical()->GetGeometries()->boxGeom;
+		PxTransform otherTransform = pGameObject->GetTransform()->GetPxTransform();
+
+		bool bIsPenet = PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, boxGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+		if (bIsPenet)
+			return Vec3(Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth));
 	}
 	break;
 
 	case GEOMETRY_TYPE::CAPSULE:
 	{
+		PxCapsuleGeometry otherGeom = pGameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+		PxTransform otherTransform = pGameObject->GetTransform()->GetPxTransform();
 		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
-		return PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, capsuleGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+		bool bIsPenet = PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, capsuleGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
+		if (bIsPenet)
+			return Vec3(Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth));
 	}
 	break;
 	}
 	
-	return false;
+	return Vec3::Zero;
 }
 
 bool Collider::IsCollisionFromTop(shared_ptr<GameObject> pGameObject)

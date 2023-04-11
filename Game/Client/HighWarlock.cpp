@@ -35,10 +35,6 @@ void HighWarlock::Start()
 void HighWarlock::Update()
 {
 	Skul::Update();
-	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
-	vPlayerPos.z -= 10.f;
-	m_pTrailEffect->GetTransform()->SetLocalPosition(vPlayerPos);
-	m_pChargedEffect->GetTransform()->SetLocalPosition(vPlayerPos);
 
 }
 
@@ -47,6 +43,8 @@ void HighWarlock::LateUpdate()
 	Skul::LateUpdate();
 	if (m_pAbyssField->GetTimer().IsFinished())
 		m_pAbyssField->Disable();
+
+	TrailAndChargedEffectPositionUpdate();
 }
 
 void HighWarlock::FinalUpdate()
@@ -82,8 +80,16 @@ void HighWarlock::DisableTrailEffect()
 
 void HighWarlock::EnableAndInitChargedEffect()
 {
+
+
 	m_pChargedEffect->Enable();
 	m_pChargedEffect->GetAnimator()->Play(L"HighWarlock_Charged", false);
+}
+
+void HighWarlock::EnableAndInitCompletedEffect()
+{
+	m_pChargedEffect->Enable();
+	m_pChargedEffect->GetAnimator()->Play(L"HighWarlock_Completed", false);
 }
 
 void HighWarlock::CreateAbyssFieldAndAddedToScene()
@@ -92,7 +98,7 @@ void HighWarlock::CreateAbyssFieldAndAddedToScene()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	m_pAbyssField->AddComponent(make_shared<Transform>());
-	m_pAbyssField->GetTransform()->SetGlobalOffset(Vec2(0.f, 40.f));
+	m_pAbyssField->GetTransform()->SetGlobalOffset(Vec2(0.f, 60.f));
 
 	m_pAbyssField->AddComponent(make_shared<Animator>());
 
@@ -118,7 +124,7 @@ void HighWarlock::CreateTrailEffectAndAddedToScene()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	m_pTrailEffect->AddComponent(make_shared<Transform>());
-	m_pTrailEffect->GetTransform()->SetGlobalOffset(Vec2(20.f, 0.f));
+	m_pTrailEffect->GetTransform()->SetGlobalOffset(Vec2(20.f, 20.f));
 
 	m_pTrailEffect->AddComponent(make_shared<Animator>());
 
@@ -144,12 +150,19 @@ void HighWarlock::CreateChargedEffectAndAddedToScene()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	m_pChargedEffect->AddComponent(make_shared<Transform>());
-	m_pChargedEffect->GetTransform()->SetGlobalOffset(Vec2(0.f, 40.f));
+	m_pChargedEffect->GetTransform()->SetGlobalOffset(Vec2(0.f, 60.f));
 
 	m_pChargedEffect->AddComponent(make_shared<Animator>());
 
-	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Charged", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_charged.anim");
-	m_pChargedEffect->GetAnimator()->AddAnimation(L"HighWarlock_Charged", pAnimation);
+	{
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Charged", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_charged.anim");
+		m_pChargedEffect->GetAnimator()->AddAnimation(L"HighWarlock_Charged", pAnimation);
+	}
+
+	{
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Completed", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_charge_complete.anim");
+		m_pChargedEffect->GetAnimator()->AddAnimation(L"HighWarlock_Completed", pAnimation);
+	}
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
@@ -162,4 +175,27 @@ void HighWarlock::CreateChargedEffectAndAddedToScene()
 	m_pChargedEffect->Awake();
 	m_pChargedEffect->Disable();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pChargedEffect, eSceneType));
+}
+
+void HighWarlock::TrailAndChargedEffectPositionUpdate()
+{
+	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
+	DIRECTION eDirection = GetDirection();
+
+	switch (eDirection)
+	{
+	case DIRECTION::RIGHT:
+		vPlayerPos.x += 5.f;
+
+		break;
+	case DIRECTION::LEFT:
+		vPlayerPos.x += -30.f;
+		break;
+	}
+
+	vPlayerPos.z -= 10.f;
+	m_pTrailEffect->GetTransform()->SetLocalPosition(vPlayerPos);
+	vPlayerPos.z -= 5.f;
+	vPlayerPos.y -= 5.f;
+	m_pChargedEffect->GetTransform()->SetLocalPosition(vPlayerPos);
 }

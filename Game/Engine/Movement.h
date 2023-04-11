@@ -12,6 +12,7 @@ public:
 
 public:
     void Move(const Vec3& vVelocity);
+    const Vec3& RegulateVelocity(Vec3& vVelocity);
 
 private:
 

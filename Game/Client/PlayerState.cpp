@@ -26,14 +26,14 @@ bool PlayerState::CheckGrounded()
 	Vec3 vFootPos = Vec3(vMyPos.x, vMyPos.y - vMySize.y, vMyPos.z);
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 
-	RaycastResult bRaycastResult = {};
+	bool bResult = {};
 	Vec3 vBtmDir = -VEC3_UP_NORMAL;
 
 	for (const auto& pGameObject : vGameObjects)
 	{
-		bRaycastResult = m_pPlayer.lock()->GetCollider()->Raycast(vFootPos, vBtmDir, pGameObject, 0.1f);
-
-		if (bRaycastResult.first)
+		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vFootPos, vBtmDir, pGameObject, 1.f);		
+		
+		if (bResult)
 			return true;
 	}
 

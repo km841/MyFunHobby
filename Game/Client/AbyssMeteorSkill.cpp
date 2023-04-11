@@ -79,7 +79,6 @@ void AbyssMeteorSkill::Enter()
 	pAbyssMeteor->GetTransform()->SetLocalPosition(vPlayerPos);
 	pAbyssMeteor->GetRigidBody()->SetVelocity(AXIS::Y, -100.f);
 
-
 	pAbyssMeteor->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pAbyssMeteor, eSceneType));

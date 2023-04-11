@@ -27,12 +27,14 @@ public:
 	void EnableAndInitTrailEffect();
 	void DisableTrailEffect();
 	void EnableAndInitChargedEffect();
+	void EnableAndInitCompletedEffect();
 
 
 private:
 	void CreateAbyssFieldAndAddedToScene();
 	void CreateTrailEffectAndAddedToScene();
 	void CreateChargedEffectAndAddedToScene();
+	void TrailAndChargedEffectPositionUpdate();
 
 private:
 	shared_ptr<GlobalEffect> m_pAbyssField;

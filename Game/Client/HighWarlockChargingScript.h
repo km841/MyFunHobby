@@ -13,8 +13,9 @@ public:
 
 private:
     weak_ptr<HighWarlock> m_pHighWarlock;
-    PLAYER_STATE m_ePlayerState;
+    PLAYER_STATE m_eRealTimePlayerState;
     bool m_bChargedFlag;
+    bool m_bCompleteFlag;
 
 };
 

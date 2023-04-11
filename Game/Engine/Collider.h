@@ -26,10 +26,10 @@ public:
     FORCEINLINE const PxSweepHit&   GetSweepHit()   const { return m_SweepHit;   }
     FORCEINLINE const PxOverlapHit& GetOverlapHit() const { return m_OverlapHit; }
     FORCEINLINE PxFilterData&       GetFilterData()       { return m_FilterData; }
-    RaycastResult                   Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_ptr<GameObject> pGameObject, float fMaxDistance);
+    bool                            Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_ptr<GameObject> pGameObject, float fMaxDistance);
     bool                            Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform);
     bool                            Sweep(const PxGeometry& otherGeom, const PxTransform& otherTransform);
-    bool                            ComputePenetration(const PxGeometry& otherGeom, const PxTransform& otherTransform);
+    Vec3                            ComputePenetration(shared_ptr<GameObject> pGameObject);
     bool                            IsCollisionFromTop(shared_ptr<GameObject> pGameObject);
 
 private:

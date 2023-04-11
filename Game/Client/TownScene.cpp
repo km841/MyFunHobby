@@ -115,7 +115,7 @@ void TownScene::Enter()
 	{
 		pPlayer = make_shared<Player>();
 		pPlayer->AddComponent(make_shared<Transform>());
-		pPlayer->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
+		pPlayer->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f)));
 		pPlayer->AddComponent(make_shared<PlayerMoveScript>());
 		pPlayer->AddComponent(make_shared<RigidBody>(true));
 		pPlayer->AddComponent(make_shared<Collider>());
@@ -222,10 +222,10 @@ void TownScene::Enter()
 		pMeshRenderer->SetMesh(pMesh);
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<RigidBody>());
-		pGameObject->AddComponent(make_shared<Movement>());
-		pGameObject->AddComponent(make_shared<BackgroundMoveScript>(pPlayer));
-		pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(1.f, 1.f, 1.f)));
+		//pGameObject->AddComponent(make_shared<RigidBody>());
+		//pGameObject->AddComponent(make_shared<Movement>());
+		//pGameObject->AddComponent(make_shared<BackgroundMoveScript>(pPlayer));
+		//pGameObject->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(1.f, 1.f, 1.f)));
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f + 100.f, 140.f));

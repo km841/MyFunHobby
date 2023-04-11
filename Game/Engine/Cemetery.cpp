@@ -44,7 +44,7 @@ void Cemetery::CreateSkul()
 
 		pLittleBone->AddComponent(pMeshRenderer);
 		pLittleBone->AddComponent(make_shared<Transform>());
-		pLittleBone->GetTransform()->SetGlobalOffset(Vec2(0.f, -20.f));
+		pLittleBone->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
 
 		uint8 iHasHeadEnum = static_cast<uint8>(LITTLE_BONE_STATE::HAS_HEAD);
 		// Has Head Animation
@@ -141,7 +141,7 @@ void Cemetery::CreateSkul()
 		pHighWarlock->AddComponent(pMeshRenderer);
 		pHighWarlock->AddComponent(make_shared<Transform>());
 		pHighWarlock->AddComponent(make_shared<HighWarlockChargingScript>(pHighWarlock));
-		pHighWarlock->GetTransform()->SetGlobalOffset(Vec2(0.f, 10.f));
+		pHighWarlock->GetTransform()->SetGlobalOffset(Vec2(0.f, 30.f));
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Idle", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Walk", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_walk.anim");
