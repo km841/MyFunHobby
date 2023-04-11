@@ -28,6 +28,7 @@ public:
 	FORCEINLINE weak_ptr<Texture>	  GetTexture()										{ return m_pTexture; }
 	FORCEINLINE void				  SetTexture(shared_ptr<Texture> pTexture)			{ m_pTexture = pTexture; }
 	FORCEINLINE void				  StoreChargingProgress(float fProgress)			{ m_fChargingProgress = fProgress; }
+	FORCEINLINE float				  LoadChargingProgress()							{ return m_fChargingProgress; }
 	FORCEINLINE void				  SetMaxChargingTime(float fMaxTime)				{ m_fMaxChargingTime = fMaxTime; }
 	FORCEINLINE float				  GetMaxChargingTime()								{ return m_fMaxChargingTime; }
 	FORCEINLINE SKILL_TYPE			  GetSkillType()									{ return m_eSkillType; }

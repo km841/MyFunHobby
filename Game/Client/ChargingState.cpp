@@ -19,11 +19,13 @@ void ChargingState::Update()
 	if (SKILL_INDEX::FIRST == eSkillIndex)
 	{
 		if (IS_PRESS(KEY_TYPE::A))
+		{
 			tChargingDuration.Update(DELTA_TIME);
+			pActiveSkill.lock()->StoreChargingProgress(tChargingDuration.GetProgress());
+		}
 
 		if (IS_UP(KEY_TYPE::A))
 		{
-			pActiveSkill.lock()->StoreChargingProgress(tChargingDuration.GetProgress());
 			AddChangeStateEvent(PLAYER_STATE::SKILL);
 		}
 	}
@@ -31,11 +33,13 @@ void ChargingState::Update()
 	else
 	{
 		if (IS_PRESS(KEY_TYPE::S))
+		{
 			tChargingDuration.Update(DELTA_TIME);
+			pActiveSkill.lock()->StoreChargingProgress(tChargingDuration.GetProgress());
+		}
 
 		if (IS_UP(KEY_TYPE::S))
 		{
-			pActiveSkill.lock()->StoreChargingProgress(tChargingDuration.GetProgress());
 			AddChangeStateEvent(PLAYER_STATE::SKILL);
 		}
 	}
@@ -53,7 +57,7 @@ void ChargingState::Enter()
 
 	weak_ptr<SkulSkill> pActiveSkill = m_pPlayer.lock()->GetActiveSkul()->GetActiveSkill().lock();
 	tChargingDuration.SetEndTime(pActiveSkill.lock()->GetMaxChargingTime());
-
+	tChargingDuration.Start();
 	m_pPlayer.lock()->GetStatus()->fSpeed /= 2.f;
 }
 

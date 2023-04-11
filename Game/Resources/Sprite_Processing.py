@@ -16,6 +16,8 @@ if (os.path.isdir(anim_filename)):
     print("This is folder..")
     exit()
 
+sprite_offset = int(input(r"offset : "))
+
 anim_filename = anim_filename + ".anim"
 
 new_folder_path = os.path.join(folder_path, "Revision")
@@ -50,7 +52,7 @@ for filename in os.listdir(folder_path):
             new_img.save(new_filename)
             file_count += 1
 
-
+#
 
 acc_width = 0
 anim_abspath = os.path.join(new_folder_path, anim_filename)
@@ -61,10 +63,12 @@ with open(anim_abspath, "w") as f:
     f.write('\n')
     f.write('\n')
     for i in range(file_count):
+        acc_width += sprite_offset
         f.write(str(acc_width) + " " + "0\n") #Left Top
-        acc_width += max_width
         
-        f.write(str(max_width) + " " + str(max_height) + "\n") #Size
+        acc_width += max_width - sprite_offset
+        
+        f.write(str(max_width - (sprite_offset * 2)) + " " + str(max_height) + "\n") #Size
         f.write("0 0\n") #offset
         f.write("1\n")   #duration
 

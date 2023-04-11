@@ -14,6 +14,7 @@
 #include "HighWarlockSwapSkill.h"
 #include "LittleBoneSwapSkill.h"
 #include "AbyssMeteorSkill.h"
+#include "HighWarlockChargingScript.h"
 
 
 void Cemetery::Init()
@@ -139,6 +140,7 @@ void Cemetery::CreateSkul()
 
 		pHighWarlock->AddComponent(pMeshRenderer);
 		pHighWarlock->AddComponent(make_shared<Transform>());
+		pHighWarlock->AddComponent(make_shared<HighWarlockChargingScript>(pHighWarlock));
 		pHighWarlock->GetTransform()->SetGlobalOffset(Vec2(0.f, 10.f));
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Idle", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_idle.anim");

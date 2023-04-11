@@ -18,16 +18,25 @@ public:
 
 public:
 	FORCEINLINE weak_ptr<GlobalEffect> GetAbyssField() { return m_pAbyssField; }
+	FORCEINLINE weak_ptr<GlobalEffect> GetTrailEffect() { return m_pTrailEffect; }
+	FORCEINLINE weak_ptr<GlobalEffect> GetChargedEffect() { return m_pChargedEffect; }
+
 	void ActiveAbyssField();
 	void DeActiveAbyssField();
 
+	void EnableAndInitTrailEffect();
+	void DisableTrailEffect();
+	void EnableAndInitChargedEffect();
+
+
 private:
-	void CreateEffectAndAddedToScene();
+	void CreateAbyssFieldAndAddedToScene();
+	void CreateTrailEffectAndAddedToScene();
+	void CreateChargedEffectAndAddedToScene();
 
 private:
 	shared_ptr<GlobalEffect> m_pAbyssField;
-	shared_ptr<GlobalEffect> m_pChargingEffect;
+	shared_ptr<GlobalEffect> m_pTrailEffect;
 	shared_ptr<GlobalEffect> m_pChargedEffect;
-
 };
 

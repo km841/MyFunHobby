@@ -182,6 +182,7 @@
     <ClInclude Include="GlobalEffectSettingScript.h" />
     <ClInclude Include="HealthBarHUD.h" />
     <ClInclude Include="HighWarlock.h" />
+    <ClInclude Include="HighWarlockChargingScript.h" />
     <ClInclude Include="HighWarlockSwapSkill.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="IdleState.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="GlobalEffectSettingScript.cpp" />
     <ClCompile Include="HealthBarHUD.cpp" />
     <ClCompile Include="HighWarlock.cpp" />
+    <ClCompile Include="HighWarlockChargingScript.cpp" />
     <ClCompile Include="HighWarlockSwapSkill.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="IdleState.cpp" />
