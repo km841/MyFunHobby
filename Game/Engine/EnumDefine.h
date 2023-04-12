@@ -44,6 +44,7 @@ enum class CONSTANT_BUFFER_TYPE
 {
 	TRANSFORM,
 	MATERIAL,
+	LIGHT,
 	END,
 };
 

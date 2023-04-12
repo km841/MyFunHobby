@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Collider.h"
 #include "Movement.h"
+#include "Light.h"
 
 Component::Component(COMPONENT_TYPE eType)
     : Object(OBJECT_TYPE::COMPONENT)
@@ -76,6 +77,11 @@ shared_ptr<Collider> Component::GetCollider()
 shared_ptr<Movement> Component::GetMovement()
 {
     return m_pGameObject.lock()->GetMovement();
+}
+
+shared_ptr<Light> Component::GetLight()
+{
+    return m_pGameObject.lock()->GetLight();
 }
 
 PLAYER_STATE Component::GetPlayerStateEnum()

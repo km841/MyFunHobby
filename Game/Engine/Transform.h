@@ -35,9 +35,12 @@ public:
     FORCEINLINE const Vec3&        GetLocalScale() const                         { return m_vLocalScale; }
 
     FORCEINLINE const Matrix&      GetLocalToWorldMatrix() const                 { return m_matWorld; }
+    FORCEINLINE Vec3               GetWorldPosition() const                      { return m_matWorld.Translation(); }
+
+
     FORCEINLINE const Matrix&      GetPxLocalToWorldMatrix() const               { return m_matPxWorld; }
     FORCEINLINE const PxTransform& GetPxTransform() const                        { return m_PxTransform; }
-    FORCEINLINE void              SetPxTransform(const PxTransform& pxTransform) { m_PxTransform = pxTransform; }
+    FORCEINLINE void               SetPxTransform(const PxTransform& pxTransform) { m_PxTransform = pxTransform; }
 
     FORCEINLINE void               SetGlobalOffset(const Vec2& vOffset)          { m_vGlobalOffset = vOffset; }
     FORCEINLINE const Vec2&        GetGlobalOffset()                             { return m_vGlobalOffset; }

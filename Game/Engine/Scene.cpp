@@ -16,6 +16,7 @@
 #include "HUD.h"
 #include "UI.h"
 #include "AfterImage.h"
+#include "Light.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 
@@ -136,6 +137,7 @@ void Scene::FinalUpdate()
 
 void Scene::Render()
 {
+	PushLightData();
 	shared_ptr<Camera> pMainCamera = m_vCameras[0];
 
 	// RenderTarget Clear
@@ -147,7 +149,7 @@ void Scene::Render()
 	pMainCamera->Render(SHADER_TYPE::DEFERRED);
 
 	// Light Rendering
-	// TODO
+	Render_Lights();
 
 	// Merge
 	Render_Final();
@@ -165,6 +167,16 @@ void Scene::Render()
 	}
 }
 
+void Scene::Render_Lights()
+{
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->OMSetRenderTarget();
+	shared_ptr<Camera> pMainCamera = m_vCameras[0];
+	for (auto& pLight : m_vLights)
+	{
+		pLight->Render(pMainCamera);
+	}
+}
+
 void Scene::Render_Final()
 {
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
@@ -173,10 +185,31 @@ void Scene::Render_Final()
 	GET_SINGLE(Resources)->LoadRectMesh()->Render();
 }
 
+void Scene::PushLightData()
+{
+	LightParams lightParams = {};
+
+	for (auto& pLight : m_vLights)
+	{
+		const LightInfo& lightInfo = pLight->GetLightInfo();
+
+		pLight->SetLightIndex(lightParams.iLightCount);
+
+		lightParams.Lights[lightParams.iLightCount] = lightInfo;
+		lightParams.iLightCount++;
+	}
+
+	CONST_BUFFER(CONSTANT_BUFFER_TYPE::LIGHT)->PushData(&lightParams, sizeof(lightParams));
+	CONST_BUFFER(CONSTANT_BUFFER_TYPE::LIGHT)->Mapping();
+}
+
 void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 {
 	if (pGameObject->GetCamera())
 		m_vCameras.push_back(pGameObject->GetCamera());
+
+	if (pGameObject->GetLight())
+		m_vLights.push_back(pGameObject->GetLight());
 
 	uint8 iLayerType = static_cast<uint8>(pGameObject->GetLayerType());
 

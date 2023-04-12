@@ -17,7 +17,6 @@ struct VS_OUT
 
 Texture2D g_tex_0 : register(t0);
 Texture2D g_tex_1 : register(t1);
-Texture2D g_tex_2 : register(t2);
 
 SamplerState g_sam_0 : register(s0);
 
@@ -30,13 +29,17 @@ VS_OUT VS_Main(VS_IN _in)
     return output;
 }
 
+// Final Shader
+// g_tex_0 : Diffuse Color RenderTarget
+// g_tex_1 : Light Color RenderTarget
+
 float4 PS_Main(VS_OUT _in) : SV_Target
 {
     float4 output = (float4) 0;
     
-    float4 vColor = g_tex_1.Sample(g_sam_0, _in.uv);
-    float4 vEffectColor = g_tex_2.Sample(g_sam_0, _in.uv);
+    float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
+    float4 vLightColor = g_tex_1.Sample(g_sam_0, _in.uv);
    
-    return vColor + vEffectColor;
+    return vColor * vLightColor;
 }
 #endif

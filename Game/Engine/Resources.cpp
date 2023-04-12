@@ -29,89 +29,6 @@ shared_ptr<Texture> Resources::CreateTextureFromResource(const wstring& szName, 
 	return pTexture;
 }
 
-shared_ptr<Mesh> Resources::LoadCubeMesh()
-{
-	shared_ptr<Mesh> pFindMesh = Get<Mesh>(L"Cube");
-	if (pFindMesh)
-		return pFindMesh;
-
-	float w2 = 0.5f;
-	float h2 = w2;
-	float d2 = w2;
-
-	std::vector<Vertex> vVertices(24);
-
-	// front
-	vVertices[0] = Vertex(Vec3(-w2, -h2, -d2), Vec2(0.f, 1.f));
-	vVertices[1] = Vertex(Vec3(-w2, +h2, -d2), Vec2(0.f, 0.f));
-	vVertices[2] = Vertex(Vec3(+w2, +h2, -d2), Vec2(1.f, 0.f));
-	vVertices[3] = Vertex(Vec3(+w2, -h2, -d2), Vec2(1.f, 1.f));
-
-	// back
-	vVertices[4] = Vertex(Vec3(-w2, -h2, +d2), Vec2(0.f, 1.f));
-	vVertices[5] = Vertex(Vec3(+w2, -h2, +d2), Vec2(1.f, 1.f));
-	vVertices[6] = Vertex(Vec3(+w2, +h2, +d2), Vec2(1.f, 0.f));
-	vVertices[7] = Vertex(Vec3(-w2, +h2, +d2), Vec2(0.f, 0.f));
-
-	// top
-	vVertices[8] = Vertex(Vec3(-w2, +h2, -d2), Vec2(0.f, 1.f));
-	vVertices[9] = Vertex(Vec3(-w2, +h2, +d2), Vec2(0.f, 0.f));
-	vVertices[10] = Vertex(Vec3(+w2, +h2, +d2), Vec2(1.f, 0.f));
-	vVertices[11] = Vertex(Vec3(+w2, +h2, -d2), Vec2(1.f, 1.f));
-
-	// bottom
-	vVertices[12] = Vertex(Vec3(-w2, -h2, -d2), Vec2(1.f, 1.f));
-	vVertices[13] = Vertex(Vec3(+w2, -h2, -d2), Vec2(1.f, 0.f));
-	vVertices[14] = Vertex(Vec3(+w2, -h2, +d2), Vec2(0.f, 0.f));
-	vVertices[15] = Vertex(Vec3(-w2, -h2, +d2), Vec2(0.f, 1.f));
-
-	// left
-	vVertices[16] = Vertex(Vec3(-w2, -h2, +d2), Vec2(0.f, 1.f));
-	vVertices[17] = Vertex(Vec3(-w2, +h2, +d2), Vec2(0.f, 0.f));
-	vVertices[18] = Vertex(Vec3(-w2, +h2, -d2), Vec2(1.f, 0.f));
-	vVertices[19] = Vertex(Vec3(-w2, -h2, -d2), Vec2(1.f, 1.f));
-
-	// right
-	vVertices[20] = Vertex(Vec3(+w2, -h2, -d2), Vec2(0.f, 1.f));
-	vVertices[21] = Vertex(Vec3(+w2, +h2, -d2), Vec2(0.f, 0.f));
-	vVertices[22] = Vertex(Vec3(+w2, +h2, +d2), Vec2(1.f, 0.f));
-	vVertices[23] = Vertex(Vec3(+w2, -h2, +d2), Vec2(1.f, 1.f));
-
-	//-------
-
-	std::vector<uint32> vIndices(36);
-
-	// front
-	vIndices[0] = 0; vIndices[1] = 1; vIndices[2] = 2;
-	vIndices[3] = 0; vIndices[4] = 2; vIndices[5] = 3;
-
-	// back
-	vIndices[6] = 4; vIndices[7] = 5; vIndices[8] = 6;
-	vIndices[9] = 4; vIndices[10] = 6; vIndices[11] = 7;
-
-	// top
-	vIndices[12] = 8; vIndices[13] = 9; vIndices[14] = 10;
-	vIndices[15] = 8; vIndices[16] = 10; vIndices[17] = 11;
-
-	// bottom
-	vIndices[18] = 12; vIndices[19] = 13; vIndices[20] = 14;
-	vIndices[21] = 12; vIndices[22] = 14; vIndices[23] = 15;
-
-	// left
-	vIndices[24] = 16; vIndices[25] = 17; vIndices[26] = 18;
-	vIndices[27] = 16; vIndices[28] = 18; vIndices[29] = 19;
-
-	// right
-	vIndices[30] = 20; vIndices[31] = 21; vIndices[32] = 22;
-	vIndices[33] = 20; vIndices[34] = 22; vIndices[35] = 23;
-
-	shared_ptr<Mesh> pMesh = make_shared<Mesh>();
-	pMesh->Init(vVertices, vIndices);
-
-	Add(L"Cube", pMesh);
-
-	return pMesh;
-}
 
 shared_ptr<Mesh> Resources::LoadRectMesh()
 {
@@ -121,10 +38,10 @@ shared_ptr<Mesh> Resources::LoadRectMesh()
 
 	std::vector<Vertex> vVertices;
 
-	vVertices.push_back(Vertex(Vec3(-1.f, 1.f, 0.f), Vec2(0.f, 0.f)));
-	vVertices.push_back(Vertex(Vec3(1.f, 1.f, 0.f), Vec2(1.f, 0.f)));
-	vVertices.push_back(Vertex(Vec3(1.f, -1.f, 0.f), Vec2(1.f, 1.f)));
-	vVertices.push_back(Vertex(Vec3(-1.f, -1.f, 0.f), Vec2(0.f, 1.f)));
+	vVertices.push_back(Vertex(Vec3(-1.f, 1.f, 0.f), Vec2(0.f, 0.f), Vec3(0.f, 0.f, -1.f)));
+	vVertices.push_back(Vertex(Vec3(1.f, 1.f, 0.f), Vec2(1.f, 0.f), Vec3(0.f, 0.f, -1.f)));
+	vVertices.push_back(Vertex(Vec3(1.f, -1.f, 0.f), Vec2(1.f, 1.f), Vec3(0.f, 0.f, -1.f)));
+	vVertices.push_back(Vertex(Vec3(-1.f, -1.f, 0.f), Vec2(0.f, 1.f), Vec3(0.f, 0.f, -1.f)));
 
 	std::vector<uint32> vIndices(6);
 
@@ -212,14 +129,44 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Forward", pShader);
 	}
 
+	// DirLight
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::LIGHTING,
+			DEPTH_STENCIL_TYPE::NO_DEPTH_TEST_NO_WRITE,
+			RASTERIZER_TYPE::CULL_NONE,
+			BLEND_TYPE::ONE_TO_ONE_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\lighting.fx",shaderInfo, "VS_DirLight", "PS_DirLight");
+
+		Add<Shader>(L"DirLight", pShader);
+	}
+
+	// PointLight
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::LIGHTING,
+			DEPTH_STENCIL_TYPE::NO_DEPTH_TEST_NO_WRITE,
+			RASTERIZER_TYPE::CULL_NONE,
+			BLEND_TYPE::ONE_TO_ONE_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\lighting.fx", shaderInfo, "VS_PointLight", "PS_PointLight");
+
+		Add<Shader>(L"PointLight", pShader);
+	}
+
+
 	// Deferred
 	{
 		ShaderInfo shaderInfo =
 		{
 			SHADER_TYPE::DEFERRED,
-			DEPTH_STENCIL_TYPE::LESS,
-			RASTERIZER_TYPE::CULL_NONE,
-			BLEND_TYPE::ONE_TO_ONE_BLEND
 		};
 
 		shared_ptr<Shader> pShader = make_shared<Shader>();
@@ -359,6 +306,31 @@ void Resources::CreateDefaultMaterial()
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"Deferred", pMaterial);
 	}
+
+	// Dir Light
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"DirLight");
+
+		pMaterial->SetTexture(0, Get<Texture>(L"PositionTarget"));
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"DirLight", pMaterial);
+	}
+
+	// Point Light
+	{
+		Vec2 vResolution = Vec2(static_cast<float>(g_pEngine->GetWidth()), static_cast<float>(g_pEngine->GetHeight()));
+
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"PointLight");
+
+		pMaterial->SetTexture(0, Get<Texture>(L"PositionTarget"));
+		pMaterial->SetVec2(0, vResolution);
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"PointLight", pMaterial);
+	}
 	
 	// Debug Geometry
 	{
@@ -405,7 +377,7 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"FadeInOut", pMaterial);
 	}
 
-	// Fade In / Out
+	// HP
 	{
 		shared_ptr<Material> pMaterial = make_shared<Material>();
 		shared_ptr<Shader> pShader = Get<Shader>(L"HP");
@@ -448,9 +420,8 @@ void Resources::CreateDefaultMaterial()
 		shared_ptr<Shader> pShader = Get<Shader>(L"Final");
 		pMaterial->SetShader(pShader);
 
-		pMaterial->SetTexture(0, GET_SINGLE(Resources)->Get<Texture>(L"PositionTarget"));
-		pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
-		pMaterial->SetTexture(2, GET_SINGLE(Resources)->Get<Texture>(L"EffectTarget"));
+		pMaterial->SetTexture(0, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
+		pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseLightTarget"));
 
 		Add<Material>(L"Final", pMaterial);
 	}

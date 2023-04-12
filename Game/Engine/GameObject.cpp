@@ -11,6 +11,7 @@
 #include "Physical.h"
 #include "Animator.h"
 #include "Movement.h"
+#include "Light.h"
 
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -162,13 +163,19 @@ shared_ptr<Movement> GameObject::GetMovement()
 	return static_pointer_cast<Movement>(pComponent);
 }
 
+shared_ptr<Light> GameObject::GetLight()
+{
+	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::LIGHT);
+	return static_pointer_cast<Light>(pComponent);
+}
+
 void GameObject::AddComponent(shared_ptr<Component> pComponent)
 {
 	pComponent->SetGameObject(shared_from_this());
 
 	uint8 iIndex = static_cast<uint8>(pComponent->GetType());
 
-	if (FIXED_COMPONENT_COUNT - 1 > iIndex)
+	if (FIXED_COMPONENT_COUNT > iIndex)
 	{
 		m_arrComponents[iIndex] = pComponent;
 	}

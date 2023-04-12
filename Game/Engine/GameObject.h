@@ -13,6 +13,7 @@ class RigidBody;
 class Physical;
 class Animator;
 class Movement;
+class Light;
 
 class GameObject :
     public Object
@@ -39,6 +40,7 @@ public:
     shared_ptr<Camera>          GetCamera();
     shared_ptr<Animator>        GetAnimator();
     shared_ptr<Movement>        GetMovement();
+    shared_ptr<Light>           GetLight();
 
     void AddComponent(shared_ptr<Component> pComponent);
 

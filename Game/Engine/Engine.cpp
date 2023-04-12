@@ -10,6 +10,7 @@
 #include "CollisionManager.h"
 #include "InterfaceManager.h"
 #include "Cemetery.h"
+#include "Light.h"
 
 void Engine::Init(const WindowInfo& wInfo)
 {
@@ -60,6 +61,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	CreateRenderTargetGroups();
 	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(TransformParams));
 	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(MaterialParams));
+	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(LightParams));
 
 	GET_SINGLE(Resources)->Init();
 	GET_SINGLE(Scenes)->Init();
@@ -159,7 +161,7 @@ void Engine::CreateRenderTargetGroups()
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)]->Create(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN, vRenderTargetVec, pDepthStencilTexture);
 	}
 
-	 //G-Buffer
+	 // G-Buffer
 	{
 		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		std::vector<RenderTarget> vRenderTargetVec(G_BUGGER_GROUP_COUNT);
@@ -179,6 +181,22 @@ void Engine::CreateRenderTargetGroups()
 
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)] = make_shared<RenderTargetGroup>();
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, vRenderTargetVec, pDepthStencilTexture);
+	}
+
+	// Lighting
+	{
+		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		std::vector<RenderTarget> vRenderTargetVec(LIGHTING_GROUP_COUNT);
+
+		vRenderTargetVec[0].pTarget = GET_SINGLE(Resources)->CreateTexture(
+			L"DiffuseLightTarget",
+			D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
+			m_Window.iWidth, m_Window.iHeight);
+
+		memcpy(vRenderTargetVec[0].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
+
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::LIGHTING)] = make_shared<RenderTargetGroup>();
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::LIGHTING)]->Create(RENDER_TARGET_GROUP_TYPE::LIGHTING, vRenderTargetVec, pDepthStencilTexture);
 	}
 }
 

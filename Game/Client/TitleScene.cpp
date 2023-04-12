@@ -23,6 +23,7 @@
 #include "UI.h"
 #include "CameraFadeInOutScript.h"
 #include "ObjectFadeInOutScript.h"
+#include "Light.h"
 
 
 TitleScene::TitleScene()
@@ -71,6 +72,20 @@ void TitleScene::Render()
 
 void TitleScene::Enter()
 {
+	// Light
+	{
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->AddComponent(make_shared<Light>());
+		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
+		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+		pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
+		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+		pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
+
+		AddGameObject(pGameObject);
+	}
+
 	// Background
 	{
 		m_pBackground = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);

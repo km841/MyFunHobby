@@ -3,6 +3,10 @@
 
 cbuffer TRANSFORM_PARAMS : register(b0)
 {
+    row_major matrix g_matWorld;
+    row_major matrix g_matView;
+    row_major matrix g_matProjection;
+    row_major matrix g_matWV;
     row_major matrix g_matWVP;
     row_major matrix g_matWVPInv;
 }
@@ -38,6 +42,31 @@ cbuffer MATERIAL_PARAMS : register(b1)
     float4 g_vec4_1;
     float4 g_vec4_2;
     float4 g_vec4_3;
+}
+
+struct LightColor
+{
+    float4 diffuse;
+    float4 ambient;
+    float4 specular;
+};
+
+struct LightInfo
+{
+    LightColor color;
+    float4 position;
+    float4 direction;
+    int lightType;
+    float range;
+    float angle;
+    int padding;
+};
+
+cbuffer LIGHT_PARAMS : register(b2)
+{
+    int g_lightCount;
+    float3 g_lightPadding;
+    LightInfo g_light[50];
 }
 
 

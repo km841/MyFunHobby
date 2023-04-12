@@ -30,7 +30,6 @@ public:
 	template<typename T>
 	OBJECT_TYPE GetObjectType();
 
-	shared_ptr<Mesh> LoadCubeMesh();
 	shared_ptr<Mesh> LoadRectMesh();
 
 	void CreateDefaultShader();

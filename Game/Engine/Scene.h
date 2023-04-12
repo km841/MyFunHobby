@@ -3,6 +3,7 @@
 class GameObject;
 class Camera;
 class AfterImage;
+class Light;
 
 class Scene
 {
@@ -21,11 +22,12 @@ public:
 public:
     virtual void Enter() { }
     virtual void Exit() { }
+    void Render_Lights();
     void Render_Final();
+    void PushLightData();
 
     FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
-    void                                 AddFrontGameObject(shared_ptr<GameObject> pGameObject);
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
 
 
@@ -38,6 +40,7 @@ protected:
 
     std::array<std::vector<shared_ptr<GameObject>>, SCENE_OBJECT_TYPE_COUNT> m_vSceneObjects;
     std::vector<shared_ptr<Camera>>                                          m_vCameras;
+    std::vector<shared_ptr<Light>>                                           m_vLights;
 
 protected:
     static std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> s_vGlobalObjects;

@@ -89,6 +89,7 @@ class Camera;
 class Animator;
 class PlayerState;
 class Movement;
+class Light;
 
 class Component :
     public Object
@@ -116,6 +117,7 @@ public:
     shared_ptr<Animator>            GetAnimator();
     shared_ptr<Collider>            GetCollider();
     shared_ptr<Movement>            GetMovement();
+    shared_ptr<Light>               GetLight();
 
 	FORCEINLINE COMPONENT_TYPE GetType() const { return m_eType; }
     PLAYER_STATE   GetPlayerStateEnum();

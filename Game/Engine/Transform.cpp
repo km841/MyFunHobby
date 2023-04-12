@@ -96,6 +96,10 @@ void Transform::FinalUpdate()
 void Transform::PushData(shared_ptr<Camera> pCamera)
 {
 	TransformParams transformParams = {};
+	transformParams.matWorld = m_matWorld;
+	transformParams.matView = pCamera->GetViewMatrix();
+	transformParams.matProjection = pCamera->GetProjectionMatrix();
+	transformParams.matWV = m_matWorld * pCamera->GetViewMatrix();
 	transformParams.matWVP = m_matWorld * pCamera->GetViewMatrix() * pCamera->GetProjectionMatrix();
 	transformParams.matWVPInv = transformParams.matWVP.Invert();
 
@@ -105,6 +109,10 @@ void Transform::PushData(shared_ptr<Camera> pCamera)
 void Transform::PxPushData(shared_ptr<Camera> pCamera)
 {
 	TransformParams transformParams = {};
+	transformParams.matWorld = m_matWorld;
+	transformParams.matView = pCamera->GetViewMatrix();
+	transformParams.matProjection = pCamera->GetProjectionMatrix();
+	transformParams.matWV = m_matWorld * pCamera->GetViewMatrix();
 	transformParams.matWVP = m_matPxWorld * pCamera->GetViewMatrix() * pCamera->GetProjectionMatrix();
 	transformParams.matWVPInv = transformParams.matWVP.Invert();
 

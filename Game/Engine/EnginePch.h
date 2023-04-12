@@ -103,37 +103,25 @@ struct WindowInfo
 struct Vertex
 {
 	Vertex() {}
-	Vertex(Vec3 vPos, Vec2 vUV)
-		: vPos(vPos), vUV(vUV)
+	Vertex(Vec3 vPos, Vec2 vUV, Vec3 vNormal)
+		: vPos(vPos), vUV(vUV), vNormal(vNormal)
 	{}
 
 	Vec3 vPos;
 	Vec2 vUV;
+	Vec3 vNormal;
 
 public:
-	static std::vector<Vertex> CreateHemisphereVertices(float fRadius, float fSlices)
-	{
-		std::vector<Vertex> vVertices;
 
-		for (int i = 0; i < fSlices; ++i)
-		{
-			float theta = i / fSlices * 2.0f * XM_PI;
-			Vec3 vVertex(fRadius * cosf(theta), fRadius * sinf(theta), 0.0f);
-			Vec2 vUV = Vec2(cosf(theta), sinf(theta)) * 0.5f + Vec2{ 0.5f, 0.5f };
-			vVertices.push_back({ vVertex, vUV });
-		}
-
-		return vVertices;
-	}
 
 	static std::vector<Vertex> CreateBoxVertices(Vec3 vBoxHalfSize)
 	{
 		std::vector<Vertex> vVertices;
 
-		vVertices.push_back({ Vec3(-vBoxHalfSize.x, vBoxHalfSize.y, 0.f), Vec2(0.f, 0.f) });
-		vVertices.push_back({ Vec3(vBoxHalfSize.x, vBoxHalfSize.y, 0.f), Vec2(1.f, 0.f) });
-		vVertices.push_back({ Vec3(vBoxHalfSize.x, -vBoxHalfSize.y, 0.f), Vec2(1.f, 1.f) });
-		vVertices.push_back({ Vec3(-vBoxHalfSize.x, -vBoxHalfSize.y, 0.f), Vec2(0.f, 1.f) });
+		vVertices.push_back({ Vec3(-vBoxHalfSize.x, vBoxHalfSize.y, 0.f), Vec2(0.f, 0.f), Vec3(0.f, 0.f, -1.f)});
+		vVertices.push_back({ Vec3(vBoxHalfSize.x, vBoxHalfSize.y, 0.f), Vec2(1.f, 0.f), Vec3(0.f, 0.f, -1.f) });
+		vVertices.push_back({ Vec3(vBoxHalfSize.x, -vBoxHalfSize.y, 0.f), Vec2(1.f, 1.f), Vec3(0.f, 0.f, -1.f) });
+		vVertices.push_back({ Vec3(-vBoxHalfSize.x, -vBoxHalfSize.y, 0.f), Vec2(0.f, 1.f), Vec3(0.f, 0.f, -1.f) });
 
 		return vVertices;
 	}
@@ -180,6 +168,10 @@ public:
 
 struct TransformParams
 {
+	Matrix matWorld;
+	Matrix matView;
+	Matrix matProjection;
+	Matrix matWV;
 	Matrix matWVP;
 	Matrix matWVPInv;
 };
