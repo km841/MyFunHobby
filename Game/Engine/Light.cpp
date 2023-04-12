@@ -33,10 +33,14 @@ void Light::Render(shared_ptr<Camera> pCamera)
 	{
 	case LIGHT_TYPE::DIRECTIONAL_LIGHT:
 		break;
+
+	case LIGHT_TYPE::POINT_LIGHT:
+		float fScale = 2.f * m_LightInfo.fRange;
+		GetTransform()->SetLocalScale(Vec3(fScale, fScale, 1.f));
+		break;
 	}
 
 	m_pMesh->Render();
-
 }
 
 void Light::SetLightType(LIGHT_TYPE eLightType)
@@ -50,6 +54,8 @@ void Light::SetLightType(LIGHT_TYPE eLightType)
 		m_pMaterial = GET_SINGLE(Resources)->Get<Material>(L"DirLight");
 		break;
 	case LIGHT_TYPE::POINT_LIGHT:
+		m_pMesh = GET_SINGLE(Resources)->LoadCircleMesh();
+		m_pMaterial = GET_SINGLE(Resources)->Get<Material>(L"PointLight");
 		break;
 	case LIGHT_TYPE::SPOT_LIGHT:
 		break;

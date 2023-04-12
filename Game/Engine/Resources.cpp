@@ -61,6 +61,115 @@ shared_ptr<Mesh> Resources::LoadRectMesh()
 	return pMesh;
 }
 
+shared_ptr<Mesh> Resources::LoadCircleMesh()
+{
+	shared_ptr<Mesh> findMesh = Get<Mesh>(L"Circle");
+	if (findMesh)
+		return findMesh;
+
+	float fRadius = 0.5f; // ±¸ÀÇ ¹ÝÁö¸§
+	uint32 iStackCount = 20; // °¡·Î ºÐÇÒ
+	uint32 iSliceCount = 20; // ¼¼·Î ºÐÇÒ
+
+	std::vector<Vertex> vVertices;
+
+	Vertex vertex;
+
+	// ºÏ±Ø
+	vertex.vPos = Vec3(0.0f, fRadius, 0.0f);
+	vertex.vUV = Vec2(0.5f, 0.0f);
+	vertex.vNormal = vertex.vPos;
+	vertex.vNormal.Normalize();
+	vVertices.push_back(vertex);
+
+	float fStackAngle = XM_PI / iStackCount;
+	float fSliceAngle = XM_2PI / iSliceCount;
+
+	float fDeltaU = 1.f / static_cast<float>(iSliceCount);
+	float fDeltaV = 1.f / static_cast<float>(iStackCount);
+
+	for (uint32 y = 1; y <= iStackCount - 1; ++y)
+	{
+		float fPhi = y * fStackAngle;
+
+		// °í¸®¿¡ À§Ä¡ÇÑ Á¤Á¡
+		for (uint32 x = 0; x <= iSliceCount; ++x)
+		{
+			float fTheta = x * fSliceAngle;
+
+			vertex.vPos.x = fRadius * sinf(fPhi) * cosf(fTheta);
+			vertex.vPos.y = fRadius * cosf(fPhi);
+
+			vertex.vUV = Vec2(fDeltaU * x, fDeltaV * y);
+
+			vertex.vNormal = vertex.vPos;
+			vertex.vNormal.Normalize();
+
+			vVertices.push_back(vertex);
+		}
+	}
+
+	// ³²±Ø
+	vertex.vPos = Vec3(0.0f, -fRadius, 0.0f);
+	vertex.vUV = Vec2(0.5f, 1.0f);
+	vertex.vNormal = vertex.vPos;
+	vertex.vNormal.Normalize();
+	vVertices.push_back(vertex);
+
+	std::vector<uint32> vIndices(36);
+
+	// ºÏ±Ø ÀÎµ¦½º
+	for (uint32 i = 0; i <= iSliceCount; ++i)
+	{
+		//  [0]
+		//   |  \
+		//  [i+1]-[i+2]
+		vIndices.push_back(0);
+		vIndices.push_back(i + 2);
+		vIndices.push_back(i + 1);
+	}
+
+	// ¸öÅë ÀÎµ¦½º
+	uint32 iRingVertexCount = iSliceCount + 1;
+	for (uint32 y = 0; y < iStackCount - 2; ++y)
+	{
+		for (uint32 x = 0; x < iSliceCount; ++x)
+		{
+			//  [y, x]-[y, x+1]
+			//  |		/
+			//  [y+1, x]
+			vIndices.push_back(1 + (y)*iRingVertexCount + (x));
+			vIndices.push_back(1 + (y)*iRingVertexCount + (x + 1));
+			vIndices.push_back(1 + (y + 1) * iRingVertexCount + (x));
+			//		 [y, x+1]
+			//		 /	  |
+			//  [y+1, x]-[y+1, x+1]
+			vIndices.push_back(1 + (y + 1) * iRingVertexCount + (x));
+			vIndices.push_back(1 + (y)*iRingVertexCount + (x + 1));
+			vIndices.push_back(1 + (y + 1) * iRingVertexCount + (x + 1));
+		}
+	}
+
+	// ³²±Ø ÀÎµ¦½º
+	uint32 iBottomIndex = static_cast<uint32>(vVertices.size()) - 1;
+	uint32 iLastRingStartIndex = iBottomIndex - iRingVertexCount;
+	for (uint32 i = 0; i < iSliceCount; ++i)
+	{
+		//  [last+i]-[last+i+1]
+		//  |      /
+		//  [bottom]
+		vIndices.push_back(iBottomIndex);
+		vIndices.push_back(iLastRingStartIndex + i);
+		vIndices.push_back(iLastRingStartIndex + i + 1);
+	}
+
+	shared_ptr<Mesh> pMesh = make_shared<Mesh>();
+	pMesh->Init(vVertices, vIndices);
+	Add(L"Circle", pMesh);
+
+	return pMesh;
+}
+
 void Resources::CreateDefaultShader()
 {
 	// Preview

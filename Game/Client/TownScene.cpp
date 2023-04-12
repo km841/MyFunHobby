@@ -111,6 +111,22 @@ void TownScene::Enter()
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::PLAYER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
 
+
+	// Light
+	{
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->AddComponent(make_shared<Light>());
+		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
+		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+		pGameObject->GetLight()->SetDiffuse(Vec3(0.1f, 0.1f, 0.1f));
+		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+		pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
+
+		AddGameObject(pGameObject);
+	}
+
+
 	shared_ptr<Player> pPlayer = nullptr;
 	// Player
 	{
@@ -124,6 +140,12 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Movement>());
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::LITTLE_BONE));
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::HIGH_WARLOCK));
+
+		pPlayer->AddComponent(make_shared<Light>());
+		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
+		pPlayer->GetLight()->SetDiffuse(Vec3(1.0f, 1.0f, 1.0f));
+		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+		pPlayer->GetLight()->SetLightRange(200.f);
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -178,19 +200,6 @@ void TownScene::Enter()
 	//	AddGameObject(pGlobalEffect);
 	//}
 
-	// Light
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Light>());
-		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
-		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
-		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-		pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
-
-		AddGameObject(pGameObject);
-	}
 
 	// Ground
 	{
@@ -335,8 +344,6 @@ void TownScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, false);
 	}
-
-
 
 	// NPC_Witch
 	{

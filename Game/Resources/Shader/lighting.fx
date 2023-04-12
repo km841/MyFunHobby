@@ -79,10 +79,10 @@ PS_OUT PS_PointLight(VS_OUT _in)
         clip(-1);
     
     int iLightIndex = g_int_0;
-    float3 vViewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView);
-    float fDistance = length(vViewPos - vViewLightPos);
-    if (fDistance > g_light[iLightIndex].range)
-        clip(-1);
+    //float3 vViewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView);
+    //float fDistance = length(vViewPos - vViewLightPos);
+    //if (fDistance > g_light[iLightIndex].range)
+    //    clip(-1);
     
     LightColor color = CalculateLightColor(iLightIndex, vViewPos);
     output.vDiffuse = color.diffuse + color.ambient;

@@ -31,6 +31,7 @@ public:
 	OBJECT_TYPE GetObjectType();
 
 	shared_ptr<Mesh> LoadRectMesh();
+	shared_ptr<Mesh> LoadCircleMesh();
 
 	void CreateDefaultShader();
 	void CreateDefaultMaterial();

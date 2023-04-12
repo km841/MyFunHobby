@@ -1,2 +1,4 @@
-﻿  Light.cpp
+﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\MyProject\Game\Output\lighting.cso
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib
