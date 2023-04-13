@@ -1,5 +1,6 @@
 #pragma once
 #include "PlayerProjectile.h"
+class GlobalEffect;
 class AbyssMeteor :
     public PlayerProjectile
 {
@@ -15,5 +16,14 @@ public:
     virtual void FinalUpdate();
 
 public:
+    void CreateSmokeEffectAndAddedScene();
+    void EnableAndInitSmokeEffect();
+
+public:
+    virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
+    virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
+
+private:
+    static shared_ptr<GlobalEffect> s_pSmokeEffect;
 };
 

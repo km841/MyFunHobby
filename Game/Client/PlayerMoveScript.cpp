@@ -93,19 +93,20 @@ void PlayerMoveScript::LateUpdate()
 		}
 
 		// Test Code
-		//GetGameObject()->GetStatus()->TakeDamage(1);
+		GetGameObject()->GetStatus()->TakeDamage(1);
 
-		//GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
-		//if (GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
-		//	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Disable();
+		GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
+		if (GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
+			GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Disable();
 		
-		//else
-		//	GET_SINGLE(UIManager)->Get(UI_TYPE::DIALOGUE)->Enable();
+		else
+			GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Enable();
 	}
 
 	if (IS_NONE(KEY_TYPE::LEFT) && IS_NONE(KEY_TYPE::RIGHT))
 	{
-		if (PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum())
+		if (PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum() &&
+			PLAYER_STATE::SWAP != pPlayer->GetPlayerStateEnum())
 			GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 	}
 

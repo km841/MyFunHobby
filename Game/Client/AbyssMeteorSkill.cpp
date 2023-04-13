@@ -34,14 +34,14 @@ shared_ptr<AbyssMeteor> AbyssMeteorSkill::CreateAbyssMeteor()
 	shared_ptr<AbyssMeteor> pAbyssMeteor = make_shared<AbyssMeteor>();
 
 	pAbyssMeteor->AddComponent(make_shared<Transform>());
-	pAbyssMeteor->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
+	pAbyssMeteor->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f)));
 	pAbyssMeteor->AddComponent(make_shared<RigidBody>(false));
 	pAbyssMeteor->AddComponent(make_shared<Collider>());
 	pAbyssMeteor->AddComponent(make_shared<DebugRenderer>());
 	pAbyssMeteor->AddComponent(make_shared<Movement>());
 	pAbyssMeteor->AddComponent(make_shared<Animator>());
 
-
+	pAbyssMeteor->GetTransform()->SetGlobalOffset(Vec2(0.f, 450.f));
 
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(Conv::AddressToWstring(pAbyssMeteor.get()), L"..\\Resources\\Animation\\HighWarlock\\highwarlock_meteor.anim");
@@ -76,8 +76,8 @@ void AbyssMeteorSkill::Enter()
 	shared_ptr<AbyssMeteor> pAbyssMeteor = CreateAbyssMeteor();
 
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPxTransform().p);
-	vPlayerPos.y += 1300.f;
-	vPlayerPos.z -= 10.f;
+	vPlayerPos.y += 1000.f;
+	vPlayerPos.z -= 0.5f;
 
 	pAbyssMeteor->GetTransform()->SetLocalPosition(vPlayerPos);
 	pAbyssMeteor->GetRigidBody()->SetVelocity(AXIS::Y, -100.f);

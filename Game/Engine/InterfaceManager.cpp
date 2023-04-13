@@ -68,8 +68,11 @@ void InterfaceManager::CreateUI()
 		pDialogueUI->AddComponent(pMeshRenderer);
 		pDialogueUI->AddComponent(make_shared<Transform>());
 
-		pDialogueUI->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
+		pDialogueUI->GetTransform()->SetLocalScale(pTexture->GetTexSize());
+		//pDialogueUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 40.f));
 		m_mInterfaceMap[INTERFACE_TYPE::DIALOGUE] = pDialogueUI;
 	}
 }

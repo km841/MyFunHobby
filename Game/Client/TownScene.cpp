@@ -103,10 +103,11 @@ void TownScene::Render()
 void TownScene::Enter()
 {
 	//Load(L"..\\Resources\\Map\\DefaultMap.map");
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::NPC);
+	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::NPC, LAYER_TYPE::PLAYER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::PLAYER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
@@ -569,6 +570,8 @@ void TownScene::Enter()
 
 		AddGameObject(pUI);
 	}
+
+
 
 	m_vCameras[1]->SetCameraEffect(CAMERA_EFFECT::FADE_IN);
 

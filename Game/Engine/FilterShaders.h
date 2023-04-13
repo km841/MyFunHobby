@@ -30,11 +30,9 @@ static PxFilterFlags PlayerFilterShader(
 	{
 		if ((filterData1.word1 & filterData0.word0) || (filterData0.word1 & filterData1.word0))
 		{
-			pairFlags |= PxPairFlag::eTRIGGER_DEFAULT;
+			pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
 			return PxFilterFlag::eDEFAULT;
 		}
-
-		
 	}
 	// 트리거가 아닌 경우 충돌 플래그 생성
 	pairFlags = PxPairFlag::eCONTACT_DEFAULT;

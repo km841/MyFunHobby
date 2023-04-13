@@ -34,3 +34,12 @@ void PlayerProjectile::FinalUpdate()
 {
 	GameObject::FinalUpdate();
 }
+
+void PlayerProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
+{
+	int a = 0;
+}
+
+void PlayerProjectile::OnTriggerExit(shared_ptr<GameObject> pGameObject)
+{
+}
