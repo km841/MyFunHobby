@@ -31,7 +31,7 @@ bool PlayerState::CheckGrounded()
 
 	for (const auto& pGameObject : vGameObjects)
 	{
-		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vFootPos, vBtmDir, pGameObject, 1.f);		
+		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vFootPos, vBtmDir, pGameObject, 2.f);		
 		
 		if (bResult)
 			return true;

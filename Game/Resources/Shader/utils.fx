@@ -15,7 +15,6 @@ LightColor CalculateLightColor(int iLightIndex, float3 vViewPos)
     {
         vViewLightDir = normalize(mul(float4(g_light[iLightIndex].direction.xyz, 0.f), g_matView).xyz);
     }
-    
     else if (g_light[iLightIndex].lightType == 1)
     {
         float3 vViewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView).xyz;
@@ -24,7 +23,8 @@ LightColor CalculateLightColor(int iLightIndex, float3 vViewPos)
         float fDist = distance(vViewPos, vViewLightPos);
         if (g_light[iLightIndex].range == 0.f)
             vDiffuseRatio = 0.f;
-
+        else 
+            fDistanceRatio = 1.f - pow(fDist / g_light[iLightIndex].range, 2);
     }
     else
     {
@@ -54,8 +54,7 @@ LightColor CalculateLightColor(int iLightIndex, float3 vViewPos)
                 fDistanceRatio = saturate(1.f - pow(fCenterDist / g_light[iLightIndex].range, 2));
         }
     }
-    float3 eyeDir = normalize(vViewPos);
-
+    
     color.diffuse = g_light[iLightIndex].color.diffuse * vDiffuseRatio * fDistanceRatio;
     color.ambient = g_light[iLightIndex].color.ambient * fDistanceRatio;
 

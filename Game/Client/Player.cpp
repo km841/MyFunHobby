@@ -23,6 +23,7 @@
 #include "Clock.h"
 #include "SkulThumnailHUD.h"
 #include "InterfaceManager.h"
+#include "Engine.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -72,6 +73,15 @@ void Player::Update()
 
 	SwapCooldownUpdate();
 	SkulCooldownUpdate();
+
+	//uint32 fps = GET_SINGLE(Clock)->GetFPS();
+
+	//WCHAR text[100] = L"";
+	//Vec3 vPosition = GetTransform()->GetWorldPosition();
+	//::wsprintf(text, L"x : %d, y : %d, z : %d", (int)vPosition.x, (int)vPosition.y, (int)vPosition.z);
+
+	//
+	//::SetWindowText(g_pEngine->GetHwnd(), text);
 }
 
 void Player::LateUpdate()

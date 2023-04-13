@@ -11,19 +11,19 @@ void Resources::Init()
 	CreateDefaultMaterial();
 }
 
-shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, uint32 eType, uint32 iWidth, uint32 iHeight)
+shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, DXGI_FORMAT eFormat, uint32 eType, uint32 iWidth, uint32 iHeight)
 {
 	shared_ptr<Texture> pTexture = make_shared<Texture>();
-	pTexture->Create(eType, iWidth, iHeight);
+	pTexture->Create(eType, eFormat, iWidth, iHeight);
 	Add(szName, pTexture);
 
 	return pTexture;
 }
 
-shared_ptr<Texture> Resources::CreateTextureFromResource(const wstring& szName, uint32 eType, ComPtr<ID3D11Texture2D> iTexture)
+shared_ptr<Texture> Resources::CreateTextureFromResource(const wstring& szName, DXGI_FORMAT eFormat, uint32 eType, ComPtr<ID3D11Texture2D> iTexture)
 {
 	shared_ptr<Texture> pTexture = make_shared<Texture>();
-	pTexture->CreateFromTexture(eType, iTexture);
+	pTexture->CreateFromTexture(eType, eFormat, iTexture);
 	Add(szName, pTexture);
 
 	return pTexture;

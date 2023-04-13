@@ -20,6 +20,7 @@
 #include "Mesh.h"
 #include "Skul.h"
 #include "Player.h"
+#include "Light.h"
 
 AbyssMeteorSkill::AbyssMeteorSkill()
 	: SkulSkill(SKILL_TYPE::CHARGING, 5.f, 1.f)
@@ -39,6 +40,8 @@ shared_ptr<AbyssMeteor> AbyssMeteorSkill::CreateAbyssMeteor()
 	pAbyssMeteor->AddComponent(make_shared<DebugRenderer>());
 	pAbyssMeteor->AddComponent(make_shared<Movement>());
 	pAbyssMeteor->AddComponent(make_shared<Animator>());
+
+
 
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(Conv::AddressToWstring(pAbyssMeteor.get()), L"..\\Resources\\Animation\\HighWarlock\\highwarlock_meteor.anim");

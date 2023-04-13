@@ -112,19 +112,40 @@ void TownScene::Enter()
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
 
 
-	// Light
+	// Directional Light
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Light>());
-		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
-		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		pGameObject->GetLight()->SetDiffuse(Vec3(0.1f, 0.1f, 0.1f));
-		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-		pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
+		//shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		//pGameObject->AddComponent(make_shared<Transform>());
+		//pGameObject->AddComponent(make_shared<Light>());
+		//pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
+		//pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+		//pGameObject->GetLight()->SetDiffuse(Vec3(0.1f, 0.1f, 0.1f));
+		//pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 
-		AddGameObject(pGameObject);
+		//AddGameObject(pGameObject);
 	}
+
+	// Spot Light
+	//{
+	//	shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+	//	pGameObject->AddComponent(make_shared<Transform>());
+	//	
+	//	pGameObject->AddComponent(make_shared<Light>());
+	//	pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, -1.f));
+	//	pGameObject->GetLight()->SetLightType(LIGHT_TYPE::SPOT_LIGHT);
+	//	pGameObject->GetLight()->SetDiffuse(Vec3(0.0f, 0.f, 0.5f));
+	//	pGameObject->GetLight()->SetAmbient(Vec3(0.0f, 0.0f, 0.1f));
+	//	pGameObject->GetLight()->SetSpecular(Vec3(0.0f, 0.0f, 0.1f));
+	//	pGameObject->GetLight()->SetLightRange(100.f);
+	//	pGameObject->GetLight()->SetLightAngle(3.14f / 2);
+
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 50.f));
+
+	//	AddGameObject(pGameObject);
+	//}
 
 
 	shared_ptr<Player> pPlayer = nullptr;
@@ -141,14 +162,14 @@ void TownScene::Enter()
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::LITTLE_BONE));
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_TYPE::HIGH_WARLOCK));
 
-		pPlayer->AddComponent(make_shared<Light>());
-		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-		pPlayer->GetLight()->SetDiffuse(Vec3(1.0f, 1.0f, 1.0f));
-		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-		pPlayer->GetLight()->SetLightRange(200.f);
-
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pPlayer->AddComponent(make_shared<Light>());
+		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
+		pPlayer->GetLight()->SetLightRange(600.f);
+		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
 		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 100.f, 100.f));
 
@@ -371,7 +392,6 @@ void TownScene::Enter()
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pWitch->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 115.f, 110.f));
-
 		AddGameObject(pWitch);
 	}
 
@@ -471,7 +491,7 @@ void TownScene::Enter()
 
 	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"EffectTarget");
+	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"PositionTarget");
 	//	pMaterial->SetTexture(0, pTexture);
 
 	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -480,12 +500,38 @@ void TownScene::Enter()
 
 	//	pHUD->AddComponent(pMeshRenderer);
 	//	pHUD->AddComponent(make_shared<Transform>());
-	//	pHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+	//	//pHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
 	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 600.f, fHeight / 2.f, 10.f));
+	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 10.f));
+	//	pHUD->GetTransform()->SetLocalScale(Vec3(800, 450, 1.f));
+
+	//	AddGameObject(pHUD);
+	//}
+
+	//// Test HUD
+	//{
+	//	shared_ptr<HUD> pHUD = make_shared<HUD>();
+
+	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"DiffuseLightTarget");
+	//	pMaterial->SetTexture(0, pTexture);
+
+	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	//	pMeshRenderer->SetMaterial(pMaterial);
+	//	pMeshRenderer->SetMesh(pMesh);
+
+	//	pHUD->AddComponent(pMeshRenderer);
+	//	pHUD->AddComponent(make_shared<Transform>());
+	//	//pHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 200.f, fHeight / 2.f + 200.f, 10.f));
 	//	pHUD->GetTransform()->SetLocalScale(Vec3(200.f, 112.f, 1.f));
 
 	//	AddGameObject(pHUD);

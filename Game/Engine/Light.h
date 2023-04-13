@@ -60,9 +60,12 @@ public:
 
     void SetLightIndex(int8 iIndex) { m_iLightIndex = iIndex; }
 
+    void SetLightOffset(const Vec2& vOffset) { m_vLightOffset = vOffset; }
+
 private:
     LightInfo m_LightInfo;
 
+    Vec2 m_vLightOffset;
     int8 m_iLightIndex;
     shared_ptr<Mesh> m_pMesh;
     shared_ptr<Material> m_pMaterial;

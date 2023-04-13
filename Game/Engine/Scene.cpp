@@ -137,19 +137,19 @@ void Scene::FinalUpdate()
 
 void Scene::Render()
 {
-	PushLightData();
 	shared_ptr<Camera> pMainCamera = m_vCameras[0];
 
 	// RenderTarget Clear
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->ClearRenderTargetView();
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->ClearRenderTargetView();
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->ClearRenderTargetView();
-	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->ClearRenderTargetView();
 
 	// Deferred Rendering
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
 	pMainCamera->Render(SHADER_TYPE::DEFERRED);
 
 	// Light Rendering
+	PushLightData();
 	Render_Lights();
 
 	// Merge

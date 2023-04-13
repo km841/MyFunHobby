@@ -10,8 +10,8 @@ public:
     virtual void Load(const wstring& szPath) override;
 
 public:
-    void Create(uint32 eType, uint32 iWidth, uint32 iHeight);
-    void CreateFromTexture(uint32 eType, ComPtr<ID3D11Texture2D> pTexture);
+    void Create(uint32 eType, DXGI_FORMAT eFormat, uint32 iWidth, uint32 iHeight);
+    void CreateFromTexture(uint32 eType, DXGI_FORMAT eFormat, ComPtr<ID3D11Texture2D> pTexture);
 
 public:
     FORCEINLINE Vec3 GetTexSize() { return m_vTexSize; }

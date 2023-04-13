@@ -15,7 +15,6 @@ struct VS_OUT
     float4 pos : SV_Position;
     float2 uv : TEXCOORD;
     float3 viewPos : POSITION;
-    float3 viewNormal : NORMAL;
 };
 
 Texture2D g_tex_0 : register(t0);
@@ -35,7 +34,6 @@ VS_OUT VS_Main(VS_IN _in)
         output.uv = float2(1.0f - _in.uv.x, _in.uv.y);
     
     output.viewPos = mul(float4(_in.pos, 1.f), g_matWV).xyz;
-    output.viewNormal = normalize(mul(float4(_in.normal, 0.f), g_matWV).xyz);
     
     return output;
 }
@@ -89,8 +87,8 @@ PS_OUT PS_Main(VS_OUT _in)
         if (vColor.a > 0.f && fRatio > 0.f)
             vColor.a = 1.f * fRatio;
     }
-    
-    output.vPosition = float4(_in.pos.xyz, 0.f);
+   
+    output.vPosition = float4(_in.viewPos, 0.f);
     output.vColor = vColor;
    
     return output;

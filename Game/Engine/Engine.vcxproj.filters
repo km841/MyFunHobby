@@ -178,6 +178,9 @@
     <ClInclude Include="Light.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
+    <ClInclude Include="StructuredBuffer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -353,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="StructuredBuffer.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

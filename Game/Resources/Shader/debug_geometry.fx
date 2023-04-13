@@ -34,7 +34,6 @@ struct PS_OUT
 {
     float4 vPosition : SV_Target0;
     float4 vColor : SV_Target1;
-    float4 vEffectColor : SV_Target2;
 };
 
 PS_OUT PS_Main(VS_OUT _in) : SV_Target

@@ -3,6 +3,7 @@
 
 enum class COMPONENT_TYPE : uint8
 {
+	LIGHT,
     ANIMATOR,
 	TRANSFORM,
 	CONTROLLER,
@@ -13,7 +14,6 @@ enum class COMPONENT_TYPE : uint8
 	CAMERA,
 	PHYSICAL,
 	COLLIDER,
-	LIGHT,
 	// ...
 	MONO_BEHAVIOUR,
 	END,

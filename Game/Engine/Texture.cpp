@@ -41,7 +41,7 @@ void Texture::Load(const wstring& szPath)
 	m_vTexSize = Vec3(static_cast<float>(m_scratchImage.GetMetadata().width), static_cast<float>(m_scratchImage.GetMetadata().height), 1.f);
 }
 
-void Texture::Create(uint32 eType, uint32 iWidth, uint32 iHeight)
+void Texture::Create(uint32 eType, DXGI_FORMAT eFormat, uint32 iWidth, uint32 iHeight)
 {
 	D3D11_TEXTURE2D_DESC td = { 0 };
 	m_vTexSize = Vec3(static_cast<float>(iWidth), static_cast<float>(iHeight), 1.f);
@@ -60,15 +60,15 @@ void Texture::Create(uint32 eType, uint32 iWidth, uint32 iHeight)
 	if (eType & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 		td.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
 	else
-		td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		td.Format = eFormat;
 	
 	HRESULT hr = DEVICE->CreateTexture2D(&td, nullptr, m_pTexture.GetAddressOf());
 	assert(SUCCEEDED(hr));
 
-	CreateFromTexture(eType, m_pTexture);
+	CreateFromTexture(eType, eFormat, m_pTexture);
 }
 
-void Texture::CreateFromTexture(uint32 eType, ComPtr<ID3D11Texture2D> pTexture)
+void Texture::CreateFromTexture(uint32 eType, DXGI_FORMAT eFormat, ComPtr<ID3D11Texture2D> pTexture)
 {
 	m_eType = eType;
 	m_pTexture = pTexture;
@@ -85,7 +85,7 @@ void Texture::CreateFromTexture(uint32 eType, ComPtr<ID3D11Texture2D> pTexture)
 	if (m_eType & D3D11_BIND_SHADER_RESOURCE)
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC sd = {};
-		sd.Format = td.Format;
+		sd.Format = eFormat;
 		sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		sd.Texture2D.MipLevels = 1;
 
@@ -102,7 +102,7 @@ void Texture::CreateFromTexture(uint32 eType, ComPtr<ID3D11Texture2D> pTexture)
 	if (m_eType & D3D11_BIND_UNORDERED_ACCESS)	
 	{
 		D3D11_UNORDERED_ACCESS_VIEW_DESC ud = {};
-		ud.Format = td.Format;
+		ud.Format = eFormat;
 		ud.ViewDimension = D3D11_UAV_DIMENSION::D3D11_UAV_DIMENSION_TEXTURE2D;
 		HRESULT hr = DEVICE->CreateUnorderedAccessView(pTexture.Get(), nullptr, m_pUAV.GetAddressOf());
 		assert(SUCCEEDED(hr));
