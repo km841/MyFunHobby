@@ -295,6 +295,9 @@
     <ClInclude Include="HighWarlockChargingScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Script</Filter>
     </ClInclude>
+    <ClInclude Include="JuniorKnight.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -495,6 +498,9 @@
     </ClCompile>
     <ClCompile Include="HighWarlockChargingScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="JuniorKnight.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

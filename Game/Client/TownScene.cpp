@@ -40,6 +40,7 @@
 #include "NPC_Wizard.h"
 #include "NPC_Ogre.h"
 #include "GlobalEffect.h"
+#include "JuniorKnight.h"
 
 /* Resources */
 #include "Animation.h"
@@ -60,6 +61,13 @@
 #include "Animator.h"
 #include "Movement.h"
 #include "Light.h"
+#include "AI.h"
+
+/* Behavior Component */
+#include "ChasePlayerSelector.h"
+#include "BehaviorTask.h"
+#include "Sequence.h"
+
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -102,12 +110,13 @@ void TownScene::Render()
 
 void TownScene::Enter()
 {
-	//Load(L"..\\Resources\\Map\\DefaultMap.map");
+	Load(L"..\\Resources\\Map\\DefaultMap.map");
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::MONSTER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::NPC, LAYER_TYPE::PLAYER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::PLAYER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
@@ -168,13 +177,75 @@ void TownScene::Enter()
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-		pPlayer->GetLight()->SetLightRange(600.f);
+		pPlayer->GetLight()->SetLightRange(800.f);
 		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
 		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 100.f, 100.f));
 
 		AddGameObject(pPlayer);
+	}
+
+	// Monster - Junior Knight
+	{
+		shared_ptr<JuniorKnight> pJuniorKnight = JuniorKnight::Get();
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pJuniorKnight->AddComponent(pMeshRenderer);
+		pJuniorKnight->AddComponent(make_shared<Transform>());
+		pJuniorKnight->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f)));
+		pJuniorKnight->AddComponent(make_shared<RigidBody>(true));
+		pJuniorKnight->AddComponent(make_shared<Collider>());
+		pJuniorKnight->AddComponent(make_shared<DebugRenderer>());
+		pJuniorKnight->AddComponent(make_shared<Animator>());
+		pJuniorKnight->AddComponent(make_shared<Movement>());
+		pJuniorKnight->AddComponent(make_shared<AI>());
+
+
+		shared_ptr<Selector> pSelector = make_shared<Selector>();
+		shared_ptr<Sequence> pSequence = make_shared<Sequence>();
+
+		pSelector->AddChild(pSequence);
+		
+		auto fnMoveTask = [&]()->BEHAVIOR_RESULT {
+			pJuniorKnight->GetTransform()->GetRigidBody()->SetVelocity(AXIS::X, 100.f);
+			return BEHAVIOR_RESULT::SUCCESS;
+		};
+
+		auto fnRunAnimation = [&]()->BEHAVIOR_RESULT {
+			if (L"JuniorKnight_Walk" != pJuniorKnight->GetAnimator()->GetActiveAnimation()->GetName())
+			{
+				pJuniorKnight->GetAnimator()->Play(L"JuniorKnight_Walk");
+				return BEHAVIOR_RESULT::SUCCESS;
+			}
+			else
+			{
+				return BEHAVIOR_RESULT::SUCCESS;
+			}
+		};
+
+		pSequence->AddChild(make_shared<BehaviorTask>(fnMoveTask));
+		pSequence->AddChild(make_shared<BehaviorTask>(fnRunAnimation));
+		pJuniorKnight->GetAI()->SetBehaviorRootNode(pSelector);
+
+		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Idle", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_idle.anim");
+		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Walk", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_walk.anim");
+		shared_ptr<Animation> pAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Attack", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_attack.anim");
+		pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Idle", pIdleAnimation);
+		pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Walk", pWalkAnimation);
+		pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Attack", pAttackAnimation);
+		pJuniorKnight->GetAnimator()->Play(L"JuniorKnight_Idle");
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pJuniorKnight->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 115.f, 99.5f));
+		AddGameObject(pJuniorKnight);
 	}
 
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR)->SetPlayer(pPlayer);
@@ -234,7 +305,7 @@ void TownScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 650.f, 100.f));
+		pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 700.f, 100.f));
 		pGround->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 
 		AddGameObject(pGround);

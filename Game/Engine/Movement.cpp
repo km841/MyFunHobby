@@ -51,16 +51,16 @@ const Vec3& Movement::RegulateVelocity(Vec3& vVelocity)
 	const Vec3& vMySize = m_pGameObject.lock()->GetPhysical()->GetGeometrySize();
 
 	Vec3 vLeftTop = Vec3(vMyPos.x - vMySize.x, vMyPos.y + vMySize.y, vMyPos.z);
-	Vec3 vLeftBtm = Vec3(vMyPos.x - vMySize.x, vMyPos.y - vMySize.y / 2.f, vMyPos.z);
+	Vec3 vLeftBtm = Vec3(vMyPos.x - vMySize.x, vMyPos.y - vMySize.y, vMyPos.z);
 	Vec3 vRightTop = Vec3(vMyPos.x + vMySize.x, vMyPos.y + vMySize.y, vMyPos.z);
-	Vec3 vRightBtm = Vec3(vMyPos.x + vMySize.x, vMyPos.y - vMySize.y / 2.f, vMyPos.z);
+	Vec3 vRightBtm = Vec3(vMyPos.x + vMySize.x, vMyPos.y - vMySize.y, vMyPos.z);
 
 	Vec3 vLeftDir = -VEC3_RIGHT_NORMAL;
 	Vec3 vRightDir = VEC3_RIGHT_NORMAL;
 	Vec3 vTopDir = VEC3_UP_NORMAL;
 	Vec3 vBtmDir = -VEC3_UP_NORMAL;
 
-	float fRestitution = GetGameObject()->GetStatus()->fSpeed + 50.f;
+	float fRestitution = 100.f;
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 	for (const auto& pGameObject : vGameObjects)
 	{
@@ -80,10 +80,10 @@ const Vec3& Movement::RegulateVelocity(Vec3& vVelocity)
 			vVelocity.y = fRestitution;
 		
 		if (bLeftDirFromLeftTop || bLeftDirFromLeftBtm)
-			vVelocity.x = fRestitution;
+			vVelocity.x = 400.f;
 		
 		else if (bRightDirFromRightTop || bRightDirFromRightBtm)
-			vVelocity.x = -fRestitution;
+			vVelocity.x = -400.f;
 	}
 
 	return vVelocity;

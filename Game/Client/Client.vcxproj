@@ -188,6 +188,7 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="InterfaceEffect.h" />
+    <ClInclude Include="JuniorKnight.h" />
     <ClInclude Include="LittleBone.h" />
     <ClInclude Include="LittleBoneHead.h" />
     <ClInclude Include="LittleBoneSwapSkill.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="InterfaceEffect.cpp" />
+    <ClCompile Include="JuniorKnight.cpp" />
     <ClCompile Include="LittleBone.cpp" />
     <ClCompile Include="LittleBoneHead.cpp" />
     <ClCompile Include="LittleBoneSwapSkill.cpp" />

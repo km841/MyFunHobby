@@ -50,6 +50,7 @@ void Animator::AddAnimation(const wstring& szName, shared_ptr<Animation> pAnimat
 	assert(pAnimation);
 	assert(nullptr == FindAnimation(szName));
 	pAnimation->SetAnimator(shared_from_this());
+	pAnimation->SetName(szName);
 	m_mAnimations[szName] = pAnimation;
 }
 

@@ -42,3 +42,11 @@ void Monster::FinalUpdate()
 	GameObject::FinalUpdate();
 }
 
+void Monster::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
+{
+}
+
+void Monster::OnTriggerExit(shared_ptr<GameObject> pGameObject)
+{
+}
+

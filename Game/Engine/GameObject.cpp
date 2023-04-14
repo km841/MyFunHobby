@@ -12,6 +12,7 @@
 #include "Animator.h"
 #include "Movement.h"
 #include "Light.h"
+#include "AI.h"
 
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -167,6 +168,12 @@ shared_ptr<Light> GameObject::GetLight()
 {
 	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::LIGHT);
 	return static_pointer_cast<Light>(pComponent);
+}
+
+shared_ptr<AI> GameObject::GetAI()
+{
+	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::AI);
+	return static_pointer_cast<AI>(pComponent);
 }
 
 void GameObject::AddComponent(shared_ptr<Component> pComponent)

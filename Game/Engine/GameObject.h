@@ -14,6 +14,7 @@ class Physical;
 class Animator;
 class Movement;
 class Light;
+class AI;
 
 class GameObject :
     public Object
@@ -41,6 +42,7 @@ public:
     shared_ptr<Animator>        GetAnimator();
     shared_ptr<Movement>        GetMovement();
     shared_ptr<Light>           GetLight();
+    shared_ptr<AI>              GetAI();
 
     void AddComponent(shared_ptr<Component> pComponent);
 

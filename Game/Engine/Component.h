@@ -14,6 +14,7 @@ enum class COMPONENT_TYPE : uint8
 	CAMERA,
 	PHYSICAL,
 	COLLIDER,
+    AI,
 	// ...
 	MONO_BEHAVIOUR,
 	END,
@@ -90,6 +91,7 @@ class Animator;
 class PlayerState;
 class Movement;
 class Light;
+class AI;
 
 class Component :
     public Object
@@ -118,6 +120,7 @@ public:
     shared_ptr<Collider>            GetCollider();
     shared_ptr<Movement>            GetMovement();
     shared_ptr<Light>               GetLight();
+    shared_ptr<AI>                  GetAI();
 
 	FORCEINLINE COMPONENT_TYPE GetType() const { return m_eType; }
     PLAYER_STATE   GetPlayerStateEnum();

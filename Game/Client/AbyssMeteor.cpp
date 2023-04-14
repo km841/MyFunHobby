@@ -13,6 +13,7 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "Player.h"
+#include "Physical.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()
@@ -91,6 +92,10 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
 		Disable();
+		PxTransform pxTransform = GetTransform()->GetPxTransform();
+		pxTransform.p.x = 0.f;
+		pxTransform.p.y = 0.f;
+		GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(pxTransform);
 		// Crash!
 		EnableAndInitSmokeEffect();
 	}

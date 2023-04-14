@@ -181,6 +181,21 @@
     <ClInclude Include="StructuredBuffer.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="ChasePlayerSelector.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeSequence.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="UseSkillTask.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveTask.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -360,6 +375,21 @@
     <ClCompile Include="StructuredBuffer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="ChasePlayerSelector.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="FleeSequence.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="UseSkillTask.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveTask.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -394,6 +424,9 @@
     </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{abffbd3c-ea98-4231-b801-ae8359b60f82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AI\MonsterAI">
+      <UniqueIdentifier>{ce04da1d-7489-42af-bdb6-9f85824798c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

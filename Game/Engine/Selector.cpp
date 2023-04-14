@@ -12,7 +12,6 @@ BEHAVIOR_RESULT Selector::Run()
 
 		else if (BEHAVIOR_RESULT::RUNNING == eResult)
 			return BEHAVIOR_RESULT::RUNNING;
-
 	}
 
 	return BEHAVIOR_RESULT::FAILURE;
