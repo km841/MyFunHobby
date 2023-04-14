@@ -68,7 +68,7 @@ enum class COLLISION_SIDE
 	BOTTOM,
 	LEFT,
 	RIGHT,
-	NONE,
+	END,
 };
 
 enum class AXIS
@@ -80,6 +80,7 @@ enum class AXIS
 
 enum
 {
+	COLLISION_SIDE_COUNT = COLLISION_SIDE::END,
 	SCENE_TYPE_COUNT = SCENE_TYPE::END,
 };
 

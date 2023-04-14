@@ -244,6 +244,36 @@ bool Collider::IsCollisionFromTop(shared_ptr<GameObject> pGameObject)
 	return false;
 }
 
+COLLISION_SIDE Collider::CalculateCollisionSide(const Vec3& vDiffVec)
+{
+	if (fabs(vDiffVec.x) > fabs(vDiffVec.y))
+	{
+		if (vDiffVec.x > 0.f)
+		{
+			return COLLISION_SIDE::RIGHT;
+		}
+
+		else
+		{
+			return COLLISION_SIDE::LEFT;
+		}
+	}
+	
+	else
+	{
+		if (vDiffVec.y > 0.f)
+		{
+			return COLLISION_SIDE::BOTTOM;
+		}
+
+		else
+		{
+			return COLLISION_SIDE::TOP;
+		}
+	}
+
+}
+
 void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)
 {
 	switch (pGeometries->eGeomType)

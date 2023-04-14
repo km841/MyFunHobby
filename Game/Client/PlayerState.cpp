@@ -23,7 +23,9 @@ bool PlayerState::CheckGrounded()
 	Vec3 vMyPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
 	const Vec3& vMySize = m_pPlayer.lock()->GetPhysical()->GetGeometrySize();
 
-	Vec3 vFootPos = Vec3(vMyPos.x, vMyPos.y - vMySize.y, vMyPos.z);
+	Vec3 vBtmLeft = Vec3(vMyPos.x - vMySize.x, vMyPos.y - vMySize.y, vMyPos.z);
+	Vec3 vBtmCenter = Vec3(vMyPos.x, vMyPos.y - vMySize.y, vMyPos.z);
+	Vec3 vBtmRight = Vec3(vMyPos.x + vMySize.x, vMyPos.y - vMySize.y, vMyPos.z);
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 
 	bool bResult = {};
@@ -31,8 +33,15 @@ bool PlayerState::CheckGrounded()
 
 	for (const auto& pGameObject : vGameObjects)
 	{
-		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vFootPos, vBtmDir, pGameObject, 2.f);		
-		
+		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmLeft, vBtmDir, pGameObject, 5.f);
+		if (bResult)
+			return true;
+
+		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmCenter, vBtmDir, pGameObject, 5.f);
+		if (bResult)
+			return true;
+
+		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmRight, vBtmDir, pGameObject, 5.f);
 		if (bResult)
 			return true;
 	}

@@ -118,3 +118,10 @@ void Transform::PxPushData(shared_ptr<Camera> pCamera)
 
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushData(&transformParams, sizeof(transformParams));
 }
+
+void Transform::SetPhysicalPosition(const Vec3& vPosition)
+{
+	assert(GetPhysical());
+	m_PxTransform.p = Conv::Vec3ToPxVec3(vPosition);
+	GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(m_PxTransform);
+}

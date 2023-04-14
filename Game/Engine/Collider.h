@@ -32,6 +32,8 @@ public:
     Vec3                            ComputePenetration(shared_ptr<GameObject> pGameObject);
     bool                            IsCollisionFromTop(shared_ptr<GameObject> pGameObject);
 
+    COLLISION_SIDE CalculateCollisionSide(const Vec3& vDiffVec);
+
 private:
     void CreateDebugGeometry(shared_ptr<Geometries> pGeometries);
     void CreateDebugBox(const Vec3& vHalfSize);

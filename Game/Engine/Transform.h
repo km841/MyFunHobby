@@ -52,6 +52,9 @@ public:
     Vec3             GetUp()    { return m_matWorld.Up(); }
     Vec3             GetLook()  { return m_matWorld.Backward(); }
 
+    void SetPhysicalPosition(const Vec3& vPosition);
+    Vec3 GetPhysicalPosition() { return Conv::PxVec3ToVec3(m_PxTransform.p); }
+
 public:
     FORCEINLINE weak_ptr<Transform> GetParent()                            const { return m_pParent; }
     FORCEINLINE void                SetParent(shared_ptr<Transform> pParent)     { m_pParent = pParent; }

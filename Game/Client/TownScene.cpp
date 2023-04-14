@@ -110,9 +110,9 @@ void TownScene::Render()
 
 void TownScene::Enter()
 {
-	Load(L"..\\Resources\\Map\\DefaultMap.map");
+	Load(L"..\\Resources\\Map\\DefaultMap5.map");
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
@@ -181,7 +181,7 @@ void TownScene::Enter()
 		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
-		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 100.f, 100.f));
+		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 100.f, 100.f));
 
 		AddGameObject(pPlayer);
 	}
@@ -295,21 +295,21 @@ void TownScene::Enter()
 
 
 	// Ground
-	{
-		shared_ptr<GameObject> pGround = make_shared<GameObject>(LAYER_TYPE::TILE);
-		pGround->AddComponent(make_shared<Transform>());
-		pGround->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(2400.f, 400.f, 1.f)));
-		pGround->AddComponent(make_shared<Collider>());
-		pGround->AddComponent(make_shared<DebugRenderer>());
+	//{
+	//	shared_ptr<GameObject> pGround = make_shared<GameObject>(LAYER_TYPE::TILE);
+	//	pGround->AddComponent(make_shared<Transform>());
+	//	pGround->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(2400.f, 400.f, 1.f)));
+	//	pGround->AddComponent(make_shared<Collider>());
+	//	pGround->AddComponent(make_shared<DebugRenderer>());
 
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 700.f, 100.f));
-		pGround->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
+	//	pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 700.f, 100.f));
+	//	pGround->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 
-		AddGameObject(pGround);
-	}
+	//	AddGameObject(pGround);
+	//}
 
 	// Compute Shader
 	//{

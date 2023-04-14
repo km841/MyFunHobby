@@ -35,14 +35,18 @@ void PlayerMoveScript::LateUpdate()
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{
-		
 		vVelocity = VEC3_RIGHT_NORMAL * -pPlayer->GetStatus()->fSpeed;
 		
 		if (PLAYER_STATE::DASH != GetPlayerStateEnum() &&
 			PLAYER_STATE::SWAP != GetPlayerStateEnum())
 		{
 			pPlayer->SetDirection(DIRECTION::LEFT);
-			GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+			
+			CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
+			if (COLLISION_SIDE::LEFT != collisionInfo.first)
+			{
+				GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+			}
 		}
 	}
 
@@ -54,7 +58,12 @@ void PlayerMoveScript::LateUpdate()
 			PLAYER_STATE::SWAP != GetPlayerStateEnum())
 		{
 			pPlayer->SetDirection(DIRECTION::RIGHT);
-			GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+
+			CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
+			if (COLLISION_SIDE::RIGHT != collisionInfo.first)
+			{
+				GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
+			}
 		}
 	}
 
@@ -93,14 +102,14 @@ void PlayerMoveScript::LateUpdate()
 		}
 
 		// Test Code
-		GetGameObject()->GetStatus()->TakeDamage(1);
+		//GetGameObject()->GetStatus()->TakeDamage(1);
 
-		GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
-		if (GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
-			GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Disable();
-		
-		else
-			GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Enable();
+		//GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
+		//if (GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
+		//	GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Disable();
+		//
+		//else
+		//	GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Enable();
 	}
 
 	if (IS_NONE(KEY_TYPE::LEFT) && IS_NONE(KEY_TYPE::RIGHT))
@@ -109,6 +118,42 @@ void PlayerMoveScript::LateUpdate()
 			PLAYER_STATE::SWAP != pPlayer->GetPlayerStateEnum())
 			GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 	}
+
+
+	{
+		CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
+		if (COLLISION_SIDE::BOTTOM == collisionInfo.first)
+		{
+			Vec3 vPosition = GetTransform()->GetPhysicalPosition();
+			vPosition.y = collisionInfo.second;
+			GetTransform()->SetPhysicalPosition(vPosition);
+		}
+	}
+
+	{
+		CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
+		if (COLLISION_SIDE::TOP == collisionInfo.first)
+		{
+			Vec3 vPosition = GetTransform()->GetPhysicalPosition();
+			vPosition.y = collisionInfo.second;
+			GetTransform()->SetPhysicalPosition(vPosition);
+			GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+		}
+	}
+
+	{
+		CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
+		if (COLLISION_SIDE::LEFT == collisionInfo.first ||
+			COLLISION_SIDE::RIGHT == collisionInfo.first)
+		{
+			Vec3 vPosition = GetTransform()->GetPhysicalPosition();
+			vPosition.x = collisionInfo.second;
+			GetTransform()->SetPhysicalPosition(vPosition);
+		}
+	}
+
+
+	//pPlayer->CheckAndAdjustPlayerPositionOnCollision();
 
 	if (IS_DOWN(KEY_TYPE::SPACE))
 	{
