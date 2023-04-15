@@ -7,6 +7,7 @@
 #include "SkulSkill.h"
 #include "InterfaceManager.h"
 #include "SkillBoxHUD.h"
+#include "SkulAttack.h"
 
 Skul::Skul(SKUL_GRADE eSkulGrade)
 	: GameObject(LAYER_TYPE::UNKNOWN)
@@ -58,6 +59,31 @@ void Skul::AddAnimation(PLAYER_STATE ePlayerState, const wstring& szName, shared
 	m_vStateToNameMaps[iEnum][ePlayerState] = szName;
 }
 
+void Skul::AddAttackAnimation(ATTACK_ORDER eAttackOrder, const wstring& szName, shared_ptr<Animation> pAnimation, uint8 iEnum)
+{
+	assert(GetAnimator());
+	GetAnimator()->AddAnimation(szName, pAnimation);
+	
+	switch (eAttackOrder)
+	{
+	case ATTACK_ORDER::ATTACK_A:
+		m_vStateToNameMaps[iEnum][PLAYER_STATE::ATTACK_A] = szName;
+		break;
+	case ATTACK_ORDER::ATTACK_B:
+		m_vStateToNameMaps[iEnum][PLAYER_STATE::ATTACK_B] = szName;
+		break;
+	case ATTACK_ORDER::ATTACK_C:
+		m_vStateToNameMaps[iEnum][PLAYER_STATE::ATTACK_C] = szName;
+		break;
+	case ATTACK_ORDER::ATTACK_D:
+		m_vStateToNameMaps[iEnum][PLAYER_STATE::ATTACK_D] = szName;
+		break;
+	case ATTACK_ORDER::ATTACK_E:
+		m_vStateToNameMaps[iEnum][PLAYER_STATE::ATTACK_E] = szName;
+		break;
+	}
+}
+
 const wstring& Skul::GetStateToName(PLAYER_STATE ePlayerState)
 {
 	auto iter = m_vStateToNameMaps[m_iEnumIndex].find(ePlayerState);
@@ -80,6 +106,36 @@ void Skul::PlayAnimation(const wstring& szName, bool bLoop, int32 iSection)
 	assert(GetAnimator()->FindAnimation(szName));
 	GetAnimator()->Play(szName, bLoop, iSection);
 }
+
+void Skul::PlayAnimation(ATTACK_ORDER eAttackOrder, bool bLoop, int32 iSection)
+{
+	assert(GetAnimator());
+	wstring szName = {};
+
+	switch (eAttackOrder)
+	{
+	case ATTACK_ORDER::ATTACK_A:
+		szName = GetStateToName(PLAYER_STATE::ATTACK_A);
+		break;
+	case ATTACK_ORDER::ATTACK_B:
+		szName = GetStateToName(PLAYER_STATE::ATTACK_B);
+		break;
+	case ATTACK_ORDER::ATTACK_C:
+		szName = GetStateToName(PLAYER_STATE::ATTACK_C);
+		break;
+	case ATTACK_ORDER::ATTACK_D:
+		szName = GetStateToName(PLAYER_STATE::ATTACK_D);
+		break;
+	case ATTACK_ORDER::ATTACK_E:
+		szName = GetStateToName(PLAYER_STATE::ATTACK_E);
+		break;
+	}
+
+	assert(!szName.empty());
+	assert(GetAnimator()->FindAnimation(szName));
+	GetAnimator()->Play(szName, bLoop, iSection);
+}
+
 
 void Skul::SetActiveSkill(SKILL_INDEX eSkillIndex)
 {
@@ -152,11 +208,25 @@ void Skul::RefreshAnimation()
 	m_pPlayer.lock()->RefreshAnimation();
 }
 
-const AttackInfo& Skul::GetAttackInfo(ATTACK_ORDER eAttackOrder)
+void Skul::SetAttackMethod(shared_ptr<SkulAttack> pAttackMethod)
 {
-	assert(static_cast<uint8>(eAttackOrder) < ATTACK_ORDER_COUNT);
-	return m_arrAttackInfo[static_cast<uint8>(eAttackOrder)];
+	assert(pAttackMethod);
+
+	auto& attackInfo = pAttackMethod->m_arrAttackInfo;
+	for (int32 i = 0; i < attackInfo.size(); ++i)
+	{
+		for (int32 j = 0; j < ATTACK_ORDER_COUNT; ++j)
+		{
+			if (attackInfo[i][j].pAnimation)
+			{
+				AddAttackAnimation(static_cast<ATTACK_ORDER>(j), attackInfo[i][j].pAnimation->GetName(), attackInfo[i][j].pAnimation, attackInfo[i][j].iEnum);
+			}
+		}
+	}
+
+	m_pAttackMethod = pAttackMethod;
 }
+
 
 void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)
 {
@@ -176,12 +246,7 @@ void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)
 	CooldownCompletionCallback(eSkillIndex);
 }
 
-void Skul::AddAttackInfo(ATTACK_ORDER eAttackOrder, const AttackInfo& attackInfo)
-{
-	uint8 iAttackOrder = static_cast<uint8>(eAttackOrder);
-	assert(iAttackOrder < ATTACK_ORDER_COUNT);
-	m_arrAttackInfo[iAttackOrder] = attackInfo;
-}
+
 
 weak_ptr<Animation> Skul::GetActiveAnimation()
 {

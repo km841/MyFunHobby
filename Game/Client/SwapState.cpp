@@ -81,7 +81,6 @@ void SwapState::PlayAnimation()
 	{
 		m_pPlayer.lock()->GetActiveSkul()->PlayAnimation(szName, true);
 	}
-
 }
 
 void SwapState::CreateAndAddAfterImageToScene()

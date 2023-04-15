@@ -51,7 +51,7 @@ void WalkState::Update()
 	// Attack A State ÀüÀÌ
 	if (IS_PRESS(KEY_TYPE::X))
 	{
-		AddChangeStateEvent(PLAYER_STATE::ATTACK_A);
+		AddChangeStateEvent(PLAYER_STATE::ATTACK);
 		return;
 	}
 

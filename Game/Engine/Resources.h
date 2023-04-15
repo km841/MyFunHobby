@@ -54,8 +54,10 @@ inline shared_ptr<T> Resources::Load(const wstring& szKey, const wstring& szPath
 		return static_pointer_cast<T>(findIt->second);
 
 	shared_ptr<T> pObject = make_shared<T>();
+	pObject->SetName(szKey);
 	pObject->Load(szPath);
 	mObjMap[szKey] = pObject;
+
 
 	return pObject;
 }

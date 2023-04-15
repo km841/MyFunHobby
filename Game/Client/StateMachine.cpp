@@ -7,8 +7,7 @@
 #include "JumpRiseState.h"
 #include "JumpFallState.h"
 #include "JumpAttackState.h"
-#include "AttackAState.h"
-#include "AttackBState.h"
+#include "AttackState.h"
 #include "DashState.h"
 #include "SkillState.h"
 #include "PathState.h"
@@ -26,8 +25,7 @@ void StateMachine::Awake()
 	m_mStateMap[PLAYER_STATE::WALK]        = make_shared<WalkState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::JUMP_RISE]   = make_shared<JumpRiseState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::JUMP_FALL]   = make_shared<JumpFallState>(m_pPlayer.lock());
-	m_mStateMap[PLAYER_STATE::ATTACK_A]    = make_shared<AttackAState>(m_pPlayer.lock());
-	m_mStateMap[PLAYER_STATE::ATTACK_B]    = make_shared<AttackBState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::ATTACK]      = make_shared<AttackState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::JUMP_ATTACK] = make_shared<JumpAttackState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::DASH]		   = make_shared<DashState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::SKILL]	   = make_shared<SkillState>(m_pPlayer.lock());
@@ -37,7 +35,8 @@ void StateMachine::Awake()
 
 	for (int32 i = 0; i < PLAYER_STATE_COUNT; ++i)
 	{
-		m_mStateMap[static_cast<PLAYER_STATE>(i)]->Awake();
+		if (m_mStateMap[static_cast<PLAYER_STATE>(i)])
+			m_mStateMap[static_cast<PLAYER_STATE>(i)]->Awake();
 	}
 	
 	ChangePlayerState(static_pointer_cast<Player>(m_pPlayer.lock())->GetPlayerStateEnum());

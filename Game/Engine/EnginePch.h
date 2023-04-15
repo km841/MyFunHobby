@@ -278,17 +278,21 @@ struct AttackInfo
 		memset(this, 0, sizeof(AttackInfo));
 	}
 
-	explicit AttackInfo(ATTACK_TYPE eAttackType, float fStartAngle, float fEndAngle, float fRadius)
-		: eAttackType(eAttackType)
+	explicit AttackInfo(shared_ptr<class Animation> pAnimation, float fStartAngle, float fEndAngle, float fRadius, uint8 iEnum = 0)
+		: pAnimation(pAnimation)
 		, fStartAngle(fStartAngle)
 		, fEndAngle(fEndAngle)
 		, fRadius(fRadius)
+		, iEnum(iEnum)
+		, bUse(true)
 	{}
 
-	ATTACK_TYPE eAttackType;
+	shared_ptr<Animation> pAnimation;
 	float fStartAngle;
 	float fEndAngle;
 	float fRadius;
+	uint8 iEnum;
+	bool bUse;
 };
 
 
@@ -298,6 +302,8 @@ enum class ATTACK_ORDER
 	ATTACK_A,
 	ATTACK_B,
 	ATTACK_C,
+	ATTACK_D,
+	ATTACK_E,
 	END,
 };
 

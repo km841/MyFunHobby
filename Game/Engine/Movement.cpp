@@ -29,8 +29,7 @@ void Movement::FinalUpdate()
 
 	if (LAYER_TYPE::PLAYER == GetGameObject()->GetLayerType())
 	{
-		if (PLAYER_STATE::ATTACK_A == GetPlayerStateEnum() ||
-			PLAYER_STATE::ATTACK_B == GetPlayerStateEnum())
+		if (PLAYER_STATE::ATTACK == GetPlayerStateEnum())
 			return;
 
 		if (PLAYER_STATE::SKILL == GetPlayerStateEnum())

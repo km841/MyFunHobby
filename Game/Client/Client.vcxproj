@@ -170,8 +170,7 @@
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="AfterImageDrawScript.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="AttackAState.h" />
-    <ClInclude Include="AttackBState.h" />
+    <ClInclude Include="AttackState.h" />
     <ClInclude Include="BackgroundMoveScript.h" />
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="CameraFadeInOutScript.h" />
@@ -190,6 +189,7 @@
     <ClInclude Include="InterfaceEffect.h" />
     <ClInclude Include="JuniorKnight.h" />
     <ClInclude Include="LittleBone.h" />
+    <ClInclude Include="LittleBoneAttack.h" />
     <ClInclude Include="LittleBoneHead.h" />
     <ClInclude Include="LittleBoneSwapSkill.h" />
     <ClInclude Include="PathState.h" />
@@ -215,6 +215,7 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerTrackingScript.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SkulAttack.h" />
     <ClInclude Include="SkulThumnailHUD.h" />
     <ClInclude Include="SkullThrowSkill.h" />
     <ClInclude Include="SkulSkill.h" />
@@ -235,8 +236,7 @@
     <ClCompile Include="AfterImage.cpp" />
     <ClCompile Include="AfterImageDrawScript.cpp" />
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="AttackAState.cpp" />
-    <ClCompile Include="AttackBState.cpp" />
+    <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="BackgroundMoveScript.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="ChargingState.cpp" />
@@ -256,6 +256,7 @@
     <ClCompile Include="InterfaceEffect.cpp" />
     <ClCompile Include="JuniorKnight.cpp" />
     <ClCompile Include="LittleBone.cpp" />
+    <ClCompile Include="LittleBoneAttack.cpp" />
     <ClCompile Include="LittleBoneHead.cpp" />
     <ClCompile Include="LittleBoneSwapSkill.cpp" />
     <ClCompile Include="PathState.cpp" />
@@ -285,6 +286,7 @@
     <ClCompile Include="PlayerMoveScript.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerTrackingScript.cpp" />
+    <ClCompile Include="SkulAttack.cpp" />
     <ClCompile Include="SkulThumnailHUD.cpp" />
     <ClCompile Include="SkullThrowSkill.cpp" />
     <ClCompile Include="SkulSkill.cpp" />

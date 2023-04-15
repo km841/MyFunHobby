@@ -15,6 +15,7 @@
 #include "LittleBoneSwapSkill.h"
 #include "AbyssMeteorSkill.h"
 #include "HighWarlockChargingScript.h"
+#include "LittleBoneAttack.h"
 
 
 void Cemetery::Init()
@@ -47,9 +48,6 @@ void Cemetery::CreateSkul()
 		pLittleBone->AddComponent(make_shared<Transform>());
 		pLittleBone->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
 
-		pLittleBone->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ ATTACK_TYPE::MELEE, -20.f, 90.f, 10.f });
-		pLittleBone->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ ATTACK_TYPE::MELEE, -20.f, 90.f, 10.f });
-
 		uint8 iHasHeadEnum = static_cast<uint8>(LITTLE_BONE_STATE::HAS_HEAD);
 		// Has Head Animation
 		{
@@ -59,11 +57,6 @@ void Cemetery::CreateSkul()
 			shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpRise", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_rise.anim");
 			shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpFall", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_fall.anim");
 			shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpAttack", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_attack.anim");
-			shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackA", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_a.anim");
-			shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackB", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_b.anim");
-
-			pAttackA_Animation->SetHitFrame(1);
-			pAttackB_Animation->SetHitFrame(1);
 
 
 			pLittleBone->AddAnimation(PLAYER_STATE::IDLE, L"LittleBone_Idle", pIdleAnimation, iHasHeadEnum);
@@ -72,8 +65,7 @@ void Cemetery::CreateSkul()
 			pLittleBone->AddAnimation(PLAYER_STATE::JUMP_RISE, L"LittleBone_JumpRise", pJumpRiseAnimation, iHasHeadEnum);
 			pLittleBone->AddAnimation(PLAYER_STATE::JUMP_FALL, L"LittleBone_JumpFall", pJumpFallAnimation, iHasHeadEnum);
 			pLittleBone->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"LittleBone_JumpAttack", pJumpAttackAnimation, iHasHeadEnum);
-			pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_A, L"LittleBone_AttackA", pAttackA_Animation, iHasHeadEnum);
-			pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_B, L"LittleBone_AttackB", pAttackB_Animation, iHasHeadEnum);
+			//pLittleBone->AddAnimation(PLAYER_STATE::ATTACK, L"LittleBone_AttackA", pAttackA_Animation, iHasHeadEnum);
 		}
 
 		uint8 iNoHeadEnum = static_cast<uint8>(LITTLE_BONE_STATE::NO_HEAD);
@@ -85,8 +77,6 @@ void Cemetery::CreateSkul()
 			shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_NoHead_JumpRise", L"..\\Resources\\Animation\\LittleBone\\nohead_littlebone_jump_rise.anim");
 			shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_NoHead_JumpFall", L"..\\Resources\\Animation\\LittleBone\\nohead_littlebone_jump_fall.anim");
 			shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_NoHead_JumpAttack", L"..\\Resources\\Animation\\LittleBone\\nohead_littlebone_jump_attack.anim");
-			shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_NoHead_AttackA", L"..\\Resources\\Animation\\LittleBone\\nohead_littlebone_attack_a.anim");
-			shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_NoHead_AttackB", L"..\\Resources\\Animation\\LittleBone\\nohead_littlebone_attack_b.anim");
 
 			pLittleBone->AddAnimation(PLAYER_STATE::IDLE, L"LittleBone_NoHead_Idle", pIdleAnimation, iNoHeadEnum);
 			pLittleBone->AddAnimation(PLAYER_STATE::WALK, L"LittleBone_NoHead_Walk", pWalkAnimation, iNoHeadEnum);
@@ -94,10 +84,29 @@ void Cemetery::CreateSkul()
 			pLittleBone->AddAnimation(PLAYER_STATE::JUMP_RISE, L"LittleBone_NoHead_JumpRise", pJumpRiseAnimation, iNoHeadEnum);
 			pLittleBone->AddAnimation(PLAYER_STATE::JUMP_FALL, L"LittleBone_NoHead_JumpFall", pJumpFallAnimation, iNoHeadEnum);
 			pLittleBone->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"LittleBone_NoHead_JumpAttack", pJumpAttackAnimation, iNoHeadEnum);
-			pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_A, L"LittleBone_NoHead_AttackA", pAttackA_Animation, iNoHeadEnum);
-			pLittleBone->AddAnimation(PLAYER_STATE::ATTACK_B, L"LittleBone_NoHead_AttackB", pAttackB_Animation, iNoHeadEnum);
 		}
 
+		// LittleBone Attack Method
+		{
+			shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackA", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_a.anim");
+			shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackB", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_b.anim");
+
+			shared_ptr<Animation> pNoHead_AttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_NoHead_AttackA", L"..\\Resources\\Animation\\LittleBone\\nohead_littlebone_attack_a.anim");
+			shared_ptr<Animation> pNoHead_AttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_NoHead_AttackB", L"..\\Resources\\Animation\\LittleBone\\nohead_littlebone_attack_b.anim");
+
+			pAttackA_Animation->SetHitFrame(1);
+			pAttackB_Animation->SetHitFrame(1);
+			pNoHead_AttackA_Animation->SetHitFrame(1);
+			pNoHead_AttackB_Animation->SetHitFrame(1);
+
+			shared_ptr<LittleBoneAttack> pLittleBoneAttackMethod = make_shared<LittleBoneAttack>(pLittleBone);
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pAttackA_Animation , -20.f, 90.f, 100.f, iHasHeadEnum });
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pNoHead_AttackA_Animation , -20.f, 90.f, 100.f, iNoHeadEnum });
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pAttackB_Animation , -20.f, 90.f, 100.f, iHasHeadEnum });
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pNoHead_AttackB_Animation , -20.f, 90.f, 100.f, iNoHeadEnum });
+
+			pLittleBone->SetAttackMethod(pLittleBoneAttackMethod);
+		}
 		// Skull Throw Skill
 		{
 			shared_ptr<SkullThrowSkill> pThrowSkill = make_shared<SkullThrowSkill>();
