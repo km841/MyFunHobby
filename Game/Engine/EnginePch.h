@@ -265,8 +265,45 @@ public:
 	bool  bAlive;
 };
 
+enum class ATTACK_TYPE
+{
+	MELEE,
+	MISSILE,
+};
+
+struct AttackInfo
+{
+	AttackInfo()
+	{
+		memset(this, 0, sizeof(AttackInfo));
+	}
+
+	explicit AttackInfo(ATTACK_TYPE eAttackType, float fStartAngle, float fEndAngle, float fRadius)
+		: eAttackType(eAttackType)
+		, fStartAngle(fStartAngle)
+		, fEndAngle(fEndAngle)
+		, fRadius(fRadius)
+	{}
+
+	ATTACK_TYPE eAttackType;
+	float fStartAngle;
+	float fEndAngle;
+	float fRadius;
+};
+
+
+
+enum class ATTACK_ORDER
+{
+	ATTACK_A,
+	ATTACK_B,
+	ATTACK_C,
+	END,
+};
+
 enum
 {
+	ATTACK_ORDER_COUNT = ATTACK_ORDER::END,
 	TILE_SIZE = 64,
 	TILE_HALF_SIZE = TILE_SIZE / 2,
 };

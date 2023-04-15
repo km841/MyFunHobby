@@ -43,10 +43,12 @@ public:
 	void							SetSwapSkill(shared_ptr<SkulSkill> pSkulSkill);
 	void							SkillCooldownUpdate();
 	void							RefreshAnimation();
+	const AttackInfo& GetAttackInfo(ATTACK_ORDER eAttackOrder);
 
 public:
 	void							CooldownCompletion(SKILL_INDEX eSkillIndex);
 	virtual void					CooldownCompletionCallback(SKILL_INDEX eSkillIndex) { }
+	void							AddAttackInfo(ATTACK_ORDER eAttackOrder, const AttackInfo& attackInfo);
 
 public:
 	// Helper Functions
@@ -77,6 +79,7 @@ protected:
 
 	
 	std::vector<std::map<PLAYER_STATE, wstring>>	   m_vStateToNameMaps;
+	std::array<AttackInfo, ATTACK_ORDER_COUNT>		   m_arrAttackInfo;
 	shared_ptr<Texture>								   m_pThumnailImage;
 };
 

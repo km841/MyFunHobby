@@ -71,6 +71,12 @@ void Animation::Update()
 	
 }
 
+void Animation::SetHitFrame(int32 iHitFrame)
+{
+	assert(iHitFrame < m_vFrameDataList[0].iFrameCount);
+	m_iHitFrame = iHitFrame;
+}
+
 float Animation::GetAnimationProgress()
 {
 	assert(!m_vFrameDataList.empty());

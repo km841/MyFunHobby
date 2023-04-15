@@ -35,6 +35,7 @@ void Transform::FinalUpdate()
 				m_PxTransform = GetPhysical()->GetActor<PxRigidStatic>()->getGlobalPose();
 				break;
 
+			case ACTOR_TYPE::NO_COLLISION_DYN:
 			case ACTOR_TYPE::KINEMATIC:
 			case ACTOR_TYPE::DYNAMIC:
 			{

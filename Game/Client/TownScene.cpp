@@ -64,9 +64,12 @@
 #include "AI.h"
 
 /* Behavior Component */
-#include "ChasePlayerSelector.h"
+#include "IsPlayerNearCondition.h"
 #include "BehaviorTask.h"
 #include "Sequence.h"
+#include "MoveTask.h"
+#include "RunAnimateTask.h"
+#include "Selector.h"
 
 
 TownScene::TownScene()
@@ -118,7 +121,7 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::MONSTER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::NPC, LAYER_TYPE::PLAYER);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::PLAYER);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
 
 
@@ -181,7 +184,7 @@ void TownScene::Enter()
 		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
-		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 100.f, 100.f));
+		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 100.f, 100.f));
 
 		AddGameObject(pPlayer);
 	}
@@ -191,7 +194,7 @@ void TownScene::Enter()
 		shared_ptr<JuniorKnight> pJuniorKnight = JuniorKnight::Get();
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 		pMeshRenderer->SetMaterial(pMaterial);
 		pMeshRenderer->SetMesh(pMesh);
@@ -207,31 +210,27 @@ void TownScene::Enter()
 		pJuniorKnight->AddComponent(make_shared<AI>());
 
 
-		shared_ptr<Selector> pSelector = make_shared<Selector>();
-		shared_ptr<Sequence> pSequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pWalkSequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
+		shared_ptr<Selector> pParentSelector = make_shared<Selector>();
 
-		pSelector->AddChild(pSequence);
+		pParentSelector->AddChild(pAttackSequence);
+		pParentSelector->AddChild(pWalkSequence);
+
 		
-		auto fnMoveTask = [&]()->BEHAVIOR_RESULT {
-			pJuniorKnight->GetTransform()->GetRigidBody()->SetVelocity(AXIS::X, 100.f);
-			return BEHAVIOR_RESULT::SUCCESS;
-		};
+		shared_ptr<MoveTask> pMoveTask = make_shared<MoveTask>(pJuniorKnight);
+		shared_ptr<IsPlayerNearCondition> pNearCondition = make_shared<IsPlayerNearCondition>(pPlayer, pJuniorKnight);
+		shared_ptr<RunAnimateTask> pRunWalkAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Walk");
+		shared_ptr<RunAnimateTask> pRunAttackAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Attack");
+		shared_ptr<RunAnimateTask> pRunIdleAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Idle");
 
-		auto fnRunAnimation = [&]()->BEHAVIOR_RESULT {
-			if (L"JuniorKnight_Walk" != pJuniorKnight->GetAnimator()->GetActiveAnimation()->GetName())
-			{
-				pJuniorKnight->GetAnimator()->Play(L"JuniorKnight_Walk");
-				return BEHAVIOR_RESULT::SUCCESS;
-			}
-			else
-			{
-				return BEHAVIOR_RESULT::SUCCESS;
-			}
-		};
+		pAttackSequence->AddChild(pNearCondition);
+		pAttackSequence->AddChild(pRunAttackAnimation);
 
-		pSequence->AddChild(make_shared<BehaviorTask>(fnMoveTask));
-		pSequence->AddChild(make_shared<BehaviorTask>(fnRunAnimation));
-		pJuniorKnight->GetAI()->SetBehaviorRootNode(pSelector);
+		pWalkSequence->AddChild(pRunWalkAnimation);
+		pWalkSequence->AddChild(pMoveTask);
+
+		pJuniorKnight->GetAI()->SetBehaviorRootNode(pParentSelector);
 
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Idle", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Walk", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_walk.anim");
@@ -479,7 +478,7 @@ void TownScene::Enter()
 
 		pWolf->AddComponent(pMeshRenderer);
 		pWolf->AddComponent(make_shared<Transform>());
-		pWolf->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(217.f, 144.f, 1.f)));
+		pWolf->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(217.f, 144.f, 1.f)));
 		pWolf->AddComponent(make_shared<RigidBody>());
 		pWolf->AddComponent(make_shared<Collider>());
 		pWolf->AddComponent(make_shared<DebugRenderer>());

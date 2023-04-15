@@ -15,6 +15,7 @@ public:
 	void FinalUpdate();
 
 public:
+	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 

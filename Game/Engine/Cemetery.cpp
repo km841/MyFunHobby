@@ -47,6 +47,9 @@ void Cemetery::CreateSkul()
 		pLittleBone->AddComponent(make_shared<Transform>());
 		pLittleBone->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
 
+		pLittleBone->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ ATTACK_TYPE::MELEE, -20.f, 90.f, 10.f });
+		pLittleBone->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ ATTACK_TYPE::MELEE, -20.f, 90.f, 10.f });
+
 		uint8 iHasHeadEnum = static_cast<uint8>(LITTLE_BONE_STATE::HAS_HEAD);
 		// Has Head Animation
 		{
@@ -58,6 +61,10 @@ void Cemetery::CreateSkul()
 			shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_JumpAttack", L"..\\Resources\\Animation\\LittleBone\\littlebone_jump_attack.anim");
 			shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackA", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_a.anim");
 			shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"LittleBone_AttackB", L"..\\Resources\\Animation\\LittleBone\\littlebone_attack_b.anim");
+
+			pAttackA_Animation->SetHitFrame(1);
+			pAttackB_Animation->SetHitFrame(1);
+
 
 			pLittleBone->AddAnimation(PLAYER_STATE::IDLE, L"LittleBone_Idle", pIdleAnimation, iHasHeadEnum);
 			pLittleBone->AddAnimation(PLAYER_STATE::WALK, L"LittleBone_Walk", pWalkAnimation, iHasHeadEnum);

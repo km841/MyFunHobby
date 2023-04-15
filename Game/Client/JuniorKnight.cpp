@@ -37,12 +37,31 @@ void JuniorKnight::FinalUpdate()
 	Monster::FinalUpdate();
 }
 
+void JuniorKnight::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
+{
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		GetRigidBody()->RemoveGravity();
+		GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+	}
+
+	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+	{
+		int a = 0;
+	}
+}
+
 void JuniorKnight::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
 		GetRigidBody()->RemoveGravity();
 		GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+	}
+
+	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+	{
+		int a = 0;
 	}
 }
 

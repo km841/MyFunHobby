@@ -174,7 +174,6 @@
     <ClInclude Include="BehaviorTask.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cemetery.h" />
-    <ClInclude Include="ChasePlayerSelector.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
@@ -192,6 +191,7 @@
     <ClInclude Include="FleeSequence.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="IsPlayerNearCondition.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
@@ -215,6 +215,7 @@
     <ClInclude Include="ReportCallback.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="RunAnimateTask.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneChangeEvent.h" />
     <ClInclude Include="Scenes.h" />
@@ -228,7 +229,6 @@
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="InterfaceManager.h" />
-    <ClInclude Include="UseSkillTask.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -241,7 +241,6 @@
     <ClCompile Include="BehaviorTask.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cemetery.cpp" />
-    <ClCompile Include="ChasePlayerSelector.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -258,6 +257,7 @@
     <ClCompile Include="FleeSequence.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="IsPlayerNearCondition.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -286,6 +286,7 @@
     <ClCompile Include="ReportCallback.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="RunAnimateTask.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneChangeEvent.cpp" />
     <ClCompile Include="Scenes.cpp" />
@@ -299,7 +300,6 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="InterfaceManager.cpp" />
-    <ClCompile Include="UseSkillTask.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>

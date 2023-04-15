@@ -221,8 +221,8 @@ CollisionInfo GameObject::IsCollisionSide()
 	Vec3 vRightTop = Vec3(vMyPos.x + (vMySize.x + fTolerance), vMyPos.y + (vMySize.y - fTolerance), vMyPos.z);
 	Vec3 vRightBtm = Vec3(vMyPos.x + (vMySize.x + fTolerance), vMyPos.y - (vMySize.y - fTolerance), vMyPos.z);
 
-	Vec3 vLeftTop = Vec3(vMyPos.x - (vMySize.x - fTolerance), vMyPos.y + (vMySize.y - fTolerance), vMyPos.z);
-	Vec3 vLeftBtm = Vec3(vMyPos.x - (vMySize.x - fTolerance), vMyPos.y - (vMySize.y - fTolerance), vMyPos.z);
+	Vec3 vLeftTop = Vec3(vMyPos.x - (vMySize.x + fTolerance), vMyPos.y + (vMySize.y - fTolerance), vMyPos.z);
+	Vec3 vLeftBtm = Vec3(vMyPos.x - (vMySize.x + fTolerance), vMyPos.y - (vMySize.y - fTolerance), vMyPos.z);
 
 	Vec3 vLeftDir = -VEC3_RIGHT_NORMAL;
 	Vec3 vRightDir = VEC3_RIGHT_NORMAL;

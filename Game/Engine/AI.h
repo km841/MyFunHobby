@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-class Selector;
+class BehaviorNode;
 
 class AI :
     public Component
@@ -13,11 +13,11 @@ public:
 	virtual void Update();
 
 public:
-	weak_ptr<Selector> GetBehaviorRootNode() { return m_pRoot; }
-	void			   SetBehaviorRootNode(shared_ptr<Selector> pRoot) { m_pRoot = pRoot; }
+	weak_ptr<BehaviorNode> GetBehaviorRootNode() { return m_pRoot; }
+	void				   SetBehaviorRootNode(shared_ptr<BehaviorNode> pRoot) { m_pRoot = pRoot; }
 
 private:
-	shared_ptr<Selector> m_pRoot;
+	shared_ptr<BehaviorNode> m_pRoot;
 
 };
 

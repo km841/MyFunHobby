@@ -1,12 +1,15 @@
 #pragma once
 #include "BehaviorTask.h"
+class GameObject;
 class MoveTask :
     public BehaviorTask
 {
 public:
-    MoveTask(std::function<BEHAVIOR_RESULT()> fnTask);
+    MoveTask(shared_ptr<GameObject> pGameObject);
     virtual BEHAVIOR_RESULT Run() override;
 
 private:
+    Timer m_tDuration;
+
 };
 

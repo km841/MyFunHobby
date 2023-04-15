@@ -135,6 +135,13 @@ void Physical::CreateShape()
 		m_pShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 		m_pShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 	}
+
+	if (ACTOR_TYPE::NO_COLLISION_DYN == m_eActorType)
+	{
+		//m_pShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+		//m_pShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		//m_pShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+	}
 }
 
 
@@ -142,6 +149,7 @@ void Physical::CreateActor()
 {
 	switch (m_eActorType)
 	{
+	case ACTOR_TYPE::NO_COLLISION_DYN:
 	case ACTOR_TYPE::DYNAMIC:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
 		break;
@@ -172,6 +180,7 @@ void Physical::InitializeActor()
 	switch (m_eActorType)
 	{
 	case ACTOR_TYPE::KINEMATIC:
+	case ACTOR_TYPE::NO_COLLISION_DYN:
 	case ACTOR_TYPE::DYNAMIC:
 	{
 		PxRigidDynamic* pActor = m_pActor->is<PxRigidDynamic>();
@@ -193,7 +202,7 @@ void Physical::InitializeActor()
 
 	PxRigidActor* pActor = m_pActor->is<PxRigidActor>();
 	pActor->userData = GetGameObject().get();
-	pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+	//pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
 
 void Physical::CreateController()
@@ -250,6 +259,7 @@ void Physical::ApplyShapeScale()
 	}
 	break;
 	case ACTOR_TYPE::DYNAMIC:
+	case ACTOR_TYPE::NO_COLLISION_DYN:
 	case ACTOR_TYPE::KINEMATIC:
 	{
 		PxRigidDynamic* pActor = m_pActor->is<PxRigidDynamic>();

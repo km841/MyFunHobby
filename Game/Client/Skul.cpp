@@ -152,6 +152,12 @@ void Skul::RefreshAnimation()
 	m_pPlayer.lock()->RefreshAnimation();
 }
 
+const AttackInfo& Skul::GetAttackInfo(ATTACK_ORDER eAttackOrder)
+{
+	assert(static_cast<uint8>(eAttackOrder) < ATTACK_ORDER_COUNT);
+	return m_arrAttackInfo[static_cast<uint8>(eAttackOrder)];
+}
+
 void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)
 {
 	switch (eSkillIndex)
@@ -168,6 +174,13 @@ void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)
 	}
 
 	CooldownCompletionCallback(eSkillIndex);
+}
+
+void Skul::AddAttackInfo(ATTACK_ORDER eAttackOrder, const AttackInfo& attackInfo)
+{
+	uint8 iAttackOrder = static_cast<uint8>(eAttackOrder);
+	assert(iAttackOrder < ATTACK_ORDER_COUNT);
+	m_arrAttackInfo[iAttackOrder] = attackInfo;
 }
 
 weak_ptr<Animation> Skul::GetActiveAnimation()

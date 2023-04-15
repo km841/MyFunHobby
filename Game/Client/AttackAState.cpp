@@ -21,19 +21,27 @@ AttackAState::AttackAState(shared_ptr<Player> pPlayer)
 
 void AttackAState::Update()
 {
+	weak_ptr<Animation> pActiveAnimation = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock();
 	// Path State 전이
-	if (m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->IsFinished())
+	if (pActiveAnimation.lock()->IsFinished())
 	{
 		AddChangeStateEvent(PLAYER_STATE::PATH);
 		return;
 	}
 
 	// Attack B State 전이
-	float fProgress = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetAnimationProgress();
+	float fProgress = pActiveAnimation.lock()->GetAnimationProgress();
 	if (fProgress >= 0.75f && IS_PRESS(KEY_TYPE::X))
 	{
 		AddChangeStateEvent(PLAYER_STATE::ATTACK_B);
 		return;
+	}
+
+	if (pActiveAnimation.lock()->CurrentIsHitFrame())
+	{
+		const AttackInfo& attackInfo = m_pPlayer.lock()->GetActiveSkul()->GetAttackInfo(ATTACK_ORDER::ATTACK_A);
+		int a = 0;
+		// Hit 처리
 	}
 	
 	// Jump Rise State 전이

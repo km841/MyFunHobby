@@ -1,12 +1,8 @@
 #include "pch.h"
 #include "BehaviorTask.h"
 
-BehaviorTask::BehaviorTask(std::function<BEHAVIOR_RESULT()> fnTask)
-    : m_fnTask(fnTask)
-{
-}
 
-BEHAVIOR_RESULT BehaviorTask::Run()
+BehaviorTask::BehaviorTask(shared_ptr<GameObject> pGameObject)
+	: m_pGameObject(pGameObject)
 {
-    return m_fnTask();
 }

@@ -181,19 +181,19 @@
     <ClInclude Include="StructuredBuffer.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="ChasePlayerSelector.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
     <ClInclude Include="FleeSequence.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
-    <ClInclude Include="UseSkillTask.h">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClInclude>
     <ClInclude Include="AI.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
     <ClInclude Include="MoveTask.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAnimateTask.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="IsPlayerNearCondition.h">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -375,19 +375,19 @@
     <ClCompile Include="StructuredBuffer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="ChasePlayerSelector.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
     <ClCompile Include="FleeSequence.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
-    <ClCompile Include="UseSkillTask.cpp">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
     <ClCompile Include="AI.cpp">
       <Filter>Object\Component</Filter>
     </ClCompile>
     <ClCompile Include="MoveTask.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAnimateTask.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="IsPlayerNearCondition.cpp">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
   </ItemGroup>

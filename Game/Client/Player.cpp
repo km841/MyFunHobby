@@ -202,6 +202,10 @@ void Player::OnCollisionExit(shared_ptr<GameObject> pGameObject)
 
 void Player::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
+	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
+	{
+		int a = 0;
+	}
 }
 
 void Player::OnTriggerExit(shared_ptr<GameObject> pGameObject)
