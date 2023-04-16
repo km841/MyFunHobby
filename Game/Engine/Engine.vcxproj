@@ -181,6 +181,7 @@
     <ClInclude Include="ContactCallback.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="DebugRenderer.h" />
+    <ClInclude Include="DelayTask.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="FleeSequence.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="IsHitCondition.h" />
     <ClInclude Include="IsPlayerNearCondition.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
@@ -248,6 +250,7 @@
     <ClCompile Include="ContactCallback.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="DebugRenderer.cpp" />
+    <ClCompile Include="DelayTask.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EnginePch.cpp" />
@@ -257,6 +260,7 @@
     <ClCompile Include="FleeSequence.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="IsHitCondition.cpp" />
     <ClCompile Include="IsPlayerNearCondition.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />

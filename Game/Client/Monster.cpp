@@ -10,6 +10,8 @@
 
 Monster::Monster()
 	: GameObject(LAYER_TYPE::MONSTER)
+	, m_bExtraHitFlag(false)
+	, m_bHitFlag(false)
 {
 }
 

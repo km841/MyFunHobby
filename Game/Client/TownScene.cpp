@@ -70,6 +70,8 @@
 #include "MoveTask.h"
 #include "RunAnimateTask.h"
 #include "Selector.h"
+#include "DelayTask.h"
+#include "IsHitCondition.h"
 
 
 TownScene::TownScene()
@@ -210,10 +212,12 @@ void TownScene::Enter()
 		pJuniorKnight->AddComponent(make_shared<AI>());
 
 
-		shared_ptr<Sequence> pWalkSequence = make_shared<Sequence>();
-		shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
 		shared_ptr<Selector> pParentSelector = make_shared<Selector>();
+		shared_ptr<Sequence> pHitSequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pWalkSequence = make_shared<Sequence>();
 
+		pParentSelector->AddChild(pHitSequence);
 		pParentSelector->AddChild(pAttackSequence);
 		pParentSelector->AddChild(pWalkSequence);
 
@@ -223,6 +227,13 @@ void TownScene::Enter()
 		shared_ptr<RunAnimateTask> pRunWalkAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Walk");
 		shared_ptr<RunAnimateTask> pRunAttackAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Attack");
 		shared_ptr<RunAnimateTask> pRunIdleAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Idle");
+		shared_ptr<RunAnimateTask> pRunHitAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Weak_Hit");
+		shared_ptr<DelayTask> pDelayTask = make_shared<DelayTask>(pJuniorKnight, 1.f);
+		shared_ptr<IsHitCondition> pHitCondition = make_shared<IsHitCondition>(pJuniorKnight);
+
+		pHitSequence->AddChild(pHitCondition);
+		pHitSequence->AddChild(pRunHitAnimation);
+		pHitSequence->AddChild(pDelayTask);
 
 		pAttackSequence->AddChild(pNearCondition);
 		pAttackSequence->AddChild(pRunAttackAnimation);
@@ -235,9 +246,11 @@ void TownScene::Enter()
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Idle", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_idle.anim");
 		shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Walk", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_walk.anim");
 		shared_ptr<Animation> pAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Attack", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_attack.anim");
+		shared_ptr<Animation> pWeakHitAnimation = GET_SINGLE(Resources)->Load<Animation>(L"JuniorKnight_Weak_Hit", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_weak_hit.anim");
 		pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Idle", pIdleAnimation);
 		pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Walk", pWalkAnimation);
 		pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Attack", pAttackAnimation);
+		pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Weak_Hit", pWeakHitAnimation);
 		pJuniorKnight->GetAnimator()->Play(L"JuniorKnight_Idle");
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());

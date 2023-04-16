@@ -20,6 +20,9 @@ public:
 	// 스킬은 시간을 기준으로 한다면 어택은 애니메이션이 끝나는 것을 기준으로 한다.
 
 protected:
+	void HitMonstersInAttackRange();
+
+protected:
 	uint8 m_iMaxCount;
 	weak_ptr<Skul> m_pSkul;
 	ATTACK_ORDER m_eActiveAttackOrder;

@@ -196,6 +196,12 @@
     <ClInclude Include="IsPlayerNearCondition.h">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClInclude>
+    <ClInclude Include="IsHitCondition.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="DelayTask.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -388,6 +394,12 @@
       <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
     <ClCompile Include="IsPlayerNearCondition.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="IsHitCondition.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="DelayTask.cpp">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
   </ItemGroup>
