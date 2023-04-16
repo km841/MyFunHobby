@@ -170,6 +170,15 @@ shared_ptr<Mesh> Resources::LoadCircleMesh()
 	return pMesh;
 }
 
+
+shared_ptr<Animation> Resources::LoadAnimation(const wstring& szKey, const wstring& szPath)
+{
+	shared_ptr<Animation> pAnimation = make_shared<Animation>();
+	pAnimation->Load(szPath);
+	pAnimation->SetName(szKey);
+	return pAnimation;
+}
+
 void Resources::CreateDefaultShader()
 {
 	// Preview

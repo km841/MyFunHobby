@@ -12,7 +12,7 @@ public:
     virtual void Update() override;
     virtual void Enter() override;
     virtual void Exit() override;
-
+    virtual void CreateHitEffectAndAddedScene(Vec3 vMonsterPos) override;
 private:
 
 };

@@ -50,6 +50,7 @@ void TitleScene::Update()
 	if (IS_DOWN(KEY_TYPE::N))
 	{
 		GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::TOWN));
+		// 히트 애니메이션 만들어야 함
 	}
 
 	Scene::Update();

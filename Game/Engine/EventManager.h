@@ -3,6 +3,7 @@
 class SceneChangeEvent;
 class ObjectAddedToSceneEvent;
 class PlayerChangeStateEvent;
+class ObjectRemoveToSceneEvent;
 
 class EventManager
 {
@@ -15,6 +16,7 @@ public:
 private:
 	void ProcessSceneChangeEvent(SceneChangeEvent* pEvent);
 	void ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent);
+	void ProcessObjectRemoveEvent(ObjectRemoveToSceneEvent* pEvent);
 	void ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent);
 
 private:

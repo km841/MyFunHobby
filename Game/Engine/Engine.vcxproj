@@ -203,6 +203,7 @@
     <ClInclude Include="MoveTask.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectAddedToSceneEvent.h" />
+    <ClInclude Include="ObjectRemoveToSceneEvent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physical.h" />
     <ClInclude Include="Physics.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="MoveTask.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectAddedToSceneEvent.cpp" />
+    <ClCompile Include="ObjectRemoveToSceneEvent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

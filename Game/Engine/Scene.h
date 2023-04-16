@@ -29,6 +29,7 @@ public:
     FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
+    void RemoveGameObject(shared_ptr<GameObject> pGameObject);
 
 
 public:

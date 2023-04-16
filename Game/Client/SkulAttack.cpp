@@ -60,11 +60,13 @@ void SkulAttack::HitMonstersInAttackRange()
 			if (fDegree > fStartAngle && fDegree < fEndAngle)
 			{
 				static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
+				CreateHitEffectAndAddedScene(vPos);
 			}
 		}
 	}
 
 }
+
 
 void SkulAttack::AddAttackInfo(ATTACK_ORDER eAttackOrder, const AttackInfo& attackInfo)
 {

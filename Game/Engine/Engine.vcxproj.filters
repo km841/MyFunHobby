@@ -202,6 +202,9 @@
     <ClInclude Include="DelayTask.h">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectRemoveToSceneEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -401,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="DelayTask.cpp">
       <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectRemoveToSceneEvent.cpp">
+      <Filter>Object\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

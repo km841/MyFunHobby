@@ -5,6 +5,7 @@
 #include "PlayerChangeStateEvent.h"
 #include "Scenes.h"
 #include "StateMachine.h"
+#include "ObjectRemoveToSceneEvent.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -29,6 +30,10 @@ void EventManager::ProcessEvents()
 			ProcessObjectAddedEvent(static_cast<ObjectAddedToSceneEvent*>(pEvent.get()));
 			break;
 
+		case EVENT_TYPE::OBJECT_REMOVE_TO_SCENE:
+			ProcessObjectRemoveEvent(static_cast<ObjectRemoveToSceneEvent*>(pEvent.get()));
+			break;
+
 		case EVENT_TYPE::PLAYER_CHANGE_STATE:
 			ProcessPlayerChangeStateEvent(static_cast<PlayerChangeStateEvent*>(pEvent.get()));
 			break;
@@ -45,6 +50,12 @@ void EventManager::ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent)
 {
 	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
 	pCurScene->AddGameObject(pEvent->GetGameObject());
+}
+
+void EventManager::ProcessObjectRemoveEvent(ObjectRemoveToSceneEvent* pEvent)
+{
+	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
+	pCurScene->RemoveGameObject(pEvent->GetGameObject());
 }
 
 void EventManager::ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent)

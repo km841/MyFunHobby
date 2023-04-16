@@ -307,6 +307,9 @@
     <ClInclude Include="LittleBoneAttack.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationGlobalEffect.h">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -513,6 +516,9 @@
     </ClCompile>
     <ClCompile Include="LittleBoneAttack.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationGlobalEffect.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

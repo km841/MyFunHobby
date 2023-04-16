@@ -233,6 +233,30 @@ std::vector<shared_ptr<GameObject>>& Scene::GetGameObjects(LAYER_TYPE eLayerType
 		return s_vGlobalObjects[iLayerType - SCENE_OBJECT_TYPE_COUNT];
 }
 
+void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
+{
+	if (pGameObject->GetCamera())
+	{
+		auto pFindIt = std::find(m_vCameras.begin(), m_vCameras.end(), pGameObject->GetCamera());
+		if (pFindIt != m_vCameras.end())
+			m_vCameras.erase(pFindIt);
+	}
+
+	if (pGameObject->GetLight())
+	{
+		auto pFindIt = std::find(m_vLights.begin(), m_vLights.end(), pGameObject->GetLight());
+		if (pFindIt != m_vLights.end())
+			m_vLights.erase(pFindIt);
+	}
+
+	auto& vGameObjects = GetGameObjects(pGameObject->GetLayerType());
+	
+	auto pFindIt = std::find(vGameObjects.begin(), vGameObjects.end(), pGameObject);
+	if (pFindIt != vGameObjects.end())
+		vGameObjects.erase(pFindIt);
+
+}
+
 void Scene::Load(const wstring& szPath)
 {
 	std::wifstream ifs(szPath, std::ios::in);

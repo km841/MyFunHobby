@@ -17,7 +17,7 @@ public:
 public:
     Timer& GetTimer() { return m_tDuration; }
 
-private:
+protected:
     Timer m_tDuration;
 };
 

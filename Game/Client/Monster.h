@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-class MonsterAI;
+class GlobalEffect;
 class Monster :
     public GameObject
 {
@@ -25,15 +25,15 @@ public:
 	FORCEINLINE void FlagAsExtraAttacked() { m_bExtraHitFlag = true; }
 	FORCEINLINE void UnflagAsExtraAttacked() { m_bExtraHitFlag = false; }
 
-public:
-	bool m_bHitFlag;
-	bool m_bExtraHitFlag;
+	void AnimateHitEffect();
 
 public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
-private:
+protected:
+	bool m_bHitFlag;
+	bool m_bExtraHitFlag;
 
 };
 

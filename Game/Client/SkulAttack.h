@@ -1,5 +1,6 @@
 #pragma once
 class Skul;
+class AnimationGlobalEffect;
 class SkulAttack
 {
 public:
@@ -12,6 +13,8 @@ public:
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;
 
+	virtual void CreateHitEffectAndAddedScene(Vec3 vMonsterPos) = 0;
+
 public:
 	void  AddAttackInfo(ATTACK_ORDER eAttackOrder, const AttackInfo& attackInfo);
 	bool  IsFinished();
@@ -21,11 +24,14 @@ public:
 
 protected:
 	void HitMonstersInAttackRange();
+	
 
 protected:
 	uint8 m_iMaxCount;
 	weak_ptr<Skul> m_pSkul;
 	ATTACK_ORDER m_eActiveAttackOrder;
 	std::array<std::array<AttackInfo, ATTACK_ORDER_COUNT>, MAX_ENUMS> m_arrAttackInfo;
+
+	shared_ptr<Animation> m_pHitAnimation;
 };
 

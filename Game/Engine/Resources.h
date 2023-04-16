@@ -33,6 +33,8 @@ public:
 	shared_ptr<Mesh> LoadRectMesh();
 	shared_ptr<Mesh> LoadCircleMesh();
 
+	shared_ptr<Animation> LoadAnimation(const wstring& szKey, const wstring& szPath);
+
 	void CreateDefaultShader();
 	void CreateDefaultMaterial();
 
@@ -56,8 +58,8 @@ inline shared_ptr<T> Resources::Load(const wstring& szKey, const wstring& szPath
 	shared_ptr<T> pObject = make_shared<T>();
 	pObject->SetName(szKey);
 	pObject->Load(szPath);
-	mObjMap[szKey] = pObject;
 
+	mObjMap[szKey] = pObject;
 
 	return pObject;
 }
