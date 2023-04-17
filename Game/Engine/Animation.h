@@ -20,7 +20,8 @@ public:
     FORCEINLINE const std::vector<FrameData>& GetFrameDataList()  { return m_vFrameDataList; }
     FORCEINLINE int32 GetCurFrame()                               { return m_iCurFrame; }
     FORCEINLINE int32 GetHitFrame()                               { return m_iHitFrame; }
-    FORCEINLINE bool  CurrentIsHitFrame()                         { return m_iCurFrame == m_iHitFrame; }
+    FORCEINLINE bool  IsHitFrame()                                { return !m_bHitChecked && m_iCurFrame == m_iHitFrame; }
+    FORCEINLINE void  CheckToHitFrame()                           { m_bHitChecked = true; }
 
     void  SetHitFrame(int32 iHitFrame);
     float GetAnimationProgress();
@@ -43,5 +44,6 @@ private:
     bool                    m_bLoop;
     bool                    m_bFinished;
     int32                   m_iHitFrame;
+    bool                    m_bHitChecked;
 };
 

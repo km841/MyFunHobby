@@ -36,13 +36,11 @@ void LittleBoneAttack::Update()
 		m_pSkul.lock()->PlayAnimation(m_eActiveAttackOrder, false);
 	}
 
-	int32 iCurFrame = m_pSkul.lock()->GetAnimator()->GetActiveAnimation()->GetCurFrame();
-	int32 iHitFrame = m_pSkul.lock()->GetAnimator()->GetActiveAnimation()->GetHitFrame();
-
 	// 한 프레임에 여러 번 호출되서 그런 것
-	if (m_arrAttackInfo[iEnum][iOrder].pAnimation->CurrentIsHitFrame())
+	if (m_arrAttackInfo[iEnum][iOrder].pAnimation->IsHitFrame())
 	{
 		HitMonstersInAttackRange();
+		m_arrAttackInfo[iEnum][iOrder].pAnimation->CheckToHitFrame();
 	}
 }
 
@@ -64,28 +62,30 @@ void LittleBoneAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 
 	vMonsterPos.z -= 1.0f;
 
-	// X / Y 값 랜덤으로 흔들기
-	srand(reinterpret_cast<unsigned int>(pAnimation.get()));
-	int32 iRandomX = rand() % 100;
-	int32 iRandomY = rand() % 100;
-	vMonsterPos.x -= iRandomX;
-	vMonsterPos.y -= iRandomY;
+	int32 iRandomX = RANDOM(50, 100);
+	int32 iRandomY = RANDOM(0, 30);
 
-
-	pHitEffect->AddComponent(make_shared<Transform>());
-	pHitEffect->GetTransform()->SetLocalPosition(vMonsterPos);
+	int32 iRandomDegree = RANDOM(-30, 30);
+	float fRandomRadian = (iRandomDegree * XM_PI) / 180.f;
 
 	DIRECTION eDirection = m_pSkul.lock()->GetDirection();
-
 	switch (eDirection)
 	{
 	case DIRECTION::RIGHT:
 		pHitEffect->SetDirection(DIRECTION::LEFT);
+		vMonsterPos.x -= iRandomX;
+		vMonsterPos.y -= iRandomY;
 		break;
 	case DIRECTION::LEFT:
 		pHitEffect->SetDirection(DIRECTION::RIGHT);
+		vMonsterPos.x += iRandomX;
+		vMonsterPos.y -= iRandomY;
 		break;
 	}
+
+	pHitEffect->AddComponent(make_shared<Transform>());
+	pHitEffect->GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, fRandomRadian));
+	pHitEffect->GetTransform()->SetLocalPosition(vMonsterPos);
 
 	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");

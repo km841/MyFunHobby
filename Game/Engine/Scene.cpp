@@ -296,12 +296,12 @@ void Scene::Load(const wstring& szPath)
 
 		pTile->AddComponent(pMeshRenderer);
 		pTile->AddComponent(make_shared<Transform>());
-		pTile->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f)));
+		pTile->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(1000.f, 1000.f, 0.01f)));
 		pTile->AddComponent(make_shared<Collider>());
 		pTile->AddComponent(make_shared<DebugRenderer>());
 
 		pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 100.f));
+		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 90.f));
 
 		// 잠들어 있는 Component 깨우기
 		pTile->Awake();

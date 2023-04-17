@@ -1,28 +1,2 @@
-﻿  AbyssMeteor.cpp
-  AbyssMeteorSkill.cpp
-  AfterImageDrawScript.cpp
-  AnimationGlobalEffect.cpp
-  AttackState.cpp
-  DashState.cpp
-  HighWarlock.cpp
-  JumpAttackState.cpp
-  LittleBone.cpp
-  LittleBoneAttack.cpp
-C:\MyProject\Game\Client\LittleBoneAttack.cpp(68,55): warning C4311: 'reinterpret_cast': 'Animation *'에서 'unsigned int'(으)로 포인터가 잘립니다.
-C:\MyProject\Game\Client\LittleBoneAttack.cpp(68,55): warning C4302: 'reinterpret_cast': 'Animation *'에서 'unsigned int'(으)로 잘립니다.
-  Monster.cpp
-  Player.cpp
-  PlayerFirstSkillShowScript.cpp
-  SkillBoxHUD.cpp
-  SkillState.cpp
-  Skul.cpp
-  SkulAttack.cpp
-  SkulThumnailHUD.cpp
-  SwapState.cpp
-  TitleScene.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  ToolScene.cpp
-  TownScene.cpp
-  코드를 생성하고 있습니다...
+﻿  JuniorKnight.cpp
   Client.vcxproj -> C:\MyProject\Game\Output\Client.exe

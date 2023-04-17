@@ -7,6 +7,7 @@
 #include "Transform.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Physical.h"
 
 SkulAttack::SkulAttack(shared_ptr<Skul> pSkul)
 	: m_eActiveAttackOrder(ATTACK_ORDER::ATTACK_A)
@@ -60,6 +61,14 @@ void SkulAttack::HitMonstersInAttackRange()
 			if (fDegree > fStartAngle && fDegree < fEndAngle)
 			{
 				static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
+				pGameObject->GetStatus()->TakeDamage(1);
+
+				if (!pGameObject->GetStatus()->bAlive)
+				{
+					int a = 0;
+				}
+				PxVec3 vImpulse = PxVec3(0.f, 100.f, 0.f);
+				//PxRigidBodyExt::addForceAtPos(*pGameObject->GetPhysical()->GetActor<PxRigidDynamic>(), vImpulse, Conv::Vec3ToPxVec3(vTargetVec), PxForceMode::eIMPULSE);
 				CreateHitEffectAndAddedScene(vPos);
 			}
 		}

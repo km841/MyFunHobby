@@ -35,6 +35,7 @@ private:
     void          CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize);
     void          CreateCapsuleGeometry(GEOMETRY_TYPE eGeometryType, float fRadius, float fHalfHeight);
     void          CreatePlaneGeometry(GEOMETRY_TYPE eGeometryType);
+    void          CreateSphereGeometry(GEOMETRY_TYPE eGeometryType, float fRadius);
     
 private:
     void          CreatePhysicsProperties(const MassProperties& massProperties = MassProperties());

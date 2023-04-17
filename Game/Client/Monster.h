@@ -2,6 +2,9 @@
 #include "GameObject.h"
 
 class GlobalEffect;
+class Particle;
+class Texture;
+
 class Monster :
     public GameObject
 {
@@ -25,15 +28,21 @@ public:
 	FORCEINLINE void FlagAsExtraAttacked() { m_bExtraHitFlag = true; }
 	FORCEINLINE void UnflagAsExtraAttacked() { m_bExtraHitFlag = false; }
 
-	void AnimateHitEffect();
-
 public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
+
+	void SetParticleTextureNames(const std::vector<wstring> vTextureNames) { m_vTextureNames = vTextureNames; }
+protected:
+
+public:
+	void ActivateDeadEvent();
+	virtual void ScatterParticles() { }
 
 protected:
 	bool m_bHitFlag;
 	bool m_bExtraHitFlag;
 
+	std::vector<wstring> m_vTextureNames;
 };
 

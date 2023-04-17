@@ -192,6 +192,7 @@
     <ClInclude Include="FleeSequence.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="IsDeadCondition.h" />
     <ClInclude Include="IsHitCondition.h" />
     <ClInclude Include="IsPlayerNearCondition.h" />
     <ClInclude Include="Light.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="MoveTask.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectAddedToSceneEvent.h" />
+    <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ObjectRemoveToSceneEvent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physical.h" />
@@ -214,6 +216,7 @@
     <ClInclude Include="PxDispatcher.h" />
     <ClInclude Include="PxEnvironment.h" />
     <ClInclude Include="PxEnvironmentSetting.h" />
+    <ClInclude Include="RemoveObjectTask.h" />
     <ClInclude Include="RenderTargetGroup.h" />
     <ClInclude Include="ReportCallback.h" />
     <ClInclude Include="Resources.h" />
@@ -261,6 +264,7 @@
     <ClCompile Include="FleeSequence.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="IsDeadCondition.cpp" />
     <ClCompile Include="IsHitCondition.cpp" />
     <ClCompile Include="IsPlayerNearCondition.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -272,6 +276,7 @@
     <ClCompile Include="MoveTask.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectAddedToSceneEvent.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectRemoveToSceneEvent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -288,6 +293,7 @@
     <ClCompile Include="PxDispatcher.cpp" />
     <ClCompile Include="PxEnvironment.cpp" />
     <ClCompile Include="PxEnvironmentSetting.cpp" />
+    <ClCompile Include="RemoveObjectTask.cpp" />
     <ClCompile Include="RenderTargetGroup.cpp" />
     <ClCompile Include="ReportCallback.cpp" />
     <ClCompile Include="Resources.cpp" />

@@ -34,6 +34,7 @@ enum class GEOMETRY_TYPE
 {
     BOX,
     CAPSULE,
+    SPHERE,
     PLANE,
     END,
 };
@@ -58,6 +59,15 @@ struct Geometries
         }
     }
 
+    Geometries(GEOMETRY_TYPE eGeometryType, float fRadius)
+        : eGeomType(GEOMETRY_TYPE::SPHERE)
+    {
+        if (GEOMETRY_TYPE::SPHERE == eGeometryType)
+        {
+            sphereGeom = PxSphereGeometry(fRadius);
+        }
+    }
+
     Geometries(GEOMETRY_TYPE eGeometryType)
         : eGeomType(GEOMETRY_TYPE::PLANE)
     {
@@ -71,6 +81,7 @@ struct Geometries
     PxBoxGeometry boxGeom;
     PxCapsuleGeometry capsuleGeom;
     PxPlaneGeometry planeGeom;
+    PxSphereGeometry sphereGeom;
     GEOMETRY_TYPE eGeomType;
 };
 

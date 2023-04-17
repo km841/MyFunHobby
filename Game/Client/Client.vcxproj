@@ -193,6 +193,7 @@
     <ClInclude Include="LittleBoneAttack.h" />
     <ClInclude Include="LittleBoneHead.h" />
     <ClInclude Include="LittleBoneSwapSkill.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="PathState.h" />
     <ClInclude Include="PlayerFirstSkillShowScript.h" />
     <ClInclude Include="PlayerProjectile.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="LittleBoneAttack.cpp" />
     <ClCompile Include="LittleBoneHead.cpp" />
     <ClCompile Include="LittleBoneSwapSkill.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PathState.cpp" />
     <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />

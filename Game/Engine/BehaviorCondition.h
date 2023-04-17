@@ -3,7 +3,8 @@
 
 // 특정 조건을 수행하고 결과를 반환한다.
 // EX) 플레이어가 멀리 떨어져있다면? SUCCESS
-class GameObject;
+#include "GameObject.h"
+
 class BehaviorCondition
 	: public BehaviorNode
 {

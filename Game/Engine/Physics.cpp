@@ -17,13 +17,14 @@ Physics::~Physics()
 	//PxCloseExtensions();
 }
 
-void Physics::Init()
+void Physics::Init(bool bUseDebugger)
 {
+	m_bUseDebugger = bUseDebugger;
 	m_pEnvironment->Init();
 
 	m_pDispatcher->CreateCpuDispatcher();
 	PxSceneDesc sceneDesc(m_pEnvironment->GetPhysics()->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.81f * 10.f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -9.81f * 30.f, 0.0f);
 	sceneDesc.cpuDispatcher = m_pDispatcher->GetCpuDispatcher();
 	sceneDesc.filterShader = PlayerFilterShader;
 	sceneDesc.simulationEventCallback = m_pDispatcher->GetSimulationCallback();

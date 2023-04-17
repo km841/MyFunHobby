@@ -19,9 +19,8 @@ void PxEnvironmentSetting::CreateFoundation()
 	m_pFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, m_allocCallback, m_errorCallback);
 }
 
-void PxEnvironmentSetting::CreatePhysics()
+void PxEnvironmentSetting::CreatePhysics(PxPvd* pPvd)
 {
 	assert(m_pFoundation);
-	m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation, PxTolerancesScale());
+	m_pPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pFoundation, PxTolerancesScale()/*, false, pPvd*/);
 }
-

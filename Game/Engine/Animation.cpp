@@ -15,6 +15,8 @@ Animation::Animation()
 	, m_fAccTime(0.f)
 	, m_bFinished(false)
 	, m_iSection(0)
+	, m_bHitChecked(false)
+	, m_iHitFrame(-1)
 {
 }
 
@@ -26,6 +28,8 @@ Animation::Animation(const std::vector<FrameData> vFrameDataList)
 	, m_fAccTime(0.f)
 	, m_bFinished(false)
 	, m_iSection(0)
+	, m_bHitChecked(false)
+	, m_iHitFrame(-1)
 {
 }
 
@@ -61,6 +65,7 @@ void Animation::Update()
 					m_iCurFrame = m_vFrameDataList[0].iFrameCount + m_iSection;
 				else
 					m_iCurFrame = m_iSection;
+				m_bHitChecked = false;
 			}
 			else
 			{
@@ -89,6 +94,7 @@ void Animation::Reset()
 {
 	m_iCurFrame = 0;
 	m_bFinished = false;
+	m_bHitChecked = false;
 }
 
 void Animation::PushData()
@@ -117,6 +123,7 @@ void Animation::RefreshAnimation(const std::vector<FrameData> vFrameDataList)
 	m_vFrameDataList = vFrameDataList;
 	m_iCurFrame = 0;
 	m_bFinished = false;
+	m_bHitChecked = false;
 }
 
 

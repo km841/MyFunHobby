@@ -205,6 +205,15 @@
     <ClInclude Include="ObjectRemoveToSceneEvent.h">
       <Filter>Object\Event</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="IsDeadCondition.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoveObjectTask.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -407,6 +416,15 @@
     </ClCompile>
     <ClCompile Include="ObjectRemoveToSceneEvent.cpp">
       <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="IsDeadCondition.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoveObjectTask.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

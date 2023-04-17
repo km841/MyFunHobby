@@ -49,14 +49,12 @@ void Transform::FinalUpdate()
 				break;
 		}
 
-
 		m_vPxLocalScale = Conv::Vec3ToPxVec3(GetPhysical()->GetGeometrySize());
 		m_vPxLocalRotation = static_cast<PxMat33>(m_PxTransform.q.getNormalized());
 		m_vPxLocalTranslation = m_PxTransform.p;
 
-
 		Matrix matPxScale = Matrix::CreateScale(Conv::PxVec3ToVec3(m_vPxLocalScale));
-		Matrix matPxRotation = Matrix::CreateRotationZ(m_PxTransform.q.z + m_vLocalRotation.z);
+		Matrix matPxRotation = Matrix::CreateRotationZ(m_PxTransform.q.z);
 		Matrix matPxTranslation = Matrix::CreateTranslation(Conv::PxVec3ToVec3(m_vPxLocalTranslation));
 
 		Vec3 vLocalTranslation = Vec3(m_PxTransform.p.x + m_vGlobalOffset.x, m_PxTransform.p.y + m_vGlobalOffset.y, m_PxTransform.p.z);

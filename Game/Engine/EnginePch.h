@@ -227,6 +227,17 @@ struct Status
 		bAlive = true;
 	}
 
+	void MonsterDefaultSetting()
+	{
+		iMaxHP = 5;
+		iCurHP = 5;
+		iShield = 0;
+		iAttack = 1;
+		iDefence = 1;
+		fSpeed = 400.f;
+		bAlive = true;
+	}
+
 	void TakeDamage(int32 iDamage)
 	{
 		assert(iDamage > 0);
@@ -635,5 +646,6 @@ bool m_bUse = false;\
 #define IS_NONE(key) GET_SINGLE(Input)->GetButtonNone(key)
 #define VEC3_RIGHT_NORMAL Vec3(1.f, 0.f, 0.f)
 #define VEC3_UP_NORMAL Vec3(0.f, 1.f, 0.f)
+#define RANDOM(minNumber, maxNumber) rand() % (maxNumber - (minNumber - 1)) + minNumber
 
 extern unique_ptr<class Engine> g_pEngine;

@@ -45,6 +45,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     g_wWindowInfo.iHeight = 900;
     g_wWindowInfo.bWindowed = true;
 
+    srand(static_cast<uint32>(time(0)));
+
     unique_ptr<Application> application = make_unique<Application>();
     application->Init(g_wWindowInfo);
 

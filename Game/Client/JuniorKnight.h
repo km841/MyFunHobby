@@ -19,6 +19,9 @@ public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
+public:
+	virtual void ScatterParticles() override;
+
 private:
 	DECLARE_POOL(JuniorKnight);
 

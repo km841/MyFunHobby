@@ -35,40 +35,40 @@ void Physical::Awake()
 
 void Physical::Update()
 {
-	if (GetTransform()->IsChangedFlag())
-	{
-		Vec3 vScale = GetTransform()->GetLocalScale();
+	//if (GetTransform()->IsChangedFlag())
+	//{
+	//	Vec3 vScale = GetTransform()->GetLocalScale();
 
-		if (ACTOR_TYPE::CHARACTER == m_eActorType)
-		{
-			PxBoxController* pController = static_cast<PxBoxController*>(m_pController);
-			pController->setHalfSideExtent(pController->getHalfSideExtent());
-			pController->setHalfHeight(pController->getHalfHeight());
-			pController->setHalfForwardExtent(pController->getHalfForwardExtent());
-		}
+	//	if (ACTOR_TYPE::CHARACTER == m_eActorType)
+	//	{
+	//		PxBoxController* pController = static_cast<PxBoxController*>(m_pController);
+	//		pController->setHalfSideExtent(pController->getHalfSideExtent());
+	//		pController->setHalfHeight(pController->getHalfHeight());
+	//		pController->setHalfForwardExtent(pController->getHalfForwardExtent());
+	//	}
 
-		else
-		{
-			switch (m_eGeometryType)
-			{
-			case GEOMETRY_TYPE::BOX:
-			{
-				m_pGeometries->boxGeom.halfExtents = Conv::Vec3ToPxVec3(m_vSize);
-				//ApplyShapeScale();
-			}
-				break;
-			case GEOMETRY_TYPE::CAPSULE:
-			{
-				m_pGeometries->capsuleGeom.radius = m_vSize.x;
-				m_pGeometries->capsuleGeom.halfHeight = m_vSize.y;
-				//ApplyShapeScale();
-			}
-				break;
-			}	
-		}
+	//	else
+	//	{
+	//		switch (m_eGeometryType)
+	//		{
+	//		case GEOMETRY_TYPE::BOX:
+	//		{
+	//			m_pGeometries->boxGeom.halfExtents = Conv::Vec3ToPxVec3(m_vSize);
+	//			//ApplyShapeScale();
+	//		}
+	//			break;
+	//		case GEOMETRY_TYPE::CAPSULE:
+	//		{
+	//			m_pGeometries->capsuleGeom.radius = m_vSize.x;
+	//			m_pGeometries->capsuleGeom.halfHeight = m_vSize.y;
+	//			//ApplyShapeScale();
+	//		}
+	//			break;
+	//		}	
+	//	}
 
-		GetTransform()->ChangedFlagOff();
-	}
+	//	GetTransform()->ChangedFlagOff();
+	//}
 }
 
 void Physical::CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize)
@@ -92,6 +92,13 @@ void Physical::CreatePlaneGeometry(GEOMETRY_TYPE eGeometryType)
 	m_pGeometries = make_shared<Geometries>(eGeometryType);
 }
 
+void Physical::CreateSphereGeometry(GEOMETRY_TYPE eGeometryType, float fRadius)
+{
+	assert(GEOMETRY_TYPE::SPHERE == eGeometryType);
+	assert(nullptr == m_pGeometries);
+	m_pGeometries = make_shared<Geometries>(eGeometryType, fRadius);
+}
+
 void Physical::CreatePhysicsProperties(const MassProperties& massProperties)
 {
 	m_pProperties = make_shared<PhysicsProperties>(massProperties);
@@ -109,6 +116,11 @@ void Physical::CreateGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vShapeSiz
 	case GEOMETRY_TYPE::CAPSULE:
 		CreateCapsuleGeometry(eGeometryType, m_vSize.x, m_vSize.y);
 		break;
+
+	case GEOMETRY_TYPE::SPHERE:
+		CreateSphereGeometry(eGeometryType, m_vSize.x);
+		break;
+
 	case GEOMETRY_TYPE::PLANE:
 		CreatePlaneGeometry(eGeometryType);
 		break;
@@ -124,6 +136,9 @@ void Physical::CreateShape()
 		break;
 	case GEOMETRY_TYPE::CAPSULE:
 		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->capsuleGeom, *m_pProperties->GetMaterial());
+		break;
+	case GEOMETRY_TYPE::SPHERE:
+		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->sphereGeom, *m_pProperties->GetMaterial());
 		break;
 	case GEOMETRY_TYPE::PLANE:
 		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->planeGeom, *m_pProperties->GetMaterial());
@@ -152,6 +167,11 @@ void Physical::CreateActor()
 	case ACTOR_TYPE::NO_COLLISION_DYN:
 	case ACTOR_TYPE::DYNAMIC:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
+		m_pActor->is<PxRigidDynamic>()->setLinearDamping(1.f);
+		//m_pActor->is<PxRigidDynamic>()->setAngularDamping(1.f);
+		m_pActor->is<PxRigidDynamic>()->setMass(2.f);
+		m_pActor->is<PxRigidDynamic>()->setMaxAngularVelocity(300.f);
+		m_pActor->is<PxRigidDynamic>()->setMaxLinearVelocity(300.f);
 		break;
 	case ACTOR_TYPE::STATIC:
 		m_pActor = PHYSICS->createRigidStatic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
@@ -231,6 +251,8 @@ void Physical::CreateController()
 		m_pController = static_cast<PxCapsuleController*>(g_pEngine->GetPhysics()->GetEnvironment()->GetControllerManager()->createController(desc));
 	}
 		break;
+
+	break;
 	}
 
 	m_pController->setPosition(Conv::Vec3ToPxExtendedVec3(GetTransform()->GetLocalPosition()));

@@ -122,22 +122,15 @@ void PlayerMoveScript::LateUpdate()
 
 	{
 		CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
-		if (COLLISION_SIDE::BOTTOM == collisionInfo.first)
+		if (COLLISION_SIDE::BOTTOM == collisionInfo.first || 
+			COLLISION_SIDE::TOP == collisionInfo.first)
 		{
 			Vec3 vPosition = GetTransform()->GetPhysicalPosition();
 			vPosition.y = collisionInfo.second;
 			GetTransform()->SetPhysicalPosition(vPosition);
-		}
-	}
 
-	{
-		CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
-		if (COLLISION_SIDE::TOP == collisionInfo.first)
-		{
-			Vec3 vPosition = GetTransform()->GetPhysicalPosition();
-			vPosition.y = collisionInfo.second;
-			GetTransform()->SetPhysicalPosition(vPosition);
-			GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+			if (COLLISION_SIDE::TOP == collisionInfo.first)
+				GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 		}
 	}
 

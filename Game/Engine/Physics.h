@@ -10,7 +10,7 @@ public:
 	~Physics();
 
 public:
-	void Init();
+	void Init(bool bUseDebugger = true);
 	void Update();
 	
 	FORCEINLINE shared_ptr<PxEnvironment>   GetEnvironment() { return m_pEnvironment; }
@@ -22,5 +22,6 @@ private:
 private:
 	shared_ptr<PxEnvironment>   m_pEnvironment;
 	shared_ptr<PxDispatcher>    m_pDispatcher;
+	bool m_bUseDebugger;
 };
 

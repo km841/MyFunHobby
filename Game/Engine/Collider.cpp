@@ -119,6 +119,24 @@ bool Collider::Raycast(const Vec3& vOrigin, const Vec3& vDir, shared_ptr<GameObj
 		return bResult;
 	}
 		break;
+
+	case GEOMETRY_TYPE::SPHERE:
+	{
+		PxSphereGeometry sphereGeom = pGameObject->GetPhysical()->GetGeometries()->sphereGeom;
+		PxTransform transform = pGameObject->GetTransform()->GetPxTransform();
+
+		bool bResult = PxGeometryQuery::raycast(
+			Conv::Vec3ToPxVec3(vOrigin),
+			Conv::Vec3ToPxVec3(vDir),
+			sphereGeom, transform,
+			m_fMaxDist,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			m_fRaycastMaxHit,
+			&m_RaycastHit);
+
+		return bResult;
+	}
+	break;
 	}
 
 	return false;
@@ -291,9 +309,18 @@ void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)
 		const PxCapsuleGeometry& capsuleGeom = static_cast<const PxCapsuleGeometry&>(pGeometries->capsuleGeom);
 		float fRadius = capsuleGeom.radius;
 		float fHalfHeight = capsuleGeom.halfHeight;
-		CreateDebugCapsule(fRadius, fHalfHeight);
+		CreateDebugBox(Vec3(fRadius, fRadius, 1.f));
 	}
 		break;
+
+	case GEOMETRY_TYPE::SPHERE:
+	{
+		const PxCapsuleGeometry& capsuleGeom = static_cast<const PxCapsuleGeometry&>(pGeometries->capsuleGeom);
+		float fRadius = capsuleGeom.radius;
+		float fHalfHeight = capsuleGeom.halfHeight;
+		CreateDebugBox(Vec3(fRadius, fRadius, 1.f));
+	}
+	break;
 
 	case GEOMETRY_TYPE::PLANE:
 		break;

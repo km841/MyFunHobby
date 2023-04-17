@@ -55,7 +55,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	m_pDevice->Init(pDevice);
 	m_pContext->Init(pContext);
 	m_pSwapChain->Init(m_Window, m_pDevice->GetDevice(), m_pDevice->GetDXGI());
-	m_pPhysics->Init();
+	m_pPhysics->Init(false);
 	m_pUtility->Init(pDevice, pContext);
 
 	CreateRenderTargetGroups();
@@ -87,6 +87,7 @@ void Engine::Update()
 
 void Engine::Render()
 {
+	
 	RenderBegin();
 	GET_SINGLE(Scenes)->Render();
 	RenderEnd();
@@ -95,7 +96,7 @@ void Engine::Render()
 
 void Engine::FinalUpdate()
 {
-
+	
 }
 
 void Engine::RenderBegin()
