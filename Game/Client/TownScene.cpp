@@ -54,7 +54,6 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 #include "Camera.h"
-#include "Controller.h"
 #include "RigidBody.h"
 #include "Collider.h"
 #include "Physical.h"
@@ -121,52 +120,24 @@ void TownScene::Enter()
 	Load(L"..\\Resources\\Map\\DefaultMap5.map");
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::TILE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
+
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::MONSTER);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PARTICLE);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::NPC, LAYER_TYPE::PLAYER);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::TILE);
-
 
 	// Directional Light
 	{
-		//shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		//pGameObject->AddComponent(make_shared<Transform>());
-		//pGameObject->AddComponent(make_shared<Light>());
-		//pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
-		//pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		//pGameObject->GetLight()->SetDiffuse(Vec3(0.1f, 0.1f, 0.1f));
-		//pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->AddComponent(make_shared<Light>());
+		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
+		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+		pGameObject->GetLight()->SetDiffuse(Vec3(0.7f, 0.7f, 0.7f));
+		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 
-		//AddGameObject(pGameObject);
+		AddGameObject(pGameObject);
 	}
-
-	// Spot Light
-	//{
-	//	shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-	//	pGameObject->AddComponent(make_shared<Transform>());
-	//	
-	//	pGameObject->AddComponent(make_shared<Light>());
-	//	pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, -1.f));
-	//	pGameObject->GetLight()->SetLightType(LIGHT_TYPE::SPOT_LIGHT);
-	//	pGameObject->GetLight()->SetDiffuse(Vec3(0.0f, 0.f, 0.5f));
-	//	pGameObject->GetLight()->SetAmbient(Vec3(0.0f, 0.0f, 0.1f));
-	//	pGameObject->GetLight()->SetSpecular(Vec3(0.0f, 0.0f, 0.1f));
-	//	pGameObject->GetLight()->SetLightRange(100.f);
-	//	pGameObject->GetLight()->SetLightAngle(3.14f / 2);
-
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 50.f));
-
-	//	AddGameObject(pGameObject);
-	//}
-
 
 	shared_ptr<Player> pPlayer = nullptr;
 	// Player
@@ -193,6 +164,7 @@ void TownScene::Enter()
 
 		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 100.f, 100.f));
 
+		pPlayer->SetFrustum(false);
 		AddGameObject(pPlayer);
 	}
 
@@ -350,6 +322,7 @@ void TownScene::Enter()
 	//Background
 	{
 		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Back.tga");
@@ -375,6 +348,7 @@ void TownScene::Enter()
 	//Background_Bridge
 	{
 		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Bridge.tga");
@@ -396,6 +370,7 @@ void TownScene::Enter()
 	//Background_Surrounding
 	{
 		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Surrounding.tga");
@@ -584,7 +559,7 @@ void TownScene::Enter()
 	// Fade In/Out Object
 	{
 		shared_ptr<UI> pUI = make_shared<UI>();
-
+		pUI->SetFrustum(false);
 		pUI->AddComponent(make_shared<Transform>());
 
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"FadeInOut");

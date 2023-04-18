@@ -18,12 +18,7 @@ public:
     void          PxPushData(shared_ptr<Camera> pCamera);
        
 public:
-    void SetLocalScale(const Vec3& vScale)       
-    { 
-        m_vLocalScale = vScale; 
-        m_bChanged = true; 
-    }
-
+    FORCEINLINE void               SetLocalScale(const Vec3& vScale)             { m_vLocalScale = vScale; }
     FORCEINLINE void               SetLocalRotation(const Vec3& vRotation)       { m_vLocalRotation = vRotation; }
     FORCEINLINE void               SetLocalPosition(const Vec3& vPosition)       { m_vLocalTranslation = vPosition; }
                                                                                  
@@ -35,7 +30,6 @@ public:
     FORCEINLINE const Vec3&        GetLocalScale() const                         { return m_vLocalScale; }
 
     FORCEINLINE const Matrix&      GetLocalToWorldMatrix() const                 { return m_matWorld; }
-    FORCEINLINE Vec3               GetWorldPosition() const                      { return m_matWorld.Translation(); }
 
 
     FORCEINLINE const Matrix&      GetPxLocalToWorldMatrix() const               { return m_matPxWorld; }
@@ -45,18 +39,18 @@ public:
     FORCEINLINE void               SetGlobalOffset(const Vec2& vOffset)          { m_vGlobalOffset = vOffset; }
     FORCEINLINE const Vec2&        GetGlobalOffset()                             { return m_vGlobalOffset; }
 
-    FORCEINLINE bool               IsChangedFlag() const                         { return m_bChanged; }
-    FORCEINLINE void               ChangedFlagOff()                              { m_bChanged = false; }
+    FORCEINLINE float              GetBoundingSphereRadius()                     { return max(max(m_vLocalScale.x, m_vLocalScale.y), m_vLocalScale.z); }
 
-    Vec3             GetRight() { return m_matWorld.Right(); }
-    Vec3             GetUp()    { return m_matWorld.Up(); }
-    Vec3             GetLook()  { return m_matWorld.Backward(); }
+    Vec3 GetWorldPosition();
+    Vec3 GetRight() { return m_matWorld.Right(); }
+    Vec3 GetUp()    { return m_matWorld.Up(); }
+    Vec3 GetLook()  { return m_matWorld.Backward(); }
 
     void SetPhysicalPosition(const Vec3& vPosition);
-    Vec3 GetPhysicalPosition() { return Conv::PxVec3ToVec3(m_PxTransform.p); }
+    Vec3 GetPhysicalPosition();
 
 public:
-    FORCEINLINE weak_ptr<Transform> GetParent()                            const { return m_pParent; }
+    FORCEINLINE weak_ptr<Transform> GetParent() const                            { return m_pParent; }
     FORCEINLINE void                SetParent(shared_ptr<Transform> pParent)     { m_pParent = pParent; }
 
 private:
@@ -68,17 +62,9 @@ private:
 
     Matrix  m_matLocal = {};
     Matrix  m_matWorld = {};
-    Matrix  m_matPxLocal = {};
     Matrix  m_matPxWorld = {};
 
     PxTransform m_PxTransform;
-
-    PxVec3   m_vPxLocalScale;
-    PxMat33  m_vPxLocalRotation;
-    PxVec3   m_vPxLocalTranslation;
-
     Vec2     m_vGlobalOffset;
-
-    bool m_bChanged;
 };
 

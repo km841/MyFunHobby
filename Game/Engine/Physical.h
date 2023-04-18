@@ -13,10 +13,8 @@ public:
 
 public:
     virtual void Awake() override;
-    virtual void Update() override;
 
 public:
-    FORCEINLINE PxController*          GetController()   const { return m_pController; }
     FORCEINLINE ACTOR_TYPE             GetActorType()    const { return m_eActorType; }
     FORCEINLINE GEOMETRY_TYPE          GetGeometryType() const { return m_eGeometryType; }
     FORCEINLINE PxShape*               GetShape()        const { return m_pShape; }
@@ -43,9 +41,7 @@ private:
     void          CreateShape();
     void          CreateActor();
     void          InitializeActor();
-    void          CreateController();
     void          AddActor(PxActor* pActor);
-    void          ApplyShapeScale();
 
 private:
     ACTOR_TYPE                    m_eActorType;
@@ -54,7 +50,6 @@ private:
     Vec3                          m_vSize;          
     PxActor*                      m_pActor;
     PxShape*                      m_pShape;
-    PxController*                 m_pController;
 
     shared_ptr<PhysicsProperties> m_pProperties;
     shared_ptr<Geometries>        m_pGeometries;

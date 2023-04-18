@@ -327,6 +327,12 @@ enum
 
 namespace Conv
 {
+	using namespace DirectX::SimpleMath;
+	static Quaternion PxQuatToQuat(const PxQuat& pxQuat)
+	{
+		return Quaternion(pxQuat.x, pxQuat.y, pxQuat.z, pxQuat.w);
+	}
+
 	static wstring AddressToWstring(void* pAddress)
 	{
 		assert(pAddress);

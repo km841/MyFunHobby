@@ -4,7 +4,6 @@
 #include "GameObject.h"
 #include "DebugRenderer.h"
 #include "MeshRenderer.h"
-#include "Controller.h"
 #include "RigidBody.h"
 #include "Physical.h"
 #include "Camera.h"
@@ -43,11 +42,6 @@ shared_ptr<DebugRenderer> Component::GetDebugRenderer()
 shared_ptr<MeshRenderer> Component::GetMeshRenderer()
 {
     return m_pGameObject.lock()->GetMeshRenderer();
-}
-
-shared_ptr<Controller> Component::GetController()
-{
-    return m_pGameObject.lock()->GetController();
 }
 
 shared_ptr<RigidBody> Component::GetRigidBody()

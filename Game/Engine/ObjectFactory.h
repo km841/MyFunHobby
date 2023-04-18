@@ -19,7 +19,7 @@ class ObjectFactory
 public:
 	template<typename T>
 	shared_ptr<T> CreateObject(const wstring& szMaterialName, 
-		bool bApplyGravity = false,
+		bool bApplyGravity,
 		ACTOR_TYPE eActorType = ACTOR_TYPE::KINEMATIC, 
 		GEOMETRY_TYPE eGeometryType = GEOMETRY_TYPE::SPHERE, 
 		const Vec3& vSize = Vec3(50.f, 50.f, 1.f),
@@ -60,7 +60,7 @@ public:
 
 	template<typename T>
 	shared_ptr<T> CreateObjectFromPool(const wstring& szMaterialName,
-		bool bApplyGravity = false,
+		bool bApplyGravity,
 		ACTOR_TYPE eActorType = ACTOR_TYPE::KINEMATIC,
 		GEOMETRY_TYPE eGeometryType = GEOMETRY_TYPE::SPHERE,
 		const Vec3& vSize = Vec3(50.f, 50.f, 1.f),

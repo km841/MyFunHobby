@@ -1,7 +1,6 @@
 #pragma once
 #include "Component.h"
 
-class ContactCallback;
 class Collider :
       public Component
 {
@@ -30,14 +29,11 @@ public:
     bool                            Overlap(const PxGeometry& otherGeom, const PxTransform& otherTransform);
     bool                            Sweep(const PxGeometry& otherGeom, const PxTransform& otherTransform);
     Vec3                            ComputePenetration(shared_ptr<GameObject> pGameObject);
-    bool                            IsCollisionFromTop(shared_ptr<GameObject> pGameObject);
 
-    COLLISION_SIDE CalculateCollisionSide(const Vec3& vDiffVec);
 
 private:
     void CreateDebugGeometry(shared_ptr<Geometries> pGeometries);
     void CreateDebugBox(const Vec3& vHalfSize);
-    void CreateDebugCapsule(float fRadius, float fHalfHeight);
 
 private:
     PxRaycastHit     m_RaycastHit;

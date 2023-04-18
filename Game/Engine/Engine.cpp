@@ -35,15 +35,15 @@ void Engine::Init(const WindowInfo& wInfo)
 	ComPtr<ID3D11DeviceContext> pContext;
 #pragma region CreateDevice
 	{
-		D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_11_0 };
-		UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+		D3D_FEATURE_LEVEL eFeatureLevels[] = { D3D_FEATURE_LEVEL_11_0 };
+		UINT iCreationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
 #if defined(DEBUG_BUILD)
 		creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 		HRESULT hResult = D3D11CreateDevice(0, D3D_DRIVER_TYPE_HARDWARE,
-			0, creationFlags,
-			featureLevels, ARRAYSIZE(featureLevels),
+			0, iCreationFlags,
+			eFeatureLevels, ARRAYSIZE(eFeatureLevels),
 			D3D11_SDK_VERSION, &pDevice,
 			0, &pContext);
 		if (FAILED(hResult)) {
@@ -79,11 +79,11 @@ void Engine::Update()
 	GET_SINGLE(Clock)->Update();
 	GET_SINGLE(Scenes)->Update();
 	GET_SINGLE(CollisionManager)->Update();
-	
-	m_pPhysics->Update();
 
+	m_pPhysics->Update();
 	ShowFPS();
 }
+
 
 void Engine::Render()
 {

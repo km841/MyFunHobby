@@ -46,6 +46,8 @@ void Camera::FinalUpdate()
     {
         m_matProjection = XMMatrixOrthographicLH(fWidth / m_fScale, fHeight / m_fScale, m_fNear, m_fFar);
     }
+
+    m_Frustum.FinalUpdate(shared_from_this());
 }
 
 void Camera::Render(SHADER_TYPE eShaderType)
@@ -62,6 +64,15 @@ void Camera::Render(SHADER_TYPE eShaderType)
         {
             if (pGameObject->IsEnable())
             {
+                if (pGameObject->IsFrustum() && pGameObject->GetTransform())
+                {
+                    if (m_Frustum.ContainsSphere(
+                        pGameObject->GetTransform()->GetWorldPosition(),
+                        pGameObject->GetTransform()->GetBoundingSphereRadius()))
+                    {
+                        continue;
+                    }
+                }
 
                 if (pGameObject->GetMeshRenderer())
                 {

@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Frustum.h"
 
 enum class PROJECTION_TYPE
 {
@@ -46,5 +47,7 @@ private:
     uint32          m_iCullingMask;
 
     CAMERA_EFFECT   m_eCameraEffect;
+
+    Frustum         m_Frustum;
 };
 

@@ -174,7 +174,6 @@
     <ClInclude Include="BehaviorTask.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cemetery.h" />
-    <ClInclude Include="Controller.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConstantBuffer.h" />
@@ -190,6 +189,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FilterShaders.h" />
     <ClInclude Include="FleeSequence.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IsDeadCondition.h" />
@@ -247,7 +247,6 @@
     <ClCompile Include="BehaviorTask.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cemetery.cpp" />
-    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
@@ -262,6 +261,7 @@
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FilterShaders.cpp" />
     <ClCompile Include="FleeSequence.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="IsDeadCondition.cpp" />

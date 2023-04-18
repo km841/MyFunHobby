@@ -5,7 +5,6 @@
 #include "MeshRenderer.h"
 #include "Camera.h"
 #include "MonoBehaviour.h"
-#include "Controller.h"
 #include "Collider.h"
 #include "RigidBody.h"
 #include "Physical.h"
@@ -21,6 +20,7 @@ GameObject::GameObject(LAYER_TYPE eLayerType)
 	, m_eDirection(DIRECTION::RIGHT)
 	, m_eLayerType(eLayerType)
 	, m_eLevelType(OBJECT_LEVEL_TYPE::OBJECT_LEVEL_1)
+	, m_bCheckFrustum(true)
 	
 {
 }
@@ -139,12 +139,6 @@ shared_ptr<DebugRenderer> GameObject::GetDebugRenderer()
 {
 	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::DEBUG_RENDERER);
 	return static_pointer_cast<DebugRenderer>(pComponent);
-}
-
-shared_ptr<Controller> GameObject::GetController()
-{
-	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::CONTROLLER);
-	return static_pointer_cast<Controller>(pComponent);
 }
 
 shared_ptr<Camera> GameObject::GetCamera()

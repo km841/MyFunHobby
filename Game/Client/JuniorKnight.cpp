@@ -86,7 +86,7 @@ void JuniorKnight::ScatterParticles()
 	for (int32 i = 0; i < m_vTextureNames.size(); ++i)
 	{
 		shared_ptr<Particle> pParticle = GET_SINGLE(ObjectFactory)->CreateObjectFromPool<Particle>(L"Deferred", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE,
-			Vec3(100.f, 100.f, 10.f), MassProperties(100.f, 100.f, 1.f), m_vTextureNames[i]);
+			Vec3(100.f, 100.f, 10.f), MassProperties(10.f, 10.f, 1.f), m_vTextureNames[i]);
 		
 		Vec3 vMyPos = GetTransform()->GetWorldPosition();
 		vMyPos.z = 90.f;
@@ -94,18 +94,19 @@ void JuniorKnight::ScatterParticles()
 
 		Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
 
-		int32 iRandomDegree = RANDOM(1, 180);
+		int32 iRandomDegree = RANDOM(75, 105);
 		float fRandomRadian = (iRandomDegree * XM_PI) / 180.f;
 		float fRotatedX = vRightNormal.x * cosf(fRandomRadian) - vRightNormal.y * sinf(fRandomRadian);
 		float fRotatedY = vRightNormal.x * sinf(fRandomRadian) + vRightNormal.y * cosf(fRandomRadian);
 
-		int32 iRandomAngular = RANDOM(60, 180);
+		int32 iRandomAngular = RANDOM(-1000, 1000);
 		float fRandomAngularRadian = (iRandomAngular * XM_PI) / 180.f;
 
 		Vec3 vRotatedVec = Vec3(fRotatedX, fRotatedY, 0.f);
 		pParticle->Awake();
-		pParticle->GetRigidBody()->SetVelocity(vRotatedVec * 400.f);
+		//pParticle->GetRigidBody()->SetVelocity(vRotatedVec * 400.f);
 		pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, fRandomAngularRadian));
+		pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setLinearVelocity(Conv::Vec3ToPxVec3(vRotatedVec * 1000.f));
 
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pParticle, eSceneType));

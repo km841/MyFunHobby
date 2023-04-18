@@ -14,6 +14,7 @@
 #include "Animation.h"
 #include "Player.h"
 #include "Physical.h"
+#include "ObjectFactory.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()
@@ -55,27 +56,14 @@ void AbyssMeteor::FinalUpdate()
 
 void AbyssMeteor::CreateSmokeEffectAndAddedScene()
 {
-	s_pSmokeEffect = make_shared<GlobalEffect>();
-	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-
-	s_pSmokeEffect->AddComponent(make_shared<Transform>());
+	s_pSmokeEffect = GET_SINGLE(ObjectFactory)->CreateObject<GlobalEffect>(L"Forward");
 	s_pSmokeEffect->GetTransform()->SetGlobalOffset(Vec2(20.f, 20.f));
-
 	s_pSmokeEffect->AddComponent(make_shared<Animator>());
-
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"AbyssMeteor_Smoke", L"..\\Resources\\Animation\\HighWarlock\\charged_meteor_smoke.anim");
 	s_pSmokeEffect->GetAnimator()->AddAnimation(L"AbyssMeteor_Smoke", pAnimation);
-
-	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-
-	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	pMeshRenderer->SetMaterial(pMaterial);
-	pMeshRenderer->SetMesh(pMesh);
-	s_pSmokeEffect->AddComponent(pMeshRenderer);
-
 	s_pSmokeEffect->Awake();
 	s_pSmokeEffect->Disable();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(s_pSmokeEffect, eSceneType));
 }
 
@@ -98,6 +86,8 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 		//GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(pxTransform);
 		// Crash!
 		EnableAndInitSmokeEffect();
+
+		// 화면 내에 보이는 모든 파티클들에 위쪽 방향에 힘을 가한다
 	}
 }
 

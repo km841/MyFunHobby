@@ -30,8 +30,6 @@ void Scenes::Update()
 {
 	m_pActiveScene->Update();
 	m_pActiveScene->LateUpdate();
-
-	g_pEngine->GetPhysics()->Update();
 	m_pActiveScene->FinalUpdate();
 }
 

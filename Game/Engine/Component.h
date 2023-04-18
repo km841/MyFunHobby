@@ -25,8 +25,6 @@ enum class ACTOR_TYPE
 	STATIC,
 	DYNAMIC,
 	KINEMATIC,
-	CHARACTER,
-    NO_COLLISION_DYN,
 	END,
 };
 
@@ -94,7 +92,6 @@ class GameObject;
 class Transform;
 class MeshRenderer;
 class DebugRenderer;
-class Controller;
 class Collider;
 class RigidBody;
 class Physical;
@@ -124,7 +121,6 @@ public:
 	shared_ptr<Transform>			GetTransform();
     shared_ptr<DebugRenderer>       GetDebugRenderer();
 	shared_ptr<MeshRenderer>		GetMeshRenderer();
-	shared_ptr<Controller>			GetController();
 	shared_ptr<RigidBody>			GetRigidBody();
 	shared_ptr<Physical>			GetPhysical();
     shared_ptr<Camera>              GetCamera();

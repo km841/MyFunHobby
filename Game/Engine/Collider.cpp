@@ -33,7 +33,9 @@ void Collider::Awake()
 
 	if (GetPhysical())
 	{
-		CreateDebugGeometry(GetPhysical()->GetGeometries());
+		if (GetDebugRenderer())
+			CreateDebugGeometry(GetPhysical()->GetGeometries());
+
 		GetPhysical()->GetShape()->setSimulationFilterData(m_FilterData);
 	}
 }
@@ -230,68 +232,6 @@ Vec3 Collider::ComputePenetration(shared_ptr<GameObject> pGameObject)
 	return Vec3::Zero;
 }
 
-bool Collider::IsCollisionFromTop(shared_ptr<GameObject> pGameObject)
-{
-	const PxVec3& vMyPos = GetTransform()->GetPxTransform().p;
-	const Vec3& vMySize = GetPhysical()->GetGeometrySize();
-
-	const PxVec3& vOtherPos = pGameObject->GetTransform()->GetPxTransform().p;
-	const Vec3& vOtherSize = pGameObject->GetPhysical()->GetGeometrySize();
-
-	Vec3 vLeftBottom = Vec3(vMyPos.x - vMySize.x, vMyPos.y - vMySize.y, 1.f);
-	Vec3 vRightBottom = Vec3(vMyPos.x + vMySize.x, vMyPos.y - vMySize.y, 1.f);
-
-	// 이 두 점 중 하나가 타일의 위쪽에 닿으면 충돌 처리
-
-	float fTolerance = 10.f;
-
-	// 타일의 x 범위
-	Vec3 vOtherLeftTop = Vec3(vOtherPos.x - vOtherSize.x + fTolerance, vOtherPos.y + vOtherSize.y, 1.f);
-	Vec3 vOtherRightTop = Vec3(vOtherPos.x + vOtherSize.x - fTolerance, vOtherPos.y + vOtherSize.y, 1.f);
-
-
-	if (fabs(vLeftBottom.y - vOtherLeftTop.y) < fTolerance)
-	{
-		if ((vLeftBottom.x >= vOtherLeftTop.x && vLeftBottom.x <= vOtherRightTop.x) ||
-			(vRightBottom.x >= vOtherLeftTop.x && vRightBottom.x <= vOtherRightTop.x))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-COLLISION_SIDE Collider::CalculateCollisionSide(const Vec3& vDiffVec)
-{
-	if (fabs(vDiffVec.x) > fabs(vDiffVec.y))
-	{
-		if (vDiffVec.x > 0.f)
-		{
-			return COLLISION_SIDE::RIGHT;
-		}
-
-		else
-		{
-			return COLLISION_SIDE::LEFT;
-		}
-	}
-	
-	else
-	{
-		if (vDiffVec.y > 0.f)
-		{
-			return COLLISION_SIDE::BOTTOM;
-		}
-
-		else
-		{
-			return COLLISION_SIDE::TOP;
-		}
-	}
-
-}
-
 void Collider::CreateDebugGeometry(shared_ptr<Geometries> pGeometries)
 {
 	switch (pGeometries->eGeomType)
@@ -338,16 +278,4 @@ void Collider::CreateDebugBox(const Vec3& vHalfSize)
 	GetDebugRenderer()->SetMaterial(pMaterial);
 	GetDebugRenderer()->SetMesh(pMesh);
 }
-
-void Collider::CreateDebugCapsule(float fRadius, float fHalfHeight)
-{
-	//auto [vVertices, vIndices] = Vertex::CreateHemisphereVerticesAndIndices(fRadius, fHalfHeight);
-	//shared_ptr<Mesh> pMesh = make_shared<Mesh>();
-	//pMesh->Init(vVertices, vIndices);
-	//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"DebugGeometry");
-
-	//GetDebugRenderer()->SetMaterial(pMaterial);
-	//GetDebugRenderer()->SetMesh(pMesh);
-}
-
 

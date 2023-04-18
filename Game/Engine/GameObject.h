@@ -7,7 +7,6 @@ class MeshRenderer;
 class Transform;
 class Camera;
 class MonoBehaviour;
-class Controller;
 class Collider;
 class RigidBody;
 class Physical;
@@ -17,7 +16,6 @@ class Light;
 class AI;
 
 using CollisionInfo = std::pair<COLLISION_SIDE, float>;
-
 class GameObject :
     public Object
     , public std::enable_shared_from_this<GameObject>
@@ -39,7 +37,6 @@ public:
     shared_ptr<RigidBody>       GetRigidBody();
     shared_ptr<Physical>        GetPhysical();
     shared_ptr<DebugRenderer>   GetDebugRenderer();
-    shared_ptr<Controller>      GetController();
     shared_ptr<Camera>          GetCamera();
     shared_ptr<Animator>        GetAnimator();
     shared_ptr<Movement>        GetMovement();
@@ -64,11 +61,15 @@ public:
     FORCEINLINE Status*           GetStatus()                        { return &m_Status; }
     
 
-    FORCEINLINE void Disable()   { m_bDisable = true; }
-    FORCEINLINE void Enable()    { m_bDisable = false; }
-    FORCEINLINE bool IsEnable()  { return !m_bDisable; }
-    FORCEINLINE bool IsDisable()  { return m_bDisable; }
-    FORCEINLINE void FlipState() { m_bDisable = (m_bDisable + 1) % 2; }
+    FORCEINLINE void              Disable()                          { m_bDisable = true; }
+    FORCEINLINE void              Enable()                           { m_bDisable = false; }
+    FORCEINLINE bool              IsEnable()                         { return !m_bDisable; }
+    FORCEINLINE bool              IsDisable()                        { return m_bDisable; }
+    FORCEINLINE void              FlipState()                        { m_bDisable = (m_bDisable + 1) % 2; }
+                                  
+    FORCEINLINE bool              IsFrustum()                        { return m_bCheckFrustum; }
+    FORCEINLINE void              SetFrustum(bool bCheckFrustum)     { m_bCheckFrustum = bCheckFrustum; }
+
     void Release();
 
     CollisionInfo IsCollisionSide();
@@ -83,5 +84,6 @@ private:
     std::array<shared_ptr<Component>, FIXED_COMPONENT_COUNT> m_arrComponents;
     std::vector<shared_ptr<MonoBehaviour>>                   m_vScripts;
     bool                                                     m_bDisable;
+    bool                                                     m_bCheckFrustum;
 };
 

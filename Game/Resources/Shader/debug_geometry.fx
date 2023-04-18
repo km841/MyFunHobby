@@ -13,6 +13,7 @@ struct VS_OUT
 {
     float4 pos : SV_Position;
     float2 uv : TEXCOORD;
+    float3 viewPos : POSITION;
 };
 
 
@@ -24,6 +25,7 @@ VS_OUT VS_Main(VS_IN _in)
     output.pos = mul(float4(_in.pos, 1.f), g_matWVP);
     output.uv = _in.uv;
     
+    output.viewPos = mul(float4(_in.pos, 1.f), g_matWV).xyz;
     return output;
 }
 
@@ -39,6 +41,8 @@ struct PS_OUT
 PS_OUT PS_Main(VS_OUT _in) : SV_Target
 {
     PS_OUT output = (PS_OUT) 0;
+    
+    output.vPosition = float4(_in.viewPos, 0.f);
     output.vColor = float4(0.f, 1.f, 0.f, 1.f);
     
     return output;

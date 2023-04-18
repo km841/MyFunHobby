@@ -55,6 +55,7 @@ void InterfaceManager::CreateUI()
 	// Dialogue UI
 	{
 		shared_ptr<DialogueUI> pDialogueUI = make_shared<DialogueUI>();
+		pDialogueUI->SetFrustum(false);
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
@@ -80,9 +81,11 @@ void InterfaceManager::CreateUI()
 void InterfaceManager::CreateHUD()
 {
 	shared_ptr<PlayerInterfaceHUD> pInterfaceHUD = nullptr;
+	
 	// Player Interface HUD
 	{
 		pInterfaceHUD = make_shared<PlayerInterfaceHUD>();
+		pInterfaceHUD->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"PlayerInterfaceHUD", L"..\\Resources\\Texture\\HUD\\HUD_Player_Normal_Frame.tga");
@@ -108,7 +111,7 @@ void InterfaceManager::CreateHUD()
 	// Skul Thumnail HUD
 	{
 		shared_ptr<SkulThumnailHUD> pSkulThumnailHUD = make_shared<SkulThumnailHUD>();
-
+		pSkulThumnailHUD->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Cooldown")->Clone();
 
@@ -133,7 +136,7 @@ void InterfaceManager::CreateHUD()
 	// Health Bar HUD
 	{
 		shared_ptr<HealthBarHUD> pHealthBarHUD = make_shared<HealthBarHUD>();
-
+		pHealthBarHUD->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"HP")->Clone();
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HealthBarHUD", L"..\\Resources\\Texture\\HUD\\HealthBar\\HUD_Player_HealthBar.tga");
@@ -160,7 +163,7 @@ void InterfaceManager::CreateHUD()
 	// Skill Box HUD
 	{
 		shared_ptr<SkillBoxHUD> pSkillBoxHUD = make_shared<SkillBoxHUD>();
-
+		pSkillBoxHUD->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Cooldown")->Clone();
 

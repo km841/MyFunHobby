@@ -76,9 +76,6 @@
     <ClInclude Include="MonoBehaviour.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Object\Component</Filter>
-    </ClInclude>
     <ClInclude Include="FilterShaders.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -214,6 +211,9 @@
     <ClInclude Include="RemoveObjectTask.h">
       <Filter>Object\AI\MonsterAI</Filter>
     </ClInclude>
+    <ClInclude Include="Frustum.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -289,9 +289,6 @@
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="MonoBehaviour.cpp">
-      <Filter>Object\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Controller.cpp">
       <Filter>Object\Component</Filter>
     </ClCompile>
     <ClCompile Include="FilterShaders.cpp">
@@ -425,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="RemoveObjectTask.cpp">
       <Filter>Object\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Frustum.cpp">
+      <Filter>Object\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
