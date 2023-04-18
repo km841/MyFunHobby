@@ -6,6 +6,10 @@
 #include "Scenes.h"
 #include "StateMachine.h"
 #include "ObjectRemoveToSceneEvent.h"
+#include "ObjectReturnToPoolEvent.h"
+#include "Physical.h"
+#include "Engine.h"
+#include "Physics.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -34,6 +38,10 @@ void EventManager::ProcessEvents()
 			ProcessObjectRemoveEvent(static_cast<ObjectRemoveToSceneEvent*>(pEvent.get()));
 			break;
 
+		case EVENT_TYPE::OBJECT_RETURN_TO_POOL:
+			ProcessObjectReturnToPoolEvent(static_cast<ObjectReturnToPoolEvent*>(pEvent.get()));
+			break;
+
 		case EVENT_TYPE::PLAYER_CHANGE_STATE:
 			ProcessPlayerChangeStateEvent(static_cast<PlayerChangeStateEvent*>(pEvent.get()));
 			break;
@@ -50,12 +58,31 @@ void EventManager::ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent)
 {
 	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
 	pCurScene->AddGameObject(pEvent->GetGameObject());
+	shared_ptr<GameObject> pGameObject = pEvent->GetGameObject();
 }
 
 void EventManager::ProcessObjectRemoveEvent(ObjectRemoveToSceneEvent* pEvent)
 {
 	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
-	pCurScene->RemoveGameObject(pEvent->GetGameObject());
+	shared_ptr<GameObject> pGameObject = pEvent->GetGameObject();
+	pCurScene->RemoveGameObject(pGameObject);
+	if (pGameObject->GetPhysical())
+	{
+		pGameObject->GetPhysical()->RemoveActorToPxScene();
+	}
+}
+
+void EventManager::ProcessObjectReturnToPoolEvent(ObjectReturnToPoolEvent* pEvent)
+{
+	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
+	shared_ptr<GameObject> pGameObject = pEvent->GetGameObject();
+	pCurScene->RemoveGameObject(pGameObject);
+	if (pGameObject->GetPhysical())
+	{
+		pGameObject->GetPhysical()->RemoveActorToPxScene();
+	}
+	
+	pGameObject->Release();
 }
 
 void EventManager::ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent)

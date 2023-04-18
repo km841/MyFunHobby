@@ -4,6 +4,7 @@ class SceneChangeEvent;
 class ObjectAddedToSceneEvent;
 class PlayerChangeStateEvent;
 class ObjectRemoveToSceneEvent;
+class ObjectReturnToPoolEvent;
 
 class EventManager
 {
@@ -17,6 +18,7 @@ private:
 	void ProcessSceneChangeEvent(SceneChangeEvent* pEvent);
 	void ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent);
 	void ProcessObjectRemoveEvent(ObjectRemoveToSceneEvent* pEvent);
+	void ProcessObjectReturnToPoolEvent(ObjectReturnToPoolEvent* pEvent);
 	void ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent);
 
 private:

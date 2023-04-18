@@ -194,6 +194,8 @@ void GameObject::Release()
 		if (m_arrComponents[i])
 			m_arrComponents[i].reset();
 	}
+
+	ReturnToPool();
 }
 
 CollisionInfo GameObject::IsCollisionSide()

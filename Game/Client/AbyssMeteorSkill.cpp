@@ -21,6 +21,7 @@
 #include "Skul.h"
 #include "Player.h"
 #include "Light.h"
+#include "ObjectFactory.h"
 
 AbyssMeteorSkill::AbyssMeteorSkill()
 	: SkulSkill(SKILL_TYPE::CHARGING, 5.f, 1.f)
@@ -31,30 +32,12 @@ AbyssMeteorSkill::AbyssMeteorSkill()
 
 shared_ptr<AbyssMeteor> AbyssMeteorSkill::CreateAbyssMeteor()
 {
-	shared_ptr<AbyssMeteor> pAbyssMeteor = make_shared<AbyssMeteor>();
-
-	pAbyssMeteor->AddComponent(make_shared<Transform>());
-	pAbyssMeteor->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f)));
-	pAbyssMeteor->AddComponent(make_shared<RigidBody>(false));
-	pAbyssMeteor->AddComponent(make_shared<Collider>());
-	pAbyssMeteor->AddComponent(make_shared<DebugRenderer>());
-	pAbyssMeteor->AddComponent(make_shared<Movement>());
+	shared_ptr<AbyssMeteor> pAbyssMeteor = GET_SINGLE(ObjectFactory)->CreateObject<AbyssMeteor>(L"Forward", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f));
 	pAbyssMeteor->AddComponent(make_shared<Animator>());
-
-	pAbyssMeteor->GetTransform()->SetGlobalOffset(Vec2(0.f, 450.f));
-
-	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(Conv::AddressToWstring(pAbyssMeteor.get()), L"..\\Resources\\Animation\\HighWarlock\\highwarlock_meteor.anim");
+	pAbyssMeteor->GetTransform()->SetGlobalOffset(Vec2(0.f, 450.f));
 	pAbyssMeteor->GetAnimator()->AddAnimation(L"AbyssMeteor_Falling", pAnimation);
 	pAbyssMeteor->GetAnimator()->Play(L"AbyssMeteor_Falling");
-
-	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-
-	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	pMeshRenderer->SetMaterial(pMaterial);
-	pMeshRenderer->SetMesh(pMesh);
-	pAbyssMeteor->AddComponent(pMeshRenderer);
-
 	return pAbyssMeteor;
 }
 

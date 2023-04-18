@@ -61,15 +61,18 @@ void SkulAttack::HitMonstersInAttackRange()
 			if (fDegree > fStartAngle && fDegree < fEndAngle)
 			{
 				static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
+				CreateHitEffectAndAddedScene(vPos);
 				pGameObject->GetStatus()->TakeDamage(1);
 
-				if (!pGameObject->GetStatus()->bAlive)
+				if (!pGameObject->GetStatus()->IsAlive())
 				{
-					int a = 0;
+					if (vTargetVec.x > 0.f)
+						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::RIGHT);
+					else
+						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::LEFT);
+
 				}
-				PxVec3 vImpulse = PxVec3(0.f, 100.f, 0.f);
-				//PxRigidBodyExt::addForceAtPos(*pGameObject->GetPhysical()->GetActor<PxRigidDynamic>(), vImpulse, Conv::Vec3ToPxVec3(vTargetVec), PxForceMode::eIMPULSE);
-				CreateHitEffectAndAddedScene(vPos);
+
 			}
 		}
 	}

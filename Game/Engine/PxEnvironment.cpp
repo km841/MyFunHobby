@@ -27,7 +27,6 @@ void PxEnvironment::Init()
 {
 	m_pSetting->CreateFoundation();
 
-
 	CreateDebugger("127.0.0.1", 5425);
 	ConnectDebugger();
 	m_pSetting->CreatePhysics(m_pPvd);

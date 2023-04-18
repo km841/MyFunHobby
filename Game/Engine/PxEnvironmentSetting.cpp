@@ -2,6 +2,8 @@
 #include "PxEnvironmentSetting.h"
 
 PxEnvironmentSetting::PxEnvironmentSetting()
+	: m_pFoundation(nullptr)
+	, m_pPhysics(nullptr)
 {
 }
 

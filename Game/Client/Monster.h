@@ -34,10 +34,11 @@ public:
 
 	void SetParticleTextureNames(const std::vector<wstring> vTextureNames) { m_vTextureNames = vTextureNames; }
 protected:
+	int32 CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDirection);
 
 public:
-	void ActivateDeadEvent();
-	virtual void ScatterParticles() { }
+	void ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection);
+	virtual void ScatterParticles(PARTICLE_DIRECTION eParticleDirection) { }
 
 protected:
 	bool m_bHitFlag;

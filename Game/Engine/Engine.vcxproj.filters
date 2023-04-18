@@ -214,6 +214,9 @@
     <ClInclude Include="Frustum.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectReturnToPoolEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -425,6 +428,9 @@
     </ClCompile>
     <ClCompile Include="Frustum.cpp">
       <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectReturnToPoolEvent.cpp">
+      <Filter>Object\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

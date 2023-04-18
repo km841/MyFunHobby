@@ -20,8 +20,6 @@ void Frustum::FinalUpdate(shared_ptr<Camera> pCamera)
 		XMVector3TransformCoord(Vec3(-1.f, -1.f, 1.f), matInv)
 	};
 
-	m_arrPlanes[PLANE_FRONT] = XMPlaneFromPoints(vWorldPos[0], vWorldPos[1], vWorldPos[2]); // CW
-	m_arrPlanes[PLANE_BACK] =  XMPlaneFromPoints(vWorldPos[4], vWorldPos[7], vWorldPos[5]); // CCW
 	m_arrPlanes[PLANE_UP] =    XMPlaneFromPoints(vWorldPos[4], vWorldPos[5], vWorldPos[1]); // CW
 	m_arrPlanes[PLANE_DOWN] =  XMPlaneFromPoints(vWorldPos[7], vWorldPos[3], vWorldPos[6]); // CCW
 	m_arrPlanes[PLANE_LEFT] =  XMPlaneFromPoints(vWorldPos[4], vWorldPos[0], vWorldPos[7]); // CW

@@ -13,6 +13,9 @@ Physical::Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeo
 	,m_vSize(vGeometrySize)
 {
 	CreatePhysicsProperties(massProperties);
+	CreateGeometry(m_eGeometryType, m_vSize);
+	CreateActor();
+	CreateShape();
 }
 
 Physical::~Physical()
@@ -21,14 +24,9 @@ Physical::~Physical()
 
 void Physical::Awake()
 {
-	CreateGeometry(m_eGeometryType, m_vSize);
-	CreateActor();
-	CreateShape();
-
 	if (m_pActor)
 	{
 		InitializeActor();
-		AddActor(m_pActor);
 	}
 }
 
@@ -119,7 +117,7 @@ void Physical::CreateActor()
 	switch (m_eActorType)
 	{
 	case ACTOR_TYPE::DYNAMIC:
-		m_pActor = PHYSICS->createRigidDynamic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
+		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		m_pActor->is<PxRigidDynamic>()->setLinearDamping(0.5f);
 		//m_pActor->is<PxRigidDynamic>()->setAngularDamping(1.f);
 		//m_pActor->is<PxRigidDynamic>()->setMass(2.f);
@@ -127,11 +125,11 @@ void Physical::CreateActor()
 		m_pActor->is<PxRigidDynamic>()->setMaxLinearVelocity(1000.f);
 		break;
 	case ACTOR_TYPE::STATIC:
-		m_pActor = PHYSICS->createRigidStatic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
+		m_pActor = PHYSICS->createRigidStatic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		break;
 	case ACTOR_TYPE::KINEMATIC:
 	{
-		m_pActor = PHYSICS->createRigidDynamic(PxTransform(Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition())));
+		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		m_pActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
 	}
 	break;
@@ -142,10 +140,19 @@ void Physical::InitializeActor()
 {
 	PxRigidActor* pActor = m_pActor->is<PxRigidActor>();
 	pActor->userData = GetGameObject().get();
+
+	PxVec3 vMyPos = Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition());
+	pActor->setGlobalPose(PxTransform(vMyPos));
+
 	//pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
 
-void Physical::AddActor(PxActor* pActor)
+void Physical::AddActorToPxScene()
 {
-	g_pEngine->GetPhysics()->GetEnvironment()->GetPhysScene()->AddActor(pActor);
+	PX_SCENE->AddActor(m_pActor);
+}
+
+void Physical::RemoveActorToPxScene()
+{
+	PX_SCENE->GetScene()->removeActor(*m_pActor);
 }

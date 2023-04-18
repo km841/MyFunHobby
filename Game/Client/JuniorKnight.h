@@ -20,7 +20,7 @@ public:
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
 public:
-	virtual void ScatterParticles() override;
+	virtual void ScatterParticles(PARTICLE_DIRECTION eParticleDirection) override;
 
 private:
 	DECLARE_POOL(JuniorKnight);

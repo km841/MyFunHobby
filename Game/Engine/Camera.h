@@ -32,6 +32,7 @@ public:
     void            SetCullingMask(LAYER_TYPE eLayerType, bool bFlag);
     void            DisableAllCullingMask();
     void            EnableAllCullingMask();
+    bool            ContainsSphere(const Vec3& vPos, float fRadius)           { return m_Frustum.ContainsSphere(vPos, fRadius); }
 
 private:
     PROJECTION_TYPE m_eType;

@@ -71,6 +71,7 @@ public:
     FORCEINLINE void              SetFrustum(bool bCheckFrustum)     { m_bCheckFrustum = bCheckFrustum; }
 
     void Release();
+    virtual void ReturnToPool() {}
 
     CollisionInfo IsCollisionSide();
 

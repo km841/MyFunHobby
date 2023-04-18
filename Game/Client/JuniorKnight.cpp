@@ -81,7 +81,7 @@ void JuniorKnight::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
 }
 
-void JuniorKnight::ScatterParticles()
+void JuniorKnight::ScatterParticles(PARTICLE_DIRECTION eParticleDirection)
 {
 	for (int32 i = 0; i < m_vTextureNames.size(); ++i)
 	{
@@ -94,7 +94,7 @@ void JuniorKnight::ScatterParticles()
 
 		Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
 
-		int32 iRandomDegree = RANDOM(75, 105);
+		int32 iRandomDegree = CalculateParticleDirectionToDegree(eParticleDirection);
 		float fRandomRadian = (iRandomDegree * XM_PI) / 180.f;
 		float fRotatedX = vRightNormal.x * cosf(fRandomRadian) - vRightNormal.y * sinf(fRandomRadian);
 		float fRotatedY = vRightNormal.x * sinf(fRandomRadian) + vRightNormal.y * cosf(fRandomRadian);
@@ -106,7 +106,7 @@ void JuniorKnight::ScatterParticles()
 		pParticle->Awake();
 		//pParticle->GetRigidBody()->SetVelocity(vRotatedVec * 400.f);
 		pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, fRandomAngularRadian));
-		pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setLinearVelocity(Conv::Vec3ToPxVec3(vRotatedVec * 1000.f));
+		pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setLinearVelocity(Conv::Vec3ToPxVec3(vRotatedVec * 800.f));
 
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pParticle, eSceneType));

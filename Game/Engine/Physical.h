@@ -20,7 +20,7 @@ public:
     FORCEINLINE PxShape*               GetShape()        const { return m_pShape; }
     FORCEINLINE const Vec3&            GetGeometrySize() const { return m_vSize; }
     FORCEINLINE shared_ptr<Geometries> GetGeometries()   const { return m_pGeometries; }
-
+    FORCEINLINE PxActor*               GetActor()        const { return m_pActor; }
     template<typename T>
     T* GetActor() const 
     { 
@@ -28,6 +28,9 @@ public:
         assert(pActor);
         return pActor;
     }
+
+    void          AddActorToPxScene();
+    void          RemoveActorToPxScene();
 
 private:
     void          CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize);
@@ -41,7 +44,7 @@ private:
     void          CreateShape();
     void          CreateActor();
     void          InitializeActor();
-    void          AddActor(PxActor* pActor);
+
 
 private:
     ACTOR_TYPE                    m_eActorType;

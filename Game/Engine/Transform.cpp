@@ -26,18 +26,7 @@ void Transform::FinalUpdate()
 {
 	if (GetPhysical())
 	{
-		ACTOR_TYPE eActorType = GetPhysical()->GetActorType();
-		switch (eActorType)
-		{
-			case ACTOR_TYPE::STATIC:
-				m_PxTransform = GetPhysical()->GetActor<PxRigidStatic>()->getGlobalPose();
-				break;
-
-			case ACTOR_TYPE::KINEMATIC:
-			case ACTOR_TYPE::DYNAMIC:
-				m_PxTransform = GetPhysical()->GetActor<PxRigidDynamic>()->getGlobalPose();
-				break;
-		}
+		m_PxTransform = GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose();
 
 		Matrix matPxScale = Matrix::CreateScale(GetPhysical()->GetGeometrySize());
 		Matrix matPxRotation = Matrix::CreateFromQuaternion(Conv::PxQuatToQuat(m_PxTransform.q));
@@ -108,16 +97,16 @@ void Transform::PxPushData(shared_ptr<Camera> pCamera)
 
 Vec3 Transform::GetWorldPosition()
 {
-	if (m_pParent.lock())
-	{
-		Matrix matParentMatrix = m_pParent.lock()->GetLocalToWorldMatrix();
-		matParentMatrix._11 = 1.f;
-		matParentMatrix._22 = 1.f;
-		matParentMatrix._33 = 1.f;
-		Matrix matWorld = m_matWorld *= matParentMatrix;
-		return matWorld.Translation();
-	}
-	else
+	//if (m_pParent.lock())
+	//{
+	//	Matrix matParentMatrix = m_pParent.lock()->GetLocalToWorldMatrix();
+	//	matParentMatrix._11 = 1.f;
+	//	matParentMatrix._22 = 1.f;
+	//	matParentMatrix._33 = 1.f;
+	//	Matrix matWorld = m_matWorld *= matParentMatrix;
+	//	return matWorld.Translation();
+	//}
+	//else
 	{
 		return m_matWorld.Translation();
 	}
@@ -127,22 +116,11 @@ void Transform::SetPhysicalPosition(const Vec3& vPosition)
 {
 	assert(GetPhysical());
 	m_PxTransform.p = Conv::Vec3ToPxVec3(vPosition);
-	GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(m_PxTransform);
+	GetPhysical()->GetActor<PxRigidActor>()->setGlobalPose(m_PxTransform);
 }
 
 Vec3 Transform::GetPhysicalPosition()
 {
 	assert(GetPhysical());
-
-	ACTOR_TYPE eActorType = GetPhysical()->GetActorType();
-	switch (eActorType)
-	{
-	case ACTOR_TYPE::STATIC:
-		return Conv::PxVec3ToVec3(GetPhysical()->GetActor<PxRigidStatic>()->getGlobalPose().p);
-	case ACTOR_TYPE::KINEMATIC:
-	case ACTOR_TYPE::DYNAMIC:
-		return Conv::PxVec3ToVec3(GetPhysical()->GetActor<PxRigidDynamic>()->getGlobalPose().p);
-	}
-	assert(nullptr);
-	return Vec3::Zero;
+	return Conv::PxVec3ToVec3(GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose().p);
 }

@@ -206,6 +206,7 @@
     <ClInclude Include="ObjectAddedToSceneEvent.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ObjectRemoveToSceneEvent.h" />
+    <ClInclude Include="ObjectReturnToPoolEvent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physical.h" />
     <ClInclude Include="Physics.h" />
@@ -278,6 +279,7 @@
     <ClCompile Include="ObjectAddedToSceneEvent.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectRemoveToSceneEvent.cpp" />
+    <ClCompile Include="ObjectReturnToPoolEvent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

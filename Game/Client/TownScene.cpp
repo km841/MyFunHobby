@@ -382,6 +382,7 @@ void TownScene::Enter()
 		pMeshRenderer->SetMesh(pMesh);
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
+
 		pGameObject->AddComponent(make_shared<PlayerTrackingScript>(pPlayer, 90.f));
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -585,8 +586,6 @@ void TownScene::Enter()
 
 		AddGameObject(pUI);
 	}
-
-
 
 	m_vCameras[1]->SetCameraEffect(CAMERA_EFFECT::FADE_IN);
 

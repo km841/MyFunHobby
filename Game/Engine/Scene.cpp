@@ -212,6 +212,10 @@ void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 	if (pGameObject->GetLight())
 		m_vLights.push_back(pGameObject->GetLight());
 
+	if (pGameObject->GetPhysical())
+		pGameObject->GetPhysical()->AddActorToPxScene();
+	
+
 	uint8 iLayerType = static_cast<uint8>(pGameObject->GetLayerType());
 
 	if (iLayerType < SCENE_OBJECT_TYPE_COUNT)

@@ -15,6 +15,8 @@
 #include "Player.h"
 #include "Physical.h"
 #include "ObjectFactory.h"
+#include "EventManager.h"
+#include "ObjectRemoveToSceneEvent.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()
@@ -76,18 +78,42 @@ void AbyssMeteor::EnableAndInitSmokeEffect()
 
 void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
-	
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
 		Disable();
-		//PxTransform pxTransform = GetTransform()->GetPxTransform();
-		//pxTransform.p.x = 0.f;
-		//pxTransform.p.y = 0.f;
-		//GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(pxTransform);
-		// Crash!
 		EnableAndInitSmokeEffect();
+		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 
-		// 화면 내에 보이는 모든 파티클들에 위쪽 방향에 힘을 가한다
+		auto& vParticles = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::PARTICLE);
+		for (auto& pParticle : vParticles)
+		{
+			Vec3 vParticlePos = pParticle->GetTransform()->GetPhysicalPosition();
+			Vec3 vTargetVec = vParticlePos - vMyPos;
+
+			if (vTargetVec.Length() < 1000.f)
+			{
+				float fRandomXImpulse = static_cast<float>(RANDOM(0, 1000));
+				if (vTargetVec.x < 0.f)
+					fRandomXImpulse = -fRandomXImpulse;
+
+				PxVec3 vImpulse = PxVec3(fRandomXImpulse, 1000.f, 0.f);
+
+				PxRigidBodyExt::addForceAtPos(
+					*pParticle->GetPhysical()->GetActor<PxRigidDynamic>(),
+					vImpulse,
+					Conv::Vec3ToPxVec3(vParticlePos),
+					PxForceMode::eIMPULSE
+				);
+
+				int32 iRandomAngular = RANDOM(-1000, 1000);
+				float fRandomAngularRadian = (iRandomAngular * XM_PI) / 180.f;
+				pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, fRandomAngularRadian));
+
+			}
+		}
+		//GetTransform()->SetPhysicalPosition(Vec3(100.f, 100.f, 0.f));
+		//SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+		//GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
 	}
 }
 
