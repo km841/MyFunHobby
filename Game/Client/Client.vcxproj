@@ -170,6 +170,7 @@
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="AfterImageDrawScript.h" />
     <ClInclude Include="AnimationGlobalEffect.h" />
+    <ClInclude Include="AnimationLocalEffect.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="BackgroundMoveScript.h" />
@@ -193,6 +194,9 @@
     <ClInclude Include="LittleBoneAttack.h" />
     <ClInclude Include="LittleBoneHead.h" />
     <ClInclude Include="LittleBoneSwapSkill.h" />
+    <ClInclude Include="MonsterHealthBarShowScript.h" />
+    <ClInclude Include="MonsterHPHUD.h" />
+    <ClInclude Include="MonsterHUD.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="PathState.h" />
     <ClInclude Include="PlayerFirstSkillShowScript.h" />
@@ -238,6 +242,7 @@
     <ClCompile Include="AfterImage.cpp" />
     <ClCompile Include="AfterImageDrawScript.cpp" />
     <ClCompile Include="AnimationGlobalEffect.cpp" />
+    <ClCompile Include="AnimationLocalEffect.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="BackgroundMoveScript.cpp" />
@@ -262,6 +267,9 @@
     <ClCompile Include="LittleBoneAttack.cpp" />
     <ClCompile Include="LittleBoneHead.cpp" />
     <ClCompile Include="LittleBoneSwapSkill.cpp" />
+    <ClCompile Include="MonsterHealthBarShowScript.cpp" />
+    <ClCompile Include="MonsterHPHUD.cpp" />
+    <ClCompile Include="MonsterHUD.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PathState.cpp" />
     <ClCompile Include="PlayerFirstSkillShowScript.cpp" />

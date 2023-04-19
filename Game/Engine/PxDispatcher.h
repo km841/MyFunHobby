@@ -13,7 +13,7 @@ public:
 	FORCEINLINE ContactCallback*		GetSimulationCallback() { return m_pCallback; }
 
 public:
-	void					CreateCpuDispatcher();
+	void CreateCpuDispatcher();
 
 private:
 	PxDefaultCpuDispatcher* m_pCpuDispatcher;

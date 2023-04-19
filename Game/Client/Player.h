@@ -44,7 +44,7 @@ public:
 
 	void			      SkulCooldownUpdate();
 	void			      SwapCooldownUpdate();
-	
+
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;

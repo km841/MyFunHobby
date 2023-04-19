@@ -34,6 +34,7 @@ shared_ptr<AbyssMeteor> AbyssMeteorSkill::CreateAbyssMeteor()
 {
 	shared_ptr<AbyssMeteor> pAbyssMeteor = GET_SINGLE(ObjectFactory)->CreateObject<AbyssMeteor>(L"Forward", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f));
 	pAbyssMeteor->AddComponent(make_shared<Animator>());
+	pAbyssMeteor->AddComponent(make_shared<Movement>());
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(Conv::AddressToWstring(pAbyssMeteor.get()), L"..\\Resources\\Animation\\HighWarlock\\highwarlock_meteor.anim");
 	pAbyssMeteor->GetTransform()->SetGlobalOffset(Vec2(0.f, 450.f));
 	pAbyssMeteor->GetAnimator()->AddAnimation(L"AbyssMeteor_Falling", pAnimation);

@@ -48,8 +48,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//PalleteUpdate();
-	AnimationEditorUpdate();
+	PalleteUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();

@@ -12,14 +12,14 @@ public:
 	void Init();
 
 public:
-	FORCEINLINE PxFoundation* GetFoundation() { return m_pSetting->GetFoundation(); }
-	FORCEINLINE PxPhysics* GetPhysics() { return m_pSetting->GetPhysics(); }
-	FORCEINLINE PxControllerManager* GetControllerManager() { return m_pControllerMgr; }
-	FORCEINLINE shared_ptr<PhysicsScene>		 GetPhysScene() { return m_pPhysScene; }
+	FORCEINLINE PxFoundation*			 GetFoundation()		{ return m_pSetting->GetFoundation(); }
+	FORCEINLINE PxPhysics*				 GetPhysics()			{ return m_pSetting->GetPhysics(); }
+	FORCEINLINE PxControllerManager*	 GetControllerManager() { return m_pControllerMgr; }
+	FORCEINLINE shared_ptr<PhysicsScene> GetPhysScene()			{ return m_pPhysScene; }
 
 public:
-	void							 CreatePhysicsScene(const PxSceneDesc& sceneDesc);
-	void                             ConnectDebuggerToScene();
+	void CreatePhysicsScene(const PxSceneDesc& sceneDesc);
+	void ConnectDebuggerToScene();
 
 private:
 	void CreateScene(const PxSceneDesc& sceneDesc);

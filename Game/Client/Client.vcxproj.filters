@@ -116,6 +116,12 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Particle">
       <UniqueIdentifier>{01d2f7e7-8f25-49cb-be23-7ff086ca3363}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\MonsterHUD">
+      <UniqueIdentifier>{8bdbf54c-8684-4827-b90e-bb51ad84520b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\Script">
+      <UniqueIdentifier>{9239000c-fc3a-4bb8-8936-67cba6b70782}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -315,6 +321,18 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>소스 파일\Game\Object\GameObject\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterHUD.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\MonsterHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterHPHUD.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\MonsterHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterHealthBarShowScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationLocalEffect.h">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -528,6 +546,18 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHUD.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\MonsterHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHPHUD.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\MonsterHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHealthBarShowScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationLocalEffect.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

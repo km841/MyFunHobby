@@ -70,7 +70,6 @@ void SkulAttack::HitMonstersInAttackRange()
 						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::RIGHT);
 					else
 						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::LEFT);
-
 				}
 
 			}

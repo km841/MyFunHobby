@@ -4,6 +4,7 @@
 class GlobalEffect;
 class Particle;
 class Texture;
+class MonsterHPHUD;
 
 class Monster :
     public GameObject
@@ -31,18 +32,22 @@ public:
 public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
-
-	void SetParticleTextureNames(const std::vector<wstring> vTextureNames) { m_vTextureNames = vTextureNames; }
-protected:
-	int32 CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDirection);
+	virtual void ScatterParticles(PARTICLE_DIRECTION eParticleDirection) { }
+	virtual void ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection);
 
 public:
-	void ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection);
-	virtual void ScatterParticles(PARTICLE_DIRECTION eParticleDirection) { }
+	void SetParticleTextureNames(const std::vector<wstring> vTextureNames) { m_vTextureNames = vTextureNames; }
+
+protected:
+	int32 CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDirection);
+	void CreateMonsterHPHUD();
 
 protected:
 	bool m_bHitFlag;
 	bool m_bExtraHitFlag;
+
+	shared_ptr<MonsterHPHUD> m_pMonsterHPHUDFrame;
+	shared_ptr<MonsterHPHUD> m_pMonsterHPHUD;
 
 	std::vector<wstring> m_vTextureNames;
 };

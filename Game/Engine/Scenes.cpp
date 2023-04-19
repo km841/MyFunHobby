@@ -49,19 +49,19 @@ void Scenes::ChangeScene(SCENE_TYPE eSceneType)
 	m_pActiveScene->Enter();
 }
 
-Vec3 Scenes::ScreenToWorldPosition(const Vec3& point, shared_ptr<Camera> pCamera)
+Vec3 Scenes::ScreenToWorldPosition(const Vec3& vPoint, shared_ptr<Camera> pCamera)
 {
 	int32 iWidth  = g_pEngine->GetWidth();
 	int32 iHeight = g_pEngine->GetHeight();
 
 	Matrix matProjection = pCamera->GetProjectionMatrix();
 
-	float fViewX = (+2.f * point.x /  iWidth - 1) / matProjection(0, 0);
-	float fViewY = (-2.f * point.y / iHeight + 1) / matProjection(1, 1);
+	float fViewX = (+2.f * vPoint.x / iWidth  - 1) / matProjection(0, 0);
+	float fViewY = (-2.f * vPoint.y / iHeight + 1) / matProjection(1, 1);
 
 	Matrix matViewInv = pCamera->GetViewMatrix().Invert();
 
-	Vec3 vWorldPos = Vec3(fViewX, fViewY, point.z);
+	Vec3 vWorldPos = Vec3(fViewX, fViewY, vPoint.z);
 	vWorldPos = XMVector3TransformCoord(vWorldPos, matViewInv);
 
 	return vWorldPos;

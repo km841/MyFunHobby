@@ -241,14 +241,15 @@ struct Status
 	void TakeDamage(int32 iDamage)
 	{
 		assert(iDamage > 0);
-		if (bAlive)
-			iCurHP -= iDamage;
 
 		if (iCurHP <= iDamage)
 		{
 			iCurHP = 0;
 			bAlive = false;
 		}
+
+		if (bAlive)
+			iCurHP -= iDamage;
 	}
 
 	void IncreaseHP(int32 iHeal)

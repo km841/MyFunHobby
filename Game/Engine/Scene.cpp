@@ -17,6 +17,7 @@
 #include "UI.h"
 #include "AfterImage.h"
 #include "Light.h"
+#include "ObjectFactory.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 
@@ -283,29 +284,14 @@ void Scene::Load(const wstring& szPath)
 		ifs >> vTileAlignVec.x >> vTileAlignVec.y;
 		ifs.ignore(1);
 
-		shared_ptr<Tile> pTile = Tile::Get();
-
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = make_shared<Material>();
-		shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
-		pMaterial->SetShader(pShader);
-
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
-		assert(pTexture);
-		pMaterial->SetTexture(0, pTexture);
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pTile->AddComponent(pMeshRenderer);
-		pTile->AddComponent(make_shared<Transform>());
-		pTile->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f)));
-		pTile->AddComponent(make_shared<Collider>());
-		pTile->AddComponent(make_shared<DebugRenderer>());
+		shared_ptr<Tile> pTile= GET_SINGLE(ObjectFactory)->CreateObjectFromPool<Tile>(
+			L"Deferred",
+			false,
+			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),
+			szTexPath);
 
 		pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 90.f));
+		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 100.f));
 
 		// 잠들어 있는 Component 깨우기
 		pTile->Awake();

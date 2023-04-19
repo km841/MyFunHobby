@@ -38,16 +38,6 @@ void Particle::FinalUpdate()
 
 void Particle::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
-	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
-	{
-		//Vec3 vVelocity = GetRigidBody()->GetVelocity();
-		//if (1.f > vVelocity.Length())
-		//	vVelocity = Vec3::Zero;
-		//else
-		//	vVelocity /= 2.f;
-
-		//GetRigidBody()->SetVelocity(vVelocity);
-	}
 }
 
 void Particle::OnCollisionExit(shared_ptr<GameObject> pGameObject)

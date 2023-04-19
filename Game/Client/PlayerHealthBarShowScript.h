@@ -6,7 +6,7 @@ class PlayerHealthBarShowScript :
     public MonoBehaviour
 {
 public:
-    explicit PlayerHealthBarShowScript(shared_ptr<HealthBarHUD> m_pHealthBar);
+    explicit PlayerHealthBarShowScript(shared_ptr<HealthBarHUD> pHealthBar);
     virtual ~PlayerHealthBarShowScript();
 
 public:

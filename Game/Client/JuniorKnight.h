@@ -21,6 +21,7 @@ public:
 
 public:
 	virtual void ScatterParticles(PARTICLE_DIRECTION eParticleDirection) override;
+	virtual void ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection) override;
 
 private:
 	DECLARE_POOL(JuniorKnight);

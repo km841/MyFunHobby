@@ -73,8 +73,6 @@ void Engine::Init(const WindowInfo& wInfo)
 
 void Engine::Update()
 {
-	// ImGui Update
-
 	GET_SINGLE(Input)->Update();
 	GET_SINGLE(Clock)->Update();
 	GET_SINGLE(Scenes)->Update();
@@ -84,10 +82,8 @@ void Engine::Update()
 	ShowFPS();
 }
 
-
 void Engine::Render()
 {
-	
 	RenderBegin();
 	GET_SINGLE(Scenes)->Render();
 	RenderEnd();

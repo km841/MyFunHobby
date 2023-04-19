@@ -8,7 +8,11 @@ class Physical :
     public Component
 {
 public:
-    explicit Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, const MassProperties& massProperties = MassProperties());
+    explicit Physical(
+        ACTOR_TYPE eActorType, 
+        GEOMETRY_TYPE eGeometryType, 
+        Vec3 vGeometrySize, 
+        const MassProperties& massProperties = MassProperties());
     ~Physical();
 
 public:
@@ -21,29 +25,30 @@ public:
     FORCEINLINE const Vec3&            GetGeometrySize() const { return m_vSize; }
     FORCEINLINE shared_ptr<Geometries> GetGeometries()   const { return m_pGeometries; }
     FORCEINLINE PxActor*               GetActor()        const { return m_pActor; }
+
     template<typename T>
-    T* GetActor() const 
+    inline T* GetActor() const 
     { 
         T* pActor = m_pActor->is<T>();
         assert(pActor);
         return pActor;
     }
 
-    void          AddActorToPxScene();
-    void          RemoveActorToPxScene();
+    void AddActorToPxScene();
+    void RemoveActorToPxScene();
 
 private:
-    void          CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize);
-    void          CreateCapsuleGeometry(GEOMETRY_TYPE eGeometryType, float fRadius, float fHalfHeight);
-    void          CreatePlaneGeometry(GEOMETRY_TYPE eGeometryType);
-    void          CreateSphereGeometry(GEOMETRY_TYPE eGeometryType, float fRadius);
+    void CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize);
+    void CreateCapsuleGeometry(GEOMETRY_TYPE eGeometryType, float fRadius, float fHalfHeight);
+    void CreatePlaneGeometry(GEOMETRY_TYPE eGeometryType);
+    void CreateSphereGeometry(GEOMETRY_TYPE eGeometryType, float fRadius);
     
 private:
-    void          CreatePhysicsProperties(const MassProperties& massProperties = MassProperties());
-    void          CreateGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vShapeSize);
-    void          CreateShape();
-    void          CreateActor();
-    void          InitializeActor();
+    void CreatePhysicsProperties(const MassProperties& massProperties = MassProperties());
+    void CreateGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vShapeSize);
+    void CreateShape();
+    void CreateActor();
+    void InitializeActor();
 
 
 private:

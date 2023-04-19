@@ -86,7 +86,7 @@ void JuniorKnight::ScatterParticles(PARTICLE_DIRECTION eParticleDirection)
 	for (int32 i = 0; i < m_vTextureNames.size(); ++i)
 	{
 		shared_ptr<Particle> pParticle = GET_SINGLE(ObjectFactory)->CreateObjectFromPool<Particle>(L"Deferred", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE,
-			Vec3(100.f, 100.f, 10.f), MassProperties(10.f, 10.f, 1.f), m_vTextureNames[i]);
+			Vec3::Zero, MassProperties(10.f, 10.f, 1.f), m_vTextureNames[i]);
 		
 		Vec3 vMyPos = GetTransform()->GetWorldPosition();
 		vMyPos.z = 90.f;
@@ -111,5 +111,10 @@ void JuniorKnight::ScatterParticles(PARTICLE_DIRECTION eParticleDirection)
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pParticle, eSceneType));
 	}
+}
+
+void JuniorKnight::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)
+{
+	Monster::ActivateDeadEvent(eParticleDirection);
 }
 
