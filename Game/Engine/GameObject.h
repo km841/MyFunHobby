@@ -73,7 +73,8 @@ public:
     void Release();
     virtual void ReturnToPool() {}
 
-    CollisionInfo IsCollisionSide();
+    void ReorganizePosition();
+    bool DoesTileExistInDirection(DIRECTION eDirection, float fDistance);
 
 protected:
     DIRECTION                                                m_eDirection;

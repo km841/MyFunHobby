@@ -49,4 +49,6 @@ void Movement::Move(const Vec3& vVelocity)
 		GetPhysical()->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
 	else
 		GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(transform);
+
+	GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 }

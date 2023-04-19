@@ -40,12 +40,8 @@ void PlayerMoveScript::LateUpdate()
 			PLAYER_STATE::SWAP != GetPlayerStateEnum())
 		{
 			pPlayer->SetDirection(DIRECTION::LEFT);
-			
-			CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
-			if (COLLISION_SIDE::LEFT != collisionInfo.first)
-			{
+			if (pPlayer->DoesTileExistInDirection(DIRECTION::LEFT, 0.1f))
 				GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
-			}
 		}
 	}
 
@@ -57,12 +53,8 @@ void PlayerMoveScript::LateUpdate()
 			PLAYER_STATE::SWAP != GetPlayerStateEnum())
 		{
 			pPlayer->SetDirection(DIRECTION::RIGHT);
-
-			CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
-			if (COLLISION_SIDE::RIGHT != collisionInfo.first)
-			{
+			if (pPlayer->DoesTileExistInDirection(DIRECTION::RIGHT, 0.1f))
 				GetRigidBody()->SetVelocity(AXIS::X, vVelocity.x);
-			}
 		}
 	}
 
@@ -118,33 +110,7 @@ void PlayerMoveScript::LateUpdate()
 			GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 	}
 
-
-	{
-		CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
-		if (COLLISION_SIDE::BOTTOM == collisionInfo.first || 
-			COLLISION_SIDE::TOP == collisionInfo.first)
-		{
-			Vec3 vPosition = GetTransform()->GetPhysicalPosition();
-			vPosition.y = collisionInfo.second;
-			GetTransform()->SetPhysicalPosition(vPosition);
-
-			if (COLLISION_SIDE::TOP == collisionInfo.first)
-				GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
-		}
-	}
-
-	{
-		CollisionInfo collisionInfo = pPlayer->IsCollisionSide();
-		if (COLLISION_SIDE::LEFT == collisionInfo.first ||
-			COLLISION_SIDE::RIGHT == collisionInfo.first)
-		{
-			Vec3 vPosition = GetTransform()->GetPhysicalPosition();
-			vPosition.x = collisionInfo.second;
-			GetTransform()->SetPhysicalPosition(vPosition);
-		}
-	}
-
-
+	pPlayer->ReorganizePosition();
 	//pPlayer->CheckAndAdjustPlayerPositionOnCollision();
 
 	if (IS_DOWN(KEY_TYPE::SPACE))

@@ -124,14 +124,26 @@ void Physical::CreateActor()
 		//m_pActor->is<PxRigidDynamic>()->setMaxAngularVelocity(300.f);
 		m_pActor->is<PxRigidDynamic>()->setMaxLinearVelocity(1000.f);
 		break;
+
 	case ACTOR_TYPE::STATIC:
 		m_pActor = PHYSICS->createRigidStatic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		break;
+
 	case ACTOR_TYPE::KINEMATIC:
-	{
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		m_pActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
-	}
+	
+		break;
+
+	case ACTOR_TYPE::CHARACTER:
+		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
+		m_pActor->is<PxRigidDynamic>()->setLinearDamping(0.5f);
+		m_pActor->is<PxRigidDynamic>()->setMaxLinearVelocity(1000.f);
+		m_pActor->is<PxRigidDynamic>()->setRigidDynamicLockFlags(
+			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
+		break;
 	break;
 	}
 }
@@ -143,6 +155,8 @@ void Physical::InitializeActor()
 
 	PxVec3 vMyPos = Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition());
 	pActor->setGlobalPose(PxTransform(vMyPos));
+
+
 
 	//pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }

@@ -25,6 +25,7 @@ enum class ACTOR_TYPE
 	STATIC,
 	DYNAMIC,
 	KINEMATIC,
+    CHARACTER,
 	END,
 };
 

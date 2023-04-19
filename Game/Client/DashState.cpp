@@ -39,6 +39,9 @@ void DashState::Update()
 {
 	m_tDuration.Update(DELTA_TIME);
 
+	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
+	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, iDirection ? -m_fDashSpeed : m_fDashSpeed);
+
 	// Path State ÀüÀÌ
 	if (m_tDuration.IsFinished())
 	{
@@ -64,8 +67,7 @@ void DashState::Enter()
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 
-	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
-	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, iDirection ? -m_fDashSpeed : m_fDashSpeed);
+
 
 	EnableAndInitDashSmokeEffect();
 }

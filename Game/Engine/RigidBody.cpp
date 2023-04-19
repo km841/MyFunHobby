@@ -39,6 +39,7 @@ void RigidBody::FinalUpdate()
 
 	if (m_bGravityApplied)
 		m_vVelocity += m_vGravityAccel * DELTA_TIME;
+
 }
 
 void RigidBody::Move()

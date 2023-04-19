@@ -54,6 +54,18 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
             }
         }
 
+        if (pair.status & PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+        {
+            if (pair.triggerActor && pair.otherActor)
+            {
+                GameObject* pTrigger = static_cast<GameObject*>(pair.triggerActor->userData);
+                GameObject* pOther = static_cast<GameObject*>(pair.otherActor->userData);
+
+                if (pTrigger->GetCollider())
+                    pTrigger->GetCollider()->OnTriggerStay(pOther->GetCollider());
+            }
+        }
+
         if (pair.status & PxPairFlag::eNOTIFY_TOUCH_LOST)
         {
             if (pair.triggerActor && pair.otherActor)

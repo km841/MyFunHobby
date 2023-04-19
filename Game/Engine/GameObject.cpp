@@ -198,76 +198,57 @@ void GameObject::Release()
 	ReturnToPool();
 }
 
-CollisionInfo GameObject::IsCollisionSide()
+void GameObject::ReorganizePosition()
 {
 	assert(GetPhysical());
 	assert(GetCollider());
-
-	Vec3 vMyPos = Conv::PxVec3ToVec3(GetTransform()->GetPxTransform().p);
-	const Vec3& vMySize = GetPhysical()->GetGeometrySize();
-
-	float fTolerance = 3.f;
-
-	Vec3 vTopLeft = Vec3(vMyPos.x - (vMySize.x - fTolerance), vMyPos.y + (vMySize.y + fTolerance), vMyPos.z);
-	Vec3 vTopRight = Vec3(vMyPos.x + (vMySize.x - fTolerance), vMyPos.y + (vMySize.y + fTolerance), vMyPos.z);
-
-	Vec3 vBtmLeft = Vec3(vMyPos.x - (vMySize.x - fTolerance), vMyPos.y - (vMySize.y - fTolerance), vMyPos.z);
-	Vec3 vBtmRight = Vec3(vMyPos.x + (vMySize.x - fTolerance), vMyPos.y - (vMySize.y - fTolerance), vMyPos.z);
-
-	Vec3 vRightTop = Vec3(vMyPos.x + (vMySize.x + fTolerance), vMyPos.y + (vMySize.y - fTolerance), vMyPos.z);
-	Vec3 vRightBtm = Vec3(vMyPos.x + (vMySize.x + fTolerance), vMyPos.y - (vMySize.y - fTolerance), vMyPos.z);
-
-	Vec3 vLeftTop = Vec3(vMyPos.x - (vMySize.x + fTolerance), vMyPos.y + (vMySize.y - fTolerance), vMyPos.z);
-	Vec3 vLeftBtm = Vec3(vMyPos.x - (vMySize.x + fTolerance), vMyPos.y - (vMySize.y - fTolerance), vMyPos.z);
-
-	Vec3 vLeftDir = -VEC3_RIGHT_NORMAL;
-	Vec3 vRightDir = VEC3_RIGHT_NORMAL;
-	Vec3 vTopDir = VEC3_UP_NORMAL;
-	Vec3 vBtmDir = -VEC3_UP_NORMAL;
-
-	uint32 iCollisionFlags = 0;
+	assert(GetRigidBody());
 
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
-
+	Vec3 vResult = {};
 	for (const auto& pGameObject : vGameObjects)
 	{
-		bool bTopDirFromLeftTop = GetCollider()->Raycast(vTopLeft, vTopDir, pGameObject, 1.f);
-		bool bTopDirFromRightTop = GetCollider()->Raycast(vTopRight, vTopDir, pGameObject, 1.f);
-
-		if (bTopDirFromLeftTop || bTopDirFromRightTop)
+		vResult = GetCollider()->ComputePenetration(pGameObject);
+		if (vResult != Vec3::Zero)
 		{
-			float fTileCollisionPos = pGameObject->GetTransform()->GetWorldPosition().y - TILE_SIZE - fTolerance;
-			return CollisionInfo(COLLISION_SIDE::TOP, fTileCollisionPos);
+			if (vResult.x > 0.f)
+				vResult.x += 1.f;
+			else if (vResult.x < 0.f)
+				vResult.x -= 1.f;
+
+			if (vResult.y < 0.f)
+				GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+
+			vResult.z = 0.f;
+			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+			return;
 		}
+	}
+}
 
-		bool bBtmDirFromLeftBtm = GetCollider()->Raycast(vBtmLeft, vBtmDir, pGameObject, 1.f);
-		bool bBtmDirFromRightBtm = GetCollider()->Raycast(vBtmRight, vBtmDir, pGameObject, 1.f);
+bool GameObject::DoesTileExistInDirection(DIRECTION eDirection, float fDistance)
+{
+	Vec3 vGeomPos = GetTransform()->GetPhysicalPosition();
+	const Vec3& vGeomSize = GetPhysical()->GetGeometrySize();
 
-		if (bBtmDirFromLeftBtm || bBtmDirFromRightBtm)
+	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
+	for (const auto& pGameObject : vGameObjects)
+	{
+		if (DIRECTION::LEFT == eDirection)
 		{
-			float fTileCollisionPos = pGameObject->GetTransform()->GetWorldPosition().y + TILE_SIZE + fTolerance;
-			return CollisionInfo(COLLISION_SIDE::BOTTOM, fTileCollisionPos);
+			Vec3 vLeft = Vec3(vGeomPos.x - TILE_HALF_SIZE - 1.f, vGeomPos.y, vGeomPos.z);
+			if (GetCollider()->Raycast(vLeft, -VEC3_RIGHT_NORMAL, pGameObject, fDistance))
+				return false;
 		}
-
-		bool bLeftDirFromLeftTop = GetCollider()->Raycast(vLeftTop, vLeftDir, pGameObject, 1.f);
-		bool bLeftDirFromLeftBtm = GetCollider()->Raycast(vLeftBtm, vLeftDir, pGameObject, 1.f);
-		if (bLeftDirFromLeftTop || bLeftDirFromLeftBtm)
+		else
 		{
-			float fTileCollisionPos = pGameObject->GetTransform()->GetWorldPosition().x + TILE_SIZE + fTolerance;
-			return CollisionInfo(COLLISION_SIDE::LEFT, fTileCollisionPos);
-		}
-
-		bool bRightDirFromRightTop = GetCollider()->Raycast(vRightTop, vRightDir, pGameObject, 1.f);
-		bool bRightDirFromRightBtm = GetCollider()->Raycast(vRightBtm, vRightDir, pGameObject, 1.f);
-		if (bRightDirFromRightTop || bRightDirFromRightBtm)
-		{
-			float fTileCollisionPos = pGameObject->GetTransform()->GetWorldPosition().x - TILE_SIZE - fTolerance;
-			return CollisionInfo(COLLISION_SIDE::RIGHT, fTileCollisionPos);
+			Vec3 vRight = Vec3(vGeomPos.x + TILE_HALF_SIZE + 1.f, vGeomPos.y, vGeomPos.z);
+			if (GetCollider()->Raycast(vRight, VEC3_RIGHT_NORMAL, pGameObject, fDistance))
+				return false;
 		}
 	}
 
-	return CollisionInfo(COLLISION_SIDE::END, 0.f);;
+	return true;
 }
-
 
 

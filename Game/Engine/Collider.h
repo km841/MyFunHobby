@@ -18,6 +18,7 @@ public:
     void OnCollisionExit(shared_ptr<Collider> pOtherCollider);
 
     void OnTriggerEnter(shared_ptr<Collider> pOtherCollider);
+    void OnTriggerStay(shared_ptr<Collider> pOtherCollider);
     void OnTriggerExit(shared_ptr<Collider> pOtherCollider);
 
 public:

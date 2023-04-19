@@ -26,16 +26,6 @@ BEHAVIOR_RESULT MoveTask::Run()
 		m_tDuration.Start();
 	}
 
-	CollisionInfo collisionInfo = m_pGameObject.lock()->IsCollisionSide();
-	if (COLLISION_SIDE::RIGHT == collisionInfo.first && !iDirection)
-	{
-		m_pGameObject.lock()->SetDirection(static_cast<DIRECTION>((iDirection + 1) % 2));
-	}
-	if (COLLISION_SIDE::LEFT == collisionInfo.first && iDirection)
-	{
-		m_pGameObject.lock()->SetDirection(static_cast<DIRECTION>((iDirection + 1) % 2));
-	}
-
 	m_pGameObject.lock()->GetRigidBody()->SetVelocity(AXIS::X, iDirection ? -100.f : 100.f);
 
 	return BEHAVIOR_RESULT::SUCCESS;
