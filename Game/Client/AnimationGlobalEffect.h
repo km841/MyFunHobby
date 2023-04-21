@@ -14,8 +14,6 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
-    virtual void ReturnToPool() override;
-
 private:
     DECLARE_POOL(AnimationGlobalEffect);
 };

@@ -18,7 +18,7 @@ void Mesh::Init(const std::vector<Vertex>& vVertices, const std::vector<uint32>&
 	CreateIndexBuffer(vIndices);
 }
 
-void Mesh::Render()
+void Mesh::Render(uint32 iInstanceCount)
 {
 	uint32 iStride = sizeof(Vertex);
 	uint32 iOffset = 0;
@@ -26,7 +26,12 @@ void Mesh::Render()
 	CONTEXT->IASetVertexBuffers(0, 1, m_pVertexBuffer.GetAddressOf(), &iStride, &iOffset);
 	CONTEXT->IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
-	CONTEXT->DrawIndexed(m_iIndexCount, 0, 0);
+	CONTEXT->DrawIndexedInstanced(m_iIndexCount, iInstanceCount, 0, 0, 0);
+}
+
+void Mesh::RenderInstanced(uint32 iInstanceCount)
+{
+	CONTEXT->DrawIndexedInstanced(m_iIndexCount, iInstanceCount, 0, 0, 0);
 }
 
 void Mesh::CreateVertexBuffer(const std::vector<Vertex>& vVertices)

@@ -13,7 +13,7 @@ public:
     void Render();
 
     FORCEINLINE shared_ptr<Scene> GetActiveScene() const { return m_pActiveScene; }
-    void              ChangeScene(SCENE_TYPE eSceneType);
+    void ChangeScene(SCENE_TYPE eSceneType);
 
     Vec3 ScreenToWorldPosition(const Vec3& point, shared_ptr<class Camera> pCamera);
 

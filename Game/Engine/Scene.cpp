@@ -159,6 +159,7 @@ void Scene::Render()
 	// Forward Rendering
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
 	pMainCamera->Render(SHADER_TYPE::FORWARD);
+	pMainCamera->Render(SHADER_TYPE::PARTICLE);
 
 	for (const shared_ptr<Camera>& pCamera : m_vCameras)
 	{

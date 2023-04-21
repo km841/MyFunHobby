@@ -13,6 +13,7 @@
 #include "Light.h"
 #include "AI.h"
 #include "Scenes.h"
+#include "ParticleSystem.h"
 
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -171,6 +172,12 @@ shared_ptr<AI> GameObject::GetAI()
 	return static_pointer_cast<AI>(pComponent);
 }
 
+shared_ptr<ParticleSystem> GameObject::GetParticleSystem()
+{
+	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::PARTICLE_SYSTEM);
+	return static_pointer_cast<ParticleSystem>(pComponent);
+}
+
 void GameObject::AddComponent(shared_ptr<Component> pComponent)
 {
 	pComponent->SetGameObject(shared_from_this());
@@ -211,9 +218,9 @@ void GameObject::ReorganizePosition()
 		vResult = GetCollider()->ComputePenetration(pGameObject);
 		if (vResult != Vec3::Zero)
 		{
-			if (vResult.x > 0.f)
+			if (vResult.x > 0.f)	  
 				vResult.x += 1.f;
-			else if (vResult.x < 0.f)
+			else if (vResult.x < 0.f) 
 				vResult.x -= 1.f;
 
 			if (vResult.y < 0.f)

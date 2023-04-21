@@ -22,6 +22,8 @@
 #include "ObjectFactory.h"
 #include "MonsterHealthBarShowScript.h"
 #include "ObjectRemoveToSceneEvent.h"
+#include "AnimationLocalEffect.h"
+#include "ObjectReturnToPoolEvent.h"
 
 
 Monster::Monster()
@@ -97,7 +99,6 @@ int32 Monster::CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDi
 
 void Monster::CreateMonsterHPHUD()
 {
-	// HUD Size는 몬스터 종류에 따라 커질 수 있다.
 	m_pMonsterHPHUDFrame = GET_SINGLE(ObjectFactory)->CreateObject<MonsterHPHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HealthBar\\Enemy_HealthBar_Frame.png", Conv::BaseToDeclare<Monster>(shared_from_this()));
 	m_pMonsterHPHUDFrame->GetTransform()->SetParent(GetTransform());
 	m_pMonsterHPHUDFrame->GetTransform()->SetLocalPosition(Vec3(0.f, -50.f, -1.f));
@@ -106,7 +107,7 @@ void Monster::CreateMonsterHPHUD()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
 
-	m_pMonsterHPHUD = GET_SINGLE(ObjectFactory)->CreateObject<MonsterHPHUD>(L"HP", L"..\\Resources\\Texture\\HUD\\HealthBar\\Enemy_HealthBar.png", Conv::BaseToDeclare<Monster>(shared_from_this()));
+	m_pMonsterHPHUD = GET_SINGLE(ObjectFactory)->CreateObject<MonsterHPHUD>(L"MonsterHP", L"..\\Resources\\Texture\\HUD\\HealthBar\\Enemy_HealthBar.png", Conv::BaseToDeclare<Monster>(shared_from_this()));
 	m_pMonsterHPHUD->AddComponent(make_shared<MonsterHealthBarShowScript>(m_pMonsterHPHUD));
 	m_pMonsterHPHUD->GetTransform()->SetParent(GetTransform());
 	m_pMonsterHPHUD->GetTransform()->SetLocalPosition(Vec3(0.f, -50.f, -2.f));
@@ -116,12 +117,26 @@ void Monster::CreateMonsterHPHUD()
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pMonsterHPHUD, eSceneType));
 }
 
+void Monster::CreateDeadEffectAndAddedScene()
+{
+	shared_ptr<AnimationLocalEffect> pDeadEffect = GET_SINGLE(ObjectFactory)->CreateObjectFromPool<AnimationLocalEffect>(L"Forward");
+	pDeadEffect->AddComponent(make_shared<Animator>());
+	shared_ptr<Animation> pDeadAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Monster_Dead", L"..\\Resources\\Animation\\MonsterCommon\\monster_dead.anim");
+	pDeadEffect->GetAnimator()->AddAnimation(L"Monster_Dead", pDeadAnimation);
+	pDeadEffect->GetAnimator()->Play(L"Monster_Dead", false);
+
+	pDeadEffect->GetTransform()->SetLocalPosition(GetTransform()->GetPhysicalPosition());
+	pDeadEffect->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDeadEffect, eSceneType));
+}
+
 void Monster::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)
 {
 	ScatterParticles(eParticleDirection);
-
+	
+	CreateDeadEffectAndAddedScene();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUD, eSceneType));
 }

@@ -72,6 +72,7 @@ void Physical::CreateGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vShapeSiz
 	case GEOMETRY_TYPE::BOX:
 		CreateBoxGeometry(eGeometryType, m_vSize);
 		break;
+
 	case GEOMETRY_TYPE::CAPSULE:
 		CreateCapsuleGeometry(eGeometryType, m_vSize.x, m_vSize.y);
 		break;
@@ -119,9 +120,6 @@ void Physical::CreateActor()
 	case ACTOR_TYPE::DYNAMIC:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		m_pActor->is<PxRigidDynamic>()->setLinearDamping(0.5f);
-		//m_pActor->is<PxRigidDynamic>()->setAngularDamping(1.f);
-		//m_pActor->is<PxRigidDynamic>()->setMass(2.f);
-		//m_pActor->is<PxRigidDynamic>()->setMaxAngularVelocity(300.f);
 		m_pActor->is<PxRigidDynamic>()->setMaxLinearVelocity(1000.f);
 		break;
 
@@ -155,9 +153,6 @@ void Physical::InitializeActor()
 
 	PxVec3 vMyPos = Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition());
 	pActor->setGlobalPose(PxTransform(vMyPos));
-
-
-
 	//pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
 
@@ -168,5 +163,5 @@ void Physical::AddActorToPxScene()
 
 void Physical::RemoveActorToPxScene()
 {
-	PX_SCENE->GetScene()->removeActor(*m_pActor);
+	PX_SCENE->RemoveActor(m_pActor);
 }

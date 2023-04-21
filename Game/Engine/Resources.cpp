@@ -170,6 +170,26 @@ shared_ptr<Mesh> Resources::LoadCircleMesh()
 	return pMesh;
 }
 
+shared_ptr<Mesh> Resources::LoadPointMesh()
+{
+	shared_ptr<Mesh> pFindMesh = Get<Mesh>(L"Point");
+	if (pFindMesh)
+		return pFindMesh;
+
+	std::vector<Vertex> vVertices(1);
+	vVertices[0] = Vertex(Vec3(0.f, 0.f, 0.f), Vec2(0.5f, 0.5f), Vec3(0.f, 0.f, -1.f));
+
+
+	std::vector<uint32> vIndices(1);
+	vIndices[0] = 0;
+
+	shared_ptr<Mesh> pMesh = make_shared<Mesh>();
+	pMesh->Init(vVertices, vIndices);
+
+	Add<Mesh>(L"Point", pMesh);
+	return pMesh;
+}
+
 
 shared_ptr<Animation> Resources::LoadAnimation(const wstring& szKey, const wstring& szPath)
 {
@@ -257,8 +277,15 @@ void Resources::CreateDefaultShader()
 			BLEND_TYPE::ONE_TO_ONE_BLEND
 		};
 
+		ShaderArg shaderArg =
+		{
+			"VS_DirLight",
+			"",
+			"PS_DirLight"
+		};
+
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\lighting.fx",shaderInfo, "VS_DirLight", "PS_DirLight");
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\lighting.fx",shaderInfo, shaderArg);
 
 		Add<Shader>(L"DirLight", pShader);
 	}
@@ -273,8 +300,15 @@ void Resources::CreateDefaultShader()
 			BLEND_TYPE::ONE_TO_ONE_BLEND
 		};
 
+		ShaderArg shaderArg =
+		{
+			"VS_PointLight",
+			"",
+			"PS_PointLight"
+		};
+
 		shared_ptr<Shader> pShader = make_shared<Shader>();
-		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\lighting.fx", shaderInfo, "VS_PointLight", "PS_PointLight");
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\lighting.fx", shaderInfo, shaderArg);
 
 		Add<Shader>(L"PointLight", pShader);
 	}
@@ -322,6 +356,22 @@ void Resources::CreateDefaultShader()
 		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\hp.fx", shaderInfo);
 
 		Add<Shader>(L"HP", pShader);
+	}
+
+	// Monster Health Bar
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\monster_hp.fx", shaderInfo);
+
+		Add<Shader>(L"MonsterHP", pShader);
 	}
 
 	// Compute
@@ -393,6 +443,37 @@ void Resources::CreateDefaultShader()
 		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\final.fx", shaderInfo);
 
 		Add<Shader>(L"Final", pShader);
+	}
+
+
+	// Particle
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS_NO_WRITE,
+			RASTERIZER_TYPE::CULL_NONE,
+			BLEND_TYPE::ALPHA_BLEND,
+			D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST
+		};
+
+		ShaderArg shaderArg =
+		{
+			"VS_Main",
+			"GS_Main",
+			"PS_Main"
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\particle.fx", shaderInfo, shaderArg);
+		Add<Shader>(L"Particle", pShader);
+	}
+
+	// Compute Particle
+	{
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateComputeShader(L"..\\Resources\\Shader\\particle.fx", "CS_Main", "cs_5_0");
+		Add<Shader>(L"ComputeParticle", pShader);
 	}
 }
 
@@ -504,6 +585,15 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"HP", pMaterial);
 	}
 
+	// Monster HP
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"MonsterHP");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"MonsterHP", pMaterial);
+	}
+
 	// AfterImage
 	{
 		shared_ptr<Material> pMaterial = make_shared<Material>();
@@ -544,4 +634,19 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"Final", pMaterial);
 	}
 
+	// Particle
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Particle");
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"Particle", pMaterial);
+	}
+
+	// Compute Particle
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"ComputeParticle");
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"ComputeParticle", pMaterial);
+	}
 }

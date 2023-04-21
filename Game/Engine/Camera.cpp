@@ -11,6 +11,7 @@
 #include "Skul.h"
 #include "Material.h"
 #include "Shader.h"
+#include "ParticleSystem.h"
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
@@ -64,24 +65,33 @@ void Camera::Render(SHADER_TYPE eShaderType)
         {
             if (pGameObject->IsEnable())
             {
-                if (pGameObject->IsFrustum() && pGameObject->GetTransform())
+                if (pGameObject->GetMeshRenderer() || pGameObject->GetParticleSystem())
                 {
-                    if (m_Frustum.ContainsSphere(
-                        pGameObject->GetTransform()->GetWorldPosition(),
-                        pGameObject->GetTransform()->GetBoundingSphereRadius()))
+                    if (pGameObject->GetMeshRenderer())
                     {
-                        continue;
+                        if (eShaderType != pGameObject->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType())
+                            continue;
+
+                        if (pGameObject->IsFrustum() && pGameObject->GetTransform())
+                        {
+                            if (m_Frustum.ContainsSphere(
+                                pGameObject->GetTransform()->GetWorldPosition(),
+                                pGameObject->GetTransform()->GetBoundingSphereRadius()))
+                            {
+                                continue;
+                            }
+                        }
+                        pGameObject->GetMeshRenderer()->Render(shared_from_this());
+                    }
+
+                    else
+                    {
+                        if (SHADER_TYPE::PARTICLE == eShaderType)
+                        if (pGameObject->GetParticleSystem())
+                            pGameObject->GetParticleSystem()->Render(shared_from_this());
                     }
                 }
 
-                if (pGameObject->GetMeshRenderer())
-                {
-                    if (eShaderType != pGameObject->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType())
-                        continue;
-
-                    if (pGameObject->GetMeshRenderer())
-                        pGameObject->GetMeshRenderer()->Render(shared_from_this());
-                }
                 else
                 {
                     if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())

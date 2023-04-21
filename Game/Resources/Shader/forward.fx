@@ -52,9 +52,8 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float2 vSpriteSize = g_vec2_1;
     float2 vAtlasSize = g_vec2_2;
     float2 vOffset = g_vec2_3;
-    int iAnimationFlag = g_int_0;
-    
-    float fRatio = g_float_0;
+    int    iAnimationFlag = g_int_0;
+    float  fRatio = g_float_0;
     
     float4 vColor;
     if (iAnimationFlag == 1)
@@ -64,7 +63,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
         if (vColor.a < 0.1f)
             discard;
         
-        if (vColor.a > 0.f && fRatio > 0.f)
+        if (fRatio > 0.f)
             vColor.a = 1.f * fRatio;
          
     }
@@ -74,7 +73,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
         if (vColor.a <= 0.1f)
             discard;
         
-        if (vColor.a > 0.f && fRatio > 0.f)
+        if (fRatio > 0.f)
             vColor.a = 1.f * fRatio;
     }
     return vColor;

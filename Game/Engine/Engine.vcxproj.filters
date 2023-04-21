@@ -217,6 +217,12 @@
     <ClInclude Include="ObjectReturnToPoolEvent.h">
       <Filter>Object\Event</Filter>
     </ClInclude>
+    <ClInclude Include="ForceOnObjectEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -432,6 +438,12 @@
     <ClCompile Include="ObjectReturnToPoolEvent.cpp">
       <Filter>Object\Event</Filter>
     </ClCompile>
+    <ClCompile Include="ForceOnObjectEvent.cpp">
+      <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -520,6 +532,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\Resources\Shader\lighting.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\monster_hp.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\particle.fx">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

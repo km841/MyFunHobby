@@ -21,9 +21,7 @@ public:
 private:
     void EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage);
     void CreateAndAddAfterImagesToScene();
-
     void EnableAndInitDashSmokeEffect();
-
 
 private:
     Timer m_tDuration;

@@ -15,6 +15,8 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "EventManager.h"
 #include "Player.h"
+#include "RigidBody.h"
+#include "ObjectFactory.h"
 
 LittleBoneAttack::LittleBoneAttack(shared_ptr<Skul> pSkul)
 	: SkulAttack(pSkul)
@@ -30,18 +32,20 @@ void LittleBoneAttack::Update()
 	uint8 iEnum = m_pSkul.lock()->GetEnumIndex();
 	uint8 iOrder = static_cast<uint8>(m_eActiveAttackOrder);
 	float fProgress = m_arrAttackInfo[iEnum][iOrder].pAnimation->GetAnimationProgress();
-	if (IS_DOWN(KEY_TYPE::X) && fProgress > 0.75f && iOrder < m_iMaxCount - 1)
+	if (IS_PRESS(KEY_TYPE::X) && fProgress > 0.75f && iOrder < m_iMaxCount - 1)
 	{
 		m_eActiveAttackOrder = static_cast<ATTACK_ORDER>(iOrder + 1);
 		m_pSkul.lock()->PlayAnimation(m_eActiveAttackOrder, false);
 	}
 
-	// 한 프레임에 여러 번 호출되서 그런 것
 	if (m_arrAttackInfo[iEnum][iOrder].pAnimation->IsHitFrame())
 	{
+		LittleBoneStomp();
 		HitMonstersInAttackRange();
 		m_arrAttackInfo[iEnum][iOrder].pAnimation->CheckToHitFrame();
 	}
+
+	m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 }
 
 void LittleBoneAttack::Enter()
@@ -56,11 +60,7 @@ void LittleBoneAttack::Exit()
 
 void LittleBoneAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 {
-	// RegisterAnimation
-	shared_ptr<AnimationGlobalEffect> pHitEffect = AnimationGlobalEffect::Get();
-	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"LittleBone_Hit", L"..\\Resources\\Animation\\LittleBone\\littlebone_hit.anim");
-
-	vMonsterPos.z -= 1.0f;
+	shared_ptr<AnimationGlobalEffect> pHitEffect = GET_SINGLE(ObjectFactory)->CreateObjectFromPool<AnimationGlobalEffect>(L"Forward");
 
 	int32 iRandomX = RANDOM(50, 100);
 	int32 iRandomY = RANDOM(0, 30);
@@ -83,24 +83,49 @@ void LittleBoneAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 		break;
 	}
 
-	pHitEffect->AddComponent(make_shared<Transform>());
+	vMonsterPos.z -= 1.0f;
+
 	pHitEffect->GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, fRandomRadian));
 	pHitEffect->GetTransform()->SetLocalPosition(vMonsterPos);
-
-	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward");
-	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-
-	pMeshRenderer->SetMaterial(pMaterial);
-	pMeshRenderer->SetMesh(pMesh);
-
-	pHitEffect->AddComponent(pMeshRenderer);
 	pHitEffect->AddComponent(make_shared<Animator>());
 
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"LittleBone_Hit", L"..\\Resources\\Animation\\LittleBone\\littlebone_hit.anim");
 	pHitEffect->GetAnimator()->AddAnimation(L"LittleBone_Hit", pAnimation);
-	pHitEffect->Awake();
-
 	pHitEffect->GetAnimator()->Play(L"LittleBone_Hit", false);
+
+	pHitEffect->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pHitEffect, eSceneType));
+}
+
+void LittleBoneAttack::LittleBoneStomp()
+{
+	if (m_pSkul.lock()->GetPlayer().lock()->DoesTileExistInDirection(m_pSkul.lock()->GetDirection(), 2.f))
+	{
+		Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();
+		DIRECTION eDirection = m_pSkul.lock()->GetDirection();
+		
+		bool bChanged = false;
+		switch (eDirection)
+		{
+		case DIRECTION::RIGHT:
+			if (IS_PRESS(KEY_TYPE::RIGHT))
+			{
+				vMyPos.x += 30.f;
+				bChanged = true;
+			}
+			break;
+		case DIRECTION::LEFT:
+			if (IS_PRESS(KEY_TYPE::LEFT))
+			{
+				vMyPos.x -= 30.f;
+				bChanged = true;
+			}
+			break;
+		}
+
+		if (bChanged)
+			m_pSkul.lock()->GetPlayer().lock()->GetTransform()->SetPhysicalPosition(vMyPos);
+	}
+
 }

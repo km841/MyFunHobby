@@ -25,5 +25,9 @@ public:
 
 private:
     static shared_ptr<GlobalEffect> s_pSmokeEffect;
+
+private:
+    float m_fMaxDistance;
+    float m_fImpulse;
 };
 

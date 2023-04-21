@@ -11,6 +11,7 @@
 #include "InterfaceManager.h"
 #include "Cemetery.h"
 #include "Light.h"
+#include "ParticleSystem.h"
 
 void Engine::Init(const WindowInfo& wInfo)
 {

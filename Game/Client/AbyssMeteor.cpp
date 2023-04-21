@@ -17,9 +17,12 @@
 #include "ObjectFactory.h"
 #include "EventManager.h"
 #include "ObjectRemoveToSceneEvent.h"
+#include "ForceOnObjectEvent.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()
+	: m_fMaxDistance(1000.f)
+	, m_fImpulse(1000.f)
 {
 }
 
@@ -82,38 +85,24 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 	{
 		Disable();
 		EnableAndInitSmokeEffect();
-		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 
+		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		auto& vParticles = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::PARTICLE);
 		for (auto& pParticle : vParticles)
 		{
 			Vec3 vParticlePos = pParticle->GetTransform()->GetPhysicalPosition();
 			Vec3 vTargetVec = vParticlePos - vMyPos;
 
-			if (vTargetVec.Length() < 1000.f)
+			if (vTargetVec.Length() < m_fMaxDistance)
 			{
-				float fRandomXImpulse = static_cast<float>(RANDOM(0, 1000));
+				float fRandomXImpulse = static_cast<float>(RANDOM(0, static_cast<int32>(m_fImpulse)));
 				if (vTargetVec.x < 0.f)
 					fRandomXImpulse = -fRandomXImpulse;
 
-				PxVec3 vImpulse = PxVec3(fRandomXImpulse, 1000.f, 0.f);
-
-				PxRigidBodyExt::addForceAtPos(
-					*pParticle->GetPhysical()->GetActor<PxRigidDynamic>(),
-					vImpulse,
-					Conv::Vec3ToPxVec3(vParticlePos),
-					PxForceMode::eIMPULSE
-				);
-
-				int32 iRandomAngular = RANDOM(-1000, 1000);
-				float fRandomAngularRadian = (iRandomAngular * XM_PI) / 180.f;
-				pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, fRandomAngularRadian));
-
+				PxVec3 vImpulse = PxVec3(fRandomXImpulse, m_fImpulse, 0.f);
+				GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pParticle, vImpulse));
 			}
 		}
-		//GetTransform()->SetPhysicalPosition(Vec3(100.f, 100.f, 0.f));
-		//SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-		//GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
 	}
 }
 

@@ -10,6 +10,8 @@
 #include "Physical.h"
 #include "Engine.h"
 #include "Physics.h"
+#include "ForceOnObjectEvent.h"
+#include "Transform.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -44,6 +46,10 @@ void EventManager::ProcessEvents()
 
 		case EVENT_TYPE::PLAYER_CHANGE_STATE:
 			ProcessPlayerChangeStateEvent(static_cast<PlayerChangeStateEvent*>(pEvent.get()));
+			break;
+
+		case EVENT_TYPE::FORCE_ON_OBJECT_EVENT:
+			ProcessForceOnObjectEvent(static_cast<ForceOnObjectEvent*>(pEvent.get()));
 			break;
 		}
 	}
@@ -89,4 +95,18 @@ void EventManager::ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent)
 {
 	shared_ptr<Player> pPlayer = pEvent->GetPlayer();
 	pPlayer->ChangePlayerState(pEvent->GetNextPlayerState());
+}
+
+void EventManager::ProcessForceOnObjectEvent(ForceOnObjectEvent* pEvent)
+{
+	shared_ptr<GameObject> pGameObject = pEvent->GetGameObject();
+	assert(pGameObject->GetPhysical());
+
+	const PxVec3& vImpulse = pEvent->GetForce();
+	PxRigidBodyExt::addForceAtPos(
+		*pGameObject->GetPhysical()->GetActor<PxRigidDynamic>(),
+		vImpulse,
+		Conv::Vec3ToPxVec3(pGameObject->GetTransform()->GetPhysicalPosition()),
+		PxForceMode::eIMPULSE
+	);
 }

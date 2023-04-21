@@ -37,5 +37,10 @@ void CameraMoveScript::LateUpdate()
 		vPos += GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
 	}
 
+	//if (IS_PRESS(KEY_TYPE::Z))
+	//{
+	//	vPos -= GetTransform()->GetLook() * m_fSpeed * DELTA_TIME;
+	//}
+
 	GetTransform()->SetLocalPosition(vPos);
 }

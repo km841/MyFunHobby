@@ -41,6 +41,7 @@ public:
 protected:
 	int32 CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDirection);
 	void CreateMonsterHPHUD();
+	void CreateDeadEffectAndAddedScene();
 
 protected:
 	bool m_bHitFlag;

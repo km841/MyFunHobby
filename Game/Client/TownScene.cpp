@@ -62,6 +62,7 @@
 #include "Movement.h"
 #include "Light.h"
 #include "AI.h"
+#include "ParticleSystem.h"
 
 /* Behavior Component */
 #include "IsPlayerNearCondition.h"
@@ -171,14 +172,14 @@ void TownScene::Enter()
 	}
 
 	// Create Monster
-	//{
-	//	GET_SINGLE(ObjectFactory)->SetPlayer(pPlayer);
-	//	GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 200.f, 99.5f));
-	//	GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 400.f, fHeight / 2.f - 200.f, 99.5f));
-	//	GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 500.f, fHeight / 2.f - 200.f, 99.5f));
-	//	GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 200.f, 99.5f));
-	//	GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 700.f, fHeight / 2.f - 200.f, 99.5f));
-	//}
+	{
+		GET_SINGLE(ObjectFactory)->SetPlayer(pPlayer);
+		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 200.f, 99.5f));
+		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 400.f, fHeight / 2.f - 200.f, 99.5f));
+		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 500.f, fHeight / 2.f - 200.f, 99.5f));
+		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 200.f, 99.5f));
+		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 700.f, fHeight / 2.f - 200.f, 99.5f));
+	}
 
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR)->SetPlayer(pPlayer);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST)->SetPlayer(pPlayer);
@@ -260,23 +261,23 @@ void TownScene::Enter()
 
 	//Background
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Back.tga");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
-		pMaterial->SetTexture(0, pTexture);
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
+		//shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		//pGameObject->SetFrustum(false);
+		//shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		//shared_ptr<Texture> pTexture = make_shared<Texture>();
+		//pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Back.tga");
+		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
+		//pMaterial->SetTexture(0, pTexture);
+		//shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		//pMeshRenderer->SetMaterial(pMaterial);
+		//pMeshRenderer->SetMesh(pMesh);
+		//pGameObject->AddComponent(pMeshRenderer);
+		//pGameObject->AddComponent(make_shared<Transform>());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f + 100.f, 140.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 350.f, 1.f));
+		//pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f + 100.f, 140.f));
+		//pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 350.f, 1.f));
 
-		AddGameObject(pGameObject);
+		//AddGameObject(pGameObject);
 	}
 
 	//Background_Bridge
@@ -469,6 +470,19 @@ void TownScene::Enter()
 	//	AddGameObject(pHUD);
 	//}
 
+	// Particle System
+	{
+		shared_ptr<GameObject> pParticle = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pParticle->AddComponent(make_shared<Transform>());
+		pParticle->AddComponent(make_shared<ParticleSystem>());
+		pParticle->SetFrustum(false);
+		pParticle->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 60.f));
+		pParticle->GetTransform()->SetLocalScale(Vec3(200.f, 200.f, 1.f));
+		AddGameObject(pParticle);
+	}
+
+
+
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE));
 	GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE)->Disable();
 	
@@ -498,6 +512,9 @@ void TownScene::Enter()
 
 		AddGameObject(pUI);
 	}
+
+
+
 
 	m_vCameras[1]->SetCameraEffect(CAMERA_EFFECT::FADE_IN);
 

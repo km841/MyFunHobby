@@ -1,10 +1,6 @@
 #pragma once
 #include "Object.h"
 
-
-
-
-
 enum class DEPTH_STENCIL_TYPE : uint8
 {
     LESS,
@@ -32,6 +28,13 @@ enum class BLEND_TYPE : uint8
     END,
 };
 
+struct ShaderArg
+{
+    string szVSFuncName = "VS_Main";
+    string szGSFuncName = "";
+    string szPSFuncName = "PS_Main";
+};
+
 
 struct ShaderInfo
 {
@@ -46,7 +49,6 @@ struct ShaderInfo
         , eBlendType(blendType)
         , eTopology(topology)
     {}
-
 
     SHADER_TYPE            eShaderType;
     DEPTH_STENCIL_TYPE     eDepthStencilType;
@@ -63,13 +65,14 @@ public:
     virtual ~Shader();
     virtual void Load(const wstring& szPath) override;
 
-    void CreateGraphicsShader(const wstring& szPath, ShaderInfo sInfo = ShaderInfo(), const string& szVSFuncName = "VS_Main", const string& szPSFuncName = "PS_Main");
+    void CreateGraphicsShader(const wstring& szPath, ShaderInfo shaderInfo = ShaderInfo(), ShaderArg shaderArg = ShaderArg());
     void Update();
 
 public:
     void CreateComputeShader(const wstring& szPath, const string& szName, const string& szVersion);
     void CreateVertexShader(const wstring& szPath, const string& szName, const string& szVersion);
     void CreatePixelShader(const wstring& szPath, const string& szName, const string& szVersion);
+    void CreateGeometryShader(const wstring& szPath, const string& szName, const string& szVersion);
 
 public:
     FORCEINLINE SHADER_TYPE GetShaderType() const { return m_shaderInfo.eShaderType; }
@@ -82,6 +85,7 @@ private:
     ShaderInfo                      m_shaderInfo;
 
     ComPtr<ID3D11VertexShader>      m_pVertexShader;
+    ComPtr<ID3D11GeometryShader>    m_pGeometryShader;
     ComPtr<ID3D11PixelShader>       m_pPixelShader;
     ComPtr<ID3D11ComputeShader>     m_pComputeShader;
 
@@ -94,6 +98,7 @@ private:
 
     ComPtr<ID3DBlob>                m_pVSBlob;
     ComPtr<ID3DBlob>                m_pPSBlob;
+    ComPtr<ID3DBlob>                m_pGSBlob;
     ComPtr<ID3DBlob>                m_pCSBlob;
     ComPtr<ID3DBlob>                m_pErrBlob;
 };

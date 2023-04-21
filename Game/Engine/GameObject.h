@@ -14,6 +14,7 @@ class Animator;
 class Movement;
 class Light;
 class AI;
+class ParticleSystem;
 
 using CollisionInfo = std::pair<COLLISION_SIDE, float>;
 class GameObject :
@@ -42,6 +43,7 @@ public:
     shared_ptr<Movement>        GetMovement();
     shared_ptr<Light>           GetLight();
     shared_ptr<AI>              GetAI();
+    shared_ptr<ParticleSystem>  GetParticleSystem();
 
     void AddComponent(shared_ptr<Component> pComponent);
 

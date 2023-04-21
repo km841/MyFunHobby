@@ -49,8 +49,3 @@ void AnimationGlobalEffect::FinalUpdate()
 {
 	GlobalEffect::FinalUpdate();
 }
-
-void AnimationGlobalEffect::ReturnToPool()
-{
-	AnimationGlobalEffect::Release(static_pointer_cast<AnimationGlobalEffect>(shared_from_this()));
-}

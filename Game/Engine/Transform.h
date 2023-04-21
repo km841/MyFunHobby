@@ -41,11 +41,11 @@ public:
 
     FORCEINLINE float              GetBoundingSphereRadius()                     { return max(max(m_vLocalScale.x, m_vLocalScale.y), m_vLocalScale.z); }
 
-    Vec3 GetWorldPosition();
     Vec3 GetRight() { return m_matWorld.Right(); }
     Vec3 GetUp()    { return m_matWorld.Up(); }
     Vec3 GetLook()  { return m_matWorld.Backward(); }
 
+    Vec3 GetWorldPosition();
     void SetPhysicalPosition(const Vec3& vPosition);
     Vec3 GetPhysicalPosition();
 

@@ -27,11 +27,30 @@ void Material::PushGraphicData()
 		{
 			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
 				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+
+			CONTEXT->GSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+
+			CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+
+			CONTEXT->VSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+
 		}
 
 		else
 		{
 			CONTEXT->PSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				m_pTextures[i]->GetSRV().GetAddressOf());
+
+			CONTEXT->GSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				m_pTextures[i]->GetSRV().GetAddressOf());
+
+			CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+				m_pTextures[i]->GetSRV().GetAddressOf());
+
+			CONTEXT->VSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
 				m_pTextures[i]->GetSRV().GetAddressOf());
 		}
 
@@ -48,20 +67,20 @@ void Material::PushComputeData()
 	{
 		if (nullptr == m_pTextures[i])
 		{
-			CONTEXT->CSSetUnorderedAccessViews(static_cast<uint8>(UAV_REGISTER::u0) + i, 1,
-				reinterpret_cast<ID3D11UnorderedAccessView**>(&m_ppNullptr), 0);
+			//CONTEXT->CSSetUnorderedAccessViews(static_cast<uint8>(UAV_REGISTER::u0) + i, 1,
+			//	reinterpret_cast<ID3D11UnorderedAccessView**>(&m_ppNullptr), 0);
 
-			CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
-				reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
+			//CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+			//	reinterpret_cast<ID3D11ShaderResourceView**>(&m_ppNullptr));
 		}
 
 		else
 		{
-			CONTEXT->CSSetUnorderedAccessViews(static_cast<uint8>(UAV_REGISTER::u0) + i, 1,
-				m_pTextures[i]->GetUAV().GetAddressOf(), 0);
+			//CONTEXT->CSSetUnorderedAccessViews(static_cast<uint8>(UAV_REGISTER::u0) + i, 1,
+			//	m_pTextures[i]->GetUAV().GetAddressOf(), 0);
 
-			CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
-				m_pTextures[i]->GetSRV().GetAddressOf());
+			//CONTEXT->CSSetShaderResources(static_cast<uint8>(SRV_REGISTER::t0) + i, 1,
+			//	m_pTextures[i]->GetSRV().GetAddressOf());
 		}
 	}
 

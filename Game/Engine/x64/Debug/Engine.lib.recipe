@@ -36,7 +36,13 @@
       <FullPath>C:\MyProject\Game\Output\lighting.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\monster_hp.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\params.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\particle.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\MyProject\Game\Output\preview.cso</FullPath>

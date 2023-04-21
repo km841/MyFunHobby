@@ -32,9 +32,9 @@ private:
 	shared_ptr<PhysicsScene>		 m_pPhysScene;
 	shared_ptr<PxEnvironmentSetting> m_pSetting;
 
-	PxPvdTransport* m_pTransfort;
-	PxPvd* m_pPvd;
-	PxPvdSceneClient* m_pSceneClient;
-	PxScene* m_pScene;
-	PxControllerManager* m_pControllerMgr;
+	PxPvdTransport*					 m_pTransfort;
+	PxPvd*							 m_pPvd;
+	PxPvdSceneClient*				 m_pSceneClient;
+	PxScene*						 m_pScene;
+	PxControllerManager*			 m_pControllerMgr;
 };

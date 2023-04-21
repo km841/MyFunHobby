@@ -28,18 +28,8 @@ void RigidBody::Awake()
 
 void RigidBody::FinalUpdate()
 {
-	if (LAYER_TYPE::PLAYER == GetGameObject()->GetLayerType())
-	{
-		if (PLAYER_STATE::SKILL == GetPlayerStateEnum())
-		{
-			m_vVelocity.y = 0.f;
-			return;
-		}
-	}
-
 	if (m_bGravityApplied)
 		m_vVelocity += m_vGravityAccel * DELTA_TIME;
-
 }
 
 void RigidBody::Move()

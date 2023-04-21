@@ -5,6 +5,7 @@ class ObjectAddedToSceneEvent;
 class PlayerChangeStateEvent;
 class ObjectRemoveToSceneEvent;
 class ObjectReturnToPoolEvent;
+class ForceOnObjectEvent;
 
 class EventManager
 {
@@ -20,6 +21,7 @@ private:
 	void ProcessObjectRemoveEvent(ObjectRemoveToSceneEvent* pEvent);
 	void ProcessObjectReturnToPoolEvent(ObjectReturnToPoolEvent* pEvent);
 	void ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent);
+	void ProcessForceOnObjectEvent(ForceOnObjectEvent* pEvent);
 
 private:
 	std::queue<unique_ptr<Event>> m_qEvents;

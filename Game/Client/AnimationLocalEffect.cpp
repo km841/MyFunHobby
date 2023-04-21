@@ -49,8 +49,3 @@ void AnimationLocalEffect::FinalUpdate()
 {
 	GameObject::FinalUpdate();
 }
-
-void AnimationLocalEffect::ReturnToPool()
-{
-	AnimationLocalEffect::Release(static_pointer_cast<AnimationLocalEffect>(shared_from_this()));
-}

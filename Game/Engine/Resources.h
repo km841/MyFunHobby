@@ -32,6 +32,7 @@ public:
 
 	shared_ptr<Mesh> LoadRectMesh();
 	shared_ptr<Mesh> LoadCircleMesh();
+	shared_ptr<Mesh> LoadPointMesh();
 
 	shared_ptr<Animation> LoadAnimation(const wstring& szKey, const wstring& szPath);
 

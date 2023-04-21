@@ -13,15 +13,18 @@ Shader::~Shader()
 
 void Shader::Load(const wstring& szPath)
 {
-
 }
 
-void Shader::CreateGraphicsShader(const wstring& szPath, ShaderInfo shaderInfo, const string& szVSFuncName, const string& szPSFuncName)
+void Shader::CreateGraphicsShader(const wstring& szPath, ShaderInfo shaderInfo, ShaderArg shaderArg)
 {
 	m_shaderInfo = shaderInfo;
 
-	CreateVertexShader(szPath, szVSFuncName, "vs_5_0");
-	CreatePixelShader(szPath, szPSFuncName, "ps_5_0");
+	CreateVertexShader(szPath, shaderArg.szVSFuncName, "vs_5_0");
+	CreatePixelShader(szPath, shaderArg.szPSFuncName, "ps_5_0");
+
+	if (!shaderArg.szGSFuncName.empty())
+		CreateGeometryShader(szPath, shaderArg.szGSFuncName, "gs_5_0");
+
 	CreateSampler();
 
 	D3D11_INPUT_ELEMENT_DESC inputLayoutDesc[] =
@@ -171,23 +174,28 @@ void Shader::Update()
 {
 	if (SHADER_TYPE::COMPUTE == m_shaderInfo.eShaderType)
 	{
-		CONTEXT->CSSetShader(m_pComputeShader.Get(), nullptr, 0);
 		CONTEXT->CSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+		CONTEXT->CSSetShader(m_pComputeShader.Get(), nullptr, 0);
 	}
+
 	else
 	{
 		CONTEXT->VSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
 		CONTEXT->PSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+		CONTEXT->GSSetSamplers(0, 1, m_pSamplerState.GetAddressOf());
+
 		CONTEXT->VSSetShader(m_pVertexShader.Get(), nullptr, 0);
 		CONTEXT->PSSetShader(m_pPixelShader.Get(), nullptr, 0);
-
-		CONTEXT->IASetPrimitiveTopology(m_shaderInfo.eTopology);
-		CONTEXT->IASetInputLayout(m_pInputLayout.Get());
-		CONTEXT->RSSetState(m_pRasterizerState.Get());
-
-		CONTEXT->OMSetDepthStencilState(m_pDepthStencilState.Get(), 0);
-		CONTEXT->OMSetBlendState(m_pBlendState.Get(), nullptr, 0xffffffff);
+		CONTEXT->GSSetShader(m_pGeometryShader.Get(), nullptr, 0);
 	}
+
+
+	CONTEXT->IASetPrimitiveTopology(m_shaderInfo.eTopology);
+	CONTEXT->IASetInputLayout(m_pInputLayout.Get());
+	CONTEXT->RSSetState(m_pRasterizerState.Get());
+
+	CONTEXT->OMSetDepthStencilState(m_pDepthStencilState.Get(), 0);
+	CONTEXT->OMSetBlendState(m_pBlendState.Get(), nullptr, 0xffffffff);
 }
 
 void Shader::CreateShader(const wstring& szPath, const string& szName, const string& szVersion, ComPtr<ID3DBlob>& pBlob)
@@ -220,9 +228,10 @@ void Shader::CreateSampler()
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.Filter = D3D11_FILTER::D3D11_FILTER_COMPARISON_MIN_MAG_MIP_POINT;
+	samplerDesc.Filter = D3D11_FILTER::D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT;
 
-	DEVICE->CreateSamplerState(&samplerDesc, m_pSamplerState.GetAddressOf());
+	HRESULT hr = DEVICE->CreateSamplerState(&samplerDesc, m_pSamplerState.GetAddressOf());
+	assert(SUCCEEDED(hr));
 }
 
 void Shader::CreateVertexShader(const wstring& szPath, const string& szName, const string& szVersion)
@@ -236,5 +245,12 @@ void Shader::CreatePixelShader(const wstring& szPath, const string& szName, cons
 {
 	CreateShader(szPath, szName, szVersion, m_pPSBlob);
 	HRESULT hr = DEVICE->CreatePixelShader(m_pPSBlob->GetBufferPointer(), m_pPSBlob->GetBufferSize(), nullptr, &m_pPixelShader);
+	assert(SUCCEEDED(hr));
+}
+
+void Shader::CreateGeometryShader(const wstring& szPath, const string& szName, const string& szVersion)
+{
+	CreateShader(szPath, szName, szVersion, m_pGSBlob);
+	HRESULT hr = DEVICE->CreateGeometryShader(m_pGSBlob->GetBufferPointer(), m_pGSBlob->GetBufferSize(), nullptr, &m_pGeometryShader);
 	assert(SUCCEEDED(hr));
 }

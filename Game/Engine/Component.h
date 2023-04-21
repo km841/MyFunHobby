@@ -15,6 +15,7 @@ enum class COMPONENT_TYPE : uint8
 	PHYSICAL,
 	COLLIDER,
     AI,
+    PARTICLE_SYSTEM,
 	// ...
 	MONO_BEHAVIOUR,
 	END,
@@ -102,6 +103,7 @@ class PlayerState;
 class Movement;
 class Light;
 class AI;
+class ParticleSystem;
 
 class Component :
     public Object
@@ -130,6 +132,7 @@ public:
     shared_ptr<Movement>            GetMovement();
     shared_ptr<Light>               GetLight();
     shared_ptr<AI>                  GetAI();
+    shared_ptr<ParticleSystem>      GetParticleSystem();
 
 	FORCEINLINE COMPONENT_TYPE GetType() const { return m_eType; }
     PLAYER_STATE   GetPlayerStateEnum();

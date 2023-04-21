@@ -75,7 +75,7 @@ PS_OUT PS_Main(VS_OUT _in)
         if (vColor.a < 0.1f)
             discard;
         
-        if (vColor.a > 0.f && fRatio > 0.f)
+        if (fRatio > 0.f)
             vColor.a = 1.f * fRatio;
     }
     else
@@ -84,7 +84,7 @@ PS_OUT PS_Main(VS_OUT _in)
         if (vColor.a <= 0.1f)
             discard;
         
-        if (vColor.a > 0.f && fRatio > 0.f)
+        if (fRatio > 0.f)
             vColor.a = 1.f * fRatio;
     }
    

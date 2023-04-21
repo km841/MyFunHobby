@@ -189,6 +189,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FilterShaders.h" />
     <ClInclude Include="FleeSequence.h" />
+    <ClInclude Include="ForceOnObjectEvent.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
@@ -207,6 +208,7 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ObjectRemoveToSceneEvent.h" />
     <ClInclude Include="ObjectReturnToPoolEvent.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physical.h" />
     <ClInclude Include="Physics.h" />
@@ -262,6 +264,7 @@
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FilterShaders.cpp" />
     <ClCompile Include="FleeSequence.cpp" />
+    <ClCompile Include="ForceOnObjectEvent.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -280,6 +283,7 @@
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectRemoveToSceneEvent.cpp" />
     <ClCompile Include="ObjectReturnToPoolEvent.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -390,7 +394,19 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="..\Resources\Shader\monster_hp.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="..\Resources\Shader\params.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\particle.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>

@@ -582,6 +582,10 @@ friend class name##Pool;\
 	{\
 		m_pPool->Release(p##name);\
 	}\
+	virtual void ReturnToPool() override\
+	{\
+		name::Release(static_pointer_cast<name>(shared_from_this()));\
+	}\
 private:\
 class name##Pool											\
 {															\

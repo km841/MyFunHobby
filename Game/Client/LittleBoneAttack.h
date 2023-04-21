@@ -13,6 +13,10 @@ public:
     virtual void Enter() override;
     virtual void Exit() override;
     virtual void CreateHitEffectAndAddedScene(Vec3 vMonsterPos) override;
+
+private:
+    void LittleBoneStomp();
+
 private:
 
 };
