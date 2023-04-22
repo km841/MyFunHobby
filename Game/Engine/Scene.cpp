@@ -180,7 +180,6 @@ void Scene::Render_Forward()
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
 	shared_ptr<Camera> pCamera = m_vCameras[0];
 	pCamera->Render_Forward();
-	pCamera->Render_Particle();
 
 	for (const shared_ptr<Camera>& pSubCamera : m_vCameras)
 	{

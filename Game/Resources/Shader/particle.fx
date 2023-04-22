@@ -12,8 +12,9 @@ struct Particle
     float fCurTime;
     
     float fSpeed;
+    float fGravityAcc;
     uint  iAlive;
-    float2 vPadding;
+    float fPadding;
 };
 
 struct ParticleShared
@@ -118,9 +119,10 @@ float4 PS_Main(GS_OUT input) : SV_TARGET
 // =======================
 // g_vec3_0  : World Position
 // g_int_0   : Particle Max Count
-// g_float_0 : Particle Creation Radius
-// g_float_1 : Particle Start Speed
-// g_float_2 : Particle Life Time (Maximum)
+// g_float_0 : Particle Life Time (Maximum)
+// g_float_1 : Particle Start Speed (Range)
+// g_float_2 : Particle End Speed (Range)
+// g_float_3 : Gravity
 // g_vec2_0  : Delta Time / Elapsed Time
 
 RWStructuredBuffer<Particle> g_particle : register(u0);
@@ -132,13 +134,18 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
     float3 vWorldPos = g_vec3_0;
     
     uint iMaxCount = g_int_0;
-    
-    float fRadius = g_float_0;
-    float fStartSpeed = g_float_1;
-    float fStartLifeTime = g_float_2;
+
+    float fStartLifeTime = g_float_0;
+    int iStartSpeed = g_float_1;
+    int iEndSpeed = g_float_2;
     
     float fDeltaTime = g_vec2_0.x;
     float fElapsedTime = g_vec2_0.y;
+    
+    float fGravity = g_float_3;
+
+    int iStartAngle = (int) g_vec2_2.x;
+    int iEndAngle = (int) g_vec2_2.y;
     
     if (iMaxCount <= threadIndex.x)
         return;
@@ -176,26 +183,36 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
                 2.f * fRand2 - 1.f,
             };
             
-            float2 fDir = (fNoise - 0.5f) * 2.f;
-            g_particle[threadIndex.x].vDirection.xy = normalize(fDir);
+            float fRandSpeed = lerp(iStartSpeed, iEndSpeed, fNoise.x);
+            float fRandAngle = lerp(iStartAngle, iEndAngle, fNoise.y);
+            float fRandRadian = fRandAngle * 3.141592f / 180.f;
+            
+            float2 vRightNormal = float2(1.f, 0.f);
+            float fRotatedX = vRightNormal.x * cos(fRandRadian) + vRightNormal.y * sin(fRandRadian);
+            float fRotatedY = vRightNormal.x * sin(fRandRadian) - vRightNormal.y * cos(fRandRadian);
+
+            g_particle[threadIndex.x].vDirection.xy = float2(fRotatedX, fRotatedY);
             g_particle[threadIndex.x].vPosition.xyz = vWorldPos;
             
+            g_particle[threadIndex.x].fGravityAcc = 0.f;
             g_particle[threadIndex.x].fCurTime = 0.f;
-            g_particle[threadIndex.x].fSpeed = fStartSpeed;
-            g_particle[threadIndex.x].fEndTime = fStartLifeTime;
-            
+            g_particle[threadIndex.x].fSpeed = fRandSpeed;
+            g_particle[threadIndex.x].fEndTime = fStartLifeTime;   
         }
     }
     else
     {
         g_particle[threadIndex.x].fCurTime += fDeltaTime;
+        
         if (g_particle[threadIndex.x].fEndTime < g_particle[threadIndex.x].fCurTime)
         {
             g_particle[threadIndex.x].iAlive = 0;
         }
         else
         {
+            g_particle[threadIndex.x].fGravityAcc += fGravity * fDeltaTime;
             g_particle[threadIndex.x].vPosition += g_particle[threadIndex.x].vDirection * g_particle[threadIndex.x].fSpeed * fDeltaTime;
+            g_particle[threadIndex.x].vPosition.y += g_particle[threadIndex.x].fGravityAcc;
         }
     }
 }

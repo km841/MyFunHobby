@@ -24,6 +24,7 @@
 #include "ObjectRemoveToSceneEvent.h"
 #include "AnimationLocalEffect.h"
 #include "ObjectReturnToPoolEvent.h"
+#include "ParticleSystem.h"
 
 
 Monster::Monster()
@@ -41,6 +42,7 @@ void Monster::Awake()
 {
 	GameObject::Awake();
 	CreateMonsterHPHUD();
+	CreateParticleGeneratorAndAddedToScene();
 }
 
 void Monster::Start()
@@ -129,6 +131,19 @@ void Monster::CreateDeadEffectAndAddedScene()
 	pDeadEffect->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDeadEffect, eSceneType));
+}
+
+void Monster::CreateParticleGeneratorAndAddedToScene()
+{
+	m_pParticleGenerator = make_shared<GlobalEffect>();
+	m_pParticleGenerator->AddComponent(make_shared<Transform>());
+	m_pParticleGenerator->GetTransform()->SetParent(GetTransform());
+	m_pParticleGenerator->AddComponent(make_shared<ParticleSystem>());
+	m_pParticleGenerator->SetFrustum(false);
+
+	m_pParticleGenerator->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pParticleGenerator, eSceneType));
 }
 
 void Monster::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)

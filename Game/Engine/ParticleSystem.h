@@ -14,19 +14,14 @@ struct ParticleInfo
 	float fCurTime;
 
 	float fSpeed;
+	float fGravityAcc;
 	uint32 iAlive;
-	Vec2 vPadding;
+	float fPadding;
 };
 
 struct ParticleShared
 {
 	uint32 iAdd;
-};
-
-enum class eSimulationSpace
-{
-	Local,
-	World,
 };
 
 class ParticleShader;
@@ -43,11 +38,13 @@ public:
 	virtual void Render(shared_ptr<Camera> pCamera);
 
 public:
+	FORCEINLINE void SetParticleAliveCount(uint32 iCount) { m_iAliveCount = iCount; }
 	FORCEINLINE void SetParticleScale(const Vec3& vScale) { m_vStartScale = vScale; }
 	FORCEINLINE void SetParticleLifeTime(float fLifeTime) { m_fEndTime = fLifeTime; }
 	FORCEINLINE void SetCreateInterval(float fCreateInterval) { m_fCreateInterval = fCreateInterval; }
 	FORCEINLINE void SetMaxParticles(uint32 iMaxParticles) { m_iMaxParticles = iMaxParticles; }
 
+	void SetParticleDirection(PARTICLE_DIRECTION eParticleDirection);
 private:
 	shared_ptr<StructuredBuffer> m_pParticleBuffer;
 	shared_ptr<StructuredBuffer> m_pSharedBuffer;
@@ -57,10 +54,18 @@ private:
 	shared_ptr<Material> m_pComputeMaterial;
 
 	Vec3 m_vStartScale;
+	Vec3 m_vStartDir;
 
+	uint32 m_iAliveCount;
 	uint32 m_iMaxParticles;
 	float m_fEndTime;
 	float m_fStartSpeed;
+	float m_fEndSpeed;
+
+	float m_fStartAngle;
+	float m_fEndAngle;
+
+	float m_fGravity;
 
 	// Total Time
 	float m_fElapsedTime;

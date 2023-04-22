@@ -37,11 +37,13 @@ public:
 
 public:
 	void SetParticleTextureNames(const std::vector<wstring> vTextureNames) { m_vTextureNames = vTextureNames; }
+	weak_ptr<GlobalEffect> GetParticleGenerator() { return m_pParticleGenerator; }
 
 protected:
 	int32 CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDirection);
 	void CreateMonsterHPHUD();
 	void CreateDeadEffectAndAddedScene();
+	void CreateParticleGeneratorAndAddedToScene();
 
 protected:
 	bool m_bHitFlag;
@@ -51,5 +53,6 @@ protected:
 	shared_ptr<MonsterHPHUD> m_pMonsterHPHUD;
 
 	std::vector<wstring> m_vTextureNames;
+	shared_ptr<GlobalEffect> m_pParticleGenerator;
 };
 

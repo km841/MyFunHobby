@@ -31,7 +31,6 @@ public:
 
     FORCEINLINE const Matrix&      GetLocalToWorldMatrix() const                 { return m_matWorld; }
 
-
     FORCEINLINE const Matrix&      GetPxLocalToWorldMatrix() const               { return m_matPxWorld; }
     FORCEINLINE const PxTransform& GetPxTransform() const                        { return m_PxTransform; }
     FORCEINLINE void               SetPxTransform(const PxTransform& pxTransform) { m_PxTransform = pxTransform; }

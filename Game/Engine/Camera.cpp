@@ -102,7 +102,7 @@ void Camera::SortGameObject()
                     m_vDeferredObjects.push_back(pGameObject);
 
                 if (pGameObject->GetParticleSystem())
-                    m_vParticleObjects.push_back(pGameObject);
+                    m_vForwardObjects.push_back(pGameObject);
             }
         }
     }
@@ -133,7 +133,14 @@ void Camera::Render_Forward()
 {
     for (const auto& pGameObject : m_vForwardObjects)
     {
-        pGameObject->GetMeshRenderer()->Render(shared_from_this());  
+        if (pGameObject->GetMeshRenderer())
+            pGameObject->GetMeshRenderer()->Render(shared_from_this());  
+        
+        if (pGameObject->GetParticleSystem())
+            pGameObject->GetParticleSystem()->Render(shared_from_this());
+
+        if (pGameObject->GetDebugRenderer())
+            pGameObject->GetDebugRenderer()->Render(shared_from_this());
     }
 }
 
@@ -152,13 +159,5 @@ void Camera::Render_Deferred()
 
 		if (pGameObject->GetDebugRenderer())
 			pGameObject->GetDebugRenderer()->Render(shared_from_this());
-    }
-}
-
-void Camera::Render_Particle()
-{
-    for (const auto& pGameObject : m_vParticleObjects)
-    {
-        pGameObject->GetParticleSystem()->Render(shared_from_this());
     }
 }

@@ -97,8 +97,24 @@ void Transform::PxPushData(shared_ptr<Camera> pCamera)
 
 Vec3 Transform::GetWorldPosition()
 {
-	return m_matWorld.Translation();
+	Vec3 vWorldTranslation = {};
+	if (GetPhysical())
+		vWorldTranslation = GetPhysicalPosition();
+	else
+		vWorldTranslation = m_vLocalTranslation;
+
+	if (m_pParent.lock())
+	{
+		if (m_pParent.lock()->GetPhysical())
+			vWorldTranslation += m_pParent.lock()->GetPhysicalPosition();
+		else
+			vWorldTranslation += m_pParent.lock()->GetWorldPosition();
+	}
+
+	return vWorldTranslation;
 }
+
+
 
 void Transform::SetPhysicalPosition(const Vec3& vPosition)
 {

@@ -17,6 +17,8 @@
 #include "Scene.h"
 #include "RotateHeadScript.h"
 #include "Player.h"
+#include "GlobalEffect.h"
+#include "ParticleSystem.h"
 
 LittleBone::LittleBone()
 	: Skul(SKUL_GRADE::NORMAL)
@@ -104,3 +106,5 @@ void LittleBone::CreateHeadAndAddedToScene()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pHead, eSceneType));
 }
+
+

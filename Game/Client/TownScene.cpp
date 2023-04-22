@@ -472,13 +472,13 @@ void TownScene::Enter()
 
 	// Particle System
 	{
-		shared_ptr<GameObject> pParticle = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pParticle->AddComponent(make_shared<Transform>());
-		pParticle->AddComponent(make_shared<ParticleSystem>());
-		pParticle->SetFrustum(false);
-		pParticle->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 60.f));
-		pParticle->GetTransform()->SetLocalScale(Vec3(200.f, 200.f, 1.f));
-		AddGameObject(pParticle);
+		//shared_ptr<GameObject> pParticle = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		//pParticle->AddComponent(make_shared<Transform>());
+		//pParticle->AddComponent(make_shared<ParticleSystem>());
+		//pParticle->SetFrustum(false);
+		//pParticle->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 60.f));
+		//pParticle->GetTransform()->SetLocalScale(Vec3(200.f, 200.f, 1.f));
+		//AddGameObject(pParticle);
 	}
 
 

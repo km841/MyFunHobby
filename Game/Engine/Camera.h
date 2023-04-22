@@ -38,7 +38,6 @@ public:
 public:
     void Render_Forward();
     void Render_Deferred();
-    void Render_Particle();
 
 private:
     PROJECTION_TYPE m_eType;

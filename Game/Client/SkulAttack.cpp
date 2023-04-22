@@ -8,6 +8,8 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Physical.h"
+#include "ParticleSystem.h"
+#include "GlobalEffect.h"
 
 SkulAttack::SkulAttack(shared_ptr<Skul> pSkul)
 	: m_eActiveAttackOrder(ATTACK_ORDER::ATTACK_A)
@@ -60,7 +62,8 @@ void SkulAttack::HitMonstersInAttackRange()
 			float fDegree = (fRadian * 180.f) / XM_PI;
 			if (fDegree > fStartAngle && fDegree < fEndAngle)
 			{
-				static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
+				shared_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
+				pMonster->FlagAsAttacked();
 				CreateHitEffectAndAddedScene(vPos);
 				pGameObject->GetStatus()->TakeDamage(1);
 
@@ -71,6 +74,12 @@ void SkulAttack::HitMonstersInAttackRange()
 					else
 						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::LEFT);
 				}
+
+				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleAliveCount(50);
+				if (vTargetVec.x > 0.f)
+					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(PARTICLE_DIRECTION::RIGHT);
+				else
+					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(PARTICLE_DIRECTION::LEFT);
 
 			}
 		}

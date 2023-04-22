@@ -1,5 +1,7 @@
 #pragma once
 #include "Skul.h"
+
+class GlobalEffect;
 class PlayerProjectile;
 class LittleBone :
     public Skul
@@ -31,5 +33,6 @@ private:
 private:
 	LITTLE_BONE_STATE m_eLittleBoneState;
 	shared_ptr<PlayerProjectile> m_pHead;
+	
 };
 

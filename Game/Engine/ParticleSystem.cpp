@@ -10,12 +10,17 @@
 ParticleSystem::ParticleSystem()
 	: Component(COMPONENT_TYPE::PARTICLE_SYSTEM)
 	, m_iMaxParticles(1000)
-	, m_fEndTime(3.f)
+	, m_fEndTime(1.f)
 	, m_fAccTime(0.f)
 	, m_fStartSpeed(300.0f)
+	, m_fEndSpeed(700.f)
 	, m_fElapsedTime(0.f)
-	, m_fCreateInterval(0.01f)
+	, m_fCreateInterval(1.f)
 	, m_vStartScale(4.f, 4.f, 1.f)
+	, m_fGravity(-5.f)
+	, m_iAliveCount(0)
+	, m_fStartAngle(70.f)
+	, m_fEndAngle(90.f)
 {
 }
 
@@ -48,25 +53,32 @@ void ParticleSystem::FinalUpdate()
 {
 	m_fElapsedTime += DELTA_TIME;
 	m_fAccTime += DELTA_TIME;
-	if (m_fCreateInterval < m_fAccTime)
+
+	if (m_iAliveCount > 0)
 	{
-		m_fAccTime -= m_fCreateInterval;
-		ParticleShared shared = { 1, }; // 활성화시킬 파티클의 수
-		// WriteBuffer를 이용하여 SharedBuffer에 값을 쓴다
+		ParticleShared shared = { m_iAliveCount, }; // 활성화시킬 파티클의 수
 		m_pSharedBuffer->SetData(&shared, 1);
+		m_iAliveCount = 0;
 	}
+
 	else
 	{
 		ParticleShared shared = {  };
 		m_pSharedBuffer->SetData(&shared, 1);
 	}
 
+	Vec3 vPosition = GetTransform()->GetWorldPosition();
 	m_iMaxParticles = m_pParticleBuffer->GetElementCount();
-	m_pComputeMaterial->SetVec3(0, GetTransform()->GetLocalPosition());
+	m_pComputeMaterial->SetVec3(0, GetTransform()->GetWorldPosition());
+	m_pComputeMaterial->SetVec3(1, m_vStartDir);
 	m_pComputeMaterial->SetInt(0, m_iMaxParticles);
+	m_pComputeMaterial->SetFloat(0, m_fEndTime);
 	m_pComputeMaterial->SetFloat(1, m_fStartSpeed);
-	m_pComputeMaterial->SetFloat(2, m_fEndTime);
+	m_pComputeMaterial->SetFloat(2, m_fEndSpeed);
+	m_pComputeMaterial->SetFloat(3, m_fGravity);
 	m_pComputeMaterial->SetVec2(0, Vec2(DELTA_TIME, m_fElapsedTime));
+	m_pComputeMaterial->SetVec2(2, Vec2(m_fStartAngle, m_fEndAngle));
+
 	
 	m_pParticleBuffer->PushComputeUAVData(UAV_REGISTER::u0);
 	m_pSharedBuffer->PushComputeUAVData(UAV_REGISTER::u1);
@@ -84,4 +96,43 @@ void ParticleSystem::Render(shared_ptr<Camera> pCamera)
 	m_pMesh->Render(m_iMaxParticles);
 
 	m_pParticleBuffer->ClearGraphicsData();
+}
+
+void ParticleSystem::SetParticleDirection(PARTICLE_DIRECTION eParticleDirection)
+{
+	switch (eParticleDirection)
+	{
+	case PARTICLE_DIRECTION::TOP:
+		m_fStartAngle = 75.f;
+		m_fEndAngle = 105.f;
+		break;
+	case PARTICLE_DIRECTION::RIGHT_TOP:
+		m_fStartAngle = 60.f;
+		m_fEndAngle = 90.f;
+		break;
+	case PARTICLE_DIRECTION::RIGHT:
+		m_fStartAngle = 60.f;
+		m_fEndAngle = 90.f;
+		break;
+	case PARTICLE_DIRECTION::RIGHT_BTM:
+		m_fStartAngle = -30.f;
+		m_fEndAngle = -60.f;
+		break;
+	case PARTICLE_DIRECTION::BTM:
+		m_fStartAngle = -75.f;
+		m_fEndAngle = -105.f;
+		break;
+	case PARTICLE_DIRECTION::LEFT_BTM:
+		m_fStartAngle = 120.f;
+		m_fEndAngle = 150.f;
+		break;
+	case PARTICLE_DIRECTION::LEFT:
+		m_fStartAngle = -240.f;
+		m_fEndAngle = -270.f;
+		break;
+	case PARTICLE_DIRECTION::LEFT_TOP:
+		m_fStartAngle = -240.f;
+		m_fEndAngle = -270.f;
+		break;
+	}
 }
