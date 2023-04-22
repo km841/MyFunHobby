@@ -261,23 +261,23 @@ void TownScene::Enter()
 
 	//Background
 	{
-		//shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		//pGameObject->SetFrustum(false);
-		//shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		//shared_ptr<Texture> pTexture = make_shared<Texture>();
-		//pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Back.tga");
-		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
-		//pMaterial->SetTexture(0, pTexture);
-		//shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		//pMeshRenderer->SetMaterial(pMaterial);
-		//pMeshRenderer->SetMesh(pMesh);
-		//pGameObject->AddComponent(pMeshRenderer);
-		//pGameObject->AddComponent(make_shared<Transform>());
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->SetFrustum(false);
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Texture> pTexture = make_shared<Texture>();
+		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Back.tga");
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
+		pMaterial->SetTexture(0, pTexture);
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+		pGameObject->AddComponent(pMeshRenderer);
+		pGameObject->AddComponent(make_shared<Transform>());
 
-		//pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f + 100.f, 140.f));
-		//pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 350.f, 1.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f + 100.f, 140.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 350.f, 1.f));
 
-		//AddGameObject(pGameObject);
+		AddGameObject(pGameObject);
 	}
 
 	//Background_Bridge

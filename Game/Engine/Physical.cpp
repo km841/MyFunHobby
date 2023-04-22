@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Material.h"
+#include "RigidBody.h"
 
 Physical::Physical(ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vGeometrySize, const MassProperties& massProperties)
 	:Component(COMPONENT_TYPE::PHYSICAL)
@@ -24,10 +25,8 @@ Physical::~Physical()
 
 void Physical::Awake()
 {
-	if (m_pActor)
-	{
-		InitializeActor();
-	}
+	assert(GetRigidBody());
+	InitializeActor();
 }
 
 void Physical::CreateBoxGeometry(GEOMETRY_TYPE eGeometryType, const Vec3& vBoxSize)
@@ -104,12 +103,6 @@ void Physical::CreateShape()
 		m_pShape = PxRigidActorExt::createExclusiveShape(*m_pActor->is<PxRigidActor>(), m_pGeometries->planeGeom, *m_pProperties->GetMaterial());
 		break;
 	}
-
-	if (ACTOR_TYPE::KINEMATIC == m_eActorType)
-	{
-		m_pShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
-		m_pShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
-	}
 }
 
 
@@ -119,8 +112,6 @@ void Physical::CreateActor()
 	{
 	case ACTOR_TYPE::DYNAMIC:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
-		m_pActor->is<PxRigidDynamic>()->setLinearDamping(0.5f);
-		m_pActor->is<PxRigidDynamic>()->setMaxLinearVelocity(1000.f);
 		break;
 
 	case ACTOR_TYPE::STATIC:
@@ -130,13 +121,10 @@ void Physical::CreateActor()
 	case ACTOR_TYPE::KINEMATIC:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		m_pActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
-	
 		break;
 
 	case ACTOR_TYPE::CHARACTER:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
-		m_pActor->is<PxRigidDynamic>()->setLinearDamping(0.5f);
-		m_pActor->is<PxRigidDynamic>()->setMaxLinearVelocity(1000.f);
 		m_pActor->is<PxRigidDynamic>()->setRigidDynamicLockFlags(
 			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z |
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
@@ -153,7 +141,24 @@ void Physical::InitializeActor()
 
 	PxVec3 vMyPos = Conv::Vec3ToPxVec3(GetTransform()->GetLocalPosition());
 	pActor->setGlobalPose(PxTransform(vMyPos));
-	//pActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+
+	switch (m_eActorType)
+	{
+	case ACTOR_TYPE::STATIC:
+		break;
+	case ACTOR_TYPE::DYNAMIC:
+		GetRigidBody()->SetLinearDamping(0.5f);
+		GetRigidBody()->SetLinearMaxVelocityForDynamic(1000.f);
+		GetRigidBody()->SetAngularMaxVelocityForDynamic(500.f);
+		break;
+	case ACTOR_TYPE::KINEMATIC:
+		m_pShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+		m_pShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		break;
+	case ACTOR_TYPE::CHARACTER:
+		break;
+	}
+	
 }
 
 void Physical::AddActorToPxScene()

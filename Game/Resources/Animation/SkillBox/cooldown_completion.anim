@@ -1,4 +1,4 @@
-20
+22
 Cooldown
 ..\Resources\Texture\Sprites\SkillBox\Sprite_Cooldown_Completion.png
 0 0
@@ -80,4 +80,8 @@ Cooldown
 1222 0
 72 137
 2.5 20
+0.025
+1294 0
+100 137
+0 0
 0.025

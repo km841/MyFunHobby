@@ -24,6 +24,8 @@ public:
     virtual void Exit() { }
     void Render_Lights();
     void Render_Final();
+    void Render_Forward();
+    void Render_Deferred();
     void PushLightData();
 
     FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }

@@ -6,13 +6,14 @@
 
 struct Particle
 {
-    float4 vPosition;
-    float4 vDirection;
-    
+    float3 vPosition;
     float fEndTime;
+    float3 vDirection;
     float fCurTime;
+    
     float fSpeed;
     uint  iAlive;
+    float2 vPadding;
 };
 
 struct ParticleShared
@@ -48,6 +49,11 @@ struct GS_OUT
     uint id : SV_InstanceID;
 };
 
+// ========================
+// Particle Geometry Shader
+// ========================
+// g_vec3_0 : Particle Scale
+
 StructuredBuffer<Particle> particleBuffer : register(t9);
 
 [maxvertexcount(6)]
@@ -60,7 +66,8 @@ void GS_Main(point VS_OUT input[1], inout TriangleStream<GS_OUT> triangleStream)
 	
     float3 vWorldPos = input[0].pos.xyz + particleBuffer[input[0].id].vPosition.xyz;
     float3 vViewPos = mul(float4(vWorldPos, 1.0f), g_matView).xyz;
-    float3 vScale = float3(50.f, 50.f, 1.f);
+    float3 vScale = g_vec3_0;
+    
     float3 vNewPos[4] =
     {
         vViewPos + float3(-0.5f, 0.5f, 0.0f) * vScale,
@@ -102,17 +109,27 @@ float4 PS_Main(GS_OUT input) : SV_TARGET
 {
     float4 output = (float4) 0.0f;
     output = g_tex_0.Sample(g_sam_0, input.uv);
-   
+    
     return output;
 }
+
+// =======================
+// Particle Compute Shader
+// =======================
+// g_vec3_0  : World Position
+// g_int_0   : Particle Max Count
+// g_float_0 : Particle Creation Radius
+// g_float_1 : Particle Start Speed
+// g_float_2 : Particle Life Time (Maximum)
+// g_vec2_0  : Delta Time / Elapsed Time
 
 RWStructuredBuffer<Particle> g_particle : register(u0);
 RWStructuredBuffer<ParticleShared> g_shared : register(u1);
 
 [numthreads(1024, 1, 1)]
-void CS_Main(uint3 DTid : SV_DispatchThreadID)
+void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
 {
-    float4 vWorldPos = g_vec4_0;
+    float3 vWorldPos = g_vec3_0;
     
     uint iMaxCount = g_int_0;
     
@@ -123,10 +140,10 @@ void CS_Main(uint3 DTid : SV_DispatchThreadID)
     float fDeltaTime = g_vec2_0.x;
     float fElapsedTime = g_vec2_0.y;
     
-    if (iMaxCount <= DTid.x)
+    if (iMaxCount <= threadIndex.x)
         return;
     
-    if (g_particle[DTid.x].iAlive == 0)
+    if (0 == g_particle[threadIndex.x].iAlive)
     {
         while (true)
         {
@@ -141,14 +158,14 @@ void CS_Main(uint3 DTid : SV_DispatchThreadID)
 
             if (iOriginalValue == iExpected)
             {
-                g_particle[DTid.x].iAlive = 1;
+                g_particle[threadIndex.x].iAlive = 1;
                 break;
             }
         }
         
-        if (g_particle[DTid.x].iAlive)
+        if (1 == g_particle[threadIndex.x].iAlive)
         {
-            float fSeedValue = ((float) DTid.x / (float) iMaxCount) + fElapsedTime;
+            float fSeedValue = ((float) threadIndex.x / (float) iMaxCount) + fElapsedTime;
 
             float fRand1 = Rand(float2(fSeedValue, fElapsedTime));
             float fRand2 = Rand(float2(fSeedValue * fElapsedTime * fElapsedTime, fElapsedTime * fElapsedTime));
@@ -160,25 +177,25 @@ void CS_Main(uint3 DTid : SV_DispatchThreadID)
             };
             
             float2 fDir = (fNoise - 0.5f) * 2.f;
-            g_particle[DTid.x].vDirection.xy = normalize(fDir);
-            g_particle[DTid.x].vPosition.xyz = float3(400.f, 400.f, 80.f);
+            g_particle[threadIndex.x].vDirection.xy = normalize(fDir);
+            g_particle[threadIndex.x].vPosition.xyz = vWorldPos;
             
-            g_particle[DTid.x].fCurTime = 0.f;
-            g_particle[DTid.x].fSpeed = fStartSpeed;
-            g_particle[DTid.x].fEndTime = fStartLifeTime;
+            g_particle[threadIndex.x].fCurTime = 0.f;
+            g_particle[threadIndex.x].fSpeed = fStartSpeed;
+            g_particle[threadIndex.x].fEndTime = fStartLifeTime;
             
         }
     }
     else
     {
-        g_particle[DTid.x].fCurTime += fDeltaTime;
-        if (g_particle[DTid.x].fEndTime < g_particle[DTid.x].fCurTime)
+        g_particle[threadIndex.x].fCurTime += fDeltaTime;
+        if (g_particle[threadIndex.x].fEndTime < g_particle[threadIndex.x].fCurTime)
         {
-            g_particle[DTid.x].iAlive = 0;
+            g_particle[threadIndex.x].iAlive = 0;
         }
         else
         {
-            g_particle[DTid.x].vPosition += g_particle[DTid.x].vDirection * g_particle[DTid.x].fSpeed * fDeltaTime;
+            g_particle[threadIndex.x].vPosition += g_particle[threadIndex.x].vDirection * g_particle[threadIndex.x].fSpeed * fDeltaTime;
         }
     }
 }

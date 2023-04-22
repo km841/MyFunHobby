@@ -17,7 +17,6 @@ public:
     virtual ~Camera();
 
     virtual void    FinalUpdate() override;
-    void            Render(SHADER_TYPE eShaderType);
 
     FORCEINLINE void             SetProjectionType(PROJECTION_TYPE eType)     { m_eType = eType; }
     FORCEINLINE PROJECTION_TYPE  GetProjectionType()   const                  { return m_eType; }
@@ -29,10 +28,17 @@ public:
     FORCEINLINE void             SetCameraEffect(CAMERA_EFFECT eCameraEffect) { m_eCameraEffect = eCameraEffect; }
     FORCEINLINE void             RemoveCameraEffect() { m_eCameraEffect = CAMERA_EFFECT::NONE; }
     
+    void            SortGameObject();
     void            SetCullingMask(LAYER_TYPE eLayerType, bool bFlag);
     void            DisableAllCullingMask();
     void            EnableAllCullingMask();
     bool            ContainsSphere(const Vec3& vPos, float fRadius)           { return m_Frustum.ContainsSphere(vPos, fRadius); }
+
+
+public:
+    void Render_Forward();
+    void Render_Deferred();
+    void Render_Particle();
 
 private:
     PROJECTION_TYPE m_eType;
@@ -50,5 +56,10 @@ private:
     CAMERA_EFFECT   m_eCameraEffect;
 
     Frustum         m_Frustum;
+
+    std::vector<shared_ptr<GameObject>> m_vForwardObjects;
+    std::vector<shared_ptr<GameObject>> m_vDeferredObjects;
+    std::vector<shared_ptr<GameObject>> m_vParticleObjects;
+
 };
 

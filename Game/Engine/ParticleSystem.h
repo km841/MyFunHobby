@@ -8,13 +8,14 @@ class StructuredBuffer;
 
 struct ParticleInfo
 {
-	Vec4 vPosition;
-	Vec4 vDirection;
-
+	Vec3 vPosition;
 	float fEndTime;
+	Vec3 vDirection;
 	float fCurTime;
+
 	float fSpeed;
 	uint32 iAlive;
+	Vec2 vPadding;
 };
 
 struct ParticleShared
@@ -42,8 +43,10 @@ public:
 	virtual void Render(shared_ptr<Camera> pCamera);
 
 public:
-	void SetMesh(shared_ptr<Mesh> pMesh) { m_pMesh = pMesh; }
-	void SetMaterial(shared_ptr<Material> pMaterial) { m_pMaterial = pMaterial; }
+	FORCEINLINE void SetParticleScale(const Vec3& vScale) { m_vStartScale = vScale; }
+	FORCEINLINE void SetParticleLifeTime(float fLifeTime) { m_fEndTime = fLifeTime; }
+	FORCEINLINE void SetCreateInterval(float fCreateInterval) { m_fCreateInterval = fCreateInterval; }
+	FORCEINLINE void SetMaxParticles(uint32 iMaxParticles) { m_iMaxParticles = iMaxParticles; }
 
 private:
 	shared_ptr<StructuredBuffer> m_pParticleBuffer;
@@ -53,8 +56,7 @@ private:
 	shared_ptr<Material> m_pMaterial;
 	shared_ptr<Material> m_pComputeMaterial;
 
-	Vec4 m_vStartScale;
-	Vec4 m_vStartColor;
+	Vec3 m_vStartScale;
 
 	uint32 m_iMaxParticles;
 	float m_fEndTime;

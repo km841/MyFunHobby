@@ -138,36 +138,23 @@ void Scene::FinalUpdate()
 
 void Scene::Render()
 {
-	shared_ptr<Camera> pMainCamera = m_vCameras[0];
-
 	// RenderTarget Clear
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->ClearRenderTargetView();
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->ClearRenderTargetView();
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->ClearRenderTargetView();
 
 	// Deferred Rendering
-	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
-	pMainCamera->Render(SHADER_TYPE::DEFERRED);
+	Render_Deferred();
 
 	// Light Rendering
 	PushLightData();
 	Render_Lights();
 
-	// Merge
+	// G-Buffer Merge & Rendering
 	Render_Final();
 
 	// Forward Rendering
-	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
-	pMainCamera->Render(SHADER_TYPE::FORWARD);
-	pMainCamera->Render(SHADER_TYPE::PARTICLE);
-
-	for (const shared_ptr<Camera>& pCamera : m_vCameras)
-	{
-		if (pMainCamera == pCamera)
-			continue;
-
-		pCamera->Render(SHADER_TYPE::FORWARD);
-	}
+	Render_Forward();
 }
 
 void Scene::Render_Lights()
@@ -186,6 +173,31 @@ void Scene::Render_Final()
 
 	GET_SINGLE(Resources)->Get<Material>(L"Final")->PushGraphicData();
 	GET_SINGLE(Resources)->LoadRectMesh()->Render();
+}
+
+void Scene::Render_Forward()
+{
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
+	shared_ptr<Camera> pCamera = m_vCameras[0];
+	pCamera->Render_Forward();
+	pCamera->Render_Particle();
+
+	for (const shared_ptr<Camera>& pSubCamera : m_vCameras)
+	{
+		if (pCamera == pSubCamera)
+			continue;
+
+		pSubCamera->SortGameObject();
+		pSubCamera->Render_Forward();
+	}
+}
+
+void Scene::Render_Deferred()
+{
+	shared_ptr<Camera> pCamera = m_vCameras[0];
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
+	pCamera->SortGameObject();
+	pCamera->Render_Deferred();
 }
 
 void Scene::PushLightData()

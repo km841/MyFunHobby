@@ -51,8 +51,12 @@ void Camera::FinalUpdate()
     m_Frustum.FinalUpdate(shared_from_this());
 }
 
-void Camera::Render(SHADER_TYPE eShaderType)
+void Camera::SortGameObject()
 {
+    m_vForwardObjects.clear();
+    m_vDeferredObjects.clear();
+    m_vParticleObjects.clear();
+
     shared_ptr<Scene> pCurScene = GET_SINGLE(Scenes)->GetActiveScene();
 
     for (int32 i = 0; i < LAYER_TYPE_COUNT; ++i)
@@ -63,51 +67,42 @@ void Camera::Render(SHADER_TYPE eShaderType)
         const std::vector<shared_ptr<GameObject>>& vGameObjects = pCurScene->GetGameObjects(static_cast<LAYER_TYPE>(i));
         for (const shared_ptr<GameObject>& pGameObject : vGameObjects)
         {
-            if (pGameObject->IsEnable())
+            if (pGameObject->IsDisable())
+                continue;
+
+            if (nullptr == pGameObject->GetMeshRenderer() &&
+                nullptr == pGameObject->GetParticleSystem() &&
+                LAYER_TYPE::PLAYER != pGameObject->GetLayerType())
+                continue;
+
+            if (pGameObject->IsFrustum() && pGameObject->GetTransform())
             {
-                if (pGameObject->GetMeshRenderer() || pGameObject->GetParticleSystem())
+                if (m_Frustum.ContainsSphere(
+                    pGameObject->GetTransform()->GetWorldPosition(),
+                    pGameObject->GetTransform()->GetBoundingSphereRadius()))
+                    continue;
+            }
+            
+            if (pGameObject->GetMeshRenderer())
+            {
+                SHADER_TYPE eShaderType = pGameObject->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType();
+                switch (eShaderType)
                 {
-                    if (pGameObject->GetMeshRenderer())
-                    {
-                        if (eShaderType != pGameObject->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType())
-                            continue;
-
-                        if (pGameObject->IsFrustum() && pGameObject->GetTransform())
-                        {
-                            if (m_Frustum.ContainsSphere(
-                                pGameObject->GetTransform()->GetWorldPosition(),
-                                pGameObject->GetTransform()->GetBoundingSphereRadius()))
-                            {
-                                continue;
-                            }
-                        }
-                        pGameObject->GetMeshRenderer()->Render(shared_from_this());
-                    }
-
-                    else
-                    {
-                        if (SHADER_TYPE::PARTICLE == eShaderType)
-                        if (pGameObject->GetParticleSystem())
-                            pGameObject->GetParticleSystem()->Render(shared_from_this());
-                    }
+                case SHADER_TYPE::FORWARD:
+                    m_vForwardObjects.push_back(pGameObject);
+                    break;
+                case SHADER_TYPE::DEFERRED:
+                    m_vDeferredObjects.push_back(pGameObject);
+                    break;
                 }
+            }
+            else
+            {
+                if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+                    m_vDeferredObjects.push_back(pGameObject);
 
-                else
-                {
-                    if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
-                    {
-                        weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
-                        if (pActiveSkul.lock())
-                        {
-                            if (eShaderType != pActiveSkul.lock()->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType())
-                                continue;
-                            pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
-                        }
-                    }
-                }
-
-                if (pGameObject->GetDebugRenderer())
-                    pGameObject->GetDebugRenderer()->Render(shared_from_this());
+                if (pGameObject->GetParticleSystem())
+                    m_vParticleObjects.push_back(pGameObject);
             }
         }
     }
@@ -131,5 +126,39 @@ void Camera::EnableAllCullingMask()
     for (int32 i = 0; i < LAYER_TYPE_COUNT - 1; ++i)
     {
         m_iCullingMask |= 1 << i;
+    }
+}
+
+void Camera::Render_Forward()
+{
+    for (const auto& pGameObject : m_vForwardObjects)
+    {
+        pGameObject->GetMeshRenderer()->Render(shared_from_this());  
+    }
+}
+
+void Camera::Render_Deferred()
+{
+    for (const auto& pGameObject : m_vDeferredObjects)
+    {
+        if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+        {
+            weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
+            if (pActiveSkul.lock())
+                pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
+        }
+        else
+            pGameObject->GetMeshRenderer()->Render(shared_from_this());
+
+		if (pGameObject->GetDebugRenderer())
+			pGameObject->GetDebugRenderer()->Render(shared_from_this());
+    }
+}
+
+void Camera::Render_Particle()
+{
+    for (const auto& pGameObject : m_vParticleObjects)
+    {
+        pGameObject->GetParticleSystem()->Render(shared_from_this());
     }
 }

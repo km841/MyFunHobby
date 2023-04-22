@@ -10,11 +10,12 @@
 ParticleSystem::ParticleSystem()
 	: Component(COMPONENT_TYPE::PARTICLE_SYSTEM)
 	, m_iMaxParticles(1000)
-	, m_fEndTime(10.f)
+	, m_fEndTime(3.f)
 	, m_fAccTime(0.f)
 	, m_fStartSpeed(300.0f)
 	, m_fElapsedTime(0.f)
 	, m_fCreateInterval(0.01f)
+	, m_vStartScale(4.f, 4.f, 1.f)
 {
 }
 
@@ -28,7 +29,7 @@ void ParticleSystem::Awake()
 	m_pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Particle");
 	m_pComputeMaterial = GET_SINGLE(Resources)->Get<Material>(L"ComputeParticle");
 	
-	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"Bubble", L"..\\Resources\\Texture\\bubble.png");
+	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"Bubble", L"..\\Resources\\Texture\\Particle\\Image_Particle.png");
 	m_pMaterial->SetTexture(0, pTexture);
 
 	std::vector<ParticleInfo> vParticles(m_iMaxParticles);
@@ -50,7 +51,8 @@ void ParticleSystem::FinalUpdate()
 	if (m_fCreateInterval < m_fAccTime)
 	{
 		m_fAccTime -= m_fCreateInterval;
-		ParticleShared shared = { 1, };
+		ParticleShared shared = { 1, }; // 활성화시킬 파티클의 수
+		// WriteBuffer를 이용하여 SharedBuffer에 값을 쓴다
 		m_pSharedBuffer->SetData(&shared, 1);
 	}
 	else
@@ -60,8 +62,7 @@ void ParticleSystem::FinalUpdate()
 	}
 
 	m_iMaxParticles = m_pParticleBuffer->GetElementCount();
-	const Vec3 vMyPos = GetTransform()->GetLocalPosition();
-	m_pComputeMaterial->SetVec4(0, Vec4(vMyPos.x, vMyPos.y, vMyPos.z, 1.0f));
+	m_pComputeMaterial->SetVec3(0, GetTransform()->GetLocalPosition());
 	m_pComputeMaterial->SetInt(0, m_iMaxParticles);
 	m_pComputeMaterial->SetFloat(1, m_fStartSpeed);
 	m_pComputeMaterial->SetFloat(2, m_fEndTime);
@@ -78,6 +79,8 @@ void ParticleSystem::Render(shared_ptr<Camera> pCamera)
 	m_pParticleBuffer->PushGraphicsData(SRV_REGISTER::t9);
 
 	m_pMaterial->PushGraphicData();
+	m_pMaterial->SetVec3(0, m_vStartScale);
+	CONST_BUFFER(CONSTANT_BUFFER_TYPE::MATERIAL)->Mapping();
 	m_pMesh->Render(m_iMaxParticles);
 
 	m_pParticleBuffer->ClearGraphicsData();

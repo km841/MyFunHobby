@@ -12,6 +12,7 @@
 #include "Physics.h"
 #include "ForceOnObjectEvent.h"
 #include "Transform.h"
+#include "RigidBody.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -103,10 +104,5 @@ void EventManager::ProcessForceOnObjectEvent(ForceOnObjectEvent* pEvent)
 	assert(pGameObject->GetPhysical());
 
 	const PxVec3& vImpulse = pEvent->GetForce();
-	PxRigidBodyExt::addForceAtPos(
-		*pGameObject->GetPhysical()->GetActor<PxRigidDynamic>(),
-		vImpulse,
-		Conv::Vec3ToPxVec3(pGameObject->GetTransform()->GetPhysicalPosition()),
-		PxForceMode::eIMPULSE
-	);
+	pGameObject->GetRigidBody()->AddForceForDynamic(vImpulse, PxForceMode::eIMPULSE);
 }
