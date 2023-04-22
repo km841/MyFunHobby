@@ -19,10 +19,8 @@ RotateHeadScript::~RotateHeadScript()
 
 void RotateHeadScript::LateUpdate()
 {
-	if (m_pProjectile.lock()->GetRigidBody()->IsAccelerating())
-	{
-		float fRotatedZ = m_pProjectile.lock()->GetTransform()->GetLocalRotation().z;
-		fRotatedZ += m_fAngularSpeed * DELTA_TIME;
-		m_pProjectile.lock()->GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, fRotatedZ));
-	}
+	float fRotatedZ = m_pProjectile.lock()->GetTransform()->GetLocalRotation().z;
+	fRotatedZ += m_fAngularSpeed * DELTA_TIME;
+	
+	
 }

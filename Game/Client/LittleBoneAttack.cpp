@@ -44,8 +44,6 @@ void LittleBoneAttack::Update()
 		HitMonstersInAttackRange();
 		m_arrAttackInfo[iEnum][iOrder].pAnimation->CheckToHitFrame();
 	}
-
-	m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 }
 
 void LittleBoneAttack::Enter()

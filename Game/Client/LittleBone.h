@@ -2,7 +2,7 @@
 #include "Skul.h"
 
 class GlobalEffect;
-class PlayerProjectile;
+class LittleBoneHead;
 class LittleBone :
     public Skul
 {
@@ -19,7 +19,7 @@ public:
 
 public:
 	FORCEINLINE bool HasHead()  { return m_eLittleBoneState == LITTLE_BONE_STATE::HAS_HEAD; }
-	FORCEINLINE weak_ptr<PlayerProjectile> GetHeadProjectile() { return m_pHead; }
+	FORCEINLINE weak_ptr<LittleBoneHead> GetHeadProjectile() { return m_pHead; }
 	void LoseHead();
 	void PickUpHead();
 
@@ -32,7 +32,7 @@ private:
 
 private:
 	LITTLE_BONE_STATE m_eLittleBoneState;
-	shared_ptr<PlayerProjectile> m_pHead;
+	shared_ptr<LittleBoneHead> m_pHead;
 	
 };
 

@@ -12,7 +12,7 @@ public:
     virtual void FinalUpdate() override;
 
 public:
-    // for kinematic actor
+    // for kinematic actors
     FORCEINLINE bool        IsAccelerating() const             { return fabs(m_vVelocity.Length()) > 0.f; }
     FORCEINLINE bool        IsGravityApplied() const           { return m_bGravityApplied;   }
     FORCEINLINE const Vec3& GetGravityAccel()  const           { return m_vGravityAccel;     }
@@ -29,7 +29,7 @@ public:
     void  AddVelocity(AXIS eAxis, float fVelocity);
 
 public:
-    // for dynamic actor
+    // for dynamic actors
     void SetMassForDynamic(float fMass);
     void SetLinearVelocityForDynamic(const PxVec3& vLinearVelocity);
     void SetAngularVelocityForDynamic(const PxVec3& vAngularVelocity);

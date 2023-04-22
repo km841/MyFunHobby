@@ -183,8 +183,8 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
                 2.f * fRand2 - 1.f,
             };
             
-            float fRandSpeed = lerp(iStartSpeed, iEndSpeed, fNoise.x);
-            float fRandAngle = lerp(iStartAngle, iEndAngle, fNoise.y);
+            float fRandSpeed = lerp((float) iStartSpeed, (float) iEndSpeed, fNoise.x);
+            float fRandAngle = lerp((float) iStartAngle, (float) iEndAngle, fNoise.y);
             float fRandRadian = fRandAngle * 3.141592f / 180.f;
             
             float2 vRightNormal = float2(1.f, 0.f);

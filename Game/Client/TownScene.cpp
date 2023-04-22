@@ -123,14 +123,15 @@ void TownScene::Enter()
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 	Load(L"..\\Resources\\Map\\DefaultMap6.map");
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
 
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::MONSTER);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PARTICLE, LAYER_TYPE::PARTICLE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::PLAYER_PROJECTILE);
 
 	// Directional Light
 	{
@@ -165,7 +166,7 @@ void TownScene::Enter()
 		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
-		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 100.f, 100.f));
+		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 100.f));
 
 		pPlayer->SetFrustum(false);
 		AddGameObject(pPlayer);

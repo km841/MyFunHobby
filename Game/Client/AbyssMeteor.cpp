@@ -18,6 +18,7 @@
 #include "EventManager.h"
 #include "ObjectRemoveToSceneEvent.h"
 #include "ForceOnObjectEvent.h"
+#include "Engine.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()

@@ -52,7 +52,6 @@ void ParticleSystem::Update()
 void ParticleSystem::FinalUpdate()
 {
 	m_fElapsedTime += DELTA_TIME;
-	m_fAccTime += DELTA_TIME;
 
 	if (m_iAliveCount > 0)
 	{
@@ -79,7 +78,6 @@ void ParticleSystem::FinalUpdate()
 	m_pComputeMaterial->SetVec2(0, Vec2(DELTA_TIME, m_fElapsedTime));
 	m_pComputeMaterial->SetVec2(2, Vec2(m_fStartAngle, m_fEndAngle));
 
-	
 	m_pParticleBuffer->PushComputeUAVData(UAV_REGISTER::u0);
 	m_pSharedBuffer->PushComputeUAVData(UAV_REGISTER::u1);
 	m_pComputeMaterial->Dispatch(1, 1, 1);

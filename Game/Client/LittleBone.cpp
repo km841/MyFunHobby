@@ -71,6 +71,7 @@ void LittleBone::CooldownCompletionCallback(SKILL_INDEX eSkillIndex)
 	if (SKILL_INDEX::FIRST == eSkillIndex)
 	{
 		PickUpHead();
+		m_pHead->Disable();
 		m_pPlayer.lock()->RefreshAnimation();
 	}
 
@@ -78,11 +79,11 @@ void LittleBone::CooldownCompletionCallback(SKILL_INDEX eSkillIndex)
 
 void LittleBone::CreateHeadAndAddedToScene()
 {
-	m_pHead = make_shared<LittleBoneHead>();
+	m_pHead = make_shared<LittleBoneHead>(static_pointer_cast<LittleBone>(shared_from_this()));
 	m_pHead->Disable();
 
 	m_pHead->AddComponent(make_shared<Transform>());
-	m_pHead->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(15.f, 13.f, 1.f)));
+	m_pHead->AddComponent(make_shared<Physical>(ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(15.f, 13.f, 10.f)));
 	m_pHead->AddComponent(make_shared<Collider>());
 	m_pHead->AddComponent(make_shared<DebugRenderer>());
 	m_pHead->AddComponent(make_shared<RigidBody>());
