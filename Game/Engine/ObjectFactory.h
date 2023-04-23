@@ -114,7 +114,6 @@ shared_ptr<T> ObjectFactory::CreateObjectHavePhysicalFromPool(const wstring& szM
 	pMeshRenderer->SetMesh(pMesh);
 	pObject->AddComponent(pMeshRenderer);
 
-
 	pObject->AddComponent(make_shared<RigidBody>(bApplyGravity));
 	pObject->AddComponent(make_shared<Collider>());
 	pObject->AddComponent(make_shared<DebugRenderer>());

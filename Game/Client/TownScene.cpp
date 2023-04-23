@@ -163,7 +163,7 @@ void TownScene::Enter()
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-		pPlayer->GetLight()->SetLightRange(800.f);
+		pPlayer->GetLight()->SetLightRange(1000.f);
 		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
@@ -304,28 +304,28 @@ void TownScene::Enter()
 	}
 
 	//Background_Surrounding
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Surrounding.tga");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		pMaterial->SetTexture(0, pTexture);
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+	//{
+	//	shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+	//	pGameObject->SetFrustum(false);
+	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+	//	shared_ptr<Texture> pTexture = make_shared<Texture>();
+	//	pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Surrounding.tga");
+	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+	//	pMaterial->SetTexture(0, pTexture);
+	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
+	//	pMeshRenderer->SetMaterial(pMaterial);
+	//	pMeshRenderer->SetMesh(pMesh);
+	//	pGameObject->AddComponent(pMeshRenderer);
+	//	pGameObject->AddComponent(make_shared<Transform>());
 
-		pGameObject->AddComponent(make_shared<PlayerTrackingScript>(pPlayer, 90.f));
+	//	pGameObject->AddComponent(make_shared<PlayerTrackingScript>(pPlayer, 90.f));
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 500.f, fHeight / 2.f - 20.f, 90.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(680.f, 400.f, 1.f));
+	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 500.f, fHeight / 2.f - 20.f, 90.f));
+	//	pGameObject->GetTransform()->SetLocalScale(Vec3(680.f, 400.f, 1.f));
 
-		AddGameObject(pGameObject);
-	}
+	//	AddGameObject(pGameObject);
+	//}
 
 
 	// Camera

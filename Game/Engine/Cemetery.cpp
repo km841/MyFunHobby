@@ -16,6 +16,7 @@
 #include "AbyssMeteorSkill.h"
 #include "HighWarlockChargingScript.h"
 #include "LittleBoneAttack.h"
+#include "HighWarlockAttack.h"
 
 
 void Cemetery::Init()
@@ -166,8 +167,7 @@ void Cemetery::CreateSkul()
 		shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_JumpRise", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_jump_rise.anim");
 		shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_JumpFall", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_jump_fall.anim");
 		shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_JumpAttack", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_jump_attack.anim");
-		shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackA", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_a.anim");
-		shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackB", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_b.anim");
+		
 		shared_ptr<Animation> pCharging_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Charging", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_charging.anim");
 
 		pHighWarlock->AddAnimation(PLAYER_STATE::IDLE, L"HighWarlock_Idle", pIdleAnimation);
@@ -176,9 +176,26 @@ void Cemetery::CreateSkul()
 		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_RISE, L"HighWarlock_JumpRise", pJumpRiseAnimation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_FALL, L"HighWarlock_JumpFall", pJumpFallAnimation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"HighWarlock_JumpAttack", pJumpAttackAnimation);
-		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_A, L"HighWarlock_AttackA", pAttackA_Animation);
-		pHighWarlock->AddAnimation(PLAYER_STATE::ATTACK_B, L"HighWarlock_AttackB", pAttackB_Animation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::CHARGING, L"HighWarlock_Charging", pCharging_Animation);
+
+		// LittleBone Attack Method
+		{
+			shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackA", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_a.anim");
+			shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackB", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_b.anim");
+
+			pAttackA_Animation->SetTriggerFrame(3);
+			pAttackA_Animation->SetTriggerFrame(4);
+			pAttackA_Animation->SetTriggerFrame(5);
+			pAttackB_Animation->SetTriggerFrame(1);
+			pAttackB_Animation->SetTriggerFrame(2);
+			pAttackB_Animation->SetTriggerFrame(3);
+
+			shared_ptr<HighWarlockAttack> pHighWarlockAttackMethod = make_shared<HighWarlockAttack>(pHighWarlock);
+			pHighWarlockAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pAttackA_Animation , -20.f, 90.f, 100.f });
+			pHighWarlockAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pAttackB_Animation , -20.f, 90.f, 100.f });
+	
+			pHighWarlock->SetAttackMethod(pHighWarlockAttackMethod);
+		}
 
 		// HighWarlock Swap Skill
 		{

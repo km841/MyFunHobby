@@ -150,7 +150,7 @@ void Physical::InitializeActor()
 	case ACTOR_TYPE::MONSTER_DYNAMIC:
 	case ACTOR_TYPE::DYNAMIC:
 		GetRigidBody()->SetLinearDamping(0.5f);
-		GetRigidBody()->SetLinearMaxVelocityForDynamic(2000.f);
+		GetRigidBody()->SetLinearMaxVelocityForDynamic(1000.f);
 		GetRigidBody()->SetAngularMaxVelocityForDynamic(500.f);
 		break;
 	case ACTOR_TYPE::KINEMATIC:

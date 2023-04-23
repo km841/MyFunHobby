@@ -24,6 +24,10 @@ public:
     FORCEINLINE int32                         GetHitFrame()                               { return m_iHitFrame; }
     FORCEINLINE bool                          IsHitFrame()                                { return !m_bHitChecked && m_iCurFrame == m_iHitFrame; }
     FORCEINLINE void                          CheckToHitFrame()                           { m_bHitChecked = true; }
+    
+    void SetTriggerFrame(int32 iTriggerFrame);
+    void CheckToTriggerFrame();
+    bool IsTriggerFrame();
 
     void  SetHitFrame(int32 iHitFrame);
     float GetAnimationProgress();
@@ -45,6 +49,9 @@ private:
     bool                    m_bLoop;
     bool                    m_bFinished;
     int32                   m_iHitFrame;
+
+    std::vector<bool>       m_vTriggerFrames;
+    std::vector<bool>       m_vTriggerChecked;
 
     // 한 프레임 당 Hit 이벤트가 어러 번 체크되지 않도록 하는 플래그
     bool                    m_bHitChecked;

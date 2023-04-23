@@ -66,6 +66,7 @@ void Animation::Update()
 				else
 					m_iCurFrame = m_iSection;
 				m_bHitChecked = false;
+			
 			}
 			else
 			{
@@ -74,6 +75,29 @@ void Animation::Update()
 		}
 	}
 	
+}
+
+void Animation::SetTriggerFrame(int32 iTriggerFrame)
+{
+	if (m_vTriggerFrames.empty())
+		m_vTriggerFrames.resize(m_vFrameDataList[0].iFrameCount, false);
+	if (m_vTriggerChecked.empty())
+		m_vTriggerChecked.resize(m_vFrameDataList[0].iFrameCount, false);
+
+	assert(m_iCurFrame < m_vTriggerChecked.size());
+	m_vTriggerFrames[iTriggerFrame] = true;
+}
+
+void Animation::CheckToTriggerFrame()
+{
+	assert(m_iCurFrame < m_vTriggerChecked.size());
+	m_vTriggerChecked[m_iCurFrame] = true;
+}
+
+bool Animation::IsTriggerFrame()
+{
+	assert(m_iCurFrame < m_vTriggerChecked.size());
+	return m_vTriggerFrames[m_iCurFrame] && !m_vTriggerChecked[m_iCurFrame];
 }
 
 void Animation::SetHitFrame(int32 iHitFrame)
@@ -95,6 +119,12 @@ void Animation::Reset()
 	m_iCurFrame = 0;
 	m_bFinished = false;
 	m_bHitChecked = false;
+
+	if (!m_vTriggerChecked.empty())
+	{
+		for (int32 i = 0; i < m_vTriggerChecked.size(); ++i)
+			m_vTriggerChecked[i] = false;
+	}
 }
 
 void Animation::PushData()

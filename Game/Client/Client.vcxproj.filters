@@ -334,6 +334,12 @@
     <ClInclude Include="AnimationLocalEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="HighWarlockAttack.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="HighWarlockBaseProjectile.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -558,6 +564,12 @@
     </ClCompile>
     <ClCompile Include="AnimationLocalEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="HighWarlockAttack.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="HighWarlockBaseProjectile.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Attack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

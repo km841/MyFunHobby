@@ -81,7 +81,6 @@ void HighWarlock::DisableTrailEffect()
 void HighWarlock::EnableAndInitChargedEffect()
 {
 
-
 	m_pChargedEffect->Enable();
 	m_pChargedEffect->GetAnimator()->Play(L"HighWarlock_Charged", false);
 }
