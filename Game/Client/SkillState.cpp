@@ -2,6 +2,7 @@
 #include "SkillState.h"
 #include "SkulSkill.h"
 #include "Animation.h"
+#include "RigidBody.h"
 
 SkillState::SkillState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)

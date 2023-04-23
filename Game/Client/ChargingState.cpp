@@ -44,6 +44,12 @@ void ChargingState::Update()
 		}
 	}
 
+	if (IS_NONE(KEY_TYPE::LEFT) && IS_NONE(KEY_TYPE::RIGHT))
+	{
+		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, 0.f);
+	}
+
+
 	if (CheckGrounded())
 	{
 		m_pPlayer.lock()->GetRigidBody()->RemoveGravity();

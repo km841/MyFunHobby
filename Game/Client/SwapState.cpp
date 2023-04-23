@@ -48,6 +48,7 @@ void SwapState::Update()
 	if (CheckGrounded())
 	{
 		m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
+		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 	}
 }
 

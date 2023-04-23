@@ -139,8 +139,8 @@ void Camera::Render_Forward()
         if (pGameObject->GetParticleSystem())
             pGameObject->GetParticleSystem()->Render(shared_from_this());
 
-        if (pGameObject->GetDebugRenderer())
-            pGameObject->GetDebugRenderer()->Render(shared_from_this());
+        //if (pGameObject->GetDebugRenderer())
+        //    pGameObject->GetDebugRenderer()->Render(shared_from_this());
     }
 }
 

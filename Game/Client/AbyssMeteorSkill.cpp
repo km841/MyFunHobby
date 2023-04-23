@@ -57,6 +57,8 @@ void AbyssMeteorSkill::CreateConditionFunction()
 
 void AbyssMeteorSkill::Enter()
 {
+	m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(AXIS::X, 0.f);
+
 	shared_ptr<AbyssMeteor> pAbyssMeteor = CreateAbyssMeteor();
 
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPxTransform().p);
