@@ -124,8 +124,9 @@ void TownScene::Enter()
 
 	Load(L"..\\Resources\\Map\\DefaultMap6.map");
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
+	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::MONSTER);
 
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::MONSTER);
@@ -366,7 +367,7 @@ void TownScene::Enter()
 
 	// NPC_Witch
 	{
-		shared_ptr<NPC_Witch> pWitch = GET_SINGLE(ObjectFactory)->CreateObject<NPC_Witch>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(400.f, 120.f, 1.f));
+		shared_ptr<NPC_Witch> pWitch = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysical<NPC_Witch>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(400.f, 120.f, 1.f));
 		pWitch->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Witch_Idle", L"..\\Resources\\Animation\\Witch\\witch_idle.anim");
@@ -379,7 +380,7 @@ void TownScene::Enter()
 
 	// NPC_Wolf
 	{
-		shared_ptr<NPC_Wolf> pWolf = GET_SINGLE(ObjectFactory)->CreateObject<NPC_Wolf>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(217.f, 144.f, 1.f));
+		shared_ptr<NPC_Wolf> pWolf = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysical<NPC_Wolf>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(217.f, 144.f, 1.f));
 		pWolf->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Wolf_Idle", L"..\\Resources\\Animation\\Wolf\\wolf_idle.anim");
@@ -393,7 +394,7 @@ void TownScene::Enter()
 
 	// NPC_Ogre
 	{
-		shared_ptr<NPC_Ogre> pOgre = GET_SINGLE(ObjectFactory)->CreateObject<NPC_Ogre>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(227.f, 151.f, 1.f));
+		shared_ptr<NPC_Ogre> pOgre = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysical<NPC_Ogre>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(227.f, 151.f, 1.f));
 		pOgre->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Ogre_Idle", L"..\\Resources\\Animation\\Ogre\\ogre_idle.anim");
@@ -407,7 +408,7 @@ void TownScene::Enter()
 
 	// NPC_Wizard
 	{
-		shared_ptr<NPC_Wizard> pWizard = GET_SINGLE(ObjectFactory)->CreateObject<NPC_Wizard>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(221.f, 151.f, 1.f));
+		shared_ptr<NPC_Wizard> pWizard = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysical<NPC_Wizard>(L"Deferred", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(221.f, 151.f, 1.f));
 		pWizard->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Wizard_Idle", L"..\\Resources\\Animation\\Wizard\\wizard_idle.anim");

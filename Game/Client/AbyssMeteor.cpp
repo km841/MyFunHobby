@@ -62,7 +62,7 @@ void AbyssMeteor::FinalUpdate()
 
 void AbyssMeteor::CreateSmokeEffectAndAddedScene()
 {
-	s_pSmokeEffect = GET_SINGLE(ObjectFactory)->CreateObject<GlobalEffect>(L"Forward");
+	s_pSmokeEffect = GET_SINGLE(ObjectFactory)->CreateObjectHaveNotPhysical<GlobalEffect>(L"Forward");
 	s_pSmokeEffect->GetTransform()->SetGlobalOffset(Vec2(20.f, 20.f));
 	s_pSmokeEffect->AddComponent(make_shared<Animator>());
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"AbyssMeteor_Smoke", L"..\\Resources\\Animation\\HighWarlock\\charged_meteor_smoke.anim");
@@ -84,6 +84,12 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
+		if (IsEnable())
+		{
+			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
+		}
+
 		Disable();
 		EnableAndInitSmokeEffect();
 
@@ -104,9 +110,30 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 				GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pParticle, vImpulse));
 			}
 		}
+
+		auto& vMonsters = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::MONSTER);
+		for (auto& pMonster : vMonsters)
+		{
+			Vec3 vMonsterPos = pMonster->GetTransform()->GetPhysicalPosition();
+			Vec3 vTargetVec = vMonsterPos - vMyPos;
+
+			if (vTargetVec.Length() < m_fMaxDistance)
+			{
+				float fRandomXImpulse = static_cast<float>(RANDOM(0, 100));
+				if (vTargetVec.x < 0.f)
+					fRandomXImpulse = -fRandomXImpulse;
+
+				PxVec3 vImpulse = PxVec3(fRandomXImpulse, 200.f, 0.f);
+
+				static_pointer_cast<Monster>(pMonster)->FlagAsAttacked();
+				//static_pointer_cast<Monster>(pMonster)->GetStatus()->TakeDamage(2);
+				GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pMonster, vImpulse));
+			}
+		}
 	}
 }
 
 void AbyssMeteor::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
+
 }

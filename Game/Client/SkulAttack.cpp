@@ -75,7 +75,7 @@ void SkulAttack::HitMonstersInAttackRange()
 						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::LEFT);
 				}
 
-				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleAliveCount(50);
+				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleAliveCount(30);
 				if (vTargetVec.x > 0.f)
 					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(PARTICLE_DIRECTION::RIGHT);
 				else

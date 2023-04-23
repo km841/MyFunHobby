@@ -12,9 +12,8 @@
 RigidBody::RigidBody(bool bGravityApplied)
 	: Component(COMPONENT_TYPE::RIGIDBODY)
 	, m_bGravityApplied(bGravityApplied)
+	, m_vGravityAccel(Vec3(0.f, -4500.f, 0.f))
 {
-	m_vGravityAccel = Vec3(0.f, -4500.f, 0.f);
-	m_vVelocity = Vec3::Zero;
 }
 
 RigidBody::~RigidBody()

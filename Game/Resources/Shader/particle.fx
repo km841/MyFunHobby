@@ -203,6 +203,7 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
     else
     {
         g_particle[threadIndex.x].fCurTime += fDeltaTime;
+        g_particle[threadIndex.x].fGravityAcc += fGravity * fDeltaTime;
         
         if (g_particle[threadIndex.x].fEndTime < g_particle[threadIndex.x].fCurTime)
         {
@@ -210,7 +211,6 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
         }
         else
         {
-            g_particle[threadIndex.x].fGravityAcc += fGravity * fDeltaTime;
             g_particle[threadIndex.x].vPosition += g_particle[threadIndex.x].vDirection * g_particle[threadIndex.x].fSpeed * fDeltaTime;
             g_particle[threadIndex.x].vPosition.y += g_particle[threadIndex.x].fGravityAcc;
         }

@@ -57,7 +57,7 @@ void JuniorKnight::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 		//GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, 0.f));
 	}
 
-	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+	if (LAYER_TYPE::PLAYER_PROJECTILE == pGameObject->GetLayerType())
 	{
 		int a = 0;
 	}
@@ -85,7 +85,7 @@ void JuniorKnight::ScatterParticles(PARTICLE_DIRECTION eParticleDirection)
 {
 	for (int32 i = 0; i < m_vTextureNames.size(); ++i)
 	{
-		shared_ptr<Particle> pParticle = GET_SINGLE(ObjectFactory)->CreateObjectFromPool<Particle>(
+		shared_ptr<Particle> pParticle = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysicalFromPool<Particle>(
 			L"Deferred", false, 
 			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3::Zero, MassProperties(10.f, 10.f, 1.f), 
 			m_vTextureNames[i]);

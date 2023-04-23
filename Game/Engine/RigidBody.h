@@ -10,7 +10,6 @@ public:
 
     virtual void Awake() override;
     virtual void FinalUpdate() override;
-
 public:
     // for kinematic actors
     FORCEINLINE bool        IsAccelerating() const             { return fabs(m_vVelocity.Length()) > 0.f; }
@@ -36,7 +35,6 @@ public:
     void AddForceForDynamic(const PxVec3& vForce, PxForceMode::Enum eForceMode);
     void SetLinearDamping(float fDamping);
     void SetAngularDamping(float fDamping);
-
     void SetLinearMaxVelocityForDynamic(float fMaxVelocity);
     void SetAngularMaxVelocityForDynamic(float fMaxVelocity);
     void ApplyGravityForDynamic();

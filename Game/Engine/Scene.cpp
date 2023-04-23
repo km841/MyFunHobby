@@ -296,7 +296,7 @@ void Scene::Load(const wstring& szPath)
 		ifs >> vTileAlignVec.x >> vTileAlignVec.y;
 		ifs.ignore(1);
 
-		shared_ptr<Tile> pTile= GET_SINGLE(ObjectFactory)->CreateObjectFromPool<Tile>(
+		shared_ptr<Tile> pTile= GET_SINGLE(ObjectFactory)->CreateObjectHavePhysicalFromPool<Tile>(
 			L"Deferred",
 			false,
 			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),

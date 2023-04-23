@@ -5,7 +5,7 @@ class LittleBoneHead :
     public PlayerProjectile
 {
 public:
-    LittleBoneHead(shared_ptr<LittleBone> pLittleBone);
+    LittleBoneHead();
     virtual ~LittleBoneHead();
 
 public:

@@ -25,22 +25,22 @@ class ObjectFactory
 public:
 	FORCEINLINE void SetPlayer(shared_ptr<Player> pPlayer) { m_pPlayer = pPlayer; }
 	template<typename T, typename ... Types>
-	shared_ptr<T> CreateObject(const wstring& szMaterialName, bool bApplyGravity,
+	shared_ptr<T> CreateObjectHavePhysical(const wstring& szMaterialName, bool bApplyGravity,
 		ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType = GEOMETRY_TYPE::SPHERE,
 		Vec3 vSize = Vec3::Zero, const MassProperties& massProperties = MassProperties(),
 		const wstring& szPath = L"", Types ... args);
 
 	template<typename T>
-	shared_ptr<T> CreateObjectFromPool(const wstring& szMaterialName, bool bApplyGravity,
+	shared_ptr<T> CreateObjectHavePhysicalFromPool(const wstring& szMaterialName, bool bApplyGravity,
 		ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType = GEOMETRY_TYPE::SPHERE,
 		Vec3 vSize = Vec3::Zero, const MassProperties& massProperties = MassProperties(),
 		const wstring& szPath = L"");
 
 	template<typename T, typename ... Types>
-	shared_ptr<T> CreateObject(const wstring& szMaterialName, const wstring& szPath = L"", Types ... args);
+	shared_ptr<T> CreateObjectHaveNotPhysical(const wstring& szMaterialName, const wstring& szPath = L"", Types ... args);
 
 	template<typename T>
-	shared_ptr<T> CreateObjectFromPool(const wstring& szMaterialName, const wstring& szPath = L"");
+	shared_ptr<T> CreateObjectHaveNotPhysicalFromPool(const wstring& szMaterialName, const wstring& szPath = L"");
 
 	template<typename T>
 	void CreateMonsterAndAddedScene(const Vec3& vMonsterPos);
@@ -56,7 +56,7 @@ private:
 };
 
 template<typename T, typename ... Types>
-shared_ptr<T> ObjectFactory::CreateObject(const wstring& szMaterialName, bool bApplyGravity, 
+shared_ptr<T> ObjectFactory::CreateObjectHavePhysical(const wstring& szMaterialName, bool bApplyGravity,
 	ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vSize, const MassProperties& massProperties,
 	const wstring& szPath, Types ... args)
 {
@@ -90,7 +90,7 @@ shared_ptr<T> ObjectFactory::CreateObject(const wstring& szMaterialName, bool bA
 }
 
 template<typename T>
-shared_ptr<T> ObjectFactory::CreateObjectFromPool(const wstring& szMaterialName, bool bApplyGravity,
+shared_ptr<T> ObjectFactory::CreateObjectHavePhysicalFromPool(const wstring& szMaterialName, bool bApplyGravity,
 	ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vSize, const MassProperties& massProperties, const wstring& szPath)
 {
 	shared_ptr<T> pObject = T::Get();
@@ -123,7 +123,7 @@ shared_ptr<T> ObjectFactory::CreateObjectFromPool(const wstring& szMaterialName,
 }
 
 template<typename T, typename ... Types>
-shared_ptr<T> ObjectFactory::CreateObject(const wstring& szMaterialName, const wstring& szPath, Types ... args)
+shared_ptr<T> ObjectFactory::CreateObjectHaveNotPhysical(const wstring& szMaterialName, const wstring& szPath, Types ... args)
 {
 	shared_ptr<T> pObject = make_shared<T>(args...);
 	pObject->AddComponent(make_shared<Transform>());
@@ -147,7 +147,7 @@ shared_ptr<T> ObjectFactory::CreateObject(const wstring& szMaterialName, const w
 }
 
 template<typename T>
-shared_ptr<T> ObjectFactory::CreateObjectFromPool(const wstring& szMaterialName, const wstring& szPath)
+shared_ptr<T> ObjectFactory::CreateObjectHaveNotPhysicalFromPool(const wstring& szMaterialName, const wstring& szPath)
 {
 	shared_ptr<T> pObject = T::Get();
 	pObject->AddComponent(make_shared<Transform>());

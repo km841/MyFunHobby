@@ -123,12 +123,13 @@ void Physical::CreateActor()
 		m_pActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
 		break;
 
-	case ACTOR_TYPE::CHARACTER:
+	case ACTOR_TYPE::MONSTER_DYNAMIC:
 		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 		m_pActor->is<PxRigidDynamic>()->setRigidDynamicLockFlags(
 			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z |
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
-			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 		break;
 	break;
 	}
@@ -146,19 +147,17 @@ void Physical::InitializeActor()
 	{
 	case ACTOR_TYPE::STATIC:
 		break;
+	case ACTOR_TYPE::MONSTER_DYNAMIC:
 	case ACTOR_TYPE::DYNAMIC:
 		GetRigidBody()->SetLinearDamping(0.5f);
-		GetRigidBody()->SetLinearMaxVelocityForDynamic(1000.f);
+		GetRigidBody()->SetLinearMaxVelocityForDynamic(2000.f);
 		GetRigidBody()->SetAngularMaxVelocityForDynamic(500.f);
 		break;
 	case ACTOR_TYPE::KINEMATIC:
 		m_pShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 		m_pShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		break;
-	case ACTOR_TYPE::CHARACTER:
-		break;
 	}
-	
 }
 
 void Physical::AddActorToPxScene()

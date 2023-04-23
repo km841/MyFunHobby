@@ -101,7 +101,7 @@ int32 Monster::CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDi
 
 void Monster::CreateMonsterHPHUD()
 {
-	m_pMonsterHPHUDFrame = GET_SINGLE(ObjectFactory)->CreateObject<MonsterHPHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HealthBar\\Enemy_HealthBar_Frame.png", Conv::BaseToDeclare<Monster>(shared_from_this()));
+	m_pMonsterHPHUDFrame = GET_SINGLE(ObjectFactory)->CreateObjectHaveNotPhysical<MonsterHPHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HealthBar\\Enemy_HealthBar_Frame.png", Conv::BaseToDeclare<Monster>(shared_from_this()));
 	m_pMonsterHPHUDFrame->GetTransform()->SetParent(GetTransform());
 	m_pMonsterHPHUDFrame->GetTransform()->SetLocalPosition(Vec3(0.f, -50.f, -1.f));
 
@@ -109,7 +109,7 @@ void Monster::CreateMonsterHPHUD()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
 
-	m_pMonsterHPHUD = GET_SINGLE(ObjectFactory)->CreateObject<MonsterHPHUD>(L"MonsterHP", L"..\\Resources\\Texture\\HUD\\HealthBar\\Enemy_HealthBar.png", Conv::BaseToDeclare<Monster>(shared_from_this()));
+	m_pMonsterHPHUD = GET_SINGLE(ObjectFactory)->CreateObjectHaveNotPhysical<MonsterHPHUD>(L"MonsterHP", L"..\\Resources\\Texture\\HUD\\HealthBar\\Enemy_HealthBar.png",  Conv::BaseToDeclare<Monster>(shared_from_this()));
 	m_pMonsterHPHUD->AddComponent(make_shared<MonsterHealthBarShowScript>(m_pMonsterHPHUD));
 	m_pMonsterHPHUD->GetTransform()->SetParent(GetTransform());
 	m_pMonsterHPHUD->GetTransform()->SetLocalPosition(Vec3(0.f, -50.f, -2.f));
@@ -121,7 +121,7 @@ void Monster::CreateMonsterHPHUD()
 
 void Monster::CreateDeadEffectAndAddedScene()
 {
-	shared_ptr<AnimationLocalEffect> pDeadEffect = GET_SINGLE(ObjectFactory)->CreateObjectFromPool<AnimationLocalEffect>(L"Forward");
+	shared_ptr<AnimationLocalEffect> pDeadEffect = GET_SINGLE(ObjectFactory)->CreateObjectHaveNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
 	pDeadEffect->AddComponent(make_shared<Animator>());
 	shared_ptr<Animation> pDeadAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Monster_Dead", L"..\\Resources\\Animation\\MonsterCommon\\monster_dead.anim");
 	pDeadEffect->GetAnimator()->AddAnimation(L"Monster_Dead", pDeadAnimation);

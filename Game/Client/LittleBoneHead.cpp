@@ -2,9 +2,10 @@
 #include "LittleBoneHead.h"
 #include "RigidBody.h"
 #include "LittleBone.h"
+#include "Monster.h"
+#include "Transform.h"
 
-LittleBoneHead::LittleBoneHead(shared_ptr<LittleBone> pLittleBone)
-	:m_pLittleBone(pLittleBone)
+LittleBoneHead::LittleBoneHead()
 {
 }
 
@@ -25,9 +26,6 @@ void LittleBoneHead::Start()
 void LittleBoneHead::Update()
 {
 	PlayerProjectile::Update();
-	//if (Vec3::Zero == m_vVelocity)
-	//	return;
-	//GetRigidBody()->SetVelocity(m_vVelocity);
 }
 
 void LittleBoneHead::LateUpdate()
@@ -42,10 +40,6 @@ void LittleBoneHead::FinalUpdate()
 
 void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
-	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
-	{
-		int a = 0;
-	}
 }
 
 void LittleBoneHead::OnCollisionExit(shared_ptr<GameObject> pGameObject)
@@ -56,7 +50,9 @@ void LittleBoneHead::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
 	{
-		int a = 0;
+		static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
+		// 몬스터와의 거리를 계산해서 힘 주기
+		
 	}
 
 	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
