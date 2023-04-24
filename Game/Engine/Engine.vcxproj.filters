@@ -223,6 +223,9 @@
     <ClInclude Include="ParticleSystem.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
+    <ClInclude Include="SceneFadeEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -443,6 +446,9 @@
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFadeEvent.cpp">
+      <Filter>Object\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

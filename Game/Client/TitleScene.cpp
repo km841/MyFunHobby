@@ -20,9 +20,9 @@
 #include "Input.h"
 #include "SceneChangeEvent.h"
 #include "UI.h"
-#include "CameraFadeInOutScript.h"
 #include "ObjectFadeInOutScript.h"
 #include "Light.h"
+#include "SceneFadeEvent.h"
 
 
 TitleScene::TitleScene()
@@ -176,36 +176,8 @@ void TitleScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
 	}
 
-	// Fade In / Out Object
-	{
-		shared_ptr<UI> pUI = make_shared<UI>();
-
-		pUI->AddComponent(make_shared<Transform>());
-
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"FadeInOut");
-
-		auto [vVertices, vIndices] = Vertex::CreateBoxVerticesAndIndicesTri(Vec3(1.f, 1.f, 1.f));
-		shared_ptr<Mesh> pMesh = make_shared<Mesh>();
-
-		pMesh->Init(vVertices, vIndices);
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pUI->AddComponent(pMeshRenderer);
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		pUI->AddComponent(make_shared<CameraFadeInOutScript>(m_vCameras[1]));
-
-		pUI->GetTransform()->SetLocalScale(Vec3(1600.f, 900.f, 50.f));
-		pUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-
-		AddGameObject(pUI);
-	}
-	m_vCameras[1]->SetCameraEffect(CAMERA_EFFECT::FADE_IN);
+	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
+	//GET_SINGLE(EventManager)->AddEvent(make_unique<SceneFadeEvent>());
 	// GameObject를 깨우는 작업
 	Awake();
 }

@@ -227,6 +227,7 @@
     <ClInclude Include="RunAnimateTask.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneChangeEvent.h" />
+    <ClInclude Include="SceneFadeEvent.h" />
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
@@ -307,6 +308,7 @@
     <ClCompile Include="RunAnimateTask.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneChangeEvent.cpp" />
+    <ClCompile Include="SceneFadeEvent.cpp" />
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />

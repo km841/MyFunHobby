@@ -136,9 +136,6 @@
     <ClInclude Include="CameraMoveScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
-    <ClInclude Include="CameraFadeInOutScript.h">
-      <Filter>소스 파일\Game\Object\Script</Filter>
-    </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>소스 파일\Game\Scene</Filter>
     </ClInclude>
@@ -365,9 +362,6 @@
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
     <ClCompile Include="CameraMoveScript.cpp">
-      <Filter>소스 파일\Game\Object\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraFadeInOutScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">

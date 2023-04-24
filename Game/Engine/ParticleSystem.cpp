@@ -72,10 +72,9 @@ void ParticleSystem::FinalUpdate()
 	m_pComputeMaterial->SetVec3(1, m_vStartDir);
 	m_pComputeMaterial->SetInt(0, m_iMaxParticles);
 	m_pComputeMaterial->SetFloat(0, m_fEndTime);
-	m_pComputeMaterial->SetFloat(1, m_fStartSpeed);
-	m_pComputeMaterial->SetFloat(2, m_fEndSpeed);
-	m_pComputeMaterial->SetFloat(3, m_fGravity);
+	m_pComputeMaterial->SetFloat(1, m_fGravity);
 	m_pComputeMaterial->SetVec2(0, Vec2(DELTA_TIME, m_fElapsedTime));
+	m_pComputeMaterial->SetVec2(1, Vec2(m_fStartSpeed, m_fEndSpeed));
 	m_pComputeMaterial->SetVec2(2, Vec2(m_fStartAngle, m_fEndAngle));
 
 	m_pParticleBuffer->PushComputeUAVData(UAV_REGISTER::u0);

@@ -13,6 +13,7 @@ RigidBody::RigidBody(bool bGravityApplied)
 	: Component(COMPONENT_TYPE::RIGIDBODY)
 	, m_bGravityApplied(bGravityApplied)
 	, m_vGravityAccel(Vec3(0.f, -4500.f, 0.f))
+	, m_vMaxVelocity(Vec3(1000.f, -1500.f, 1.f))
 {
 }
 
@@ -27,7 +28,10 @@ void RigidBody::Awake()
 void RigidBody::FinalUpdate()
 {
 	if (m_bGravityApplied)
-		m_vVelocity += m_vGravityAccel * DELTA_TIME;
+	{
+		if (m_vVelocity.y> m_vMaxVelocity.y)
+			m_vVelocity += m_vGravityAccel * DELTA_TIME;
+	}
 }
 
 // for kinematic actors

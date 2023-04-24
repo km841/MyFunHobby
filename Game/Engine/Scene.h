@@ -5,6 +5,15 @@ class Camera;
 class AfterImage;
 class Light;
 
+
+struct SceneEventInfo
+{
+    EVENT_TYPE eEventType;
+    uint8 iDetailEnum;
+    float fEndTime;
+    float fCurTime;
+};
+
 class Scene
 {
 public:
@@ -27,7 +36,9 @@ public:
     void Render_Forward();
     void Render_Deferred();
     void PushLightData();
+    void EventUpdate();
 
+    FORCEINLINE void                     RegisterSceneEvent(EVENT_TYPE eEventType, uint8 iDetailEnum, float fEndTime) { m_vSceneEvents.push_back(SceneEventInfo{ eEventType, iDetailEnum, fEndTime }); }
     FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
@@ -44,6 +55,10 @@ protected:
     std::array<std::vector<shared_ptr<GameObject>>, SCENE_OBJECT_TYPE_COUNT> m_vSceneObjects;
     std::vector<shared_ptr<Camera>>                                          m_vCameras;
     std::vector<shared_ptr<Light>>                                           m_vLights;
+    std::vector<SceneEventInfo>                                              m_vSceneEvents;
+
+    float m_fFadeEffectRatio;
+    EVENT_TYPE m_eActiveSceneEvent;
 
 protected:
     static std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> s_vGlobalObjects;

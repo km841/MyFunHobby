@@ -20,7 +20,6 @@ Camera::Camera()
     , m_fFar(1000.f)
     , m_fFov(XM_PI / 4.f)
     , m_fScale(1.25f)
-    , m_eCameraEffect(CAMERA_EFFECT::NONE)
     , m_iCullingMask(0)
 {
 }
@@ -139,8 +138,8 @@ void Camera::Render_Forward()
         if (pGameObject->GetParticleSystem())
             pGameObject->GetParticleSystem()->Render(shared_from_this());
 
-        //if (pGameObject->GetDebugRenderer())
-        //    pGameObject->GetDebugRenderer()->Render(shared_from_this());
+        if (pGameObject->GetDebugRenderer())
+            pGameObject->GetDebugRenderer()->Render(shared_from_this());
     }
 }
 

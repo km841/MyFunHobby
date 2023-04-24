@@ -18,11 +18,14 @@
 #include "AfterImage.h"
 #include "Light.h"
 #include "ObjectFactory.h"
+#include "Clock.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 
 Scene::Scene(SCENE_TYPE eSceneType)
 	: m_eSceneType(eSceneType)
+	, m_fFadeEffectRatio(1.f)
+	, m_eActiveSceneEvent(EVENT_TYPE::END)
 {
 
 }
@@ -92,6 +95,8 @@ void Scene::Update()
 				pGameObject->Update();
 		}
 	}
+
+	EventUpdate();
 }
 
 void Scene::LateUpdate()
@@ -171,6 +176,11 @@ void Scene::Render_Final()
 {
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
 
+	if (EVENT_TYPE::SCENE_FADE_EVENT == m_eActiveSceneEvent)
+		GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(0, m_fFadeEffectRatio);
+	else
+		GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(0, 1.f);
+
 	GET_SINGLE(Resources)->Get<Material>(L"Final")->PushGraphicData();
 	GET_SINGLE(Resources)->LoadRectMesh()->Render();
 }
@@ -215,6 +225,47 @@ void Scene::PushLightData()
 
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::LIGHT)->PushData(&lightParams, sizeof(lightParams));
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::LIGHT)->Mapping();
+}
+
+void Scene::EventUpdate()
+{
+	// Processing Scene Event
+	if (EVENT_TYPE::END == m_eActiveSceneEvent)
+	{
+		if (!m_vSceneEvents.empty())
+		{
+			const auto& curEvent = m_vSceneEvents.front();
+			m_eActiveSceneEvent = curEvent.eEventType;
+		}
+	}
+
+	else
+	{
+		switch (m_eActiveSceneEvent)
+		{
+		case EVENT_TYPE::SCENE_FADE_EVENT:
+		{
+			auto& curEvent = m_vSceneEvents.front();
+			SCENE_FADE_EFFECT eSceneFadeEffect = static_cast<SCENE_FADE_EFFECT>(curEvent.iDetailEnum);
+			curEvent.fCurTime += DELTA_TIME;
+
+			if (SCENE_FADE_EFFECT::FADE_IN == eSceneFadeEffect)
+				m_fFadeEffectRatio = curEvent.fCurTime / curEvent.fEndTime;
+
+			else // FADE_OUT
+				m_fFadeEffectRatio = 1.f - (curEvent.fCurTime / curEvent.fEndTime);
+
+
+			if (curEvent.fEndTime < curEvent.fCurTime)
+			{
+				m_fFadeEffectRatio = 1.f;
+				m_eActiveSceneEvent = EVENT_TYPE::END;
+				m_vSceneEvents.erase(m_vSceneEvents.begin());
+			}
+		}
+		break;
+		}
+	}
 }
 
 void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)

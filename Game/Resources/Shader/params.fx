@@ -69,21 +69,4 @@ cbuffer LIGHT_PARAMS : register(b2)
     LightInfo g_light[50];
 }
 
-cbuffer PARTICLE_PARAMS : register(b3)
-{
-    float4 g_worldPosition;
-    float4 g_startColor;
-    float4 g_startSize;
-    
-    uint g_maxParticles;
-    uint g_simulationSpace;
-    float g_radius;
-    float g_startSpeed;
-    
-    float g_startLifeTime;
-    float g_deltaTime;
-    float g_elapsedTime; 
-    int g_particlePadding;
-}
-
 #endif

@@ -101,7 +101,7 @@ void JuniorKnight::ScatterParticles(PARTICLE_DIRECTION eParticleDirection)
 		float fRotatedX = vRightNormal.x * cosf(fRandomRadian) - vRightNormal.y * sinf(fRandomRadian);
 		float fRotatedY = vRightNormal.x * sinf(fRandomRadian) + vRightNormal.y * cosf(fRandomRadian);
 
-		int32 iRandomAngularVelocity = RANDOM(-100, 100);
+		int32 iRandomAngularVelocity = RANDOM(-30, 30);
 		Vec3 vRotatedVec = Vec3(fRotatedX, fRotatedY, 0.f);
 		pParticle->Awake();
 		pParticle->GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, static_cast<float>(iRandomAngularVelocity)));

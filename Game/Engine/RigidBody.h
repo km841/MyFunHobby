@@ -44,5 +44,6 @@ private:
     bool m_bGravityApplied;
     Vec3 m_vGravityAccel;
     Vec3 m_vVelocity;
+    Vec3 m_vMaxVelocity;
 };
 

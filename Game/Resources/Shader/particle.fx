@@ -120,10 +120,10 @@ float4 PS_Main(GS_OUT input) : SV_TARGET
 // g_vec3_0  : World Position
 // g_int_0   : Particle Max Count
 // g_float_0 : Particle Life Time (Maximum)
-// g_float_1 : Particle Start Speed (Range)
-// g_float_2 : Particle End Speed (Range)
-// g_float_3 : Gravity
+// g_float_1 : Gravity
 // g_vec2_0  : Delta Time / Elapsed Time
+// g_vec2_1  : Particle Start Speed (Range) / Particle End Speed (Range)
+// g_vec2_2  : Particle Start Angle (Range) / Particle End Angle (Range)
 
 RWStructuredBuffer<Particle> g_particle : register(u0);
 RWStructuredBuffer<ParticleShared> g_shared : register(u1);
@@ -136,14 +136,14 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
     uint iMaxCount = g_int_0;
 
     float fStartLifeTime = g_float_0;
-    int iStartSpeed = g_float_1;
-    int iEndSpeed = g_float_2;
+    float fGravity = g_float_1;
     
     float fDeltaTime = g_vec2_0.x;
     float fElapsedTime = g_vec2_0.y;
     
-    float fGravity = g_float_3;
-
+    int iStartSpeed = (int) g_vec2_1.x;
+    int iEndSpeed = (int) g_vec2_1.y;
+    
     int iStartAngle = (int) g_vec2_2.x;
     int iEndAngle = (int) g_vec2_2.y;
     
@@ -175,7 +175,7 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
             float fSeedValue = ((float) threadIndex.x / (float) iMaxCount) + fElapsedTime;
 
             float fRand1 = Rand(float2(fSeedValue, fElapsedTime));
-            float fRand2 = Rand(float2(fSeedValue * fElapsedTime * fElapsedTime, fElapsedTime * fElapsedTime));
+            float fRand2 = Rand(float2(fSeedValue * fElapsedTime, fElapsedTime));
             
             float2 fNoise =
             {

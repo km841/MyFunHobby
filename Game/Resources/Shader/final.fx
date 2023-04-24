@@ -38,9 +38,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float4 output = (float4) 0;
     
     float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-    float4 vLightColor = g_tex_1.Sample(g_sam_0, _in.uv);
-    //if (vLightColor.x == 0.f && vLightColor.y == 0.f && vLightColor.z == 0.f)
-    //    vLightColor = float4(0.7f, 0.7f, 0.7f, 1.f);
+    float4 vLightColor = g_tex_1.Sample(g_sam_0, _in.uv) * g_float_0; 
    
     return vColor * vLightColor;
 }

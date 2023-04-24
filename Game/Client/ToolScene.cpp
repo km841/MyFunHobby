@@ -23,6 +23,8 @@
 #include "Physical.h"
 #include "Collider.h"
 #include "DebugRenderer.h"
+#include "RigidBody.h"
+#include "Light.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
@@ -48,8 +50,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//PalleteUpdate();
-	AnimationEditorUpdate();
+	PalleteUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -76,6 +78,21 @@ void ToolScene::Render()
 
 void ToolScene::Enter()
 {
+
+	// Light
+	{
+		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->AddComponent(make_shared<Light>());
+		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
+		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+		pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
+		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+		pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
+
+		AddGameObject(pGameObject);
+	}
+
 	// Preview Tile
 	{
 		m_pPreviewTile = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
@@ -315,7 +332,7 @@ void ToolScene::CreateTile(const Vec3& vWorldPos)
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = m_pPreviewTile->GetMeshRenderer()->GetMaterial()->Clone();
-	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
+	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Deferred");
 	pMaterial->SetShader(pShader);
 	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 	pMeshRenderer->SetMaterial(pMaterial);
@@ -325,6 +342,7 @@ void ToolScene::CreateTile(const Vec3& vWorldPos)
 	pTile->AddComponent(make_shared<Transform>());
 	pTile->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f)));
 	pTile->AddComponent(make_shared<Collider>());
+	pTile->AddComponent(make_shared<RigidBody>());
 	pTile->AddComponent(make_shared<DebugRenderer>());
 
 	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
@@ -343,7 +361,7 @@ void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath)
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = make_shared<Material>();
-	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Forward");
+	shared_ptr<Shader> pShader = GET_SINGLE(Resources)->Get<Shader>(L"Deferred");
 	pMaterial->SetShader(pShader);
 
 	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
@@ -358,6 +376,7 @@ void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath)
 	pTile->AddComponent(make_shared<Transform>());
 	pTile->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f)));
 	pTile->AddComponent(make_shared<Collider>());
+	pTile->AddComponent(make_shared<RigidBody>());
 	pTile->AddComponent(make_shared<DebugRenderer>());
 
 	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));

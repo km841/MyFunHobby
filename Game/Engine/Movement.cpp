@@ -40,6 +40,7 @@ void Movement::FinalUpdate()
 
 void Movement::Move(const Vec3& vVelocity)
 {
+
 	PxTransform transform = GetTransform()->GetPxTransform();
 	transform.p += Conv::Vec3ToPxVec3(vVelocity * DELTA_TIME);
 
@@ -47,6 +48,4 @@ void Movement::Move(const Vec3& vVelocity)
 		GetPhysical()->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
 	else
 		GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(transform);
-
-	//GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 }

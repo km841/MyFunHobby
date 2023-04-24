@@ -18,15 +18,18 @@ PlayerTrackingScript::~PlayerTrackingScript()
 void PlayerTrackingScript::LateUpdate()
 {
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
-	vPlayerPos.y += 200.f;
+	vPlayerPos.y += 100.f;
 	const Vec3& vMyPos = GetTransform()->GetTransform()->GetLocalPosition();
 
 	Vec3 vDiffNormal = vPlayerPos - vMyPos;
 	if (1.f > vDiffNormal.Length())
+	{
+		GetTransform()->SetLocalPosition(vPlayerPos);
 		return;
+	}
 
 	vDiffNormal.Normalize();
-	vDiffNormal.y = 0.f;
+	vDiffNormal.y *= 2.f;
 	vDiffNormal.z = 0.f;
-	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 2000.f * DELTA_TIME);
+	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 1000.f * DELTA_TIME);
 }

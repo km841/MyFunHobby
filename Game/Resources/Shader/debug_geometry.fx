@@ -43,7 +43,7 @@ PS_OUT PS_Main(VS_OUT _in) : SV_Target
     PS_OUT output = (PS_OUT) 0;
     
     output.vPosition = float4(_in.viewPos, 0.f);
-    output.vColor = float4(0.f, 1.f, 0.f, 1.f);
+    output.vColor = float4(1.f, 0.f, 0.f, 1.f);
     
     return output;
 }

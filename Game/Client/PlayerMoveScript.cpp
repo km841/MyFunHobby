@@ -103,13 +103,14 @@ void PlayerMoveScript::LateUpdate()
 		//	GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Enable();
 	}
 
-	//if (IS_NONE(KEY_TYPE::LEFT) && IS_NONE(KEY_TYPE::RIGHT))
-	//{
-	//	if (PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum() &&
-	//		PLAYER_STATE::SWAP != pPlayer->GetPlayerStateEnum())
-	//		//GetRigidBody()->SetVelocity(AXIS::X, 0.f);
-	//}
+	if (IS_NONE(KEY_TYPE::LEFT) && IS_NONE(KEY_TYPE::RIGHT))
+	{
+		if (PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum() &&
+			PLAYER_STATE::SWAP != pPlayer->GetPlayerStateEnum())
+			GetRigidBody()->SetVelocity(AXIS::X, 0.f);
+	}
 
+	pPlayer->ReorganizePosition();
 	pPlayer->ReorganizePosition();
 	//pPlayer->CheckAndAdjustPlayerPositionOnCollision();
 

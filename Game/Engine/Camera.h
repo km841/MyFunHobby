@@ -23,17 +23,12 @@ public:
 
     FORCEINLINE const Matrix&    GetViewMatrix()       const                  { return m_matView; }
     FORCEINLINE const Matrix&    GetProjectionMatrix() const                  { return m_matProjection; }
-
-    FORCEINLINE CAMERA_EFFECT    GetCameraEffect()     const                  { return m_eCameraEffect; }
-    FORCEINLINE void             SetCameraEffect(CAMERA_EFFECT eCameraEffect) { m_eCameraEffect = eCameraEffect; }
-    FORCEINLINE void             RemoveCameraEffect() { m_eCameraEffect = CAMERA_EFFECT::NONE; }
     
     void            SortGameObject();
     void            SetCullingMask(LAYER_TYPE eLayerType, bool bFlag);
     void            DisableAllCullingMask();
     void            EnableAllCullingMask();
     bool            ContainsSphere(const Vec3& vPos, float fRadius)           { return m_Frustum.ContainsSphere(vPos, fRadius); }
-
 
 public:
     void Render_Forward();
@@ -51,8 +46,6 @@ private:
     Matrix          m_matProjection;
 
     uint32          m_iCullingMask;
-
-    CAMERA_EFFECT   m_eCameraEffect;
 
     Frustum         m_Frustum;
 

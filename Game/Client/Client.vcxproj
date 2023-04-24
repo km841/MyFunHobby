@@ -175,7 +175,6 @@
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="BackgroundMoveScript.h" />
     <ClInclude Include="CameraMoveScript.h" />
-    <ClInclude Include="CameraFadeInOutScript.h" />
     <ClInclude Include="ChargingState.h" />
     <ClInclude Include="DashState.h" />
     <ClInclude Include="DialogueUI.h" />
@@ -251,7 +250,6 @@
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="ChargingState.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="CameraFadeInOutScript.cpp" />
     <ClCompile Include="DashState.cpp" />
     <ClCompile Include="DialogueUI.cpp" />
     <ClCompile Include="GlobalEffect.cpp" />

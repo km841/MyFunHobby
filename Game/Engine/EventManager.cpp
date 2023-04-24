@@ -13,6 +13,7 @@
 #include "ForceOnObjectEvent.h"
 #include "Transform.h"
 #include "RigidBody.h"
+#include "SceneFadeEvent.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -51,6 +52,10 @@ void EventManager::ProcessEvents()
 
 		case EVENT_TYPE::FORCE_ON_OBJECT_EVENT:
 			ProcessForceOnObjectEvent(static_cast<ForceOnObjectEvent*>(pEvent.get()));
+			break;
+
+		case EVENT_TYPE::SCENE_FADE_EVENT:
+			ProcessSceneFadeEvent(static_cast<SceneFadeEvent*>(pEvent.get()));
 			break;
 		}
 	}
@@ -105,4 +110,13 @@ void EventManager::ProcessForceOnObjectEvent(ForceOnObjectEvent* pEvent)
 
 	const PxVec3& vImpulse = pEvent->GetForce();
 	pGameObject->GetRigidBody()->AddForceForDynamic(vImpulse, PxForceMode::eIMPULSE);
+}
+
+void EventManager::ProcessSceneFadeEvent(SceneFadeEvent* pEvent)
+{
+	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
+	EVENT_TYPE eEventType = pEvent->GetEventType();
+	SCENE_FADE_EFFECT eSceneFadeEffect = pEvent->GetFadeEffectType();
+	float fEndTime = pEvent->GetEndTime();
+	pCurScene->RegisterSceneEvent(eEventType, static_cast<uint8>(eSceneFadeEffect), fEndTime);
 }

@@ -19,6 +19,7 @@
 #include "ObjectRemoveToSceneEvent.h"
 #include "ForceOnObjectEvent.h"
 #include "Engine.h"
+#include "Clock.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()
@@ -48,6 +49,7 @@ void AbyssMeteor::Start()
 void AbyssMeteor::Update()
 {
 	PlayerProjectile::Update();
+	GetRigidBody()->AddVelocity(AXIS::Y, -20.f * DELTA_TIME);
 }
 
 void AbyssMeteor::LateUpdate()
