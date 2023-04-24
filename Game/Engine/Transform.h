@@ -61,6 +61,7 @@ private:
 
     Matrix  m_matLocal = {};
     Matrix  m_matWorld = {};
+    Matrix  m_matOldWorld = {};
     Matrix  m_matPxWorld = {};
 
     PxTransform m_PxTransform;

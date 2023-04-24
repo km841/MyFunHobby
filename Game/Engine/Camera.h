@@ -21,6 +21,7 @@ public:
     FORCEINLINE void             SetProjectionType(PROJECTION_TYPE eType)     { m_eType = eType; }
     FORCEINLINE PROJECTION_TYPE  GetProjectionType()   const                  { return m_eType; }
 
+    FORCEINLINE const Matrix&    GetOldViewMatrix()    const                  { return m_matOldView; }
     FORCEINLINE const Matrix&    GetViewMatrix()       const                  { return m_matView; }
     FORCEINLINE const Matrix&    GetProjectionMatrix() const                  { return m_matProjection; }
     
@@ -33,6 +34,7 @@ public:
 public:
     void Render_Forward();
     void Render_Deferred();
+    void Render_Velocity();
 
 private:
     PROJECTION_TYPE m_eType;
@@ -42,6 +44,7 @@ private:
     float           m_fFov;
     float           m_fScale;
 
+    Matrix          m_matOldView;
     Matrix          m_matView;
     Matrix          m_matProjection;
 

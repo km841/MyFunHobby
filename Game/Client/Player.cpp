@@ -24,6 +24,7 @@
 #include "SkulThumnailHUD.h"
 #include "InterfaceManager.h"
 #include "Engine.h"
+#include "PlayerHitHUD.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -190,6 +191,12 @@ void Player::SwapCooldownUpdate()
 			}
 		}
 	}
+}
+
+void Player::TakeDamage(uint32 iDamage)
+{
+	m_Status.TakeDamage(iDamage);
+	static_pointer_cast<PlayerHitHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::PLAYER_HIT))->PlayHitAnimation();
 }
 
 void Player::OnCollisionEnter(shared_ptr<GameObject> pGameObject)

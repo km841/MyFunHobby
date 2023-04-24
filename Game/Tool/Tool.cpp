@@ -29,8 +29,8 @@ void Tool::Update()
 {
 	UpdateGui();
 
-	//m_pAnimEditor->Update();
-	m_pPallete->Update();
+	m_pAnimEditor->Update();
+	//m_pPallete->Update();
 	// Changed
 }
 

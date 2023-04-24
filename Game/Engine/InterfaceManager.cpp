@@ -9,9 +9,12 @@
 #include "MeshRenderer.h"
 #include "Engine.h"
 #include "Transform.h"
+#include "Animator.h"
+#include "Animation.h"
 
 #include "Resources.h"
 
+#include "PlayerHitHUD.h"
 #include "HealthBarHUD.h"
 #include "PlayerInterfaceHUD.h"
 #include "SkulThumnailHUD.h"
@@ -183,6 +186,32 @@ void InterfaceManager::CreateHUD()
 		pSkillBoxHUD->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_SKILL_BOX_FIRST] = pSkillBoxHUD;
+	}
+
+	// Player Hit HUD
+	{
+		shared_ptr<PlayerHitHUD> pPlayerHitHUD = make_shared<PlayerHitHUD>();
+		pPlayerHitHUD->SetFrustum(false);
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pPlayerHitHUD->AddComponent(pMeshRenderer);
+		pPlayerHitHUD->AddComponent(make_shared<Transform>());
+		pPlayerHitHUD->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"PlayerHit", L"..\\Resources\\Animation\\Player\\player_hit.anim");
+		pPlayerHitHUD->GetAnimator()->AddAnimation(L"PlayerHit", pAnimation);
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pPlayerHitHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 80.f));
+		
+		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_HIT] = pPlayerHitHUD;
 	}
 
 }

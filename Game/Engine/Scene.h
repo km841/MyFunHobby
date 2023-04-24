@@ -34,6 +34,7 @@ public:
     void Render_Lights();
     void Render_Final();
     void Render_Forward();
+    void Render_Velocity();
     void Render_Deferred();
     void PushLightData();
     void EventUpdate();

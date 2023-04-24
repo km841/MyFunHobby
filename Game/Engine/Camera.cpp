@@ -12,6 +12,7 @@
 #include "Material.h"
 #include "Shader.h"
 #include "ParticleSystem.h"
+#include "Resources.h"
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
@@ -33,6 +34,9 @@ void Camera::FinalUpdate()
     shared_ptr<Transform> pTransform = GetTransform();
     Matrix matWorld = pTransform->GetLocalToWorldMatrix();
     Matrix matWorldInv = matWorld.Invert();
+
+    // Old View Matrix
+    m_matOldView = m_matView;
     m_matView = matWorldInv;
 
     float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -158,5 +162,20 @@ void Camera::Render_Deferred()
 
 		if (pGameObject->GetDebugRenderer())
 			pGameObject->GetDebugRenderer()->Render(shared_from_this());
+    }
+}
+
+void Camera::Render_Velocity()
+{
+    for (const auto& pGameObject : m_vDeferredObjects)
+    {
+        if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+        {
+            weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
+            shared_ptr<Material> pDeferredMaterial = pActiveSkul.lock()->GetMeshRenderer()->GetMaterial();
+            pActiveSkul.lock()->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"MotionBlur"));
+            pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
+            pActiveSkul.lock()->GetMeshRenderer()->SetMaterial(pDeferredMaterial);
+        }
     }
 }

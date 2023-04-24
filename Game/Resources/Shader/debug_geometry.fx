@@ -38,7 +38,7 @@ struct PS_OUT
     float4 vColor : SV_Target1;
 };
 
-PS_OUT PS_Main(VS_OUT _in) : SV_Target
+PS_OUT PS_Main(VS_OUT _in)
 {
     PS_OUT output = (PS_OUT) 0;
     

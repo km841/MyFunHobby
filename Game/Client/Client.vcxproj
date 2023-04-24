@@ -201,6 +201,7 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="PathState.h" />
     <ClInclude Include="PlayerFirstSkillShowScript.h" />
+    <ClInclude Include="PlayerHitHUD.h" />
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerSkulThumnailScript.h" />
     <ClInclude Include="RotateHeadScript.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PathState.cpp" />
     <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
+    <ClCompile Include="PlayerHitHUD.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerSkulThumnailScript.cpp" />
     <ClCompile Include="RotateHeadScript.cpp" />

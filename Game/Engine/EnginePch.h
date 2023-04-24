@@ -168,6 +168,10 @@ public:
 
 struct TransformParams
 {
+	Matrix matOldWorld;
+	Matrix matOldView;
+	Matrix matOldWV;
+
 	Matrix matWorld;
 	Matrix matView;
 	Matrix matProjection;

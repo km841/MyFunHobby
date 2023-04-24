@@ -445,6 +445,19 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Final", pShader);
 	}
 
+	// Velocity
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::VELOCITY,
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\motion_blur.fx", shaderInfo);
+
+		Add<Shader>(L"MotionBlur", pShader);
+	}
+
 
 	// Particle
 	{
@@ -618,7 +631,6 @@ void Resources::CreateDefaultMaterial()
 		shared_ptr<Shader> pShader = Get<Shader>(L"Effect");
 		pMaterial->SetShader(pShader);
 
-		
 		Add<Material>(L"Effect", pMaterial);
 	}
 
@@ -632,6 +644,16 @@ void Resources::CreateDefaultMaterial()
 		pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseLightTarget"));
 
 		Add<Material>(L"Final", pMaterial);
+	}
+
+	// Motion Blur
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"MotionBlur");
+		pMaterial->SetTexture(0, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"MotionBlur", pMaterial);
 	}
 
 	// Particle

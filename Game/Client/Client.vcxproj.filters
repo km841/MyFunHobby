@@ -337,6 +337,9 @@
     <ClInclude Include="HighWarlockBaseProjectile.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerHitHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -564,6 +567,9 @@
     </ClCompile>
     <ClCompile Include="HighWarlockBaseProjectile.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHitHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -191,75 +191,7 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL));
-
-	// EffectTest
-	//{
-	//	shared_ptr<GlobalEffect> pGlobalEffect = make_shared<GlobalEffect>();
-
-	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-	//	//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"SkillBoxLight", L"..\\Resources\\Texture\\HUD\\Image_SkillBox_Light1.tga");
-	//	//pMaterial->SetTexture(1, pTexture);
-
-	//	//pMaterial->SetTexture(1, GET_SINGLE(Resources)->Get<Texture>(L"DiffuseTarget"));
-
-	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	//	pMeshRenderer->SetMaterial(pMaterial);
-	//	pMeshRenderer->SetMesh(pMesh);
-
-	//	pGlobalEffect->AddComponent(pMeshRenderer);
-	//	pGlobalEffect->AddComponent(make_shared<Transform>());
-	//	pGlobalEffect->AddComponent(make_shared<Animator>());
-	//	pGlobalEffect->AddComponent(make_shared<GlobalEffectSettingScript>());
-
-	//	pGlobalEffect->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
-
-
-	//	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Cooldown_Completion", L"..\\Resources\\Animation\\SkillBox\\cooldown_completion.anim");
-	//	pGlobalEffect->GetAnimator()->AddAnimation(L"Cooldown_Completion", pAnimation);
-	//	pGlobalEffect->GetAnimator()->Play(L"Cooldown_Completion");
-
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	//	pGlobalEffect->GetTransform()->SetLocalPosition(Vec3(-63.f, 11.5f, -10.f));
-	//	pGlobalEffect->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
-
-	//	AddGameObject(pGlobalEffect);
-	//}
-
-
-	// Ground
-	//{
-	//	shared_ptr<GameObject> pGround = make_shared<GameObject>(LAYER_TYPE::TILE);
-	//	pGround->AddComponent(make_shared<Transform>());
-	//	pGround->AddComponent(make_shared<Physical>(ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(2400.f, 400.f, 1.f)));
-	//	pGround->AddComponent(make_shared<Collider>());
-	//	pGround->AddComponent(make_shared<DebugRenderer>());
-
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	//	pGround->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 700.f, 100.f));
-	//	pGround->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
-
-	//	AddGameObject(pGround);
-	//}
-
-	// Compute Shader
-	//{
-		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Compute");
-		//shared_ptr<Texture> pTexture = make_shared<Texture>();
-		//pTexture->Create(D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, 1024, 1024);
-
-		//shared_ptr<Texture> pNoiseTexture = GET_SINGLE(Resources)->Load<Texture>(L"NoiseTexture", L"..\\Resources\\Texture\\Image_NoiseTexture.tga");
-		//pMaterial->SetTexture(0, pTexture);
-		//pMaterial->SetTexture(1, pNoiseTexture);
-		//pMaterial->SetVec3(0, pNoiseTexture->GetTexSize());
-
-		//pMaterial->Dispatch(1, 1024, 1);
-		//GET_SINGLE(Resources)->Add<Texture>(L"ComputeTexture", pTexture);
-	//}
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HIT));
 
 	//Background
 	{
@@ -281,51 +213,6 @@ void TownScene::Enter()
 
 		AddGameObject(pGameObject);
 	}
-
-	//Background_Bridge
-	//{
-	//	shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-	//	pGameObject->SetFrustum(false);
-	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	//	shared_ptr<Texture> pTexture = make_shared<Texture>();
-	//	pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Bridge.tga");
-	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
-	//	pMaterial->SetTexture(0, pTexture);
-	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	//	pMeshRenderer->SetMaterial(pMaterial);
-	//	pMeshRenderer->SetMesh(pMesh);
-	//	pGameObject->AddComponent(pMeshRenderer);
-	//	pGameObject->AddComponent(make_shared<Transform>());
-
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 65.f, 130.f));
-	//	pGameObject->GetTransform()->SetLocalScale(Vec3(2400.f, 400.f, 1.f));
-
-	//	AddGameObject(pGameObject);
-	//}
-
-	//Background_Surrounding
-	//{
-	//	shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-	//	pGameObject->SetFrustum(false);
-	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	//	shared_ptr<Texture> pTexture = make_shared<Texture>();
-	//	pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Surrounding.tga");
-	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-	//	pMaterial->SetTexture(0, pTexture);
-	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-
-	//	pMeshRenderer->SetMaterial(pMaterial);
-	//	pMeshRenderer->SetMesh(pMesh);
-	//	pGameObject->AddComponent(pMeshRenderer);
-	//	pGameObject->AddComponent(make_shared<Transform>());
-
-	//	pGameObject->AddComponent(make_shared<PlayerTrackingScript>(pPlayer, 90.f));
-
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 500.f, fHeight / 2.f - 20.f, 90.f));
-	//	pGameObject->GetTransform()->SetLocalScale(Vec3(680.f, 400.f, 1.f));
-
-	//	AddGameObject(pGameObject);
-	//}
 
 
 	// Camera
@@ -446,44 +333,6 @@ void TownScene::Enter()
 
 	//	AddGameObject(pHUD);
 	//}
-
-	//// Test HUD
-	//{
-	//	shared_ptr<HUD> pHUD = make_shared<HUD>();
-
-	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"DiffuseLightTarget");
-	//	pMaterial->SetTexture(0, pTexture);
-
-	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	//	pMeshRenderer->SetMaterial(pMaterial);
-	//	pMeshRenderer->SetMesh(pMesh);
-
-	//	pHUD->AddComponent(pMeshRenderer);
-	//	pHUD->AddComponent(make_shared<Transform>());
-	//	//pHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
-
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 200.f, fHeight / 2.f + 200.f, 10.f));
-	//	pHUD->GetTransform()->SetLocalScale(Vec3(200.f, 112.f, 1.f));
-
-	//	AddGameObject(pHUD);
-	//}
-
-	// Particle System
-	{
-		//shared_ptr<GameObject> pParticle = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		//pParticle->AddComponent(make_shared<Transform>());
-		//pParticle->AddComponent(make_shared<ParticleSystem>());
-		//pParticle->SetFrustum(false);
-		//pParticle->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 60.f));
-		//pParticle->GetTransform()->SetLocalScale(Vec3(200.f, 200.f, 1.f));
-		//AddGameObject(pParticle);
-	}
-
 	
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE));

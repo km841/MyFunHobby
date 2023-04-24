@@ -40,6 +40,8 @@ void Transform::FinalUpdate()
 
 		Matrix matTranslation = Matrix::CreateTranslation(vLocalTranslation);
 		Matrix matScale = Matrix::CreateScale(m_vLocalScale);
+
+		m_matOldWorld = m_matWorld;
 		m_matWorld = matScale * matPxRotation * matTranslation;
 	}
 
@@ -55,6 +57,7 @@ void Transform::FinalUpdate()
 		Matrix matTranslation = Matrix::CreateTranslation(vLocalTranslation);
 
 		m_matLocal = matScale * matRotation * matTranslation;
+		m_matOldWorld = m_matWorld;
 		m_matWorld = m_matLocal;
 	}
 
@@ -72,6 +75,11 @@ void Transform::FinalUpdate()
 void Transform::PushData(shared_ptr<Camera> pCamera)
 {
 	TransformParams transformParams = {};
+
+	transformParams.matOldWorld = m_matOldWorld;
+	transformParams.matOldView = pCamera->GetOldViewMatrix();
+	transformParams.matOldWV = m_matOldWorld * pCamera->GetOldViewMatrix();
+
 	transformParams.matWorld = m_matWorld;
 	transformParams.matView = pCamera->GetViewMatrix();
 	transformParams.matProjection = pCamera->GetProjectionMatrix();
@@ -85,6 +93,11 @@ void Transform::PushData(shared_ptr<Camera> pCamera)
 void Transform::PxPushData(shared_ptr<Camera> pCamera)
 {
 	TransformParams transformParams = {};
+
+	transformParams.matOldWorld = m_matOldWorld;
+	transformParams.matOldView = pCamera->GetOldViewMatrix();
+	transformParams.matOldWV = m_matOldWorld * pCamera->GetOldViewMatrix();
+
 	transformParams.matWorld = m_matWorld;
 	transformParams.matView = pCamera->GetViewMatrix();
 	transformParams.matProjection = pCamera->GetProjectionMatrix();

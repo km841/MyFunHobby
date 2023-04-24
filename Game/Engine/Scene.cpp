@@ -144,11 +144,11 @@ void Scene::FinalUpdate()
 void Scene::Render()
 {
 	// RenderTarget Clear
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->ClearRenderTargetView();
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->ClearRenderTargetView();
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->ClearRenderTargetView();
-	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->ClearRenderTargetView();
 
-	// Deferred Rendering
+	// G-Buffer Writing
 	Render_Deferred();
 
 	// Light Rendering
@@ -199,6 +199,13 @@ void Scene::Render_Forward()
 		pSubCamera->SortGameObject();
 		pSubCamera->Render_Forward();
 	}
+}
+
+void Scene::Render_Velocity()
+{
+	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::VELOCITY)->OMSetRenderTarget();
+	shared_ptr<Camera> pCamera = m_vCameras[0];
+	pCamera->Render_Velocity();
 }
 
 void Scene::Render_Deferred()

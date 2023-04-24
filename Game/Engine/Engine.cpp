@@ -183,6 +183,23 @@ void Engine::CreateRenderTargetGroups()
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, vRenderTargetVec, pDepthStencilTexture);
 	}
 
+	// Velocity
+	{
+		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		std::vector<RenderTarget> vRenderTargetVec(VELOCITY_BUFFER_COUNT);
+
+		vRenderTargetVec[0].pTarget = GET_SINGLE(Resources)->CreateTexture(
+			L"VelocityTarget",
+			DXGI_FORMAT_R16G16B16A16_FLOAT,
+			D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE,
+			m_Window.iWidth, m_Window.iHeight);
+
+		memcpy(vRenderTargetVec[0].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
+
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::VELOCITY)] = make_shared<RenderTargetGroup>();
+		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::VELOCITY)]->Create(RENDER_TARGET_GROUP_TYPE::VELOCITY, vRenderTargetVec, pDepthStencilTexture);
+	}
+
 	// Lighting
 	{
 		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -199,6 +216,8 @@ void Engine::CreateRenderTargetGroups()
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::LIGHTING)] = make_shared<RenderTargetGroup>();
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::LIGHTING)]->Create(RENDER_TARGET_GROUP_TYPE::LIGHTING, vRenderTargetVec, pDepthStencilTexture);
 	}
+
+
 }
 
 void Engine::CreateConstantBuffer(CBV_REGISTER eReg, uint32 iSize)
