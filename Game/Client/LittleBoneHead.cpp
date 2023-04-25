@@ -7,6 +7,8 @@
 #include "Physical.h"
 #include "Engine.h"
 #include "Collider.h"
+#include "Scene.h"
+#include "Scenes.h"
 
 LittleBoneHead::LittleBoneHead()
 	: m_bTouch(false)
@@ -34,9 +36,7 @@ void LittleBoneHead::Update()
 	if (m_bTouch)
 	{
 		GetRigidBody()->ApplyGravityForDynamic();
-		PxFilterData& filterData = GetCollider()->GetFilterData();
-		filterData.word1 = 0;
-
+		//GET_SINGLE(Scenes)->GetActiveScene()->CameraShakeAxis(0.05f, Vec3(500.f, 0.f, 0.f));
 		//PX_SCENE->GetScene()->removeActor(*GetPhysical()->GetActor());
 		//PX_SCENE->GetScene()->flushSimulation();
 	}
@@ -54,7 +54,8 @@ void LittleBoneHead::FinalUpdate()
 
 void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
-	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
+	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType() ||
+		LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
 		if (!m_bTouch)
 			m_bTouch = true;

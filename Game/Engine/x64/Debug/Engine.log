@@ -1,2 +1,11 @@
-﻿  Scene.cpp
+﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
+C:\MyProject\Game\Resources\Shader\lighting.fx(82,12-89): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see C:\MyProject\Game\Output\lighting.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\MyProject\Game\Output\particle.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\MyProject\Game\Output\utils.cso
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

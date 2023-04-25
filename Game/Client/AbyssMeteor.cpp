@@ -23,7 +23,7 @@
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()
-	: m_fMaxDistance(1000.f)
+	: m_fMaxDistance(500.f)
 	, m_fImpulse(1000.f)
 {
 }
