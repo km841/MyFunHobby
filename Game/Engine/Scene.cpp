@@ -201,13 +201,6 @@ void Scene::Render_Forward()
 	}
 }
 
-void Scene::Render_Velocity()
-{
-	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::VELOCITY)->OMSetRenderTarget();
-	shared_ptr<Camera> pCamera = m_vCameras[0];
-	pCamera->Render_Velocity();
-}
-
 void Scene::Render_Deferred()
 {
 	shared_ptr<Camera> pCamera = m_vCameras[0];

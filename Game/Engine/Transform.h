@@ -30,6 +30,7 @@ public:
     FORCEINLINE const Vec3&        GetLocalScale() const                         { return m_vLocalScale; }
 
     FORCEINLINE const Matrix&      GetLocalToWorldMatrix() const                 { return m_matWorld; }
+    FORCEINLINE const Matrix&      GetLocalToWorldOldMatrix() const              { return m_matOldWorld; }
 
     FORCEINLINE const Matrix&      GetPxLocalToWorldMatrix() const               { return m_matPxWorld; }
     FORCEINLINE const PxTransform& GetPxTransform() const                        { return m_PxTransform; }
@@ -39,6 +40,8 @@ public:
     FORCEINLINE const Vec2&        GetGlobalOffset()                             { return m_vGlobalOffset; }
 
     FORCEINLINE float              GetBoundingSphereRadius()                     { return max(max(m_vLocalScale.x, m_vLocalScale.y), m_vLocalScale.z); }
+
+   
 
     Vec3 GetRight() { return m_matWorld.Right(); }
     Vec3 GetUp()    { return m_matWorld.Up(); }

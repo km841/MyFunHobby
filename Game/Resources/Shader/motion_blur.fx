@@ -23,30 +23,35 @@ struct VS_OUT
 VS_OUT VS_Main(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0;
+    int iDirection = g_int_1;
     
     output.pos = mul(float4(_in.pos, 1.f), g_matWVP);
     output.normal = normalize(mul(float4(_in.normal, 0.f), g_matWV)).xyz;
-    output.uv = _in.uv;
+    if (iDirection == 0)
+        output.uv = _in.uv;
+    else if (iDirection == 1)
+        output.uv = float2(1.0f - _in.uv.x, _in.uv.y);
     
     float4 vNewProjPos = output.pos;
-    float4 vOldViewPos = mul(float4(_in.pos, 1.f), g_matOldWV);
-    float4 vOldProjPos = mul(float4(vOldViewPos.xyz, 1.f), g_matProjection);
+    
+    float4 vOldViewPos = mul(float4(_in.pos, 1.f), g_matOldWorld);
+    vOldViewPos = mul(vOldViewPos, g_matOldView);
+    
+    float4 vOldProjPos = mul(vOldViewPos, g_matProjection);
     
     float3 vDir = vNewProjPos.xyz - vOldProjPos.xyz;
-    
     float fCheck = dot(normalize(vDir), normalize(output.normal));
     
     if (fCheck < 0.f)
-        output.pos = vNewProjPos;
-    else
         output.pos = vOldProjPos;
-    
+    else
+        output.pos = vNewProjPos;
     
     float2 vVelocity = vNewProjPos.xy - vOldProjPos.xy;
+    
     output.dir.xy = vVelocity * 0.5f;
     output.dir.y *= -1.f;
     output.dir.z = output.pos.z;
-    //output.dir.w = 1.f;
     
     return output;
 }
@@ -63,14 +68,20 @@ PS_OUT PS_Main(VS_OUT _in)
 {
     PS_OUT output = (PS_OUT) 0;
     
-    float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-    //if (vColor.a <= 0.1f)
-    //    discard;
-        
+    float2 vLeftTopPos = g_vec2_0;
+    float2 vSpriteSize = g_vec2_1;
+    float2 vAtlasSize = g_vec2_2;
+    float2 vOffset = g_vec2_3;
+    int iAnimationFlag = g_int_0;
+    int iEffectFlag = g_int_3;
+    
+    float2 vUV = (vLeftTopPos + vOffset) + (_in.uv * vSpriteSize);
+    
+    float4 vColor = g_tex_0.Sample(g_sam_0, vUV);
+    if (vColor.a < 0.1f)
+        discard;
     output.vVelocity.xy = _in.dir.xy;
     output.vVelocity.z = 1.f;
-    
-    //output.vVelocity = float4(1.f, 0.f, 0.f, 1.f);
     
     return output;
 }

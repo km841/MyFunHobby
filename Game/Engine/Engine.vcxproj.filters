@@ -546,8 +546,5 @@
     <FxCompile Include="..\Resources\Shader\particle.fx">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resources\Shader\motion_blur.fx">
-      <Filter>Shader</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

@@ -34,7 +34,6 @@ public:
 public:
     void Render_Forward();
     void Render_Deferred();
-    void Render_Velocity();
 
 private:
     PROJECTION_TYPE m_eType;

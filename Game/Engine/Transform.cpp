@@ -63,11 +63,19 @@ void Transform::FinalUpdate()
 
 	if (m_pParent.lock())
 	{
+		Matrix matParentOldMatrix = m_pParent.lock()->GetLocalToWorldOldMatrix();
+		matParentOldMatrix._11 = 1.f;
+		matParentOldMatrix._22 = 1.f;
+		matParentOldMatrix._33 = 1.f;
+		m_matOldWorld = m_matWorld;
+		m_matOldWorld *= matParentOldMatrix;
+
 		Matrix matParentMatrix = m_pParent.lock()->GetLocalToWorldMatrix();
 		matParentMatrix._11 = 1.f;
 		matParentMatrix._22 = 1.f;
 		matParentMatrix._33 = 1.f;
 		m_matWorld *= matParentMatrix;
+
 		GetGameObject()->SetDirection(m_pParent.lock()->GetGameObject()->GetDirection());
 	}
 }

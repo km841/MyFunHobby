@@ -129,6 +129,8 @@ void Animation::Reset()
 
 void Animation::PushData()
 {
+	if (m_iCurFrame >= m_vFrameDataList[0].iFrameCount)
+		return;
 	DIRECTION eDirection = m_pAnimator.lock()->GetGameObject()->GetDirection();
 	FrameData currFrameData = m_vFrameDataList[m_iCurFrame];
 

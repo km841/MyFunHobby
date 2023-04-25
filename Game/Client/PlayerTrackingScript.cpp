@@ -19,6 +19,7 @@ void PlayerTrackingScript::LateUpdate()
 {
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
 	vPlayerPos.y += 100.f;
+	//vPlayerPos.z = 0.f;
 	const Vec3& vMyPos = GetTransform()->GetTransform()->GetLocalPosition();
 
 	Vec3 vDiffNormal = vPlayerPos - vMyPos;
@@ -32,4 +33,5 @@ void PlayerTrackingScript::LateUpdate()
 	vDiffNormal.y *= 2.f;
 	vDiffNormal.z = 0.f;
 	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 1000.f * DELTA_TIME);
+	//GetTransform()->SetLocalPosition(vPlayerPos);
 }

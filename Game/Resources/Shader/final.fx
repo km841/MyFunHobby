@@ -32,15 +32,32 @@ VS_OUT VS_Main(VS_IN _in)
 
 // Final Shader
 // g_tex_0   : Diffuse Color RenderTarget
-// g_tex_1   : Light Color RenderTarget
+// g_tex_1   : Velocity RenderTarget
+// g_tex_2   : Light Color RenderTarget
 // g_float_0 : Fade Ratio
 
 float4 PS_Main(VS_OUT _in) : SV_Target
 {
     float4 output = (float4) 0;
     float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-    float4 vLightColor = g_tex_1.Sample(g_sam_0, _in.uv) * g_float_0;
     
+    float4 vVelocity = g_tex_1.Sample(g_sam_0, _in.uv);
+    int iNumBlurSampling = 10;
+    
+    vVelocity.xy /= (float) iNumBlurSampling;
+    vVelocity.xy *= 2.f;
+    int iCount = 1;
+    
+    for (int i = iCount; i < iNumBlurSampling; ++i)
+    {
+        float4 vBlurColor = g_tex_0.Sample(g_sam_0, _in.uv + vVelocity.xy * (float) i);
+        vColor += vBlurColor;
+        iCount++;
+    }
+    
+    vColor /= iCount;
+    
+    float4 vLightColor = g_tex_2.Sample(g_sam_0, _in.uv) * g_float_0;
     return vColor * vLightColor;
 }
 #endif

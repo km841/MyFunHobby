@@ -13,6 +13,7 @@
 #include "Shader.h"
 #include "ParticleSystem.h"
 #include "Resources.h"
+#include "Animator.h"
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
@@ -36,8 +37,8 @@ void Camera::FinalUpdate()
     Matrix matWorldInv = matWorld.Invert();
 
     // Old View Matrix
-    m_matOldView = m_matView;
     m_matView = matWorldInv;
+    m_matOldView = m_matView;
 
     float fWidth = static_cast<float>(g_pEngine->GetWidth());
     float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -155,27 +156,15 @@ void Camera::Render_Deferred()
         {
             weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
             if (pActiveSkul.lock())
+            {
                 pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
+                pActiveSkul.lock()->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
+            }
         }
         else
             pGameObject->GetMeshRenderer()->Render(shared_from_this());
 
 		if (pGameObject->GetDebugRenderer())
 			pGameObject->GetDebugRenderer()->Render(shared_from_this());
-    }
-}
-
-void Camera::Render_Velocity()
-{
-    for (const auto& pGameObject : m_vDeferredObjects)
-    {
-        if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
-        {
-            weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
-            shared_ptr<Material> pDeferredMaterial = pActiveSkul.lock()->GetMeshRenderer()->GetMaterial();
-            pActiveSkul.lock()->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"MotionBlur"));
-            pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
-            pActiveSkul.lock()->GetMeshRenderer()->SetMaterial(pDeferredMaterial);
-        }
     }
 }

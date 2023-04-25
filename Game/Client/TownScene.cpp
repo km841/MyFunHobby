@@ -226,7 +226,6 @@ void TownScene::Enter()
 
 
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-		//pGameObject->GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, 3.141592f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 		AddGameObject(pGameObject);
 
@@ -308,13 +307,13 @@ void TownScene::Enter()
 	//	AddGameObject(pWizard);
 	//}
 
-	// Test HUD
+	 //Test HUD
 	//{
 	//	shared_ptr<HUD> pHUD = make_shared<HUD>();
 
 	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"PositionTarget");
+	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"VelocityTarget");
 	//	pMaterial->SetTexture(0, pTexture);
 
 	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -328,8 +327,8 @@ void TownScene::Enter()
 	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 10.f));
-	//	pHUD->GetTransform()->SetLocalScale(Vec3(800, 450, 1.f));
+	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 200.f, 10.f));
+	//	pHUD->GetTransform()->SetLocalScale(Vec3(442, 260, 1.f));
 
 	//	AddGameObject(pHUD);
 	//}
