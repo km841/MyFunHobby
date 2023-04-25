@@ -20,6 +20,7 @@
 #include "IsHitCondition.h"
 #include "IsDeadCondition.h"
 #include "RemoveObjectTask.h"
+#include "IsPlayerInAttackRangeCondition.h"
 
 shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 {
@@ -58,7 +59,8 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	shared_ptr<IsHitCondition> pHitCondition = make_shared<IsHitCondition>(pJuniorKnight);
 
 	shared_ptr<IsDeadCondition> pDeadCondition = make_shared<IsDeadCondition>(pJuniorKnight);
-	shared_ptr<RemoveObjectTask> pRemoveTask = make_shared< RemoveObjectTask>(pJuniorKnight);
+	shared_ptr<RemoveObjectTask> pRemoveTask = make_shared<RemoveObjectTask>(pJuniorKnight);
+	shared_ptr<IsPlayerInAttackRangeCondition> pPlayerInAttackRangeCondition = make_shared<IsPlayerInAttackRangeCondition>(m_pPlayer.lock(), pJuniorKnight);
 
 	pDeadSequence->AddChild(pDeadCondition);
 	pDeadSequence->AddChild(pRemoveTask);
@@ -69,6 +71,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 
 	pAttackSequence->AddChild(pNearCondition);
 	pAttackSequence->AddChild(pRunAttackAnimation);
+	pAttackSequence->AddChild(pPlayerInAttackRangeCondition);
 
 	pWalkSequence->AddChild(pRunWalkAnimation);
 	pWalkSequence->AddChild(pMoveTask);
@@ -84,6 +87,8 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Attack", pAttackAnimation);
 	pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Weak_Hit", pWeakHitAnimation);
 	pJuniorKnight->GetAnimator()->Play(L"JuniorKnight_Idle");
+
+	pAttackAnimation->SetHitFrame(1);
 
 	pJuniorKnight->GetTransform()->SetLocalPosition(vMonsterPos);
 	return pJuniorKnight;

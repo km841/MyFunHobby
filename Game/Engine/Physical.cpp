@@ -131,6 +131,14 @@ void Physical::CreateActor()
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 		break;
+
+	case ACTOR_TYPE::PROJECTILE_DYNAMIC:
+		m_pActor = PHYSICS->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
+		m_pActor->is<PxRigidDynamic>()->setRigidDynamicLockFlags(
+			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
+		break;
 	break;
 	}
 }
@@ -147,6 +155,7 @@ void Physical::InitializeActor()
 	{
 	case ACTOR_TYPE::STATIC:
 		break;
+	case ACTOR_TYPE::PROJECTILE_DYNAMIC:
 	case ACTOR_TYPE::MONSTER_DYNAMIC:
 	case ACTOR_TYPE::DYNAMIC:
 		GetRigidBody()->SetLinearDamping(0.5f);

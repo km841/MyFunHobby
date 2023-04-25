@@ -82,7 +82,7 @@ void LittleBone::CreateHeadAndAddedToScene()
 {
 	m_pHead = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysical<LittleBoneHead>(
 		L"Deferred", false,
-		ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(15.f, 13.f, 10.f), MassProperties(0.3f, 0.3f, 1.f),
+		ACTOR_TYPE::PROJECTILE_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(15.f, 13.f, 10.f), MassProperties(0.3f, 0.3f, 1.f),
 		L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Head.tga");
 
 	m_pHead->AddComponent(make_shared<Movement>());

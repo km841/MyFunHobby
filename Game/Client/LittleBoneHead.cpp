@@ -4,8 +4,12 @@
 #include "LittleBone.h"
 #include "Monster.h"
 #include "Transform.h"
+#include "Physical.h"
+#include "Engine.h"
+#include "Collider.h"
 
 LittleBoneHead::LittleBoneHead()
+	: m_bTouch(false)
 {
 }
 
@@ -26,6 +30,16 @@ void LittleBoneHead::Start()
 void LittleBoneHead::Update()
 {
 	PlayerProjectile::Update();
+
+	if (m_bTouch)
+	{
+		GetRigidBody()->ApplyGravityForDynamic();
+		PxFilterData& filterData = GetCollider()->GetFilterData();
+		filterData.word1 = 0;
+
+		//PX_SCENE->GetScene()->removeActor(*GetPhysical()->GetActor());
+		//PX_SCENE->GetScene()->flushSimulation();
+	}
 }
 
 void LittleBoneHead::LateUpdate()
@@ -40,6 +54,11 @@ void LittleBoneHead::FinalUpdate()
 
 void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
+	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
+	{
+		if (!m_bTouch)
+			m_bTouch = true;
+	}
 }
 
 void LittleBoneHead::OnCollisionExit(shared_ptr<GameObject> pGameObject)
@@ -48,17 +67,7 @@ void LittleBoneHead::OnCollisionExit(shared_ptr<GameObject> pGameObject)
 
 void LittleBoneHead::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
-	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
-	{
-		static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
-		// 몬스터와의 거리를 계산해서 힘 주기
-		
-	}
 
-	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
-	{
-		int a = 0;
-	}
 }
 
 void LittleBoneHead::OnTriggerExit(shared_ptr<GameObject> pGameObject)

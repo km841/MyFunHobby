@@ -93,7 +93,7 @@ void PlayerMoveScript::LateUpdate()
 		}
 
 		// Test Code
-		pPlayer->TakeDamage(1);
+		//pPlayer->TakeDamage(1);
 
 		//GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
 		//if (GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())

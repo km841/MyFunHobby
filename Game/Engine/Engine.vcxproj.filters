@@ -226,6 +226,9 @@
     <ClInclude Include="SceneFadeEvent.h">
       <Filter>Object\Event</Filter>
     </ClInclude>
+    <ClInclude Include="IsPlayerInAttackRangeCondition.h">
+      <Filter>Object\AI\MonsterAI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -449,6 +452,9 @@
     </ClCompile>
     <ClCompile Include="SceneFadeEvent.cpp">
       <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="IsPlayerInAttackRangeCondition.cpp">
+      <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

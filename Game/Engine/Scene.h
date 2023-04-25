@@ -37,13 +37,14 @@ public:
     void Render_Deferred();
     void PushLightData();
     void EventUpdate();
+    void CameraShakeUpdate();
 
     FORCEINLINE void                     RegisterSceneEvent(EVENT_TYPE eEventType, uint8 iDetailEnum, float fEndTime) { m_vSceneEvents.push_back(SceneEventInfo{ eEventType, iDetailEnum, fEndTime }); }
     FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
     void RemoveGameObject(shared_ptr<GameObject> pGameObject);
-
+    void CameraShakeAxis(float fMaxTime, const Vec3& vImpulse);
 
 public:
     virtual void Load(const wstring& szPath);
@@ -59,6 +60,9 @@ protected:
 
     float m_fFadeEffectRatio;
     EVENT_TYPE m_eActiveSceneEvent;
+
+    Timer m_tCameraShakeTimer;
+    Vec3 m_vCameraShakeImpulse;
 
 protected:
     static std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> s_vGlobalObjects;

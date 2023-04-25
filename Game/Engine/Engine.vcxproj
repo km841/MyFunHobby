@@ -195,6 +195,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="IsDeadCondition.h" />
     <ClInclude Include="IsHitCondition.h" />
+    <ClInclude Include="IsPlayerInAttackRangeCondition.h" />
     <ClInclude Include="IsPlayerNearCondition.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="IsDeadCondition.cpp" />
     <ClCompile Include="IsHitCondition.cpp" />
+    <ClCompile Include="IsPlayerInAttackRangeCondition.cpp" />
     <ClCompile Include="IsPlayerNearCondition.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />

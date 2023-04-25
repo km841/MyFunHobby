@@ -26,6 +26,7 @@ Scene::Scene(SCENE_TYPE eSceneType)
 	: m_eSceneType(eSceneType)
 	, m_fFadeEffectRatio(1.f)
 	, m_eActiveSceneEvent(EVENT_TYPE::END)
+	, m_tCameraShakeTimer(0)
 {
 
 }
@@ -97,6 +98,7 @@ void Scene::Update()
 	}
 
 	EventUpdate();
+	CameraShakeUpdate();
 }
 
 void Scene::LateUpdate()
@@ -268,6 +270,36 @@ void Scene::EventUpdate()
 	}
 }
 
+void Scene::CameraShakeUpdate()
+{
+	if (m_tCameraShakeTimer.IsRunning())
+	{
+		m_tCameraShakeTimer.Update(DELTA_TIME);
+		float fProgress = m_tCameraShakeTimer.GetProgress();
+		shared_ptr<Camera> pMainCamera = m_vCameras[0];
+		if (!pMainCamera)
+			return;
+
+		Vec3 vCamPos = pMainCamera->GetTransform()->GetLocalPosition();
+		if (fProgress < 0.5f)
+		{
+			vCamPos += m_vCameraShakeImpulse * DELTA_TIME;
+			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
+		}
+		else
+		{
+			vCamPos -= m_vCameraShakeImpulse * DELTA_TIME;
+			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
+
+			if (m_tCameraShakeTimer.IsFinished())
+			{
+				m_tCameraShakeTimer.Stop();
+				m_vCameraShakeImpulse = Vec3::Zero;
+			}
+		}
+	}
+}
+
 void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 {
 	if (pGameObject->GetCamera())
@@ -323,6 +355,13 @@ void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 	if (pFindIt != vGameObjects.end())
 		vGameObjects.erase(pFindIt);
 
+}
+
+void Scene::CameraShakeAxis(float fMaxTime, const Vec3& vImpulse)
+{
+	m_tCameraShakeTimer.SetEndTime(fMaxTime);
+	m_tCameraShakeTimer.Start();
+	m_vCameraShakeImpulse = vImpulse;
 }
 
 void Scene::Load(const wstring& szPath)

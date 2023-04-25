@@ -28,5 +28,7 @@ public:
 private:
     weak_ptr<LittleBone> m_pLittleBone;
     Vec3 m_vVelocity;
+
+    bool m_bTouch;
 };
 

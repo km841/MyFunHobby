@@ -143,8 +143,8 @@ void Camera::Render_Forward()
         if (pGameObject->GetParticleSystem())
             pGameObject->GetParticleSystem()->Render(shared_from_this());
 
-        if (pGameObject->GetDebugRenderer())
-            pGameObject->GetDebugRenderer()->Render(shared_from_this());
+ /*       if (pGameObject->GetDebugRenderer())
+            pGameObject->GetDebugRenderer()->Render(shared_from_this());*/
     }
 }
 
@@ -158,7 +158,6 @@ void Camera::Render_Deferred()
             if (pActiveSkul.lock())
             {
                 pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
-                pActiveSkul.lock()->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
             }
         }
         else

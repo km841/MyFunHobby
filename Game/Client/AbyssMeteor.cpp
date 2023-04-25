@@ -94,6 +94,7 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 
 		Disable();
 		EnableAndInitSmokeEffect();
+		GET_SINGLE(Scenes)->GetActiveScene()->CameraShakeAxis(0.15f, Vec3(100.f, 1000.f, 0.f));
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		auto& vParticles = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::PARTICLE);
@@ -128,7 +129,6 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 				PxVec3 vImpulse = PxVec3(fRandomXImpulse, 200.f, 0.f);
 
 				static_pointer_cast<Monster>(pMonster)->FlagAsAttacked();
-				//static_pointer_cast<Monster>(pMonster)->GetStatus()->TakeDamage(2);
 				GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pMonster, vImpulse));
 			}
 		}

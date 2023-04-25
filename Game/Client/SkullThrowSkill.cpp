@@ -12,7 +12,7 @@
 
 SkullThrowSkill::SkullThrowSkill()
 	: SkulSkill(SKILL_TYPE::INSTANT, 6.0f, 0.25f)
-	, m_fThrowSpeed(500.f)
+	, m_fThrowSpeed(1000.f)
 {
 	CreateConditionFunction();
 }
@@ -44,10 +44,9 @@ void SkullThrowSkill::Enter()
 	pHead.lock()->GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(pxTransform);
 
 	uint8 iDirection = static_cast<uint8>(pLittleBone.lock()->GetPlayer().lock()->GetDirection());
-	pHead.lock()->GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(iDirection ? -m_fThrowSpeed : m_fThrowSpeed, 300.f, 0.f));
+	pHead.lock()->GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(iDirection ? -m_fThrowSpeed : m_fThrowSpeed, 0.f, 0.f));
 	pHead.lock()->GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, 10.f));
-	//pHead.lock()->GetRigidBody()->RemoveGravityForDynamic();
-	//pHead.lock()->SetThrowVelocity(Vec3(iDirection ? -m_fThrowSpeed : m_fThrowSpeed, 0.f, 0.f));
+	pHead.lock()->GetRigidBody()->RemoveGravityForDynamic();
 }
 
 void SkullThrowSkill::Exit()

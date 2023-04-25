@@ -82,6 +82,9 @@ void SkulAttack::HitMonstersInAttackRange()
 					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(PARTICLE_DIRECTION::LEFT);
 
 			}
+
+			GET_SINGLE(Scenes)->GetActiveScene()->CameraShakeAxis(0.05f, Vec3(500.f, 0.f, 0.f));
+
 		}
 	}
 
