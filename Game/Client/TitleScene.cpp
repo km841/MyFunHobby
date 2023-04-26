@@ -23,6 +23,7 @@
 #include "ObjectFadeInOutScript.h"
 #include "Light.h"
 #include "SceneFadeEvent.h"
+#include "ComponentObject.h"
 
 
 TitleScene::TitleScene()
@@ -73,7 +74,7 @@ void TitleScene::Enter()
 {
 	// Light
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		shared_ptr<ComponentObject> pGameObject = make_shared<ComponentObject>();
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Light>());
 		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
@@ -144,36 +145,41 @@ void TitleScene::Enter()
 
 	// Camera
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		shared_ptr<ComponentObject> pGameObject = make_shared<ComponentObject>();
 
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
 		pGameObject->AddComponent(make_shared<CameraMoveScript>());
+		
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 		AddGameObject(pGameObject);
+
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, true);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, true);
 	}
+
 
 	// UI Camera
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		shared_ptr<ComponentObject> pGameObject = make_shared<ComponentObject>();
 
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
-
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
 		AddGameObject(pGameObject);
 
 		pGameObject->GetCamera()->EnableAllCullingMask();
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, false);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, false);
 	}
 
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);

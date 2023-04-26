@@ -23,8 +23,11 @@ SkulThumnailHUD::~SkulThumnailHUD()
 
 void SkulThumnailHUD::Awake()
 {
-	HUD::Awake();
-	CreateAndAddCompletionEffectToScene();
+	if (!IsAwake())
+	{
+		HUD::Awake();
+		CreateAndAddCompletionEffectToScene();
+	}
 }
 
 void SkulThumnailHUD::Start()

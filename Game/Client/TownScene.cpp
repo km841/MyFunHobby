@@ -31,6 +31,7 @@
 #include "InterfaceManager.h"
 #include "Cemetery.h"
 #include "ObjectFactory.h"
+#include "ComponentObject.h"
 
 /* GameObject */
 #include "GameObject.h"
@@ -42,6 +43,7 @@
 #include "NPC_Ogre.h"
 #include "GlobalEffect.h"
 #include "JuniorKnight.h"
+#include "SceneChangeEventObject.h"
 
 /* Resources */
 #include "Animation.h"
@@ -124,8 +126,7 @@ void TownScene::Enter()
 
 	Load(L"..\\Resources\\Map\\DefaultMap.map");
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
-	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
-	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::PLAYER_PROJECTILE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::EVENT_OBJECT);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::MONSTER);
 
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
@@ -173,16 +174,6 @@ void TownScene::Enter()
 		AddGameObject(pPlayer);
 	}
 
-	// Create Monster
-	{
-		GET_SINGLE(ObjectFactory)->SetPlayer(pPlayer);
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 400.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 500.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 700.f, fHeight / 2.f - 200.f, 99.5f));
-	}
-
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR)->SetPlayer(pPlayer);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST)->SetPlayer(pPlayer);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL)->SetPlayer(pPlayer);
@@ -192,6 +183,16 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HIT));
+
+	//Change Scene Event
+	{
+		shared_ptr<SceneChangeEventObject> pGameObject =  GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<SceneChangeEventObject>(L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(500.f, 100.f, 1.f), MassProperties(), L"", pPlayer);
+		
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1850.f, fHeight / 2.f - 3000.f, 100.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(1000.f, 100.f, 1.f));
+
+		AddGameObject(pGameObject);
+	}
 
 	//Background
 	{
@@ -208,49 +209,14 @@ void TownScene::Enter()
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f -1625.f, 140.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 1625.f, 140.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(2000.f, 2200.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
 
 
-	// Camera
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Camera>());
-		pGameObject->AddComponent(make_shared<CameraMoveScript>());
-		pGameObject->AddComponent(make_shared<PlayerTrackingScript>(pPlayer));
-
-
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
-		AddGameObject(pGameObject);
-
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, true);
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, true);
-	}
-
-
-	// UI Camera
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Camera>());
-
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
-		AddGameObject(pGameObject);
-
-		pGameObject->GetCamera()->EnableAllCullingMask();
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, false);
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, false);
-	}
+	GetMainCamera().lock()->AddComponent(make_shared<PlayerTrackingScript>(pPlayer));
 
 	//// NPC_Witch
 	//{
@@ -343,4 +309,7 @@ void TownScene::Enter()
 
 void TownScene::Exit()
 {
+	// 모든 Actor를 씬에서 제거한다.
+
+
 }

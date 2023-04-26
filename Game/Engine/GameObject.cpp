@@ -22,6 +22,7 @@ GameObject::GameObject(LAYER_TYPE eLayerType)
 	, m_eLayerType(eLayerType)
 	, m_eLevelType(OBJECT_LEVEL_TYPE::OBJECT_LEVEL_1)
 	, m_bCheckFrustum(true)
+	, m_bAwake(false)
 	
 {
 }
@@ -43,6 +44,8 @@ void GameObject::Awake()
 		if (pScript)
 			pScript->Awake();
 	}
+
+	m_bAwake = true;
 }
 
 void GameObject::Start()

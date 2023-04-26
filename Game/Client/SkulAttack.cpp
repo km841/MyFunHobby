@@ -83,7 +83,7 @@ void SkulAttack::HitMonstersInAttackRange()
 
 			}
 
-			GET_SINGLE(Scenes)->GetActiveScene()->CameraShakeAxis(0.05f, Vec3(500.f, 0.f, 0.f));
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.05f, Vec3(500.f, 0.f, 0.f));
 
 		}
 	}

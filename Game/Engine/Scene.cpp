@@ -19,8 +19,12 @@
 #include "Light.h"
 #include "ObjectFactory.h"
 #include "Clock.h"
+#include "Player.h"
+#include "ComponentObject.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
+std::vector<shared_ptr<Camera>> Scene::s_vCameras;
+std::vector<shared_ptr<Light>> Scene::s_vLights;
 
 Scene::Scene(SCENE_TYPE eSceneType)
 	: m_eSceneType(eSceneType)
@@ -167,8 +171,8 @@ void Scene::Render()
 void Scene::Render_Lights()
 {
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->OMSetRenderTarget();
-	shared_ptr<Camera> pMainCamera = m_vCameras[0];
-	for (auto& pLight : m_vLights)
+	shared_ptr<Camera> pMainCamera = s_vCameras[0];
+	for (auto& pLight : s_vLights)
 	{
 		pLight->Render(pMainCamera);
 	}
@@ -190,10 +194,10 @@ void Scene::Render_Final()
 void Scene::Render_Forward()
 {
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)->OMSetRenderTarget(1);
-	shared_ptr<Camera> pCamera = m_vCameras[0];
+	shared_ptr<Camera> pCamera = s_vCameras[0];
 	pCamera->Render_Forward();
 
-	for (const shared_ptr<Camera>& pSubCamera : m_vCameras)
+	for (const shared_ptr<Camera>& pSubCamera : s_vCameras)
 	{
 		if (pCamera == pSubCamera)
 			continue;
@@ -205,7 +209,7 @@ void Scene::Render_Forward()
 
 void Scene::Render_Deferred()
 {
-	shared_ptr<Camera> pCamera = m_vCameras[0];
+	shared_ptr<Camera> pCamera = s_vCameras[0];
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
 	pCamera->SortGameObject();
 	pCamera->Render_Deferred();
@@ -215,7 +219,7 @@ void Scene::PushLightData()
 {
 	LightParams lightParams = {};
 
-	for (auto& pLight : m_vLights)
+	for (auto& pLight : s_vLights)
 	{
 		const LightInfo& lightInfo = pLight->GetLightInfo();
 
@@ -276,7 +280,7 @@ void Scene::CameraShakeUpdate()
 	{
 		m_tCameraShakeTimer.Update(DELTA_TIME);
 		float fProgress = m_tCameraShakeTimer.GetProgress();
-		shared_ptr<Camera> pMainCamera = m_vCameras[0];
+		shared_ptr<Camera> pMainCamera = s_vCameras[0];
 		if (!pMainCamera)
 			return;
 
@@ -303,10 +307,10 @@ void Scene::CameraShakeUpdate()
 void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 {
 	if (pGameObject->GetCamera())
-		m_vCameras.push_back(pGameObject->GetCamera());
+		s_vCameras.push_back(pGameObject->GetCamera());
 
 	if (pGameObject->GetLight())
-		m_vLights.push_back(pGameObject->GetLight());
+		s_vLights.push_back(pGameObject->GetLight());
 
 	if (pGameObject->GetPhysical())
 		pGameObject->GetPhysical()->AddActorToPxScene();
@@ -337,16 +341,16 @@ void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 {
 	if (pGameObject->GetCamera())
 	{
-		auto pFindIt = std::find(m_vCameras.begin(), m_vCameras.end(), pGameObject->GetCamera());
-		if (pFindIt != m_vCameras.end())
-			m_vCameras.erase(pFindIt);
+		auto pFindIt = std::find(s_vCameras.begin(), s_vCameras.end(), pGameObject->GetCamera());
+		if (pFindIt != s_vCameras.end())
+			s_vCameras.erase(pFindIt);
 	}
 
 	if (pGameObject->GetLight())
 	{
-		auto pFindIt = std::find(m_vLights.begin(), m_vLights.end(), pGameObject->GetLight());
-		if (pFindIt != m_vLights.end())
-			m_vLights.erase(pFindIt);
+		auto pFindIt = std::find(s_vLights.begin(), s_vLights.end(), pGameObject->GetLight());
+		if (pFindIt != s_vLights.end())
+			s_vLights.erase(pFindIt);
 	}
 
 	auto& vGameObjects = GetGameObjects(pGameObject->GetLayerType());
@@ -357,11 +361,25 @@ void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 
 }
 
-void Scene::CameraShakeAxis(float fMaxTime, const Vec3& vImpulse)
+void Scene::ShakeCameraAxis(float fMaxTime, const Vec3& vImpulse)
 {
 	m_tCameraShakeTimer.SetEndTime(fMaxTime);
 	m_tCameraShakeTimer.Start();
 	m_vCameraShakeImpulse = vImpulse;
+}
+
+weak_ptr<ComponentObject> Scene::GetMainCamera()
+{
+	assert(!s_vCameras.empty());
+	weak_ptr<Camera> pMainCamera = s_vCameras[0];
+	return static_pointer_cast<ComponentObject>(pMainCamera.lock()->GetGameObject());
+}
+
+weak_ptr<Player> Scene::GetPlayer()
+{
+	auto& vGameObjects = GetGameObjects(LAYER_TYPE::PLAYER);
+	assert(!vGameObjects.empty());
+	return static_pointer_cast<Player>(vGameObjects[0]);
 }
 
 void Scene::Load(const wstring& szPath)
@@ -386,7 +404,7 @@ void Scene::Load(const wstring& szPath)
 		ifs >> vTileAlignVec.x >> vTileAlignVec.y;
 		ifs.ignore(1);
 
-		shared_ptr<Tile> pTile= GET_SINGLE(ObjectFactory)->CreateObjectHavePhysicalFromPool<Tile>(
+		shared_ptr<Tile> pTile= GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<Tile>(
 			L"Deferred",
 			false,
 			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),

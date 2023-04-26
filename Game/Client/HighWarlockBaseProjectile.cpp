@@ -87,6 +87,14 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 			}
 		}
 	}
+
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		GetRigidBody()->SetVelocity(Vec3::Zero);
+		GetAnimator()->Play(L"HighWarlock_BaseProjectile_Despawn", false);
+		m_bDespawn = true;
+	}
+
 }
 
 void HighWarlockBaseProjectile::OnTriggerExit(shared_ptr<GameObject> pGameObject)

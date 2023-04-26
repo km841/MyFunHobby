@@ -89,6 +89,12 @@ void DashState::EnableAndInitAfterImage(weak_ptr<AfterImage> pAfterImage)
 	pAfterImage.lock()->Enable();
 
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
+	vPlayerPos.z -= 10.f;
+	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
+	vPlayerPos.x += iDirection ? 10.f : -10.f;
+	
+
+
 	const Vec3& vPlayerScale = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetLocalScale();
 	int32 iCurFrame = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetCurFrame();
 	const FrameData& frameData = m_pPlayer.lock()->GetActiveSkul()->GetActiveAnimation().lock()->GetFrameDataList()[iCurFrame];

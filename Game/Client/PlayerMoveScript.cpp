@@ -85,7 +85,8 @@ void PlayerMoveScript::LateUpdate()
 	if (IS_DOWN(KEY_TYPE::C))
 	{
 		if (pPlayer->GetJumpCount() && 
-			PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum())
+			PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum() && 
+			PLAYER_STATE::CHARGING != pPlayer->GetPlayerStateEnum())
 		{
 			vVelocity = VEC3_UP_NORMAL * m_fJumpSpeed;
 			GetRigidBody()->SetVelocity(vVelocity);

@@ -23,8 +23,12 @@ SkillBoxHUD::~SkillBoxHUD()
 
 void SkillBoxHUD::Awake()
 {
-	HUD::Awake();
-	CreateAndAddCompletionEffectToScene();
+	if (!IsAwake())
+	{
+		HUD::Awake();
+		CreateAndAddCompletionEffectToScene();
+
+	}
 }
 
 void SkillBoxHUD::Start()

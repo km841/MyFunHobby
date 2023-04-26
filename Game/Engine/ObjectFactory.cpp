@@ -21,10 +21,11 @@
 #include "IsDeadCondition.h"
 #include "RemoveObjectTask.h"
 #include "IsPlayerInAttackRangeCondition.h"
+#include "PlayerHitTask.h"
 
 shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 {
-	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHavePhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
 	pJuniorKnight->AddComponent(make_shared<AI>());
 	pJuniorKnight->AddComponent(make_shared<Animator>());
 	pJuniorKnight->AddComponent(make_shared<Movement>());
@@ -61,6 +62,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	shared_ptr<IsDeadCondition> pDeadCondition = make_shared<IsDeadCondition>(pJuniorKnight);
 	shared_ptr<RemoveObjectTask> pRemoveTask = make_shared<RemoveObjectTask>(pJuniorKnight);
 	shared_ptr<IsPlayerInAttackRangeCondition> pPlayerInAttackRangeCondition = make_shared<IsPlayerInAttackRangeCondition>(m_pPlayer.lock(), pJuniorKnight);
+	shared_ptr<PlayerHitTask> pPlayerHitTask = make_shared<PlayerHitTask>(m_pPlayer.lock(), pJuniorKnight);
 
 	pDeadSequence->AddChild(pDeadCondition);
 	pDeadSequence->AddChild(pRemoveTask);
@@ -72,6 +74,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	pAttackSequence->AddChild(pNearCondition);
 	pAttackSequence->AddChild(pRunAttackAnimation);
 	pAttackSequence->AddChild(pPlayerInAttackRangeCondition);
+	pAttackSequence->AddChild(pPlayerHitTask);
 
 	pWalkSequence->AddChild(pRunWalkAnimation);
 	pWalkSequence->AddChild(pMoveTask);
@@ -96,7 +99,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 
 void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)
 {
-	shared_ptr<AnimationLocalEffect> pSpawnEffect = CreateObjectHaveNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
+	shared_ptr<AnimationLocalEffect> pSpawnEffect = CreateObjectHasNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
 	pSpawnEffect->AddComponent(make_shared<Animator>());
 	shared_ptr<Animation> pSpawnAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Monster_Spawn", L"..\\Resources\\Animation\\MonsterCommon\\monster_spawn.anim");
 	pSpawnEffect->GetAnimator()->AddAnimation(L"Monster_Spawn", pSpawnAnimation);

@@ -43,21 +43,26 @@ Player::~Player()
 
 void Player::Awake()
 {
-	GameObject::Awake();
-
-	for (uint8 i = 0; i < MAX_SKULS; ++i)
+	if (!IsAwake())
 	{
-		if (m_arrSkuls[i])
+		GameObject::Awake();
+
+		for (uint8 i = 0; i < MAX_SKULS; ++i)
 		{
-			m_arrSkuls[i]->Awake();
+			if (m_arrSkuls[i])
+			{
+				m_arrSkuls[i]->Awake();
+			}
 		}
+
+		CreateDashSmokeAndAddedToScene();
+		CreateJumpSmokeAndAddedToScene();
+
+		m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
+		m_pStateMachine->Awake();
 	}
 
-	CreateDashSmokeAndAddedToScene();
-	CreateJumpSmokeAndAddedToScene();
 
-	m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
-	m_pStateMachine->Awake();
 }
 
 void Player::Start()

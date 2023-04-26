@@ -85,7 +85,7 @@ void JuniorKnight::ScatterParticles(PARTICLE_DIRECTION eParticleDirection)
 {
 	for (int32 i = 0; i < m_vTextureNames.size(); ++i)
 	{
-		shared_ptr<Particle> pParticle = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysicalFromPool<Particle>(
+		shared_ptr<Particle> pParticle = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<Particle>(
 			L"Deferred", false, 
 			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3::Zero, MassProperties(10.f, 10.f, 1.f), 
 			m_vTextureNames[i]);

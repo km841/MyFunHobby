@@ -178,38 +178,14 @@
     <ClInclude Include="StructuredBuffer.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="FleeSequence.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
     <ClInclude Include="AI.h">
       <Filter>Object\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveTask.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
-    <ClInclude Include="RunAnimateTask.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
-    <ClInclude Include="IsPlayerNearCondition.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
-    <ClInclude Include="IsHitCondition.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
-    <ClInclude Include="DelayTask.h">
-      <Filter>Object\AI\MonsterAI</Filter>
     </ClInclude>
     <ClInclude Include="ObjectRemoveToSceneEvent.h">
       <Filter>Object\Event</Filter>
     </ClInclude>
     <ClInclude Include="ObjectFactory.h">
       <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="IsDeadCondition.h">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClInclude>
-    <ClInclude Include="RemoveObjectTask.h">
-      <Filter>Object\AI\MonsterAI</Filter>
     </ClInclude>
     <ClInclude Include="Frustum.h">
       <Filter>Object\Component</Filter>
@@ -226,8 +202,35 @@
     <ClInclude Include="SceneFadeEvent.h">
       <Filter>Object\Event</Filter>
     </ClInclude>
+    <ClInclude Include="IsDeadCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="IsHitCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="IsPlayerNearCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
     <ClInclude Include="IsPlayerInAttackRangeCondition.h">
-      <Filter>Object\AI\MonsterAI</Filter>
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHitTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="DelayTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoveObjectTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAnimateTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeSequence.h">
+      <Filter>Object\AI\MonsterAI\Sequence</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -405,38 +408,14 @@
     <ClCompile Include="StructuredBuffer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="FleeSequence.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
     <ClCompile Include="AI.cpp">
       <Filter>Object\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveTask.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
-    <ClCompile Include="RunAnimateTask.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
-    <ClCompile Include="IsPlayerNearCondition.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
-    <ClCompile Include="IsHitCondition.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
-    <ClCompile Include="DelayTask.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
     <ClCompile Include="ObjectRemoveToSceneEvent.cpp">
       <Filter>Object\Event</Filter>
     </ClCompile>
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="IsDeadCondition.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
-    </ClCompile>
-    <ClCompile Include="RemoveObjectTask.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
     </ClCompile>
     <ClCompile Include="Frustum.cpp">
       <Filter>Object\Component</Filter>
@@ -453,8 +432,35 @@
     <ClCompile Include="SceneFadeEvent.cpp">
       <Filter>Object\Event</Filter>
     </ClCompile>
+    <ClCompile Include="IsDeadCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="IsHitCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
     <ClCompile Include="IsPlayerInAttackRangeCondition.cpp">
-      <Filter>Object\AI\MonsterAI</Filter>
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="IsPlayerNearCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHitTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="DelayTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoveObjectTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAnimateTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="FleeSequence.cpp">
+      <Filter>Object\AI\MonsterAI\Sequence</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +499,18 @@
     </Filter>
     <Filter Include="Object\AI\MonsterAI">
       <UniqueIdentifier>{ce04da1d-7489-42af-bdb6-9f85824798c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AI\MonsterAI\Task">
+      <UniqueIdentifier>{417a6ae9-7cd0-4c1e-bb14-b30f1e951931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AI\MonsterAI\Condition">
+      <UniqueIdentifier>{11b2e4ec-a2b8-4fbf-a0aa-a2faec69c97b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AI\MonsterAI\Sequence">
+      <UniqueIdentifier>{4c11f716-4af5-49fa-9fa9-df2538c6869a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AI\MonsterAI\Selector">
+      <UniqueIdentifier>{eb966714-3fcd-496e-8aeb-9fee161b78cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

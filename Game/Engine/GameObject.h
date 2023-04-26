@@ -72,6 +72,8 @@ public:
     FORCEINLINE bool              IsFrustum()                        { return m_bCheckFrustum; }
     FORCEINLINE void              SetFrustum(bool bCheckFrustum)     { m_bCheckFrustum = bCheckFrustum; }
 
+    FORCEINLINE bool              IsAwake()                          { return m_bAwake; }
+
     void Release();
     virtual void ReturnToPool() {}
 
@@ -89,5 +91,6 @@ private:
     std::vector<shared_ptr<MonoBehaviour>>                   m_vScripts;
     bool                                                     m_bDisable;
     bool                                                     m_bCheckFrustum;
+    bool                                                     m_bAwake;
 };
 

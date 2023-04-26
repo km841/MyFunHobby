@@ -13,6 +13,8 @@
 #include "Scenes.h"
 #include "Animation.h"
 #include "SkulAttack.h"
+#include "MeshRenderer.h"
+#include "Material.h"
 
 AttackState::AttackState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -70,9 +72,11 @@ void AttackState::Update()
 void AttackState::Enter()
 {
 	m_pPlayer.lock()->GetActiveSkul()->GetAttackMethod().lock()->Enter();
+	m_pPlayer.lock()->GetActiveSkul()->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
 }
 
 void AttackState::Exit()
 {
 	m_pPlayer.lock()->GetActiveSkul()->GetAttackMethod().lock()->Exit();
+	m_pPlayer.lock()->GetActiveSkul()->GetMeshRenderer()->GetMaterial()->SetInt(3, 0);
 }

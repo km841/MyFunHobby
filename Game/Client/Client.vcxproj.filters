@@ -122,6 +122,12 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Monster\Script">
       <UniqueIdentifier>{9239000c-fc3a-4bb8-8936-67cba6b70782}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\EventObject">
+      <UniqueIdentifier>{c9bd003f-ba8a-4b65-b438-617df9cd79a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\ComponentObject">
+      <UniqueIdentifier>{3cc88e4b-2d43-4e08-8e3f-01a18e68bcda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -339,6 +345,18 @@
     </ClInclude>
     <ClInclude Include="PlayerHitHUD.h">
       <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="EventObject.h">
+      <Filter>소스 파일\Game\Object\GameObject\EventObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneChangeEventObject.h">
+      <Filter>소스 파일\Game\Object\GameObject\EventObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonScene.h">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentObject.h">
+      <Filter>소스 파일\Game\Object\GameObject\ComponentObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -570,6 +588,18 @@
     </ClCompile>
     <ClCompile Include="PlayerHitHUD.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="EventObject.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\EventObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneChangeEventObject.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\EventObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonScene.cpp">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentObject.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\ComponentObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

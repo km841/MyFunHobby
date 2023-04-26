@@ -58,7 +58,7 @@ void LittleBoneAttack::Exit()
 
 void LittleBoneAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 {
-	shared_ptr<AnimationGlobalEffect> pHitEffect = GET_SINGLE(ObjectFactory)->CreateObjectHaveNotPhysicalFromPool<AnimationGlobalEffect>(L"Forward");
+	shared_ptr<AnimationGlobalEffect> pHitEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationGlobalEffect>(L"Forward");
 
 	int32 iRandomX = RANDOM(50, 100);
 	int32 iRandomY = RANDOM(0, 30);

@@ -64,7 +64,7 @@ void AbyssMeteor::FinalUpdate()
 
 void AbyssMeteor::CreateSmokeEffectAndAddedScene()
 {
-	s_pSmokeEffect = GET_SINGLE(ObjectFactory)->CreateObjectHaveNotPhysical<GlobalEffect>(L"Forward");
+	s_pSmokeEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<GlobalEffect>(L"Forward");
 	s_pSmokeEffect->GetTransform()->SetGlobalOffset(Vec2(20.f, 20.f));
 	s_pSmokeEffect->AddComponent(make_shared<Animator>());
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"AbyssMeteor_Smoke", L"..\\Resources\\Animation\\HighWarlock\\charged_meteor_smoke.anim");
@@ -94,7 +94,7 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 
 		Disable();
 		EnableAndInitSmokeEffect();
-		GET_SINGLE(Scenes)->GetActiveScene()->CameraShakeAxis(0.15f, Vec3(100.f, 1000.f, 0.f));
+		GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.15f, Vec3(100.f, 1000.f, 0.f));
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		auto& vParticles = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::PARTICLE);

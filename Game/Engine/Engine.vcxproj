@@ -217,6 +217,7 @@
     <ClInclude Include="PhysicsProperties.h" />
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PlayerChangeStateEvent.h" />
+    <ClInclude Include="PlayerHitTask.h" />
     <ClInclude Include="PxDispatcher.h" />
     <ClInclude Include="PxEnvironment.h" />
     <ClInclude Include="PxEnvironmentSetting.h" />
@@ -299,6 +300,7 @@
     <ClCompile Include="PhysicsProperties.cpp" />
     <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="PlayerChangeStateEvent.cpp" />
+    <ClCompile Include="PlayerHitTask.cpp" />
     <ClCompile Include="PxDispatcher.cpp" />
     <ClCompile Include="PxEnvironment.cpp" />
     <ClCompile Include="PxEnvironmentSetting.cpp" />

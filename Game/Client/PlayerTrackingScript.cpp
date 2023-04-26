@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Physical.h"
 #include "Clock.h"
+#include "RigidBody.h"
 
 PlayerTrackingScript::PlayerTrackingScript(shared_ptr<Player> pPlayer, float fDepth)
 	: m_pPlayer(pPlayer)
@@ -29,9 +30,20 @@ void PlayerTrackingScript::LateUpdate()
 		return;
 	}
 
+	if (vPlayerPos.y < -3000.f)
+	{
+		if (vPlayerPos.y < -3200.f)
+		{
+			m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
+			m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+		}
+		return;
+	}
+
+	
+
 	vDiffNormal.Normalize();
 	vDiffNormal.y *= 2.f;
 	vDiffNormal.z = 0.f;
 	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 1000.f * DELTA_TIME);
-	//GetTransform()->SetLocalPosition(vPlayerPos);
 }

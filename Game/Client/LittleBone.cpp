@@ -80,7 +80,8 @@ void LittleBone::CooldownCompletionCallback(SKILL_INDEX eSkillIndex)
 
 void LittleBone::CreateHeadAndAddedToScene()
 {
-	m_pHead = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysical<LittleBoneHead>(
+	// 별도의 Global한 Object로 관리해주어야 한다.
+	m_pHead = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<LittleBoneHead>(
 		L"Deferred", false,
 		ACTOR_TYPE::PROJECTILE_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(15.f, 13.f, 10.f), MassProperties(0.3f, 0.3f, 1.f),
 		L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Head.tga");

@@ -42,10 +42,10 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
     
     float4 vVelocity = g_tex_1.Sample(g_sam_0, _in.uv);
-    int iNumBlurSampling = 10;
+    int iNumBlurSampling = 20;
     
     vVelocity.xy /= (float) iNumBlurSampling;
-    vVelocity.x *= 3.f;
+    vVelocity.x *= 5.f;
     int iCount = 1;
     
     for (int i = iCount; i < iNumBlurSampling; ++i)

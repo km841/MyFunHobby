@@ -26,6 +26,7 @@ BEHAVIOR_RESULT IsPlayerInAttackRangeCondition::Run()
 
 	if (m_pGameObject.lock()->GetAnimator()->GetActiveAnimation()->IsHitFrame())
 	{
+		m_pGameObject.lock()->GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
 		if (vTargetVec.Length() < 400.f)
 		{
 			if (vTargetVec.x > 0.f)
@@ -36,11 +37,11 @@ BEHAVIOR_RESULT IsPlayerInAttackRangeCondition::Run()
 				float fRadian = acos(vRightNormal.Dot(vTargetNormal));
 
 				if (fRadian > 0.f && fRadian < XM_PI / 4.f)
-				{
-					// Hit!
-					m_pPlayer.lock()->TakeDamage(1);
-					GET_SINGLE(Scenes)->GetActiveScene()->CameraShakeAxis(0.05f, Vec3(500.f, 0.f, 0.f));
-				}
+					return BEHAVIOR_RESULT::SUCCESS;
+				
+				else
+					return BEHAVIOR_RESULT::FAILURE;
+				
 			
 			}
 			else
@@ -51,16 +52,18 @@ BEHAVIOR_RESULT IsPlayerInAttackRangeCondition::Run()
 				float fRadian = acos(vRightNormal.Dot(vTargetNormal));
 
 				if (fRadian > 0.f && fRadian < XM_PI / 4.f)
-				{
-					// Hit!
-					m_pPlayer.lock()->TakeDamage(1);
-					GET_SINGLE(Scenes)->GetActiveScene()->CameraShakeAxis(0.05f, Vec3(500.f, 0.f, 0.f));
-				}
+					return BEHAVIOR_RESULT::SUCCESS;
+
+				else
+					return BEHAVIOR_RESULT::FAILURE;
+				
 			}
 		}
-
-		m_pGameObject.lock()->GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
+		else
+		{
+			return BEHAVIOR_RESULT::FAILURE;
+		}
 	}
 
-	return BEHAVIOR_RESULT::SUCCESS;
+	return BEHAVIOR_RESULT::RUNNING;
 }

@@ -54,7 +54,7 @@ void HighWarlockAttack::Exit()
 
 void HighWarlockAttack::CreateBaseProjectileAndAddedToScene()
 {
-	shared_ptr<HighWarlockBaseProjectile> pProjectile = GET_SINGLE(ObjectFactory)->CreateObjectHavePhysicalFromPool<HighWarlockBaseProjectile>(L"Forward", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::SPHERE, Vec3(20.f, 20.f, 1.f));
+	shared_ptr<HighWarlockBaseProjectile> pProjectile = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<HighWarlockBaseProjectile>(L"Forward", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::SPHERE, Vec3(20.f, 20.f, 1.f));
 	pProjectile->AddComponent(make_shared<Animator>());
 	pProjectile->AddComponent(make_shared<Movement>());
 

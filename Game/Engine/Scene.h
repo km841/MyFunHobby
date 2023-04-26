@@ -4,7 +4,8 @@ class GameObject;
 class Camera;
 class AfterImage;
 class Light;
-
+class ComponentObject;
+class Player;
 
 struct SceneEventInfo
 {
@@ -44,7 +45,12 @@ public:
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
     void RemoveGameObject(shared_ptr<GameObject> pGameObject);
-    void CameraShakeAxis(float fMaxTime, const Vec3& vImpulse);
+    void ShakeCameraAxis(float fMaxTime, const Vec3& vImpulse);
+
+public:
+    // Helper Functions
+    weak_ptr<ComponentObject> GetMainCamera();
+    weak_ptr<Player>          GetPlayer();
 
 public:
     virtual void Load(const wstring& szPath);
@@ -54,8 +60,7 @@ protected:
     SCENE_TYPE m_eSceneType;
 
     std::array<std::vector<shared_ptr<GameObject>>, SCENE_OBJECT_TYPE_COUNT> m_vSceneObjects;
-    std::vector<shared_ptr<Camera>>                                          m_vCameras;
-    std::vector<shared_ptr<Light>>                                           m_vLights;
+
     std::vector<SceneEventInfo>                                              m_vSceneEvents;
 
     float m_fFadeEffectRatio;
@@ -66,4 +71,6 @@ protected:
 
 protected:
     static std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> s_vGlobalObjects;
+    static std::vector<shared_ptr<Camera>>                                           s_vCameras;
+    static std::vector<shared_ptr<Light>>                                            s_vLights;
 };
