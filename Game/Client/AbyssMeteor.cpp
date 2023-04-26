@@ -132,6 +132,8 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 				GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pMonster, vImpulse));
 			}
 		}
+
+		
 	}
 }
 
