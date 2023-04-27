@@ -1,8 +1,8 @@
 #pragma once
-#include "PlayerProjectile.h"
+#include "Possession.h"
 class LittleBone;
 class LittleBoneHead :
-    public PlayerProjectile
+    public Possession
 {
 public:
     LittleBoneHead();

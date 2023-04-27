@@ -50,10 +50,15 @@ public:
 public:
     // Helper Functions
     weak_ptr<ComponentObject> GetMainCamera();
+    weak_ptr<ComponentObject> GetUICamera();
     weak_ptr<Player>          GetPlayer();
 
 public:
     virtual void Load(const wstring& szPath);
+
+protected:
+    void AwakeLocalObjects();
+    void AwakeGlobalObjects();
 
 protected:
     friend class Scenes;

@@ -58,30 +58,6 @@ void PlayerMoveScript::LateUpdate()
 		}
 	}
 
-	if (IS_DOWN(KEY_TYPE::A))
-	{
-		weak_ptr<SkulSkill> pFirstSkill = pPlayer->GetActiveSkul()->GetSkill(SKILL_INDEX::FIRST).lock();
-		if (pFirstSkill.lock() && 
-			pFirstSkill.lock()->IsActive() && 
-			pFirstSkill.lock()->IsCondition(pPlayer->GetActiveSkul()))
-		{
-			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::FIRST);
-			pPlayer->GetActiveSkul()->EnableSkillActiveFlag(pFirstSkill.lock()->GetSkillType());
-		}
-	}
-
-	if (IS_DOWN(KEY_TYPE::S))
-	{
-		weak_ptr<SkulSkill> pSecondSkill = pPlayer->GetActiveSkul()->GetSkill(SKILL_INDEX::SECOND).lock();
-		if (pSecondSkill.lock() && 
-			pSecondSkill.lock()->IsActive() && 
-			pSecondSkill.lock()->IsCondition(pPlayer->GetActiveSkul()))
-		{
-			pPlayer->GetActiveSkul()->SetActiveSkill(SKILL_INDEX::SECOND);
-			pPlayer->GetActiveSkul()->EnableSkillActiveFlag(pSecondSkill.lock()->GetSkillType());
-		}
-	}
-
 	if (IS_DOWN(KEY_TYPE::C))
 	{
 		if (pPlayer->GetJumpCount() && 
@@ -92,16 +68,6 @@ void PlayerMoveScript::LateUpdate()
 			GetRigidBody()->SetVelocity(vVelocity);
 			pPlayer->DecreaseJumpCount();
 		}
-
-		// Test Code
-		//pPlayer->TakeDamage(1);
-
-		//GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 80.f));
-		//if (GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->IsEnable())
-		//	GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Disable();
-		//
-		//else
-		//	GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)->Enable();
 	}
 
 	if (IS_NONE(KEY_TYPE::LEFT) && IS_NONE(KEY_TYPE::RIGHT))
@@ -113,11 +79,4 @@ void PlayerMoveScript::LateUpdate()
 
 	pPlayer->ReorganizePosition();
 	pPlayer->ReorganizePosition();
-	//pPlayer->CheckAndAdjustPlayerPositionOnCollision();
-
-	if (IS_DOWN(KEY_TYPE::SPACE))
-	{
-		if (pPlayer->IsSwapPossible())
-			pPlayer->EnableSwapActiveFlag();
-	}
 }

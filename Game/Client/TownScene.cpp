@@ -23,6 +23,7 @@
 #include "BackgroundMoveScript.h"
 #include "GlobalEffectSettingScript.h"
 #include "PlayerSkulThumnailScript.h"
+#include "PlayerFunctionScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -128,6 +129,8 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::EVENT_OBJECT);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::MONSTER);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::POSSESSION, LAYER_TYPE::MONSTER);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::POSSESSION, LAYER_TYPE::TILE);
 
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PLAYER_PROJECTILE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::MONSTER);
@@ -155,6 +158,7 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Transform>());
 		pPlayer->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f)));
 		pPlayer->AddComponent(make_shared<PlayerMoveScript>());
+		pPlayer->AddComponent(make_shared<PlayerFunctionScript>());
 		pPlayer->AddComponent(make_shared<RigidBody>(true));
 		pPlayer->AddComponent(make_shared<Collider>());
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
@@ -183,6 +187,8 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HIT));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::MOUSE_POINTER));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY));
 
 	//Change Scene Event
 	{

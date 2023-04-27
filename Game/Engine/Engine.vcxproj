@@ -210,6 +210,7 @@
     <ClInclude Include="ObjectRemoveToSceneEvent.h" />
     <ClInclude Include="ObjectReturnToPoolEvent.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="PauseEvent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physical.h" />
     <ClInclude Include="Physics.h" />
@@ -218,6 +219,7 @@
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PlayerChangeStateEvent.h" />
     <ClInclude Include="PlayerHitTask.h" />
+    <ClInclude Include="PlayEvent.h" />
     <ClInclude Include="PxDispatcher.h" />
     <ClInclude Include="PxEnvironment.h" />
     <ClInclude Include="PxEnvironmentSetting.h" />
@@ -288,6 +290,7 @@
     <ClCompile Include="ObjectRemoveToSceneEvent.cpp" />
     <ClCompile Include="ObjectReturnToPoolEvent.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="PauseEvent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -301,6 +304,7 @@
     <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="PlayerChangeStateEvent.cpp" />
     <ClCompile Include="PlayerHitTask.cpp" />
+    <ClCompile Include="PlayEvent.cpp" />
     <ClCompile Include="PxDispatcher.cpp" />
     <ClCompile Include="PxEnvironment.cpp" />
     <ClCompile Include="PxEnvironmentSetting.cpp" />

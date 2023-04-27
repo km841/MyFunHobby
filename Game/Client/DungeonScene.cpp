@@ -152,7 +152,7 @@ void DungeonScene::Enter()
 		AddGameObject(pGameObject);
 	}
 
-	Awake();
+	AwakeLocalObjects();
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 }
 

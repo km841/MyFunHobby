@@ -7,6 +7,8 @@ class ObjectRemoveToSceneEvent;
 class ObjectReturnToPoolEvent;
 class ForceOnObjectEvent;
 class SceneFadeEvent;
+class PauseEvent;
+class PlayEvent;
 
 class EventManager
 {
@@ -24,6 +26,8 @@ private:
 	void ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent);
 	void ProcessForceOnObjectEvent(ForceOnObjectEvent* pEvent);
 	void ProcessSceneFadeEvent(SceneFadeEvent* pEvent);
+	void ProcessPauseEvent(PauseEvent* pEvent);
+	void ProcessPlayEvent(PlayEvent* pEvent);
 
 private:
 	std::queue<unique_ptr<Event>> m_qEvents;

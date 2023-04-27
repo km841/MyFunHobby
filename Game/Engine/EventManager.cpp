@@ -14,6 +14,9 @@
 #include "Transform.h"
 #include "RigidBody.h"
 #include "SceneFadeEvent.h"
+#include "Clock.h"
+#include "PauseEvent.h"
+#include "PlayEvent.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -56,6 +59,14 @@ void EventManager::ProcessEvents()
 
 		case EVENT_TYPE::SCENE_FADE_EVENT:
 			ProcessSceneFadeEvent(static_cast<SceneFadeEvent*>(pEvent.get()));
+			break;
+
+		case EVENT_TYPE::PAUSE_EVENT:
+			ProcessPauseEvent(static_cast<PauseEvent*>(pEvent.get()));
+			break;
+
+		case EVENT_TYPE::PLAY_EVENT:
+			ProcessPlayEvent(static_cast<PlayEvent*>(pEvent.get()));
 			break;
 		}
 	}
@@ -119,4 +130,16 @@ void EventManager::ProcessSceneFadeEvent(SceneFadeEvent* pEvent)
 	SCENE_FADE_EFFECT eSceneFadeEffect = pEvent->GetFadeEffectType();
 	float fEndTime = pEvent->GetEndTime();
 	pCurScene->RegisterSceneEvent(eEventType, static_cast<uint8>(eSceneFadeEffect), fEndTime);
+}
+
+void EventManager::ProcessPauseEvent(PauseEvent* pEvent)
+{
+	pEvent->GetEventType();
+	GET_SINGLE(Clock)->Pause();
+}
+
+void EventManager::ProcessPlayEvent(PlayEvent* pEvent)
+{
+	pEvent->GetEventType();
+	GET_SINGLE(Clock)->Play();
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Clock.h"
+#include "Input.h"
 
 void Clock::Init()
 {
@@ -16,6 +17,9 @@ void Clock::Update()
 
 	if (m_fDeltaTime > (1.f / 60.f))
 		m_fDeltaTime = (1.f / 60.f);
+
+	if (m_bPause)
+		m_fDeltaTime = 0.f;
 
 	m_iPrevCount = iCurrentCount;
 

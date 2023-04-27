@@ -41,23 +41,8 @@ Scene::~Scene()
 
 void Scene::Awake()
 {
-	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
-	{
-		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
-		{
-			if (pGameObject)
-				pGameObject->Awake();
-		}
-	}
-
-	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
-	{
-		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
-		{
-			if (pGameObject)
-				pGameObject->Awake();
-		}
-	}
+	AwakeLocalObjects();
+	AwakeGlobalObjects();
 }
 
 void Scene::Start()
@@ -375,6 +360,13 @@ weak_ptr<ComponentObject> Scene::GetMainCamera()
 	return static_pointer_cast<ComponentObject>(pMainCamera.lock()->GetGameObject());
 }
 
+weak_ptr<ComponentObject> Scene::GetUICamera()
+{
+	assert(!s_vCameras.empty());
+	weak_ptr<Camera> pUICamera = s_vCameras[1];
+	return static_pointer_cast<ComponentObject>(pUICamera.lock()->GetGameObject());
+}
+
 weak_ptr<Player> Scene::GetPlayer()
 {
 	auto& vGameObjects = GetGameObjects(LAYER_TYPE::PLAYER);
@@ -419,4 +411,28 @@ void Scene::Load(const wstring& szPath)
 	}
 
 	ifs.close();
+}
+
+void Scene::AwakeLocalObjects()
+{
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
+	{
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Awake();
+		}
+	}
+}
+
+void Scene::AwakeGlobalObjects()
+{
+	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
+	{
+		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Awake();
+		}
+	}
 }

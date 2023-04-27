@@ -232,6 +232,12 @@
     <ClInclude Include="FleeSequence.h">
       <Filter>Object\AI\MonsterAI\Sequence</Filter>
     </ClInclude>
+    <ClInclude Include="PauseEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -461,6 +467,12 @@
     </ClCompile>
     <ClCompile Include="FleeSequence.cpp">
       <Filter>Object\AI\MonsterAI\Sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseEvent.cpp">
+      <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayEvent.cpp">
+      <Filter>Object\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

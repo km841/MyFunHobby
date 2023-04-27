@@ -176,6 +176,12 @@
     <ClInclude Include="BackgroundMoveScript.h" />
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="ComponentObject.h" />
+    <ClInclude Include="InfoUI.h" />
+    <ClInclude Include="InventoryUI.h" />
+    <ClInclude Include="ItemInfoUI.h" />
+    <ClInclude Include="MousePointerHUD.h" />
+    <ClInclude Include="PlayerFunctionScript.h" />
+    <ClInclude Include="Possession.h" />
     <ClInclude Include="SceneChangeEventObject.h" />
     <ClInclude Include="ChargingState.h" />
     <ClInclude Include="DashState.h" />
@@ -228,6 +234,7 @@
     <ClInclude Include="PlayerTrackingScript.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SkulAttack.h" />
+    <ClInclude Include="SkulInfoUI.h" />
     <ClInclude Include="SkulThumnailHUD.h" />
     <ClInclude Include="SkullThrowSkill.h" />
     <ClInclude Include="SkulSkill.h" />
@@ -254,6 +261,12 @@
     <ClCompile Include="BackgroundMoveScript.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="ComponentObject.cpp" />
+    <ClCompile Include="InfoUI.cpp" />
+    <ClCompile Include="InventoryUI.cpp" />
+    <ClCompile Include="ItemInfoUI.cpp" />
+    <ClCompile Include="MousePointerHUD.cpp" />
+    <ClCompile Include="PlayerFunctionScript.cpp" />
+    <ClCompile Include="Possession.cpp" />
     <ClCompile Include="SceneChangeEventObject.cpp" />
     <ClCompile Include="ChargingState.cpp" />
     <ClCompile Include="Client.cpp" />
@@ -311,6 +324,7 @@
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerTrackingScript.cpp" />
     <ClCompile Include="SkulAttack.cpp" />
+    <ClCompile Include="SkulInfoUI.cpp" />
     <ClCompile Include="SkulThumnailHUD.cpp" />
     <ClCompile Include="SkullThrowSkill.cpp" />
     <ClCompile Include="SkulSkill.cpp" />

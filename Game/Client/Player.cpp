@@ -43,26 +43,21 @@ Player::~Player()
 
 void Player::Awake()
 {
-	if (!IsAwake())
+	GameObject::Awake();
+
+	for (uint8 i = 0; i < MAX_SKULS; ++i)
 	{
-		GameObject::Awake();
-
-		for (uint8 i = 0; i < MAX_SKULS; ++i)
+		if (m_arrSkuls[i])
 		{
-			if (m_arrSkuls[i])
-			{
-				m_arrSkuls[i]->Awake();
-			}
+			m_arrSkuls[i]->Awake();
 		}
-
-		CreateDashSmokeAndAddedToScene();
-		CreateJumpSmokeAndAddedToScene();
-
-		m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
-		m_pStateMachine->Awake();
 	}
 
+	CreateDashSmokeAndAddedToScene();
+	CreateJumpSmokeAndAddedToScene();
 
+	m_pStateMachine->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
+	m_pStateMachine->Awake();
 }
 
 void Player::Start()
@@ -79,15 +74,6 @@ void Player::Update()
 
 	SwapCooldownUpdate();
 	SkulCooldownUpdate();
-
-	//uint32 fps = GET_SINGLE(Clock)->GetFPS();
-
-	//WCHAR text[100] = L"";
-	//Vec3 vPosition = GetTransform()->GetWorldPosition();
-	//::wsprintf(text, L"x : %d, y : %d, z : %d", (int)vPosition.x, (int)vPosition.y, (int)vPosition.z);
-
-	//
-	//::SetWindowText(g_pEngine->GetHwnd(), text);
 }
 
 void Player::LateUpdate()

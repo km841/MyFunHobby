@@ -3,6 +3,7 @@
 #include "Interface.h"
 
 #include "DialogueUI.h"
+#include "inventoryUI.h"
 #include "Mesh.h"
 #include "Material.h"
 #include "Texture.h"
@@ -14,6 +15,9 @@
 
 #include "Resources.h"
 
+#include "InventoryUI.h"
+#include "MousePointerHUD.h"
+
 #include "PlayerHitHUD.h"
 #include "HealthBarHUD.h"
 #include "PlayerInterfaceHUD.h"
@@ -24,6 +28,7 @@
 #include "PlayerFirstSkillShowScript.h"
 #include "UI.h"
 #include "HUD.h"
+#include "ObjectFactory.h"
 
 void InterfaceManager::Init()
 {
@@ -57,27 +62,27 @@ void InterfaceManager::CreateUI()
 {
 	// Dialogue UI
 	{
-		shared_ptr<DialogueUI> pDialogueUI = make_shared<DialogueUI>();
+		shared_ptr<DialogueUI> pDialogueUI = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DialogueUI>(L"Forward", L"..\\Resources\\Texture\\UI\\UI_Dialog.tga");
 		pDialogueUI->SetFrustum(false);
-
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"DialogueUI", L"..\\Resources\\Texture\\UI\\UI_Dialog.tga");
-		pMaterial->SetTexture(0, pTexture);
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pDialogueUI->AddComponent(pMeshRenderer);
-		pDialogueUI->AddComponent(make_shared<Transform>());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pDialogueUI->GetTransform()->SetLocalScale(pTexture->GetTexSize());
-		//pDialogueUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 40.f));
+		pDialogueUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 40.f));
 		m_mInterfaceMap[INTERFACE_TYPE::DIALOGUE] = pDialogueUI;
+	}
+
+	// Inventory UI
+	{
+		shared_ptr<InventoryUI> pInventoryUI = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<InventoryUI>(L"Forward", L"..\\Resources\\Texture\\UI\\Inventory\\UI_Inventory_Frame_Hardmode.png");
+		pInventoryUI->SetFrustum(false);
+		pInventoryUI->Disable();
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pInventoryUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 40.f));
+		m_mInterfaceMap[INTERFACE_TYPE::INVENTORY] = pInventoryUI;
 	}
 }
 
@@ -87,19 +92,8 @@ void InterfaceManager::CreateHUD()
 	
 	// Player Interface HUD
 	{
-		pInterfaceHUD = make_shared<PlayerInterfaceHUD>();
+		pInterfaceHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<PlayerInterfaceHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_Player_Normal_Frame.tga");
 		pInterfaceHUD->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"PlayerInterfaceHUD", L"..\\Resources\\Texture\\HUD\\HUD_Player_Normal_Frame.tga");
-		pMaterial->SetTexture(0, pTexture);
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pInterfaceHUD->AddComponent(pMeshRenderer);
-		pInterfaceHUD->AddComponent(make_shared<Transform>());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -113,17 +107,9 @@ void InterfaceManager::CreateHUD()
 
 	// Skul Thumnail HUD
 	{
-		shared_ptr<SkulThumnailHUD> pSkulThumnailHUD = make_shared<SkulThumnailHUD>();
+		shared_ptr<SkulThumnailHUD> pSkulThumnailHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkulThumnailHUD>(L"Cooldown");
 		pSkulThumnailHUD->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Cooldown")->Clone();
 
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pSkulThumnailHUD->AddComponent(pMeshRenderer);
-		pSkulThumnailHUD->AddComponent(make_shared<Transform>());
 		pSkulThumnailHUD->AddComponent(make_shared<PlayerSkulThumnailScript>(pSkulThumnailHUD));
 		pSkulThumnailHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
@@ -138,20 +124,10 @@ void InterfaceManager::CreateHUD()
 
 	// Health Bar HUD
 	{
-		shared_ptr<HealthBarHUD> pHealthBarHUD = make_shared<HealthBarHUD>();
+		shared_ptr<HealthBarHUD> pHealthBarHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<HealthBarHUD>(L"HP", L"..\\Resources\\Texture\\HUD\\HealthBar\\HUD_Player_HealthBar.tga");
 		pHealthBarHUD->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"HP")->Clone();
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HealthBarHUD", L"..\\Resources\\Texture\\HUD\\HealthBar\\HUD_Player_HealthBar.tga");
-		pMaterial->SetTexture(0, pTexture);
 
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pHealthBarHUD->AddComponent(pMeshRenderer);
 		pHealthBarHUD->AddComponent(make_shared<PlayerHealthBarShowScript>(pHealthBarHUD));
-		pHealthBarHUD->AddComponent(make_shared<Transform>());
 		pHealthBarHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -165,18 +141,10 @@ void InterfaceManager::CreateHUD()
 
 	// Skill Box HUD
 	{
-		shared_ptr<SkillBoxHUD> pSkillBoxHUD = make_shared<SkillBoxHUD>();
+		shared_ptr<SkillBoxHUD> pSkillBoxHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkillBoxHUD>(L"Cooldown");
 		pSkillBoxHUD->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Cooldown")->Clone();
 
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pSkillBoxHUD->AddComponent(pMeshRenderer);
 		pSkillBoxHUD->AddComponent(make_shared<PlayerFirstSkillShowScript>(pSkillBoxHUD));
-		pSkillBoxHUD->AddComponent(make_shared<Transform>());
 		pSkillBoxHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -190,17 +158,8 @@ void InterfaceManager::CreateHUD()
 
 	// Player Hit HUD
 	{
-		shared_ptr<PlayerHitHUD> pPlayerHitHUD = make_shared<PlayerHitHUD>();
+		shared_ptr<PlayerHitHUD> pPlayerHitHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<PlayerHitHUD>(L"Forward");
 		pPlayerHitHUD->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-
-		pPlayerHitHUD->AddComponent(pMeshRenderer);
-		pPlayerHitHUD->AddComponent(make_shared<Transform>());
 		pPlayerHitHUD->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"PlayerHit", L"..\\Resources\\Animation\\Player\\player_hit.anim");
@@ -212,6 +171,14 @@ void InterfaceManager::CreateHUD()
 		pPlayerHitHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 80.f));
 		
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_HIT] = pPlayerHitHUD;
+	}
+
+	// Mouse Pointer HUD
+	{
+		shared_ptr<MousePointerHUD> pMousePointerHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<MousePointerHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\Mouse_Cursor.png");
+		pMousePointerHUD->SetFrustum(false);
+		pMousePointerHUD->GetTransform()->SetLocalScale(Vec3(10.5f, 10.5f, 1.f));
+		m_mInterfaceMap[INTERFACE_TYPE::MOUSE_POINTER] = pMousePointerHUD;
 	}
 
 }

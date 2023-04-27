@@ -21,17 +21,17 @@ LittleBoneHead::~LittleBoneHead()
 
 void LittleBoneHead::Awake()
 {
-	PlayerProjectile::Awake();
+	Possession::Awake();
 }
 
 void LittleBoneHead::Start()
 {
-	PlayerProjectile::Start();
+	Possession::Start();
 }
 
 void LittleBoneHead::Update()
 {
-	PlayerProjectile::Update();
+	Possession::Update();
 
 	if (m_bTouch)
 	{
@@ -44,12 +44,12 @@ void LittleBoneHead::Update()
 
 void LittleBoneHead::LateUpdate()
 {
-	PlayerProjectile::LateUpdate();
+	Possession::LateUpdate();
 }
 
 void LittleBoneHead::FinalUpdate()
 {
-	PlayerProjectile::FinalUpdate();
+	Possession::FinalUpdate();
 }
 
 void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
