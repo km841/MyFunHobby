@@ -2,6 +2,7 @@
 #include "ItemInfoUI.h"
 
 ItemInfoUI::ItemInfoUI()
+	: InfoUI(INFO_TYPE::ITEM_INFO)
 {
 }
 
@@ -32,4 +33,8 @@ void ItemInfoUI::LateUpdate()
 void ItemInfoUI::FinalUpdate()
 {
 	InfoUI::FinalUpdate();
+}
+
+void ItemInfoUI::ShowDetailInfo()
+{
 }

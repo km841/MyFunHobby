@@ -19,7 +19,7 @@ void Clock::Update()
 		m_fDeltaTime = (1.f / 60.f);
 
 	if (m_bPause)
-		m_fDeltaTime = 0.f;
+		m_fDeltaTime = 0.000001f;
 
 	m_iPrevCount = iCurrentCount;
 

@@ -22,10 +22,11 @@
 #include "ObjectFactory.h"
 
 LittleBone::LittleBone()
-	: Skul(SKUL_GRADE::NORMAL)
+	: Skul(GRADE::NORMAL)
 	, m_eLittleBoneState(LITTLE_BONE_STATE::HAS_HEAD)
 {
 	SetEnumIndex(static_cast<uint8>(m_eLittleBoneState));
+	m_eSkulType = SKUL_TYPE::LITTLE_BONE;
 	
 }
 

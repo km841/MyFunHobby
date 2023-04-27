@@ -172,10 +172,13 @@
     <ClInclude Include="AnimationGlobalEffect.h" />
     <ClInclude Include="AnimationLocalEffect.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ArtifactInfoUI.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="BackgroundMoveScript.h" />
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="ComponentObject.h" />
+    <ClInclude Include="DarkAbilInfoUI.h" />
+    <ClInclude Include="DetailInfoUI.h" />
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="ItemInfoUI.h" />
@@ -257,10 +260,13 @@
     <ClCompile Include="AnimationGlobalEffect.cpp" />
     <ClCompile Include="AnimationLocalEffect.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ArtifactInfoUI.cpp" />
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="BackgroundMoveScript.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="ComponentObject.cpp" />
+    <ClCompile Include="DarkAbilInfoUI.cpp" />
+    <ClCompile Include="DetailInfoUI.cpp" />
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />

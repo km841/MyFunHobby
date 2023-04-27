@@ -10,7 +10,7 @@ class Skul :
 	public GameObject
 {
 public:
-	explicit Skul(SKUL_GRADE eSkulGrade);
+	explicit Skul(GRADE eGrade);
 	virtual ~Skul() = default;
 
 public:
@@ -22,7 +22,7 @@ public:
 
 public:
 	FORCEINLINE SKUL_INDEX			 GetSkulIndex()										   { return m_eSkulIndex;     }
-	FORCEINLINE SKUL_GRADE			 GetSkulGrade()										   { return m_eSkulGrade;   }
+	FORCEINLINE GRADE				 GetSkulGrade()										   { return m_eSkulGrade;   }
 	FORCEINLINE void				 SetSkulIndex(SKUL_INDEX eSkulIndex)				   { m_eSkulIndex = eSkulIndex; }
 	FORCEINLINE bool				 IsSkillActiveFlag()								   { return SKILL_TYPE::NONE != m_bSkillActiveType; }
 	FORCEINLINE SKILL_TYPE			 GetSkillActiveType()								   { return m_bSkillActiveType; }
@@ -35,6 +35,7 @@ public:
 	FORCEINLINE void				 DisableSkillActiveFlag()							   { m_bSkillActiveType = SKILL_TYPE::NONE; }
 	FORCEINLINE void				 EnableSkillActiveFlag(SKILL_TYPE eSkillType)		   { m_bSkillActiveType = eSkillType; }
 	FORCEINLINE weak_ptr<SkulAttack> GetAttackMethod()									   { return m_pAttackMethod; }
+	FORCEINLINE SKUL_TYPE			 GetSkulType()										   { return m_eSkulType; }
 	
 
 public:
@@ -71,7 +72,8 @@ protected:
 	weak_ptr<Player>								   m_pPlayer;
 
 	// About Enums
-	SKUL_GRADE										   m_eSkulGrade;
+	SKUL_TYPE										   m_eSkulType;
+	GRADE											   m_eSkulGrade;
 	SKUL_INDEX										   m_eSkulIndex;
 	uint8											   m_iEnumIndex;
 

@@ -15,8 +15,9 @@
 #include "Player.h"
 
 HighWarlock::HighWarlock()
-	: Skul(SKUL_GRADE::UNIQUE)
+	: Skul(GRADE::UNIQUE)
 {
+	m_eSkulType = SKUL_TYPE::HIGH_WARLOCK;
 }
 
 void HighWarlock::Awake()

@@ -134,6 +134,12 @@
     <Filter Include="소스 파일\Game\Object\Interface\UI\InventoryUI">
       <UniqueIdentifier>{7e1fce2c-d12e-4cda-b008-d388b45de230}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI">
+      <UniqueIdentifier>{e1e3a8e7-1692-4e9a-ac9f-586f25bd3b27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\UI\InventoryUI\DetailUI">
+      <UniqueIdentifier>{75b93267-80e4-4ca2-b3a7-a7a2b270c3b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -376,14 +382,23 @@
     <ClInclude Include="MousePointerHUD.h">
       <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="SkulInfoUI.h">
-      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI</Filter>
+    <ClInclude Include="InfoUI.h">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtifactInfoUI.h">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="DarkAbilInfoUI.h">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
     </ClInclude>
     <ClInclude Include="ItemInfoUI.h">
-      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI</Filter>
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
     </ClInclude>
-    <ClInclude Include="InfoUI.h">
-      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI</Filter>
+    <ClInclude Include="SkulInfoUI.h">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="DetailInfoUI.h">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\DetailUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -640,14 +655,23 @@
     <ClCompile Include="MousePointerHUD.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="SkulInfoUI.cpp">
-      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI</Filter>
+    <ClCompile Include="ArtifactInfoUI.cpp">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
     </ClCompile>
-    <ClCompile Include="ItemInfoUI.cpp">
-      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI</Filter>
+    <ClCompile Include="DarkAbilInfoUI.cpp">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
     </ClCompile>
     <ClCompile Include="InfoUI.cpp">
-      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI</Filter>
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInfoUI.cpp">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="SkulInfoUI.cpp">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DetailInfoUI.cpp">
+      <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\DetailUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

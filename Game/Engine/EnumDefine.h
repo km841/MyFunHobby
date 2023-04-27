@@ -272,7 +272,7 @@ enum class SKUL_TYPE
 	HIGH_WARLOCK,
 };
 
-enum class SKUL_GRADE
+enum class GRADE
 {
 	NORMAL,
 	RARE,

@@ -9,10 +9,10 @@
 #include "SkillBoxHUD.h"
 #include "SkulAttack.h"
 
-Skul::Skul(SKUL_GRADE eSkulGrade)
+Skul::Skul(GRADE eGrade)
 	: GameObject(LAYER_TYPE::UNKNOWN)
 	, m_eSkulIndex(SKUL_INDEX::END)
-	, m_eSkulGrade(eSkulGrade)
+	, m_eSkulGrade(eGrade)
 	, m_bSkillActiveType(SKILL_TYPE::NONE)
 	, m_iEnumIndex(0)
 {

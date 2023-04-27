@@ -1,5 +1,7 @@
 #pragma once
 #include "UI.h"
+class InfoUI;
+class DetailInfoUI;
 class InventoryUI :
     public UI
 {
@@ -14,10 +16,25 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
+public:
+    virtual void Enable();
+    virtual void Disable();
+
 private:
     void CreateChildUIAndAddedToScene();
     void CreateSkulInfoUI();
+    void CreateArtifactInfoUI();
     void CreateItemInfoUI();
+    void CreateDarkAbilInfoUI();
+    void CreateDetailInfoUI();
+
+private:
+    std::vector<shared_ptr<InfoUI>> m_vSkulInfoUI;
+    std::vector<shared_ptr<InfoUI>> m_vItemInfoUI;
+    std::vector<shared_ptr<InfoUI>> m_vArtifactInfoUI;
+    std::vector<shared_ptr<InfoUI>> m_vDarkAbilInfoUI;
+
+    shared_ptr<DetailInfoUI> m_pDetailInfoUI;
 
     // Awake에서 Child ui를 모두 씬에 추가시킨다.
     // Child ui는 부모 ui가 enable일 때 같이 enable됨

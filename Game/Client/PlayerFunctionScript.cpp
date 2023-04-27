@@ -55,10 +55,17 @@ void PlayerFunctionScript::LateUpdate()
 
 	if (IS_DOWN(KEY_TYPE::TAB))
 	{
-		GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY)->FlipState();
-		if (GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY)->IsEnable())
-			GET_SINGLE(EventManager)->AddEvent(make_unique<PauseEvent>());
-		else
+		bool bState = GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY)->IsEnable();
+
+		if (bState)
+		{
+			GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY)->Disable();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<PlayEvent>());
+		}
+		else
+		{
+			GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY)->Enable();
+			GET_SINGLE(EventManager)->AddEvent(make_unique<PauseEvent>());
+		}		
 	}
 }

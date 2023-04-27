@@ -33,6 +33,9 @@
       <FullPath>C:\MyProject\Game\Output\hp.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\inventory_info.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\lighting.cso</FullPath>
     </ContentFile>
     <ContentFile>

@@ -13,5 +13,7 @@ public:
     virtual void Update();
     virtual void LateUpdate();
     virtual void FinalUpdate();
+
+    virtual void ShowDetailInfo();
 };
 

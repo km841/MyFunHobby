@@ -475,6 +475,22 @@ void Resources::CreateDefaultShader()
 		pShader->CreateComputeShader(L"..\\Resources\\Shader\\particle.fx", "CS_Main", "cs_5_0");
 		Add<Shader>(L"ComputeParticle", pShader);
 	}
+
+	// Forward
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\inventory_info.fx", shaderInfo);
+
+		Add<Shader>(L"InventoryInfo", pShader);
+	}
 }
 
 void Resources::CreateDefaultMaterial()
@@ -648,5 +664,13 @@ void Resources::CreateDefaultMaterial()
 		shared_ptr<Shader> pShader = Get<Shader>(L"ComputeParticle");
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"ComputeParticle", pMaterial);
+	}
+
+	// Particle
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"InventoryInfo");
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"InventoryInfo", pMaterial);
 	}
 }
