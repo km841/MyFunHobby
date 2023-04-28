@@ -36,6 +36,7 @@ public:
     void Render_Final();
     void Render_Forward();
     void Render_Deferred();
+    void Render_Font();
     void PushLightData();
     void EventUpdate();
     void CameraShakeUpdate();

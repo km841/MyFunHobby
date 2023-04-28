@@ -21,6 +21,7 @@
 #include "Clock.h"
 #include "Player.h"
 #include "ComponentObject.h"
+#include "Font.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -151,6 +152,9 @@ void Scene::Render()
 
 	// Forward Rendering
 	Render_Forward();
+
+	// Font Rendering
+	Render_Font();
 }
 
 void Scene::Render_Lights()
@@ -198,6 +202,11 @@ void Scene::Render_Deferred()
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
 	pCamera->SortGameObject();
 	pCamera->Render_Deferred();
+}
+
+void Scene::Render_Font()
+{
+	GET_SINGLE(Font)->Render();
 }
 
 void Scene::PushLightData()

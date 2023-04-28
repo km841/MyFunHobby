@@ -189,8 +189,12 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FilterShaders.h" />
     <ClInclude Include="FleeSequence.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="ForceOnObjectEvent.h" />
     <ClInclude Include="Frustum.h" />
+    <ClInclude Include="FW1CompileSettings.h" />
+    <ClInclude Include="FW1FontWrapper.h" />
+    <ClInclude Include="FW1Precompiled.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IsDeadCondition.h" />
@@ -269,6 +273,7 @@
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FilterShaders.cpp" />
     <ClCompile Include="FleeSequence.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="ForceOnObjectEvent.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameObject.cpp" />

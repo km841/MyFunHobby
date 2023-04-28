@@ -20,7 +20,6 @@
 #include "CameraMoveScript.h"
 #include "PlayerMoveScript.h"
 #include "PlayerFirstSkillShowScript.h"
-#include "BackgroundMoveScript.h"
 #include "GlobalEffectSettingScript.h"
 #include "PlayerSkulThumnailScript.h"
 #include "PlayerFunctionScript.h"

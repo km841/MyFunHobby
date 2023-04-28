@@ -12,6 +12,7 @@
 #include "Cemetery.h"
 #include "Light.h"
 #include "ParticleSystem.h"
+#include "Font.h"
 
 void Engine::Init(const WindowInfo& wInfo)
 {
@@ -70,6 +71,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
 	GET_SINGLE(InterfaceManager)->Init();
 	GET_SINGLE(Cemetery)->Init();
+	GET_SINGLE(Font)->Init();
 }
 
 void Engine::Update()
@@ -104,6 +106,8 @@ void Engine::RenderBegin()
 
 void Engine::RenderEnd()
 {
+	// FontEngine Test
+	
 	m_pSwapChain->Present();
 	GET_SINGLE(EventManager)->ProcessEvents();
 }

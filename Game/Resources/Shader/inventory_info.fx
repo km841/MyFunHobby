@@ -35,8 +35,8 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
     
     if (g_tex_on_1 && 
-        _in.uv.x > 0.05f && _in.uv.x < 0.95f && 
-        _in.uv.y > 0.05f && _in.uv.y < 0.95f)
+        _in.uv.x > 0.1f && _in.uv.x < 0.9f && 
+        _in.uv.y > 0.1f && _in.uv.y < 0.9f)
         vColor = g_tex_1.Sample(g_sam_0, _in.uv);
     
     if (vColor.a <= 0.1f)

@@ -58,6 +58,7 @@ private:
 	shared_ptr<Physics>		m_pPhysics;
 	shared_ptr<Utility>     m_pUtility;
 
+
 	std::array<shared_ptr<ConstantBuffer>, CONSTANT_BUFFER_TYPE_COUNT>		  m_arrCBGroups;
 	std::array<shared_ptr<RenderTargetGroup>, RENDER_TARGET_GROUP_TYPE_COUNT> m_arrRTGroups;
 	

@@ -44,6 +44,8 @@ namespace fs = std::filesystem;
 #pragma comment(lib, "PhysX\\debug\\PhysXExtensions_static_64.lib")
 #pragma comment(lib, "PhysX\\debug\\PhysXPvdSDK_static_64.lib")
 #pragma comment(lib, "PhysX\\debug\\PhysXCharacterKinematic_static_64.lib")
+
+#pragma comment(lib, "FW1FontWrapper\\FW1FontWrapper.lib")
 #else
 #pragma comment(lib, "DirectXTex\\DirectXTex.lib")
 
@@ -91,6 +93,23 @@ using std::static_pointer_cast;
 using std::dynamic_pointer_cast;
 
 using RaycastResult = std::pair<bool, Vec3>;
+
+
+struct Color
+{
+	uint32 iValue;
+
+#define RED(x) ((x >> 16) & 0xff)
+#define GREEN(x) ((x >> 8) & 0xff)
+#define BLUE(x) (x & 0xff)
+
+	static Color FromRGB(uint8 iRed, uint8 iGreen, uint8 iBlue) 
+	{
+		return Color{ static_cast<uint32>((0xff << 24) | (iBlue << 16) | (iGreen << 8) | iRed)  };
+	};
+
+	operator uint32() { return iValue; }
+};
 
 struct WindowInfo
 {

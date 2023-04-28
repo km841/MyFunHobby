@@ -238,6 +238,18 @@
     <ClInclude Include="PlayEvent.h">
       <Filter>Object\Event</Filter>
     </ClInclude>
+    <ClInclude Include="FW1CompileSettings.h">
+      <Filter>Engine\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="FW1FontWrapper.h">
+      <Filter>Engine\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="FW1Precompiled.h">
+      <Filter>Engine\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -474,6 +486,9 @@
     <ClCompile Include="PlayEvent.cpp">
       <Filter>Object\Event</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -523,6 +538,9 @@
     </Filter>
     <Filter Include="Object\AI\MonsterAI\Selector">
       <UniqueIdentifier>{eb966714-3fcd-496e-8aeb-9fee161b78cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Font">
+      <UniqueIdentifier>{d25d4582-9d2a-4b5e-afd7-fc9bb4e2cd82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

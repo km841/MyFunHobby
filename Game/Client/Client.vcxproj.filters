@@ -271,9 +271,6 @@
     <ClInclude Include="RotateHeadScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Script</Filter>
     </ClInclude>
-    <ClInclude Include="BackgroundMoveScript.h">
-      <Filter>소스 파일\Game\Object\Script</Filter>
-    </ClInclude>
     <ClInclude Include="LittleBoneHead.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone</Filter>
     </ClInclude>
@@ -543,9 +540,6 @@
     </ClCompile>
     <ClCompile Include="RotateHeadScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="BackgroundMoveScript.cpp">
-      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
     <ClCompile Include="LittleBoneHead.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\LittleBone</Filter>

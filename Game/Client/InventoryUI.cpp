@@ -344,6 +344,7 @@ void InventoryUI::CreateDetailInfoUI()
 		m_pDetailInfoUI->GetTransform()->SetParent(GetTransform());
 		m_pDetailInfoUI->GetTransform()->SetLocalPosition(Vec3(-235.f, 114.f, -10.f));
 
+		m_pDetailInfoUI->m_pInventoryUI = Conv::BaseToDeclare<InventoryUI>(shared_from_this());
 		m_pDetailInfoUI->Awake();
 		m_pDetailInfoUI->Disable();
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

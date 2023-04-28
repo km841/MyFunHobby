@@ -2,10 +2,12 @@
 #include "UI.h"
 #include "InfoUI.h"
 
+class InventoryUI;
 class DetailInfoUI :
     public UI
 {
 public:
+    friend class InventoryUI;
     DetailInfoUI();
     virtual ~DetailInfoUI();
 
@@ -20,6 +22,13 @@ public:
     FORCEINLINE void SetDetailInfo(const DetailInfo& detailInfo) { m_DetailInfo = detailInfo; }
 
 private:
+    void DrawSkulInfo();
+    void DrawItemInfo();
+    void DrawArtifactInfo();
+    void DrawDarkAbilInfo();
+
+private:
     DetailInfo m_DetailInfo;
+    weak_ptr<InventoryUI> m_pInventoryUI;
 };
 
