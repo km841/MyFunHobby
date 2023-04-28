@@ -9,12 +9,12 @@
 #include "SkillBoxHUD.h"
 #include "SkulAttack.h"
 
-Skul::Skul(GRADE eGrade)
+Skul::Skul(const SkulInfo& skulInfo)
 	: GameObject(LAYER_TYPE::UNKNOWN)
 	, m_eSkulIndex(SKUL_INDEX::END)
-	, m_eSkulGrade(eGrade)
 	, m_bSkillActiveType(SKILL_TYPE::NONE)
 	, m_iEnumIndex(0)
+	, m_SkulInfo(skulInfo)
 {
 	m_vStateToNameMaps.resize(MAX_ENUMS);
 }
@@ -227,6 +227,13 @@ void Skul::SetAttackMethod(shared_ptr<SkulAttack> pAttackMethod)
 	m_pAttackMethod = pAttackMethod;
 }
 
+SKILL_INDEX Skul::GetTotalSkills()
+{
+	if (m_arrSkills[static_cast<uint8>(SKILL_INDEX::SECOND)])
+		return SKILL_INDEX::SECOND;
+	else
+		return SKILL_INDEX::FIRST;
+}
 
 void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)
 {

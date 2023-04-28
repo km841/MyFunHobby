@@ -15,8 +15,9 @@ public:
     virtual void FinalUpdate();
     virtual void ShowDetailInfo();
 
-    void SetSkulIndex(SKUL_INDEX eSkulIndex) { m_eSkulIndex = eSkulIndex; }
-
+    FORCEINLINE void       SetSkulIndex(SKUL_INDEX eSkulIndex) { m_eSkulIndex = eSkulIndex; }
+    FORCEINLINE SKUL_INDEX GetSkulIndex()                      { return m_eSkulIndex; }
+    
 private:
     SKUL_INDEX m_eSkulIndex;
 };

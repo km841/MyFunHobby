@@ -266,10 +266,17 @@ enum
 	OBJECT_TYPE_COUNT = static_cast<uint8>(OBJECT_TYPE::END),
 };
 
-enum class SKUL_TYPE
+enum class SKUL_KIND
 {
 	LITTLE_BONE,
 	HIGH_WARLOCK,
+};
+
+enum class SKUL_TYPE
+{
+	SPEED,
+	BALANCE,
+	POWER,
 };
 
 enum class GRADE

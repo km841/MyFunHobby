@@ -3,6 +3,12 @@
 #include "InfoUI.h"
 #include "Font.h"
 #include "InventoryUI.h"
+#include "Resources.h"
+#include "MeshRenderer.h"
+#include "Material.h"
+#include "SkulInfoUI.h"
+#include "Transform.h"
+#include "Texture.h"
 
 DetailInfoUI::DetailInfoUI()
 	:m_DetailInfo{}
@@ -68,10 +74,13 @@ void DetailInfoUI::FinalUpdate()
 
 void DetailInfoUI::DrawSkulInfo()
 {
-	//GET_SINGLE(Font)->DrawString(L"SkulInfo", 20.f, Vec3(16.f, 16.f, 0.f));
+	// 전용 Texture로 변경
+	SetSkulDetailTexture();
 
-	GET_SINGLE(Font)->DrawString(m_DetailInfo.szName, 20.f, Vec3(750.f, 220.f, 0.f), FONT_WEIGHT::LIGHT, Color::FromRGB(136, 96, 90));
-	
+	GET_SINGLE(Font)->DrawString(m_DetailInfo.szGrade, 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	GET_SINGLE(Font)->DrawString(m_DetailInfo.szSkulType, 20.f, Vec3(1375.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	GET_SINGLE(Font)->DrawString(m_DetailInfo.szName, 25.f, Vec3(1076.f, 685.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	GET_SINGLE(Font)->DrawString(m_DetailInfo.szComment, 20.f, Vec3(1076.f, 550.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
 }
 
 void DetailInfoUI::DrawItemInfo()
@@ -87,4 +96,23 @@ void DetailInfoUI::DrawArtifactInfo()
 void DetailInfoUI::DrawDarkAbilInfo()
 {
 	GET_SINGLE(Font)->DrawString(L"DarkAbilInfo", 20.f, Vec3(16.f, 16.f, 0.f));
+}
+
+void DetailInfoUI::SetSkulDetailTexture()
+{
+	shared_ptr<Texture> pTexture = nullptr;
+
+	switch (m_DetailInfo.eTotalSkills)
+	{
+	case SKILL_INDEX::FIRST:
+		pTexture = GET_SINGLE(Resources)->Load<Texture>(L"SkulInfoDetail", L"..\\Resources\\Texture\\UI\\Inventory\\Image_Skill01_Frame.png");
+		break;
+	case SKILL_INDEX::SECOND:
+		pTexture = GET_SINGLE(Resources)->Load<Texture>(L"SkulInfoDetail", L"..\\Resources\\Texture\\UI\\Inventory\\Image_Skill02_Frame.png");
+		break;
+	}
+
+	assert(pTexture);
+	GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+	GetTransform()->SetLocalScale(pTexture->GetTexSize());
 }

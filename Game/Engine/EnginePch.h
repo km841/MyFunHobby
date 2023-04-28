@@ -681,4 +681,9 @@ bool m_bUse = false;\
 #define VEC3_UP_NORMAL Vec3(0.f, 1.f, 0.f)
 #define RANDOM(minNumber, maxNumber) rand() % (maxNumber - (minNumber - 1)) + minNumber
 
+// Color
+#define GRADE_COLOR Color::FromRGB(136, 96, 90)
+#define NAME_COLOR Color::FromRGB(75, 53, 50)
+#define COMMENT_COLOR Color::FromRGB(117, 86, 85)
+
 extern unique_ptr<class Engine> g_pEngine;

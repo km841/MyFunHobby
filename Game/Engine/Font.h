@@ -40,10 +40,10 @@ private:
 
 private:
 	std::array<ComPtr<IFW1FontWrapper>, FONT_WEIGHT_COUNT> m_arrFontWrapperGroup;
-
-
 	ComPtr<IDWriteFactory> m_pWriteFactory;
 	ComPtr<IFW1Factory> m_pFontFactory;
+
+	int32 m_iWindowHeight;
 
 	std::queue<FontInfo> m_qFontQueue;
 };

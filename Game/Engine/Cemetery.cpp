@@ -24,7 +24,7 @@ void Cemetery::Init()
 	CreateSkul();
 }
 
-shared_ptr<Skul> Cemetery::Get(SKUL_TYPE eSkulType)
+shared_ptr<Skul> Cemetery::Get(SKUL_KIND eSkulType)
 {
 	auto iter = m_mSkulMap.find(eSkulType);
 	assert(iter != m_mSkulMap.end());
@@ -35,7 +35,14 @@ void Cemetery::CreateSkul()
 {
 	// LittleBone
 	{
-		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>();
+		SkulInfo skulInfo = {};
+		skulInfo.eSkulGrade = GRADE::NORMAL;
+		skulInfo.eSkulKind = SKUL_KIND::LITTLE_BONE;
+		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
+		skulInfo.szComment = L"마왕성 경비대의 막내 스켈레톤.";
+		skulInfo.pVignette = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Vignette", L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Vignette.png");
+
+		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>(skulInfo);
 		pLittleBone->AddComponent(make_shared<Animator>());
 		
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
@@ -140,14 +147,21 @@ void Cemetery::CreateSkul()
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Thumnail", L"..\\Resources\\Texture\\HUD\\LittleBone\\Image_LittleBone_Thumnail.tga");
 		pLittleBone->SetThumnailImage(pTexture);
 
-		m_mSkulMap[SKUL_TYPE::LITTLE_BONE] = pLittleBone;
+		m_mSkulMap[SKUL_KIND::LITTLE_BONE] = pLittleBone;
 	}
 
 
 
 	// High Warlock
 	{
-		shared_ptr<HighWarlock> pHighWarlock = make_shared<HighWarlock>();
+		SkulInfo skulInfo = {};
+		skulInfo.eSkulGrade = GRADE::UNIQUE;
+		skulInfo.eSkulKind = SKUL_KIND::HIGH_WARLOCK;
+		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
+		skulInfo.szComment = L"마나의 흐름을 느끼는데 살가죽은 방해가 될 뿐이다.";
+		skulInfo.pVignette = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Vignette", L"..\\Resources\\Texture\\Sprites\\HighWarlock\\Image_HighWarlock_Vignette.png");
+
+		shared_ptr<HighWarlock> pHighWarlock = make_shared<HighWarlock>(skulInfo);
 		pHighWarlock->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
@@ -223,6 +237,6 @@ void Cemetery::CreateSkul()
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Thumnail", L"..\\Resources\\Texture\\HUD\\HighWarlock\\Image_HighWarlock_Thumnail.png");
 		pHighWarlock->SetThumnailImage(pTexture);
 
-		m_mSkulMap[SKUL_TYPE::HIGH_WARLOCK] = pHighWarlock;
+		m_mSkulMap[SKUL_KIND::HIGH_WARLOCK] = pHighWarlock;
 	}
 }

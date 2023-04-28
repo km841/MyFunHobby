@@ -21,13 +21,11 @@
 #include "ParticleSystem.h"
 #include "ObjectFactory.h"
 
-LittleBone::LittleBone()
-	: Skul(GRADE::NORMAL)
+LittleBone::LittleBone(const SkulInfo& skulInfo)
+	: Skul(skulInfo)
 	, m_eLittleBoneState(LITTLE_BONE_STATE::HAS_HEAD)
 {
 	SetEnumIndex(static_cast<uint8>(m_eLittleBoneState));
-	m_eSkulType = SKUL_TYPE::LITTLE_BONE;
-	
 }
 
 void LittleBone::Awake()

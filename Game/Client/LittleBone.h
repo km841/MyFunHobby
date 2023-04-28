@@ -7,7 +7,7 @@ class LittleBone :
     public Skul
 {
 public:
-	LittleBone();
+	LittleBone(const SkulInfo& skulInfo);
 	virtual ~LittleBone() = default;
 
 public:

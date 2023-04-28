@@ -60,6 +60,9 @@ void InventoryUI::Enable()
 	for (auto& pInfoUI : m_vDarkAbilInfoUI)
 		pInfoUI->Enable();
 
+	if (m_pDetailInfoUI)
+		m_pDetailInfoUI->Enable();
+
 	GameObject::Enable();
 }
 
@@ -76,6 +79,9 @@ void InventoryUI::Disable()
 
 	for (auto& pInfoUI : m_vDarkAbilInfoUI)
 		pInfoUI->Disable();
+
+	if (m_pDetailInfoUI)
+		m_pDetailInfoUI->Disable();
 
 	GameObject::Disable();
 }
@@ -342,7 +348,7 @@ void InventoryUI::CreateDetailInfoUI()
 	{
 		m_pDetailInfoUI = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DetailInfoUI>(L"Forward");
 		m_pDetailInfoUI->GetTransform()->SetParent(GetTransform());
-		m_pDetailInfoUI->GetTransform()->SetLocalPosition(Vec3(-235.f, 114.f, -10.f));
+		m_pDetailInfoUI->GetTransform()->SetLocalPosition(Vec3(222.f, -75.f, -10.f));
 
 		m_pDetailInfoUI->m_pInventoryUI = Conv::BaseToDeclare<InventoryUI>(shared_from_this());
 		m_pDetailInfoUI->Awake();

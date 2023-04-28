@@ -27,8 +27,11 @@ private:
     void DrawArtifactInfo();
     void DrawDarkAbilInfo();
 
+    void SetSkulDetailTexture();
+
 private:
     DetailInfo m_DetailInfo;
     weak_ptr<InventoryUI> m_pInventoryUI;
+
 };
 

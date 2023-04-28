@@ -9,6 +9,12 @@ enum class INFO_TYPE
     ITEM_INFO,
     ARTIFACT_INFO,
     DARKABIL_INFO,
+    END,
+};
+
+enum
+{
+    INFO_TYPE_COUNT = INFO_TYPE::END,
 };
 
 struct DetailInfo
@@ -18,14 +24,17 @@ struct DetailInfo
     // SkulInfo
     shared_ptr<Texture> pSkulSkillFirst;
     shared_ptr<Texture> pSkulSkillSecond;
+    wstring szSkulType;
+    SKILL_INDEX eTotalSkills;
 
     // ItemInfo
     shared_ptr<Texture> pSetAbilFirst;
     shared_ptr<Texture> pSetAbilSecond;
 
-    shared_ptr<Texture> pThumnail;
+    shared_ptr<Texture> pVignette;
     wstring szName;
     wstring szComment;
+    wstring szGrade;
     GRADE eGrade;
 
     bool bUse;
@@ -52,6 +61,10 @@ public:
 
 public:
     FORCEINLINE void SetDetailInfoUI(shared_ptr<DetailInfoUI> pDetailInfoUI) { m_pDetailInfoUI = pDetailInfoUI; }
+
+    wstring GetGradeWstring(GRADE eGrade);
+    wstring GetSkulKindWstring(SKUL_KIND eSkulKind);
+    wstring GetSkulTypeWstring(SKUL_TYPE eSkulType);
 
 public:
     static weak_ptr<InfoUI> GetSelectedInfoUI() { return s_pSelectedInfoUI; }

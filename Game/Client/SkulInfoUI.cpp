@@ -58,27 +58,22 @@ void SkulInfoUI::ShowDetailInfo()
 	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 	weak_ptr<Skul> pSkul = pPlayer.lock()->GetSkul(m_eSkulIndex).lock();
 
+	const SkulInfo& skulInfo = pSkul.lock()->GetSkulInfo();
+
 	m_DetailInfo.bUse = true;
 	m_DetailInfo.eInfoType = m_eInfoType;
-	m_DetailInfo.eGrade = pSkul.lock()->GetSkulGrade();
+	m_DetailInfo.eTotalSkills = pSkul.lock()->GetTotalSkills();
+	m_DetailInfo.eGrade = skulInfo.eSkulGrade;
+	m_DetailInfo.szComment = skulInfo.szComment;
+	m_DetailInfo.pVignette = skulInfo.pVignette;
+	m_DetailInfo.szSkulType = GetSkulTypeWstring(skulInfo.eSkulType);
+	m_DetailInfo.szGrade = GetGradeWstring(m_DetailInfo.eGrade);
+	m_DetailInfo.szName = GetSkulKindWstring(pSkul.lock()->GetSkulKind());
 
 	if (pSkul.lock()->GetSkill(SKILL_INDEX::FIRST).lock())
 		m_DetailInfo.pSkulSkillSecond = pSkul.lock()->GetSkill(SKILL_INDEX::FIRST).lock()->GetTexture().lock();
 	if (pSkul.lock()->GetSkill(SKILL_INDEX::SECOND).lock())
 		m_DetailInfo.pSkulSkillSecond = pSkul.lock()->GetSkill(SKILL_INDEX::SECOND).lock()->GetTexture().lock();
-
-	m_DetailInfo.pThumnail = pSkul.lock()->GetThumnailImage().lock();
-
-	switch (pSkul.lock()->GetSkulType())
-	{
-	case SKUL_TYPE::LITTLE_BONE:
-		m_DetailInfo.szName = L"리틀 본";
-		break;
-	case SKUL_TYPE::HIGH_WARLOCK:
-		m_DetailInfo.szName = L"대마도사";
-		break;
-	}
-	m_DetailInfo.szComment = L"";
 
 	m_pDetailInfoUI.lock()->SetDetailInfo(m_DetailInfo);
 }

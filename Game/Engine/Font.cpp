@@ -4,6 +4,8 @@
 
 void Font::Init()
 {
+	m_iWindowHeight = g_pEngine->GetHeight();
+
 	FW1CreateFactory(FW1_VERSION, m_pFontFactory.GetAddressOf());
 	assert(m_pFontFactory);
 	DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(m_pWriteFactory.GetAddressOf()));
@@ -12,7 +14,10 @@ void Font::Init()
 
 void Font::DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight, uint32 iColor)
 {
-	m_qFontQueue.push(FontInfo{ szText, fFontSize, vPos, eWeight, iColor });
+	Vec3 vNewPos = vPos;
+
+	vNewPos.y = m_iWindowHeight - vPos.y;
+	m_qFontQueue.push(FontInfo{ szText, fFontSize, vNewPos, eWeight, iColor });
 }
 
 void Font::Render()
@@ -29,7 +34,7 @@ void Font::Render()
 			fontInfo.vFontPos.x, 
 			fontInfo.vFontPos.y, 
 			fontInfo.iFontColor, 
-			FW1_RESTORESTATE);
+			FW1_RESTORESTATE | FW1_CENTER);
 	}
 }
 

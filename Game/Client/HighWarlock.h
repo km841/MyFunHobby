@@ -6,7 +6,7 @@ class HighWarlock :
     public Skul
 {
 public:
-	HighWarlock();
+	HighWarlock(const SkulInfo& skulInfo);
 	virtual ~HighWarlock() = default;
 
 public:

@@ -6,11 +6,21 @@ class SkulSkill;
 class Animation;
 class Player;
 class Texture;
+
+struct SkulInfo
+{
+	SKUL_KIND eSkulKind;
+	GRADE eSkulGrade;
+	SKUL_TYPE eSkulType;
+	shared_ptr<Texture> pVignette;
+	wstring szComment;
+};
+
 class Skul :
 	public GameObject
 {
 public:
-	explicit Skul(GRADE eGrade);
+	explicit Skul(const SkulInfo& skulInfo);
 	virtual ~Skul() = default;
 
 public:
@@ -22,7 +32,7 @@ public:
 
 public:
 	FORCEINLINE SKUL_INDEX			 GetSkulIndex()										   { return m_eSkulIndex;     }
-	FORCEINLINE GRADE				 GetSkulGrade()										   { return m_eSkulGrade;   }
+	FORCEINLINE GRADE				 GetSkulGrade()										   { return m_SkulInfo.eSkulGrade;   }
 	FORCEINLINE void				 SetSkulIndex(SKUL_INDEX eSkulIndex)				   { m_eSkulIndex = eSkulIndex; }
 	FORCEINLINE bool				 IsSkillActiveFlag()								   { return SKILL_TYPE::NONE != m_bSkillActiveType; }
 	FORCEINLINE SKILL_TYPE			 GetSkillActiveType()								   { return m_bSkillActiveType; }
@@ -35,7 +45,8 @@ public:
 	FORCEINLINE void				 DisableSkillActiveFlag()							   { m_bSkillActiveType = SKILL_TYPE::NONE; }
 	FORCEINLINE void				 EnableSkillActiveFlag(SKILL_TYPE eSkillType)		   { m_bSkillActiveType = eSkillType; }
 	FORCEINLINE weak_ptr<SkulAttack> GetAttackMethod()									   { return m_pAttackMethod; }
-	FORCEINLINE SKUL_TYPE			 GetSkulType()										   { return m_eSkulType; }
+	FORCEINLINE SKUL_KIND			 GetSkulKind()										   { return m_SkulInfo.eSkulKind; }
+	FORCEINLINE const SkulInfo&		 GetSkulInfo()										   { return m_SkulInfo; }
 	
 
 public:
@@ -48,6 +59,7 @@ public:
 	void							SkillCooldownUpdate();
 	void							RefreshAnimation();
 	void							SetAttackMethod(shared_ptr<SkulAttack> pAttackMethod);
+	SKILL_INDEX						GetTotalSkills();
 
 public:
 	void							CooldownCompletion(SKILL_INDEX eSkillIndex);
@@ -72,8 +84,9 @@ protected:
 	weak_ptr<Player>								   m_pPlayer;
 
 	// About Enums
-	SKUL_TYPE										   m_eSkulType;
-	GRADE											   m_eSkulGrade;
+
+
+	SkulInfo m_SkulInfo;
 	SKUL_INDEX										   m_eSkulIndex;
 	uint8											   m_iEnumIndex;
 

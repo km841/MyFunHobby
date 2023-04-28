@@ -5,12 +5,12 @@ class Cemetery
 	DECLARE_SINGLE(Cemetery);
 public:
 	void Init();
-	shared_ptr<Skul> Get(SKUL_TYPE eSkulType);
+	shared_ptr<Skul> Get(SKUL_KIND eSkulType);
 
 private:
 	void CreateSkul();
 
 private:
-	std::map<SKUL_TYPE, shared_ptr<Skul>> m_mSkulMap;
+	std::map<SKUL_KIND, shared_ptr<Skul>> m_mSkulMap;
 };
 

@@ -14,10 +14,9 @@
 #include "Animation.h"
 #include "Player.h"
 
-HighWarlock::HighWarlock()
-	: Skul(GRADE::UNIQUE)
+HighWarlock::HighWarlock(const SkulInfo& skulInfo)
+	: Skul(skulInfo)
 {
-	m_eSkulType = SKUL_TYPE::HIGH_WARLOCK;
 }
 
 void HighWarlock::Awake()
