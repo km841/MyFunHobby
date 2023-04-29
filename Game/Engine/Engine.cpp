@@ -32,6 +32,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	m_pSwapChain = make_shared<SwapChain>();
 	m_pPhysics = make_shared<Physics>();
 	m_pUtility = make_shared<Utility>();
+	m_pFont = make_shared<Font>();
 
 	ComPtr<ID3D11Device> pDevice;
 	ComPtr<ID3D11DeviceContext> pContext;
@@ -59,6 +60,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	m_pSwapChain->Init(m_Window, m_pDevice->GetDevice(), m_pDevice->GetDXGI());
 	m_pPhysics->Init(false);
 	m_pUtility->Init(pDevice, pContext);
+	m_pFont->Init(m_Window, pDevice, pContext);
 
 	CreateRenderTargetGroups();
 	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(TransformParams));
@@ -71,7 +73,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
 	GET_SINGLE(InterfaceManager)->Init();
 	GET_SINGLE(Cemetery)->Init();
-	GET_SINGLE(Font)->Init();
+	
 }
 
 void Engine::Update()

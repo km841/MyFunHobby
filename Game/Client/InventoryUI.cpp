@@ -190,8 +190,6 @@ void InventoryUI::CreateItemInfoUI()
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
 #pragma endregion
-
-
 #pragma region Item Row 2
 	// Item Info_1
 	{
@@ -236,8 +234,6 @@ void InventoryUI::CreateItemInfoUI()
 	}
 
 #pragma endregion
-
-
 #pragma region Item Row 3
 	// Item Info_1
 	{

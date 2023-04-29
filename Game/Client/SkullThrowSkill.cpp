@@ -10,8 +10,8 @@
 #include "RigidBody.h"
 #include "LittleBoneHead.h"
 
-SkullThrowSkill::SkullThrowSkill()
-	: SkulSkill(SKILL_TYPE::INSTANT, 6.0f, 0.25f)
+SkullThrowSkill::SkullThrowSkill(const SkillInfo& skillInfo)
+	: SkulSkill(skillInfo)
 	, m_fThrowSpeed(1000.f)
 {
 	CreateConditionFunction();

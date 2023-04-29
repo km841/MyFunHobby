@@ -27,7 +27,6 @@ void SkillBoxHUD::Awake()
 	{
 		HUD::Awake();
 		CreateAndAddCompletionEffectToScene();
-
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "ConstantBuffer.h"
 #include "Physics.h"
 #include "Utility.h"
+#include "Font.h"
 
 class GameObject;
 
@@ -33,6 +34,7 @@ public:
 	FORCEINLINE shared_ptr<Utility>				GetUtility() const								 { return m_pUtility; }
 	FORCEINLINE shared_ptr<ConstantBuffer>		GetCB(CONSTANT_BUFFER_TYPE eType) const			 { return m_arrCBGroups[static_cast<uint8>(eType)]; }
 	FORCEINLINE shared_ptr<RenderTargetGroup>	GetRTGroup(RENDER_TARGET_GROUP_TYPE eType) const { return m_arrRTGroups[static_cast<uint8>(eType)]; }
+	FORCEINLINE shared_ptr<Font>				GetFont() const									 { return m_pFont; }
 
 	FORCEINLINE int32   GetWidth()  const { return m_Window.iWidth; }
 	FORCEINLINE int32   GetHeight() const { return m_Window.iHeight; }
@@ -57,6 +59,7 @@ private:
 	shared_ptr<SwapChain>	m_pSwapChain;
 	shared_ptr<Physics>		m_pPhysics;
 	shared_ptr<Utility>     m_pUtility;
+	shared_ptr<Font>		m_pFont;
 
 
 	std::array<shared_ptr<ConstantBuffer>, CONSTANT_BUFFER_TYPE_COUNT>		  m_arrCBGroups;

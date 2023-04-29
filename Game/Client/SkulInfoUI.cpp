@@ -58,22 +58,14 @@ void SkulInfoUI::ShowDetailInfo()
 	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 	weak_ptr<Skul> pSkul = pPlayer.lock()->GetSkul(m_eSkulIndex).lock();
 
-	const SkulInfo& skulInfo = pSkul.lock()->GetSkulInfo();
+	m_DetailInfo.skulInfo = pSkul.lock()->GetSkulInfo();
 
 	m_DetailInfo.bUse = true;
 	m_DetailInfo.eInfoType = m_eInfoType;
 	m_DetailInfo.eTotalSkills = pSkul.lock()->GetTotalSkills();
-	m_DetailInfo.eGrade = skulInfo.eSkulGrade;
-	m_DetailInfo.szComment = skulInfo.szComment;
-	m_DetailInfo.pVignette = skulInfo.pVignette;
-	m_DetailInfo.szSkulType = GetSkulTypeWstring(skulInfo.eSkulType);
-	m_DetailInfo.szGrade = GetGradeWstring(m_DetailInfo.eGrade);
+	m_DetailInfo.szSkulType = GetSkulTypeWstring(m_DetailInfo.skulInfo.eSkulType);
+	m_DetailInfo.szGrade = GetGradeWstring(m_DetailInfo.skulInfo.eSkulGrade);
 	m_DetailInfo.szName = GetSkulKindWstring(pSkul.lock()->GetSkulKind());
-
-	if (pSkul.lock()->GetSkill(SKILL_INDEX::FIRST).lock())
-		m_DetailInfo.pSkulSkillSecond = pSkul.lock()->GetSkill(SKILL_INDEX::FIRST).lock()->GetTexture().lock();
-	if (pSkul.lock()->GetSkill(SKILL_INDEX::SECOND).lock())
-		m_DetailInfo.pSkulSkillSecond = pSkul.lock()->GetSkill(SKILL_INDEX::SECOND).lock()->GetTexture().lock();
 
 	m_pDetailInfoUI.lock()->SetDetailInfo(m_DetailInfo);
 }

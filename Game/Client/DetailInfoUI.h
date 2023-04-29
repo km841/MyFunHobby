@@ -18,6 +18,9 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
+    virtual void Enable();
+    virtual void Disable();
+
 public:
     FORCEINLINE void SetDetailInfo(const DetailInfo& detailInfo) { m_DetailInfo = detailInfo; }
 
@@ -27,11 +30,19 @@ private:
     void DrawArtifactInfo();
     void DrawDarkAbilInfo();
 
+    void CreateDetailSubUIAndAddedToScene();
     void SetSkulDetailTexture();
+    void InitSkulDetailSubUI();
 
 private:
     DetailInfo m_DetailInfo;
     weak_ptr<InventoryUI> m_pInventoryUI;
+
+    shared_ptr<UI> m_pVignetteUI;
+    shared_ptr<UI> m_pFirstImageUI;
+    shared_ptr<UI> m_pSecondImageUI;
+
+    
 
 };
 

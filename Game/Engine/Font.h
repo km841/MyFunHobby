@@ -27,11 +27,12 @@ struct FontInfo
 class Font
 {
 public:
-	DECLARE_SINGLE(Font);
+	Font();
+	~Font();
 
 public:
 	// Font를 오브젝트 단위로 관리할 필요가 없다!
-	void Init();
+	void Init(const WindowInfo& windowInfo, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);
 	void DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff);
 	void Render();
 
@@ -40,11 +41,12 @@ private:
 
 private:
 	std::array<ComPtr<IFW1FontWrapper>, FONT_WEIGHT_COUNT> m_arrFontWrapperGroup;
-	ComPtr<IDWriteFactory> m_pWriteFactory;
-	ComPtr<IFW1Factory> m_pFontFactory;
-
+	std::queue<FontInfo> m_qFontQueue;
 	int32 m_iWindowHeight;
 
-	std::queue<FontInfo> m_qFontQueue;
+	ComPtr<IDWriteFactory> m_pWriteFactory;
+	ComPtr<IFW1Factory> m_pFontFactory;
+	ComPtr<ID3D11Device> m_pDevice;
+	ComPtr<ID3D11DeviceContext> m_pContext;
 };
 

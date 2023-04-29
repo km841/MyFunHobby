@@ -21,7 +21,6 @@ void Tool::Init(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceCon
 	m_pPallete = make_shared<TilePallete>();
 	m_pAnimEditor = make_shared<AnimationEditor>();
 
-
 	m_pPallete->Init(vSRV);
 }
 

@@ -23,8 +23,8 @@
 #include "Light.h"
 #include "ObjectFactory.h"
 
-AbyssMeteorSkill::AbyssMeteorSkill()
-	: SkulSkill(SKILL_TYPE::CHARGING, 5.f, 1.f)
+AbyssMeteorSkill::AbyssMeteorSkill(const SkillInfo& skillInfo)
+	: SkulSkill(skillInfo)
 {
 	CreateConditionFunction();
 	m_fMaxChargingTime = 5.f;

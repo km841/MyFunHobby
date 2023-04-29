@@ -6,8 +6,8 @@
 #include "Clock.h"
 #include "Player.h"
 
-LittleBoneSwapSkill::LittleBoneSwapSkill()
-	: SkulSkill(SKILL_TYPE::INSTANT, 0.f, 2.f)
+LittleBoneSwapSkill::LittleBoneSwapSkill(const SkillInfo& skillInfo)
+	: SkulSkill(skillInfo)
 	, m_fSpeed(200.f)
 {
 }

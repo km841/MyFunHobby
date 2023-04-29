@@ -103,9 +103,10 @@ struct Color
 #define GREEN(x) ((x >> 8) & 0xff)
 #define BLUE(x) (x & 0xff)
 
-	static Color FromRGB(uint8 iRed, uint8 iGreen, uint8 iBlue) 
+	static Color FromRGB(uint8 iRed, uint8 iGreen, uint8 iBlue, float fAlpha = 1.f) 
 	{
-		return Color{ static_cast<uint32>((0xff << 24) | (iBlue << 16) | (iGreen << 8) | iRed)  };
+		uint8 iAlpha = static_cast<uint8>(255.f * fAlpha);
+		return Color{ static_cast<uint32>((iAlpha << 24) | (iBlue << 16) | (iGreen << 8) | iRed)  };
 	};
 
 	operator uint32() { return iValue; }
@@ -117,6 +118,32 @@ struct WindowInfo
 	int32 iWidth;
 	int32 iHeight;
 	bool bWindowed;
+};
+
+struct SkillInfo
+{
+	shared_ptr<class Texture> pSkillTexture;
+	wstring szName;
+	wstring szComment;
+	SKILL_TYPE eSkillType;
+	float fCooldown;
+	float fDuration;
+	bool bUse;
+};
+
+struct SkulInfo
+{
+	SKUL_KIND eSkulKind;
+	GRADE eSkulGrade;
+	SKUL_TYPE eSkulType;
+	shared_ptr<Texture> pVignette;
+	Vec2 vVignetteOffset;
+	wstring szComment;
+
+	SKILL_INDEX eTotalSkills;
+	SkillInfo FirstSkillInfo;
+	SkillInfo SecondSkillInfo;
+	SkillInfo SwapSkillInfo;
 };
 
 struct Vertex
@@ -669,7 +696,7 @@ bool m_bUse = false;\
 #define UTILITY g_pEngine->GetUtility()
 #define TILEMAP_TOOL g_pEngine->GetUtility()->GetTool()->GetPallete()
 #define ANIMATION_TOOL g_pEngine->GetUtility()->GetTool()->GetAnimEditor()
-#define POOL g_pEngine->GetObjectPool()
+#define FONT g_pEngine->GetFont()
 #define GET_SINGLE(type) type::GetInstance()
 #define CONST_BUFFER(type) g_pEngine->GetCB(type)
 #define DELTA_TIME GET_SINGLE(Clock)->GetDeltaTime()

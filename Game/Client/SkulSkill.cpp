@@ -2,11 +2,11 @@
 #include "SkulSkill.h"
 #include "Clock.h"
 
-SkulSkill::SkulSkill(SKILL_TYPE eSkillType, float fCooldown, float fDuration)
+SkulSkill::SkulSkill(const SkillInfo& skillInfo)
 	: m_eSkillIndex(SKILL_INDEX::END)
-	, m_eSkillType(eSkillType)
-	, m_tCooldown(fCooldown)
-	, m_tDuration(fDuration)
+	, m_SkillInfo(skillInfo)
+	, m_tCooldown(skillInfo.fCooldown)
+	, m_tDuration(skillInfo.fDuration)
 	, m_fMaxChargingTime(0.f)
 	, m_fChargingProgress(0.f)
 {

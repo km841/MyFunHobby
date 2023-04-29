@@ -1,10 +1,20 @@
 #include "pch.h"
 #include "Font.h"
-#include "Engine.h"
 
-void Font::Init()
+Font::Font()
+	: m_iWindowHeight(0)
 {
-	m_iWindowHeight = g_pEngine->GetHeight();
+}
+
+Font::~Font()
+{
+}
+
+void Font::Init(const WindowInfo& windowInfo, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext)
+{
+	m_pDevice = pDevice;
+	m_pContext = pContext;
+	m_iWindowHeight = windowInfo.iHeight;
 
 	FW1CreateFactory(FW1_VERSION, m_pFontFactory.GetAddressOf());
 	assert(m_pFontFactory);
@@ -28,7 +38,7 @@ void Font::Render()
 		m_qFontQueue.pop();
 
 		m_arrFontWrapperGroup[static_cast<uint8>(fontInfo.eFontWeight)]->DrawString(
-			CONTEXT.Get(), 
+			m_pContext.Get(), 
 			fontInfo.szText.c_str(), 
 			fontInfo.fFontSize, 
 			fontInfo.vFontPos.x, 
@@ -57,22 +67,22 @@ void Font::CreateFontWrapperGroup()
 	createParams.DefaultFontParams.pszLocale = L"";
 	
 	createParams.DefaultFontParams.FontWeight = DWRITE_FONT_WEIGHT_LIGHT;
-	HRESULT hr = m_pFontFactory->CreateFontWrapper(DEVICE.Get(), 
+	HRESULT hr = m_pFontFactory->CreateFontWrapper(m_pDevice.Get(), 
 		m_pWriteFactory.Get(), &createParams, m_arrFontWrapperGroup[static_cast<uint8>(FONT_WEIGHT::LIGHT)].GetAddressOf());
 	assert(SUCCEEDED(hr));
 
 	createParams.DefaultFontParams.FontWeight = DWRITE_FONT_WEIGHT_NORMAL;
-	hr = m_pFontFactory->CreateFontWrapper(DEVICE.Get(),
+	hr = m_pFontFactory->CreateFontWrapper(m_pDevice.Get(),
 		m_pWriteFactory.Get(), &createParams, m_arrFontWrapperGroup[static_cast<uint8>(FONT_WEIGHT::NORMAL)].GetAddressOf());
 	assert(SUCCEEDED(hr));
 
 	createParams.DefaultFontParams.FontWeight = DWRITE_FONT_WEIGHT_BOLD;
-	hr = m_pFontFactory->CreateFontWrapper(DEVICE.Get(),
+	hr = m_pFontFactory->CreateFontWrapper(m_pDevice.Get(),
 		m_pWriteFactory.Get(), &createParams, m_arrFontWrapperGroup[static_cast<uint8>(FONT_WEIGHT::BOLD)].GetAddressOf());
 	assert(SUCCEEDED(hr));
 
 	createParams.DefaultFontParams.FontWeight = DWRITE_FONT_WEIGHT_ULTRA_BLACK;
-	hr = m_pFontFactory->CreateFontWrapper(DEVICE.Get(),
+	hr = m_pFontFactory->CreateFontWrapper(m_pDevice.Get(),
 		m_pWriteFactory.Get(), &createParams, m_arrFontWrapperGroup[static_cast<uint8>(FONT_WEIGHT::ULTRA_BOLD)].GetAddressOf());
 	assert(SUCCEEDED(hr));
 }

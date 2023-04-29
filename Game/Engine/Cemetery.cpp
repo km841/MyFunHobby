@@ -39,7 +39,7 @@ void Cemetery::CreateSkul()
 		skulInfo.eSkulGrade = GRADE::NORMAL;
 		skulInfo.eSkulKind = SKUL_KIND::LITTLE_BONE;
 		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
-		skulInfo.szComment = L"마왕성 경비대의 막내 스켈레톤.";
+		skulInfo.szComment = L"마왕성 경비대의 막내 스켈레톤.\n다른 스켈레톤에 비해 체구가 작아 리틀본이라 불린다.";
 		skulInfo.pVignette = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Vignette", L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Vignette.png");
 
 		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>(skulInfo);
@@ -117,7 +117,15 @@ void Cemetery::CreateSkul()
 		}
 		// Skull Throw Skill
 		{
-			shared_ptr<SkullThrowSkill> pThrowSkill = make_shared<SkullThrowSkill>();
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
+			skillInfo.fCooldown = 6.f;
+			skillInfo.fDuration = 0.25f;
+			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Throw", L"..\\Resources\\Texture\\HUD\\LittleBone\\HUD_SkullThrow.tga");
+			skillInfo.szComment = L"머리를 냅다 던진다.";
+			skillInfo.szName = L"두개골 날리기";
+
+			shared_ptr<SkullThrowSkill> pThrowSkill = make_shared<SkullThrowSkill>(skillInfo);
 
 			wstring szAnimationName = L"LittleBone_Throw";
 			pThrowSkill->SetAnimationName(szAnimationName);
@@ -125,15 +133,19 @@ void Cemetery::CreateSkul()
 			shared_ptr<Animation> pThrowAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\LittleBone\\littlebone_throw.anim");
 			pThrowSkill->SetAnimation(pThrowAnimation);
 
-			shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Throw", L"..\\Resources\\Texture\\HUD\\LittleBone\\HUD_SkullThrow.tga");
-			pThrowSkill->SetTexture(pTexture);
-
 			pLittleBone->ObtainSkill(pThrowSkill);
 		}
 
 		// LittleBone Swap Skill
 		{
-			shared_ptr<LittleBoneSwapSkill> pSwapSkill = make_shared<LittleBoneSwapSkill>();
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
+			skillInfo.fCooldown = 0.f;
+			skillInfo.fDuration = 2.f;
+			skillInfo.szComment = L"잘논다";
+			skillInfo.szName = L"뼈다구 회전";
+
+			shared_ptr<LittleBoneSwapSkill> pSwapSkill = make_shared<LittleBoneSwapSkill>(skillInfo);
 
 			wstring szAnimationName = L"LittleBone_Swap";
 			pSwapSkill->SetAnimationName(szAnimationName);
@@ -158,8 +170,9 @@ void Cemetery::CreateSkul()
 		skulInfo.eSkulGrade = GRADE::UNIQUE;
 		skulInfo.eSkulKind = SKUL_KIND::HIGH_WARLOCK;
 		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
-		skulInfo.szComment = L"마나의 흐름을 느끼는데 살가죽은 방해가 될 뿐이다.";
+		skulInfo.szComment = L"마나의 흐름을 느끼는데 살가죽은 방해가 될 뿐이다.\n- 마왕성 제 1 마도 군단장";
 		skulInfo.pVignette = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Vignette", L"..\\Resources\\Texture\\Sprites\\HighWarlock\\Image_HighWarlock_Vignette.png");
+		skulInfo.vVignetteOffset = Vec2(5.f, 20.f);
 
 		shared_ptr<HighWarlock> pHighWarlock = make_shared<HighWarlock>(skulInfo);
 		pHighWarlock->AddComponent(make_shared<Animator>());
@@ -192,7 +205,7 @@ void Cemetery::CreateSkul()
 		pHighWarlock->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"HighWarlock_JumpAttack", pJumpAttackAnimation);
 		pHighWarlock->AddAnimation(PLAYER_STATE::CHARGING, L"HighWarlock_Charging", pCharging_Animation);
 
-		// LittleBone Attack Method
+		// HighWarlock Attack Method
 		{
 			shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackA", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_a.anim");
 			shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_AttackB", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_attack_b.anim");
@@ -213,16 +226,28 @@ void Cemetery::CreateSkul()
 
 		// HighWarlock Swap Skill
 		{
-			shared_ptr<HighWarlockSwapSkill> pSwapSkill = make_shared<HighWarlockSwapSkill>();
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
+			skillInfo.fCooldown = 0.f;
+			skillInfo.fDuration = 0.f;
+			skillInfo.szComment = L"어비스 필드를 소환한다.";
+			skillInfo.szName = L"어비스 필드";
+
+			shared_ptr<HighWarlockSwapSkill> pSwapSkill = make_shared<HighWarlockSwapSkill>(skillInfo);
 			pHighWarlock->SetSwapSkill(pSwapSkill);
 		}
 
 		// AbyssMeteor Skill
 		{
-			shared_ptr<AbyssMeteorSkill> pAbyssMeteorSkill = make_shared<AbyssMeteorSkill>();
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::CHARGING;
+			skillInfo.fCooldown = 5.f;
+			skillInfo.fDuration = 1.f;
+			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_AbyssMeteor", L"..\\Resources\\Texture\\HUD\\HighWarlock\\HUD_AbyssMeteor.png");
+			skillInfo.szComment = L"메테오를 소환한다.";
+			skillInfo.szName = L"어비스 메테오";
 
-			shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_AbyssMeteor", L"..\\Resources\\Texture\\HUD\\HighWarlock\\HUD_AbyssMeteor.png");
-			pAbyssMeteorSkill->SetTexture(pTexture);
+			shared_ptr<AbyssMeteorSkill> pAbyssMeteorSkill = make_shared<AbyssMeteorSkill>(skillInfo);
 
 			wstring szAnimationName = L"HighWarlock_AbyssMeteor";
 			pAbyssMeteorSkill->SetAnimationName(szAnimationName);

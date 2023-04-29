@@ -22,8 +22,8 @@ struct DetailInfo
     INFO_TYPE eInfoType;
     
     // SkulInfo
-    shared_ptr<Texture> pSkulSkillFirst;
-    shared_ptr<Texture> pSkulSkillSecond;
+    SkulInfo skulInfo;
+
     wstring szSkulType;
     SKILL_INDEX eTotalSkills;
 
@@ -32,6 +32,7 @@ struct DetailInfo
     shared_ptr<Texture> pSetAbilSecond;
 
     shared_ptr<Texture> pVignette;
+    Vec2 vVignetteOffset;
     wstring szName;
     wstring szComment;
     wstring szGrade;

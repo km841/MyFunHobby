@@ -29,7 +29,7 @@ void PlayerFirstSkillShowScript::LateUpdate()
 		m_bFlag = pFirstSkill.lock()->IsActive();
 		float fCooldownProgress = pFirstSkill.lock()->GetCooldownProgress();
 		bool bActive = m_bFlag;
-		weak_ptr<Texture> pTexture = pFirstSkill.lock()->GetTexture().lock();
+		weak_ptr<Texture> pTexture = pFirstSkill.lock()->GetSkillTexture().lock();
 
 		GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture.lock());
 		GetMeshRenderer()->GetMaterial()->SetFloat(0, fCooldownProgress);

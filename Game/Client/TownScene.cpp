@@ -120,6 +120,7 @@ void TownScene::Render()
 
 void TownScene::Enter()
 {
+	ShowCursor(false);
 	shared_ptr<Player> pPlayer = nullptr;
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());

@@ -33,6 +33,7 @@ void Skul::Update()
 {
 	GameObject::Update();
 	SkillCooldownUpdate();
+	SkulInfoUpdate();
 }
 
 void Skul::LateUpdate()
@@ -233,6 +234,30 @@ SKILL_INDEX Skul::GetTotalSkills()
 		return SKILL_INDEX::SECOND;
 	else
 		return SKILL_INDEX::FIRST;
+}
+
+const SkulInfo& Skul::GetSkulInfo()
+{
+	SkulInfoUpdate();
+	return m_SkulInfo;
+}
+
+void Skul::SkulInfoUpdate()
+{
+	SKILL_INDEX eSkillIndex = GetTotalSkills();
+
+	switch (eSkillIndex)
+	{
+	case SKILL_INDEX::FIRST:
+		m_SkulInfo.FirstSkillInfo = GetSkill(SKILL_INDEX::FIRST).lock()->GetSkillInfo();
+		break;
+	case SKILL_INDEX::SECOND:
+		m_SkulInfo.FirstSkillInfo = GetSkill(SKILL_INDEX::FIRST).lock()->GetSkillInfo();
+		m_SkulInfo.SecondSkillInfo = GetSkill(SKILL_INDEX::SECOND).lock()->GetSkillInfo();
+		break;
+	}
+
+	m_SkulInfo.SwapSkillInfo = GetSwapSkill().lock()->GetSkillInfo();
 }
 
 void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)

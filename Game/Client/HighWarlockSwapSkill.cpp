@@ -5,8 +5,8 @@
 #include "HighWarlock.h"
 #include "GlobalEffect.h"
 
-HighWarlockSwapSkill::HighWarlockSwapSkill()
-	: SkulSkill(SKILL_TYPE::INSTANT, 0.f, 0.f)
+HighWarlockSwapSkill::HighWarlockSwapSkill(const SkillInfo& skillInfo)
+	: SkulSkill(skillInfo)
 {
 }
 

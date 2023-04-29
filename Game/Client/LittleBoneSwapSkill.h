@@ -4,7 +4,7 @@ class LittleBoneSwapSkill :
     public SkulSkill
 {
 public:
-	LittleBoneSwapSkill();
+	LittleBoneSwapSkill(const SkillInfo& skillInfo);
 	virtual ~LittleBoneSwapSkill() = default;
 
 public:

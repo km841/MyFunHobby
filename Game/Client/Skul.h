@@ -7,14 +7,7 @@ class Animation;
 class Player;
 class Texture;
 
-struct SkulInfo
-{
-	SKUL_KIND eSkulKind;
-	GRADE eSkulGrade;
-	SKUL_TYPE eSkulType;
-	shared_ptr<Texture> pVignette;
-	wstring szComment;
-};
+
 
 class Skul :
 	public GameObject
@@ -46,7 +39,6 @@ public:
 	FORCEINLINE void				 EnableSkillActiveFlag(SKILL_TYPE eSkillType)		   { m_bSkillActiveType = eSkillType; }
 	FORCEINLINE weak_ptr<SkulAttack> GetAttackMethod()									   { return m_pAttackMethod; }
 	FORCEINLINE SKUL_KIND			 GetSkulKind()										   { return m_SkulInfo.eSkulKind; }
-	FORCEINLINE const SkulInfo&		 GetSkulInfo()										   { return m_SkulInfo; }
 	
 
 public:
@@ -60,6 +52,9 @@ public:
 	void							RefreshAnimation();
 	void							SetAttackMethod(shared_ptr<SkulAttack> pAttackMethod);
 	SKILL_INDEX						GetTotalSkills();
+
+	const SkulInfo&					GetSkulInfo();
+	void							SkulInfoUpdate();
 
 public:
 	void							CooldownCompletion(SKILL_INDEX eSkillIndex);
@@ -84,8 +79,6 @@ protected:
 	weak_ptr<Player>								   m_pPlayer;
 
 	// About Enums
-
-
 	SkulInfo m_SkulInfo;
 	SKUL_INDEX										   m_eSkulIndex;
 	uint8											   m_iEnumIndex;

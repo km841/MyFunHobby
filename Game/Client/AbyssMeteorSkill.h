@@ -6,7 +6,7 @@ class AbyssMeteorSkill :
     public SkulSkill
 {
 public:
-	AbyssMeteorSkill();
+	AbyssMeteorSkill(const SkillInfo& skillInfo);
 	virtual ~AbyssMeteorSkill() = default;
 
 public:

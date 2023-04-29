@@ -206,7 +206,7 @@ void Scene::Render_Deferred()
 
 void Scene::Render_Font()
 {
-	GET_SINGLE(Font)->Render();
+	FONT->Render();
 }
 
 void Scene::PushLightData()

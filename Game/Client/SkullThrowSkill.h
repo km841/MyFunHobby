@@ -4,7 +4,7 @@ class SkullThrowSkill :
     public SkulSkill
 {
 public:
-	SkullThrowSkill();
+	SkullThrowSkill(const SkillInfo& skillInfo);
 	virtual ~SkullThrowSkill() = default;
 
 public:

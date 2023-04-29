@@ -4,7 +4,7 @@ class HighWarlockSwapSkill :
     public SkulSkill
 {
 public:
-	HighWarlockSwapSkill();
+	HighWarlockSwapSkill(const SkillInfo& skillInfo);
 	virtual ~HighWarlockSwapSkill() = default;
 
 public:
