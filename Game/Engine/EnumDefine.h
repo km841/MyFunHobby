@@ -216,6 +216,19 @@ enum class SKILL_TYPE : uint8
 	CHARGING,
 };
 
+enum class ENGRAVE : uint8
+{
+	SUN_AND_MOON, // 해와달
+	SOUL, // 정령
+	WISDOM, // 지혜
+	FAST, // 신속
+	MAGIC_TOOL, // 마도구
+	SOAR, // 비상
+	MISFORTUNE, // 불운
+	ARMOR, // 무구
+	KNELL, // 흉조
+};
+
 
 enum
 {
@@ -255,6 +268,7 @@ enum class OBJECT_TYPE : uint8
 	SHADER,
 	TEXTURE,
 	PROPERTIES,
+	ITEM,
 
 	END
 };
@@ -264,6 +278,27 @@ enum
 {
 	PLAYER_STATE_COUNT = static_cast<uint8>(PLAYER_STATE::END),
 	OBJECT_TYPE_COUNT = static_cast<uint8>(OBJECT_TYPE::END),
+};
+
+enum class ITEM_PLACE
+{
+	PLACE_1_1,
+	PLACE_1_2,
+	PLACE_1_3,
+	PLACE_2_1,
+	PLACE_2_2,
+	PLACE_2_3,
+	PLACE_3_1,
+	PLACE_3_2,
+	PLACE_3_3,
+	END,
+};
+
+enum class ITEM_KIND
+{
+	SEALED_SWORD,
+	DEMON_SWORD_KIRION,
+
 };
 
 enum class SKUL_KIND
@@ -306,6 +341,7 @@ enum
 	MAX_ENUMS = 8,
 	MAX_SKULS = SKUL_INDEX::END,
 	MAX_SKILLS = SKILL_INDEX::END,
+	MAX_ITEMS = ITEM_PLACE::END,
 	END_POINT = -1,
 };
 

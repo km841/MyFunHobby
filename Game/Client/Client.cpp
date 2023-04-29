@@ -39,8 +39,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg = { 0 };
 
-   
-
     g_wWindowInfo.iWidth = 1600;
     g_wWindowInfo.iHeight = 900;
     g_wWindowInfo.bWindowed = true;

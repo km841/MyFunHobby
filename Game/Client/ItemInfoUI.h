@@ -4,7 +4,7 @@ class ItemInfoUI :
     public InfoUI
 {
 public:
-    ItemInfoUI();
+    ItemInfoUI(ITEM_PLACE eItemPlace);
     virtual ~ItemInfoUI();
 
 public:
@@ -15,5 +15,8 @@ public:
     virtual void FinalUpdate();
 
     virtual void ShowDetailInfo();
+
+private:
+    ITEM_PLACE m_eItemPlace;
 };
 

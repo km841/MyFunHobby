@@ -64,7 +64,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
             discard;
         
         if (fRatio > 0.f)
-            vColor.a = 1.f * fRatio;
+            vColor.a *= fRatio;
          
     }
     else
@@ -74,7 +74,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
             discard;
         
         if (fRatio > 0.f)
-            vColor.a = 1.f * fRatio;
+            vColor.a *= fRatio;
     }
     return vColor;
 }

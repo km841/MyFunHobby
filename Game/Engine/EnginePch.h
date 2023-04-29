@@ -120,6 +120,19 @@ struct WindowInfo
 	bool bWindowed;
 };
 
+struct ItemInfo
+{
+	shared_ptr<class Texture> pItemInvenTexture;
+	shared_ptr<class Texture> pItemVignetteTexture;
+	shared_ptr<class Texture> pItemDropTexture;
+	wstring szName;
+	wstring szComment;
+	GRADE eGrade;
+
+	ENGRAVE eFirstEngrave;
+	ENGRAVE eSecondEngrave;
+};
+
 struct SkillInfo
 {
 	shared_ptr<class Texture> pSkillTexture;

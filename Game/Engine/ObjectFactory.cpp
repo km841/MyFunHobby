@@ -110,3 +110,23 @@ void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pSpawnEffect, eSceneType));
 }
+
+shared_ptr<Item> ObjectFactory::CreateSealedSword()
+{
+	ItemInfo itemInfo = {};
+	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"SealedSword_Vignette", L"");
+
+	shared_ptr<Item> pSealedSword = make_shared<SealedSword>(itemInfo);
+
+	return pSealedSword;
+}
+
+shared_ptr<Item> ObjectFactory::CreateDemonSwordKirion()
+{
+	ItemInfo itemInfo = {};
+	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"DemonSwordKirion_Vignette", L"");
+
+	shared_ptr<Item> pDemonSwordKirion = make_shared<DemonSwordKirion>(itemInfo);
+
+	return pDemonSwordKirion;
+}

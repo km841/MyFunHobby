@@ -179,9 +179,11 @@
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="ComponentObject.h" />
     <ClInclude Include="DarkAbilInfoUI.h" />
+    <ClInclude Include="DemonSwordKirion.h" />
     <ClInclude Include="DetailInfoUI.h" />
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoUI.h" />
     <ClInclude Include="MousePointerHUD.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
@@ -219,6 +221,7 @@
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerSkulThumnailScript.h" />
     <ClInclude Include="RotateHeadScript.h" />
+    <ClInclude Include="SealedSword.h" />
     <ClInclude Include="SkillBoxHUD.h" />
     <ClInclude Include="SkillState.h" />
     <ClInclude Include="Skul.h" />
@@ -266,9 +269,11 @@
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="ComponentObject.cpp" />
     <ClCompile Include="DarkAbilInfoUI.cpp" />
+    <ClCompile Include="DemonSwordKirion.cpp" />
     <ClCompile Include="DetailInfoUI.cpp" />
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />
     <ClCompile Include="MousePointerHUD.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
@@ -307,6 +312,7 @@
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerSkulThumnailScript.cpp" />
     <ClCompile Include="RotateHeadScript.cpp" />
+    <ClCompile Include="SealedSword.cpp" />
     <ClCompile Include="SkillBoxHUD.cpp" />
     <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="Skul.cpp" />

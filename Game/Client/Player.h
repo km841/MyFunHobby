@@ -5,6 +5,7 @@ class PlayerState;
 class StateMachine;
 class Skul;
 class GlobalEffect;
+class Item;
 class Player :
 	  public GameObject
 {
@@ -37,17 +38,22 @@ public:
 	FORCEINLINE float					 GetSwapCooldownProgress()					   { return m_tSwapCooldown.GetProgress(); }
 	FORCEINLINE weak_ptr<Skul>			 GetSkul(SKUL_INDEX eSkulIndex)				   { return m_arrSkuls[static_cast<uint8>(eSkulIndex)]; }
 
+	// About states
 	weak_ptr<PlayerState> GetPlayerState();
 	void				  ChangePlayerState(PLAYER_STATE ePlayerState);
+
+	// About skuls
 	shared_ptr<Skul>	  ObtainSkul(shared_ptr<Skul> pSkul);
+	shared_ptr<Item>	  ObtainItem(shared_ptr<Item> pItem);
 	void				  SwapSkul();
 	void				  RefreshAnimation(); 
-
 	void			      SkulCooldownUpdate();
 	void			      SwapCooldownUpdate();
 
+	// About items
+	ITEM_PLACE			  GetNearEmptyItemPlace();
+	void				  ItemUpdate();
 	void				  TakeDamage(uint32 iDamage);
-
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
@@ -61,6 +67,8 @@ private:
 
 private:
 	std::array<shared_ptr<Skul>, MAX_SKULS> m_arrSkuls;
+	std::array<shared_ptr<Item>, MAX_ITEMS> m_arrItems;
+
 	shared_ptr<Skul>						m_pActiveSkul;
 	shared_ptr<GlobalEffect>				m_pDashSmoke;
 	shared_ptr<GlobalEffect>				m_pJumpSmoke;

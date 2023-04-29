@@ -140,6 +140,9 @@
     <Filter Include="소스 파일\Game\Object\Interface\UI\InventoryUI\DetailUI">
       <UniqueIdentifier>{75b93267-80e4-4ca2-b3a7-a7a2b270c3b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\Item">
+      <UniqueIdentifier>{88aba77f-2d37-40a6-989e-52b152617c37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -396,6 +399,15 @@
     </ClInclude>
     <ClInclude Include="DetailInfoUI.h">
       <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\DetailUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DemonSwordKirion.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SealedSword.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -666,6 +678,15 @@
     </ClCompile>
     <ClCompile Include="DetailInfoUI.cpp">
       <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\DetailUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DemonSwordKirion.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SealedSword.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

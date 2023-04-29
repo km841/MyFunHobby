@@ -25,6 +25,7 @@
 #include "InterfaceManager.h"
 #include "Engine.h"
 #include "PlayerHitHUD.h"
+#include "Item.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -74,6 +75,8 @@ void Player::Update()
 
 	SwapCooldownUpdate();
 	SkulCooldownUpdate();
+
+	ItemUpdate();
 }
 
 void Player::LateUpdate()
@@ -123,6 +126,24 @@ shared_ptr<Skul> Player::ObtainSkul(shared_ptr<Skul> pSkul)
 		pSkul->SetSkulIndex(pDropSkul->GetSkulIndex());
 		m_pActiveSkul = pSkul;
 		return pDropSkul;
+	}
+
+	return nullptr;
+}
+
+shared_ptr<Item> Player::ObtainItem(shared_ptr<Item> pItem)
+{
+	ITEM_PLACE eItemPlace =	GetNearEmptyItemPlace();
+
+	if (ITEM_PLACE::END == eItemPlace)
+	{
+		// Full!
+		// Open SelectItemUI!
+		assert(nullptr);
+	}
+	else
+	{
+		m_arrItems[static_cast<uint8>(eItemPlace)] = pItem;
 	}
 
 	return nullptr;
@@ -190,6 +211,25 @@ void Player::TakeDamage(uint32 iDamage)
 	static_pointer_cast<PlayerHitHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::PLAYER_HIT))->PlayHitAnimation();
 }
 
+ITEM_PLACE Player::GetNearEmptyItemPlace()
+{
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		if (!m_arrItems[i])
+			return static_cast<ITEM_PLACE>(i);
+	}
+	return ITEM_PLACE::END;
+}
+
+void Player::ItemUpdate()
+{
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		if (m_arrItems[i])
+			m_arrItems[i]->Update();
+	}
+}
+
 void Player::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
 }
@@ -202,7 +242,6 @@ void Player::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
 	{
-		int a = 0;
 	}
 }
 

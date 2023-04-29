@@ -16,6 +16,8 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "SealedSword.h"
+#include "DemonSwordKirion.h"
 
 class Player;
 class ObjectFactory
@@ -45,12 +47,24 @@ public:
 	template<typename T>
 	void CreateMonsterAndAddedScene(const Vec3& vMonsterPos);
 
+	template<typename T>
+	shared_ptr<Item> CreateItem();
+
 private:
 	template<typename T>
 	inline MONSTER_KIND GetMonsterKind();
 
+	template<typename T>
+	inline ITEM_KIND GetItemKind();
+
 	shared_ptr<Monster> CreateJuniorKnight(const Vec3& vMonsterPos);
 	void CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos);
+
+
+private:
+	shared_ptr<Item> CreateSealedSword();
+	shared_ptr<Item> CreateDemonSwordKirion();
+
 private:
 	weak_ptr<Player> m_pPlayer;
 };
@@ -193,12 +207,42 @@ inline void ObjectFactory::CreateMonsterAndAddedScene(const Vec3& vMonsterPos)
 	CreateSpawnEffectAndAddedScene(vMonsterPos);
 }
 
+template<typename T>
+inline shared_ptr<Item> ObjectFactory::CreateItem()
+{
+	ITEM_KIND eItemKind = GetItemKind<T>();
+	shared_ptr<Item> pItem = nullptr;
+	switch (eItemKind)
+	{
+	case ITEM_KIND::SEALED_SWORD:
+		pItem = CreateSealedSword();
+		break;
+	case ITEM_KIND::DEMON_SWORD_KIRION:
+		pItem = CreateDemonSwordKirion();
+		break;
+	}
+
+	assert(pItem);
+	return pItem;
+}
+
 
 template<typename T>
 inline MONSTER_KIND ObjectFactory::GetMonsterKind()
 {
 	if constexpr (std::is_same_v<T, JuniorKnight>)
 		return MONSTER_KIND::JUNIOR_KNIGHT;
+	else
+		return MONSTER_KIND::NONE;
+}
+
+template<typename T>
+inline ITEM_KIND ObjectFactory::GetItemKind()
+{
+	if constexpr (std::is_same_v<T, SealedSword>)
+		return ITEM_KIND::SEALED_SWORD;
+	else if constexpr (std::is_same_v<T, DemonSwordKirion>)
+		return ITEM_KIND::DEMON_SWORD_KIRION;
 	else
 		return MONSTER_KIND::NONE;
 }

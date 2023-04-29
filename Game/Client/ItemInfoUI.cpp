@@ -6,8 +6,9 @@
 #include "Scene.h"
 #include "Scenes.h"
 
-ItemInfoUI::ItemInfoUI()
+ItemInfoUI::ItemInfoUI(ITEM_PLACE eItemPlace)
 	: InfoUI(INFO_TYPE::ITEM_INFO)
+	, m_eItemPlace(eItemPlace)
 {
 }
 

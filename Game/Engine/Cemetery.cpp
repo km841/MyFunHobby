@@ -122,8 +122,8 @@ void Cemetery::CreateSkul()
 			skillInfo.fCooldown = 6.f;
 			skillInfo.fDuration = 0.25f;
 			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Throw", L"..\\Resources\\Texture\\HUD\\LittleBone\\HUD_SkullThrow.tga");
-			skillInfo.szComment = L"머리를 냅다 던진다.";
-			skillInfo.szName = L"두개골 날리기";
+			skillInfo.szComment = L"자신의 머리를 던져 마법 데미지를 입힙니다.\n던진 머리를 회수하면 쿨타임이 초기화됩니다.";
+			skillInfo.szName = L"두개골 투척";
 
 			shared_ptr<SkullThrowSkill> pThrowSkill = make_shared<SkullThrowSkill>(skillInfo);
 
@@ -142,8 +142,8 @@ void Cemetery::CreateSkul()
 			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
 			skillInfo.fCooldown = 0.f;
 			skillInfo.fDuration = 2.f;
-			skillInfo.szComment = L"잘논다";
-			skillInfo.szName = L"뼈다구 회전";
+			skillInfo.szComment = L"교대 시 뼈를 들고 회전해 물리 데미지를 입힙니다.";
+			skillInfo.szName = L"바톤 터치";
 
 			shared_ptr<LittleBoneSwapSkill> pSwapSkill = make_shared<LittleBoneSwapSkill>(skillInfo);
 

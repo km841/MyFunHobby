@@ -93,9 +93,9 @@ void TitleScene::Enter()
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleBG.tga");
+		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleBG.png");
 
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 	
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -109,7 +109,7 @@ void TitleScene::Enter()
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		m_pBackground->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
-		m_pBackground->GetTransform()->SetLocalScale(Vec3(900.f, 450.f, 1.f));
+		m_pBackground->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
 
 		AddGameObject(m_pBackground);
 	}
@@ -121,7 +121,7 @@ void TitleScene::Enter()
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleLogo.tga");
+		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleLogo.png");
 
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 		pMaterial->SetTexture(0, pTexture);
@@ -137,8 +137,8 @@ void TitleScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pLogo->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 150.f, 90.f));
-		m_pLogo->GetTransform()->SetLocalScale(pTexture->GetTexSize() * 2.f / 3.f);
+		m_pLogo->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 180.f, 90.f));
+		m_pLogo->GetTransform()->SetLocalScale(pTexture->GetTexSize() / 3.f);
 
 		AddGameObject(m_pLogo);
 	}
