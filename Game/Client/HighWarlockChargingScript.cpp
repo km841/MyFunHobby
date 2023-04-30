@@ -39,6 +39,7 @@ void HighWarlockChargingScript::LateUpdate()
 		if (fProgress > 0.99f && !m_bCompleteFlag)
 		{
 			m_pHighWarlock.lock()->EnableAndInitCompletedEffect();
+			m_pHighWarlock.lock()->EnableAndInitCompletedSmoke();
 			m_bCompleteFlag = true;
 		}
 	}
