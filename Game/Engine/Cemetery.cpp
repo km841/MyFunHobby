@@ -36,11 +36,11 @@ void Cemetery::CreateSkul()
 	// LittleBone
 	{
 		SkulInfo skulInfo = {};
-		skulInfo.eSkulGrade = GRADE::NORMAL;
+		skulInfo.eGrade = GRADE::NORMAL;
 		skulInfo.eSkulKind = SKUL_KIND::LITTLE_BONE;
 		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
 		skulInfo.szComment = L"마왕성 경비대의 막내 스켈레톤.\n다른 스켈레톤에 비해 체구가 작아 리틀본이라 불린다.";
-		skulInfo.pVignette = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Vignette", L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Vignette.png");
+		skulInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Vignette", L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Vignette.png");
 
 		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>(skulInfo);
 		pLittleBone->AddComponent(make_shared<Animator>());
@@ -167,12 +167,12 @@ void Cemetery::CreateSkul()
 	// High Warlock
 	{
 		SkulInfo skulInfo = {};
-		skulInfo.eSkulGrade = GRADE::UNIQUE;
+		skulInfo.eGrade = GRADE::UNIQUE;
 		skulInfo.eSkulKind = SKUL_KIND::HIGH_WARLOCK;
 		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
 		skulInfo.szComment = L"마나의 흐름을 느끼는데 살가죽은 방해가 될 뿐이다.\n- 마왕성 제 1 마도 군단장";
-		skulInfo.pVignette = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Vignette", L"..\\Resources\\Texture\\Sprites\\HighWarlock\\Image_HighWarlock_Vignette.png");
-		skulInfo.vVignetteOffset = Vec2(5.f, 20.f);
+		skulInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Vignette", L"..\\Resources\\Texture\\Sprites\\HighWarlock\\Image_HighWarlock_Vignette.png");
+		skulInfo.vVignetteTextureOffset = Vec2(5.f, 20.f);
 
 		shared_ptr<HighWarlock> pHighWarlock = make_shared<HighWarlock>(skulInfo);
 		pHighWarlock->AddComponent(make_shared<Animator>());

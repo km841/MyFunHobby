@@ -146,6 +146,9 @@
     <Filter Include="소스 파일\Game\Object\Item\Engrave">
       <UniqueIdentifier>{d611ef2b-8080-4c3c-86f8-eb953d85e5a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\Essence">
+      <UniqueIdentifier>{692ba0ce-1e7d-44a8-ab56-c516e2743e51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -420,6 +423,15 @@
     </ClInclude>
     <ClInclude Include="Rapidity.h">
       <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
+    </ClInclude>
+    <ClInclude Include="Essence.h">
+      <Filter>소스 파일\Game\Object\Essence</Filter>
+    </ClInclude>
+    <ClInclude Include="Lyweasel.h">
+      <Filter>소스 파일\Game\Object\Essence</Filter>
+    </ClInclude>
+    <ClInclude Include="Wisp.h">
+      <Filter>소스 파일\Game\Object\Essence</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -708,6 +720,15 @@
     </ClCompile>
     <ClCompile Include="Rapidity.cpp">
       <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
+    </ClCompile>
+    <ClCompile Include="Essence.cpp">
+      <Filter>소스 파일\Game\Object\Essence</Filter>
+    </ClCompile>
+    <ClCompile Include="Lyweasel.cpp">
+      <Filter>소스 파일\Game\Object\Essence</Filter>
+    </ClCompile>
+    <ClCompile Include="Wisp.cpp">
+      <Filter>소스 파일\Game\Object\Essence</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

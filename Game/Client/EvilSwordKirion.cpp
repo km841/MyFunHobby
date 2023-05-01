@@ -68,8 +68,7 @@ void EvilSwordKirion::CreateSlashEffectAndAddedToScene()
 	pAnimationLocalEffect->SetDirection(m_pPlayer.lock()->GetDirection());
 
 	Vec3 vPlayerPos = m_pPlayer.lock()->GetTransform()->GetPhysicalPosition();
-	vPlayerPos.z -= (10.f + m_fDepthValue);
-	m_fDepthValue++;
+	vPlayerPos.z -= (10.f + m_fDepthValue++);
 
 	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
 	vPlayerPos.x += iDirection ? -30.f : 30.f;
@@ -101,8 +100,7 @@ void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 	pAnimationLocalEffect->SetDirection(m_pPlayer.lock()->GetDirection());
 
 	Vec3 vPlayerPos = m_pPlayer.lock()->GetTransform()->GetPhysicalPosition();
-	vPlayerPos.z -= (10.f + m_fDepthValue);
-	m_fDepthValue++;
+	vPlayerPos.z -= (10.f + m_fDepthValue++);
 
 	float fRandomDegree = static_cast<float>(RANDOM(0, 360));
 	float fRandomRadian = fRandomDegree * XM_PI / 180.f;
@@ -111,6 +109,7 @@ void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 
 	pAnimationLocalEffect->GetTransform()->SetLocalPosition(vPlayerPos);
 	pAnimationLocalEffect->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
+
 
 	pAnimationLocalEffect->AddComponent(make_shared<Animator>());
 

@@ -25,7 +25,7 @@ public:
 
 public:
 	FORCEINLINE SKUL_INDEX			 GetSkulIndex()										   { return m_eSkulIndex;     }
-	FORCEINLINE GRADE				 GetSkulGrade()										   { return m_SkulInfo.eSkulGrade;   }
+	FORCEINLINE GRADE				 GetSkulGrade()										   { return m_SkulInfo.eGrade;   }
 	FORCEINLINE void				 SetSkulIndex(SKUL_INDEX eSkulIndex)				   { m_eSkulIndex = eSkulIndex; }
 	FORCEINLINE bool				 IsSkillActiveFlag()								   { return SKILL_TYPE::NONE != m_bSkillActiveType; }
 	FORCEINLINE SKILL_TYPE			 GetSkillActiveType()								   { return m_bSkillActiveType; }

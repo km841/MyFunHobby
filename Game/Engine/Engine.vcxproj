@@ -211,6 +211,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectAddedToSceneEvent.h" />
     <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ObjectInfo.h" />
     <ClInclude Include="ObjectRemoveToSceneEvent.h" />
     <ClInclude Include="ObjectReturnToPoolEvent.h" />
     <ClInclude Include="ParticleSystem.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectAddedToSceneEvent.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="ObjectInfo.cpp" />
     <ClCompile Include="ObjectRemoveToSceneEvent.cpp" />
     <ClCompile Include="ObjectReturnToPoolEvent.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />

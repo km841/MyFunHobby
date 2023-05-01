@@ -119,7 +119,7 @@ void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)
 shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 {
 	ItemInfo itemInfo = {};
-	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword_Vignette", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword_Vignette.png");
+	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword_Vignette", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword_Vignette.png");
 	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png");
 	
 	itemInfo.eGrade = GRADE::UNIQUE;
@@ -138,7 +138,7 @@ shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 shared_ptr<Item> ObjectFactory::CreateEvilSwordKirion()
 {
 	ItemInfo itemInfo = {};
-	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion_Vignette", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion_Vignette.png");
+	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion_Vignette", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion_Vignette.png");
 	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png");
 	
 	itemInfo.eGrade = GRADE::REGENDARY;
@@ -152,4 +152,14 @@ shared_ptr<Item> ObjectFactory::CreateEvilSwordKirion()
 	shared_ptr<Item> pDemonSwordKirion = make_shared<EvilSwordKirion>(itemInfo);
 
 	return pDemonSwordKirion;
+}
+
+shared_ptr<Essence> ObjectFactory::CreateLyweasel()
+{
+	return shared_ptr<Essence>();
+}
+
+shared_ptr<Essence> ObjectFactory::CreateWisp()
+{
+	return shared_ptr<Essence>();
 }

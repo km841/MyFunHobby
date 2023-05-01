@@ -18,6 +18,8 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "ForbiddenSword.h"
 #include "EvilSwordKirion.h"
+#include "Lyweasel.h"
+#include "Wisp.h"
 
 class Player;
 class ObjectFactory
@@ -50,20 +52,29 @@ public:
 	template<typename T>
 	shared_ptr<Item> CreateItem();
 
+	template<typename T>
+	shared_ptr<Item> CreateEssence();
+
 private:
 	template<typename T>
 	inline MONSTER_KIND GetMonsterKind();
 
-	template<typename T>
-	inline ITEM_KIND GetItemKind();
-
 	shared_ptr<Monster> CreateJuniorKnight(const Vec3& vMonsterPos);
 	void CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos);
 
-
 private:
+	template<typename T>
+	inline ITEM_KIND GetItemKind();
+
 	shared_ptr<Item> CreateForbiddenSword();
 	shared_ptr<Item> CreateEvilSwordKirion();
+
+private:
+	template<typename T>
+	inline ESSENCE_KIND GetEssenceKind();
+
+	shared_ptr<Essence> CreateLyweasel();
+	shared_ptr<Essence> CreateWisp();
 
 private:
 	weak_ptr<Player> m_pPlayer;
@@ -228,6 +239,27 @@ inline shared_ptr<Item> ObjectFactory::CreateItem()
 	return pItem;
 }
 
+template<typename T>
+inline shared_ptr<Item> ObjectFactory::CreateEssence()
+{
+	ESSENCE_KIND eEssenceKind = GetEssenceKind<T>();
+	shared_ptr<Essence> pEssence = nullptr;
+	switch (eEssenceKind)
+	{
+	case ESSENCE_KIND::LYWEASEL:
+		pEssence = CreateLyweasel();
+		break;
+	case ESSENCE_KIND::WISP:
+		pEssence = CreateWisp();
+		break;
+	}
+
+	assert(pEssence);
+
+	pEssence->SetPlayer(m_pPlayer.lock());
+	return pEssence;
+}
+
 
 template<typename T>
 inline MONSTER_KIND ObjectFactory::GetMonsterKind()
@@ -245,6 +277,17 @@ inline ITEM_KIND ObjectFactory::GetItemKind()
 		return ITEM_KIND::FORBIDDEN_SWORD;
 	else if constexpr (std::is_same_v<T, EvilSwordKirion>)
 		return ITEM_KIND::EVIL_SWORD_KIRION;
+	else
+		return MONSTER_KIND::NONE;
+}
+
+template<typename T>
+inline ESSENCE_KIND ObjectFactory::GetEssenceKind()
+{
+	if constexpr (std::is_same_v<T, Lyweasel>)
+		return ESSENCE_KIND::LYWEASEL;
+	else if constexpr (std::is_same_v<T, Wisp>)
+		return ESSENCE_KIND::WISP;
 	else
 		return MONSTER_KIND::NONE;
 }

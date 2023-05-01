@@ -216,6 +216,20 @@ enum class SKILL_TYPE : uint8
 	CHARGING,
 };
 
+enum class ESSENCE_TYPE : uint8
+{
+	INSTANT,
+	CONTINUOUS,
+	END,
+};
+
+enum class ESSENCE_KIND : uint8
+{
+	LYWEASEL,
+	WISP,
+	END,
+};
+
 enum class ENGRAVE : uint8
 {
 	SUN_AND_MOON, // 해와달
@@ -229,7 +243,6 @@ enum class ENGRAVE : uint8
 	KNELL, // 흉조
 	END,
 };
-
 
 enum
 {
@@ -270,6 +283,7 @@ enum class OBJECT_TYPE : uint8
 	TEXTURE,
 	PROPERTIES,
 	ITEM,
+	ESSENCE,
 
 	END
 };

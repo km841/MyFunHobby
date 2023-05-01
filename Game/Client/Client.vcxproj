@@ -175,6 +175,7 @@
     <ClInclude Include="AnimationLocalEffect.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arms.h" />
+    <ClInclude Include="Essence.h" />
     <ClInclude Include="EssenceInfoUI.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="CameraMoveScript.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoUI.h" />
+    <ClInclude Include="Lyweasel.h" />
     <ClInclude Include="MousePointerHUD.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
     <ClInclude Include="Possession.h" />
@@ -258,6 +260,7 @@
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
     <ClInclude Include="NPC_Wolf.h" />
+    <ClInclude Include="Wisp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbyssMeteor.cpp" />
@@ -268,6 +271,7 @@
     <ClCompile Include="AnimationLocalEffect.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Arms.cpp" />
+    <ClCompile Include="Essence.cpp" />
     <ClCompile Include="EssenceInfoUI.cpp" />
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
@@ -280,6 +284,7 @@
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />
+    <ClCompile Include="Lyweasel.cpp" />
     <ClCompile Include="MousePointerHUD.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
     <ClCompile Include="Possession.cpp" />
@@ -356,6 +361,7 @@
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />
     <ClCompile Include="NPC_Wolf.cpp" />
+    <ClCompile Include="Wisp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

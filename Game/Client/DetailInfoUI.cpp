@@ -98,7 +98,7 @@ void DetailInfoUI::DrawSkulInfo()
 	InitSkulDetailSubUI();
 
 	// Enum To Wstring
-	FONT->DrawString(m_DetailInfo.skulInfo.SkulGradeEnumToWstring(), 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	FONT->DrawString(m_DetailInfo.skulInfo.GradeEnumToWstring(), 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
 	FONT->DrawString(m_DetailInfo.skulInfo.SkulTypeEnumToWstring(), 20.f, Vec3(1375.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
 	FONT->DrawString(m_DetailInfo.skulInfo.SkulKindEnumToWstring(), 25.f, Vec3(1076.f, 685.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 
@@ -110,7 +110,7 @@ void DetailInfoUI::DrawItemInfo()
 	SetItemDetailTexture();
 	InitItemDetailSubUI();
 
-	FONT->DrawString(m_DetailInfo.itemInfo.ItemGradeEnumToWstring(), 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	FONT->DrawString(m_DetailInfo.itemInfo.GradeEnumToWstring(), 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
 	FONT->DrawString(m_DetailInfo.itemInfo.szName, 25.f, Vec3(1076.f, 685.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 
 	FONT->DrawString(m_DetailInfo.itemInfo.szComment, 20.f, Vec3(1076.f, 623.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
@@ -151,9 +151,9 @@ void DetailInfoUI::SetSkulDetailTexture()
 
 void DetailInfoUI::InitSkulDetailSubUI()
 {
-	m_pVignetteUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, m_DetailInfo.skulInfo.pVignette);
-	m_pVignetteUI->GetTransform()->SetLocalScale(m_DetailInfo.skulInfo.pVignette->GetTexSize());
-	m_pVignetteUI->GetTransform()->SetGlobalOffset(m_DetailInfo.skulInfo.vVignetteOffset);
+	m_pVignetteUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, m_DetailInfo.skulInfo.pVignetteTexture);
+	m_pVignetteUI->GetTransform()->SetLocalScale(m_DetailInfo.skulInfo.pVignetteTexture->GetTexSize());
+	m_pVignetteUI->GetTransform()->SetGlobalOffset(m_DetailInfo.skulInfo.vVignetteTextureOffset);
 
 	const SkillInfo& FirstSkillInfo = m_DetailInfo.skulInfo.FirstSkillInfo;
 	const SkillInfo& SecondSkillInfo = m_DetailInfo.skulInfo.SecondSkillInfo;
@@ -190,8 +190,8 @@ void DetailInfoUI::SetItemDetailTexture()
 
 void DetailInfoUI::InitItemDetailSubUI()
 {
-	m_pVignetteUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, m_DetailInfo.itemInfo.pItemVignetteTexture);
-	m_pVignetteUI->GetTransform()->SetLocalScale(m_DetailInfo.itemInfo.pItemVignetteTexture->GetTexSize());
+	m_pVignetteUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, m_DetailInfo.itemInfo.pVignetteTexture);
+	m_pVignetteUI->GetTransform()->SetLocalScale(m_DetailInfo.itemInfo.pVignetteTexture->GetTexSize());
 	m_pVignetteUI->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
 	ENGRAVE eFirstEng = m_DetailInfo.itemInfo.pFirstEngrave->GetEngrave();
 	ENGRAVE eSecondEng = m_DetailInfo.itemInfo.pSecondEngrave->GetEngrave();
