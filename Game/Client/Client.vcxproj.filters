@@ -388,7 +388,7 @@
     <ClInclude Include="InfoUI.h">
       <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
     </ClInclude>
-    <ClInclude Include="ArtifactInfoUI.h">
+    <ClInclude Include="EssenceInfoUI.h">
       <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
     </ClInclude>
     <ClInclude Include="DarkAbilInfoUI.h">
@@ -673,7 +673,7 @@
     <ClCompile Include="MousePointerHUD.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="ArtifactInfoUI.cpp">
+    <ClCompile Include="EssenceInfoUI.cpp">
       <Filter>소스 파일\Game\Object\Interface\UI\InventoryUI\InfoUI</Filter>
     </ClCompile>
     <ClCompile Include="DarkAbilInfoUI.cpp">

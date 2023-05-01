@@ -22,5 +22,8 @@ public:
 private:
     shared_ptr<GameObject> m_pBackground;
     shared_ptr<GameObject> m_pLogo;
+
+    Timer m_tStayTimer;
+    float m_fAlphaValue;
 };
 

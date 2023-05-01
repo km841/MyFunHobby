@@ -52,8 +52,8 @@ void DetailInfoUI::Update()
 				DrawItemInfo();
 				break;
 
-			case INFO_TYPE::ARTIFACT_INFO:
-				DrawArtifactInfo();
+			case INFO_TYPE::ESSENCE_INFO:
+				DrawEssenceInfo();
 				break;
 
 			case INFO_TYPE::DARKABIL_INFO:
@@ -120,7 +120,7 @@ void DetailInfoUI::DrawItemInfo()
 	FONT->DrawString(m_DetailInfo.itemInfo.pSecondEngrave->GetName(), 20.f, Vec3(1274.f, 135.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 }
 
-void DetailInfoUI::DrawArtifactInfo()
+void DetailInfoUI::DrawEssenceInfo()
 {
 	FONT->DrawString(L"ArtifactInfo", 20.f, Vec3(16.f, 16.f, 0.f));
 }

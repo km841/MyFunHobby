@@ -211,6 +211,24 @@ void Player::TakeDamage(uint32 iDamage)
 	static_pointer_cast<PlayerHitHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::PLAYER_HIT))->PlayHitAnimation();
 }
 
+void Player::ActiveItemWhenHitTiming()
+{
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		if (m_arrItems[i])
+			m_arrItems[i]->ActiveMethodWhenHitTiming();
+	}
+}
+
+void Player::ActiveItemWhenDashTiming()
+{
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		if (m_arrItems[i])
+			m_arrItems[i]->ActiveMethodWhenDashTiming();
+	}
+}
+
 ITEM_PLACE Player::GetNearEmptyItemPlace()
 {
 	for (int32 i = 0; i < MAX_ITEMS; ++i)

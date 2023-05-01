@@ -7,7 +7,7 @@ enum class INFO_TYPE
 {
     SKUL_INFO,
     ITEM_INFO,
-    ARTIFACT_INFO,
+    ESSENCE_INFO,
     DARKABIL_INFO,
     END,
 };

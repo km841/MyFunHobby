@@ -55,6 +55,7 @@ void DashState::Update()
 		if ((fProgress >= m_fAfterImageTimeOffset + (i * m_fAfterImageTimeOffset)) && m_vAfterImages[i]->IsDisable())
 		{
 			EnableAndInitAfterImage(m_vAfterImages[i]);
+			m_pPlayer.lock()->ActiveItemWhenDashTiming();
 		}
 	}
 }

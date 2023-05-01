@@ -27,7 +27,7 @@ public:
 private:
     void DrawSkulInfo();
     void DrawItemInfo();
-    void DrawArtifactInfo();
+    void DrawEssenceInfo();
     void DrawDarkAbilInfo();
 
     void CreateDetailSubUIAndAddedToScene();

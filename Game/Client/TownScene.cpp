@@ -159,6 +159,8 @@ void TownScene::Enter()
 	// Player
 	{
 		pPlayer = make_shared<Player>();
+		GET_SINGLE(ObjectFactory)->SetPlayer(pPlayer);
+
 		pPlayer->AddComponent(make_shared<Transform>());
 		pPlayer->AddComponent(make_shared<Physical>(ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f)));
 		pPlayer->AddComponent(make_shared<PlayerMoveScript>());

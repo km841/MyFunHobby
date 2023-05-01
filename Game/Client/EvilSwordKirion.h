@@ -8,10 +8,19 @@ public:
     virtual ~EvilSwordKirion();
 
 public:
-    void Awake();
-    void Start();
-    void Update();
-    void LateUpdate();
-    void FinalUpdate();
+    virtual void Awake() override;
+    virtual void Start() override;
+    virtual void Update() override;
+    virtual void LateUpdate() override;
+    virtual void FinalUpdate() override;
+
+    virtual void ActiveMethodWhenHitTiming() override;
+    virtual void ActiveMethodWhenDashTiming() override;
+
+private:
+    void CreateSlashEffectAndAddedToScene();
+    void CreateDashEffectAndAddedToScene();
+
+    float m_fDepthValue;
 };
 

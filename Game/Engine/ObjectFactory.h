@@ -223,6 +223,8 @@ inline shared_ptr<Item> ObjectFactory::CreateItem()
 	}
 
 	assert(pItem);
+
+	pItem->SetPlayer(m_pPlayer.lock());
 	return pItem;
 }
 

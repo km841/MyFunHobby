@@ -55,6 +55,8 @@ public:
 	weak_ptr<Item>		  GetItem(ITEM_PLACE eItemPlace);
 	void				  ItemUpdate();
 	void				  TakeDamage(uint32 iDamage);
+	void				  ActiveItemWhenHitTiming();
+	void				  ActiveItemWhenDashTiming();
 
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;

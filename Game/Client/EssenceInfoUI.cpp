@@ -1,46 +1,46 @@
 #include "pch.h"
-#include "ArtifactInfoUI.h"
+#include "EssenceInfoUI.h"
 #include "Player.h"
 #include "Skul.h"
 #include "DetailInfoUI.h"
 #include "Scene.h"
 #include "Scenes.h"
 
-ArtifactInfoUI::ArtifactInfoUI()
-	:InfoUI(INFO_TYPE::ARTIFACT_INFO)
+EssenceInfoUI::EssenceInfoUI()
+	:InfoUI(INFO_TYPE::ESSENCE_INFO)
 {
 }
 
-ArtifactInfoUI::~ArtifactInfoUI()
+EssenceInfoUI::~EssenceInfoUI()
 {
 }
 
-void ArtifactInfoUI::Awake()
+void EssenceInfoUI::Awake()
 {
 	InfoUI::Awake();
 }
 
-void ArtifactInfoUI::Start()
+void EssenceInfoUI::Start()
 {
 	InfoUI::Start();
 }
 
-void ArtifactInfoUI::Update()
+void EssenceInfoUI::Update()
 {
 	InfoUI::Update();
 }
 
-void ArtifactInfoUI::LateUpdate()
+void EssenceInfoUI::LateUpdate()
 {
 	InfoUI::LateUpdate();
 }
 
-void ArtifactInfoUI::FinalUpdate()
+void EssenceInfoUI::FinalUpdate()
 {
 	InfoUI::FinalUpdate();
 }
 
-void ArtifactInfoUI::ShowDetailInfo()
+void EssenceInfoUI::ShowDetailInfo()
 {
 	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 

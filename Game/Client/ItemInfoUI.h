@@ -1,5 +1,7 @@
 #pragma once
 #include "InfoUI.h"
+
+using ENGRAVES = std::pair<ENGRAVE, ENGRAVE>;
 class ItemInfoUI :
     public InfoUI
 {
@@ -15,6 +17,8 @@ public:
     virtual void FinalUpdate();
 
     virtual void ShowDetailInfo();
+
+    ENGRAVES GetEngravesInMyPlace();
 
 
 private:

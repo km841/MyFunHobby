@@ -40,6 +40,8 @@ void LittleBoneAttack::Update()
 
 	if (m_arrAttackInfo[iEnum][iOrder].pAnimation->IsHitFrame())
 	{
+		m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenHitTiming();
+
 		LittleBoneStomp();
 		HitMonstersInAttackRange();
 		m_arrAttackInfo[iEnum][iOrder].pAnimation->CheckToHitFrame();

@@ -1,11 +1,11 @@
 #pragma once
 #include "InfoUI.h"
-class ArtifactInfoUI :
+class EssenceInfoUI :
     public InfoUI
 {
 public:
-    ArtifactInfoUI();
-    virtual ~ArtifactInfoUI();
+    EssenceInfoUI();
+    virtual ~EssenceInfoUI();
 
 public:
     virtual void Awake();

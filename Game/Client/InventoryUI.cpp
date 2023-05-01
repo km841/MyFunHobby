@@ -8,7 +8,7 @@
 #include "Scene.h"
 #include "Scenes.h"
 #include "InfoUI.h"
-#include "ArtifactInfoUI.h"
+#include "EssenceInfoUI.h"
 #include "DarkAbilInfoUI.h"
 #include "DetailInfoUI.h"
 #include "Engine.h"
@@ -35,10 +35,12 @@ void InventoryUI::Start()
 void InventoryUI::Update()
 {
 	UI::Update();
+	UpdateEngraves();
+	ApplyEngravesStatus();
 
 	if (IsEnable())
 	{
-		DrawInventorySubjectForElements();
+		ShowInventorySubjectForElements();
 	}
 }
 
@@ -57,7 +59,7 @@ void InventoryUI::Enable()
 	for (auto& pInfoUI : m_vSkulInfoUI)
 		pInfoUI->Enable();
 
-	for (auto& pInfoUI : m_vArtifactInfoUI)
+	for (auto& pInfoUI : m_vEssenceInfoUI)
 		pInfoUI->Enable();
 
 	for (auto& pInfoUI : m_vItemInfoUI)
@@ -77,7 +79,7 @@ void InventoryUI::Disable()
 	for (auto& pInfoUI : m_vSkulInfoUI)
 		pInfoUI->Disable();
 
-	for (auto& pInfoUI : m_vArtifactInfoUI)
+	for (auto& pInfoUI : m_vEssenceInfoUI)
 		pInfoUI->Disable();
 
 	for (auto& pInfoUI : m_vItemInfoUI)
@@ -138,16 +140,16 @@ void InventoryUI::CreateArtifactInfoUI()
 {
 	// Artifact Info
 	{
-		shared_ptr<ArtifactInfoUI> pArtifactInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ArtifactInfoUI>(L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
-		pArtifactInfo->GetTransform()->SetParent(GetTransform());
-		pArtifactInfo->GetTransform()->SetLocalPosition(Vec3(-235.f, 114.f, -10.f));
-		pArtifactInfo->SetDetailInfoUI(m_pDetailInfoUI);
+		shared_ptr<EssenceInfoUI> pEssenceInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<EssenceInfoUI>(L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
+		pEssenceInfo->GetTransform()->SetParent(GetTransform());
+		pEssenceInfo->GetTransform()->SetLocalPosition(Vec3(-235.f, 114.f, -10.f));
+		pEssenceInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
-		pArtifactInfo->Awake();
-		pArtifactInfo->Disable();
-		m_vArtifactInfoUI.push_back(pArtifactInfo);
+		pEssenceInfo->Awake();
+		pEssenceInfo->Disable();
+		m_vEssenceInfoUI.push_back(pEssenceInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pArtifactInfo, eSceneType));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pEssenceInfo, eSceneType));
 	}
 }
 
@@ -164,7 +166,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -179,7 +181,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -194,7 +196,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -210,7 +212,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -225,7 +227,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -240,7 +242,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -257,7 +259,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -272,7 +274,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -287,7 +289,7 @@ void InventoryUI::CreateItemInfoUI()
 
 		pItemInfo->Awake();
 		pItemInfo->Disable();
-		m_vSkulInfoUI.push_back(pItemInfo);
+		m_vItemInfoUI.push_back(pItemInfo);
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pItemInfo, eSceneType));
 	}
@@ -369,10 +371,29 @@ void InventoryUI::CreateDetailInfoUI()
 	}
 }
 
-void InventoryUI::DrawInventorySubjectForElements()
+void InventoryUI::ShowInventorySubjectForElements()
 {
 	FONT->DrawString(L"스컬", 23.f, Vec3(504.f, 798.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 	FONT->DrawString(L"정수", 23.f, Vec3(504.f, 667.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 	FONT->DrawString(L"아이템", 23.f, Vec3(504.f, 539.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 	FONT->DrawString(L"검은 능력", 23.f, Vec3(504.f, 249.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+}
+
+void InventoryUI::UpdateEngraves()
+{
+	if (m_vItemInfoUI.empty())
+		return;
+
+	m_mEngraves.clear();
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		ENGRAVES eEngraves = static_pointer_cast<ItemInfoUI>(m_vItemInfoUI[i])->GetEngravesInMyPlace();
+		m_mEngraves[eEngraves.first]++;
+		m_mEngraves[eEngraves.second]++;
+	}
+}
+
+void InventoryUI::ApplyEngravesStatus()
+{
+	// 
 }

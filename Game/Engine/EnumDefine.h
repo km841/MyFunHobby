@@ -227,6 +227,7 @@ enum class ENGRAVE : uint8
 	MISFORTUNE, // 불운
 	ARMS, // 무구
 	KNELL, // 흉조
+	END,
 };
 
 

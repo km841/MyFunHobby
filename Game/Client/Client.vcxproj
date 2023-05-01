@@ -175,7 +175,7 @@
     <ClInclude Include="AnimationLocalEffect.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arms.h" />
-    <ClInclude Include="ArtifactInfoUI.h" />
+    <ClInclude Include="EssenceInfoUI.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="ComponentObject.h" />
@@ -268,7 +268,7 @@
     <ClCompile Include="AnimationLocalEffect.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Arms.cpp" />
-    <ClCompile Include="ArtifactInfoUI.cpp" />
+    <ClCompile Include="EssenceInfoUI.cpp" />
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="ComponentObject.cpp" />

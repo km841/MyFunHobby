@@ -28,12 +28,17 @@ private:
     void CreateItemInfoUI();
     void CreateDarkAbilInfoUI();
     void CreateDetailInfoUI();
-    void DrawInventorySubjectForElements();
+    void ShowInventorySubjectForElements();
+
+    // About engraves
+    void UpdateEngraves();
+    void ShowEngraveIcons();
+    void ApplyEngravesStatus();
 
 private:
     std::vector<shared_ptr<InfoUI>> m_vSkulInfoUI;
     std::vector<shared_ptr<InfoUI>> m_vItemInfoUI;
-    std::vector<shared_ptr<InfoUI>> m_vArtifactInfoUI;
+    std::vector<shared_ptr<InfoUI>> m_vEssenceInfoUI;
     std::vector<shared_ptr<InfoUI>> m_vDarkAbilInfoUI;
 
     shared_ptr<DetailInfoUI> m_pDetailInfoUI;

@@ -122,7 +122,7 @@ void DungeonScene::Enter()
 
 	// Create Monster
 	{
-		GET_SINGLE(ObjectFactory)->SetPlayer(GetPlayer().lock());
+		
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f - 600.f, fHeight / 2.f - 200.f, 99.5f));
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 200.f, 99.5f));
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 99.5f));

@@ -8,6 +8,7 @@
 #include "Item.h"
 #include "MeshRenderer.h"
 #include "Material.h"
+#include "Engrave.h"
 
 ItemInfoUI::ItemInfoUI(ITEM_PLACE eItemPlace)
 	: InfoUI(INFO_TYPE::ITEM_INFO)
@@ -60,6 +61,17 @@ void ItemInfoUI::ShowDetailInfo()
 
 	m_DetailInfo.itemInfo = itemInfo;
 	m_pDetailInfoUI.lock()->SetDetailInfo(m_DetailInfo);
+}
+
+ENGRAVES ItemInfoUI::GetEngravesInMyPlace()
+{
+	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+	weak_ptr<Item> pItem = pPlayer.lock()->GetItem(m_eItemPlace);
+	if (!pItem.lock())
+		return std::pair(ENGRAVE::END, ENGRAVE::END);
+
+	return ENGRAVES(pItem.lock()->GetItemInfo().pFirstEngrave->GetEngrave(), 
+					pItem.lock()->GetItemInfo().pSecondEngrave->GetEngrave());
 }
 
 void ItemInfoUI::ShowItemInMyPlace()
