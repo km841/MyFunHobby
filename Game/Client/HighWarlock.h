@@ -27,21 +27,18 @@ public:
 	void EnableAndInitTrailEffect();
 	void DisableTrailEffect();
 	void EnableAndInitChargedEffect();
-	void EnableAndInitCompletedEffect();
-	void EnableAndInitCompletedSmoke();
-
+	void CreateCompletedSmokeAndAddedToScene();
 
 private:
 	void CreateAbyssFieldAndAddedToScene();
 	void CreateTrailEffectAndAddedToScene();
 	void CreateChargedEffectAndAddedToScene();
-	void CreateCompletedSmokeAndAddedToScene();
+
 	void TrailAndChargedEffectPositionUpdate();
 
 private:
 	shared_ptr<GlobalEffect> m_pAbyssField;
 	shared_ptr<GlobalEffect> m_pTrailEffect;
 	shared_ptr<GlobalEffect> m_pChargedEffect;
-	shared_ptr<GlobalEffect> m_pCompletedSmoke;
 };
 

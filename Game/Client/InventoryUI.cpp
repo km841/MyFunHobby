@@ -11,6 +11,7 @@
 #include "ArtifactInfoUI.h"
 #include "DarkAbilInfoUI.h"
 #include "DetailInfoUI.h"
+#include "Engine.h"
 
 InventoryUI::InventoryUI()
 {
@@ -34,6 +35,11 @@ void InventoryUI::Start()
 void InventoryUI::Update()
 {
 	UI::Update();
+
+	if (IsEnable())
+	{
+		DrawInventorySubjectForElements();
+	}
 }
 
 void InventoryUI::LateUpdate()
@@ -361,4 +367,12 @@ void InventoryUI::CreateDetailInfoUI()
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pDetailInfoUI, eSceneType));
 	}
+}
+
+void InventoryUI::DrawInventorySubjectForElements()
+{
+	FONT->DrawString(L"스컬", 23.f, Vec3(504.f, 798.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	FONT->DrawString(L"정수", 23.f, Vec3(504.f, 667.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	FONT->DrawString(L"아이템", 23.f, Vec3(504.f, 539.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	FONT->DrawString(L"검은 능력", 23.f, Vec3(504.f, 249.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 }

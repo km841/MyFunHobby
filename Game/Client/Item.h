@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+class Texture;
 class Item :
     public Object
 {
@@ -13,6 +14,8 @@ public:
     void Update();
     void LateUpdate();
     void FinalUpdate();
+
+    FORCEINLINE const ItemInfo& GetItemInfo() { return m_ItemInfo; }
 
 private:
     ItemInfo m_ItemInfo;

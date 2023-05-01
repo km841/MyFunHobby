@@ -122,15 +122,33 @@ struct WindowInfo
 
 struct ItemInfo
 {
-	shared_ptr<class Texture> pItemInvenTexture;
+	wstring ItemGradeEnumToWstring()
+	{
+		switch (eGrade)
+		{
+		case GRADE::NORMAL:
+			return L"노멀";
+		case GRADE::RARE:
+			return L"레어";
+		case GRADE::UNIQUE:
+			return L"유니크";
+		case GRADE::REGENDARY:
+			return L"레전더리";
+		}
+		assert(nullptr);
+		return L"";
+	}
+
+	shared_ptr<class Texture> pItemTexture;
 	shared_ptr<class Texture> pItemVignetteTexture;
-	shared_ptr<class Texture> pItemDropTexture;
+
 	wstring szName;
 	wstring szComment;
+	wstring szExplanation;
 	GRADE eGrade;
 
-	ENGRAVE eFirstEngrave;
-	ENGRAVE eSecondEngrave;
+	shared_ptr<class Engrave> pFirstEngrave;
+	shared_ptr<class Engrave> pSecondEngrave;
 };
 
 struct SkillInfo
@@ -146,9 +164,55 @@ struct SkillInfo
 
 struct SkulInfo
 {
+	wstring SkulKindEnumToWstring()
+	{
+		switch (eSkulKind)
+		{
+		case SKUL_KIND::LITTLE_BONE:
+			return L"리틀 본";
+		case SKUL_KIND::HIGH_WARLOCK:
+			return L"대마도사";
+		}
+		assert(nullptr);
+		return L"";
+	}
+
+	wstring SkulGradeEnumToWstring()
+	{
+		switch (eSkulGrade)
+		{
+		case GRADE::NORMAL:
+			return L"노멀";
+		case GRADE::RARE:
+			return L"레어";
+		case GRADE::UNIQUE:
+			return L"유니크";
+		case GRADE::REGENDARY:
+			return L"레전더리";
+		}
+		assert(nullptr);
+		return L"";
+	}
+
+	wstring SkulTypeEnumToWstring()
+	{
+		switch (eSkulType)
+		{
+		case SKUL_TYPE::SPEED:
+			return L"스피드";
+		case SKUL_TYPE::BALANCE:
+			return L"밸런스";
+		case SKUL_TYPE::POWER:
+			return L"파워";
+		}
+		assert(nullptr);
+		return L"";
+	}
+
 	SKUL_KIND eSkulKind;
 	GRADE eSkulGrade;
 	SKUL_TYPE eSkulType;
+
 	shared_ptr<Texture> pVignette;
 	Vec2 vVignetteOffset;
 	wstring szComment;

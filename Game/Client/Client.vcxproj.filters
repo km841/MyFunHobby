@@ -143,6 +143,9 @@
     <Filter Include="소스 파일\Game\Object\Item">
       <UniqueIdentifier>{88aba77f-2d37-40a6-989e-52b152617c37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\Item\Engrave">
+      <UniqueIdentifier>{d611ef2b-8080-4c3c-86f8-eb953d85e5a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -403,11 +406,20 @@
     <ClInclude Include="Item.h">
       <Filter>소스 파일\Game\Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="DemonSwordKirion.h">
+    <ClInclude Include="EvilSwordKirion.h">
       <Filter>소스 파일\Game\Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="SealedSword.h">
+    <ClInclude Include="ForbiddenSword.h">
       <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Engrave.h">
+      <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
+    </ClInclude>
+    <ClInclude Include="Arms.h">
+      <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
+    </ClInclude>
+    <ClInclude Include="Rapidity.h">
+      <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -682,11 +694,20 @@
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일\Game\Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="DemonSwordKirion.cpp">
+    <ClCompile Include="EvilSwordKirion.cpp">
       <Filter>소스 파일\Game\Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="SealedSword.cpp">
+    <ClCompile Include="ForbiddenSword.cpp">
       <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Engrave.cpp">
+      <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
+    </ClCompile>
+    <ClCompile Include="Arms.cpp">
+      <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
+    </ClCompile>
+    <ClCompile Include="Rapidity.cpp">
+      <Filter>소스 파일\Game\Object\Item\Engrave</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Item.h"
+#include "Texture.h"
+#include "Resources.h"
 
 Item::Item(const ItemInfo& itemInfo)
 	: Object(OBJECT_TYPE::ITEM)

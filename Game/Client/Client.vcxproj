@@ -174,12 +174,14 @@
     <ClInclude Include="AnimationGlobalEffect.h" />
     <ClInclude Include="AnimationLocalEffect.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Arms.h" />
     <ClInclude Include="ArtifactInfoUI.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="CameraMoveScript.h" />
     <ClInclude Include="ComponentObject.h" />
     <ClInclude Include="DarkAbilInfoUI.h" />
-    <ClInclude Include="DemonSwordKirion.h" />
+    <ClInclude Include="Engrave.h" />
+    <ClInclude Include="EvilSwordKirion.h" />
     <ClInclude Include="DetailInfoUI.h" />
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="MousePointerHUD.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
     <ClInclude Include="Possession.h" />
+    <ClInclude Include="Rapidity.h" />
     <ClInclude Include="SceneChangeEventObject.h" />
     <ClInclude Include="ChargingState.h" />
     <ClInclude Include="DashState.h" />
@@ -221,7 +224,7 @@
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerSkulThumnailScript.h" />
     <ClInclude Include="RotateHeadScript.h" />
-    <ClInclude Include="SealedSword.h" />
+    <ClInclude Include="ForbiddenSword.h" />
     <ClInclude Include="SkillBoxHUD.h" />
     <ClInclude Include="SkillState.h" />
     <ClInclude Include="Skul.h" />
@@ -264,12 +267,14 @@
     <ClCompile Include="AnimationGlobalEffect.cpp" />
     <ClCompile Include="AnimationLocalEffect.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Arms.cpp" />
     <ClCompile Include="ArtifactInfoUI.cpp" />
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="CameraMoveScript.cpp" />
     <ClCompile Include="ComponentObject.cpp" />
     <ClCompile Include="DarkAbilInfoUI.cpp" />
-    <ClCompile Include="DemonSwordKirion.cpp" />
+    <ClCompile Include="Engrave.cpp" />
+    <ClCompile Include="EvilSwordKirion.cpp" />
     <ClCompile Include="DetailInfoUI.cpp" />
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
@@ -278,6 +283,7 @@
     <ClCompile Include="MousePointerHUD.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
     <ClCompile Include="Possession.cpp" />
+    <ClCompile Include="Rapidity.cpp" />
     <ClCompile Include="SceneChangeEventObject.cpp" />
     <ClCompile Include="ChargingState.cpp" />
     <ClCompile Include="Client.cpp" />
@@ -312,7 +318,7 @@
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerSkulThumnailScript.cpp" />
     <ClCompile Include="RotateHeadScript.cpp" />
-    <ClCompile Include="SealedSword.cpp" />
+    <ClCompile Include="ForbiddenSword.cpp" />
     <ClCompile Include="SkillBoxHUD.cpp" />
     <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="Skul.cpp" />

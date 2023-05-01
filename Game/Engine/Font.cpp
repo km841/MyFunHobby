@@ -81,7 +81,7 @@ void Font::CreateFontWrapperGroup()
 		m_pWriteFactory.Get(), &createParams, m_arrFontWrapperGroup[static_cast<uint8>(FONT_WEIGHT::BOLD)].GetAddressOf());
 	assert(SUCCEEDED(hr));
 
-	createParams.DefaultFontParams.FontWeight = DWRITE_FONT_WEIGHT_ULTRA_BLACK;
+	createParams.DefaultFontParams.FontWeight = static_cast<DWRITE_FONT_WEIGHT>(999);
 	hr = m_pFontFactory->CreateFontWrapper(m_pDevice.Get(),
 		m_pWriteFactory.Get(), &createParams, m_arrFontWrapperGroup[static_cast<uint8>(FONT_WEIGHT::ULTRA_BOLD)].GetAddressOf());
 	assert(SUCCEEDED(hr));

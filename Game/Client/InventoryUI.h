@@ -2,6 +2,7 @@
 #include "UI.h"
 class InfoUI;
 class DetailInfoUI;
+class Engrave;
 class InventoryUI :
     public UI
 {
@@ -27,6 +28,7 @@ private:
     void CreateItemInfoUI();
     void CreateDarkAbilInfoUI();
     void CreateDetailInfoUI();
+    void DrawInventorySubjectForElements();
 
 private:
     std::vector<shared_ptr<InfoUI>> m_vSkulInfoUI;
@@ -35,6 +37,8 @@ private:
     std::vector<shared_ptr<InfoUI>> m_vDarkAbilInfoUI;
 
     shared_ptr<DetailInfoUI> m_pDetailInfoUI;
+
+    std::map<ENGRAVE, uint8> m_mEngraves;
 
     // Awake에서 Child ui를 모두 씬에 추가시킨다.
     // Child ui는 부모 ui가 enable일 때 같이 enable됨

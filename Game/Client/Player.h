@@ -44,14 +44,15 @@ public:
 
 	// About skuls
 	shared_ptr<Skul>	  ObtainSkul(shared_ptr<Skul> pSkul);
-	shared_ptr<Item>	  ObtainItem(shared_ptr<Item> pItem);
 	void				  SwapSkul();
 	void				  RefreshAnimation(); 
 	void			      SkulCooldownUpdate();
 	void			      SwapCooldownUpdate();
 
 	// About items
+	shared_ptr<Item>	  ObtainItem(shared_ptr<Item> pItem);
 	ITEM_PLACE			  GetNearEmptyItemPlace();
+	weak_ptr<Item>		  GetItem(ITEM_PLACE eItemPlace);
 	void				  ItemUpdate();
 	void				  TakeDamage(uint32 iDamage);
 

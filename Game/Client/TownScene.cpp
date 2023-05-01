@@ -78,6 +78,10 @@
 #include "IsDeadCondition.h"
 #include "RemoveObjectTask.h"
 
+/* Items */
+#include "ForbiddenSword.h"
+#include "EvilSwordKirion.h"
+
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -165,6 +169,8 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Movement>());
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::LITTLE_BONE));
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::HIGH_WARLOCK));
+		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<ForbiddenSword>());
+		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<EvilSwordKirion>());
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);

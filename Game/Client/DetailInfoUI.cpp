@@ -13,6 +13,7 @@
 #include "ObjectFactory.h"
 #include "Scene.h"
 #include "Scenes.h"
+#include "Engrave.h"
 
 DetailInfoUI::DetailInfoUI()
 	:m_DetailInfo{}
@@ -97,16 +98,26 @@ void DetailInfoUI::DrawSkulInfo()
 	InitSkulDetailSubUI();
 
 	// Enum To Wstring
-	FONT->DrawString(m_DetailInfo.szGrade, 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
-	FONT->DrawString(m_DetailInfo.szSkulType, 20.f, Vec3(1375.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
-	FONT->DrawString(m_DetailInfo.szName, 25.f, Vec3(1076.f, 685.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	FONT->DrawString(m_DetailInfo.skulInfo.SkulGradeEnumToWstring(), 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	FONT->DrawString(m_DetailInfo.skulInfo.SkulTypeEnumToWstring(), 20.f, Vec3(1375.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	FONT->DrawString(m_DetailInfo.skulInfo.SkulKindEnumToWstring(), 25.f, Vec3(1076.f, 685.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 
 	FONT->DrawString(m_DetailInfo.skulInfo.szComment, 20.f, Vec3(1076.f, 550.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
 }
 
 void DetailInfoUI::DrawItemInfo()
 {
-	FONT->DrawString(L"ItemInfo", 20.f, Vec3(16.f, 16.f, 0.f));
+	SetItemDetailTexture();
+	InitItemDetailSubUI();
+
+	FONT->DrawString(m_DetailInfo.itemInfo.ItemGradeEnumToWstring(), 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	FONT->DrawString(m_DetailInfo.itemInfo.szName, 25.f, Vec3(1076.f, 685.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+
+	FONT->DrawString(m_DetailInfo.itemInfo.szComment, 20.f, Vec3(1076.f, 623.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
+	FONT->DrawString(m_DetailInfo.itemInfo.szExplanation, 20.f, Vec3(1076.f, 500.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
+
+	FONT->DrawString(m_DetailInfo.itemInfo.pFirstEngrave->GetName(), 20.f, Vec3(878.f, 135.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	FONT->DrawString(m_DetailInfo.itemInfo.pSecondEngrave->GetName(), 20.f, Vec3(1274.f, 135.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 }
 
 void DetailInfoUI::DrawArtifactInfo()
@@ -155,7 +166,9 @@ void DetailInfoUI::InitSkulDetailSubUI()
 	{
 	case SKILL_INDEX::FIRST:
 		m_pFirstImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, FirstSkillInfo.pSkillTexture);
+		m_pSecondImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
 		m_pFirstImageUI->GetTransform()->SetLocalScale(Vec3(25.f, 25.f, 1.f));
+		m_pFirstImageUI->GetTransform()->SetLocalPosition(Vec3(0.f, -146.f, -10.f));
 		FONT->DrawString(FirstSkillInfo.szName, 20.f, Vec3(1076.f, 133.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 		break;
 	case SKILL_INDEX::SECOND:
@@ -167,6 +180,32 @@ void DetailInfoUI::InitSkulDetailSubUI()
 	}
 }
 
+void DetailInfoUI::SetItemDetailTexture()
+{
+	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"ItemInfoDetail", L"..\\Resources\\Texture\\UI\\Inventory\\Image_Item_Frame.png");
+	assert(pTexture);
+	GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+	GetTransform()->SetLocalScale(pTexture->GetTexSize());
+}
+
+void DetailInfoUI::InitItemDetailSubUI()
+{
+	m_pVignetteUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, m_DetailInfo.itemInfo.pItemVignetteTexture);
+	m_pVignetteUI->GetTransform()->SetLocalScale(m_DetailInfo.itemInfo.pItemVignetteTexture->GetTexSize());
+	m_pVignetteUI->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
+	ENGRAVE eFirstEng = m_DetailInfo.itemInfo.pFirstEngrave->GetEngrave();
+	ENGRAVE eSecondEng = m_DetailInfo.itemInfo.pSecondEngrave->GetEngrave();
+
+	m_pFirstImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, Engrave::GetEngraveTexture(eFirstEng, ENGRAVE_STATE::ACTIVATE));
+	m_pSecondImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, Engrave::GetEngraveTexture(eSecondEng, ENGRAVE_STATE::ACTIVATE));
+
+	m_pFirstImageUI->GetTransform()->SetLocalPosition(Vec3(-157.5f, -146.5f, -10.f));
+	m_pFirstImageUI->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
+
+	m_pSecondImageUI->GetTransform()->SetLocalPosition(Vec3(157.5f, -146.5f, -10.f));
+	m_pSecondImageUI->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
+}
+
 void DetailInfoUI::CreateDetailSubUIAndAddedToScene()
 {
 	// Create Vignette UI
@@ -176,7 +215,7 @@ void DetailInfoUI::CreateDetailSubUIAndAddedToScene()
 		m_pVignetteUI->GetTransform()->SetLocalPosition(Vec3(-1.f, 330.f, -10.f));
 
 		m_pVignetteUI->Awake();
-		//m_pVignetteUI->Disable();
+		m_pVignetteUI->Disable();
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pVignetteUI, eSceneType));
 	}
@@ -186,6 +225,7 @@ void DetailInfoUI::CreateDetailSubUIAndAddedToScene()
 		m_pFirstImageUI= GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<UI>(L"Forward");
 		m_pFirstImageUI->GetTransform()->SetParent(GetTransform());
 		m_pFirstImageUI->GetTransform()->SetLocalPosition(Vec3(0.f, -146.f, -10.f));
+		m_pFirstImageUI->GetTransform()->SetLocalScale(Vec3(27.f, 27.f, 1.f));
 
 		m_pFirstImageUI->Awake();
 		m_pFirstImageUI->Disable();
@@ -198,6 +238,7 @@ void DetailInfoUI::CreateDetailSubUIAndAddedToScene()
 		m_pSecondImageUI = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<UI>(L"Forward");
 		m_pSecondImageUI->GetTransform()->SetParent(GetTransform());
 		m_pSecondImageUI->GetTransform()->SetLocalPosition(Vec3(30.f, 0.f, -10.f));
+		m_pSecondImageUI->GetTransform()->SetLocalScale(Vec3(27.f, 27.f, 1.f));
 
 		m_pSecondImageUI->Awake();
 		m_pSecondImageUI->Disable();

@@ -221,6 +221,12 @@ ITEM_PLACE Player::GetNearEmptyItemPlace()
 	return ITEM_PLACE::END;
 }
 
+weak_ptr<Item> Player::GetItem(ITEM_PLACE eItemPlace)
+{
+	assert(static_cast<uint8>(eItemPlace) < MAX_ITEMS);
+	return m_arrItems[static_cast<uint8>(eItemPlace)];
+}
+
 void Player::ItemUpdate()
 {
 	for (int32 i = 0; i < MAX_ITEMS; ++i)

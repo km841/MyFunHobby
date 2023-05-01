@@ -23,6 +23,11 @@
 #include "IsPlayerInAttackRangeCondition.h"
 #include "PlayerHitTask.h"
 
+
+/* Engrave */
+#include "Rapidity.h"
+#include "Arms.h"
+
 shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 {
 	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
@@ -111,22 +116,40 @@ void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pSpawnEffect, eSceneType));
 }
 
-shared_ptr<Item> ObjectFactory::CreateSealedSword()
+shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 {
 	ItemInfo itemInfo = {};
-	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"SealedSword_Vignette", L"");
+	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword_Vignette", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword_Vignette.png");
+	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png");
+	
+	itemInfo.eGrade = GRADE::UNIQUE;
+	itemInfo.pFirstEngrave = make_shared<Arms>();
+	itemInfo.pSecondEngrave = make_shared<Rapidity>();
+	
+	itemInfo.szName = L"봉인된 검";
+	itemInfo.szComment = L"강력한 힘으로 억제되어 있는 검. 미세한 떨림이 느껴진다.";
+	itemInfo.szExplanation = L"물리공격력이 15% 증가합니다.\n300명의 적 처치 시 이 아이템은 '마검: 키리온'으로 변합니다";
 
-	shared_ptr<Item> pSealedSword = make_shared<SealedSword>(itemInfo);
+	shared_ptr<Item> pForbiddenSword = make_shared<ForbiddenSword>(itemInfo);
 
-	return pSealedSword;
+	return pForbiddenSword;
 }
 
-shared_ptr<Item> ObjectFactory::CreateDemonSwordKirion()
+shared_ptr<Item> ObjectFactory::CreateEvilSwordKirion()
 {
 	ItemInfo itemInfo = {};
-	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"DemonSwordKirion_Vignette", L"");
+	itemInfo.pItemVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion_Vignette", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion_Vignette.png");
+	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png");
+	
+	itemInfo.eGrade = GRADE::REGENDARY;
+	itemInfo.pFirstEngrave = make_shared<Arms>();
+	itemInfo.pSecondEngrave = make_shared<Rapidity>();
 
-	shared_ptr<Item> pDemonSwordKirion = make_shared<DemonSwordKirion>(itemInfo);
+	itemInfo.szName = L"마검: 키리온";
+	itemInfo.szComment = L"생명력을 흡수하는 저주받은 마검, 피가 흐르는 이는 절대로 지닐 수 없다.";
+	itemInfo.szExplanation = L"물리공격력이 60% 증가합니다.\n기본공격 및 대쉬 시 참격이 발생하여 물리데미지를 입힙니다.";
+
+	shared_ptr<Item> pDemonSwordKirion = make_shared<EvilSwordKirion>(itemInfo);
 
 	return pDemonSwordKirion;
 }

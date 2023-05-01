@@ -221,11 +221,11 @@ enum class ENGRAVE : uint8
 	SUN_AND_MOON, // 해와달
 	SOUL, // 정령
 	WISDOM, // 지혜
-	FAST, // 신속
+	RAPIDITY, // 신속
 	MAGIC_TOOL, // 마도구
 	SOAR, // 비상
 	MISFORTUNE, // 불운
-	ARMOR, // 무구
+	ARMS, // 무구
 	KNELL, // 흉조
 };
 
@@ -273,11 +273,18 @@ enum class OBJECT_TYPE : uint8
 	END
 };
 
-
 enum
 {
 	PLAYER_STATE_COUNT = static_cast<uint8>(PLAYER_STATE::END),
 	OBJECT_TYPE_COUNT = static_cast<uint8>(OBJECT_TYPE::END),
+};
+
+enum class ENGRAVE_STATE
+{
+	DEACTIVATE,
+	ACTIVATE,
+	FULL_ACTIVATE,
+	END,
 };
 
 enum class ITEM_PLACE
@@ -296,8 +303,8 @@ enum class ITEM_PLACE
 
 enum class ITEM_KIND
 {
-	SEALED_SWORD,
-	DEMON_SWORD_KIRION,
+	FORBIDDEN_SWORD,
+	EVIL_SWORD_KIRION,
 
 };
 

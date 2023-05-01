@@ -63,9 +63,6 @@ void SkulInfoUI::ShowDetailInfo()
 	m_DetailInfo.bUse = true;
 	m_DetailInfo.eInfoType = m_eInfoType;
 	m_DetailInfo.eTotalSkills = pSkul.lock()->GetTotalSkills();
-	m_DetailInfo.szSkulType = GetSkulTypeWstring(m_DetailInfo.skulInfo.eSkulType);
-	m_DetailInfo.szGrade = GetGradeWstring(m_DetailInfo.skulInfo.eSkulGrade);
-	m_DetailInfo.szName = GetSkulKindWstring(pSkul.lock()->GetSkulKind());
 
 	m_pDetailInfoUI.lock()->SetDetailInfo(m_DetailInfo);
 }

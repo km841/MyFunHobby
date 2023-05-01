@@ -47,6 +47,5 @@ void DarkAbilInfoUI::ShowDetailInfo()
 	m_DetailInfo.bUse = true;
 	m_DetailInfo.eInfoType = m_eInfoType;
 
-	m_DetailInfo.szComment = L"";
 	m_pDetailInfoUI.lock()->SetDetailInfo(m_DetailInfo);
 }

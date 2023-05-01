@@ -24,18 +24,13 @@ struct DetailInfo
     // SkulInfo
     SkulInfo skulInfo;
 
-    wstring szSkulType;
     SKILL_INDEX eTotalSkills;
 
     // ItemInfo
-    shared_ptr<Texture> pSetAbilFirst;
-    shared_ptr<Texture> pSetAbilSecond;
+    ItemInfo itemInfo;
 
     shared_ptr<Texture> pVignette;
     Vec2 vVignetteOffset;
-    wstring szName;
-    wstring szComment;
-    wstring szGrade;
     GRADE eGrade;
 
     bool bUse;
@@ -62,10 +57,6 @@ public:
 
 public:
     FORCEINLINE void SetDetailInfoUI(shared_ptr<DetailInfoUI> pDetailInfoUI) { m_pDetailInfoUI = pDetailInfoUI; }
-
-    wstring GetGradeWstring(GRADE eGrade);
-    wstring GetSkulKindWstring(SKUL_KIND eSkulKind);
-    wstring GetSkulTypeWstring(SKUL_TYPE eSkulType);
 
 public:
     static weak_ptr<InfoUI> GetSelectedInfoUI() { return s_pSelectedInfoUI; }

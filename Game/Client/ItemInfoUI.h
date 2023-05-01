@@ -16,6 +16,10 @@ public:
 
     virtual void ShowDetailInfo();
 
+
+private:
+    void ShowItemInMyPlace();
+
 private:
     ITEM_PLACE m_eItemPlace;
 };

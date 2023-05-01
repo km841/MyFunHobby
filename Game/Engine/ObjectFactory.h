@@ -16,8 +16,8 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "ObjectAddedToSceneEvent.h"
-#include "SealedSword.h"
-#include "DemonSwordKirion.h"
+#include "ForbiddenSword.h"
+#include "EvilSwordKirion.h"
 
 class Player;
 class ObjectFactory
@@ -62,8 +62,8 @@ private:
 
 
 private:
-	shared_ptr<Item> CreateSealedSword();
-	shared_ptr<Item> CreateDemonSwordKirion();
+	shared_ptr<Item> CreateForbiddenSword();
+	shared_ptr<Item> CreateEvilSwordKirion();
 
 private:
 	weak_ptr<Player> m_pPlayer;
@@ -214,11 +214,11 @@ inline shared_ptr<Item> ObjectFactory::CreateItem()
 	shared_ptr<Item> pItem = nullptr;
 	switch (eItemKind)
 	{
-	case ITEM_KIND::SEALED_SWORD:
-		pItem = CreateSealedSword();
+	case ITEM_KIND::FORBIDDEN_SWORD:
+		pItem = CreateForbiddenSword();
 		break;
-	case ITEM_KIND::DEMON_SWORD_KIRION:
-		pItem = CreateDemonSwordKirion();
+	case ITEM_KIND::EVIL_SWORD_KIRION:
+		pItem = CreateEvilSwordKirion();
 		break;
 	}
 
@@ -239,10 +239,10 @@ inline MONSTER_KIND ObjectFactory::GetMonsterKind()
 template<typename T>
 inline ITEM_KIND ObjectFactory::GetItemKind()
 {
-	if constexpr (std::is_same_v<T, SealedSword>)
-		return ITEM_KIND::SEALED_SWORD;
-	else if constexpr (std::is_same_v<T, DemonSwordKirion>)
-		return ITEM_KIND::DEMON_SWORD_KIRION;
+	if constexpr (std::is_same_v<T, ForbiddenSword>)
+		return ITEM_KIND::FORBIDDEN_SWORD;
+	else if constexpr (std::is_same_v<T, EvilSwordKirion>)
+		return ITEM_KIND::EVIL_SWORD_KIRION;
 	else
 		return MONSTER_KIND::NONE;
 }

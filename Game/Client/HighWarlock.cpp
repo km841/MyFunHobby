@@ -13,6 +13,8 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "Player.h"
+#include "ObjectFactory.h"
+#include "AnimationGlobalEffect.h"
 
 HighWarlock::HighWarlock(const SkulInfo& skulInfo)
 	: Skul(skulInfo)
@@ -25,7 +27,6 @@ void HighWarlock::Awake()
 	CreateAbyssFieldAndAddedToScene();
 	CreateTrailEffectAndAddedToScene();
 	CreateChargedEffectAndAddedToScene();
-	CreateCompletedSmokeAndAddedToScene();
 }
 
 void HighWarlock::Start()
@@ -83,18 +84,6 @@ void HighWarlock::EnableAndInitChargedEffect()
 {
 	m_pChargedEffect->Enable();
 	m_pChargedEffect->GetAnimator()->Play(L"HighWarlock_Charged", false);
-}
-
-void HighWarlock::EnableAndInitCompletedEffect()
-{
-	m_pChargedEffect->Enable();
-	m_pChargedEffect->GetAnimator()->Play(L"HighWarlock_Completed", false);
-}
-
-void HighWarlock::EnableAndInitCompletedSmoke()
-{
-	m_pCompletedSmoke->Enable();
-	m_pCompletedSmoke->GetAnimator()->Play(L"HighWarlock_Completed_Smoke", false);
 }
 
 void HighWarlock::CreateAbyssFieldAndAddedToScene()
@@ -164,11 +153,6 @@ void HighWarlock::CreateChargedEffectAndAddedToScene()
 		m_pChargedEffect->GetAnimator()->AddAnimation(L"HighWarlock_Charged", pAnimation);
 	}
 
-	{
-		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Completed", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_charge_complete.anim");
-		m_pChargedEffect->GetAnimator()->AddAnimation(L"HighWarlock_Completed", pAnimation);
-	}
-
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
 
@@ -184,28 +168,20 @@ void HighWarlock::CreateChargedEffectAndAddedToScene()
 
 void HighWarlock::CreateCompletedSmokeAndAddedToScene()
 {
-	m_pCompletedSmoke = make_shared<GlobalEffect>();
+	shared_ptr<AnimationGlobalEffect> pAnimGlobalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationGlobalEffect>(L"Forward");
+	
+	pAnimGlobalEffect->GetTransform()->SetParent(GetTransform());
+	pAnimGlobalEffect->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, -20.f));
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
-	m_pCompletedSmoke->AddComponent(make_shared<Transform>());
-	m_pCompletedSmoke->GetTransform()->SetGlobalOffset(Vec2(0.f, -20.f));
+	pAnimGlobalEffect->AddComponent(make_shared<Animator>());
 
-	m_pCompletedSmoke->AddComponent(make_shared<Animator>());
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Completed", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_charge_complete.anim");
+	pAnimGlobalEffect->GetAnimator()->AddAnimation(L"HighWarlock_Completed", pAnimation);
+	pAnimGlobalEffect->GetAnimator()->Play(L"HighWarlock_Completed", false);
 
-	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"HighWarlock_Completed_Smoke", L"..\\Resources\\Animation\\HighWarlock\\highwarlock_completed_smoke.anim");
-	m_pCompletedSmoke->GetAnimator()->AddAnimation(L"HighWarlock_Completed_Smoke", pAnimation);
-
-	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-
-	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	pMeshRenderer->SetMaterial(pMaterial);
-	pMeshRenderer->SetMesh(pMesh);
-	m_pCompletedSmoke->AddComponent(pMeshRenderer);
-
-	m_pCompletedSmoke->Awake();
-	m_pCompletedSmoke->Disable();
-	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pCompletedSmoke, eSceneType));
+	pAnimGlobalEffect->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pAnimGlobalEffect, eSceneType));
 }
 
 void HighWarlock::TrailAndChargedEffectPositionUpdate()

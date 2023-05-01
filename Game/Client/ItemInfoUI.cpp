@@ -5,6 +5,9 @@
 #include "DetailInfoUI.h"
 #include "Scene.h"
 #include "Scenes.h"
+#include "Item.h"
+#include "MeshRenderer.h"
+#include "Material.h"
 
 ItemInfoUI::ItemInfoUI(ITEM_PLACE eItemPlace)
 	: InfoUI(INFO_TYPE::ITEM_INFO)
@@ -29,6 +32,8 @@ void ItemInfoUI::Start()
 void ItemInfoUI::Update()
 {
 	InfoUI::Update();
+	// 자신의 위치에 해당하는 플레이어의 아이템그룹에 접근해서 아이템을 받아온다
+	ShowItemInMyPlace();
 }
 
 void ItemInfoUI::LateUpdate()
@@ -44,10 +49,29 @@ void ItemInfoUI::FinalUpdate()
 void ItemInfoUI::ShowDetailInfo()
 {
 	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+	weak_ptr<Item> pItem = pPlayer.lock()->GetItem(m_eItemPlace);
+	if (!pItem.lock())
+		return;
+
+	const ItemInfo& itemInfo = pItem.lock()->GetItemInfo();
 
 	m_DetailInfo.bUse = true;
 	m_DetailInfo.eInfoType = m_eInfoType;
 
-	m_DetailInfo.szComment = L"";
+	m_DetailInfo.itemInfo = itemInfo;
 	m_pDetailInfoUI.lock()->SetDetailInfo(m_DetailInfo);
+}
+
+void ItemInfoUI::ShowItemInMyPlace()
+{
+	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+	
+	weak_ptr<Item> pItem = pPlayer.lock()->GetItem(m_eItemPlace);
+	if (!pItem.lock())
+		return;
+
+	const ItemInfo& itemInfo = pItem.lock()->GetItemInfo();
+	assert(itemInfo.pItemTexture);
+
+	GetMeshRenderer()->GetMaterial()->SetTexture(1, itemInfo.pItemTexture);
 }
