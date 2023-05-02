@@ -20,7 +20,7 @@ LightColor CalculateLightColor(int iLightIndex, float3 vViewPos)
         float3 vViewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView).xyz;
         vViewLightDir = normalize(vViewPos - vViewLightPos);
         
-        float fDist = distance(vViewPos, vViewLightPos);
+        float fDist = distance(vViewPos.xy, vViewLightPos.xy);
         if (g_light[iLightIndex].range == 0.f)
             vDiffuseRatio = 0.f;
         else 

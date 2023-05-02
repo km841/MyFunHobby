@@ -12,6 +12,7 @@
 weak_ptr<InfoUI> InfoUI::s_pSelectedInfoUI;
 InfoUI::InfoUI(INFO_TYPE eInfoType)
 	: m_eInfoType(eInfoType)
+	, m_bUnused(false)
 {
 }
 
@@ -72,20 +73,30 @@ void InfoUI::UpdateSelectedUI()
 		s_pSelectedInfoUI = Conv::BaseToDeclare<InfoUI>(shared_from_this());
 	}
 
-	if (s_pSelectedInfoUI.lock().get() == this)
+	if (m_bUnused)
 	{
-		if (!m_pSelectedTexture)
-			m_pSelectedTexture = GET_SINGLE(Resources)->Load<Texture>(L"SelectedInfoUI", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Select.png");
-		GetMeshRenderer()->GetMaterial()->SetTexture(0, m_pSelectedTexture);
-
-		// DetailInfo 작성 후 DetailInfo UI에게 전달
-		ShowDetailInfo();
-
+		if (!m_pUnusedTexture)
+			m_pUnusedTexture = GET_SINGLE(Resources)->Load<Texture>(L"UnusedInfoUI", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
+		GetMeshRenderer()->GetMaterial()->SetTexture(0, m_pUnusedTexture);
+		GetMeshRenderer()->GetMaterial()->SetTexture(1, nullptr);
 	}
 	else
 	{
-		if (!m_pDeselectedTexture)
-			m_pDeselectedTexture = GET_SINGLE(Resources)->Load<Texture>(L"DeselectedInfoUI", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
-		GetMeshRenderer()->GetMaterial()->SetTexture(0, m_pDeselectedTexture);
+		if (s_pSelectedInfoUI.lock().get() == this)
+		{
+			if (!m_pSelectedTexture)
+				m_pSelectedTexture = GET_SINGLE(Resources)->Load<Texture>(L"SelectedInfoUI", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Select.png");
+			GetMeshRenderer()->GetMaterial()->SetTexture(0, m_pSelectedTexture);
+
+			// DetailInfo 작성 후 DetailInfo UI에게 전달
+			ShowDetailInfo();
+
+		}
+		else
+		{
+			if (!m_pDeselectedTexture)
+				m_pDeselectedTexture = GET_SINGLE(Resources)->Load<Texture>(L"DeselectedInfoUI", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deselect.png");
+			GetMeshRenderer()->GetMaterial()->SetTexture(0, m_pDeselectedTexture);
+		}
 	}
 }

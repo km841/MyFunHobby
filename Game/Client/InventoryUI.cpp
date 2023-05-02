@@ -142,7 +142,7 @@ void InventoryUI::CreateArtifactInfoUI()
 	{
 		shared_ptr<EssenceInfoUI> pEssenceInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<EssenceInfoUI>(L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
 		pEssenceInfo->GetTransform()->SetParent(GetTransform());
-		pEssenceInfo->GetTransform()->SetLocalPosition(Vec3(-235.f, 114.f, -10.f));
+		pEssenceInfo->GetTransform()->SetLocalPosition(Vec3(-236.f, 114.f, -10.f));
 		pEssenceInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pEssenceInfo->Awake();
@@ -161,7 +161,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 				L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_1_1);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-320.5f, 10.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-320.f, 10.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -176,7 +176,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_1_2);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-235.5f, 10.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-236.f, 10.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -191,7 +191,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_1_3);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-150.5f, 10.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-152.f, 10.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -207,7 +207,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_2_1);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-320.5f, -55.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-320.f, -54.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -222,7 +222,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_2_2);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-235.5f, -55.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-236.f, -54.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -237,7 +237,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_2_3);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-150.5f, -55.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-152.f, -54.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -254,7 +254,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_3_1);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-320.5f, -120.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-320.f, -118.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -269,7 +269,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_3_2);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-235.5f, -120.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-236.f, -118.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();
@@ -284,7 +284,7 @@ void InventoryUI::CreateItemInfoUI()
 		shared_ptr<ItemInfoUI> pItemInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ItemInfoUI>(
 			L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png", ITEM_PLACE::PLACE_3_3);
 		pItemInfo->GetTransform()->SetParent(GetTransform());
-		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-150.5f, -120.f, -10.f));
+		pItemInfo->GetTransform()->SetLocalPosition(Vec3(-152.f, -118.f, -10.f));
 		pItemInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pItemInfo->Awake();

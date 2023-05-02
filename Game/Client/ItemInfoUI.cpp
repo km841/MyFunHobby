@@ -80,7 +80,10 @@ void ItemInfoUI::ShowItemInMyPlace()
 	
 	weak_ptr<Item> pItem = pPlayer.lock()->GetItem(m_eItemPlace);
 	if (!pItem.lock())
+	{
+		m_bUnused = true;
 		return;
+	}
 
 	const ItemInfo& itemInfo = pItem.lock()->GetItemInfo();
 	assert(itemInfo.pItemTexture);

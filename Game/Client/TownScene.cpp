@@ -23,6 +23,7 @@
 #include "GlobalEffectSettingScript.h"
 #include "PlayerSkulThumnailScript.h"
 #include "PlayerFunctionScript.h"
+#include "BGCameraScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -44,6 +45,7 @@
 #include "GlobalEffect.h"
 #include "JuniorKnight.h"
 #include "SceneChangeEventObject.h"
+#include "Background.h"
 
 /* Resources */
 #include "Animation.h"
@@ -176,7 +178,7 @@ void TownScene::Enter()
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::HIGH_WARLOCK));
 		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<ForbiddenSword>());
 		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<EvilSwordKirion>());
-		pPlayer->ObtainEssence(GET_SINGLE(ObjectFactory)->CreateEssence<Lyweasel>());
+		//pPlayer->ObtainEssence(GET_SINGLE(ObjectFactory)->CreateEssence<Lyweasel>());
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
@@ -214,7 +216,7 @@ void TownScene::Enter()
 
 	//Background
 	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		shared_ptr<Background> pGameObject = make_shared<Background>();
 		pGameObject->SetFrustum(false);
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
@@ -227,7 +229,8 @@ void TownScene::Enter()
 		pGameObject->AddComponent(pMeshRenderer);
 		pGameObject->AddComponent(make_shared<Transform>());
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 800.f, fHeight / 2.f - 1625.f, 140.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 780.f, fHeight / 2.f - 1620.f, 870.f));
+		//pGameObject->GetTransform()->SetLocalScale(Vec3(1800.f - 60.f, 1980.f - 66.f, 1.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(2000.f, 2200.f, 1.f));
 
 		AddGameObject(pGameObject);
@@ -235,6 +238,7 @@ void TownScene::Enter()
 
 
 	GetMainCamera().lock()->AddComponent(make_shared<PlayerTrackingScript>(pPlayer));
+	GetBGCamera().lock()->AddComponent(make_shared<BGCameraScript>(pPlayer));
 
 	//// NPC_Witch
 	//{

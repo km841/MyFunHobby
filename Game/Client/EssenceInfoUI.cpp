@@ -66,7 +66,11 @@ void EssenceInfoUI::ShowEssenceInMyPlace()
 	weak_ptr<Essence> pEssence = pPlayer.lock()->GetEssence();
 
 	if (!pEssence.lock())
+	{
+		m_bUnused = true;
+		GetMeshRenderer()->GetMaterial()->SetTexture(1, nullptr);
 		return;
+	}
 
 	const EssenceInfo& essenceInfo = pEssence.lock()->GetEssenceInfo();
 	GetMeshRenderer()->GetMaterial()->SetTexture(1, essenceInfo.pEssenceTexture);

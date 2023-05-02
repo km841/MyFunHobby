@@ -72,6 +72,7 @@ protected:
     INFO_TYPE m_eInfoType;
     shared_ptr<Texture> m_pDeselectedTexture;
     shared_ptr<Texture> m_pSelectedTexture;
+    shared_ptr<Texture> m_pUnusedTexture;
 
     DetailInfo m_DetailInfo;
     weak_ptr<DetailInfoUI> m_pDetailInfoUI;

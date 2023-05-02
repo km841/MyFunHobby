@@ -25,6 +25,7 @@
 #include "SceneFadeEvent.h"
 #include "ComponentObject.h"
 #include "Clock.h"
+#include "Background.h"
 
 
 TitleScene::TitleScene()
@@ -102,14 +103,15 @@ void TitleScene::Enter()
 
 	// Background
 	{
-		m_pBackground = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		m_pBackground = make_shared<Background>();
+		m_pBackground->SetFrustum(false);
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 
 		shared_ptr<Texture> pTexture = make_shared<Texture>();
 		pTexture->Load(L"..\\Resources\\Texture\\Title\\Image_TitleBG.png");
 
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
 		pMaterial->SetTexture(0, pTexture);
 	
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -122,7 +124,7 @@ void TitleScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pBackground->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
+		m_pBackground->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1000.f));
 		m_pBackground->GetTransform()->SetLocalScale(Vec3(800.f, 450.f, 1.f));
 
 		AddGameObject(m_pBackground);
@@ -130,7 +132,8 @@ void TitleScene::Enter()
 
 	// Logo
 	{
-		m_pLogo = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		m_pLogo = make_shared<Background>();
+		m_pLogo->SetFrustum(false);
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 
@@ -151,7 +154,7 @@ void TitleScene::Enter()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		m_pLogo->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 180.f, 90.f));
+		m_pLogo->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 180.f, 900.f));
 		m_pLogo->GetTransform()->SetLocalScale(pTexture->GetTexSize() / 3.f);
 
 		AddGameObject(m_pLogo);
@@ -175,6 +178,7 @@ void TitleScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, true);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, true);
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::BACKGROUND, true);
 	}
 
 
@@ -196,8 +200,25 @@ void TitleScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, false);
 	}
 
+	// Background Camera
+	{
+		shared_ptr<ComponentObject> pGameObject = make_shared<ComponentObject>();
+
+		pGameObject->AddComponent(make_shared<Transform>());
+		pGameObject->AddComponent(make_shared<Camera>());
+		pGameObject->GetCamera()->SetProjectionType(PROJECTION_TYPE::PERSPECTIVE);
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
+		AddGameObject(pGameObject);
+
+		pGameObject->GetCamera()->EnableAllCullingMask();
+		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::BACKGROUND, false);
+	}
+
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
-	//GET_SINGLE(EventManager)->AddEvent(make_unique<SceneFadeEvent>());
+
 	// GameObject를 깨우는 작업
 	Awake();
 }

@@ -52,6 +52,7 @@ public:
     // Helper Functions
     weak_ptr<ComponentObject> GetMainCamera();
     weak_ptr<ComponentObject> GetUICamera();
+    weak_ptr<ComponentObject> GetBGCamera();
     weak_ptr<Player>          GetPlayer();
 
 public:

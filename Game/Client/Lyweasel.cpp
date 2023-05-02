@@ -82,7 +82,7 @@ void Lyweasel::CreateDashBarriorEffect()
 	pAnimationLocalEffect->SetDirection(m_pPlayer.lock()->GetDirection());
 
 	Vec3 vPlayerPos = m_pPlayer.lock()->GetTransform()->GetPhysicalPosition();
-	vPlayerPos.z -= 5.f;
+	vPlayerPos.z -= 0.5f;
 
 	pAnimationLocalEffect->GetTransform()->SetLocalPosition(vPlayerPos);
 	pAnimationLocalEffect->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));

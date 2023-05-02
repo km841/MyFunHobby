@@ -202,6 +202,15 @@ void Scene::Render_Deferred()
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTarget();
 	pCamera->SortGameObject();
 	pCamera->Render_Deferred();
+
+	for (const shared_ptr<Camera>& pSubCamera : s_vCameras)
+	{
+		if (pCamera == pSubCamera)
+			continue;
+
+		pSubCamera->SortGameObject();
+		pSubCamera->Render_Deferred();
+	}
 }
 
 void Scene::Render_Font()
@@ -374,6 +383,13 @@ weak_ptr<ComponentObject> Scene::GetUICamera()
 	assert(!s_vCameras.empty());
 	weak_ptr<Camera> pUICamera = s_vCameras[1];
 	return static_pointer_cast<ComponentObject>(pUICamera.lock()->GetGameObject());
+}
+
+weak_ptr<ComponentObject> Scene::GetBGCamera()
+{
+	assert(!s_vCameras.empty());
+	weak_ptr<Camera> pBGCamera = s_vCameras[2];
+	return static_pointer_cast<ComponentObject>(pBGCamera.lock()->GetGameObject());
 }
 
 weak_ptr<Player> Scene::GetPlayer()

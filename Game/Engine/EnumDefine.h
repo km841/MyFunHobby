@@ -68,6 +68,7 @@ enum class SCENE_TYPE
 	TITLE,
 	TOOL,
 	TOWN,
+	SHOP,
 	DUNGEON,
 	END,
 };
@@ -109,6 +110,7 @@ enum
 enum class LAYER_TYPE : uint8
 {
 	UNKNOWN = 0,
+	BACKGROUND,
 	MONSTER,
 	NPC,
 	TILE,

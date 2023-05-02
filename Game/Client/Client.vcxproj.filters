@@ -152,6 +152,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Effect\Script">
       <UniqueIdentifier>{115e4f74-e242-47be-aae1-d9aebed95370}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Background">
+      <UniqueIdentifier>{6909d6bf-b05a-4e51-a9d8-4d8118fd6a84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -438,6 +441,15 @@
     </ClInclude>
     <ClInclude Include="ObjectFollowScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopScene.h">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="BGCameraScript.h">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -738,6 +750,15 @@
     </ClCompile>
     <ClCompile Include="ObjectFollowScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopScene.cpp">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="BGCameraScript.cpp">
+      <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

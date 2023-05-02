@@ -96,8 +96,17 @@ void Material::Dispatch(uint32 iCountX, uint32 iCountY, uint32 iCountZ)
 
 void Material::SetTexture(uint8 iIndex, shared_ptr<Texture> pTexture)
 {
-	m_pTextures[iIndex] = pTexture;
-	m_materialParams.SetTexOn(iIndex, 1);
+	if (pTexture)
+	{
+		m_pTextures[iIndex] = pTexture;
+		m_materialParams.SetTexOn(iIndex, 1);
+	}
+	else
+	{
+		m_pTextures[iIndex] = pTexture;
+		m_materialParams.SetTexOn(iIndex, 0);
+	}
+
 }
 
 shared_ptr<Material> Material::Clone()

@@ -30,6 +30,7 @@ void PlayerTrackingScript::LateUpdate()
 		return;
 	}
 
+	// Temp Code
 	if (vPlayerPos.y < -3000.f)
 	{
 		if (vPlayerPos.y < -3200.f)
@@ -39,8 +40,6 @@ void PlayerTrackingScript::LateUpdate()
 		}
 		return;
 	}
-
-	
 
 	vDiffNormal.Normalize();
 	vDiffNormal.y *= 2.f;

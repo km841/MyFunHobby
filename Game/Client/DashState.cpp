@@ -23,7 +23,7 @@
 DashState::DashState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 	, m_tDuration(0.2f)
-	, m_fDashSpeed(2000.f)
+	, m_fDashSpeed(1000.f)
 	, m_iAfterImageMaxCount(4)
 	, m_fAfterImageTimeOffset(0.25f)
 {
