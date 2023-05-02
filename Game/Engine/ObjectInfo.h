@@ -1,4 +1,6 @@
 #pragma once
+class Texture;
+class Engrave;
 struct ObjectInfo
 {
 	wstring GradeEnumToWstring()
@@ -32,24 +34,26 @@ public:
 struct EssenceInfo
 	: public ObjectInfo
 {
+	shared_ptr<Texture> pEssenceTexture;
 	ESSENCE_TYPE eEssenceType;
 	float fCooldown;
 	float fDuration;
+	wstring szSkillName;
 };
 
 
 struct ItemInfo
 	: public ObjectInfo
 {
-	shared_ptr<class Texture> pItemTexture;
-	shared_ptr<class Engrave> pFirstEngrave;
-	shared_ptr<class Engrave> pSecondEngrave;
+	shared_ptr<Texture> pItemTexture;
+	shared_ptr<Engrave> pFirstEngrave;
+	shared_ptr<Engrave> pSecondEngrave;
 };
 
 struct SkillInfo
 	: public ObjectInfo
 {
-	shared_ptr<class Texture> pSkillTexture;
+	shared_ptr<Texture> pSkillTexture;
 	SKILL_TYPE eSkillType;
 	float fCooldown;
 	float fDuration;

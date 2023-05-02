@@ -190,6 +190,7 @@
     <ClInclude Include="ItemInfoUI.h" />
     <ClInclude Include="Lyweasel.h" />
     <ClInclude Include="MousePointerHUD.h" />
+    <ClInclude Include="ObjectFollowScript.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
     <ClInclude Include="Possession.h" />
     <ClInclude Include="Rapidity.h" />
@@ -286,6 +287,7 @@
     <ClCompile Include="ItemInfoUI.cpp" />
     <ClCompile Include="Lyweasel.cpp" />
     <ClCompile Include="MousePointerHUD.cpp" />
+    <ClCompile Include="ObjectFollowScript.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
     <ClCompile Include="Possession.cpp" />
     <ClCompile Include="Rapidity.cpp" />

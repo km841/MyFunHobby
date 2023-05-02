@@ -23,7 +23,7 @@
 DashState::DashState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
 	, m_tDuration(0.2f)
-	, m_fDashSpeed(1000.f)
+	, m_fDashSpeed(2000.f)
 	, m_iAfterImageMaxCount(4)
 	, m_fAfterImageTimeOffset(0.25f)
 {
@@ -68,9 +68,10 @@ void DashState::Enter()
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 	m_pPlayer.lock()->GetActiveSkul()->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
-
+	m_pPlayer.lock()->ActiveEssenceWhenDashEnterTiming();
 
 	EnableAndInitDashSmokeEffect();
+
 }
 
 void DashState::Exit()

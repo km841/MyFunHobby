@@ -15,5 +15,8 @@ public:
     virtual void FinalUpdate();
 
     virtual void ShowDetailInfo();
+    
+private:
+    void ShowEssenceInMyPlace();
 };
 

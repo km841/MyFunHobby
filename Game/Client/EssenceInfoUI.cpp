@@ -5,6 +5,9 @@
 #include "DetailInfoUI.h"
 #include "Scene.h"
 #include "Scenes.h"
+#include "Essence.h"
+#include "MeshRenderer.h"
+#include "Material.h"
 
 EssenceInfoUI::EssenceInfoUI()
 	:InfoUI(INFO_TYPE::ESSENCE_INFO)
@@ -28,6 +31,7 @@ void EssenceInfoUI::Start()
 void EssenceInfoUI::Update()
 {
 	InfoUI::Update();
+	ShowEssenceInMyPlace();
 }
 
 void EssenceInfoUI::LateUpdate()
@@ -43,9 +47,27 @@ void EssenceInfoUI::FinalUpdate()
 void EssenceInfoUI::ShowDetailInfo()
 {
 	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+	weak_ptr<Essence> pEssence = pPlayer.lock()->GetEssence();
 
+	if (!pEssence.lock())
+		return;
+
+	const EssenceInfo& essenceInfo = pEssence.lock()->GetEssenceInfo();
 	m_DetailInfo.bUse = true;
 	m_DetailInfo.eInfoType = m_eInfoType;
+	m_DetailInfo.essenceInfo = essenceInfo;
 
 	m_pDetailInfoUI.lock()->SetDetailInfo(m_DetailInfo);
+}
+
+void EssenceInfoUI::ShowEssenceInMyPlace()
+{
+	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+	weak_ptr<Essence> pEssence = pPlayer.lock()->GetEssence();
+
+	if (!pEssence.lock())
+		return;
+
+	const EssenceInfo& essenceInfo = pEssence.lock()->GetEssenceInfo();
+	GetMeshRenderer()->GetMaterial()->SetTexture(1, essenceInfo.pEssenceTexture);
 }

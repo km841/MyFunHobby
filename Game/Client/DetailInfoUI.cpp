@@ -122,7 +122,15 @@ void DetailInfoUI::DrawItemInfo()
 
 void DetailInfoUI::DrawEssenceInfo()
 {
-	FONT->DrawString(L"ArtifactInfo", 20.f, Vec3(16.f, 16.f, 0.f));
+	SetEssenceDetailTexture();
+	InitEssenceDetailSubUI();
+
+	FONT->DrawString(m_DetailInfo.essenceInfo.GradeEnumToWstring(), 20.f, Vec3(775.f, 670.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, GRADE_COLOR);
+	FONT->DrawString(m_DetailInfo.essenceInfo.szName, 25.f, Vec3(1076.f, 685.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	FONT->DrawString(std::to_wstring(static_cast<int32>(m_DetailInfo.essenceInfo.fCooldown)), 20.f, Vec3(1425.f, 667.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
+	FONT->DrawString(m_DetailInfo.essenceInfo.szComment, 20.f, Vec3(1076.f, 623.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
+	FONT->DrawString(m_DetailInfo.essenceInfo.szSkillName, 22.f, Vec3(1076.f, 527.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+	FONT->DrawString(m_DetailInfo.essenceInfo.szExplanation, 20.f, Vec3(1076.f, 450.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, COMMENT_COLOR);
 }
 
 void DetailInfoUI::DrawDarkAbilInfo()
@@ -204,6 +212,26 @@ void DetailInfoUI::InitItemDetailSubUI()
 
 	m_pSecondImageUI->GetTransform()->SetLocalPosition(Vec3(157.5f, -146.5f, -10.f));
 	m_pSecondImageUI->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
+}
+
+void DetailInfoUI::SetEssenceDetailTexture()
+{
+	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"EssenceInfoDetail", L"..\\Resources\\Texture\\UI\\Inventory\\Image_Quintessence_Frame.png");
+	assert(pTexture);
+	GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+	GetTransform()->SetLocalScale(pTexture->GetTexSize());
+}
+
+void DetailInfoUI::InitEssenceDetailSubUI()
+{
+	m_pVignetteUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, m_DetailInfo.essenceInfo.pVignetteTexture);
+	m_pVignetteUI->GetTransform()->SetLocalScale(m_DetailInfo.essenceInfo.pVignetteTexture->GetTexSize());
+	m_pVignetteUI->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
+
+	m_pFirstImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
+	m_pSecondImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
+
+
 }
 
 void DetailInfoUI::CreateDetailSubUIAndAddedToScene()

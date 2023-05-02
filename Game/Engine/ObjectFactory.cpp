@@ -156,7 +156,21 @@ shared_ptr<Item> ObjectFactory::CreateEvilSwordKirion()
 
 shared_ptr<Essence> ObjectFactory::CreateLyweasel()
 {
-	return shared_ptr<Essence>();
+	EssenceInfo essenceInfo = {};
+	essenceInfo.szName = L"라이위즐";
+	essenceInfo.szSkillName = L"점멸";
+	essenceInfo.szComment = L"너무 빨라서 마족 중 그 누구도 정체를 알 수 없었던 정령 일족";
+	essenceInfo.szExplanation = L"라이위즐이 나타나 번개를 내리쳐 마법데미지를 입힙니다.\n대쉬거리가 30%증가하고 대쉬거리에 번개를 내리쳐 마법데미지를 입힙니다";
+	essenceInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"Lyweasel_Vignette", L"..\\Resources\\Texture\\Essence\\Lyweasel\\Lyweasel_Vignette.png");
+	essenceInfo.pEssenceTexture = GET_SINGLE(Resources)->Load<Texture>(L"Lyweasel", L"..\\Resources\\Texture\\Essence\\Lyweasel\\Lyweasel.png");
+	essenceInfo.eGrade = GRADE::RARE;
+
+	essenceInfo.fCooldown = 5.f;
+	essenceInfo.fDuration = 1.f;
+	essenceInfo.eEssenceType = ESSENCE_TYPE::CONTINUOUS;
+
+	shared_ptr<Essence> pLyweasel = make_shared<Lyweasel>(essenceInfo);
+	return pLyweasel;
 }
 
 shared_ptr<Essence> ObjectFactory::CreateWisp()

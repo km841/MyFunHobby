@@ -149,6 +149,9 @@
     <Filter Include="소스 파일\Game\Object\Essence">
       <UniqueIdentifier>{692ba0ce-1e7d-44a8-ab56-c516e2743e51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Effect\Script">
+      <UniqueIdentifier>{115e4f74-e242-47be-aae1-d9aebed95370}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -432,6 +435,9 @@
     </ClInclude>
     <ClInclude Include="Wisp.h">
       <Filter>소스 파일\Game\Object\Essence</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFollowScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Effect\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -729,6 +735,9 @@
     </ClCompile>
     <ClCompile Include="Wisp.cpp">
       <Filter>소스 파일\Game\Object\Essence</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFollowScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Effect\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

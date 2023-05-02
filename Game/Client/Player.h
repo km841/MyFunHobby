@@ -6,6 +6,7 @@ class StateMachine;
 class Skul;
 class GlobalEffect;
 class Item;
+class Essence;
 class Player :
 	  public GameObject
 {
@@ -58,6 +59,12 @@ public:
 	void				  ActiveItemWhenHitTiming();
 	void				  ActiveItemWhenDashTiming();
 
+	// About essence
+	shared_ptr<Essence>   ObtainEssence(shared_ptr<Essence> pEssence);
+	void				  EssenceUpdate();
+	weak_ptr<Essence>	  GetEssence();
+	void				  ActiveEssenceWhenDashEnterTiming();
+
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
 	virtual void OnCollisionExit(shared_ptr<GameObject> pGameObject) override;
@@ -72,6 +79,7 @@ private:
 	std::array<shared_ptr<Skul>, MAX_SKULS> m_arrSkuls;
 	std::array<shared_ptr<Item>, MAX_ITEMS> m_arrItems;
 
+	shared_ptr<Essence>					    m_pEssence;
 	shared_ptr<Skul>						m_pActiveSkul;
 	shared_ptr<GlobalEffect>				m_pDashSmoke;
 	shared_ptr<GlobalEffect>				m_pJumpSmoke;

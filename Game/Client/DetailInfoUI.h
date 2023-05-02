@@ -37,6 +37,9 @@ private:
     void SetItemDetailTexture();
     void InitItemDetailSubUI();
 
+    void SetEssenceDetailTexture();
+    void InitEssenceDetailSubUI();
+
 private:
     DetailInfo m_DetailInfo;
     weak_ptr<InventoryUI> m_pInventoryUI;

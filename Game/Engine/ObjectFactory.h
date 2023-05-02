@@ -53,7 +53,7 @@ public:
 	shared_ptr<Item> CreateItem();
 
 	template<typename T>
-	shared_ptr<Item> CreateEssence();
+	shared_ptr<Essence> CreateEssence();
 
 private:
 	template<typename T>
@@ -240,7 +240,7 @@ inline shared_ptr<Item> ObjectFactory::CreateItem()
 }
 
 template<typename T>
-inline shared_ptr<Item> ObjectFactory::CreateEssence()
+inline shared_ptr<Essence> ObjectFactory::CreateEssence()
 {
 	ESSENCE_KIND eEssenceKind = GetEssenceKind<T>();
 	shared_ptr<Essence> pEssence = nullptr;

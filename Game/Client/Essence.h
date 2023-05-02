@@ -15,10 +15,15 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
-    FORCEINLINE void SetPlayer(shared_ptr<Player> pPlayer) { m_pPlayer = pPlayer; }
-    
+    FORCEINLINE void               SetPlayer(shared_ptr<Player> pPlayer) { m_pPlayer = pPlayer; }
+    FORCEINLINE const EssenceInfo& GetEssenceInfo()                      { return m_EssenceInfo; }
+
+    virtual void ActiveMethodWhenDashEnterTiming() { }
+
 private:
     EssenceInfo m_EssenceInfo;
+
+protected:
     weak_ptr<Player> m_pPlayer;
 };
 

@@ -23,11 +23,13 @@ struct DetailInfo
     
     // SkulInfo
     SkulInfo skulInfo;
-
     SKILL_INDEX eTotalSkills;
 
     // ItemInfo
     ItemInfo itemInfo;
+
+    // EssenceInfo
+    EssenceInfo essenceInfo;
 
     shared_ptr<Texture> pVignette;
     Vec2 vVignetteOffset;
@@ -73,6 +75,8 @@ protected:
 
     DetailInfo m_DetailInfo;
     weak_ptr<DetailInfoUI> m_pDetailInfoUI;
+
+    bool m_bUnused;
 
 };
 

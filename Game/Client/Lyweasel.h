@@ -1,5 +1,6 @@
 #pragma once
 #include "Essence.h"
+class GlobalEffect;
 class Lyweasel :
     public Essence
 {
@@ -14,9 +15,14 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
+    virtual void ActiveMethodWhenDashEnterTiming() override;
+    void CreateDashEffectAndAddedToScene();
 
 
 private:
+    void CreateDashEffect();
+    void CreateDashBarriorEffect();
 
+private:
 };
 

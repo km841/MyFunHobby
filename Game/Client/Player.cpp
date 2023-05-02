@@ -26,6 +26,7 @@
 #include "Engine.h"
 #include "PlayerHitHUD.h"
 #include "Item.h"
+#include "Essence.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -227,6 +228,40 @@ void Player::ActiveItemWhenDashTiming()
 		if (m_arrItems[i])
 			m_arrItems[i]->ActiveMethodWhenDashTiming();
 	}
+}
+
+shared_ptr<Essence> Player::ObtainEssence(shared_ptr<Essence> pEssence)
+{
+	if (m_pEssence)
+	{
+		shared_ptr<Essence> pDropEssence = m_pEssence;
+		m_pEssence = pEssence;
+		return pDropEssence;
+	}
+
+	else
+	{
+		m_pEssence = pEssence;
+	}
+
+	return nullptr;
+}
+
+void Player::EssenceUpdate()
+{
+	if (m_pEssence)
+		m_pEssence->Update();
+}
+
+weak_ptr<Essence> Player::GetEssence()
+{
+	return m_pEssence;
+}
+
+void Player::ActiveEssenceWhenDashEnterTiming()
+{
+	if (m_pEssence)
+		m_pEssence->ActiveMethodWhenDashEnterTiming();
 }
 
 ITEM_PLACE Player::GetNearEmptyItemPlace()
