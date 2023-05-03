@@ -1,5 +1,5 @@
 #include "Tool.h"
-#include "TilePallete.h"
+#include "MapEditor.h"
 #include "AnimationEditor.h"
 
 
@@ -18,11 +18,10 @@ void Tool::Init(HWND hHwnd, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceCon
 {
 	InitGui(hHwnd, pDevice, pContext);
 
-	m_pPallete = make_shared<TilePallete>();
-	m_pAnimEditor = make_shared<AnimationEditor>();
 	m_pMapEditor = make_shared<MapEditor>();
+	m_pAnimEditor = make_shared<AnimationEditor>();
 
-	m_pPallete->Init(vSRV);
+	m_pMapEditor->Init(vSRV);
 }
 
 void Tool::Update()
@@ -30,7 +29,6 @@ void Tool::Update()
 	UpdateGui();
 
 	//m_pAnimEditor->Update();
-	m_pPallete->Update();
 	m_pMapEditor->Update();
 	// Changed
 }

@@ -25,6 +25,9 @@
 #include "DebugRenderer.h"
 #include "RigidBody.h"
 #include "Light.h"
+#include "Background.h"
+#include "ObjectFactory.h"
+#include "ComponentObject.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
@@ -50,7 +53,7 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	PalleteUpdate();
+	MapEditorUpdate();
 	//AnimationEditorUpdate();
 
 	Scene::Update();
@@ -78,20 +81,35 @@ void ToolScene::Render()
 
 void ToolScene::Enter()
 {
+	//// Light
+	//{
+	//	shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+	//	pGameObject->AddComponent(make_shared<Transform>());
+	//	pGameObject->AddComponent(make_shared<Light>());
+	//	pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
+	//	pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+	//	pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
+	//	pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+	//	pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
 
-	// Light
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Light>());
-		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
-		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
-		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-		pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
+	//	AddGameObject(pGameObject);
+	//}
 
-		AddGameObject(pGameObject);
-	}
+	//// Camera
+	//{
+	//	m_pMainCamera = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+
+	//	m_pMainCamera->AddComponent(make_shared<Transform>());
+	//	m_pMainCamera->AddComponent(make_shared<Camera>());
+	//	m_pMainCamera->AddComponent(make_shared<CameraMoveScript>());
+
+	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	//	m_pMainCamera->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
+	//	m_pMainCamera->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
+	//	AddGameObject(m_pMainCamera);
+	//}
 
 	// Preview Tile
 	{
@@ -160,21 +178,6 @@ void ToolScene::Enter()
 		AddGameObject(m_pSpriteTexture);
 	}
 
-	// Camera
-	{
-		m_pMainCamera = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-
-		m_pMainCamera->AddComponent(make_shared<Transform>());
-		m_pMainCamera->AddComponent(make_shared<Camera>());
-		m_pMainCamera->AddComponent(make_shared<CameraMoveScript>());
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-		m_pMainCamera->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-		m_pMainCamera->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
-		AddGameObject(m_pMainCamera);
-	}
 
 	// Grid
 	{
@@ -203,6 +206,8 @@ void ToolScene::Enter()
 		m_pGrid->GetTransform()->SetLocalScale(Vec3(3.2f, 3.2f, 1.f));
 		AddGameObject(m_pGrid);
 	}
+
+	AwakeLocalObjects();
 }
 
 void ToolScene::Exit()
@@ -229,8 +234,9 @@ void ToolScene::EraseTileMap()
 	}
 }
 
-void ToolScene::PalleteUpdate()
+void ToolScene::MapEditorUpdate()
 {
+
 	m_tTileDragHolder.Update(DELTA_TIME);
 
 	m_TileMapData.vTileData.clear();
@@ -248,25 +254,25 @@ void ToolScene::PalleteUpdate()
 
 	m_TileMapData.iTileCount = static_cast<uint32>(m_TileMapData.vTileData.size());
 
-	if (TILEMAP_TOOL->IsTileSynced())
+	if (MAP_TOOL->IsTileSynced())
 	{
-		UTILITY->GetTool()->GetPallete()->SetTileMapData(m_TileMapData);
+		UTILITY->GetTool()->GetMapEditor()->SetTileMapData(m_TileMapData);
 	}
 
-	if (TILEMAP_TOOL->IsTileSend())
+	if (MAP_TOOL->IsTileSend())
 	{
-		m_TileMapData = TILEMAP_TOOL->GetTileMapData();
+		m_TileMapData = MAP_TOOL->GetTileMapData();
 		EraseTileMap();
 		LoadTileMap();
-		TILEMAP_TOOL->DisableIsTileSend();
-		TILEMAP_TOOL->EnableTileSync();
+		MAP_TOOL->DisableIsTileSend();
+		MAP_TOOL->EnableTileSync();
 	}
 		
 	wstring szSelectedKey = UTILITY->GetSelectedTileKey();
 
 	const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
 	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 100.f);
-	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
+	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, GetMainCamera().lock()->GetCamera());
 	vWorldPos.x += TILE_HALF_SIZE;
 	vWorldPos.y += 5.f;
 
@@ -283,10 +289,10 @@ void ToolScene::PalleteUpdate()
 
 	}
 
-	if (!IS_UP(KEY_TYPE::LBUTTON) && TILEMAP_TOOL->IsMouseNotOver())
+	if (!IS_UP(KEY_TYPE::LBUTTON) && MAP_TOOL->IsMouseNotOver())
 	{ 
-		DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(TILEMAP_TOOL->GetDrawingType());
-		OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(TILEMAP_TOOL->GetOutputType());
+		DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(MAP_TOOL->GetDrawingType());
+		OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(MAP_TOOL->GetOutputType());
 
 		if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
 		{
@@ -323,13 +329,36 @@ void ToolScene::PalleteUpdate()
 			}
 		}
 	}
+
+	if (MAP_TOOL->IsCreateBGFlag())
+	{
+		Vec3 vWorldPos = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGPos());
+		Vec3 vWorldScale = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGScale());
+		const wstring& szBGImagePath = Conv::AbsolutePathToRelativePath(MAP_TOOL->GetBGImagePath());
+		CreateBGAndAddedToScene(vWorldPos, vWorldScale, szBGImagePath);
+
+		MAP_TOOL->DisableCreateBGFlag();
+	}
+
+	if (MAP_TOOL->IsChangedBGDataFlag())
+	{
+		const BackgroundData& backgroundData = MAP_TOOL->GetSelectedBGData();
+		int32 iBackgroundIndex = MAP_TOOL->GetSelectedBGIndex();
+
+		m_vBackgrounds[iBackgroundIndex]->GetTransform()->SetLocalPosition(Conv::ImVec3ToVec3(backgroundData.vBGPos));
+		m_vBackgrounds[iBackgroundIndex]->GetTransform()->SetLocalScale(Conv::ImVec3ToVec3(backgroundData.vBGScale));
+
+		MAP_TOOL->DisableChangedBGDataFlag();
+	}
 	
 
 	if (IS_PRESS(KEY_TYPE::RBUTTON))
 	{
-		TILEMAP_TOOL->ClearClickedTile();
+		MAP_TOOL->ClearClickedTile();
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
 	}
+
+	
 }
 
 void ToolScene::CreateTile(const Vec3& vWorldPos)
@@ -429,6 +458,21 @@ bool ToolScene::CheckTileAtClick(const Vec3& vWorldPos)
 
 	else
 		return m_mTileMap[vTileAlignVec];
+}
+
+void ToolScene::CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const wstring& szBGImagePath)
+{
+	shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szBGImagePath);
+	pBackground->SetFrustum(false);
+	pBackground->GetTransform()->SetLocalPosition(vWorldPos);
+	pBackground->GetTransform()->SetLocalScale(vWorldScale);
+
+	// 씬에 추가하면서 해당 오브젝트를 저쪽에서 제어할 수 있게 한다
+	// 어떻게?
+	// 해당 오브젝트를 선택하고, 해당 값을 입력한 후 버튼을 누르면 위치값이나 스케일이 적용되게끔 한다
+	// 이미지도 바꿀 수 있게 BackgroundData라는 구조체로 관리
+	m_vBackgrounds.push_back(pBackground);
+	AddGameObject(pBackground);
 }
 
 void ToolScene::AnimationEditorUpdate()

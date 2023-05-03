@@ -34,9 +34,21 @@ using std::string;
 
 #include <filesystem>
 namespace fs = std::filesystem;
-
-
 using namespace Microsoft::WRL;
+
+struct ImVec3
+{
+	float x = 0.f;
+	float y = 0.f;
+	float z = 0.f;
+};
+
+struct BackgroundData
+{
+	wstring szBGImagePath;
+	ImVec3 vBGPos;
+	ImVec3 vBGScale;
+};
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

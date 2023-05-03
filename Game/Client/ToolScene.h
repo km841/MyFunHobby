@@ -26,6 +26,7 @@ enum
     FRAME_BOX_COUNT = 100,
 };
 
+class Background;
 class ToolScene :
     public Scene
 {
@@ -50,13 +51,15 @@ public:
     void EraseTileMap();
 
 private:
-    void PalleteUpdate();
+    void MapEditorUpdate();
 
     void CreateTile(const Vec3& vWorldPos);
     void CreateTile(const Vec2& vTileAlignPos, wstring szTexPath);
 
     void EraseTile(const Vec3& vWorldPos);
     bool CheckTileAtClick(const Vec3& vWorldPos);
+
+    void CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const wstring& szBGImagePath);
 
 private:
     void AnimationEditorUpdate();
@@ -75,6 +78,7 @@ private:
     TileMapData m_TileMapData;
 
     std::vector<shared_ptr<GameObject>> m_vFrameDividers;
+    std::vector<shared_ptr<Background>> m_vBackgrounds;
     
 };
 

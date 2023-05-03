@@ -7,8 +7,8 @@
     <ClInclude Include="Tool.h">
       <Filter>Tool</Filter>
     </ClInclude>
-    <ClInclude Include="TilePallete.h">
-      <Filter>Tool\TileMapTool</Filter>
+    <ClInclude Include="MapEditor.h">
+      <Filter>Tool\MapEditorTool</Filter>
     </ClInclude>
     <ClInclude Include="AnimationEditor.h">
       <Filter>Tool\AnimationTool</Filter>
@@ -46,9 +46,6 @@
     <ClInclude Include="imstb_truetype.h">
       <Filter>Utils\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="MapEditor.h">
-      <Filter>Tool\MapEditor</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp">
@@ -57,8 +54,8 @@
     <ClCompile Include="Tool.cpp">
       <Filter>Tool</Filter>
     </ClCompile>
-    <ClCompile Include="TilePallete.cpp">
-      <Filter>Tool\TileMapTool</Filter>
+    <ClCompile Include="MapEditor.cpp">
+      <Filter>Tool\MapEditorTool</Filter>
     </ClCompile>
     <ClCompile Include="AnimationEditor.cpp">
       <Filter>Tool\AnimationTool</Filter>
@@ -90,9 +87,6 @@
     <ClCompile Include="imgui_tables.cpp">
       <Filter>Utils\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="MapEditor.cpp">
-      <Filter>Tool\MapEditor</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -107,14 +101,11 @@
     <Filter Include="Tool\AnimationTool">
       <UniqueIdentifier>{1705a37e-2f7d-4f9d-9b6e-7ddbd83ac8bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tool\TileMapTool">
-      <UniqueIdentifier>{f12ad988-a17c-4f01-a9d2-426ba5ab1edf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils\ImGuiDialog">
       <UniqueIdentifier>{110d45bf-b0f3-4756-a9a7-885f9591eb75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tool\MapEditor">
-      <UniqueIdentifier>{6a7a2e45-1f06-487c-a0b2-32ce5b655628}</UniqueIdentifier>
+    <Filter Include="Tool\MapEditorTool">
+      <UniqueIdentifier>{f12ad988-a17c-4f01-a9d2-426ba5ab1edf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

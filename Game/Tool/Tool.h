@@ -1,8 +1,7 @@
 #pragma once
 #include "Common.h"
-#include "TilePallete.h"
-#include "AnimationEditor.h"
 #include "MapEditor.h"
+#include "AnimationEditor.h"
 
 class Tool
 {
@@ -16,7 +15,7 @@ public:
 	void    Render();
 	LRESULT DispatchWndMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-	FORCEINLINE shared_ptr<TilePallete>     GetPallete() { return m_pPallete; }
+	FORCEINLINE shared_ptr<MapEditor>     GetMapEditor() { return m_pMapEditor; }
 	FORCEINLINE shared_ptr<AnimationEditor> GetAnimEditor() { return m_pAnimEditor; }
 
 private:
@@ -26,9 +25,8 @@ private:
 	
 
 private:
-	shared_ptr<TilePallete>     m_pPallete;
+	shared_ptr<MapEditor>       m_pMapEditor;
 	shared_ptr<AnimationEditor> m_pAnimEditor;
-	shared_ptr<MapEditor>		m_pMapEditor;
 	
 };
 

@@ -54,7 +54,7 @@ void Utility::ToolRender()
 
 wstring Utility::GetSelectedTileKey()
 {
-	auto iter = m_mTileRrcMap.find(g_pTool->GetPallete()->GetClickedTileIndex());
+	auto iter = m_mTileRrcMap.find(g_pTool->GetMapEditor()->GetClickedTileIndex());
 	if (iter == m_mTileRrcMap.end())
 	{
 		return L"FAILURE";

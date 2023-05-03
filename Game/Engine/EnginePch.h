@@ -380,6 +380,11 @@ namespace Conv
 		return vTileAlignVec;
 	}
 
+	static Vec3 ImVec3ToVec3(ImVec3 vVec3)
+	{
+		return Vec3(vVec3.x, vVec3.y, vVec3.z);
+	}
+
 	static Vec2 ImVec2ToVec2(ImVec2 vVec2)
 	{
 		return Vec2(vVec2.x, vVec2.y);
@@ -667,7 +672,7 @@ bool m_bUse = false;\
 #define PHYSICS g_pEngine->GetPhysics()->GetEnvironment()->GetPhysics()
 #define PX_SCENE g_pEngine->GetPhysics()->GetEnvironment()->GetPhysScene()
 #define UTILITY g_pEngine->GetUtility()
-#define TILEMAP_TOOL g_pEngine->GetUtility()->GetTool()->GetPallete()
+#define MAP_TOOL g_pEngine->GetUtility()->GetTool()->GetMapEditor()
 #define ANIMATION_TOOL g_pEngine->GetUtility()->GetTool()->GetAnimEditor()
 #define FONT g_pEngine->GetFont()
 #define GET_SINGLE(type) type::GetInstance()
