@@ -206,7 +206,8 @@ void TownScene::Enter()
 
 	//Change Scene Event
 	{
-		shared_ptr<SceneChangeEventObject> pGameObject =  GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<SceneChangeEventObject>(L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(500.f, 100.f, 1.f), MassProperties(), L"", pPlayer);
+		shared_ptr<SceneChangeEventObject> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<SceneChangeEventObject>(
+			L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(500.f, 100.f, 1.f), MassProperties(), L"", pPlayer);
 		
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 1850.f, fHeight / 2.f - 3000.f, 100.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(1000.f, 100.f, 1.f));
@@ -216,29 +217,21 @@ void TownScene::Enter()
 
 	//Background
 	{
-		shared_ptr<Background> pGameObject = make_shared<Background>();
+		shared_ptr<Background> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(
+			L"Deferred", L"..\\Resources\\Texture\\Map\\Image_Town_Background.png");
 		pGameObject->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_Town_Background.png");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
-		pMaterial->SetTexture(0, pTexture);
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
 
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 780.f, fHeight / 2.f - 1620.f, 870.f));
-		//pGameObject->GetTransform()->SetLocalScale(Vec3(1800.f - 60.f, 1980.f - 66.f, 1.f));
 		pGameObject->GetTransform()->SetLocalScale(Vec3(2000.f, 2200.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
 
-
-	GetMainCamera().lock()->AddComponent(make_shared<PlayerTrackingScript>(pPlayer));
-	GetBGCamera().lock()->AddComponent(make_shared<BGCameraScript>(pPlayer));
+	// Connect the player to the camera! 
+	{
+		GetMainCamera().lock()->AddComponent(make_shared<PlayerTrackingScript>(pPlayer));
+		GetBGCamera().lock()->AddComponent(make_shared<BGCameraScript>(pPlayer));
+	}
 
 	//// NPC_Witch
 	//{

@@ -360,7 +360,12 @@ void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 	
 	auto pFindIt = std::find(vGameObjects.begin(), vGameObjects.end(), pGameObject);
 	if (pFindIt != vGameObjects.end())
+	{
+		if (pFindIt->get()->GetPhysical())
+			pFindIt->get()->GetPhysical()->RemoveActorToPxScene();
+
 		vGameObjects.erase(pFindIt);
+	}
 
 }
 

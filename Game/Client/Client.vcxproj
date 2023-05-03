@@ -176,7 +176,11 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arms.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BaseCamp.h" />
     <ClInclude Include="BGCameraScript.h" />
+    <ClInclude Include="BlackLab.h" />
+    <ClInclude Include="CitadelOfFate.h" />
+    <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Essence.h" />
     <ClInclude Include="EssenceInfoUI.h" />
     <ClInclude Include="AttackState.h" />
@@ -254,6 +258,7 @@
     <ClInclude Include="SkulThumnailHUD.h" />
     <ClInclude Include="SkullThrowSkill.h" />
     <ClInclude Include="SkulSkill.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="SwapState.h" />
     <ClInclude Include="Tile.h" />
@@ -276,7 +281,11 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Arms.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BaseCamp.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />
+    <ClCompile Include="BlackLab.cpp" />
+    <ClCompile Include="CitadelOfFate.cpp" />
+    <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Essence.cpp" />
     <ClCompile Include="EssenceInfoUI.cpp" />
     <ClCompile Include="AttackState.cpp" />
@@ -359,6 +368,7 @@
     <ClCompile Include="SkulThumnailHUD.cpp" />
     <ClCompile Include="SkullThrowSkill.cpp" />
     <ClCompile Include="SkulSkill.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="SwapState.cpp" />
     <ClCompile Include="Tile.cpp" />

@@ -89,10 +89,6 @@ void EventManager::ProcessObjectRemoveEvent(ObjectRemoveToSceneEvent* pEvent)
 	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
 	shared_ptr<GameObject> pGameObject = pEvent->GetGameObject();
 	pCurScene->RemoveGameObject(pGameObject);
-	if (pGameObject->GetPhysical())
-	{
-		pGameObject->GetPhysical()->RemoveActorToPxScene();
-	}
 }
 
 void EventManager::ProcessObjectReturnToPoolEvent(ObjectReturnToPoolEvent* pEvent)
@@ -100,11 +96,6 @@ void EventManager::ProcessObjectReturnToPoolEvent(ObjectReturnToPoolEvent* pEven
 	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
 	shared_ptr<GameObject> pGameObject = pEvent->GetGameObject();
 	pCurScene->RemoveGameObject(pGameObject);
-	if (pGameObject->GetPhysical())
-	{
-		pGameObject->GetPhysical()->RemoveActorToPxScene();
-	}
-	
 	pGameObject->Release();
 }
 

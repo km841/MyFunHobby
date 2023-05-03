@@ -11,6 +11,9 @@ void Input::Init(HWND hHwnd)
 
 void Input::Update()
 {
+	GetCursorPos(&m_MousePos);
+	ScreenToClient(g_pEngine->GetHwnd(), &m_MousePos);
+
 	HWND hHwnd = GetActiveWindow();
 
 	if (m_hHwnd != hHwnd)
@@ -48,6 +51,5 @@ void Input::Update()
 		}
 	}
 
-	::GetCursorPos(&m_MousePos);
-	::ScreenToClient(g_pEngine->GetHwnd(), &m_MousePos);
+
 }

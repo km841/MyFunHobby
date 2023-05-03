@@ -267,12 +267,20 @@ void ToolScene::PalleteUpdate()
 	const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
 	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 100.f);
 	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, m_pMainCamera->GetCamera());
+	vWorldPos.x += TILE_HALF_SIZE;
+	vWorldPos.y += 5.f;
 
 	if (L"FAILURE" != szSelectedKey)
 	{
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(szSelectedKey);
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
-		m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
+
+		Vec3 vPreviewTilePos = vWorldPos;
+		vPreviewTilePos.x -= 28.f;
+		vPreviewTilePos.y -= 8.f;
+
+		m_pPreviewTile->GetTransform()->SetLocalPosition(vPreviewTilePos);
+
 	}
 
 	if (!IS_UP(KEY_TYPE::LBUTTON) && TILEMAP_TOOL->IsMouseNotOver())

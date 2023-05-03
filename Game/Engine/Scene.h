@@ -31,7 +31,7 @@ public:
 
 public:
     virtual void Enter() { }
-    virtual void Exit() { }
+    virtual void Exit()  { }
     void Render_Lights();
     void Render_Final();
     void Render_Forward();

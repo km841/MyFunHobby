@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+class Stage;
 class DungeonScene :
     public Scene
 {
@@ -18,6 +19,10 @@ public:
 public:
     virtual void Enter();
     virtual void Exit();
+
+private:
+    std::array<shared_ptr<Stage>, STAGE_KIND_COUNT> m_arrStages;
+    weak_ptr<Stage> m_pActiveStage;
 
 };
 

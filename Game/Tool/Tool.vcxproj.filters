@@ -4,6 +4,24 @@
     <ClInclude Include="Common.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="TilePallete.h">
+      <Filter>Tool\TileMapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEditor.h">
+      <Filter>Tool\AnimationTool</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialog.h">
+      <Filter>Utils\ImGuiDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialogConfig.h">
+      <Filter>Utils\ImGuiDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiBase.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
     <ClInclude Include="imconfig.h">
       <Filter>Utils\ImGui</Filter>
     </ClInclude>
@@ -28,26 +46,32 @@
     <ClInclude Include="imstb_truetype.h">
       <Filter>Utils\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Tool.h">
-      <Filter>Tool</Filter>
-    </ClInclude>
-    <ClInclude Include="TilePallete.h">
-      <Filter>Tool\TileMapTool</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationEditor.h">
-      <Filter>Tool\AnimationTool</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiFileDialog.h">
-      <Filter>Utils\ImGuiDialog</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGuiFileDialogConfig.h">
-      <Filter>Utils\ImGuiDialog</Filter>
-    </ClInclude>
-    <ClInclude Include="GuiBase.h">
-      <Filter>Tool</Filter>
+    <ClInclude Include="MapEditor.h">
+      <Filter>Tool\MapEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Common.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="TilePallete.cpp">
+      <Filter>Tool\TileMapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEditor.cpp">
+      <Filter>Tool\AnimationTool</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFileDialog.cpp">
+      <Filter>Utils\ImGuiDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiBase.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>Utils\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="imgui.cpp">
       <Filter>Utils\ImGui</Filter>
     </ClCompile>
@@ -66,26 +90,8 @@
     <ClCompile Include="imgui_tables.cpp">
       <Filter>Utils\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_widgets.cpp">
-      <Filter>Utils\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Common.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Tool.cpp">
-      <Filter>Tool</Filter>
-    </ClCompile>
-    <ClCompile Include="TilePallete.cpp">
-      <Filter>Tool\TileMapTool</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationEditor.cpp">
-      <Filter>Tool\AnimationTool</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGuiFileDialog.cpp">
-      <Filter>Utils\ImGuiDialog</Filter>
-    </ClCompile>
-    <ClCompile Include="GuiBase.cpp">
-      <Filter>Tool</Filter>
+    <ClCompile Include="MapEditor.cpp">
+      <Filter>Tool\MapEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +112,9 @@
     </Filter>
     <Filter Include="Utils\ImGuiDialog">
       <UniqueIdentifier>{110d45bf-b0f3-4756-a9a7-885f9591eb75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool\MapEditor">
+      <UniqueIdentifier>{6a7a2e45-1f06-487c-a0b2-32ce5b655628}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

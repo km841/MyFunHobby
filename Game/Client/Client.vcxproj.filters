@@ -155,6 +155,12 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Background">
       <UniqueIdentifier>{6909d6bf-b05a-4e51-a9d8-4d8118fd6a84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Scene\Stage">
+      <UniqueIdentifier>{df02e2ce-6846-4a30-ac1b-c4d9f2a9a95f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scene\Stage\Dungeon">
+      <UniqueIdentifier>{cb8248ba-a9be-4bc7-949c-8462bdbdd291}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -450,6 +456,21 @@
     </ClInclude>
     <ClInclude Include="BGCameraScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>소스 파일\Game\Scene\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackLab.h">
+      <Filter>소스 파일\Game\Scene\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="CitadelOfFate.h">
+      <Filter>소스 파일\Game\Scene\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCamp.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -759,6 +780,21 @@
     </ClCompile>
     <ClCompile Include="BGCameraScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>소스 파일\Game\Scene\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Dungeon.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackLab.cpp">
+      <Filter>소스 파일\Game\Scene\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="CitadelOfFate.cpp">
+      <Filter>소스 파일\Game\Scene\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCamp.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

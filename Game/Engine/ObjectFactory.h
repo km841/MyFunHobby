@@ -46,14 +46,12 @@ public:
 	template<typename T>
 	shared_ptr<T> CreateObjectHasNotPhysicalFromPool(const wstring& szMaterialName, const wstring& szPath = L"");
 
+	//===============
+	// About Monster
+	//===============
+public:
 	template<typename T>
 	void CreateMonsterAndAddedScene(const Vec3& vMonsterPos);
-
-	template<typename T>
-	shared_ptr<Item> CreateItem();
-
-	template<typename T>
-	shared_ptr<Essence> CreateEssence();
 
 private:
 	template<typename T>
@@ -62,12 +60,26 @@ private:
 	shared_ptr<Monster> CreateJuniorKnight(const Vec3& vMonsterPos);
 	void CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos);
 
+	//============
+	// About Item
+	//============
+public:
+	template<typename T>
+	shared_ptr<Item> CreateItem();
+
 private:
 	template<typename T>
 	inline ITEM_KIND GetItemKind();
 
 	shared_ptr<Item> CreateForbiddenSword();
 	shared_ptr<Item> CreateEvilSwordKirion();
+
+	//===============
+	// About Essence
+	//===============
+public:
+	template<typename T>
+	shared_ptr<Essence> CreateEssence();
 
 private:
 	template<typename T>
@@ -204,8 +216,6 @@ inline void ObjectFactory::CreateMonsterAndAddedScene(const Vec3& vMonsterPos)
 	{
 	case MONSTER_KIND::JUNIOR_KNIGHT:
 		pMonster = CreateJuniorKnight(vMonsterPos);
-		break;
-	case MONSTER_KIND::NONE:
 		break;
 	}
 

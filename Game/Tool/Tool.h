@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "TilePallete.h"
 #include "AnimationEditor.h"
+#include "MapEditor.h"
 
 class Tool
 {
@@ -27,5 +28,7 @@ private:
 private:
 	shared_ptr<TilePallete>     m_pPallete;
 	shared_ptr<AnimationEditor> m_pAnimEditor;
+	shared_ptr<MapEditor>		m_pMapEditor;
+	
 };
 

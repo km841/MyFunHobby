@@ -75,6 +75,10 @@
 #include "IsDeadCondition.h"
 #include "RemoveObjectTask.h"
 
+/* Stage */
+#include "BlackLab.h"
+#include "CitadelOfFate.h"
+
 DungeonScene::DungeonScene()
 	: Scene(SCENE_TYPE::DUNGEON)
 {
@@ -86,27 +90,37 @@ DungeonScene::~DungeonScene()
 
 void DungeonScene::Awake()
 {
-	Scene::Awake();
+	m_arrStages[static_cast<uint8>(STAGE_KIND::BLACK_LAB)] = make_shared<BlackLab>();
+	m_arrStages[static_cast<uint8>(STAGE_KIND::CITADEL_OF_FATE)] = make_shared<CitadelOfFate>();
+
+	m_pActiveStage = m_arrStages[static_cast<uint8>(STAGE_KIND::BLACK_LAB)];
+	m_pActiveStage.lock()->Enter();
+
+	AwakeLocalObjects();
 }
 
 void DungeonScene::Start()
 {
 	Scene::Start();
+	m_pActiveStage.lock()->Start();
 }
 
 void DungeonScene::Update()
 {
 	Scene::Update();
+	m_pActiveStage.lock()->Update();
 }
 
 void DungeonScene::LateUpdate()
 {
 	Scene::LateUpdate();
+	m_pActiveStage.lock()->LateUpdate();
 }
 
 void DungeonScene::FinalUpdate()
 {
 	Scene::FinalUpdate();
+	m_pActiveStage.lock()->FinalUpdate();
 }
 
 void DungeonScene::Render()
@@ -116,45 +130,11 @@ void DungeonScene::Render()
 
 void DungeonScene::Enter()
 {
-	Load(L"..\\Resources\\Map\\BaseCampMap.map");
-	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	// Create Monster
-	{
-		
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f - 600.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f - 300.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 200.f, 99.5f));
-		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 200.f, 99.5f));
-	}
-
-	//Background
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_BaseCamp_Background.png");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
-		pMaterial->SetTexture(0, pTexture);
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
-
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 300.f, 140.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(1600.f, 900.f, 1.f));
-
-		AddGameObject(pGameObject);
-	}
-
-	AwakeLocalObjects();
+	Awake();
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 }
 
 void DungeonScene::Exit()
 {
+	m_pActiveStage.lock()->Exit();
 }
