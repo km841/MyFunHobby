@@ -56,5 +56,6 @@ void SceneChangeEventObject::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
 		m_pPlayer.lock()->GetTransform()->SetPhysicalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 200.f, 100.f));
 		GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
+		GET_SINGLE(Scenes)->GetActiveScene()->GetBGCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
 	}
 }

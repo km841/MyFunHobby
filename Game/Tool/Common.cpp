@@ -23,3 +23,15 @@ string ws2s(const wstring& s)
 	::WideCharToMultiByte(CP_ACP, 0, s.c_str(), slength, &r[0], len, 0, 0);
 	return r;
 }
+
+wstring AbsolutePathToRelativePath(const wstring& szAbsolutePath)
+{
+	wstring szResourcesPath = L"..\\Resources\\";
+
+	uint32 iSplitPoint = static_cast<uint32>(szAbsolutePath.find(L"Texture\\"));
+	assert(iSplitPoint != wstring::npos);
+
+	wstring szResultPath = szResourcesPath + szAbsolutePath.substr(iSplitPoint);
+
+	return szResultPath;
+}

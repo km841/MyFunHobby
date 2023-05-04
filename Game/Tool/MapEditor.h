@@ -22,13 +22,13 @@ public:
 	FORCEINLINE uint8 GetDrawingType() const		 { return m_iDrawingType; }
 	FORCEINLINE uint8 GetOutputType() const			 { return m_iOutputType; }
 
-	FORCEINLINE bool IsTileSynced()	const			 { return m_bTileSync; }
-	FORCEINLINE void EnableTileSync()				 { m_bTileSync = true; }
-	FORCEINLINE void DisableTileSync()				 { m_bTileSync = false; }
+	FORCEINLINE bool IsDataSynced()	const			 { return m_bDataSync; }
+	FORCEINLINE void EnableDataSync()				 { m_bDataSync = true; }
+	FORCEINLINE void DisableDataSync()				 { m_bDataSync = false; }
 
-	FORCEINLINE bool IsTileSend() const				 { return m_bTileSend; }
-	FORCEINLINE void EnableIsTileSend()			 	 { m_bTileSend = true; }
-	FORCEINLINE void DisableIsTileSend()		 	 { m_bTileSend = false; }
+	FORCEINLINE bool IsDataSend() const				 { return m_bDataSend; }
+	FORCEINLINE void EnableIsDataSend()			 	 { m_bDataSend = true; }
+	FORCEINLINE void DisableIsDataSend()		 	 { m_bDataSend = false; }
 
 	void SetTileMapData(const TileMapData& tileMapData);
 	FORCEINLINE const TileMapData& GetTileMapData() { return m_TileMapData; }
@@ -44,6 +44,7 @@ public:
 	void DisableChangedBGDataFlag() { m_bChangedBGDataFlag = false; }
 	int32 GetSelectedBGIndex() { return m_iBackgroundDataSelector; }
 	const BackgroundData& GetSelectedBGData() { return m_CurrBackgroundData; }
+	const std::vector<BackgroundData>& GetBackgroundDataList() { return m_vBackgroundDataList; }
 	
 	// 이미지를 로드한 후 Create BG 버튼을 누르면 배경 오브젝트를 생성
 
@@ -76,8 +77,8 @@ private:
 	int32 m_iOutputType;
 
 	TileMapData m_TileMapData;
-	bool	    m_bTileSync;
-	bool		m_bTileSend;
+	bool	    m_bDataSync;
+	bool		m_bDataSend;
 
 	bool m_bMouseOver;
 
@@ -91,6 +92,9 @@ private:
 	BackgroundData m_CurrBackgroundData;
 
 	bool m_bChangedBGDataFlag;
+
+	bool m_bBackgroundSend;
+
 
 };
 

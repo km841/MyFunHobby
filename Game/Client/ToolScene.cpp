@@ -39,6 +39,7 @@ ToolScene::ToolScene()
 
 ToolScene::~ToolScene()
 {
+	m_vBackgrounds.clear();
 }
 
 void ToolScene::Awake()
@@ -81,36 +82,6 @@ void ToolScene::Render()
 
 void ToolScene::Enter()
 {
-	//// Light
-	//{
-	//	shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-	//	pGameObject->AddComponent(make_shared<Transform>());
-	//	pGameObject->AddComponent(make_shared<Light>());
-	//	pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
-	//	pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-	//	pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
-	//	pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-	//	pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
-
-	//	AddGameObject(pGameObject);
-	//}
-
-	//// Camera
-	//{
-	//	m_pMainCamera = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-
-	//	m_pMainCamera->AddComponent(make_shared<Transform>());
-	//	m_pMainCamera->AddComponent(make_shared<Camera>());
-	//	m_pMainCamera->AddComponent(make_shared<CameraMoveScript>());
-
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
-	//	m_pMainCamera->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-	//	m_pMainCamera->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
-	//	AddGameObject(m_pMainCamera);
-	//}
-
 	// Preview Tile
 	{
 		m_pPreviewTile = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
@@ -236,7 +207,6 @@ void ToolScene::EraseTileMap()
 
 void ToolScene::MapEditorUpdate()
 {
-
 	m_tTileDragHolder.Update(DELTA_TIME);
 
 	m_TileMapData.vTileData.clear();
@@ -254,18 +224,23 @@ void ToolScene::MapEditorUpdate()
 
 	m_TileMapData.iTileCount = static_cast<uint32>(m_TileMapData.vTileData.size());
 
-	if (MAP_TOOL->IsTileSynced())
+	if (MAP_TOOL->IsDataSynced())
 	{
 		UTILITY->GetTool()->GetMapEditor()->SetTileMapData(m_TileMapData);
 	}
 
-	if (MAP_TOOL->IsTileSend())
+	if (MAP_TOOL->IsDataSend())
 	{
 		m_TileMapData = MAP_TOOL->GetTileMapData();
 		EraseTileMap();
 		LoadTileMap();
-		MAP_TOOL->DisableIsTileSend();
-		MAP_TOOL->EnableTileSync();
+
+		m_vBackgroundDataList = MAP_TOOL->GetBackgroundDataList();
+		EraseAllBackground();
+		LoadBackgrounds();
+
+		MAP_TOOL->DisableIsDataSend();
+		MAP_TOOL->EnableDataSync();
 	}
 		
 	wstring szSelectedKey = UTILITY->GetSelectedTileKey();
@@ -334,7 +309,7 @@ void ToolScene::MapEditorUpdate()
 	{
 		Vec3 vWorldPos = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGPos());
 		Vec3 vWorldScale = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGScale());
-		const wstring& szBGImagePath = Conv::AbsolutePathToRelativePath(MAP_TOOL->GetBGImagePath());
+		const wstring& szBGImagePath = AbsolutePathToRelativePath(MAP_TOOL->GetBGImagePath());
 		CreateBGAndAddedToScene(vWorldPos, vWorldScale, szBGImagePath);
 
 		MAP_TOOL->DisableCreateBGFlag();
@@ -475,6 +450,28 @@ void ToolScene::CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorl
 	AddGameObject(pBackground);
 }
 
+void ToolScene::EraseAllBackground()
+{
+	auto& vBackgrounds = GetGameObjects(LAYER_TYPE::BACKGROUND);
+	vBackgrounds.clear();
+}
+
+void ToolScene::LoadBackgrounds()
+{
+	if (m_vBackgroundDataList.empty())
+		return;
+
+	for (int32 i = 0; i < m_vBackgroundDataList.size(); ++i)
+	{
+		const auto& szPath = m_vBackgroundDataList[i].szBGImagePath;
+		Vec3 vPosition = Conv::ImVec3ToVec3(m_vBackgroundDataList[i].vBGPos);
+		Vec3 vScale = Conv::ImVec3ToVec3(m_vBackgroundDataList[i].vBGScale);
+
+		CreateBGAndAddedToScene(vPosition, vScale, szPath);
+	}
+
+}
+
 void ToolScene::AnimationEditorUpdate()
 {
 	SpriteUpdate();
@@ -543,7 +540,7 @@ void ToolScene::DrawEditorGraphic()
 		{
 			ANIMATION_TOOL->ClearFrameDataList();
 
-			wstring szPath = Conv::AbsolutePathToRelativePath(ANIMATION_TOOL->GetSpriteTexturePath());
+			wstring szPath = AbsolutePathToRelativePath(ANIMATION_TOOL->GetSpriteTexturePath());
 			const wstring& szName = ANIMATION_TOOL->GetAnimationName();
 			const  ImVec2& vSpriteSize = ANIMATION_TOOL->GetSpriteSize();
 			const  ImVec2& vOffset = ANIMATION_TOOL->GetOffset();

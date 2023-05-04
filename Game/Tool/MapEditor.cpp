@@ -10,10 +10,12 @@ MapEditor::MapEditor()
     , m_iOutputType(0)
     , m_bMouseOver(false)
     , m_TileMapData{}
-    , m_bTileSync(true)
-    , m_bTileSend(false)
+    , m_bDataSync(true)
+    , m_bDataSend(false)
     , m_bCreateBGFlag(false)
     , m_bChangedBGDataFlag(false)
+    , m_iBackgroundDataSelector(0)
+    , m_bBackgroundSend(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
     m_vWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV.size() / 4.0f)* (m_fTileSize + m_fSpacing));
@@ -139,7 +141,17 @@ void MapEditor::UpdateOptionSelection()
                     ofs << m_TileMapData.vTileData[i].szTexPath << L'\n';
                     ofs << m_TileMapData.vTileData[i].vTilePos.x << L" " << m_TileMapData.vTileData[i].vTilePos.y << L'\n';
                 }
+                
+                size_t iBGCount = m_vBackgroundDataList.size();
+                ofs << iBGCount << L'\n';
 
+                for (uint32 i = 0; i < iBGCount; ++i)
+                {
+                    ofs << AbsolutePathToRelativePath(m_vBackgroundDataList[i].szBGImagePath) << L'\n';
+                    ofs << m_vBackgroundDataList[i].vBGPos.x << L" " << m_vBackgroundDataList[i].vBGPos.y << L" " << m_vBackgroundDataList[i].vBGPos.z << L'\n';
+                    ofs << m_vBackgroundDataList[i].vBGScale.x << L" " << m_vBackgroundDataList[i].vBGScale.y << L" " << 1.f << L'\n';
+                }
+                    
                 ofs.close();
             }
             ImGuiFileDialog::Instance()->Close();
@@ -157,7 +169,7 @@ void MapEditor::UpdateOptionSelection()
         {
             if (ImGuiFileDialog::Instance()->IsOk())
             {
-                m_bTileSync = false;
+                m_bDataSync = false;
 
                 fs::path szPath = ImGuiFileDialog::Instance()->GetFilePathName();
                 std::wifstream ifs(szPath, std::ios::in);
@@ -179,14 +191,30 @@ void MapEditor::UpdateOptionSelection()
                     ifs.ignore(1);
                 }
 
+                uint32 iBGCount = 0;
+                ifs >> iBGCount;
+
+                m_vBackgroundDataList.clear();
+                m_vBackgroundDataList.resize(iBGCount);
+
+                for (uint32 i = 0; i < iBGCount; ++i)
+                {
+                    ifs >> m_vBackgroundDataList[i].szBGImagePath;
+                    ifs.ignore(1);
+                    ifs >> m_vBackgroundDataList[i].vBGPos.x >> m_vBackgroundDataList[i].vBGPos.y >> m_vBackgroundDataList[i].vBGPos.z;
+                    ifs.ignore(1);
+                    ifs >> m_vBackgroundDataList[i].vBGScale.x >> m_vBackgroundDataList[i].vBGScale.y;
+                    ifs.ignore(1);
+                }
+
                 ifs.close();
             }
             ImGuiFileDialog::Instance()->Close();
         }
 
-        if (!m_bTileSync)
+        if (!m_bDataSync)
         {
-            m_bTileSend = true;
+            m_bDataSend = true;
         }
 
         InsertSeparator();
@@ -247,7 +275,7 @@ void MapEditor::UpdateBGSelection()
 
         ImGui::Text("ImagePath     ");
         ImGui::SameLine();
-        ImGui::InputText("     ", const_cast<char*>(ws2s(m_szBGImagePath).c_str()), m_szBGImagePath.size());
+        ImGui::InputText("ImagePath", const_cast<char*>(ws2s(m_szBGImagePath).c_str()), m_szBGImagePath.size());
 
         ImGui::Text("Position      ");
         ImGui::SameLine();
@@ -291,7 +319,7 @@ void MapEditor::UpdateBGSelection()
         InsertSeparator();
         ImGui::Text("ImagePath     ");
         ImGui::SameLine();
-        ImGui::InputText("     ", const_cast<char*>(ws2s(m_CurrBackgroundData.szBGImagePath).c_str()), m_CurrBackgroundData.szBGImagePath.size());
+        ImGui::InputText("EditImagePath", const_cast<char*>(ws2s(m_CurrBackgroundData.szBGImagePath).c_str()), m_CurrBackgroundData.szBGImagePath.size());
 
 
         ImGui::Text("Position      ");

@@ -99,3 +99,5 @@ extern shared_ptr<class Tool> g_pTool;
 
 wstring s2ws(const string& s);
 string ws2s(const wstring& ws);
+
+wstring AbsolutePathToRelativePath(const wstring& szAbsolutePath);

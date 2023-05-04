@@ -7,6 +7,8 @@ public:
 	void Init();
 	shared_ptr<Skul> Get(SKUL_KIND eSkulType);
 
+	void Destroy();
+
 private:
 	void CreateSkul();
 

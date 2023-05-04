@@ -46,6 +46,9 @@ void BaseCamp::Enter()
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
+	// 이동시켜주는 오브젝트 (상호작용)
+
+
 	// Create Monster
 	{
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f - 600.f, fHeight / 2.f - 200.f, 99.5f));
@@ -53,27 +56,6 @@ void BaseCamp::Enter()
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 99.5f));
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 200.f, 99.5f));
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f + 600.f, fHeight / 2.f - 200.f, 99.5f));
-	}
-
-	//Background
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->SetFrustum(false);
-		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-		shared_ptr<Texture> pTexture = make_shared<Texture>();
-		pTexture->Load(L"..\\Resources\\Texture\\Map\\Image_BaseCamp_Background.png");
-		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
-		pMaterial->SetTexture(0, pTexture);
-		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-		pMeshRenderer->SetMaterial(pMaterial);
-		pMeshRenderer->SetMesh(pMesh);
-		pGameObject->AddComponent(pMeshRenderer);
-		pGameObject->AddComponent(make_shared<Transform>());
-
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 300.f, 140.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(1600.f, 900.f, 1.f));
-
-		GET_SINGLE(Scenes)->GetActiveScene()->AddGameObject(pGameObject);
 	}
 }
 

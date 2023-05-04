@@ -60,6 +60,8 @@ private:
     bool CheckTileAtClick(const Vec3& vWorldPos);
 
     void CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const wstring& szBGImagePath);
+    void EraseAllBackground();
+    void LoadBackgrounds();
 
 private:
     void AnimationEditorUpdate();
@@ -76,6 +78,7 @@ private:
     Timer m_tTileDragHolder;
     TileMap m_mTileMap;
     TileMapData m_TileMapData;
+    std::vector<BackgroundData> m_vBackgroundDataList;
 
     std::vector<shared_ptr<GameObject>> m_vFrameDividers;
     std::vector<shared_ptr<Background>> m_vBackgrounds;

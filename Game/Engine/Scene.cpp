@@ -22,6 +22,7 @@
 #include "Player.h"
 #include "ComponentObject.h"
 #include "Font.h"
+#include "Background.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -362,7 +363,10 @@ void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 	if (pFindIt != vGameObjects.end())
 	{
 		if (pFindIt->get()->GetPhysical())
+		{
+			pFindIt->get()->GetPhysical()->GetActor<PxRigidActor>()->userData = nullptr;
 			pFindIt->get()->GetPhysical()->RemoveActorToPxScene();
+		}
 
 		vGameObjects.erase(pFindIt);
 	}
@@ -439,6 +443,36 @@ void Scene::Load(const wstring& szPath)
 		pTile->Awake();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
 	}
+
+	uint32 iBGCount = 0;
+
+	ifs >> iBGCount;
+	//assert(iBGCount);
+
+	for (uint32 i = 0; i < iBGCount; ++i)
+	{
+		wstring szTexPath = {};
+		Vec3 vBGPosition = {};
+		Vec3 vBGScale = {};
+
+		ifs >> szTexPath;
+		ifs.ignore(1);
+		ifs >> vBGPosition.x >> vBGPosition.y >> vBGPosition.z;
+		ifs.ignore(1);
+		ifs >> vBGScale.x >> vBGScale.y >> vBGScale.z;
+		ifs.ignore(1);
+
+		shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szTexPath);
+		pBackground->GetTransform()->SetLocalPosition(vBGPosition);
+		pBackground->GetTransform()->SetLocalScale(vBGScale);
+
+		pBackground->SetFrustum(false);
+		pBackground->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pBackground, m_eSceneType));
+	}
+	
+
+
 
 	ifs.close();
 }

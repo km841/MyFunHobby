@@ -108,14 +108,13 @@ void Engine::RenderBegin()
 
 void Engine::RenderEnd()
 {
-	// FontEngine Test
-	
 	m_pSwapChain->Present();
 	GET_SINGLE(EventManager)->ProcessEvents();
 }
 
 void Engine::Destroy()
 {
+	//GET_SINGLE(Cemetery)->Destroy();
 	FreeLibrary(m_hModule);
 }
 
@@ -151,13 +150,13 @@ void Engine::CreateRenderTargetGroups()
 		std::vector<RenderTarget> vRenderTargetVec(SWAP_CHAIN_BUFFER_COUNT);
 		for (uint32 i = 0; i < SWAP_CHAIN_BUFFER_COUNT; ++i)
 		{
-			wstring name = L"SwapChainTarget_" + std::to_wstring(i);
+			wstring szName = L"SwapChainTarget_" + std::to_wstring(i);
 			ComPtr<ID3D11Texture2D> pResource = {};
 
 			HRESULT hr = m_pSwapChain->GetSwapChain()->GetBuffer(i, IID_PPV_ARGS(&pResource));
 			assert(SUCCEEDED(hr));
 
-			vRenderTargetVec[i].pTarget = GET_SINGLE(Resources)->CreateTextureFromResource(name, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET, pResource);
+			vRenderTargetVec[i].pTarget = GET_SINGLE(Resources)->CreateTextureFromResource(szName, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET, pResource);
 			memcpy(vRenderTargetVec[i].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
 		}
 
@@ -190,6 +189,7 @@ void Engine::CreateRenderTargetGroups()
 
 		memcpy(vRenderTargetVec[0].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
 		memcpy(vRenderTargetVec[1].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
+		memcpy(vRenderTargetVec[2].fClearColors, clearColor, sizeof(float) * ARRAYSIZE(clearColor));
 
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)] = make_shared<RenderTargetGroup>();
 		m_arrRTGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, vRenderTargetVec, pDepthStencilTexture);

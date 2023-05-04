@@ -46,6 +46,7 @@
 #include "JuniorKnight.h"
 #include "SceneChangeEventObject.h"
 #include "Background.h"
+#include "DungeonGate.h"
 
 /* Resources */
 #include "Animation.h"
@@ -215,17 +216,17 @@ void TownScene::Enter()
 		AddGameObject(pGameObject);
 	}
 
-	//Background
+	//Change Scene Event
 	{
-		shared_ptr<Background> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(
-			L"Deferred", L"..\\Resources\\Texture\\Map\\Image_Town_Background.png");
-		pGameObject->SetFrustum(false);
+		shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
+			L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\DungeonGate.png");
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 780.f, fHeight / 2.f - 1620.f, 870.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(2000.f, 2200.f, 1.f));
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(100.f, 100.f, 1.f));
 
 		AddGameObject(pGameObject);
 	}
+
 
 	// Connect the player to the camera! 
 	{

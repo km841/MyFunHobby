@@ -55,7 +55,7 @@ void TitleScene::Update()
 {
 	if (IS_DOWN(KEY_TYPE::N))
 	{
-		GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::TOOL));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::TOWN));
 	}
 
 	if (m_tStayTimer.IsRunning())
@@ -177,6 +177,7 @@ void TitleScene::Enter()
 
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
+		pGameObject->AddComponent(make_shared<CameraMoveScript>());
 		pGameObject->GetCamera()->SetProjectionType(PROJECTION_TYPE::PERSPECTIVE);
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());

@@ -31,6 +31,12 @@ shared_ptr<Skul> Cemetery::Get(SKUL_KIND eSkulType)
 	return iter->second;
 }
 
+void Cemetery::Destroy()
+{
+	for (auto pSkul : m_mSkulMap)
+		pSkul.second.reset();
+}
+
 void Cemetery::CreateSkul()
 {
 	// LittleBone

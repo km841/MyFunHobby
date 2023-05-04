@@ -181,6 +181,7 @@
     <ClInclude Include="BlackLab.h" />
     <ClInclude Include="CitadelOfFate.h" />
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="DungeonGate.h" />
     <ClInclude Include="Essence.h" />
     <ClInclude Include="EssenceInfoUI.h" />
     <ClInclude Include="AttackState.h" />
@@ -286,6 +287,7 @@
     <ClCompile Include="BlackLab.cpp" />
     <ClCompile Include="CitadelOfFate.cpp" />
     <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="DungeonGate.cpp" />
     <ClCompile Include="Essence.cpp" />
     <ClCompile Include="EssenceInfoUI.cpp" />
     <ClCompile Include="AttackState.cpp" />

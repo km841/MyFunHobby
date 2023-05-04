@@ -15,6 +15,7 @@ public:
 
 public:
     virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
+    virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
 private:
 

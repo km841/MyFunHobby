@@ -50,9 +50,9 @@ struct GS_OUT
     uint id : SV_InstanceID;
 };
 
-// ========================
-// Particle Geometry Shader
-// ========================
+// ==========================
+//  Particle Geometry Shader
+// ==========================
 // g_vec3_0 : Particle Scale
 
 StructuredBuffer<Particle> particleBuffer : register(t9);
@@ -114,9 +114,9 @@ float4 PS_Main(GS_OUT input) : SV_TARGET
     return output;
 }
 
-// =======================
-// Particle Compute Shader
-// =======================
+// =========================
+//  Particle Compute Shader
+// =========================
 // g_vec3_0  : World Position
 // g_int_0   : Particle Max Count
 // g_float_0 : Particle Life Time (Maximum)
@@ -203,7 +203,7 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
     else
     {
         g_particle[threadIndex.x].fCurTime += fDeltaTime;
-        g_particle[threadIndex.x].fGravityAcc += fGravity * fDeltaTime;
+        g_particle[threadIndex.x].fGravityAcc += fGravity;
         
         if (g_particle[threadIndex.x].fEndTime < g_particle[threadIndex.x].fCurTime)
         {
@@ -212,7 +212,7 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
         else
         {
             g_particle[threadIndex.x].vPosition += g_particle[threadIndex.x].vDirection * g_particle[threadIndex.x].fSpeed * fDeltaTime;
-            g_particle[threadIndex.x].vPosition.y += g_particle[threadIndex.x].fGravityAcc;
+            g_particle[threadIndex.x].vPosition.y += g_particle[threadIndex.x].fGravityAcc * fDeltaTime;
         }
     }
 }

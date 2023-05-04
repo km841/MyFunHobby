@@ -39,3 +39,7 @@ void EventObject::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	int a = 0;
 }
+
+void EventObject::OnTriggerExit(shared_ptr<GameObject> pGameObject)
+{
+}
