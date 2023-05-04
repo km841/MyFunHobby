@@ -26,6 +26,8 @@ enum
     FRAME_BOX_COUNT = 100,
 };
 
+using DungeonObjPair = std::pair<STAGE_KIND, DUNGEON_TYPE>;
+
 class Background;
 class ToolScene :
     public Scene
@@ -56,12 +58,20 @@ private:
     void CreateTile(const Vec3& vWorldPos);
     void CreateTile(const Vec2& vTileAlignPos, wstring szTexPath);
 
+    void CreateDungeonGate(const Vec3& vWorldPos, const wstring& szSelectedKey);
+    void CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath);
+    void CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType);
+    void CreateDungeonWall(const Vec3& vWorldPos, const wstring& szSelectedKey);
+
     void EraseTile(const Vec3& vWorldPos);
     bool CheckTileAtClick(const Vec3& vWorldPos);
 
     void CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const wstring& szBGImagePath);
     void EraseAllBackground();
     void LoadBackgrounds();
+
+    SRV_KIND GetSelectedSRVKind(const wstring& szSRVKey);
+    DungeonObjPair WstringToDungeonObjPair(const wstring& szSelectedKey);
 
 private:
     void AnimationEditorUpdate();

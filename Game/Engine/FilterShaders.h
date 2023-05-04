@@ -32,7 +32,7 @@ static PxFilterFlags PlayerFilterShader(
 		if ((filterData1.word1 & filterData0.word0) || (filterData0.word1 & filterData1.word0))
 		{
 			// 트리거와 충돌하는 물체 모두 OnTrigger 이벤트를 처리하도록 합니다.
-			pairFlags = PxPairFlag::eTRIGGER_DEFAULT | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_PERSISTS | PxPairFlag::eNOTIFY_TOUCH_LOST;
+			pairFlags = PxPairFlag::eTRIGGER_DEFAULT | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
 			return PxFilterFlag::eDEFAULT;
 		}
 	}
@@ -43,7 +43,7 @@ static PxFilterFlags PlayerFilterShader(
 	// 두 필터가 서로 충돌플래그가 세워져 있을 경우
 	if ((filterData0.word0 & filterData1.word1) || (filterData1.word0 & filterData0.word1))
 	{
-		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_PERSISTS | PxPairFlag::eNOTIFY_TOUCH_LOST;
+		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
 		return PxFilterFlag::eDEFAULT;
 	}
 

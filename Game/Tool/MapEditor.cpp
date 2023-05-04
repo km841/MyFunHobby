@@ -18,15 +18,18 @@ MapEditor::MapEditor()
     , m_bBackgroundSend(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
-    m_vWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV.size() / 4.0f)* (m_fTileSize + m_fSpacing));
+    m_vWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size() / 4.0f) * (m_fTileSize + m_fSpacing));
 }
 
 MapEditor::~MapEditor()
 {
-    m_vSRV.clear();
+    for (int32 i = 0; i < SRV_KIND_COUNT; ++i)
+    {
+        m_vSRV[i].clear();
+    }
 }
 
-void MapEditor::Init(const std::vector<ComPtr<ID3D11ShaderResourceView>>& vSRV)
+void MapEditor::Init(const std::array<std::vector<ComPtr<ID3D11ShaderResourceView>>, SRV_KIND_COUNT>& vSRV)
 {
     m_vSRV = vSRV;
 	// 여러 장의 Texture를 로드한다.
@@ -49,7 +52,7 @@ void MapEditor::Update()
             UpdateOptionSelection();
             UpdateTileSelection();
             UpdateBGSelection();
-            // 배경 추가
+            UpdateDOSelection();
         }
         ImGui::EndTabBar();
     }
@@ -82,9 +85,9 @@ void MapEditor::DrawingTypeUI_Update()
 
 void MapEditor::TileButtonUI_Update()
 {
-    for (int i = 0; i < m_vSRV.size(); ++i) {
+    for (int i = 0; i < m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size(); ++i) {
         ImGui::PushID(i);
-        ImGui::ImageButton(m_vSRV[i].Get(), ImVec2(m_fTileSize, m_fTileSize));
+        ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
 
         if (ImGui::IsItemClicked())
         {
@@ -98,7 +101,8 @@ void MapEditor::TileButtonUI_Update()
         }
     }
 
-    if (ImGui::IsWindowFocused()) {
+    if (ImGui::IsWindowFocused()) 
+    {
         ImVec2 vDelta = ImVec2(ImGui::GetWindowPos().x - m_vWindowPos.x, ImGui::GetWindowPos().y - m_vWindowPos.y);
         for (int i = 0; i < m_vSRV.size(); ++i) {
             ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + vDelta.x, ImGui::GetCursorPos().y + vDelta.y));
@@ -133,15 +137,6 @@ void MapEditor::UpdateOptionSelection()
                 fs::path szPath = ImGuiFileDialog::Instance()->GetFilePathName();
                 std::wofstream ofs(szPath, std::ios::app | std::ios::out);
 
-                uint32 iCount = m_TileMapData.iTileCount;
-                ofs << iCount << L'\n';
-
-                for (uint32 i = 0; i < iCount; ++i)
-                {
-                    ofs << m_TileMapData.vTileData[i].szTexPath << L'\n';
-                    ofs << m_TileMapData.vTileData[i].vTilePos.x << L" " << m_TileMapData.vTileData[i].vTilePos.y << L'\n';
-                }
-                
                 size_t iBGCount = m_vBackgroundDataList.size();
                 ofs << iBGCount << L'\n';
 
@@ -151,8 +146,33 @@ void MapEditor::UpdateOptionSelection()
                     ofs << m_vBackgroundDataList[i].vBGPos.x << L" " << m_vBackgroundDataList[i].vBGPos.y << L" " << m_vBackgroundDataList[i].vBGPos.z << L'\n';
                     ofs << m_vBackgroundDataList[i].vBGScale.x << L" " << m_vBackgroundDataList[i].vBGScale.y << L" " << 1.f << L'\n';
                 }
+
+                uint32 iCount = m_TileMapData.iTileCount;
+                ofs << iCount << L'\n';
+
+                for (uint32 i = 0; i < iCount; ++i)
+                {
+                    ofs << m_TileMapData.vTileData[i].szTexPath << L'\n';
+                    ofs << m_TileMapData.vTileData[i].vTilePos.x << L" " << m_TileMapData.vTileData[i].vTilePos.y << L'\n';
+                }
+                
+                size_t iGateCount = m_TileMapData.vDOData.size();
+                ofs << iGateCount << L'\n';
+
+                for (uint32 i = 0; i < iGateCount; ++i)
+                {
+                    ofs << static_cast<uint8>(m_TileMapData.vDOData[i].eDungeonObjType) << '\n';
+                    ofs << static_cast<uint8>(m_TileMapData.vDOData[i].eStageKind) << '\n';
+                    ofs << static_cast<uint8>(m_TileMapData.vDOData[i].eDungeonType) << '\n';
+                    ofs << m_TileMapData.vDOData[i].szTexPath << L'\n';
+                    ofs << m_TileMapData.vDOData[i].vDOPos.x << L" " << m_TileMapData.vDOData[i].vDOPos.y << L'\n';
+                }
+
+
                     
+
                 ofs.close();
+
             }
             ImGuiFileDialog::Instance()->Close();
         }
@@ -174,6 +194,22 @@ void MapEditor::UpdateOptionSelection()
                 fs::path szPath = ImGuiFileDialog::Instance()->GetFilePathName();
                 std::wifstream ifs(szPath, std::ios::in);
 
+                uint32 iBGCount = 0;
+                ifs >> iBGCount;
+
+                m_vBackgroundDataList.clear();
+                m_vBackgroundDataList.resize(iBGCount);
+
+                for (uint32 i = 0; i < iBGCount; ++i)
+                {
+                    ifs >> m_vBackgroundDataList[i].szBGImagePath;
+                    ifs.ignore(1);
+                    ifs >> m_vBackgroundDataList[i].vBGPos.x >> m_vBackgroundDataList[i].vBGPos.y >> m_vBackgroundDataList[i].vBGPos.z;
+                    ifs.ignore(1);
+                    ifs >> m_vBackgroundDataList[i].vBGScale.x >> m_vBackgroundDataList[i].vBGScale.y;
+                    ifs.ignore(1);
+                }
+
                 uint32 iCount = 0;
                 ifs >> iCount;
 
@@ -191,19 +227,30 @@ void MapEditor::UpdateOptionSelection()
                     ifs.ignore(1);
                 }
 
-                uint32 iBGCount = 0;
-                ifs >> iBGCount;
+                uint32 iGateCount = 0;
+                ifs >> iGateCount;
+                m_TileMapData.vDOData.resize(iGateCount);
 
-                m_vBackgroundDataList.clear();
-                m_vBackgroundDataList.resize(iBGCount);
-
-                for (uint32 i = 0; i < iBGCount; ++i)
+                for (uint32 i = 0; i < iGateCount; ++i)
                 {
-                    ifs >> m_vBackgroundDataList[i].szBGImagePath;
+                    uint32 iDungeonObjTypeEnum = 0;
+                    ifs >> iDungeonObjTypeEnum;
                     ifs.ignore(1);
-                    ifs >> m_vBackgroundDataList[i].vBGPos.x >> m_vBackgroundDataList[i].vBGPos.y >> m_vBackgroundDataList[i].vBGPos.z;
+                    m_TileMapData.vDOData[i].eDungeonObjType = static_cast<DUNGEON_OBJ_TYPE>(iDungeonObjTypeEnum);
+
+                    uint32 iStageKindEnum = 0;
+                    ifs >> iStageKindEnum;
                     ifs.ignore(1);
-                    ifs >> m_vBackgroundDataList[i].vBGScale.x >> m_vBackgroundDataList[i].vBGScale.y;
+                    m_TileMapData.vDOData[i].eStageKind = static_cast<STAGE_KIND>(iStageKindEnum);
+
+                    uint32 iDungeonTypeEnum = 0;
+                    ifs >> iDungeonTypeEnum;
+                    ifs.ignore(1);
+                    m_TileMapData.vDOData[i].eDungeonType = static_cast<DUNGEON_TYPE>(iDungeonTypeEnum);
+
+                    ifs >> m_TileMapData.vDOData[i].szTexPath;
+                    ifs.ignore(1);
+                    ifs >> m_TileMapData.vDOData[i].vDOPos.x >> m_TileMapData.vDOData[i].vDOPos.y;
                     ifs.ignore(1);
                 }
 
@@ -342,5 +389,62 @@ void MapEditor::UpdateBGSelection()
         ImGui::EndTabItem();
     }
 
+}
+
+void MapEditor::UpdateDOSelection()
+{
+    if (ImGui::BeginTabItem("DungeonObject"))
+    {
+        ImGui::Text("DungeonGate");
+        int32 iTileGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size());
+        int32 iDungeonGateGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_GATE)].size());
+        int32 iDungeonWallGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_WALL)].size());
+
+        // 던전 게이트나 플레이어와 상호작용하는 오브젝트들, 맵 클리어 후 상자 받침대 등을 추가할 수 있다.
+        for (int32 i = 0; i < iDungeonGateGroupSize; ++i) {
+            ImGui::PushID(i + iTileGroupSize);
+            ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_GATE)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
+
+            if (ImGui::IsItemClicked())
+            {
+                m_iClickedTileIndex = i + iTileGroupSize;
+            }
+
+            ImGui::PopID();
+            if ((i + 1) % 4 != 0)
+            {
+                ImGui::SameLine(0.0f, m_fSpacing);
+            }
+        }
+
+        InsertSeparator();
+        ImGui::Text("DungeonWall");
+        
+        for (int32 i = 0; i < iDungeonWallGroupSize; ++i) {
+            ImGui::PushID(i + iTileGroupSize + iDungeonGateGroupSize);
+            ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_WALL)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
+
+            if (ImGui::IsItemClicked())
+            {
+                m_iClickedTileIndex = i + iTileGroupSize + iDungeonGateGroupSize;
+            }
+
+            ImGui::PopID();
+            if ((i + 1) % 4 != 0)
+            {
+                ImGui::SameLine(0.0f, m_fSpacing);
+            }
+        }
+
+        if (ImGui::IsWindowFocused())
+        {
+            ImVec2 vDelta = ImVec2(ImGui::GetWindowPos().x - m_vWindowPos.x, ImGui::GetWindowPos().y - m_vWindowPos.y);
+            for (int i = 0; i < m_vSRV.size(); ++i) {
+                ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + vDelta.x, ImGui::GetCursorPos().y + vDelta.y));
+            }
+        }
+       
+        ImGui::EndTabItem();
+    }
 }
 

@@ -18,20 +18,14 @@ void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
                 GameObject* pContact = static_cast<GameObject*>(pairHeader.actors[0]->userData);
                 GameObject* pOther = static_cast<GameObject*>(pairHeader.actors[1]->userData);
 
-                if (pContact->GetCollider())
-                    pContact->GetCollider()->OnCollisionEnter(pOther->GetCollider());
-            }
-        }
+                if (pContact && pOther)
+                {
+                    if (pContact->GetCollider())
+                        pContact->GetCollider()->OnCollisionEnter(pOther->GetCollider());
 
-        if (cp.events & PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
-        {
-            if (pairHeader.actors[0]->userData && pairHeader.actors[1]->userData)
-            {
-                GameObject* pTrigger = static_cast<GameObject*>(pairHeader.actors[0]->userData);
-                GameObject* pOther = static_cast<GameObject*>(pairHeader.actors[1]->userData);
-
-                if (pTrigger->GetCollider())
-                    pTrigger->GetCollider()->OnTriggerStay(pOther->GetCollider());
+                    if (pOther->GetCollider())
+                        pOther->GetCollider()->OnCollisionEnter(pContact->GetCollider());
+                }
             }
         }
 
@@ -42,8 +36,14 @@ void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
                 GameObject* pContact = static_cast<GameObject*>(pairHeader.actors[0]->userData);
                 GameObject* pOther = static_cast<GameObject*>(pairHeader.actors[1]->userData);
 
-                if (pContact->GetCollider())
-                    pContact->GetCollider()->OnCollisionExit(pOther->GetCollider());
+                if (pContact && pOther)
+                {
+                    if (pContact->GetCollider())
+                        pContact->GetCollider()->OnCollisionExit(pOther->GetCollider());
+
+                    if (pOther->GetCollider())
+                        pOther->GetCollider()->OnCollisionExit(pContact->GetCollider());
+                }
             }
         }
     }
@@ -62,23 +62,14 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
                 GameObject* pTrigger = static_cast<GameObject*>(pair.triggerActor->userData);
                 GameObject* pOther = static_cast<GameObject*>(pair.otherActor->userData);
 
-                if (pTrigger && pTrigger->GetCollider())
-                    pTrigger->GetCollider()->OnTriggerEnter(pOther->GetCollider());
+                if (pTrigger && pOther)
+                {
+                    if (pTrigger->GetCollider())
+                        pTrigger->GetCollider()->OnTriggerEnter(pOther->GetCollider());
 
-                if (pOther && pOther->GetCollider())
-                    pOther->GetCollider()->OnTriggerEnter(pTrigger->GetCollider());
-            }
-        }
-
-        if (pair.status & PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
-        {
-            if (pair.triggerActor && pair.otherActor)
-            {
-                GameObject* pTrigger = static_cast<GameObject*>(pair.triggerActor->userData);
-                GameObject* pOther = static_cast<GameObject*>(pair.otherActor->userData);
-
-                if (pTrigger->GetCollider())
-                    pTrigger->GetCollider()->OnTriggerStay(pOther->GetCollider());
+                    if (pOther->GetCollider())
+                        pOther->GetCollider()->OnTriggerEnter(pTrigger->GetCollider());
+                }
             }
         }
 
@@ -89,11 +80,15 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
                 GameObject* pTrigger = static_cast<GameObject*>(pair.triggerActor->userData);
                 GameObject* pOther = static_cast<GameObject*>(pair.otherActor->userData);
 
-                if (pTrigger && pTrigger->GetCollider())
-                    pTrigger->GetCollider()->OnTriggerExit(pOther->GetCollider());
+                if (pTrigger && pOther)
+                {
+                    if (pTrigger->GetCollider())
+                        pTrigger->GetCollider()->OnTriggerExit(pOther->GetCollider());
 
-                if (pOther && pOther->GetCollider())
-                    pOther->GetCollider()->OnTriggerExit(pTrigger->GetCollider());
+                    if (pOther->GetCollider())
+                        pOther->GetCollider()->OnTriggerExit(pTrigger->GetCollider());
+                }
+
             }
         }
     }

@@ -10,7 +10,7 @@ public:
 	~MapEditor();
 
 public:
-	void Init(const std::vector<ComPtr<ID3D11ShaderResourceView>>& vSRV);
+	void Init(const std::array<std::vector<ComPtr<ID3D11ShaderResourceView>>, SRV_KIND_COUNT>& vSRV);
 	void Update();
 
 public:
@@ -45,9 +45,6 @@ public:
 	int32 GetSelectedBGIndex() { return m_iBackgroundDataSelector; }
 	const BackgroundData& GetSelectedBGData() { return m_CurrBackgroundData; }
 	const std::vector<BackgroundData>& GetBackgroundDataList() { return m_vBackgroundDataList; }
-	
-	// 이미지를 로드한 후 Create BG 버튼을 누르면 배경 오브젝트를 생성
-
 
 private:
 	void  ColliderTypeUI_Update();
@@ -59,10 +56,11 @@ private:
 	void  UpdateUIHoverState();
 
 	void UpdateBGSelection();
+	void UpdateDOSelection();
 	
 
 private:
-	std::vector<ComPtr<ID3D11ShaderResourceView>> m_vSRV;
+	std::array<std::vector<ComPtr<ID3D11ShaderResourceView>>, SRV_KIND_COUNT> m_vSRV;
 
 	float m_fTileSize;
 	float m_fSpacing;

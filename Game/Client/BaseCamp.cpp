@@ -47,8 +47,6 @@ void BaseCamp::Enter()
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 	// 이동시켜주는 오브젝트 (상호작용)
-
-
 	// Create Monster
 	{
 		GET_SINGLE(ObjectFactory)->CreateMonsterAndAddedScene<JuniorKnight>(Vec3(fWidth / 2.f - 600.f, fHeight / 2.f - 200.f, 99.5f));

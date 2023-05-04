@@ -18,7 +18,7 @@ public:
 	wstring						 GetSelectedTileKey();
 
 private:
-	std::map<int32, wstring> m_mTileRrcMap;
+	std::map<int32, wstring> m_mSRVMap;
 	wstring					 m_szTexPath;
 
 };

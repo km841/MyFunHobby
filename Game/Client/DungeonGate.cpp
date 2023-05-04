@@ -1,7 +1,12 @@
 #include "pch.h"
 #include "DungeonGate.h"
+#include "Input.h"
 
-DungeonGate::DungeonGate()
+DungeonGate::DungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType)
+	: GameObject(LAYER_TYPE::DUNGEON_GATE)
+	, m_eStageKind(eStageKind)
+	, m_eDungeonType(eDungeonType)
+	, m_bIsCollisionWithPlayer(false)
 {
 }
 
@@ -11,33 +16,42 @@ DungeonGate::~DungeonGate()
 
 void DungeonGate::Awake()
 {
-	EventObject::Awake();
+	GameObject::Awake();
 }
 
 void DungeonGate::Start()
 {
-	EventObject::Start();
+	GameObject::Start();
 }
 
 void DungeonGate::Update()
 {
-	EventObject::Update();
+	GameObject::Update();
+
+	if (m_bIsCollisionWithPlayer)
+	{
+		if (IS_DOWN(KEY_TYPE::F))
+		{
+			int a = 0;
+		}
+	}
 }
 
 void DungeonGate::LateUpdate()
 {
-	EventObject::LateUpdate();
+	GameObject::LateUpdate();
 }
 
 void DungeonGate::FinalUpdate()
 {
-	EventObject::FinalUpdate();
+	GameObject::FinalUpdate();
 }
 
 void DungeonGate::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
 	{
+		m_bIsCollisionWithPlayer = true;
 	}
 }
 
@@ -45,5 +59,6 @@ void DungeonGate::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
 	{
+		m_bIsCollisionWithPlayer = false;
 	}
 }

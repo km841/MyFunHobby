@@ -1,10 +1,10 @@
 #pragma once
-#include "EventObject.h"
+#include "GameObject.h"
 class DungeonGate :
-    public EventObject
+    public GameObject
 {
 public:
-    DungeonGate();
+    explicit DungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType);
     virtual ~DungeonGate();
 
     virtual void Awake();
@@ -13,11 +13,16 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
+    STAGE_KIND GetStageKind() { return m_eStageKind; }
+    DUNGEON_TYPE GetDungeonType() { return m_eDungeonType; }
+
 public:
     virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
     virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
 private:
-
+    STAGE_KIND m_eStageKind;
+    DUNGEON_TYPE m_eDungeonType;
+    bool m_bIsCollisionWithPlayer;
 };
 

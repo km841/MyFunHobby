@@ -28,6 +28,7 @@
 #include "Background.h"
 #include "ObjectFactory.h"
 #include "ComponentObject.h"
+#include "DungeonGate.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
@@ -194,6 +195,12 @@ void ToolScene::LoadTileMap()
 		Vec2 vTilePos = Conv::ImVec2ToVec2(m_TileMapData.vTileData[i].vTilePos);
 		CreateTile(vTilePos, m_TileMapData.vTileData[i].szTexPath);
 	}
+
+	for (uint32 i = 0; i < m_TileMapData.vDOData.size(); ++i)
+	{
+		Vec3 vWorldPos = Vec3(m_TileMapData.vDOData[i].vDOPos.x, m_TileMapData.vDOData[i].vDOPos.y, 100.f);
+		CreateDungeonGate(vWorldPos, m_TileMapData.vDOData[i].eStageKind, m_TileMapData.vDOData[i].eDungeonType, m_TileMapData.vDOData[i].szTexPath);
+	}
 }
 
 void ToolScene::EraseTileMap()
@@ -203,6 +210,9 @@ void ToolScene::EraseTileMap()
 		Vec3 vTilePos = Vec3(tile.first.x, tile.first.y, 1.f);
 		EraseTile(vTilePos);
 	}
+
+	auto& vDungeonGateObjects = GetGameObjects(LAYER_TYPE::DUNGEON_GATE);
+	vDungeonGateObjects.clear();
 }
 
 void ToolScene::MapEditorUpdate()
@@ -210,6 +220,7 @@ void ToolScene::MapEditorUpdate()
 	m_tTileDragHolder.Update(DELTA_TIME);
 
 	m_TileMapData.vTileData.clear();
+	m_TileMapData.vDOData.clear();
 
 	auto& vTileGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
 
@@ -224,9 +235,21 @@ void ToolScene::MapEditorUpdate()
 
 	m_TileMapData.iTileCount = static_cast<uint32>(m_TileMapData.vTileData.size());
 
+	auto& vDungeonGateGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::DUNGEON_GATE)];
+	for (auto& pGate : vDungeonGateGroup)
+	{
+		shared_ptr<Material> pMaterial = pGate->GetMeshRenderer()->GetMaterial();
+		wstring szTexPath = pMaterial->GetTexture(0)->GetName();
+		Vec3 vPos = pGate->GetTransform()->GetLocalPosition();
+
+		STAGE_KIND eStageKind = static_pointer_cast<DungeonGate>(pGate)->GetStageKind();
+		DUNGEON_TYPE eDungeonType = static_pointer_cast<DungeonGate>(pGate)->GetDungeonType();
+		m_TileMapData.vDOData.push_back(DungeonObjData{ DUNGEON_OBJ_TYPE::DUNGEON_GATE, eStageKind, eDungeonType, szTexPath, ImVec2(vPos.x, vPos.y) });
+	}
+
 	if (MAP_TOOL->IsDataSynced())
 	{
-		UTILITY->GetTool()->GetMapEditor()->SetTileMapData(m_TileMapData);
+		MAP_TOOL->SetTileMapData(m_TileMapData);
 	}
 
 	if (MAP_TOOL->IsDataSend())
@@ -253,6 +276,8 @@ void ToolScene::MapEditorUpdate()
 
 	if (L"FAILURE" != szSelectedKey)
 	{
+		// 타일인지 검사하고, 타일이라면 아래 로직..
+
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(szSelectedKey);
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 
@@ -262,48 +287,80 @@ void ToolScene::MapEditorUpdate()
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vPreviewTilePos);
 
-	}
+		SRV_KIND eSRVKind = GetSelectedSRVKind(szSelectedKey);
 
-	if (!IS_UP(KEY_TYPE::LBUTTON) && MAP_TOOL->IsMouseNotOver())
-	{ 
-		DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(MAP_TOOL->GetDrawingType());
-		OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(MAP_TOOL->GetOutputType());
-
-		if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
+		if (!IS_UP(KEY_TYPE::LBUTTON) && MAP_TOOL->IsMouseNotOver())
 		{
-			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(MAP_TOOL->GetDrawingType());
+			OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(MAP_TOOL->GetOutputType());
+
+			if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
 			{
-				if (!CheckTileAtClick(vWorldPos) && m_tTileDragHolder.IsFinished())
+				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
 				{
-					CreateTile(vWorldPos);
-					m_tTileDragHolder.Start();
+					if (!CheckTileAtClick(vWorldPos) && m_tTileDragHolder.IsFinished())
+					{
+						switch (eSRVKind)
+						{
+						case SRV_KIND::TILE:
+							CreateTile(vWorldPos);
+							break;
+						case SRV_KIND::DUNGEON_GATE:
+							CreateDungeonGate(vWorldPos, szSelectedKey);
+							break;
+						case SRV_KIND::DUNGEON_WALL:
+							CreateDungeonWall(vWorldPos, szSelectedKey);
+							break;
+						}
+						
+						m_tTileDragHolder.Start();
+					}
+				}
+
+				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+				{
+					if (!CheckTileAtClick(vWorldPos))
+					{
+						switch (eSRVKind)
+						{
+						case SRV_KIND::TILE:
+							CreateTile(vWorldPos);
+							break;
+						case SRV_KIND::DUNGEON_GATE:
+							CreateDungeonGate(vWorldPos, szSelectedKey);
+							break;
+						case SRV_KIND::DUNGEON_WALL:
+							CreateDungeonWall(vWorldPos, szSelectedKey);
+							break;
+						}
+					}
 				}
 			}
 
-			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+			else if (OUTPUT_TYPE::ERASE == eOutputType)
 			{
-				if (!CheckTileAtClick(vWorldPos))
-					CreateTile(vWorldPos);
-			}
-		}
+				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+				{
+					if (m_tTileDragHolder.IsFinished())
+					{
+						EraseTile(vWorldPos);
+						m_tTileDragHolder.Start();
+					}
+				}
 
-		else if (OUTPUT_TYPE::ERASE == eOutputType)
-		{
-			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
-			{
-				if (m_tTileDragHolder.IsFinished())
+				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
 				{
 					EraseTile(vWorldPos);
-					m_tTileDragHolder.Start();
 				}
 			}
-
-			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
-			{
-				EraseTile(vWorldPos);
-			}
 		}
+
+
 	}
+
+
+
+
 
 	if (MAP_TOOL->IsCreateBGFlag())
 	{
@@ -332,8 +389,6 @@ void ToolScene::MapEditorUpdate()
 		MAP_TOOL->ClearClickedTile();
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
 	}
-
-	
 }
 
 void ToolScene::CreateTile(const Vec3& vWorldPos)
@@ -401,6 +456,166 @@ void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath)
 	m_mTileMap[vTileAlignVec] = true;
 }
 
+void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, const wstring& szSelectedKey)
+{
+	DungeonObjPair eEnumPair = WstringToDungeonObjPair(szSelectedKey);
+	STAGE_KIND eStageKind = eEnumPair.first;
+	DUNGEON_TYPE eDungeonType = eEnumPair.second;
+	CreateDungeonGate(vWorldPos, eStageKind, eDungeonType);
+}
+
+void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath)
+{
+	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
+	Vec3 vTexSize = pTexture->GetTexSize();
+
+	shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
+		L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(150.f, 120.f, 1.f), MassProperties(), L"", eStageKind, eDungeonType);
+
+	shared_ptr<Animation> pActivateAnimation = nullptr;
+	shared_ptr<Animation> pDeactivateAnimation = nullptr;
+
+	if (STAGE_KIND::BLACK_LAB == eStageKind)
+	{
+		switch (eDungeonType)
+		{
+		case DUNGEON_TYPE::BASE_CAMP:
+			break;
+		case DUNGEON_TYPE::DUNGEON_ITEM:
+			break;
+		case DUNGEON_TYPE::DUNGEON_GOLD:
+			break;
+		case DUNGEON_TYPE::DUNGEON_BONE:
+			break;
+		case DUNGEON_TYPE::VICE_BOSS:
+			break;
+		case DUNGEON_TYPE::STAGE_BOSS:
+			break;
+		case DUNGEON_TYPE::SHOP:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_deactivate.anim");
+			break;
+		}
+	}
+
+	else if (STAGE_KIND::CITADEL_OF_FATE == eStageKind)
+	{
+		switch (eDungeonType)
+		{
+		case DUNGEON_TYPE::BASE_CAMP:
+			break;
+		case DUNGEON_TYPE::DUNGEON_ITEM:
+			break;
+		case DUNGEON_TYPE::DUNGEON_GOLD:
+			break;
+		case DUNGEON_TYPE::DUNGEON_BONE:
+			break;
+		case DUNGEON_TYPE::VICE_BOSS:
+			break;
+		case DUNGEON_TYPE::STAGE_BOSS:
+			break;
+		case DUNGEON_TYPE::SHOP:
+			break;
+		}
+	}
+
+	assert(pActivateAnimation && pDeactivateAnimation);
+
+	pGameObject->AddComponent(make_shared<Animator>());
+	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Activate", pActivateAnimation);
+	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Deactivate", pDeactivateAnimation);
+	pGameObject->GetAnimator()->Play(L"DungeonGate_Activate");
+
+
+	pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+	pGameObject->GetTransform()->SetLocalScale(Vec3(vTexSize.x, vTexSize.y, 1.f));
+	pGameObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 100.f));
+
+	pGameObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, m_eSceneType));
+}
+
+void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType)
+{
+	shared_ptr<Texture> pTexture = m_pPreviewTile->GetMeshRenderer()->GetMaterial()->GetTexture(0);
+	Vec3 vTexSize = pTexture->GetTexSize();
+
+	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
+
+	shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
+		L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(vTexSize.x, vTexSize.y, 1.f), MassProperties(), L"", eStageKind, eDungeonType);
+
+	shared_ptr<Animation> pActivateAnimation = nullptr;
+	shared_ptr<Animation> pDeactivateAnimation = nullptr;
+
+	if (STAGE_KIND::BLACK_LAB == eStageKind)
+	{
+		switch (eDungeonType)
+		{
+		case DUNGEON_TYPE::BASE_CAMP:
+			break;
+		case DUNGEON_TYPE::DUNGEON_ITEM:
+			break;
+		case DUNGEON_TYPE::DUNGEON_GOLD:
+			break;
+		case DUNGEON_TYPE::DUNGEON_BONE:
+			break;
+		case DUNGEON_TYPE::VICE_BOSS:
+			break;
+		case DUNGEON_TYPE::STAGE_BOSS:
+			break;
+		case DUNGEON_TYPE::SHOP:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_deactivate.anim");
+			break;
+		}
+	}
+
+	else if (STAGE_KIND::CITADEL_OF_FATE == eStageKind)
+	{
+		switch (eDungeonType)
+		{
+		case DUNGEON_TYPE::BASE_CAMP:
+			break;
+		case DUNGEON_TYPE::DUNGEON_ITEM:
+			break;
+		case DUNGEON_TYPE::DUNGEON_GOLD:
+			break;
+		case DUNGEON_TYPE::DUNGEON_BONE:
+			break;
+		case DUNGEON_TYPE::VICE_BOSS:
+			break;
+		case DUNGEON_TYPE::STAGE_BOSS:
+			break;
+		case DUNGEON_TYPE::SHOP:
+			break;
+		}
+	}
+
+	assert(pActivateAnimation && pDeactivateAnimation);
+
+	pGameObject->AddComponent(make_shared<Animator>());
+	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Activate", pActivateAnimation);
+	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Deactivate", pDeactivateAnimation);
+	pGameObject->GetAnimator()->Play(L"DungeonGate_Activate");
+
+
+	pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+	pGameObject->GetTransform()->SetLocalScale(Vec3(vTexSize.x, vTexSize.y, 1.f));
+	pGameObject->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y + vTexSize.y - TILE_HALF_SIZE, 100.f));
+
+	pGameObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, m_eSceneType));
+}
+
+void ToolScene::CreateDungeonWall(const Vec3& vWorldPos, const wstring& szSelectedKey)
+{
+	DungeonObjPair eEnumPair = WstringToDungeonObjPair(szSelectedKey);
+	STAGE_KIND eStageKind = eEnumPair.first;
+
+
+}
+
 void ToolScene::EraseTile(const Vec3& vWorldPos)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
@@ -442,10 +657,6 @@ void ToolScene::CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorl
 	pBackground->GetTransform()->SetLocalPosition(vWorldPos);
 	pBackground->GetTransform()->SetLocalScale(vWorldScale);
 
-	// 씬에 추가하면서 해당 오브젝트를 저쪽에서 제어할 수 있게 한다
-	// 어떻게?
-	// 해당 오브젝트를 선택하고, 해당 값을 입력한 후 버튼을 누르면 위치값이나 스케일이 적용되게끔 한다
-	// 이미지도 바꿀 수 있게 BackgroundData라는 구조체로 관리
 	m_vBackgrounds.push_back(pBackground);
 	AddGameObject(pBackground);
 }
@@ -470,6 +681,40 @@ void ToolScene::LoadBackgrounds()
 		CreateBGAndAddedToScene(vPosition, vScale, szPath);
 	}
 
+}
+
+SRV_KIND ToolScene::GetSelectedSRVKind(const wstring& szSRVKey)
+{
+	if (szSRVKey.find(L"Tiles") != std::wstring::npos)
+		return SRV_KIND::TILE;
+	else if (szSRVKey.find(L"Gate") != std::wstring::npos)
+		return SRV_KIND::DUNGEON_GATE;
+	else if (szSRVKey.find(L"Wall") != std::wstring::npos)
+		return SRV_KIND::DUNGEON_WALL;
+
+	assert(nullptr);
+	return SRV_KIND::END;
+}
+
+DungeonObjPair ToolScene::WstringToDungeonObjPair(const wstring& szSelectedKey)
+{
+	if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
+		szSelectedKey.find(L"Shop") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::SHOP);
+
+	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
+		szSelectedKey.find(L"Shop") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::SHOP);
+
+	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
+		szSelectedKey.find(L"Wall") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::END);
+
+	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
+		szSelectedKey.find(L"Wall") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::END);
+
+	return DungeonObjPair(STAGE_KIND::END, DUNGEON_TYPE::END);
 }
 
 void ToolScene::AnimationEditorUpdate()
@@ -566,7 +811,6 @@ void ToolScene::DrawEditorGraphic()
 
 void ToolScene::PlayAnimation()
 {
-	// Bool값을 통해 툴의 상태를 확인하고 true라면 정보를 받아온다
 	if (ANIMATION_TOOL->GetAnimPlayingFlag())
 	{
 		const auto& vFrameDataList = ANIMATION_TOOL->GetFrameDataList();

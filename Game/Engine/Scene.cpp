@@ -23,6 +23,9 @@
 #include "ComponentObject.h"
 #include "Font.h"
 #include "Background.h"
+#include "DungeonGate.h"
+#include "Animator.h"
+#include "Animation.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -412,6 +415,33 @@ void Scene::Load(const wstring& szPath)
 {
 	std::wifstream ifs(szPath, std::ios::in);
 
+	uint32 iBGCount = 0;
+
+	ifs >> iBGCount;
+	//assert(iBGCount);
+
+	for (uint32 i = 0; i < iBGCount; ++i)
+	{
+		wstring szTexPath = {};
+		Vec3 vBGPosition = {};
+		Vec3 vBGScale = {};
+
+		ifs >> szTexPath;
+		ifs.ignore(1);
+		ifs >> vBGPosition.x >> vBGPosition.y >> vBGPosition.z;
+		ifs.ignore(1);
+		ifs >> vBGScale.x >> vBGScale.y >> vBGScale.z;
+		ifs.ignore(1);
+
+		shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szTexPath);
+		pBackground->GetTransform()->SetLocalPosition(vBGPosition);
+		pBackground->GetTransform()->SetLocalScale(vBGScale);
+
+		pBackground->SetFrustum(false);
+		pBackground->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pBackground, m_eSceneType));
+	}
+
 	uint32 iCount = 0;
 	wstring szTexPath = {};
 	Vec2 vTileAlignVec = {};
@@ -444,35 +474,102 @@ void Scene::Load(const wstring& szPath)
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
 	}
 
-	uint32 iBGCount = 0;
+	uint32 iGateCount = 0;
+	ifs >> iGateCount;
 
-	ifs >> iBGCount;
-	//assert(iBGCount);
-
-	for (uint32 i = 0; i < iBGCount; ++i)
+	for (uint32 i = 0; i < iGateCount; ++i)
 	{
+		uint32 iDungeonObjTypeEnum = 0;
+		uint32 iStageKindEnum = 0;
+		uint32 iDungeonTypeEnum = 0;
+
 		wstring szTexPath = {};
-		Vec3 vBGPosition = {};
-		Vec3 vBGScale = {};
+		Vec2 vGatePos = {};
+
+		ifs >> iDungeonObjTypeEnum;
+		ifs.ignore(1);
+
+		ifs >> iStageKindEnum;
+		ifs.ignore(1);
+
+		ifs >> iDungeonTypeEnum;
+		ifs.ignore(1);
 
 		ifs >> szTexPath;
 		ifs.ignore(1);
-		ifs >> vBGPosition.x >> vBGPosition.y >> vBGPosition.z;
-		ifs.ignore(1);
-		ifs >> vBGScale.x >> vBGScale.y >> vBGScale.z;
+
+		ifs >> vGatePos.x >> vGatePos.y;
 		ifs.ignore(1);
 
-		shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szTexPath);
-		pBackground->GetTransform()->SetLocalPosition(vBGPosition);
-		pBackground->GetTransform()->SetLocalScale(vBGScale);
 
-		pBackground->SetFrustum(false);
-		pBackground->Awake();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pBackground, m_eSceneType));
+		STAGE_KIND eStageKind = static_cast<STAGE_KIND>(iStageKindEnum);
+		DUNGEON_TYPE eDungeonType = static_cast<DUNGEON_TYPE>(iDungeonTypeEnum);
+
+		// 애니메이션 추가
+		shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
+			L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(150.f, 120.f, 1.f), MassProperties(), L"", eStageKind, eDungeonType);
+
+		shared_ptr<Animation> pActivateAnimation = nullptr;
+		shared_ptr<Animation> pDeactivateAnimation = nullptr;
+
+		if (STAGE_KIND::BLACK_LAB == eStageKind)
+		{
+			switch (eDungeonType)
+			{
+			case DUNGEON_TYPE::BASE_CAMP:
+				break;
+			case DUNGEON_TYPE::DUNGEON_ITEM:
+				break;
+			case DUNGEON_TYPE::DUNGEON_GOLD:
+				break;
+			case DUNGEON_TYPE::DUNGEON_BONE:
+				break;
+			case DUNGEON_TYPE::VICE_BOSS:
+				break;
+			case DUNGEON_TYPE::STAGE_BOSS:
+				break;
+			case DUNGEON_TYPE::SHOP:
+				pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_activate.anim");
+				pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_deactivate.anim");
+				break;
+			}
+		}
+
+		else if (STAGE_KIND::CITADEL_OF_FATE == eStageKind)
+		{
+			switch (eDungeonType)
+			{
+			case DUNGEON_TYPE::BASE_CAMP:
+				break;
+			case DUNGEON_TYPE::DUNGEON_ITEM:
+				break;
+			case DUNGEON_TYPE::DUNGEON_GOLD:
+				break;
+			case DUNGEON_TYPE::DUNGEON_BONE:
+				break;
+			case DUNGEON_TYPE::VICE_BOSS:
+				break;
+			case DUNGEON_TYPE::STAGE_BOSS:
+				break;
+			case DUNGEON_TYPE::SHOP:
+				break;
+			}
+		}
+
+		assert(pActivateAnimation && pDeactivateAnimation);
+
+		pGameObject->AddComponent(make_shared<Animator>());
+		pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Activate", pActivateAnimation);
+		pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Deactivate", pDeactivateAnimation);
+		pGameObject->GetAnimator()->Play(L"DungeonGate_Activate");
+
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
+		pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(vGatePos.x, vGatePos.y, 100.f));
+
+		pGameObject->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, m_eSceneType));
 	}
-	
-
-
 
 	ifs.close();
 }

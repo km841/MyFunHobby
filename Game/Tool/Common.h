@@ -13,6 +13,7 @@
 #include "ImGuiFileDialog.h"
 
 #include <vector>
+#include <array>
 
 using int8 = __int8;
 using int16 = __int16;
@@ -50,6 +51,18 @@ struct BackgroundData
 	ImVec3 vBGScale;
 };
 
+enum class SRV_KIND
+{
+	TILE,
+	DUNGEON_GATE,
+	DUNGEON_WALL,
+	END,
+};
+
+enum
+{
+	SRV_KIND_COUNT = SRV_KIND::END,
+};
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -88,11 +101,52 @@ struct TileData
 	ImVec2 vTilePos;
 };
 
+enum class STAGE_KIND : uint8
+{
+	BLACK_LAB,
+	CITADEL_OF_FATE,
+	END,
+};
+
+enum class DUNGEON_TYPE : uint8
+{
+	BASE_CAMP,
+	DUNGEON_ITEM,
+	DUNGEON_GOLD,
+	DUNGEON_BONE,
+	VICE_BOSS,
+	STAGE_BOSS,
+	SHOP,
+	END,
+};
+
+enum
+{
+	STAGE_KIND_COUNT = STAGE_KIND::END,
+};
+
+enum class DUNGEON_OBJ_TYPE
+{
+	DUNGEON_GATE,
+	DUNGEON_WALL,
+};
+
+struct DungeonObjData
+{
+	DUNGEON_OBJ_TYPE eDungeonObjType;
+
+	STAGE_KIND eStageKind;
+	DUNGEON_TYPE eDungeonType;
+	wstring szTexPath;
+	ImVec2 vDOPos;
+};
+
 struct TileMapData
 {
 	wstring szName;
 	uint32  iTileCount;
 	std::vector<TileData> vTileData;
+	std::vector<DungeonObjData> vDOData;
 };
 
 extern shared_ptr<class Tool> g_pTool;

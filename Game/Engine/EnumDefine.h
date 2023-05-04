@@ -120,6 +120,7 @@ enum class LAYER_TYPE : uint8
 	MONSTER_HUD,
 	LOCAL_EFFECT,
 	EVENT_OBJECT,
+	DUNGEON_GATE,
 	SCENE_OBJECT_END = 22,
 	POSSESSION = 23,
 	COMPONENT_OBJECT = 24,
@@ -407,22 +408,3 @@ enum class MONSTER_KIND : uint16
 };
 
 
-enum class STAGE_KIND : uint8
-{
-	BLACK_LAB,
-	CITADEL_OF_FATE,
-	END,
-};
-
-enum class DUNGEON_TYPE : uint8
-{
-	BASE_CAMP,
-	DUNGEON,
-	VICE_BOSS,
-	STAGE_BOSS,
-};
-
-enum
-{
-	STAGE_KIND_COUNT = STAGE_KIND::END,
-};
