@@ -41,6 +41,7 @@
 #include "GlobalEffect.h"
 #include "JuniorKnight.h"
 #include "SceneChangeEventObject.h"
+#include "ComponentObject.h"
 
 /* Resources */
 #include "Animation.h"
@@ -130,6 +131,7 @@ void DungeonScene::Render()
 
 void DungeonScene::Enter()
 {
+	InitializeCameraAndPlayerPos();
 	Awake();
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 }
@@ -137,4 +139,16 @@ void DungeonScene::Enter()
 void DungeonScene::Exit()
 {
 	m_pActiveStage.lock()->Exit();
+}
+
+void DungeonScene::InitializeCameraAndPlayerPos()
+{
+	weak_ptr<Player> pPlayer = GetPlayer();
+
+	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+	pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+	pPlayer.lock()->GetTransform()->SetPhysicalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 200.f, 100.f));
+	GetMainCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
+	GetBGCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
 }

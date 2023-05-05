@@ -1,6 +1,15 @@
 #include "pch.h"
 #include "DungeonGate.h"
 #include "Input.h"
+#include "EventManager.h"
+#include "SceneChangeEvent.h"
+#include "Player.h"
+#include "Transform.h"
+#include "Scenes.h"
+#include "Scene.h"
+#include "Engine.h"
+#include "RigidBody.h"
+#include "ComponentObject.h"
 
 DungeonGate::DungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType)
 	: GameObject(LAYER_TYPE::DUNGEON_GATE)
@@ -32,7 +41,27 @@ void DungeonGate::Update()
 	{
 		if (IS_DOWN(KEY_TYPE::F))
 		{
-			int a = 0;
+			switch (m_eDungeonType)
+			{
+			case DUNGEON_TYPE::BASE_CAMP:
+				break;
+			case DUNGEON_TYPE::DUNGEON_ITEM:
+				break;
+			case DUNGEON_TYPE::DUNGEON_GOLD:
+				break;
+			case DUNGEON_TYPE::DUNGEON_BONE:
+				break;
+			case DUNGEON_TYPE::VICE_BOSS:
+				break;
+			case DUNGEON_TYPE::STAGE_BOSS:
+				break;
+			case DUNGEON_TYPE::SHOP:
+			{
+				GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::SHOP));
+			}
+
+				break;
+			}
 		}
 	}
 }

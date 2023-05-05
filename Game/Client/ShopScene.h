@@ -8,15 +8,16 @@ public:
     virtual ~ShopScene();
 
 public:
-    virtual void Awake();
-    virtual void Start();
-    virtual void Update();
-    virtual void LateUpdate();
-    virtual void FinalUpdate();
-    virtual void Render();
+    virtual void Awake() override;
+    virtual void Start() override;
+    virtual void Update() override;
+    virtual void LateUpdate() override;
+    virtual void FinalUpdate() override;
+    virtual void Render() override;
 
 public:
-    virtual void Enter();
-    virtual void Exit();
+    virtual void Enter() override;
+    virtual void Exit() override;
+    virtual void InitializeCameraAndPlayerPos() override;
 };
 

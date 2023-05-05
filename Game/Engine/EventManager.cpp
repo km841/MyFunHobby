@@ -80,8 +80,8 @@ void EventManager::ProcessSceneChangeEvent(SceneChangeEvent* pEvent)
 void EventManager::ProcessObjectAddedEvent(ObjectAddedToSceneEvent* pEvent)
 {
 	const auto& pCurScene = GET_SINGLE(Scenes)->m_arrScenes[static_cast<uint8>(pEvent->GetSceneType())];
-	pCurScene->AddGameObject(pEvent->GetGameObject());
-	shared_ptr<GameObject> pGameObject = pEvent->GetGameObject();
+	auto pGameObject = pEvent->GetGameObject();
+	pCurScene->AddGameObject(pGameObject);
 }
 
 void EventManager::ProcessObjectRemoveEvent(ObjectRemoveToSceneEvent* pEvent)

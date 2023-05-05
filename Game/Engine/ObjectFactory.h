@@ -53,6 +53,8 @@ public:
 	template<typename T>
 	void CreateMonsterAndAddedScene(const Vec3& vMonsterPos);
 
+	void CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos);
+
 private:
 	template<typename T>
 	inline MONSTER_KIND GetMonsterKind();
@@ -227,6 +229,8 @@ inline void ObjectFactory::CreateMonsterAndAddedScene(const Vec3& vMonsterPos)
 
 	CreateSpawnEffectAndAddedScene(vMonsterPos);
 }
+
+
 
 template<typename T>
 inline shared_ptr<Item> ObjectFactory::CreateItem()

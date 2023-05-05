@@ -48,6 +48,8 @@ public:
     void RemoveGameObject(shared_ptr<GameObject> pGameObject);
     void ShakeCameraAxis(float fMaxTime, const Vec3& vImpulse);
 
+    virtual void InitializeCameraAndPlayerPos() { }
+
 public:
     // Helper Functions
     weak_ptr<ComponentObject> GetMainCamera();

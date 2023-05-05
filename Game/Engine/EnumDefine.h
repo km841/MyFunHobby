@@ -407,4 +407,8 @@ enum class MONSTER_KIND : uint16
 
 };
 
-
+enum class DUNGEON_EVENT_KIND : uint8
+{
+	MONSTER_SPAWN,
+	CREATE_TREASURE,
+};

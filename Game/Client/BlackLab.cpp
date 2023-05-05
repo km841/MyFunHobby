@@ -14,7 +14,7 @@ BlackLab::~BlackLab()
 void BlackLab::Awake()
 {
 	// Add dungeons
-	m_vDungeons.push_back(make_shared<BaseCamp>(L"..\\Resources\\Map\\BaseCampMap.map"));
+	m_vDungeons.push_back(make_shared<BaseCamp>(L"..\\Resources\\Map\\BaseCampMap2.map"));
 
 	// Awaken all stages and select the active dungeon.
 	Stage::Awake();

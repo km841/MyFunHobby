@@ -180,7 +180,15 @@
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
     <ClInclude Include="CitadelOfFate.h" />
+    <ClInclude Include="ConditionBlock.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="DungeonEvent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="DungeonGate.h" />
     <ClInclude Include="Essence.h" />
     <ClInclude Include="EssenceInfoUI.h" />
@@ -191,11 +199,19 @@
     <ClInclude Include="Engrave.h" />
     <ClInclude Include="EvilSwordKirion.h" />
     <ClInclude Include="DetailInfoUI.h" />
+    <ClInclude Include="IfAllDeadMonsterInDungeon.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoUI.h" />
     <ClInclude Include="Lyweasel.h" />
+    <ClInclude Include="MonsterSpawnDungeonEvent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="MousePointerHUD.h" />
     <ClInclude Include="ObjectFollowScript.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
@@ -286,7 +302,15 @@
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
     <ClCompile Include="CitadelOfFate.cpp" />
+    <ClCompile Include="ConditionBlock.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="DungeonEvent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="DungeonGate.cpp" />
     <ClCompile Include="Essence.cpp" />
     <ClCompile Include="EssenceInfoUI.cpp" />
@@ -297,11 +321,19 @@
     <ClCompile Include="Engrave.cpp" />
     <ClCompile Include="EvilSwordKirion.cpp" />
     <ClCompile Include="DetailInfoUI.cpp" />
+    <ClCompile Include="IfAllDeadMonsterInDungeon.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />
     <ClCompile Include="Lyweasel.cpp" />
+    <ClCompile Include="MonsterSpawnDungeonEvent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="MousePointerHUD.cpp" />
     <ClCompile Include="ObjectFollowScript.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />

@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "ShopScene.h"
 #include "Engine.h"
+#include "Player.h"
+#include "ComponentObject.h"
+#include "Camera.h"
+#include "Transform.h"
+#include "RigidBody.h"
 
 ShopScene::ShopScene()
 	: Scene(SCENE_TYPE::SHOP)
@@ -43,6 +48,7 @@ void ShopScene::Render()
 
 void ShopScene::Enter()
 {
+	InitializeCameraAndPlayerPos();
 	ShowCursor(false);
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -52,4 +58,16 @@ void ShopScene::Enter()
 
 void ShopScene::Exit()
 {
+}
+
+void ShopScene::InitializeCameraAndPlayerPos()
+{
+	weak_ptr<Player> pPlayer = GetPlayer();
+
+	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+	pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+	pPlayer.lock()->GetTransform()->SetPhysicalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 200.f, 100.f));
+	GetMainCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
+	GetBGCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
 }

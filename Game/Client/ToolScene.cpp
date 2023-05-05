@@ -286,79 +286,76 @@ void ToolScene::MapEditorUpdate()
 		vPreviewTilePos.y -= 8.f;
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vPreviewTilePos);
+	}
 
+	
+
+	if (!IS_UP(KEY_TYPE::LBUTTON) && MAP_TOOL->IsMouseNotOver())
+	{
+		DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(MAP_TOOL->GetDrawingType());
+		OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(MAP_TOOL->GetOutputType());
 		SRV_KIND eSRVKind = GetSelectedSRVKind(szSelectedKey);
 
-		if (!IS_UP(KEY_TYPE::LBUTTON) && MAP_TOOL->IsMouseNotOver())
+		if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
 		{
-			DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(MAP_TOOL->GetDrawingType());
-			OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(MAP_TOOL->GetOutputType());
-
-			if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
+			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
 			{
-				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+				if (!CheckTileAtClick(vWorldPos) && m_tTileDragHolder.IsFinished())
 				{
-					if (!CheckTileAtClick(vWorldPos) && m_tTileDragHolder.IsFinished())
+					switch (eSRVKind)
 					{
-						switch (eSRVKind)
-						{
-						case SRV_KIND::TILE:
-							CreateTile(vWorldPos);
-							break;
-						case SRV_KIND::DUNGEON_GATE:
-							CreateDungeonGate(vWorldPos, szSelectedKey);
-							break;
-						case SRV_KIND::DUNGEON_WALL:
-							CreateDungeonWall(vWorldPos, szSelectedKey);
-							break;
-						}
-						
-						m_tTileDragHolder.Start();
+					case SRV_KIND::TILE:
+						CreateTile(vWorldPos);
+						break;
+					case SRV_KIND::DUNGEON_GATE:
+						CreateDungeonGate(vWorldPos, szSelectedKey);
+						break;
+					case SRV_KIND::DUNGEON_WALL:
+						CreateDungeonWall(vWorldPos, szSelectedKey);
+						break;
 					}
-				}
 
-				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
-				{
-					if (!CheckTileAtClick(vWorldPos))
-					{
-						switch (eSRVKind)
-						{
-						case SRV_KIND::TILE:
-							CreateTile(vWorldPos);
-							break;
-						case SRV_KIND::DUNGEON_GATE:
-							CreateDungeonGate(vWorldPos, szSelectedKey);
-							break;
-						case SRV_KIND::DUNGEON_WALL:
-							CreateDungeonWall(vWorldPos, szSelectedKey);
-							break;
-						}
-					}
+					m_tTileDragHolder.Start();
 				}
 			}
 
-			else if (OUTPUT_TYPE::ERASE == eOutputType)
+			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
 			{
-				if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+				if (!CheckTileAtClick(vWorldPos))
 				{
-					if (m_tTileDragHolder.IsFinished())
+					switch (eSRVKind)
 					{
-						EraseTile(vWorldPos);
-						m_tTileDragHolder.Start();
+					case SRV_KIND::TILE:
+						CreateTile(vWorldPos);
+						break;
+					case SRV_KIND::DUNGEON_GATE:
+						CreateDungeonGate(vWorldPos, szSelectedKey);
+						break;
+					case SRV_KIND::DUNGEON_WALL:
+						CreateDungeonWall(vWorldPos, szSelectedKey);
+						break;
 					}
-				}
-
-				else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
-				{
-					EraseTile(vWorldPos);
 				}
 			}
 		}
 
+		else if (OUTPUT_TYPE::ERASE == eOutputType)
+		{
+			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
+			{
+				if (m_tTileDragHolder.IsFinished())
+				{
+					EraseTile(vWorldPos);
+					m_tTileDragHolder.Start();
+				}
+			}
 
+			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
+			{
+				EraseTile(vWorldPos);
+			}
+		}
 	}
-
-
 
 
 
@@ -680,7 +677,6 @@ void ToolScene::LoadBackgrounds()
 
 		CreateBGAndAddedToScene(vPosition, vScale, szPath);
 	}
-
 }
 
 SRV_KIND ToolScene::GetSelectedSRVKind(const wstring& szSRVKey)
@@ -692,7 +688,6 @@ SRV_KIND ToolScene::GetSelectedSRVKind(const wstring& szSRVKey)
 	else if (szSRVKey.find(L"Wall") != std::wstring::npos)
 		return SRV_KIND::DUNGEON_WALL;
 
-	assert(nullptr);
 	return SRV_KIND::END;
 }
 

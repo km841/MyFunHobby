@@ -13,7 +13,7 @@
 POOL_INIT(JuniorKnight);
 JuniorKnight::JuniorKnight()
 {
-	m_Status.MonsterDefaultSetting();
+	
 }
 
 JuniorKnight::~JuniorKnight()

@@ -1,7 +1,6 @@
 #pragma once
-#include "Scene.h"
-#include "Scenes.h"
 
+class DungeonEvent;
 class Dungeon
 {
 public:
@@ -18,8 +17,14 @@ public:
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;
 
+	void AddEvent(shared_ptr<DungeonEvent> pDungeonEvent);
+	void EventUpdate();
+
 protected:
 	DUNGEON_TYPE m_eDungeonType;
 	const wstring m_szMapPath;
+
+private:
+	std::queue<shared_ptr<DungeonEvent>> m_qEventQueue;
 };
 

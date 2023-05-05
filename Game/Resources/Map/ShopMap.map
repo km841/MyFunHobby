@@ -1,81 +1,54 @@
-40
+1
+..\Resources\Texture\Map\Image_Shop_Background.png
+200 700 870
+1024 488 1
+24
 ..\Resources\Texture\Tiles\Grass_10.png
--384 128
-..\Resources\Texture\Tiles\Grass_31.png
--320 128
+-320 192
+..\Resources\Texture\Tiles\Grass_14.png
+-192 192
+..\Resources\Texture\Tiles\Grass_14.png
+-256 192
+..\Resources\Texture\Tiles\Grass_14.png
+-128 192
+..\Resources\Texture\Tiles\Grass_14.png
+-64 192
+..\Resources\Texture\Tiles\Grass_14.png
+0 192
+..\Resources\Texture\Tiles\Grass_14.png
+64 192
+..\Resources\Texture\Tiles\Grass_14.png
+128 192
+..\Resources\Texture\Tiles\Grass_14.png
+192 192
+..\Resources\Texture\Tiles\Grass_14.png
+256 192
+..\Resources\Texture\Tiles\Grass_14.png
+320 192
+..\Resources\Texture\Tiles\Grass_14.png
+384 192
+..\Resources\Texture\Tiles\Grass_14.png
+448 192
+..\Resources\Texture\Tiles\Grass_14.png
+512 192
+..\Resources\Texture\Tiles\Grass_14.png
+576 192
+..\Resources\Texture\Tiles\Grass_14.png
+640 192
+..\Resources\Texture\Tiles\Grass_14.png
+704 192
+..\Resources\Texture\Tiles\Grass_14.png
+768 192
+..\Resources\Texture\Tiles\Grass_14.png
+832 192
+..\Resources\Texture\Tiles\Grass_14.png
+896 192
+..\Resources\Texture\Tiles\Grass_14.png
+960 192
+..\Resources\Texture\Tiles\Grass_14.png
+1024 192
+..\Resources\Texture\Tiles\Grass_14.png
+1088 192
 ..\Resources\Texture\Tiles\Grass_38.png
-2112 128
-..\Resources\Texture\Tiles\Grass_31.png
-2048 128
-..\Resources\Texture\Tiles\Grass_31.png
-1984 128
-..\Resources\Texture\Tiles\Grass_31.png
-1920 128
-..\Resources\Texture\Tiles\Grass_31.png
-1856 128
-..\Resources\Texture\Tiles\Grass_31.png
-1792 128
-..\Resources\Texture\Tiles\Grass_31.png
-1728 128
-..\Resources\Texture\Tiles\Grass_31.png
-1664 128
-..\Resources\Texture\Tiles\Grass_31.png
-1600 128
-..\Resources\Texture\Tiles\Grass_31.png
-1536 128
-..\Resources\Texture\Tiles\Grass_31.png
-1472 128
-..\Resources\Texture\Tiles\Grass_31.png
-1408 128
-..\Resources\Texture\Tiles\Grass_31.png
-1344 128
-..\Resources\Texture\Tiles\Grass_31.png
-1280 128
-..\Resources\Texture\Tiles\Grass_31.png
-1216 128
-..\Resources\Texture\Tiles\Grass_31.png
-1152 128
-..\Resources\Texture\Tiles\Grass_31.png
-1088 128
-..\Resources\Texture\Tiles\Grass_31.png
-1024 128
-..\Resources\Texture\Tiles\Grass_31.png
-960 128
-..\Resources\Texture\Tiles\Grass_31.png
-896 128
-..\Resources\Texture\Tiles\Grass_31.png
-832 128
-..\Resources\Texture\Tiles\Grass_31.png
-768 128
-..\Resources\Texture\Tiles\Grass_31.png
-704 128
-..\Resources\Texture\Tiles\Grass_31.png
-640 128
-..\Resources\Texture\Tiles\Grass_31.png
-576 128
-..\Resources\Texture\Tiles\Grass_31.png
-512 128
-..\Resources\Texture\Tiles\Grass_31.png
-448 128
-..\Resources\Texture\Tiles\Grass_31.png
-384 128
-..\Resources\Texture\Tiles\Grass_31.png
-320 128
-..\Resources\Texture\Tiles\Grass_31.png
-256 128
-..\Resources\Texture\Tiles\Grass_31.png
-192 128
-..\Resources\Texture\Tiles\Grass_31.png
-128 128
-..\Resources\Texture\Tiles\Grass_31.png
-64 128
-..\Resources\Texture\Tiles\Grass_31.png
-0 128
-..\Resources\Texture\Tiles\Grass_31.png
--64 128
-..\Resources\Texture\Tiles\Grass_31.png
--128 128
-..\Resources\Texture\Tiles\Grass_31.png
--192 128
-..\Resources\Texture\Tiles\Grass_31.png
--256 128
+1152 192
+0

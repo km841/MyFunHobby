@@ -20,6 +20,8 @@ public:
     virtual void Enter();
     virtual void Exit();
 
+    virtual void InitializeCameraAndPlayerPos();
+
 private:
     std::array<shared_ptr<Stage>, STAGE_KIND_COUNT> m_arrStages;
     weak_ptr<Stage> m_pActiveStage;

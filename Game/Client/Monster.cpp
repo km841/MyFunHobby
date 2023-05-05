@@ -41,6 +41,7 @@ Monster::~Monster()
 void Monster::Awake()
 {
 	GameObject::Awake();
+	m_Status.MonsterDefaultSetting();
 	CreateMonsterHPHUD();
 	CreateParticleGeneratorAndAddedToScene();
 }

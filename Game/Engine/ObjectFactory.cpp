@@ -28,6 +28,26 @@
 #include "Rapidity.h"
 #include "Arms.h"
 
+void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
+{
+	shared_ptr<Monster> pMonster = nullptr;
+
+	switch (eMonsterKind)
+	{
+	case MONSTER_KIND::JUNIOR_KNIGHT:
+		pMonster = CreateJuniorKnight(vMonsterPos);
+		break;
+	}
+
+	assert(pMonster);
+
+	pMonster->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pMonster, eSceneType));
+
+	CreateSpawnEffectAndAddedScene(vMonsterPos);
+}
+
 shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 {
 	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));

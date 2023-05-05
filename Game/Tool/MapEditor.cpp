@@ -206,7 +206,7 @@ void MapEditor::UpdateOptionSelection()
                     ifs.ignore(1);
                     ifs >> m_vBackgroundDataList[i].vBGPos.x >> m_vBackgroundDataList[i].vBGPos.y >> m_vBackgroundDataList[i].vBGPos.z;
                     ifs.ignore(1);
-                    ifs >> m_vBackgroundDataList[i].vBGScale.x >> m_vBackgroundDataList[i].vBGScale.y;
+                    ifs >> m_vBackgroundDataList[i].vBGScale.x >> m_vBackgroundDataList[i].vBGScale.y >> m_vBackgroundDataList[i].vBGScale.z;
                     ifs.ignore(1);
                 }
 
