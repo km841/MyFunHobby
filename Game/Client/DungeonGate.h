@@ -16,6 +16,8 @@ public:
     STAGE_KIND GetStageKind() { return m_eStageKind; }
     DUNGEON_TYPE GetDungeonType() { return m_eDungeonType; }
 
+    void GoToNextMap();
+
 public:
     virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
     virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);

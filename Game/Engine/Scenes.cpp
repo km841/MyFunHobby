@@ -3,7 +3,6 @@
 #include "TitleScene.h"
 #include "TownScene.h"
 #include "ToolScene.h"
-#include "ShopScene.h"
 #include "DungeonScene.h"
 #include "Engine.h"
 #include "Camera.h"
@@ -13,7 +12,6 @@ void Scenes::Init()
 	m_arrScenes[static_cast<uint8>(SCENE_TYPE::TITLE)] = make_shared<TitleScene>();
 	m_arrScenes[static_cast<uint8>(SCENE_TYPE::TOWN)] = make_shared<TownScene>();
 	m_arrScenes[static_cast<uint8>(SCENE_TYPE::TOOL)] = make_shared<ToolScene>();
-	m_arrScenes[static_cast<uint8>(SCENE_TYPE::SHOP)] = make_shared<ShopScene>();
 	m_arrScenes[static_cast<uint8>(SCENE_TYPE::DUNGEON)] = make_shared<DungeonScene>();
 
 	m_pActiveScene = m_arrScenes[static_cast<uint8>(SCENE_TYPE::TITLE)];

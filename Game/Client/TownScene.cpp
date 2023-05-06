@@ -184,7 +184,7 @@ void TownScene::Enter()
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-		pPlayer->GetLight()->SetLightRange(1000.f);
+		pPlayer->GetLight()->SetLightRange(600.f);
 		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
@@ -279,6 +279,7 @@ void TownScene::Enter()
 void TownScene::Exit()
 {
 	// 모든 Actor를 씬에서 제거한다.
-
+	GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::TILE);
+	GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::BACKGROUND);
 
 }

@@ -204,7 +204,6 @@ void GameObject::Release()
 		if (m_arrComponents[i])
 			m_arrComponents[i].reset();
 	}
-
 	m_vScripts.clear();
 	ReturnToPool();
 }

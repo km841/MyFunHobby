@@ -179,6 +179,7 @@
     <ClInclude Include="BaseCamp.h" />
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
+    <ClInclude Include="BoneDungeon.h" />
     <ClInclude Include="CitadelOfFate.h" />
     <ClInclude Include="ConditionBlock.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -251,7 +252,6 @@
     <ClInclude Include="PlayerSkulThumnailScript.h" />
     <ClInclude Include="RotateHeadScript.h" />
     <ClInclude Include="ForbiddenSword.h" />
-    <ClInclude Include="ShopScene.h" />
     <ClInclude Include="SkillBoxHUD.h" />
     <ClInclude Include="SkillState.h" />
     <ClInclude Include="Skul.h" />
@@ -301,6 +301,7 @@
     <ClCompile Include="BaseCamp.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
+    <ClCompile Include="BoneDungeon.cpp" />
     <ClCompile Include="CitadelOfFate.cpp" />
     <ClCompile Include="ConditionBlock.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -374,7 +375,6 @@
     <ClCompile Include="PlayerSkulThumnailScript.cpp" />
     <ClCompile Include="RotateHeadScript.cpp" />
     <ClCompile Include="ForbiddenSword.cpp" />
-    <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="SkillBoxHUD.cpp" />
     <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="Skul.cpp" />

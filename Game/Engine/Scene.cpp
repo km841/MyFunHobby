@@ -288,6 +288,7 @@ void Scene::CameraShakeUpdate()
 		m_tCameraShakeTimer.Update(DELTA_TIME);
 		float fProgress = m_tCameraShakeTimer.GetProgress();
 		shared_ptr<Camera> pMainCamera = s_vCameras[0];
+		shared_ptr<Camera> pBGCamera = s_vCameras[2];
 		if (!pMainCamera)
 			return;
 
@@ -296,11 +297,13 @@ void Scene::CameraShakeUpdate()
 		{
 			vCamPos += m_vCameraShakeImpulse * DELTA_TIME;
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
+			pBGCamera->GetTransform()->SetLocalPosition(vCamPos);
 		}
 		else
 		{
 			vCamPos -= m_vCameraShakeImpulse * DELTA_TIME;
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
+			pBGCamera->GetTransform()->SetLocalPosition(vCamPos);
 
 			if (m_tCameraShakeTimer.IsFinished())
 			{
@@ -346,6 +349,9 @@ std::vector<shared_ptr<GameObject>>& Scene::GetGameObjects(LAYER_TYPE eLayerType
 
 void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 {
+	if (!pGameObject)
+		int a = 0;
+
 	if (pGameObject->GetCamera())
 	{
 		auto pFindIt = std::find(s_vCameras.begin(), s_vCameras.end(), pGameObject->GetCamera());
@@ -381,6 +387,19 @@ void Scene::ShakeCameraAxis(float fMaxTime, const Vec3& vImpulse)
 	m_tCameraShakeTimer.SetEndTime(fMaxTime);
 	m_tCameraShakeTimer.Start();
 	m_vCameraShakeImpulse = vImpulse;
+}
+
+void Scene::RemoveLocalGroup(LAYER_TYPE eLocalLayerType)
+{
+	auto& vLocalGroup = GetGameObjects(eLocalLayerType);
+
+	for (auto& pLocalGameObject : vLocalGroup)
+	{
+		if (pLocalGameObject->GetPhysical())
+			pLocalGameObject->GetPhysical()->RemoveActorToPxScene();
+	}
+
+	vLocalGroup.clear();
 }
 
 weak_ptr<ComponentObject> Scene::GetMainCamera()
@@ -523,14 +542,12 @@ void Scene::Load(const wstring& szPath)
 			case DUNGEON_TYPE::DUNGEON_GOLD:
 				break;
 			case DUNGEON_TYPE::DUNGEON_BONE:
+				pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
+				pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
 				break;
 			case DUNGEON_TYPE::VICE_BOSS:
 				break;
 			case DUNGEON_TYPE::STAGE_BOSS:
-				break;
-			case DUNGEON_TYPE::SHOP:
-				pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_activate.anim");
-				pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_deactivate.anim");
 				break;
 			}
 		}
@@ -550,8 +567,6 @@ void Scene::Load(const wstring& szPath)
 			case DUNGEON_TYPE::VICE_BOSS:
 				break;
 			case DUNGEON_TYPE::STAGE_BOSS:
-				break;
-			case DUNGEON_TYPE::SHOP:
 				break;
 			}
 		}

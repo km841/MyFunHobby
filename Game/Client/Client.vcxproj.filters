@@ -457,9 +457,6 @@
     <ClInclude Include="ObjectFollowScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect\Script</Filter>
     </ClInclude>
-    <ClInclude Include="ShopScene.h">
-      <Filter>소스 파일\Game\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Background.h">
       <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
     </ClInclude>
@@ -495,6 +492,9 @@
     </ClInclude>
     <ClInclude Include="IfAllDeadMonsterInDungeon.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneDungeon.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -796,9 +796,6 @@
     <ClCompile Include="ObjectFollowScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect\Script</Filter>
     </ClCompile>
-    <ClCompile Include="ShopScene.cpp">
-      <Filter>소스 파일\Game\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Background.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
     </ClCompile>
@@ -834,6 +831,9 @@
     </ClCompile>
     <ClCompile Include="IfAllDeadMonsterInDungeon.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneDungeon.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

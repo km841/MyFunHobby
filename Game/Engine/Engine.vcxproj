@@ -196,6 +196,7 @@
     <ClInclude Include="FW1FontWrapper.h" />
     <ClInclude Include="FW1Precompiled.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GoToNextDungeonEvent.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IsDeadCondition.h" />
     <ClInclude Include="IsHitCondition.h" />
@@ -278,6 +279,7 @@
     <ClCompile Include="ForceOnObjectEvent.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GoToNextDungeonEvent.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="IsDeadCondition.cpp" />
     <ClCompile Include="IsHitCondition.cpp" />

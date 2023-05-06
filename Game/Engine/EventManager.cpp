@@ -17,6 +17,8 @@
 #include "Clock.h"
 #include "PauseEvent.h"
 #include "PlayEvent.h"
+#include "GoToNextDungeonEvent.h"
+#include "Stage.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -67,6 +69,10 @@ void EventManager::ProcessEvents()
 
 		case EVENT_TYPE::PLAY_EVENT:
 			ProcessPlayEvent(static_cast<PlayEvent*>(pEvent.get()));
+			break;
+
+		case EVENT_TYPE::GO_TO_NEXT_DUNGEON:
+			ProcessGoToNextDungeonEvent(static_cast<GoToNextDungeonEvent*>(pEvent.get()));
 			break;
 		}
 	}
@@ -133,4 +139,9 @@ void EventManager::ProcessPlayEvent(PlayEvent* pEvent)
 {
 	pEvent->GetEventType();
 	GET_SINGLE(Clock)->Play();
+}
+
+void EventManager::ProcessGoToNextDungeonEvent(GoToNextDungeonEvent* pEvent)
+{
+	pEvent->GetStage()->GoToNextDungeon(pEvent->GetDungeonType());
 }

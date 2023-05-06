@@ -116,7 +116,6 @@ enum class DUNGEON_TYPE : uint8
 	DUNGEON_BONE,
 	VICE_BOSS,
 	STAGE_BOSS,
-	SHOP,
 	END,
 };
 

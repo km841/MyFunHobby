@@ -47,3 +47,25 @@ void Stage::FinalUpdate()
 	if (m_pActiveDungeon.lock())
 		m_pActiveDungeon.lock()->FinalUpdate();
 }
+
+void Stage::GoToNextDungeon(DUNGEON_TYPE eDungeonType)
+{
+	for (auto& pDungeon : m_vDungeons)
+	{
+		if (eDungeonType == pDungeon->GetDungeonType())
+		{
+			if (m_pActiveDungeon.lock())
+				m_pActiveDungeon.lock()->Exit();
+
+			m_pActiveDungeon = pDungeon;
+			m_pActiveDungeon.lock()->Enter();
+			break;
+		}
+	}
+}
+
+void Stage::AddDungeon(shared_ptr<Dungeon> pDungeon)
+{
+	pDungeon->m_pStage = shared_from_this();
+	m_vDungeons.push_back(pDungeon);
+}

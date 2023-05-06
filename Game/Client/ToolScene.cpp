@@ -282,8 +282,6 @@ void ToolScene::MapEditorUpdate()
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 
 		Vec3 vPreviewTilePos = vWorldPos;
-		vPreviewTilePos.x -= 28.f;
-		vPreviewTilePos.y -= 8.f;
 
 		m_pPreviewTile->GetTransform()->SetLocalPosition(vPreviewTilePos);
 	}
@@ -483,14 +481,12 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 		case DUNGEON_TYPE::DUNGEON_GOLD:
 			break;
 		case DUNGEON_TYPE::DUNGEON_BONE:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::VICE_BOSS:
 			break;
 		case DUNGEON_TYPE::STAGE_BOSS:
-			break;
-		case DUNGEON_TYPE::SHOP:
-			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_activate.anim");
-			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_deactivate.anim");
 			break;
 		}
 	}
@@ -510,8 +506,6 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 		case DUNGEON_TYPE::VICE_BOSS:
 			break;
 		case DUNGEON_TYPE::STAGE_BOSS:
-			break;
-		case DUNGEON_TYPE::SHOP:
 			break;
 		}
 	}
@@ -556,14 +550,12 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 		case DUNGEON_TYPE::DUNGEON_GOLD:
 			break;
 		case DUNGEON_TYPE::DUNGEON_BONE:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::VICE_BOSS:
 			break;
 		case DUNGEON_TYPE::STAGE_BOSS:
-			break;
-		case DUNGEON_TYPE::SHOP:
-			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_activate.anim");
-			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_deactivate.anim");
 			break;
 		}
 	}
@@ -583,8 +575,6 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 		case DUNGEON_TYPE::VICE_BOSS:
 			break;
 		case DUNGEON_TYPE::STAGE_BOSS:
-			break;
-		case DUNGEON_TYPE::SHOP:
 			break;
 		}
 	}
@@ -694,12 +684,20 @@ SRV_KIND ToolScene::GetSelectedSRVKind(const wstring& szSRVKey)
 DungeonObjPair ToolScene::WstringToDungeonObjPair(const wstring& szSelectedKey)
 {
 	if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
-		szSelectedKey.find(L"Shop") != std::wstring::npos)
-		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::SHOP);
+		szSelectedKey.find(L"Item") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::DUNGEON_ITEM);
 
 	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
-		szSelectedKey.find(L"Shop") != std::wstring::npos)
-		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::SHOP);
+		szSelectedKey.find(L"Item") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::DUNGEON_ITEM);
+
+	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
+		szSelectedKey.find(L"Bone") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::DUNGEON_BONE);
+
+	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
+		szSelectedKey.find(L"Bone") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::DUNGEON_BONE);
 
 	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
 		szSelectedKey.find(L"Wall") != std::wstring::npos)

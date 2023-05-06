@@ -1,6 +1,7 @@
 #pragma once
 class Dungeon;
 class Stage
+	: public std::enable_shared_from_this<Stage>
 {
 public:
 	Stage(STAGE_KIND eStageKind);
@@ -15,6 +16,10 @@ public:
 
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;
+
+public:
+	void GoToNextDungeon(DUNGEON_TYPE eDungeonType);
+	void AddDungeon(shared_ptr<Dungeon> pDungeon);
 
 protected:
 	STAGE_KIND m_eStageKind;

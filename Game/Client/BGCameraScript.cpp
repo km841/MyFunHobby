@@ -32,5 +32,5 @@ void BGCameraScript::LateUpdate()
 	vDiffNormal.Normalize();
 	vDiffNormal.y *= 2.f;
 	vDiffNormal.z = 0.f;
-	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 1000.f * DELTA_TIME);
+	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 2000.f * DELTA_TIME);
 }

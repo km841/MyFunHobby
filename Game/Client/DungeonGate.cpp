@@ -10,6 +10,8 @@
 #include "Engine.h"
 #include "RigidBody.h"
 #include "ComponentObject.h"
+#include "GoToNextDungeonEvent.h"
+#include "DungeonScene.h"
 
 DungeonGate::DungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType)
 	: GameObject(LAYER_TYPE::DUNGEON_GATE)
@@ -41,27 +43,12 @@ void DungeonGate::Update()
 	{
 		if (IS_DOWN(KEY_TYPE::F))
 		{
-			switch (m_eDungeonType)
-			{
-			case DUNGEON_TYPE::BASE_CAMP:
-				break;
-			case DUNGEON_TYPE::DUNGEON_ITEM:
-				break;
-			case DUNGEON_TYPE::DUNGEON_GOLD:
-				break;
-			case DUNGEON_TYPE::DUNGEON_BONE:
-				break;
-			case DUNGEON_TYPE::VICE_BOSS:
-				break;
-			case DUNGEON_TYPE::STAGE_BOSS:
-				break;
-			case DUNGEON_TYPE::SHOP:
-			{
-				GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::SHOP));
-			}
+			SCENE_TYPE eSceneType=GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+			if (SCENE_TYPE::DUNGEON != eSceneType)
+				return;
 
-				break;
-			}
+			weak_ptr<Stage> pStage = static_pointer_cast<DungeonScene>(GET_SINGLE(Scenes)->GetActiveScene())->GetActiveStage();
+			GET_SINGLE(EventManager)->AddEvent(make_unique<GoToNextDungeonEvent>(pStage.lock(), m_eDungeonType));
 		}
 	}
 }

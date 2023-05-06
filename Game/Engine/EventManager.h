@@ -9,6 +9,7 @@ class ForceOnObjectEvent;
 class SceneFadeEvent;
 class PauseEvent;
 class PlayEvent;
+class GoToNextDungeonEvent;
 
 class EventManager
 {
@@ -28,6 +29,7 @@ private:
 	void ProcessSceneFadeEvent(SceneFadeEvent* pEvent);
 	void ProcessPauseEvent(PauseEvent* pEvent);
 	void ProcessPlayEvent(PlayEvent* pEvent);
+	void ProcessGoToNextDungeonEvent(GoToNextDungeonEvent* pEvent);
 
 private:
 	std::queue<unique_ptr<Event>> m_qEvents;

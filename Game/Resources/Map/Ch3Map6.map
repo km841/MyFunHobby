@@ -1,0 +1,467 @@
+4
+..\Resources\Texture\Map\Image_Ch3_BackgroundColor.png
+800 450 870
+3000 3000 1
+..\Resources\Texture\Map\Image_Ch3_Background_1.png
+800 600 700
+1740 756 1
+..\Resources\Texture\Map\Image_Ch3_Background_2.png
+800 600 850
+1678 749 1
+..\Resources\Texture\Map\Image_Ch3_Background_3.png
+0 1000 800
+2800 1200 1
+226
+..\Resources\Texture\Tiles\DarkStone_2.png
+-896 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-832 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-768 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-704 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-640 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-576 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-512 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-448 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-384 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-320 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-256 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-192 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-128 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+-64 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+0 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+64 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+128 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+320 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+384 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+448 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+512 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+576 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+640 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+704 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+768 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+832 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+896 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+960 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1024 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1088 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1152 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1216 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1280 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1344 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1408 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1472 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1536 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1600 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1664 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1728 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+1792 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+192 192
+..\Resources\Texture\Tiles\DarkStone_2.png
+256 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1024 256
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1024 320
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1088 256
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1088 320
+..\Resources\Texture\Tiles\DarkStone_6.png
+-960 320
+..\Resources\Texture\Tiles\DarkStone_6.png
+-960 256
+..\Resources\Texture\Tiles\DarkStone_6.png
+-960 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1024 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1088 192
+..\Resources\Texture\Tiles\DarkStone_4.png
+-960 384
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1024 384
+..\Resources\Texture\Tiles\DarkStone_2.png
+-1088 384
+..\Resources\Texture\Tiles\DarkStone_6.png
+1088 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1088 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1088 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1024 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-960 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-896 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-832 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-768 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-704 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-640 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-576 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-512 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-448 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-384 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-320 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-256 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-192 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-128 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+-64 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+0 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+64 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+128 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+192 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+256 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+320 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+384 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+448 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+512 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+576 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+640 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+704 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+768 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+832 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+896 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+960 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1024 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1152 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1216 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1280 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1344 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1408 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1472 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1536 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1600 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1664 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1728 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1792 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1856 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1920 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+1984 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2048 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2112 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2176 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2240 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2304 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2368 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2432 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2496 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2560 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2624 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2688 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2752 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2816 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2880 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2880 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2816 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2752 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2688 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2624 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2560 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2496 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2432 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2368 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2304 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2240 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2176 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2112 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+2048 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1984 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1920 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1856 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1792 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1728 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1664 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1600 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1536 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1472 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1408 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1344 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1280 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1216 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1152 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+960 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+896 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+832 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+768 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+1024 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+704 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+640 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+576 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+512 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+448 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+384 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+320 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+256 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+192 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+128 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+64 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+0 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-64 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-128 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-192 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-256 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-320 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-384 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-448 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-512 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-576 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-640 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-704 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-768 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-832 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-896 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-960 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1024 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1088 64
+..\Resources\Texture\Tiles\DarkStone_3.png
+1856 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+1920 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+1984 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2048 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2112 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2176 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2240 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2304 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2368 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2432 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2496 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2560 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2624 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2688 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2752 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2816 192
+..\Resources\Texture\Tiles\DarkStone_3.png
+2880 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+2944 384
+..\Resources\Texture\Tiles\DarkStone_6.png
+2944 320
+..\Resources\Texture\Tiles\DarkStone_6.png
+3008 320
+..\Resources\Texture\Tiles\DarkStone_6.png
+3072 320
+..\Resources\Texture\Tiles\DarkStone_6.png
+3072 256
+..\Resources\Texture\Tiles\DarkStone_6.png
+2944 256
+..\Resources\Texture\Tiles\DarkStone_6.png
+2944 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+2944 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+2944 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+3008 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+3008 256
+..\Resources\Texture\Tiles\DarkStone_6.png
+3008 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+3008 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+3072 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+3072 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+3072 64
+..\Resources\Texture\Tiles\DarkStone_6.png
+3008 384
+..\Resources\Texture\Tiles\DarkStone_6.png
+3072 384
+..\Resources\Texture\Tiles\DarkStone_1.png
+2944 448
+..\Resources\Texture\Tiles\DarkStone_3.png
+3008 448
+..\Resources\Texture\Tiles\DarkStone_3.png
+3072 448
+..\Resources\Texture\Tiles\DarkStone_4.png
+3136 448
+..\Resources\Texture\Tiles\DarkStone_6.png
+3136 384
+..\Resources\Texture\Tiles\DarkStone_6.png
+3136 320
+..\Resources\Texture\Tiles\DarkStone_6.png
+3136 256
+..\Resources\Texture\Tiles\DarkStone_6.png
+3136 192
+..\Resources\Texture\Tiles\DarkStone_6.png
+3136 128
+..\Resources\Texture\Tiles\DarkStone_6.png
+3136 64
+0

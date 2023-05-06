@@ -50,6 +50,8 @@ public:
 
     virtual void InitializeCameraAndPlayerPos() { }
 
+    void RemoveLocalGroup(LAYER_TYPE eLocalLayerType);
+
 public:
     // Helper Functions
     weak_ptr<ComponentObject> GetMainCamera();

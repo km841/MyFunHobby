@@ -1,9 +1,11 @@
 #pragma once
 
+class Stage;
 class DungeonEvent;
 class Dungeon
 {
 public:
+	friend class Stage;
 	Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath);
 	virtual ~Dungeon();
 
@@ -20,11 +22,15 @@ public:
 	void AddEvent(shared_ptr<DungeonEvent> pDungeonEvent);
 	void EventUpdate();
 
+	DUNGEON_TYPE GetDungeonType() { return m_eDungeonType; }
+
 protected:
+	weak_ptr<Stage> m_pStage;
 	DUNGEON_TYPE m_eDungeonType;
 	const wstring m_szMapPath;
 
 private:
+	
 	std::queue<shared_ptr<DungeonEvent>> m_qEventQueue;
 };
 

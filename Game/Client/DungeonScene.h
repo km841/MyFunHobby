@@ -21,6 +21,7 @@ public:
     virtual void Exit();
 
     virtual void InitializeCameraAndPlayerPos();
+    FORCEINLINE weak_ptr<Stage> GetActiveStage() { return m_pActiveStage; }
 
 private:
     std::array<shared_ptr<Stage>, STAGE_KIND_COUNT> m_arrStages;

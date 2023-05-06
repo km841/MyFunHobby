@@ -253,6 +253,9 @@
     <ClInclude Include="Font.h">
       <Filter>Engine\Font</Filter>
     </ClInclude>
+    <ClInclude Include="GoToNextDungeonEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -494,6 +497,9 @@
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Engine\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="GoToNextDungeonEvent.cpp">
+      <Filter>Object\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

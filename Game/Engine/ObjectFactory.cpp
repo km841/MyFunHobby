@@ -118,6 +118,8 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 
 	pAttackAnimation->SetHitFrame(1);
 
+	pJuniorKnight->UnflagAsAttacked();
+
 	pJuniorKnight->GetTransform()->SetLocalPosition(vMonsterPos);
 	return pJuniorKnight;
 }
