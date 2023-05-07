@@ -6,7 +6,7 @@ class Dungeon
 {
 public:
 	friend class Stage;
-	Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath);
+	Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstring& szScriptPath = L"");
 	virtual ~Dungeon();
 
 public:
@@ -16,11 +16,13 @@ public:
 	virtual void LateUpdate();
 	virtual void FinalUpdate();
 
-	virtual void Enter() = 0;
-	virtual void Exit() = 0;
+	virtual void Enter();
+	virtual void Exit();
 
 	void AddEvent(shared_ptr<DungeonEvent> pDungeonEvent);
 	void EventUpdate();
+
+	void LoadEvent(const wstring& szEventScriptPath);
 
 	DUNGEON_TYPE GetDungeonType() { return m_eDungeonType; }
 

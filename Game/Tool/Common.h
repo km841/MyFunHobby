@@ -182,6 +182,7 @@ enum
 struct EventInfo
 {
 	EventInfo() { memset(this, 0, sizeof(EventInfo)); }
+	CONDITION_TYPE eCondition;
 	DUNGEON_EVENT_KIND eEventKind;
 	int32 eEnum1;
 	int32 eEnum2;

@@ -486,7 +486,7 @@ void Scene::Load(const wstring& szPath)
 			szTexPath);
 
 		pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 100.f));
+		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 120.f));
 
 		// 잠들어 있는 Component 깨우기
 		pTile->Awake();

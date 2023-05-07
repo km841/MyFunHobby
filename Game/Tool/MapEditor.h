@@ -55,9 +55,9 @@ private:
 	void  UpdateTileSelection();
 	void  UpdateUIHoverState();
 
-	void UpdateBGSelection();
-	void UpdateDOSelection();
-	void UpdateDESelection();
+	void  UpdateBGSelection();
+	void  UpdateDOSelection();
+	void  UpdateDESelection();
 
 	string ConditionEnumToString(CONDITION_TYPE eConditionType);
 	string EventEnumToString(DUNGEON_EVENT_KIND eEventKind);

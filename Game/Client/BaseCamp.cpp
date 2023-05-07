@@ -43,12 +43,10 @@ void BaseCamp::FinalUpdate()
 
 void BaseCamp::Enter()
 {
-	GET_SINGLE(Scenes)->GetActiveScene()->Load(m_szMapPath);
+	Dungeon::Enter();
 }
 
 void BaseCamp::Exit()
 {
-	GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::TILE);
-	GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::BACKGROUND);
-	GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DUNGEON_GATE);
+	Dungeon::Exit();
 }

@@ -4,7 +4,7 @@ class BoneDungeon :
     public Dungeon
 {
 public:
-	BoneDungeon(const wstring& szMapPath);
+	BoneDungeon(const wstring& szMapPath, const wstring& szScriptPath = L"");
 	virtual ~BoneDungeon();
 
 public:

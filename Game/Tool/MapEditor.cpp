@@ -21,7 +21,7 @@ MapEditor::MapEditor()
     , m_iEventListSelector(0)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
-    m_vWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size() / 4.0f) * (m_fTileSize + m_fSpacing));
+    m_vWindowSize = ImVec2(m_fTileWindowWidth + 10.f, std::ceil(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size() / 4.0f) * (m_fTileSize + m_fSpacing));
 }
 
 MapEditor::~MapEditor()
@@ -370,7 +370,7 @@ void MapEditor::UpdateBGSelection()
         InsertSeparator();
         ImGui::Text("ImagePath     ");
         ImGui::SameLine();
-        ImGui::InputText("EditImagePath", const_cast<char*>(ws2s(m_CurrBackgroundData.szBGImagePath).c_str()), m_CurrBackgroundData.szBGImagePath.size());
+        ImGui::InputText("                                           ", const_cast<char*>(ws2s(m_CurrBackgroundData.szBGImagePath).c_str()), m_CurrBackgroundData.szBGImagePath.size());
 
 
         ImGui::Text("Position      ");
@@ -456,6 +456,83 @@ void MapEditor::UpdateDESelection()
 {
     if (ImGui::BeginTabItem("DungeonEvent"))
     {
+        if (ImGui::Button("Event Save"))
+        {
+            assert(m_vEventList.size() > 0);
+            ImGuiFileDialog::Instance()->OpenDialog("Event Save", "Save Event File", ".evtscript", ".");
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("Event Save"))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                fs::path szPath = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::wofstream ofs(szPath, std::ios::app | std::ios::out);
+
+                size_t iEventCount = m_vEventList.size();
+                ofs << iEventCount << L'\n';
+
+                for (uint32 i = 0; i < iEventCount; ++i)
+                {
+                    ofs << static_cast<int32>(m_vEventList[i].eEventKind) << L'\n';
+                    ofs << static_cast<int32>(m_vEventList[i].eCondition) << L'\n';
+                    ofs << m_vEventList[i].eEnum1 << L'\n';
+                    ofs << m_vEventList[i].eEnum2 << L'\n';
+                    ofs << m_vEventList[i].vVec3.x << L' ' << m_vEventList[i].vVec3.y << L' ' << m_vEventList[i].vVec3.z << '\n';
+                }
+
+                ofs.close();
+
+            }
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Button("Event Load"))
+        {
+            ImGuiFileDialog::Instance()->OpenDialog("Event Load", "Load Event File", ".evtscript", ".");
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("Event Load"))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                fs::path szPath = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::wifstream ifs(szPath, std::ios::in);
+
+                uint32 iEventCount = 0;
+                ifs >> iEventCount;
+
+                m_vEventList.clear();
+                m_vEventList.resize(iEventCount);
+
+                for (uint32 i = 0; i < iEventCount; ++i)
+                {
+                    int32 iEventKind = 0;
+                    ifs >> iEventKind;
+                    m_vEventList[i].eEventKind = static_cast<DUNGEON_EVENT_KIND>(iEventKind);
+                    ifs.ignore(1);
+
+                    int32 iCondition = 0;
+                    ifs >> iCondition;
+                    m_vEventList[i].eCondition = static_cast<CONDITION_TYPE>(iCondition);
+                    ifs.ignore(1);
+
+                    ifs >> m_vEventList[i].eEnum1;
+                    ifs.ignore(1);
+                    ifs >> m_vEventList[i].eEnum2;
+                    ifs.ignore(1);
+
+                    ifs >> m_vEventList[i].vVec3.x >> m_vEventList[i].vVec3.y >> m_vEventList[i].vVec3.z;
+                    ifs.ignore(1);
+                }
+
+                ifs.close();
+            }
+            ImGuiFileDialog::Instance()->Close();
+        }
+
         std::vector<string> vConditionNames = {};
         for (int32 i = 0; i < CONDITION_TYPE_COUNT; ++i)
         {
@@ -518,7 +595,7 @@ void MapEditor::UpdateDESelection()
             break;
         }
 
-        ImGui::Text("Animation Frames:");
+        ImGui::Text("Event List:");
 
         if (ImGui::ListBoxHeader("##itemsEvent", ImVec2(-1, 100)))
         {
@@ -540,23 +617,33 @@ void MapEditor::UpdateDESelection()
 
         InsertSeparator();
 
-        m_InputEventInfo.eEventKind = static_cast<DUNGEON_EVENT_KIND>(m_iEventSelector);
         string szEventName = EventEnumToString(m_CurrEventInfo.eEventKind);
+        string szConditionName = ConditionEnumToString(m_CurrEventInfo.eCondition);
 
-        ImGui::Text("EventName");
+        ImGui::Text("ConditionName");
+        ImGui::SameLine();
+        ImGui::InputText("                                 ", const_cast<char*>(szConditionName.c_str()), szConditionName.size());
+
+        ImGui::Text("EventName    ");
         ImGui::SameLine();
         ImGui::InputText("                               ", const_cast<char*>(szEventName.c_str()), szEventName.size());
 
-        ImGui::Text("Enum1");
+        ImGui::Text("Enum1        ");
         ImGui::SameLine();
         ImGui::InputInt("                         ", &m_CurrEventInfo.eEnum1);
 
-        ImGui::Text("Enum2");
+        ImGui::Text("Enum2        ");
         ImGui::SameLine();  
         ImGui::InputInt("                    ", &m_CurrEventInfo.eEnum2);
 
+        ImGui::Text("Vec3_1       ");
+        ImGui::SameLine();
+        ImGui::InputFloat3("                    ", &m_CurrEventInfo.vVec3.x);
+
         if (ImGui::Button("Add Event"))
         {
+            m_InputEventInfo.eCondition = static_cast<CONDITION_TYPE>(m_iConditionSelector);
+            m_InputEventInfo.eEventKind = static_cast<DUNGEON_EVENT_KIND>(m_iEventSelector);
             m_vEventList.push_back(m_InputEventInfo);
         }
 
