@@ -12,9 +12,8 @@ struct Particle
     float fCurTime;
     
     float fSpeed;
-    float fGravityAcc;
+    float2 fGravityAcc;
     uint  iAlive;
-    float fPadding;
 };
 
 struct ParticleShared
@@ -203,7 +202,7 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
     else
     {
         g_particle[threadIndex.x].fCurTime += fDeltaTime;
-        g_particle[threadIndex.x].fGravityAcc += fGravity;
+
         
         if (g_particle[threadIndex.x].fEndTime < g_particle[threadIndex.x].fCurTime)
         {
@@ -211,8 +210,11 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
         }
         else
         {
+            
+            g_particle[threadIndex.x].fGravityAcc.y += fGravity * fDeltaTime;
             g_particle[threadIndex.x].vPosition += g_particle[threadIndex.x].vDirection * g_particle[threadIndex.x].fSpeed * fDeltaTime;
-            g_particle[threadIndex.x].vPosition.y += g_particle[threadIndex.x].fGravityAcc * fDeltaTime;
+            g_particle[threadIndex.x].vPosition.y += g_particle[threadIndex.x].fGravityAcc.y * fDeltaTime;
+
         }
     }
 }

@@ -184,7 +184,7 @@ void TownScene::Enter()
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-		pPlayer->GetLight()->SetLightRange(800.f);
+		pPlayer->GetLight()->SetLightRange(1200.f);
 		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 

@@ -4,9 +4,9 @@
 
 void Frustum::FinalUpdate(shared_ptr<Camera> pCamera)
 {
-	Matrix matViewInv = pCamera->GetViewMatrix().Invert();
-	Matrix matProjectionInv = pCamera->GetProjectionMatrix().Invert();
-	Matrix matInv = matProjectionInv * matViewInv;
+	Matrix matViewInv = pCamera->GetViewMatrix();
+	Matrix matProjectionInv = pCamera->GetProjectionMatrix();
+	Matrix matInv = matProjectionInv.Invert() * matViewInv.Invert();
 
 	std::vector<Vec3> vWorldPos
 	{
@@ -31,10 +31,10 @@ bool Frustum::ContainsSphere(const Vec3& vPos, float fRadius)
 	for (const Vec4& vPlane : m_arrPlanes)
 	{
 		// n = (a, b, c)
-		Vec3 normal = Vec3(vPlane.x, vPlane.y, vPlane.z);
+		Vec3 vNormal = Vec3(vPlane.x, vPlane.y, vPlane.z);
 
 		// ax + by + cz + d > radius
-		if (normal.Dot(vPos) + vPlane.w > fRadius)
+		if (vNormal.Dot(vPos) + vPlane.w > fRadius)
 			return false;
 	}
 	

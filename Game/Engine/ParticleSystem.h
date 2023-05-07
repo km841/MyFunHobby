@@ -14,9 +14,8 @@ struct ParticleInfo
 	float fCurTime;
 
 	float fSpeed;
-	float fGravityAcc;
+	Vec2 fGravityAcc;
 	uint32 iAlive;
-	float fPadding;
 };
 
 struct ParticleShared

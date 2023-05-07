@@ -79,13 +79,13 @@ void Camera::SortGameObject()
                 LAYER_TYPE::PLAYER != pGameObject->GetLayerType())
                 continue;
 
-            //if (pGameObject->IsFrustum() && pGameObject->GetTransform())
-            //{
-            //    if (m_Frustum.ContainsSphere(
-            //        pGameObject->GetTransform()->GetWorldPosition(),
-            //        pGameObject->GetTransform()->GetBoundingSphereRadius()))
-            //        continue;
-            //}
+            if (pGameObject->IsFrustum() && pGameObject->GetTransform())
+            {
+                if (false == m_Frustum.ContainsSphere(
+                    pGameObject->GetTransform()->GetWorldPosition(),
+                    pGameObject->GetTransform()->GetBoundingSphereRadius()))
+                    continue;
+            }
             
             if (pGameObject->GetMeshRenderer())
             {

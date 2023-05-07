@@ -1,16 +1,16 @@
 4
 ..\Resources\Texture\Map\Image_Ch3_BackgroundColor.png
-800 450 870
+800 450 1200
 3000 3000 1
 ..\Resources\Texture\Map\Image_Ch3_Background_1.png
-800 600 800
+800 400 800
 2262 983 1
 ..\Resources\Texture\Map\Image_Ch3_Background_2.png
-800 600 850
+800 600 950
 1678 749 1
 ..\Resources\Texture\Map\Image_Ch3_Background_3.png
-0 1000 825
-2800 1200 1
+0 800 850
+1500 667 1
 360
 ..\Resources\Texture\Tiles\DarkStone_2.png
 -896 192
