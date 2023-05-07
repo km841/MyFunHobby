@@ -8,6 +8,8 @@
 #include "JuniorKnight.h"
 #include "IfAllDeadMonsterInDungeon.h"
 #include "MonsterSpawnDungeonEvent.h"
+#include "IfAlwaysTrue.h"
+#include "PlayerTeleportEvent.h"
 
 BoneDungeon::BoneDungeon(const wstring& szMapPath)
 	: Dungeon(DUNGEON_TYPE::DUNGEON_BONE, szMapPath)
@@ -49,6 +51,9 @@ void BoneDungeon::Enter()
 
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	shared_ptr<IfAlwaysTrue> pAlwaysTrue = make_shared<IfAlwaysTrue>();
+	AddEvent(make_shared<PlayerTeleportEvent>(pAlwaysTrue, Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 200.f, 100.f)));
 
 	shared_ptr<IfAllDeadMonsterInDungeon> pCondition = make_shared<IfAllDeadMonsterInDungeon>();
 	AddEvent(make_shared<MonsterSpawnDungeonEvent>(pCondition, MONSTER_KIND::JUNIOR_KNIGHT, Vec3(fWidth / 2.f + 300.f, fHeight / 2.f - 200.f, 99.5f)));

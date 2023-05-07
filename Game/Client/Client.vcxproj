@@ -204,6 +204,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="IfAlwaysTrue.h" />
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="MousePointerHUD.h" />
     <ClInclude Include="ObjectFollowScript.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
+    <ClInclude Include="PlayerTeleportEvent.h" />
     <ClInclude Include="Possession.h" />
     <ClInclude Include="Rapidity.h" />
     <ClInclude Include="SceneChangeEventObject.h" />
@@ -326,6 +328,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="IfAlwaysTrue.cpp" />
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -338,6 +341,7 @@
     <ClCompile Include="MousePointerHUD.cpp" />
     <ClCompile Include="ObjectFollowScript.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
+    <ClCompile Include="PlayerTeleportEvent.cpp" />
     <ClCompile Include="Possession.cpp" />
     <ClCompile Include="Rapidity.cpp" />
     <ClCompile Include="SceneChangeEventObject.cpp" />

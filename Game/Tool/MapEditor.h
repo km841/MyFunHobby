@@ -57,7 +57,15 @@ private:
 
 	void UpdateBGSelection();
 	void UpdateDOSelection();
-	
+	void UpdateDESelection();
+
+	string ConditionEnumToString(CONDITION_TYPE eConditionType);
+	string EventEnumToString(DUNGEON_EVENT_KIND eEventKind);
+
+	void MonsterSpawnEventUIUpdate();
+	void PlayerTeleportEventUIUpdate();
+
+	string MonsterKindEnumToString(MONSTER_KIND eMonsterKind);
 
 private:
 	std::array<std::vector<ComPtr<ID3D11ShaderResourceView>>, SRV_KIND_COUNT> m_vSRV;
@@ -92,6 +100,14 @@ private:
 	bool m_bChangedBGDataFlag;
 
 	bool m_bBackgroundSend;
+
+	EventInfo m_InputEventInfo;
+	EventInfo m_CurrEventInfo;
+	std::vector<EventInfo> m_vEventList;
+
+	int32 m_iConditionSelector;
+	int32 m_iEventSelector;
+	int32 m_iEventListSelector;
 
 
 };

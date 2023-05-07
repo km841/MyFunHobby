@@ -1,4 +1,34 @@
-﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\final.cso
+﻿  Animator.cpp
+  Camera.cpp
+  Collider.cpp
+  ConstantBuffer.cpp
+  ContactCallback.cpp
+  DebugRenderer.cpp
+  Engine.cpp
+  EnginePch.cpp
+  EventManager.cpp
+  Input.cpp
+  InterfaceManager.cpp
+  Material.cpp
+  Mesh.cpp
+  MeshRenderer.cpp
+  Movement.cpp
+  ParticleSystem.cpp
+  Physical.cpp
+  Physics.cpp
+  PhysicsProperties.cpp
+  RenderTargetGroup.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Resources.cpp
+  RigidBody.cpp
+  Scene.cpp
+  Scenes.cpp
+  Shader.cpp
+  StructuredBuffer.cpp
+  SwapChain.cpp
+  Texture.cpp
+  Transform.cpp
+  Utility.cpp
+  코드를 생성하고 있습니다...
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

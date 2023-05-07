@@ -16,6 +16,9 @@ MapEditor::MapEditor()
     , m_bChangedBGDataFlag(false)
     , m_iBackgroundDataSelector(0)
     , m_bBackgroundSend(false)
+    , m_iConditionSelector(0)
+    , m_iEventSelector(0)
+    , m_iEventListSelector(0)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
     m_vWindowSize = ImVec2(m_fTileWindowWidth, std::ceil(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size() / 4.0f) * (m_fTileSize + m_fSpacing));
@@ -53,6 +56,7 @@ void MapEditor::Update()
             UpdateTileSelection();
             UpdateBGSelection();
             UpdateDOSelection();
+            UpdateDESelection();
         }
         ImGui::EndTabBar();
     }
@@ -446,5 +450,198 @@ void MapEditor::UpdateDOSelection()
        
         ImGui::EndTabItem();
     }
+}
+
+void MapEditor::UpdateDESelection()
+{
+    if (ImGui::BeginTabItem("DungeonEvent"))
+    {
+        std::vector<string> vConditionNames = {};
+        for (int32 i = 0; i < CONDITION_TYPE_COUNT; ++i)
+        {
+            vConditionNames.push_back(ConditionEnumToString(static_cast<CONDITION_TYPE>(i)));
+        }
+
+        std::vector<string> vEventNames = {};
+        for (int32 i = 0; i < DUNGEON_EVENT_COUNT; ++i)
+        {
+            vEventNames.push_back(EventEnumToString(static_cast<DUNGEON_EVENT_KIND>(i)));
+        }
+
+
+        if (ImGui::BeginCombo("Condition", vConditionNames[m_iConditionSelector].c_str()))
+        {
+            for (int32 i = 0; i < vConditionNames.size(); i++)
+            {
+                const bool isSelected = (m_iConditionSelector == i);
+                if (ImGui::Selectable(vConditionNames[i].c_str(), isSelected))
+                {
+                    m_iConditionSelector = i;
+                }
+                if (isSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        if (ImGui::BeginCombo("Event", vEventNames[m_iEventSelector].c_str()))
+        {
+            for (int32 i = 0; i < vEventNames.size(); i++)
+            {
+                const bool isSelected = (m_iEventSelector == i);
+                if (ImGui::Selectable(vEventNames[i].c_str(), isSelected))
+                {
+                    m_iEventSelector = i;
+                }
+                if (isSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        DUNGEON_EVENT_KIND eEventSelect = static_cast<DUNGEON_EVENT_KIND>(m_iEventSelector);
+        switch (eEventSelect)
+        {
+        case DUNGEON_EVENT_KIND::MONSTER_SPAWN:
+            MonsterSpawnEventUIUpdate();
+            break;
+
+        case DUNGEON_EVENT_KIND::CREATE_TREASURE:
+            break;
+
+        case DUNGEON_EVENT_KIND::PLAYER_TELEPORT:
+            PlayerTeleportEventUIUpdate();
+            break;
+        }
+
+        ImGui::Text("Animation Frames:");
+
+        if (ImGui::ListBoxHeader("##itemsEvent", ImVec2(-1, 100)))
+        {
+            for (int i = 0; i < m_vEventList.size(); i++)
+            {
+                string szLabel = "Event_" + std::to_string(i);
+                if (ImGui::Selectable(szLabel.c_str(), m_iEventListSelector == i))
+                {
+                    m_iEventListSelector = i;
+
+                    if (!m_vEventList.empty())
+                    {
+                        m_CurrEventInfo = m_vEventList[i];
+                    }
+                }
+            }
+            ImGui::ListBoxFooter();
+        }
+
+        InsertSeparator();
+
+        m_InputEventInfo.eEventKind = static_cast<DUNGEON_EVENT_KIND>(m_iEventSelector);
+        string szEventName = EventEnumToString(m_CurrEventInfo.eEventKind);
+
+        ImGui::Text("EventName");
+        ImGui::SameLine();
+        ImGui::InputText("                               ", const_cast<char*>(szEventName.c_str()), szEventName.size());
+
+        ImGui::Text("Enum1");
+        ImGui::SameLine();
+        ImGui::InputInt("                         ", &m_CurrEventInfo.eEnum1);
+
+        ImGui::Text("Enum2");
+        ImGui::SameLine();  
+        ImGui::InputInt("                    ", &m_CurrEventInfo.eEnum2);
+
+        if (ImGui::Button("Add Event"))
+        {
+            m_vEventList.push_back(m_InputEventInfo);
+        }
+
+        ImGui::EndTabItem();
+    }
+}
+
+string MapEditor::ConditionEnumToString(CONDITION_TYPE eConditionType)
+{
+    switch (eConditionType)
+    {
+    case CONDITION_TYPE::ALWAYS_TRUE:
+        return "Always True";
+    case CONDITION_TYPE::ALL_MONSTER_DEAD_IN_DUNGEON:
+        return "All Monster Dead In Dungeon";
+    }
+
+    return "Not Found";
+}
+
+string MapEditor::EventEnumToString(DUNGEON_EVENT_KIND eEventKind)
+{
+    switch (eEventKind)
+    {
+    case DUNGEON_EVENT_KIND::MONSTER_SPAWN:
+        return "Monster Spawn";
+    case DUNGEON_EVENT_KIND::CREATE_TREASURE:
+        return "Create Treasure";
+    case DUNGEON_EVENT_KIND::PLAYER_TELEPORT:
+        return "Player Teleport";
+    }
+
+    return "Not Found";
+}
+
+void MapEditor::MonsterSpawnEventUIUpdate()
+{
+    InsertSeparator();
+    ImGui::Text("MonsterSpawn Event Parameters");
+
+    std::vector<string> vMonsterKind = {};
+    for (int32 i = 0; i < MONSTER_KIND_COUNT; ++i)
+    {
+        vMonsterKind.push_back(MonsterKindEnumToString(static_cast<MONSTER_KIND>(i)));
+    }
+
+    static int32 iMonsterSelector = 0;
+    if (ImGui::BeginCombo("MonsterKind", vMonsterKind[iMonsterSelector].c_str()))
+    {
+        for (int32 i = 0; i < vMonsterKind.size(); i++)
+        {
+            const bool isSelected = (iMonsterSelector == i);
+            if (ImGui::Selectable(vMonsterKind[i].c_str(), isSelected))
+            {
+                iMonsterSelector = i;
+            }
+            if (isSelected)
+            {
+                ImGui::SetItemDefaultFocus();
+            }
+        }
+        ImGui::EndCombo();
+    }
+
+    m_InputEventInfo.eEnum1 = iMonsterSelector;
+    ImGui::InputFloat3("MonsterPosition", &m_InputEventInfo.vVec3.x);
+    InsertSeparator();
+}
+
+void MapEditor::PlayerTeleportEventUIUpdate()
+{
+    InsertSeparator();
+    ImGui::Text("PlayerTeleport Event Parameters");
+    ImGui::InputFloat3("PlayerDescPosition", &m_InputEventInfo.vVec3.x);
+    InsertSeparator();
+}
+
+string MapEditor::MonsterKindEnumToString(MONSTER_KIND eMonsterKind)
+{
+    switch (eMonsterKind)
+    {
+    case MONSTER_KIND::JUNIOR_KNIGHT:
+        return "JuniorKnight";
+    }
+
+    return "Not Found";
 }
 

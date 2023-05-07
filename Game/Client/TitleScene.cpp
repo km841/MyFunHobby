@@ -55,7 +55,7 @@ void TitleScene::Update()
 {
 	if (IS_DOWN(KEY_TYPE::N))
 	{
-		GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::TOWN));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::TOOL));
 	}
 
 	if (m_tStayTimer.IsRunning())

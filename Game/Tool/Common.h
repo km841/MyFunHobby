@@ -148,6 +148,46 @@ struct TileMapData
 	std::vector<DungeonObjData> vDOData;
 };
 
+enum class CONDITION_TYPE : uint8
+{
+	ALWAYS_TRUE,
+	ALL_MONSTER_DEAD_IN_DUNGEON,
+	END,
+};
+
+enum class DUNGEON_EVENT_KIND : uint8
+{
+	MONSTER_SPAWN,
+	CREATE_TREASURE,
+	PLAYER_TELEPORT,
+	END,
+};
+
+enum class MONSTER_KIND : uint16
+{
+	JUNIOR_KNIGHT,
+	NONE,
+	END,
+};
+
+enum
+{
+	CONDITION_TYPE_COUNT = CONDITION_TYPE::END,
+	DUNGEON_EVENT_COUNT = DUNGEON_EVENT_KIND::END,
+	MONSTER_KIND_COUNT = MONSTER_KIND::END,
+};
+
+
+
+struct EventInfo
+{
+	EventInfo() { memset(this, 0, sizeof(EventInfo)); }
+	DUNGEON_EVENT_KIND eEventKind;
+	int32 eEnum1;
+	int32 eEnum2;
+	ImVec3 vVec3;
+};
+
 extern shared_ptr<class Tool> g_pTool;
 
 wstring s2ws(const string& s);

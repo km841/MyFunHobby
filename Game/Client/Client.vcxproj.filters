@@ -496,6 +496,12 @@
     <ClInclude Include="BoneDungeon.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClInclude>
+    <ClInclude Include="IfAlwaysTrue.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTeleportEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -834,6 +840,12 @@
     </ClCompile>
     <ClCompile Include="BoneDungeon.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="IfAlwaysTrue.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTeleportEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
