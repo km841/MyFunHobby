@@ -93,8 +93,8 @@ struct FrameData
 
 enum class TILE_TYPE
 {
-	NONE,
 	WALL,
+	NONE,
 	FOOTHOLD,
 };
 

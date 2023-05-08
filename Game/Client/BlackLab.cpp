@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BlackLab.h"
-#include "BaseCamp.h"
-#include "BoneDungeon.h"
+#include "Ch3BaseCamp.h"
+#include "Dungeon_Bone.h"
 
 BlackLab::BlackLab()
 	: Stage(STAGE_KIND::BLACK_LAB)
@@ -15,8 +15,8 @@ BlackLab::~BlackLab()
 void BlackLab::Awake()
 {
 	// Add dungeons
-	AddDungeon(make_shared<BaseCamp>(L"..\\Resources\\Map\\BaseCampMap2.map"));
-	AddDungeon(make_shared<BoneDungeon>(L"..\\Resources\\Map\\Ch3Map.map", L"..\\Resources\\Script\\test2.evtscript"));
+	AddDungeon(make_shared<Ch3BaseCamp>(L"..\\Resources\\Map\\Ch3BaseCampMap.map"));
+	AddDungeon(make_shared<Dungeon_Bone>(L"..\\Resources\\Map\\Ch3Map.map", L"..\\Resources\\Script\\test2.evtscript"));
 	// Awaken all stages and select the active dungeon.
 	Stage::Awake();
 }

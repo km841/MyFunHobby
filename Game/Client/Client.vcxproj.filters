@@ -170,6 +170,12 @@
     <Filter Include="소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition">
       <UniqueIdentifier>{36447f4d-7a40-4a6a-9c8b-ad5f8d7777b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Scene\Stage\Dungeon\Ch3">
+      <UniqueIdentifier>{be270a70-17c9-4154-8e50-865206e2a129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\HUD\Dungeon">
+      <UniqueIdentifier>{c84eb6a8-182e-4376-8e8e-326caf16b134}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -493,7 +499,7 @@
     <ClInclude Include="IfAllDeadMonsterInDungeon.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
     </ClInclude>
-    <ClInclude Include="BoneDungeon.h">
+    <ClInclude Include="Dungeon_Bone.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="IfAlwaysTrue.h">
@@ -501,6 +507,12 @@
     </ClInclude>
     <ClInclude Include="PlayerTeleportEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Ch3BaseCamp.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCampOpeningHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -838,7 +850,7 @@
     <ClCompile Include="IfAllDeadMonsterInDungeon.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
     </ClCompile>
-    <ClCompile Include="BoneDungeon.cpp">
+    <ClCompile Include="Dungeon_Bone.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="IfAlwaysTrue.cpp">
@@ -846,6 +858,12 @@
     </ClCompile>
     <ClCompile Include="PlayerTeleportEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch3BaseCamp.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCampOpeningHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -43,7 +43,8 @@ void Dungeon::FinalUpdate()
 
 void Dungeon::Enter()
 {
-    GET_SINGLE(Scenes)->GetActiveScene()->Load(m_szMapPath);
+    if (!m_szMapPath.empty())
+        GET_SINGLE(Scenes)->GetActiveScene()->Load(m_szMapPath);
 }
 
 void Dungeon::Exit()

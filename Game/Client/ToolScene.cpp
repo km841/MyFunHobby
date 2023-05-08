@@ -154,6 +154,7 @@ void ToolScene::Enter()
 	// Grid
 	{
 		m_pGrid = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+		m_pGrid->SetFrustum(false);
 
 		m_pGrid->AddComponent(make_shared<Transform>());
 		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
@@ -271,6 +272,7 @@ void ToolScene::MapEditorUpdate()
 	const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
 	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 100.f);
 	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, GetMainCamera().lock()->GetCamera());
+	//Vec3 vScreenPos = GET_SINGLE(Scenes)->WorldToScreenPosition(vWorldPos, GetMainCamera().lock()->GetCamera());
 	vWorldPos.x += TILE_HALF_SIZE;
 	vWorldPos.y += 5.f;
 
@@ -588,7 +590,7 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 
 	pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 	pGameObject->GetTransform()->SetLocalScale(Vec3(vTexSize.x, vTexSize.y, 1.f));
-	pGameObject->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y + vTexSize.y - TILE_HALF_SIZE, 100.f));
+	pGameObject->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y + vTexSize.y - (TILE_HALF_SIZE + 10.f), 100.f));
 
 	pGameObject->Awake();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, m_eSceneType));

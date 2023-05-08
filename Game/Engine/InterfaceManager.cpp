@@ -29,6 +29,7 @@
 #include "UI.h"
 #include "HUD.h"
 #include "ObjectFactory.h"
+#include "BaseCampOpeningHUD.h"
 
 void InterfaceManager::Init()
 {
@@ -180,5 +181,17 @@ void InterfaceManager::CreateHUD()
 		pMousePointerHUD->GetTransform()->SetLocalScale(Vec3(10.5f, 10.5f, 1.f));
 		m_mInterfaceMap[INTERFACE_TYPE::MOUSE_POINTER] = pMousePointerHUD;
 	}
+
+	// BaseCamp Opening HUD
+	{
+		shared_ptr<BaseCampOpeningHUD> pOpeningHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<BaseCampOpeningHUD>(
+			L"Forward", true, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\HUD\\Dungeon\\Ch3\\Image_Ch3_BaseCamp_OpeningUI.png");
+		pOpeningHUD->SetFrustum(false);
+
+		pOpeningHUD->GetTransform()->SetLocalScale(Vec3(212.f, 125.f, 1.f));
+		pOpeningHUD->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 50.f));
+		m_mInterfaceMap[INTERFACE_TYPE::BASECAMP_OPENING] = pOpeningHUD;
+	}
+
 
 }

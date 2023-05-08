@@ -177,9 +177,11 @@
     <ClInclude Include="Arms.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BaseCamp.h" />
+    <ClInclude Include="BaseCampOpeningHUD.h" />
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
-    <ClInclude Include="BoneDungeon.h" />
+    <ClInclude Include="Dungeon_Bone.h" />
+    <ClInclude Include="Ch3BaseCamp.h" />
     <ClInclude Include="CitadelOfFate.h" />
     <ClInclude Include="ConditionBlock.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -301,9 +303,11 @@
     <ClCompile Include="Arms.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BaseCamp.cpp" />
+    <ClCompile Include="BaseCampOpeningHUD.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
-    <ClCompile Include="BoneDungeon.cpp" />
+    <ClCompile Include="Dungeon_Bone.cpp" />
+    <ClCompile Include="Ch3BaseCamp.cpp" />
     <ClCompile Include="CitadelOfFate.cpp" />
     <ClCompile Include="ConditionBlock.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

@@ -72,8 +72,8 @@ void MapEditor::ColliderTypeUI_Update()
 {
     ImGui::BeginGroup();
     ImGui::Text("Collider Type");
-    ImGui::RadioButton("None", &m_iClickedColliderType, 0);
-    ImGui::RadioButton("Wall", &m_iClickedColliderType, 1);
+    ImGui::RadioButton("Wall", &m_iClickedColliderType, 0);
+    ImGui::RadioButton("None", &m_iClickedColliderType, 1);
     ImGui::RadioButton("Foothold", &m_iClickedColliderType, 2);
     ImGui::EndGroup();
 }
