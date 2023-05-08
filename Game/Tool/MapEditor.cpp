@@ -156,6 +156,7 @@ void MapEditor::UpdateOptionSelection()
 
                 for (uint32 i = 0; i < iCount; ++i)
                 {
+                    ofs << static_cast<uint8>(m_TileMapData.vTileData[i].eTileType) << L'\n';
                     ofs << m_TileMapData.vTileData[i].szTexPath << L'\n';
                     ofs << m_TileMapData.vTileData[i].vTilePos.x << L" " << m_TileMapData.vTileData[i].vTilePos.y << L'\n';
                 }
@@ -173,8 +174,7 @@ void MapEditor::UpdateOptionSelection()
                 }
 
 
-                    
-
+                 
                 ofs.close();
 
             }
@@ -225,6 +225,11 @@ void MapEditor::UpdateOptionSelection()
 
                 for (uint32 i = 0; i < iCount; ++i)
                 {
+                    int32 iTileType = 0;
+                    ifs >> iTileType;
+                    ifs.ignore(1);
+                    m_TileMapData.vTileData[i].eTileType = static_cast<TILE_TYPE>(iTileType);
+
                     ifs >> m_TileMapData.vTileData[i].szTexPath;
                     ifs.ignore(1);
                     ifs >> m_TileMapData.vTileData[i].vTilePos.x >> m_TileMapData.vTileData[i].vTilePos.y;

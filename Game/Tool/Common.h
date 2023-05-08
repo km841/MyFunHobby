@@ -91,12 +91,22 @@ struct FrameData
 	int32  iFrameCount;
 };
 
+enum class TILE_TYPE
+{
+	NONE,
+	WALL,
+	FOOTHOLD,
+};
+
+
 struct TileData
 {
 	TileData() = default;
-	TileData(const wstring& szTexPath, ImVec2 vTilePos)
-		: szTexPath(szTexPath), vTilePos(vTilePos)
+	TileData(TILE_TYPE eTileType, const wstring& szTexPath, ImVec2 vTilePos)
+		: szTexPath(szTexPath), vTilePos(vTilePos), eTileType(eTileType)
 	{}
+
+	TILE_TYPE eTileType;
 	wstring szTexPath;
 	ImVec2 vTilePos;
 };

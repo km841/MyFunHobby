@@ -11,6 +11,7 @@
 #include "PlayerChangeStateEvent.h"
 #include "GlobalEffect.h"
 #include "Animator.h"
+#include "Tile.h"
 
 PlayerState::PlayerState(shared_ptr<Player> pPlayer)
 	: m_pPlayer(pPlayer)
@@ -26,6 +27,11 @@ bool PlayerState::CheckGrounded()
 	Vec3 vBtmLeft = Vec3(vMyPos.x - vMySize.x, vMyPos.y - vMySize.y, vMyPos.z);
 	Vec3 vBtmCenter = Vec3(vMyPos.x, vMyPos.y - vMySize.y, vMyPos.z);
 	Vec3 vBtmRight = Vec3(vMyPos.x + vMySize.x, vMyPos.y - vMySize.y, vMyPos.z);
+
+	Vec3 vTopLeft = Vec3(vMyPos.x - vMySize.x, vMyPos.y + vMySize.y, vMyPos.z);
+	Vec3 vTopCenter = Vec3(vMyPos.x, vMyPos.y + vMySize.y, vMyPos.z);
+	Vec3 vTopRight = Vec3(vMyPos.x + vMySize.x, vMyPos.y + vMySize.y, vMyPos.z);
+
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 
 	bool bResult = {};
@@ -33,17 +39,38 @@ bool PlayerState::CheckGrounded()
 
 	for (const auto& pGameObject : vGameObjects)
 	{
-		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmLeft, vBtmDir, pGameObject, 5.f);
-		if (bResult)
-			return true;
+		// 발판일 경우, 해당 타일의 겹침까지 확인
+		if (TILE_TYPE::FOOTHOLD == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+		{
+			if (m_pPlayer.lock()->GetRigidBody()->GetVelocity(AXIS::Y) < 1.f)
+			{
+				bool bCenterBtmResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmCenter, vBtmDir, pGameObject, 5.f);
+				bool bLeftTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopLeft, vBtmDir, pGameObject, vMySize.y - 5.f);
+				bool bCenterTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopCenter, vBtmDir, pGameObject, vMySize.y - 5.f);
+				bool bRightTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopRight, vBtmDir, pGameObject, vMySize.y - 5.f);
 
-		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmCenter, vBtmDir, pGameObject, 5.f);
-		if (bResult)
-			return true;
+				if (bCenterBtmResult && (!bLeftTopResult && !bCenterTopResult && !bRightTopResult))
+				{
+					m_pPlayer.lock()->ReorganizeVerticalPosition();
+					return true;
+				}
 
-		bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmRight, vBtmDir, pGameObject, 5.f);
-		if (bResult)
-			return true;
+			}
+		}
+		else
+		{
+			bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmLeft, vBtmDir, pGameObject, 5.f);
+			if (bResult)
+				return true;
+
+			bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmCenter, vBtmDir, pGameObject, 5.f);
+			if (bResult)
+				return true;
+
+			bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmRight, vBtmDir, pGameObject, 5.f);
+			if (bResult)
+				return true;
+		}
 	}
 
 	return false;

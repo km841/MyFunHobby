@@ -38,13 +38,13 @@ public:
 	shared_ptr<T> CreateObjectHasPhysicalFromPool(const wstring& szMaterialName, bool bApplyGravity,
 		ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType = GEOMETRY_TYPE::SPHERE,
 		Vec3 vSize = Vec3::Zero, const MassProperties& massProperties = MassProperties(),
-		const wstring& szPath = L"");
+		const wstring& szPath = L"", int32 iEnum = 0);
 
 	template<typename T, typename ... Types>
 	shared_ptr<T> CreateObjectHasNotPhysical(const wstring& szMaterialName, const wstring& szPath = L"", Types ... args);
 
 	template<typename T>
-	shared_ptr<T> CreateObjectHasNotPhysicalFromPool(const wstring& szMaterialName, const wstring& szPath = L"");
+	shared_ptr<T> CreateObjectHasNotPhysicalFromPool(const wstring& szMaterialName, const wstring& szPath = L"", int32 iEnum = 0);
 
 	//===============
 	// About Monster
@@ -130,9 +130,11 @@ shared_ptr<T> ObjectFactory::CreateObjectHasPhysical(const wstring& szMaterialNa
 
 template<typename T>
 shared_ptr<T> ObjectFactory::CreateObjectHasPhysicalFromPool(const wstring& szMaterialName, bool bApplyGravity,
-	ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vSize, const MassProperties& massProperties, const wstring& szPath)
+	ACTOR_TYPE eActorType, GEOMETRY_TYPE eGeometryType, Vec3 vSize, const MassProperties& massProperties, const wstring& szPath, int32 iEnum)
 {
 	shared_ptr<T> pObject = T::Get();
+	pObject->Init(iEnum);
+
 	pObject->AddComponent(make_shared<Transform>());
 
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(szMaterialName)->Clone();
@@ -185,9 +187,11 @@ shared_ptr<T> ObjectFactory::CreateObjectHasNotPhysical(const wstring& szMateria
 }
 
 template<typename T>
-shared_ptr<T> ObjectFactory::CreateObjectHasNotPhysicalFromPool(const wstring& szMaterialName, const wstring& szPath)
+shared_ptr<T> ObjectFactory::CreateObjectHasNotPhysicalFromPool(const wstring& szMaterialName, const wstring& szPath, int32 iEnum)
 {
 	shared_ptr<T> pObject = T::Get();
+	pObject->Init(iEnum);
+
 	pObject->AddComponent(make_shared<Transform>());
 
 	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(szMaterialName)->Clone();

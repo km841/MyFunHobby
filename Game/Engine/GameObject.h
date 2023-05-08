@@ -76,8 +76,10 @@ public:
 
     void Release();
     virtual void ReturnToPool() {}
+    virtual void Init(int32 iEnum) { }
 
     void ReorganizePosition();
+    void ReorganizeVerticalPosition();
     bool DoesTileExistInDirection(DIRECTION eDirection, float fDistance);
 
 protected:

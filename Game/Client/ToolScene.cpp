@@ -193,7 +193,7 @@ void ToolScene::LoadTileMap()
 	for (uint32 i = 0; i < iCount; ++i)
 	{
 		Vec2 vTilePos = Conv::ImVec2ToVec2(m_TileMapData.vTileData[i].vTilePos);
-		CreateTile(vTilePos, m_TileMapData.vTileData[i].szTexPath);
+		CreateTile(vTilePos, m_TileMapData.vTileData[i].szTexPath, m_TileMapData.vTileData[i].eTileType);
 	}
 
 	for (uint32 i = 0; i < m_TileMapData.vDOData.size(); ++i)
@@ -229,8 +229,8 @@ void ToolScene::MapEditorUpdate()
 		shared_ptr<Material> pMaterial = pTile->GetMeshRenderer()->GetMaterial();
 		wstring szTexPath = pMaterial->GetTexture(0)->GetName();
 		Vec3 vPos = pTile->GetTransform()->GetLocalPosition();
-
-		m_TileMapData.vTileData.push_back(TileData(szTexPath, ImVec2(vPos.x, vPos.y)));	
+		TILE_TYPE eTileType = static_pointer_cast<Tile>(pTile)->GetTileType();
+		m_TileMapData.vTileData.push_back(TileData(eTileType, szTexPath, ImVec2(vPos.x, vPos.y)));
 	}
 
 	m_TileMapData.iTileCount = static_cast<uint32>(m_TileMapData.vTileData.size());
@@ -276,8 +276,6 @@ void ToolScene::MapEditorUpdate()
 
 	if (L"FAILURE" != szSelectedKey)
 	{
-		// 타일인지 검사하고, 타일이라면 아래 로직..
-
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(szSelectedKey);
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 
@@ -292,6 +290,7 @@ void ToolScene::MapEditorUpdate()
 	{
 		DRAWING_TYPE eDrawingType = static_cast<DRAWING_TYPE>(MAP_TOOL->GetDrawingType());
 		OUTPUT_TYPE  eOutputType = static_cast<OUTPUT_TYPE>(MAP_TOOL->GetOutputType());
+		TILE_TYPE eTileType = static_cast<TILE_TYPE>(MAP_TOOL->GetClickedColliderType());
 		SRV_KIND eSRVKind = GetSelectedSRVKind(szSelectedKey);
 
 		if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
@@ -303,7 +302,7 @@ void ToolScene::MapEditorUpdate()
 					switch (eSRVKind)
 					{
 					case SRV_KIND::TILE:
-						CreateTile(vWorldPos);
+						CreateTile(vWorldPos, eTileType);
 						break;
 					case SRV_KIND::DUNGEON_GATE:
 						CreateDungeonGate(vWorldPos, szSelectedKey);
@@ -324,7 +323,7 @@ void ToolScene::MapEditorUpdate()
 					switch (eSRVKind)
 					{
 					case SRV_KIND::TILE:
-						CreateTile(vWorldPos);
+						CreateTile(vWorldPos, eTileType);
 						break;
 					case SRV_KIND::DUNGEON_GATE:
 						CreateDungeonGate(vWorldPos, szSelectedKey);
@@ -355,8 +354,6 @@ void ToolScene::MapEditorUpdate()
 		}
 	}
 
-
-
 	if (MAP_TOOL->IsCreateBGFlag())
 	{
 		Vec3 vWorldPos = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGPos());
@@ -386,11 +383,12 @@ void ToolScene::MapEditorUpdate()
 	}
 }
 
-void ToolScene::CreateTile(const Vec3& vWorldPos)
+void ToolScene::CreateTile(const Vec3& vWorldPos, TILE_TYPE eTileType)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
 	shared_ptr<Tile> pTile = Tile::Get();
+	pTile->Init(static_cast<int32>(eTileType));
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = m_pPreviewTile->GetMeshRenderer()->GetMaterial()->Clone();
@@ -417,9 +415,10 @@ void ToolScene::CreateTile(const Vec3& vWorldPos)
 	m_mTileMap[vTileAlignVec] = true;
 }
 
-void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath)
+void ToolScene::CreateTile(const Vec2& vTileAlignVec, wstring szTexPath, TILE_TYPE eTileType)
 {
 	shared_ptr<Tile> pTile = Tile::Get();
+	pTile->Init(static_cast<int32>(eTileType));
 
 	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 	shared_ptr<Material> pMaterial = make_shared<Material>();

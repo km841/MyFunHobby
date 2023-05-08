@@ -2,8 +2,9 @@
 #include "Tile.h"
 
 POOL_INIT(Tile);
-Tile::Tile()
+Tile::Tile(TILE_TYPE eTileType)
 	: GameObject(LAYER_TYPE::TILE)
+	, m_eTileType(eTileType)
 {
 }
 
@@ -36,11 +37,7 @@ void Tile::FinalUpdate()
 	GameObject::FinalUpdate();
 }
 
-void Tile::Save(const wstring& szPath)
+void Tile::Init(int32 iTileType)
 {
-	
-}
-
-void Tile::Load(const wstring& szPath)
-{
+	m_eTileType = static_cast<TILE_TYPE>(iTileType);
 }

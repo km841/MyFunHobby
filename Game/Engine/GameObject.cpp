@@ -14,6 +14,7 @@
 #include "AI.h"
 #include "Scenes.h"
 #include "ParticleSystem.h"
+#include "Tile.h"
 
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -218,6 +219,9 @@ void GameObject::ReorganizePosition()
 	Vec3 vResult = {};
 	for (const auto& pGameObject : vGameObjects)
 	{
+		if (TILE_TYPE::FOOTHOLD == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+			continue;
+
 		vResult = GetCollider()->ComputePenetration(pGameObject);
 		if (vResult != Vec3::Zero)
 		{
@@ -236,6 +240,30 @@ void GameObject::ReorganizePosition()
 	}
 }
 
+void GameObject::ReorganizeVerticalPosition()
+{
+	assert(GetPhysical());
+	assert(GetCollider());
+	assert(GetRigidBody());
+
+	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
+	Vec3 vResult = {};
+	for (const auto& pGameObject : vGameObjects)
+	{
+		vResult = GetCollider()->ComputePenetration(pGameObject);
+		if (vResult != Vec3::Zero)
+		{
+			vResult.x = 0.f;
+			if (vResult.y < 0.f)
+				GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+
+			vResult.z = 0.f;
+			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+			return;
+		}
+	}
+}
+
 bool GameObject::DoesTileExistInDirection(DIRECTION eDirection, float fDistance)
 {
 	Vec3 vGeomPos = GetTransform()->GetPhysicalPosition();
@@ -244,6 +272,9 @@ bool GameObject::DoesTileExistInDirection(DIRECTION eDirection, float fDistance)
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 	for (const auto& pGameObject : vGameObjects)
 	{
+		if (TILE_TYPE::FOOTHOLD == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+			continue;
+
 		if (DIRECTION::LEFT == eDirection)
 		{
 			Vec3 vLeft = Vec3(vGeomPos.x - TILE_HALF_SIZE - 1.f, vGeomPos.y, vGeomPos.z);

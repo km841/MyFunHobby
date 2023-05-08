@@ -5,7 +5,7 @@ class Tile :
     public GameObject
 {
 public:
-    Tile();
+    Tile(TILE_TYPE eTileType = TILE_TYPE::NONE);
     virtual ~Tile();
 
 public:
@@ -15,11 +15,15 @@ public:
     void LateUpdate();
     void FinalUpdate();
 
-public:
-    virtual void Save(const wstring& szPath) override;
-    virtual void Load(const wstring& szPath) override;
+    virtual void Init(int32 iTileType);
+
+    TILE_TYPE GetTileType() { return m_eTileType; }
+
+private:
+    TILE_TYPE m_eTileType;
 
 private:
     DECLARE_POOL(Tile);
+
 };
 

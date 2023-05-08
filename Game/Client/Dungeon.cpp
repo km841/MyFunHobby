@@ -13,7 +13,7 @@ Dungeon::Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstr
 	, m_szMapPath(szMapPath)
 {
     if (L"" != szScriptPath)
-        LoadEvent(szScriptPath);
+        LoadEventFromFile(szScriptPath);
 }
 
 Dungeon::~Dungeon()
@@ -70,7 +70,7 @@ void Dungeon::EventUpdate()
 		m_qEventQueue.pop();
 }
 
-void Dungeon::LoadEvent(const wstring& szEventScriptPath)
+void Dungeon::LoadEventFromFile(const wstring& szEventScriptPath)
 {
     std::wifstream ifs(szEventScriptPath, std::ios::in);
 
@@ -127,13 +127,10 @@ void Dungeon::LoadEvent(const wstring& szEventScriptPath)
             pDungeonEvent = make_shared<PlayerTeleportEvent>(pConditionBlock, vVec3);
             break;
         }
-
         assert(pDungeonEvent);
 
-        m_qEventQueue.push(pDungeonEvent);
+        AddEvent(pDungeonEvent);
     }
 
     ifs.close();
-
-
 }

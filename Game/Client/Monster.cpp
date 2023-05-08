@@ -69,12 +69,10 @@ void Monster::FinalUpdate()
 
 void Monster::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
-	int b = 0;
 }
 
 void Monster::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
-	int a = 0;
 }
 
 int32 Monster::CalculateParticleDirectionToDegree(PARTICLE_DIRECTION eParticleDirection)

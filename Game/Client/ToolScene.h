@@ -55,8 +55,8 @@ public:
 private:
     void MapEditorUpdate();
 
-    void CreateTile(const Vec3& vWorldPos);
-    void CreateTile(const Vec2& vTileAlignPos, wstring szTexPath);
+    void CreateTile(const Vec3& vWorldPos, TILE_TYPE eTileType);
+    void CreateTile(const Vec2& vTileAlignPos, wstring szTexPath, TILE_TYPE eTileType);
 
     void CreateDungeonGate(const Vec3& vWorldPos, const wstring& szSelectedKey);
     void CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath);

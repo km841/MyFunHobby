@@ -473,7 +473,10 @@ void Scene::Load(const wstring& szPath)
 	{
 		wstring szTexPath;
 		Vec2 vTileAlignVec;
+		int32 iTileType;
 
+		ifs >> iTileType;
+		ifs.ignore(1);
 		ifs >> szTexPath;
 		ifs.ignore(1);
 		ifs >> vTileAlignVec.x >> vTileAlignVec.y;
@@ -483,10 +486,10 @@ void Scene::Load(const wstring& szPath)
 			L"Deferred",
 			false,
 			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),
-			szTexPath);
+			szTexPath, iTileType);
 
 		pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 100.f));
+		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 101.f));
 
 		// 잠들어 있는 Component 깨우기
 		pTile->Awake();
