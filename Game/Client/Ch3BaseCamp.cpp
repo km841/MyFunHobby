@@ -8,6 +8,9 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "Scene.h"
 #include "Scenes.h"
+#include "DungeonGateOpenEvent.h"
+#include "IfAlwaysTrue.h"
+#include "DropEssence.h"
 
 Ch3BaseCamp::Ch3BaseCamp(const wstring& szMapPath)
 	: BaseCamp(szMapPath)
@@ -62,6 +65,20 @@ void Ch3BaseCamp::Enter()
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
 	}
+
+	// Essence
+	{
+		shared_ptr<DropEssence> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropEssence>(
+			L"Forward", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\Essence\\Lyweasel\\Lyweasel.png", ESSENCE_KIND::LYWEASEL);
+
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(-1200.f, 200.f, 100.f));
+
+		pGameObject->Awake();
+		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
+	}
+
+	AddEvent(make_shared<DungeonGateOpenEvent>(make_shared<IfAlwaysTrue>()));
 }
 
 void Ch3BaseCamp::Exit()

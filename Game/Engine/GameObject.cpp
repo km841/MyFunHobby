@@ -219,7 +219,7 @@ void GameObject::ReorganizePosition()
 	Vec3 vResult = {};
 	for (const auto& pGameObject : vGameObjects)
 	{
-		if (TILE_TYPE::FOOTHOLD == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+		if (TILE_TYPE::WALL != static_pointer_cast<Tile>(pGameObject)->GetTileType())
 			continue;
 
 		vResult = GetCollider()->ComputePenetration(pGameObject);
@@ -250,6 +250,9 @@ void GameObject::ReorganizeVerticalPosition()
 	Vec3 vResult = {};
 	for (const auto& pGameObject : vGameObjects)
 	{
+		if (TILE_TYPE::NONE == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+			continue;
+
 		vResult = GetCollider()->ComputePenetration(pGameObject);
 		if (vResult != Vec3::Zero)
 		{
@@ -272,7 +275,7 @@ bool GameObject::DoesTileExistInDirection(DIRECTION eDirection, float fDistance)
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
 	for (const auto& pGameObject : vGameObjects)
 	{
-		if (TILE_TYPE::FOOTHOLD == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+		if (TILE_TYPE::WALL != static_pointer_cast<Tile>(pGameObject)->GetTileType())
 			continue;
 
 		if (DIRECTION::LEFT == eDirection)

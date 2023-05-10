@@ -4,7 +4,7 @@ class BaseCamp :
     public Dungeon
 {
 public:
-	BaseCamp(const wstring& szMapPath);
+	BaseCamp(const wstring& szMapPath, const wstring& szScriptPath = L"");
 	virtual ~BaseCamp();
 
 public:

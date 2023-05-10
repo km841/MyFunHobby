@@ -521,11 +521,20 @@ void Scene::Load(const wstring& szPath)
 		ifs >> vTileAlignVec.x >> vTileAlignVec.y;
 		ifs.ignore(1);
 
-		shared_ptr<Tile> pTile= GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<Tile>(
-			L"Deferred",
-			false,
-			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),
-			szTexPath, iTileType);
+		shared_ptr<Tile> pTile = nullptr;
+		if (TILE_TYPE::NONE == static_cast<TILE_TYPE>(iTileType))
+		{
+			pTile = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<Tile>(
+				L"Deferred", szTexPath, iTileType);
+		}
+		else
+		{
+			pTile = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<Tile>(
+				L"Deferred",
+				false,
+				ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),
+				szTexPath, iTileType);
+		}
 
 		pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
 		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 101.f));
@@ -580,6 +589,8 @@ void Scene::Load(const wstring& szPath)
 			case DUNGEON_TYPE::BASE_CAMP:
 				break;
 			case DUNGEON_TYPE::DUNGEON_ITEM:
+				pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_activate.anim");
+				pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
 				break;
 			case DUNGEON_TYPE::DUNGEON_GOLD:
 				break;
@@ -618,7 +629,7 @@ void Scene::Load(const wstring& szPath)
 		pGameObject->AddComponent(make_shared<Animator>());
 		pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Activate", pActivateAnimation);
 		pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Deactivate", pDeactivateAnimation);
-		pGameObject->GetAnimator()->Play(L"DungeonGate_Activate");
+		pGameObject->GetAnimator()->Play(L"DungeonGate_Deactivate");
 
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
 		pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);

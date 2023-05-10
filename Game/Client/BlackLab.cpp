@@ -2,6 +2,7 @@
 #include "BlackLab.h"
 #include "Ch3BaseCamp.h"
 #include "Dungeon_Bone.h"
+#include "Dungeon_Item.h"
 
 BlackLab::BlackLab()
 	: Stage(STAGE_KIND::BLACK_LAB)
@@ -16,7 +17,8 @@ void BlackLab::Awake()
 {
 	// Add dungeons
 	AddDungeon(make_shared<Ch3BaseCamp>(L"..\\Resources\\Map\\Ch3BaseCampMap.map"));
-	AddDungeon(make_shared<Dungeon_Bone>(L"..\\Resources\\Map\\Ch3Map.map", L"..\\Resources\\Script\\test3.evtscript"));
+	AddDungeon(make_shared<Dungeon_Bone>(L"..\\Resources\\Map\\Ch3Map2.map", L"..\\Resources\\Script\\test4.evtscript"));
+	AddDungeon(make_shared<Dungeon_Item>(L"..\\Resources\\Map\\Ch3Map4.map", L"..\\Resources\\Script\\test5.evtscript"));
 
 	// Awaken all stages and select the active dungeon.
 	Stage::Awake();

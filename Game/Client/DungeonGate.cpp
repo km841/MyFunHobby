@@ -18,6 +18,7 @@ DungeonGate::DungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType)
 	, m_eStageKind(eStageKind)
 	, m_eDungeonType(eDungeonType)
 	, m_bIsCollisionWithPlayer(false)
+	, m_bOpen(false)
 {
 }
 
@@ -39,7 +40,7 @@ void DungeonGate::Update()
 {
 	GameObject::Update();
 
-	if (m_bIsCollisionWithPlayer)
+	if (m_bOpen && m_bIsCollisionWithPlayer)
 	{
 		if (IS_DOWN(KEY_TYPE::F))
 		{

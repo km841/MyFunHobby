@@ -480,6 +480,8 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 		case DUNGEON_TYPE::BASE_CAMP:
 			break;
 		case DUNGEON_TYPE::DUNGEON_ITEM:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::DUNGEON_GOLD:
 			break;
@@ -549,6 +551,8 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 		case DUNGEON_TYPE::BASE_CAMP:
 			break;
 		case DUNGEON_TYPE::DUNGEON_ITEM:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::DUNGEON_GOLD:
 			break;

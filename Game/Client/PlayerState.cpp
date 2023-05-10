@@ -40,7 +40,12 @@ bool PlayerState::CheckGrounded()
 	for (const auto& pGameObject : vGameObjects)
 	{
 		// 발판일 경우, 해당 타일의 겹침까지 확인
-		if (TILE_TYPE::FOOTHOLD == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+		switch (static_pointer_cast<Tile>(pGameObject)->GetTileType())
+		{
+		case TILE_TYPE::NONE:
+			break;
+
+		case TILE_TYPE::FOOTHOLD:
 		{
 			if (m_pPlayer.lock()->GetRigidBody()->GetVelocity(AXIS::Y) < 0.1f)
 			{
@@ -57,7 +62,9 @@ bool PlayerState::CheckGrounded()
 
 			}
 		}
-		else
+			break;
+
+		case TILE_TYPE::WALL:
 		{
 			bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmLeft, vBtmDir, pGameObject, 5.f);
 			if (bResult)
@@ -71,6 +78,9 @@ bool PlayerState::CheckGrounded()
 			if (bResult)
 				return true;
 		}
+			break;
+		}
+
 	}
 
 	return false;

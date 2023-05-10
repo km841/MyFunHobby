@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "Skul.h"
 #include "SkulAttack.h"
+#include "StayAnimLocalEffect.h"
 
 
 EvilSwordKirion::EvilSwordKirion(const ItemInfo& itemInfo)
@@ -96,7 +97,7 @@ void EvilSwordKirion::CreateSlashEffectAndAddedToScene()
 
 void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 {
-	shared_ptr<AnimationLocalEffect> pAnimationLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
+	shared_ptr<StayAnimLocalEffect> pAnimationLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<StayAnimLocalEffect>(L"Forward");
 	pAnimationLocalEffect->SetDirection(m_pPlayer.lock()->GetDirection());
 
 	Vec3 vPlayerPos = m_pPlayer.lock()->GetTransform()->GetPhysicalPosition();
@@ -119,7 +120,7 @@ void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 		pAnimationLocalEffect->GetAnimator()->AddAnimation(L"Kirion_Slash_Dash", pAnimation);
 	}
 
-	pAnimationLocalEffect->GetAnimator()->Play(L"Kirion_Slash_Dash", false);
+	//pAnimationLocalEffect->GetAnimator()->Play(L"Kirion_Slash_Dash", false);
 
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pAnimationLocalEffect, eSceneType));

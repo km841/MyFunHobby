@@ -694,6 +694,8 @@ string MapEditor::EventEnumToString(DUNGEON_EVENT_KIND eEventKind)
         return "Create Treasure";
     case DUNGEON_EVENT_KIND::PLAYER_TELEPORT:
         return "Player Teleport";
+    case DUNGEON_EVENT_KIND::DUNGEON_GATE_OPEN:
+        return "Dungeon Gate Open";
     }
 
     return "Not Found";

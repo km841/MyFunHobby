@@ -8,6 +8,7 @@
 #include "MonsterSpawnDungeonEvent.h"
 #include "PlayerTeleportEvent.h"
 #include "IfPlayerPosXExceedsN.h"
+#include "DungeonGateOpenEvent.h"
 
 Dungeon::Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstring& szScriptPath)
 	: m_eDungeonType(eDungeonType)
@@ -57,6 +58,7 @@ void Dungeon::Exit()
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DUNGEON_GATE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DECO);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::PARTICLE);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DROP_ESSENCE);
 }
 
 void Dungeon::AddEvent(shared_ptr<DungeonEvent> pDungeonEvent)
@@ -140,6 +142,8 @@ void Dungeon::LoadEventFromFile(const wstring& szEventScriptPath)
         case DUNGEON_EVENT_KIND::PLAYER_TELEPORT:
             pDungeonEvent = make_shared<PlayerTeleportEvent>(pConditionBlock, vVec3);
             break;
+        case DUNGEON_EVENT_KIND::DUNGEON_GATE_OPEN:
+            pDungeonEvent = make_shared<DungeonGateOpenEvent>(pConditionBlock);
         }
         assert(pDungeonEvent);
 

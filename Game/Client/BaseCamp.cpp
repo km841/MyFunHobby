@@ -7,8 +7,8 @@
 #include "IfAllDeadMonsterInDungeon.h"
 #include "MonsterSpawnDungeonEvent.h"
 
-BaseCamp::BaseCamp(const wstring& szMapPath)
-	: Dungeon(DUNGEON_TYPE::BASE_CAMP, szMapPath)
+BaseCamp::BaseCamp(const wstring& szMapPath, const wstring& szScriptPath)
+	: Dungeon(DUNGEON_TYPE::BASE_CAMP, szMapPath, szScriptPath)
 {
 }
 

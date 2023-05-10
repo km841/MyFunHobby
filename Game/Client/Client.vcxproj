@@ -184,6 +184,8 @@
     <ClInclude Include="DarkMirrorReflectionScript.h" />
     <ClInclude Include="DarkMirror.h" />
     <ClInclude Include="DecoObject.h" />
+    <ClInclude Include="DropEssence.h" />
+    <ClInclude Include="DungeonGateOpenEvent.h" />
     <ClInclude Include="Dungeon_Bone.h" />
     <ClInclude Include="Ch3BaseCamp.h" />
     <ClInclude Include="CitadelOfFate.h" />
@@ -197,6 +199,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="DungeonGate.h" />
+    <ClInclude Include="Dungeon_Item.h" />
     <ClInclude Include="Essence.h" />
     <ClInclude Include="EssenceInfoUI.h" />
     <ClInclude Include="AttackState.h" />
@@ -216,6 +219,7 @@
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoUI.h" />
+    <ClInclude Include="LocalEffect.h" />
     <ClInclude Include="Lyweasel.h" />
     <ClInclude Include="MonsterSpawnDungeonEvent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -286,6 +290,7 @@
     <ClInclude Include="SkulSkill.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="StayAnimLocalEffect.h" />
     <ClInclude Include="SwapState.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScene.h" />
@@ -315,6 +320,8 @@
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />
     <ClCompile Include="DarkMirror.cpp" />
     <ClCompile Include="DecoObject.cpp" />
+    <ClCompile Include="DropEssence.cpp" />
+    <ClCompile Include="DungeonGateOpenEvent.cpp" />
     <ClCompile Include="Dungeon_Bone.cpp" />
     <ClCompile Include="Ch3BaseCamp.cpp" />
     <ClCompile Include="CitadelOfFate.cpp" />
@@ -328,6 +335,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="DungeonGate.cpp" />
+    <ClCompile Include="Dungeon_Item.cpp" />
     <ClCompile Include="Essence.cpp" />
     <ClCompile Include="EssenceInfoUI.cpp" />
     <ClCompile Include="AttackState.cpp" />
@@ -347,6 +355,7 @@
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />
+    <ClCompile Include="LocalEffect.cpp" />
     <ClCompile Include="Lyweasel.cpp" />
     <ClCompile Include="MonsterSpawnDungeonEvent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -422,6 +431,7 @@
     <ClCompile Include="SkulSkill.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="StayAnimLocalEffect.cpp" />
     <ClCompile Include="SwapState.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />
