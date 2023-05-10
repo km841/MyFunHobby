@@ -38,6 +38,7 @@ public:
 
 	ImVec3 GetCreateBGPos() { return m_vBGPos; }
 	ImVec3 GetCreateBGScale() { return m_vBGScale; }
+	ImVec3 GetCreateBGSpeed() { return m_vBGSpeed; }
 
 	const wstring& GetBGImagePath() { return m_szBGImagePath; }
 	bool IsChangedBGDataFlag() { return m_bChangedBGDataFlag; }
@@ -92,6 +93,7 @@ private:
 	bool	    m_bCreateBGFlag;
 	ImVec3 m_vBGPos;
 	ImVec3 m_vBGScale;
+	ImVec3 m_vBGSpeed;
 
 	std::vector<BackgroundData> m_vBackgroundDataList;
 	int32 m_iBackgroundDataSelector;

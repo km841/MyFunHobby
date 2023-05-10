@@ -55,7 +55,7 @@ void TitleScene::Update()
 {
 	if (IS_DOWN(KEY_TYPE::N))
 	{
-		GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::TOOL));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<SceneChangeEvent>(SCENE_TYPE::TOWN));
 	}
 
 	if (m_tStayTimer.IsRunning())
@@ -95,16 +95,14 @@ void TitleScene::Enter()
 		pGameObject->AddComponent(make_shared<Light>());
 		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
 		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
-		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-		pGameObject->GetLight()->SetSpecular(Vec3(0.2f, 0.2f, 0.2f));
-
+		pGameObject->GetLight()->SetDiffuse(Vec3(0.6f, 0.6f, 0.6f));
+		//pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 		AddGameObject(pGameObject);
 	}
 
 	// Background
 	{
-		m_pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", L"..\\Resources\\Texture\\Title\\Image_TitleBG.png");
+		m_pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Forward", L"..\\Resources\\Texture\\Title\\Image_TitleBG.png");
 		m_pBackground->SetFrustum(false);
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -149,7 +147,6 @@ void TitleScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, true);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, true);
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::BACKGROUND, true);
 	}
 
 
@@ -169,24 +166,6 @@ void TitleScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, false);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, false);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, false);
-	}
-
-	// Background Camera
-	{
-		shared_ptr<ComponentObject> pGameObject = make_shared<ComponentObject>();
-
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Camera>());
-		pGameObject->AddComponent(make_shared<CameraMoveScript>());
-		pGameObject->GetCamera()->SetProjectionType(PROJECTION_TYPE::PERSPECTIVE);
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));
-		pGameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
-		AddGameObject(pGameObject);
-
-		pGameObject->GetCamera()->EnableAllCullingMask();
-		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::BACKGROUND, false);
 	}
 
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);

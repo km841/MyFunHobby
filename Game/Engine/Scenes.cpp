@@ -78,11 +78,10 @@ Vec3 Scenes::WorldToScreenPosition(const Vec3& vPoint, shared_ptr<Camera> pCamer
 	Matrix matProjection = pCamera->GetProjectionMatrix();
 	Matrix matFinal = matView * matProjection;
 
-	Vec3 vWorldPos = XMVector3TransformCoord(vPoint, matFinal);
+	Vec3 vScreenPos = XMVector3TransformCoord(vPoint, matFinal);
 
-	vWorldPos.x = iWidth * ((vWorldPos.x + 1) / 2.f);
-	vWorldPos.y = iHeight * ((1.f - vWorldPos.y) / 2.f);
-
-	vWorldPos.z = vPoint.z;
-	return vWorldPos;
+	vScreenPos.x = iWidth  * ((vScreenPos.x + 1)   / 2.f);
+	vScreenPos.y = iHeight * ((1.f - vScreenPos.y) / 2.f);
+	vScreenPos.z = vPoint.z;
+	return vScreenPos;
 }

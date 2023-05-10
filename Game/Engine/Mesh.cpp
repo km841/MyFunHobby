@@ -34,6 +34,17 @@ void Mesh::RenderInstanced(uint32 iInstanceCount)
 	CONTEXT->DrawIndexedInstanced(m_iIndexCount, iInstanceCount, 0, 0, 0);
 }
 
+void Mesh::RenderIndexed()
+{
+	uint32 iStride = sizeof(Vertex);
+	uint32 iOffset = 0;
+
+	CONTEXT->IASetVertexBuffers(0, 1, m_pVertexBuffer.GetAddressOf(), &iStride, &iOffset);
+	CONTEXT->IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+	CONTEXT->DrawIndexed(m_iIndexCount, 0, 0);
+}
+
 void Mesh::CreateVertexBuffer(const std::vector<Vertex>& vVertices)
 {
 	uint32 iCount = static_cast<uint32>(vVertices.size());

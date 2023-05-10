@@ -176,6 +176,12 @@
     <Filter Include="소스 파일\Game\Object\Interface\HUD\Dungeon">
       <UniqueIdentifier>{c84eb6a8-182e-4376-8e8e-326caf16b134}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\DecoObject">
+      <UniqueIdentifier>{01feeed4-c265-4fc2-970e-02440ca56754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\DecoObject\Script">
+      <UniqueIdentifier>{f81ba1fc-9cd0-4ad7-bf9a-892ff5e6d7a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -513,6 +519,21 @@
     </ClInclude>
     <ClInclude Include="BaseCampOpeningHUD.h">
       <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="DarkMirror.h">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DarkMirrorReflectionScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoObject.h">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Ch3BeginTower.h">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject</Filter>
+    </ClInclude>
+    <ClInclude Include="IfPlayerPosXExceedsN.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -864,6 +885,21 @@
     </ClCompile>
     <ClCompile Include="BaseCampOpeningHUD.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="DarkMirror.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DarkMirrorReflectionScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoObject.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch3BeginTower.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\DecoObject</Filter>
+    </ClCompile>
+    <ClCompile Include="IfPlayerPosXExceedsN.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

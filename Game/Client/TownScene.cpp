@@ -24,6 +24,7 @@
 #include "PlayerSkulThumnailScript.h"
 #include "PlayerFunctionScript.h"
 #include "BGCameraScript.h"
+#include "DarkMirrorReflectionScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -47,6 +48,9 @@
 #include "SceneChangeEventObject.h"
 #include "Background.h"
 #include "DungeonGate.h"
+#include "DarkMirror.h"
+#include "Ch3BeginTower.h"
+#include "DecoObject.h"
 
 /* Resources */
 #include "Animation.h"
@@ -148,20 +152,6 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PARTICLE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::PLAYER_PROJECTILE);
-
-	// Directional Light
-	{
-		shared_ptr<GameObject> pGameObject = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
-		pGameObject->AddComponent(make_shared<Transform>());
-		pGameObject->AddComponent(make_shared<Light>());
-		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
-		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		pGameObject->GetLight()->SetDiffuse(Vec3(0.4f, 0.4f, 0.4f));
-		pGameObject->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-
-		AddGameObject(pGameObject);
-	}
-
 	
 	// Player
 	{
@@ -184,11 +174,10 @@ void TownScene::Enter()
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-		pPlayer->GetLight()->SetLightRange(1200.f);
-		pPlayer->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
+		pPlayer->GetLight()->SetLightRange(250.f);
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
-		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 100.f));
+		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 98.f));
 
 		pPlayer->SetFrustum(false);
 		AddGameObject(pPlayer);
@@ -205,9 +194,9 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HIT));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::MOUSE_POINTER));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY));
-	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING));
+	//AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING));
 
-	//Change Scene Event
+	//Scene Change Event Object
 	{
 		shared_ptr<SceneChangeEventObject> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<SceneChangeEventObject>(
 			L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(500.f, 100.f, 1.f), MassProperties(), L"", pPlayer);
@@ -218,56 +207,47 @@ void TownScene::Enter()
 		AddGameObject(pGameObject);
 	}
 
-	//Dungeon Gate
-	//{
-	//	shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
-	//		L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f), MassProperties(), L"", DUNGEON_TYPE::SHOP);
-
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 160.f, 100.f));
-
-	//	shared_ptr<Animation> pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_activate.anim");
-	//	shared_ptr<Animation> pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\DungeonGate\\Shop\\dungeongate_shop_deactivate.anim");
-	//	
-	//	pGameObject->AddComponent(make_shared<Animator>());
-	//	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Shop_Activate", pActivateAnimation);
-	//	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Shop_Deactivate", pDeactivateAnimation);
-	//	pGameObject->GetAnimator()->Play(L"DungeonGate_Shop_Activate");
-
-	//	AddGameObject(pGameObject);
-	//}
-
-
 	// Connect the player to the camera! 
 	{
 		GetMainCamera().lock()->AddComponent(make_shared<PlayerTrackingScript>(pPlayer));
-		GetBGCamera().lock()->AddComponent(make_shared<BGCameraScript>(pPlayer));
 	}
 
-	 //Test HUD
-	//{
-	//	shared_ptr<HUD> pHUD = make_shared<HUD>();
+	// Black Mirror
+	{
+		shared_ptr<GameObject> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<GameObject>(
+			L"Forward", L"..\\Resources\\Texture\\DecoObject\\Image_DarkMirrorFrame.png", LAYER_TYPE::UNKNOWN);
 
-	//	shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
-	//	shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
-	//	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"VelocityTarget");
-	//	pMaterial->SetTexture(0, pTexture);
+		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 160.f, 100.f));
+		pGameObject->GetTransform()->SetLocalScale(Vec3(105.f, 120.f, 1.f));
 
-	//	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
-	//	pMeshRenderer->SetMaterial(pMaterial);
-	//	pMeshRenderer->SetMesh(pMesh);
+		AddGameObject(pGameObject);
+	}
 
-	//	pHUD->AddComponent(pMeshRenderer);
-	//	pHUD->AddComponent(make_shared<Transform>());
-	//	//pHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+	//Test HUD
+	{
+		//shared_ptr<HUD> pHUD = make_shared<HUD>();
 
-	//	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	//	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+		//shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Forward")->Clone();
+		//shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(L"AccumulatedLight");
+		//pMaterial->SetTexture(0, pTexture);
 
-	//	pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 200.f, 10.f));
-	//	pHUD->GetTransform()->SetLocalScale(Vec3(442, 260, 1.f));
+		//shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		//pMeshRenderer->SetMaterial(pMaterial);
+		//pMeshRenderer->SetMesh(pMesh);
 
-	//	AddGameObject(pHUD);
-	//}
+		//pHUD->AddComponent(pMeshRenderer);
+		//pHUD->AddComponent(make_shared<Transform>());
+		////pHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+		////float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		////float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		//pHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 200.f, 10.f));
+		//pHUD->GetTransform()->SetLocalScale(Vec3(442, 260, 1.f));
+
+		//AddGameObject(pHUD);
+	}
 	
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE));

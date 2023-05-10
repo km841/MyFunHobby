@@ -133,7 +133,6 @@ void DungeonScene::Enter()
 {
 	InitializeCameraAndPlayerPos();
 	Awake();
-	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 }
 
 void DungeonScene::Exit()
@@ -148,7 +147,6 @@ void DungeonScene::InitializeCameraAndPlayerPos()
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 	pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
-	pPlayer.lock()->GetTransform()->SetPhysicalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 200.f, 100.f));
-	GetMainCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
-	GetBGCamera().lock()->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f + 500.f, 1.f));
+	pPlayer.lock()->GetTransform()->SetPhysicalPosition(Vec3(-1400.f, fHeight / 2.f + 200.f, 100.f));
+	GetMainCamera().lock()->GetTransform()->SetLocalPosition(Vec3(-1400.f, fHeight / 2.f + 500.f, 1.f));
 }

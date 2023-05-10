@@ -267,6 +267,22 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Forward", pShader);
 	}
 
+	// Mirror
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::FORWARD,
+			DEPTH_STENCIL_TYPE::LESS,
+			RASTERIZER_TYPE::CULL_BACK,
+			BLEND_TYPE::ALPHA_BLEND
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\mirror.fx", shaderInfo);
+
+		Add<Shader>(L"Mirror", pShader);
+	}
+
 	// DirLight
 	{
 		ShaderInfo shaderInfo =
@@ -511,6 +527,17 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"Forward", pMaterial);
+	}
+
+	// Mirror
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Mirror");
+
+		pMaterial->SetTexture(2, Get<Texture>(L"VelocityTarget"));
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"Mirror", pMaterial);
 	}
 
 	// Deferred

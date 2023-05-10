@@ -24,7 +24,8 @@ public:
     FORCEINLINE int32                         GetHitFrame()                               { return m_iHitFrame; }
     FORCEINLINE bool                          IsHitFrame()                                { return !m_bHitChecked && m_iCurFrame == m_iHitFrame; }
     FORCEINLINE void                          CheckToHitFrame()                           { m_bHitChecked = true; }
-    
+    const FrameData& GetCurFrameData();
+   
     void SetTriggerFrame(int32 iTriggerFrame);
     void CheckToTriggerFrame();
     bool IsTriggerFrame();

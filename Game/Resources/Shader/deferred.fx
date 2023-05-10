@@ -85,6 +85,7 @@ PS_OUT PS_Main(VS_OUT _in)
     float2 vAtlasSize = g_vec2_2;
     float2 vOffset = g_vec2_3;
     int iAnimationFlag = g_int_0;
+    int iPlayerFlag = g_int_2;
     int iMotionBlurFlag = g_int_3;
     
     float fRatio = g_float_0;

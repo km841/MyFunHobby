@@ -37,6 +37,7 @@ VS_OUT VS_DirLight(VS_IN _in)
 struct PS_OUT
 {
     float4 vDiffuse : SV_Target0;
+    float4 vAcc : SV_Target1;
 };
 
 PS_OUT PS_DirLight(VS_OUT _in)
@@ -48,17 +49,16 @@ PS_OUT PS_DirLight(VS_OUT _in)
         clip(-1);
     
     LightColor color = CalculateLightColor(g_int_0, vViewPos);
-    output.vDiffuse = color.diffuse + color.ambient;
-    
+    output.vDiffuse += color.diffuse + color.ambient;
+        
     return output;
 }
-
-
 
 // Point Params
 // g_int_0 : Light Index
 // g_vec2_0 : RenderTarget Resolution
 // g_tex_0 : Position RenderTarget
+// g_tex_1 : Diffuse Light RenderTarget
 
 VS_OUT VS_PointLight(VS_IN _in)
 {
@@ -79,13 +79,15 @@ PS_OUT PS_PointLight(VS_OUT _in)
         clip(-1);
     
     int iLightIndex = g_int_0;
-    float3 vViewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView);
+    float4 vViewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView);
     float fDistance = length(vViewPos.xy - vViewLightPos.xy);
     if (fDistance > g_light[iLightIndex].range)
         clip(-1);
     
     LightColor color = CalculateLightColor(iLightIndex, vViewPos);
-   
+    
+    float4 vAccColor = g_tex_1.Sample(g_sam_0, vUV);
+
     output.vDiffuse = color.diffuse + color.ambient;
     return output;
 }

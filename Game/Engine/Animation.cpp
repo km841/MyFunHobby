@@ -77,6 +77,17 @@ void Animation::Update()
 	
 }
 
+const FrameData& Animation::GetCurFrameData()
+{
+	assert(!m_vFrameDataList.empty());
+	if (m_iCurFrame < m_vFrameDataList[0].iFrameCount)
+	{
+		return m_vFrameDataList[m_iCurFrame];
+	}
+	
+	return m_vFrameDataList[0];
+}
+
 void Animation::SetTriggerFrame(int32 iTriggerFrame)
 {
 	if (m_vTriggerFrames.empty())

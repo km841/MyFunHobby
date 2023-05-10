@@ -615,5 +615,8 @@
     <FxCompile Include="..\Resources\Shader\inventory_info.fx">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="..\Resources\Shader\mirror.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

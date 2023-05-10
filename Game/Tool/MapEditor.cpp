@@ -149,6 +149,7 @@ void MapEditor::UpdateOptionSelection()
                     ofs << AbsolutePathToRelativePath(m_vBackgroundDataList[i].szBGImagePath) << L'\n';
                     ofs << m_vBackgroundDataList[i].vBGPos.x << L" " << m_vBackgroundDataList[i].vBGPos.y << L" " << m_vBackgroundDataList[i].vBGPos.z << L'\n';
                     ofs << m_vBackgroundDataList[i].vBGScale.x << L" " << m_vBackgroundDataList[i].vBGScale.y << L" " << 1.f << L'\n';
+                    ofs << m_vBackgroundDataList[i].vBGSpeed.x << L" " << m_vBackgroundDataList[i].vBGSpeed.y << L" " << 0.f << L'\n';
                 }
 
                 uint32 iCount = m_TileMapData.iTileCount;
@@ -211,6 +212,8 @@ void MapEditor::UpdateOptionSelection()
                     ifs >> m_vBackgroundDataList[i].vBGPos.x >> m_vBackgroundDataList[i].vBGPos.y >> m_vBackgroundDataList[i].vBGPos.z;
                     ifs.ignore(1);
                     ifs >> m_vBackgroundDataList[i].vBGScale.x >> m_vBackgroundDataList[i].vBGScale.y >> m_vBackgroundDataList[i].vBGScale.z;
+                    ifs.ignore(1);
+                    ifs >> m_vBackgroundDataList[i].vBGSpeed.x >> m_vBackgroundDataList[i].vBGSpeed.y >> m_vBackgroundDataList[i].vBGSpeed.z;
                     ifs.ignore(1);
                 }
 
@@ -341,13 +344,17 @@ void MapEditor::UpdateBGSelection()
         ImGui::SameLine();
         ImGui::InputFloat3("Scale", &m_vBGScale.x);
 
+        ImGui::Text("Speed         ");
+        ImGui::SameLine();
+        ImGui::InputFloat3("Speed", &m_vBGSpeed.x);
+
         if (ImGui::Button("Create BG"))
         {
             assert(!m_szBGImagePath.empty());
             // Create Flag On!
             m_bCreateBGFlag = true;
 
-            m_vBackgroundDataList.push_back(BackgroundData{ m_szBGImagePath, m_vBGPos, m_vBGScale });
+            m_vBackgroundDataList.push_back(BackgroundData{ m_szBGImagePath, m_vBGPos, m_vBGScale, m_vBGSpeed });
         }
 
         InsertSeparator();
@@ -386,6 +393,10 @@ void MapEditor::UpdateBGSelection()
         ImGui::SameLine();
         ImGui::InputFloat3("            ", &m_CurrBackgroundData.vBGScale.x);
 
+        ImGui::Text("Speed         ");
+        ImGui::SameLine();
+        ImGui::InputFloat3("             ", &m_CurrBackgroundData.vBGSpeed.x);
+
         if (ImGui::Button("Edit Data"))
         {
             if (!m_vBackgroundDataList.empty())
@@ -397,7 +408,6 @@ void MapEditor::UpdateBGSelection()
 
         ImGui::EndTabItem();
     }
-
 }
 
 void MapEditor::UpdateDOSelection()
@@ -664,6 +674,11 @@ string MapEditor::ConditionEnumToString(CONDITION_TYPE eConditionType)
         return "Always True";
     case CONDITION_TYPE::ALL_MONSTER_DEAD_IN_DUNGEON:
         return "All Monster Dead In Dungeon";
+    case CONDITION_TYPE::PLAYER_POS_X_EXCEEDS_800:
+        return "Player Pos X Exceeds 800.f";
+    case CONDITION_TYPE::PLAYER_POS_X_EXCEEDS_1000:
+        return "Player Pos X Exceeds 1000.f";
+
     }
 
     return "Not Found";

@@ -7,6 +7,7 @@
 #include "IfAllDeadMonsterInDungeon.h"
 #include "MonsterSpawnDungeonEvent.h"
 #include "PlayerTeleportEvent.h"
+#include "IfPlayerPosXExceedsN.h"
 
 Dungeon::Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstring& szScriptPath)
 	: m_eDungeonType(eDungeonType)
@@ -45,6 +46,8 @@ void Dungeon::Enter()
 {
     if (!m_szMapPath.empty())
         GET_SINGLE(Scenes)->GetActiveScene()->Load(m_szMapPath);
+
+    GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 }
 
 void Dungeon::Exit()
@@ -52,6 +55,8 @@ void Dungeon::Exit()
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::TILE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::BACKGROUND);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DUNGEON_GATE);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DECO);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::PARTICLE);
 }
 
 void Dungeon::AddEvent(shared_ptr<DungeonEvent> pDungeonEvent)
@@ -111,6 +116,14 @@ void Dungeon::LoadEventFromFile(const wstring& szEventScriptPath)
             break;
         case CONDITION_TYPE::ALL_MONSTER_DEAD_IN_DUNGEON:
             pConditionBlock = make_shared<IfAllDeadMonsterInDungeon>();
+            break;
+
+        case CONDITION_TYPE::PLAYER_POS_X_EXCEEDS_800:
+            pConditionBlock = make_shared<IfPlayerPosXExceedsN>(800.f);
+            break;
+
+        case CONDITION_TYPE::PLAYER_POS_X_EXCEEDS_1000:
+            pConditionBlock = make_shared<IfPlayerPosXExceedsN>(1000.f);
             break;
         }
         assert(pConditionBlock);

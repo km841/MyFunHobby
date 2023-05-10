@@ -6,31 +6,31 @@ LightColor CalculateLightColor(int iLightIndex, float3 vViewPos)
 {
     LightColor color = (LightColor) 0.f;
     
-    float3 vViewLightDir = (float3) 0.f;
+    float2 vViewLightDir = (float2) 0.f;
     
     float vDiffuseRatio = 1.f;
     float fDistanceRatio = 1.f;
     
     if (g_light[iLightIndex].lightType == 0)
     {
-        vViewLightDir = normalize(mul(float4(g_light[iLightIndex].direction.xyz, 0.f), g_matView).xyz);
+        vViewLightDir = normalize(mul(float4(g_light[iLightIndex].direction.xyz, 0.f), g_matView).xy);
     }
     else if (g_light[iLightIndex].lightType == 1)
     {
         float3 vViewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView).xyz;
-        vViewLightDir = normalize(vViewPos - vViewLightPos);
+        vViewLightDir = normalize(vViewPos.xy - vViewLightPos.xy);
         
         float fDist = distance(vViewPos.xy, vViewLightPos.xy);
         if (g_light[iLightIndex].range == 0.f)
             vDiffuseRatio = 0.f;
         else 
-            fDistanceRatio = clamp(1.f - fDist / g_light[iLightIndex].range, 0.4f, 1.f);
+            fDistanceRatio = clamp(1.f - fDist / g_light[iLightIndex].range, 0.6f, 1.f);
     }
     else
     {
         // Spot Light
         float3 viewLightPos = mul(float4(g_light[iLightIndex].position.xyz, 1.f), g_matView).xyz;
-        vViewLightDir = normalize(vViewPos - viewLightPos);
+        vViewLightDir = normalize(vViewPos.xy - viewLightPos.xy);
 
         if (g_light[iLightIndex].range == 0.f)
             fDistanceRatio = 0.f;

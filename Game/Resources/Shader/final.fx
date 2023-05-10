@@ -58,6 +58,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     vColor /= iCount;
     
     float4 vLightColor = g_tex_2.Sample(g_sam_0, _in.uv) * g_float_0;
+    
     return vColor * vLightColor;
 }
 #endif

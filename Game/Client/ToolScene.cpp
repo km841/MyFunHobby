@@ -360,8 +360,9 @@ void ToolScene::MapEditorUpdate()
 	{
 		Vec3 vWorldPos = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGPos());
 		Vec3 vWorldScale = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGScale());
+		Vec3 vSpeed = Conv::ImVec3ToVec3(MAP_TOOL->GetCreateBGSpeed());
 		const wstring& szBGImagePath = AbsolutePathToRelativePath(MAP_TOOL->GetBGImagePath());
-		CreateBGAndAddedToScene(vWorldPos, vWorldScale, szBGImagePath);
+		CreateBGAndAddedToScene(vWorldPos, vWorldScale, vSpeed, szBGImagePath);
 
 		MAP_TOOL->DisableCreateBGFlag();
 	}
@@ -373,6 +374,7 @@ void ToolScene::MapEditorUpdate()
 
 		m_vBackgrounds[iBackgroundIndex]->GetTransform()->SetLocalPosition(Conv::ImVec3ToVec3(backgroundData.vBGPos));
 		m_vBackgrounds[iBackgroundIndex]->GetTransform()->SetLocalScale(Conv::ImVec3ToVec3(backgroundData.vBGScale));
+		m_vBackgrounds[iBackgroundIndex]->SetFollowSpeed(Conv::ImVec3ToVec3(backgroundData.vBGSpeed));
 
 		MAP_TOOL->DisableChangedBGDataFlag();
 	}
@@ -638,12 +640,13 @@ bool ToolScene::CheckTileAtClick(const Vec3& vWorldPos)
 		return m_mTileMap[vTileAlignVec];
 }
 
-void ToolScene::CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const wstring& szBGImagePath)
+void ToolScene::CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const Vec3& vSpeed, const wstring& szBGImagePath)
 {
 	shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szBGImagePath);
 	pBackground->SetFrustum(false);
 	pBackground->GetTransform()->SetLocalPosition(vWorldPos);
 	pBackground->GetTransform()->SetLocalScale(vWorldScale);
+	pBackground->SetFollowSpeed(vSpeed);
 
 	m_vBackgrounds.push_back(pBackground);
 	AddGameObject(pBackground);
@@ -665,8 +668,9 @@ void ToolScene::LoadBackgrounds()
 		const auto& szPath = m_vBackgroundDataList[i].szBGImagePath;
 		Vec3 vPosition = Conv::ImVec3ToVec3(m_vBackgroundDataList[i].vBGPos);
 		Vec3 vScale = Conv::ImVec3ToVec3(m_vBackgroundDataList[i].vBGScale);
+		Vec3 vSpeed = Conv::ImVec3ToVec3(m_vBackgroundDataList[i].vBGSpeed);
 
-		CreateBGAndAddedToScene(vPosition, vScale, szPath);
+		CreateBGAndAddedToScene(vPosition, vScale, vSpeed, szPath);
 	}
 }
 

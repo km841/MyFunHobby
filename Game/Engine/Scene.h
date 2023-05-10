@@ -56,8 +56,7 @@ public:
     // Helper Functions
     weak_ptr<ComponentObject> GetMainCamera();
     weak_ptr<ComponentObject> GetUICamera();
-    weak_ptr<ComponentObject> GetBGCamera();
-    weak_ptr<Player>          GetPlayer();
+    shared_ptr<Player>          GetPlayer();
 
 public:
     virtual void Load(const wstring& szPath);
@@ -79,6 +78,9 @@ protected:
 
     Timer m_tCameraShakeTimer;
     Vec3 m_vCameraShakeImpulse;
+
+    std::vector<shared_ptr<Light>> m_vLights;
+    
 
 protected:
     static std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> s_vGlobalObjects;

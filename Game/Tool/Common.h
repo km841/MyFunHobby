@@ -49,6 +49,7 @@ struct BackgroundData
 	wstring szBGImagePath;
 	ImVec3 vBGPos;
 	ImVec3 vBGScale;
+	ImVec3 vBGSpeed;
 };
 
 enum class SRV_KIND
@@ -162,6 +163,8 @@ enum class CONDITION_TYPE : uint8
 {
 	ALWAYS_TRUE,
 	ALL_MONSTER_DEAD_IN_DUNGEON,
+	PLAYER_POS_X_EXCEEDS_800,
+	PLAYER_POS_X_EXCEEDS_1000,
 	END,
 };
 

@@ -180,6 +180,10 @@
     <ClInclude Include="BaseCampOpeningHUD.h" />
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
+    <ClInclude Include="Ch3BeginTower.h" />
+    <ClInclude Include="DarkMirrorReflectionScript.h" />
+    <ClInclude Include="DarkMirror.h" />
+    <ClInclude Include="DecoObject.h" />
     <ClInclude Include="Dungeon_Bone.h" />
     <ClInclude Include="Ch3BaseCamp.h" />
     <ClInclude Include="CitadelOfFate.h" />
@@ -207,6 +211,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="IfAlwaysTrue.h" />
+    <ClInclude Include="IfPlayerPosXExceedsN.h" />
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
@@ -306,6 +311,10 @@
     <ClCompile Include="BaseCampOpeningHUD.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
+    <ClCompile Include="Ch3BeginTower.cpp" />
+    <ClCompile Include="DarkMirrorReflectionScript.cpp" />
+    <ClCompile Include="DarkMirror.cpp" />
+    <ClCompile Include="DecoObject.cpp" />
     <ClCompile Include="Dungeon_Bone.cpp" />
     <ClCompile Include="Ch3BaseCamp.cpp" />
     <ClCompile Include="CitadelOfFate.cpp" />
@@ -333,6 +342,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="IfAlwaysTrue.cpp" />
+    <ClCompile Include="IfPlayerPosXExceedsN.cpp" />
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />

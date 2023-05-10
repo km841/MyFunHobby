@@ -5,6 +5,7 @@
 #include "Physical.h"
 #include "Clock.h"
 #include "RigidBody.h"
+#include "Camera.h"
 
 BGCameraScript::BGCameraScript(shared_ptr<Player> pPlayer)
 	: m_pPlayer(pPlayer)
@@ -32,5 +33,7 @@ void BGCameraScript::LateUpdate()
 	vDiffNormal.Normalize();
 	vDiffNormal.y *= 2.f;
 	vDiffNormal.z = 0.f;
+
+	GetCamera()->SetCameraSpeed(vDiffNormal * 2000.f);
 	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 2000.f * DELTA_TIME);
 }

@@ -42,7 +42,7 @@ bool PlayerState::CheckGrounded()
 		// 발판일 경우, 해당 타일의 겹침까지 확인
 		if (TILE_TYPE::FOOTHOLD == static_pointer_cast<Tile>(pGameObject)->GetTileType())
 		{
-			if (m_pPlayer.lock()->GetRigidBody()->GetVelocity(AXIS::Y) < 1.f)
+			if (m_pPlayer.lock()->GetRigidBody()->GetVelocity(AXIS::Y) < 0.1f)
 			{
 				bool bCenterBtmResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmCenter, vBtmDir, pGameObject, 5.f);
 				bool bLeftTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopLeft, vBtmDir, pGameObject, vMySize.y - 5.f);

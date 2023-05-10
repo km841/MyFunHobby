@@ -26,6 +26,7 @@
 #include "DungeonGate.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "ObjectRemoveToSceneEvent.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -165,10 +166,27 @@ void Scene::Render_Lights()
 {
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->OMSetRenderTarget();
 	shared_ptr<Camera> pMainCamera = s_vCameras[0];
-	for (auto& pLight : s_vLights)
+
+	if (s_vLights.empty())
+		return;
+
+	shared_ptr<Light> pDirLight = s_vLights[0];
+	pDirLight->Render(pMainCamera);
+
+	for (auto& pLight : m_vLights)
 	{
 		pLight->Render(pMainCamera);
 	}
+
+	for (auto& pLight : s_vLights)
+	{
+		if (pLight == pDirLight)
+			continue;
+		pLight->Render(pMainCamera);
+	}
+
+
+
 }
 
 void Scene::Render_Final()
@@ -225,6 +243,16 @@ void Scene::Render_Font()
 void Scene::PushLightData()
 {
 	LightParams lightParams = {};
+
+	for (auto& pLight : m_vLights)
+	{
+		const LightInfo& lightInfo = pLight->GetLightInfo();
+
+		pLight->SetLightIndex(lightParams.iLightCount);
+
+		lightParams.Lights[lightParams.iLightCount] = lightInfo;
+		lightParams.iLightCount++;
+	}
 
 	for (auto& pLight : s_vLights)
 	{
@@ -288,7 +316,6 @@ void Scene::CameraShakeUpdate()
 		m_tCameraShakeTimer.Update(DELTA_TIME);
 		float fProgress = m_tCameraShakeTimer.GetProgress();
 		shared_ptr<Camera> pMainCamera = s_vCameras[0];
-		shared_ptr<Camera> pBGCamera = s_vCameras[2];
 		if (!pMainCamera)
 			return;
 
@@ -297,13 +324,11 @@ void Scene::CameraShakeUpdate()
 		{
 			vCamPos += m_vCameraShakeImpulse * DELTA_TIME;
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
-			pBGCamera->GetTransform()->SetLocalPosition(vCamPos);
 		}
 		else
 		{
 			vCamPos -= m_vCameraShakeImpulse * DELTA_TIME;
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
-			pBGCamera->GetTransform()->SetLocalPosition(vCamPos);
 
 			if (m_tCameraShakeTimer.IsFinished())
 			{
@@ -316,23 +341,29 @@ void Scene::CameraShakeUpdate()
 
 void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)
 {
-	if (pGameObject->GetCamera())
-		s_vCameras.push_back(pGameObject->GetCamera());
-
-	if (pGameObject->GetLight())
-		s_vLights.push_back(pGameObject->GetLight());
+	uint8 iLayerType = static_cast<uint8>(pGameObject->GetLayerType());
 
 	if (pGameObject->GetPhysical())
 		pGameObject->GetPhysical()->AddActorToPxScene();
+
+	if (pGameObject->GetCamera())
+		s_vCameras.push_back(pGameObject->GetCamera());
 	
-
-	uint8 iLayerType = static_cast<uint8>(pGameObject->GetLayerType());
-
 	if (iLayerType < SCENE_OBJECT_TYPE_COUNT)
+	{
 		m_vSceneObjects[iLayerType].push_back(pGameObject);
 
+		if (pGameObject->GetLight())
+			m_vLights.push_back(pGameObject->GetLight());
+	}
+
 	else
+	{
 		s_vGlobalObjects[iLayerType - SCENE_OBJECT_TYPE_COUNT].push_back(pGameObject);
+
+		if (pGameObject->GetLight())
+			s_vLights.push_back(pGameObject->GetLight());
+	}
 }
 
 std::vector<shared_ptr<GameObject>>& Scene::GetGameObjects(LAYER_TYPE eLayerType)
@@ -349,8 +380,7 @@ std::vector<shared_ptr<GameObject>>& Scene::GetGameObjects(LAYER_TYPE eLayerType
 
 void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 {
-	if (!pGameObject)
-		int a = 0;
+	uint8 iLayerType = static_cast<uint8>(pGameObject->GetLayerType());
 
 	if (pGameObject->GetCamera())
 	{
@@ -361,9 +391,19 @@ void Scene::RemoveGameObject(shared_ptr<GameObject> pGameObject)
 
 	if (pGameObject->GetLight())
 	{
-		auto pFindIt = std::find(s_vLights.begin(), s_vLights.end(), pGameObject->GetLight());
-		if (pFindIt != s_vLights.end())
-			s_vLights.erase(pFindIt);
+		if (iLayerType < SCENE_OBJECT_TYPE_COUNT)
+		{
+			auto pFindIt = std::find(m_vLights.begin(), m_vLights.end(), pGameObject->GetLight());
+			if (pFindIt != m_vLights.end())
+				m_vLights.erase(pFindIt);
+		}
+		else
+		{
+			auto pFindIt = std::find(s_vLights.begin(), s_vLights.end(), pGameObject->GetLight());
+			if (pFindIt != s_vLights.end())
+				s_vLights.erase(pFindIt);
+		}
+
 	}
 
 	auto& vGameObjects = GetGameObjects(pGameObject->GetLayerType());
@@ -397,9 +437,9 @@ void Scene::RemoveLocalGroup(LAYER_TYPE eLocalLayerType)
 	{
 		if (pLocalGameObject->GetPhysical())
 			pLocalGameObject->GetPhysical()->RemoveActorToPxScene();
-	}
 
-	vLocalGroup.clear();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(pLocalGameObject, m_eSceneType));
+	}
 }
 
 weak_ptr<ComponentObject> Scene::GetMainCamera()
@@ -416,17 +456,12 @@ weak_ptr<ComponentObject> Scene::GetUICamera()
 	return static_pointer_cast<ComponentObject>(pUICamera.lock()->GetGameObject());
 }
 
-weak_ptr<ComponentObject> Scene::GetBGCamera()
-{
-	assert(!s_vCameras.empty());
-	weak_ptr<Camera> pBGCamera = s_vCameras[2];
-	return static_pointer_cast<ComponentObject>(pBGCamera.lock()->GetGameObject());
-}
-
-weak_ptr<Player> Scene::GetPlayer()
+shared_ptr<Player> Scene::GetPlayer()
 {
 	auto& vGameObjects = GetGameObjects(LAYER_TYPE::PLAYER);
-	assert(!vGameObjects.empty());
+	if (vGameObjects.empty())
+		return nullptr;
+
 	return static_pointer_cast<Player>(vGameObjects[0]);
 }
 
@@ -444,6 +479,7 @@ void Scene::Load(const wstring& szPath)
 		wstring szTexPath = {};
 		Vec3 vBGPosition = {};
 		Vec3 vBGScale = {};
+		Vec3 vBGSpeed = {};
 
 		ifs >> szTexPath;
 		ifs.ignore(1);
@@ -451,10 +487,13 @@ void Scene::Load(const wstring& szPath)
 		ifs.ignore(1);
 		ifs >> vBGScale.x >> vBGScale.y >> vBGScale.z;
 		ifs.ignore(1);
+		ifs >> vBGSpeed.x >> vBGSpeed.y >> vBGSpeed.z;
+		ifs.ignore(1);
 
 		shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szTexPath);
 		pBackground->GetTransform()->SetLocalPosition(vBGPosition);
 		pBackground->GetTransform()->SetLocalScale(vBGScale);
+		pBackground->SetFollowSpeed(vBGSpeed);
 
 		pBackground->SetFrustum(false);
 		pBackground->Awake();
@@ -529,7 +568,7 @@ void Scene::Load(const wstring& szPath)
 
 		// 애니메이션 추가
 		shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
-			L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(150.f, 120.f, 1.f), MassProperties(), L"", eStageKind, eDungeonType);
+			L"Forward", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(150.f, 120.f, 1.f), MassProperties(), L"", eStageKind, eDungeonType);
 
 		shared_ptr<Animation> pActivateAnimation = nullptr;
 		shared_ptr<Animation> pDeactivateAnimation = nullptr;

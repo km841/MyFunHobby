@@ -31,6 +31,9 @@ public:
     void            EnableAllCullingMask();
     bool            ContainsSphere(const Vec3& vPos, float fRadius)           { return m_Frustum.ContainsSphere(vPos, fRadius); }
 
+    void SetCameraSpeed(const Vec3& vCameraSpeed) { m_vCameraSpeed = vCameraSpeed; }
+    const Vec3& GetCameraSpeed() { return m_vCameraSpeed; }
+
 public:
     void Render_Forward();
     void Render_Deferred();
@@ -50,6 +53,8 @@ private:
     uint32          m_iCullingMask;
 
     Frustum         m_Frustum;
+
+    Vec3            m_vCameraSpeed;
 
     std::vector<shared_ptr<GameObject>> m_vForwardObjects;
     std::vector<shared_ptr<GameObject>> m_vDeferredObjects;

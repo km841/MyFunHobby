@@ -66,7 +66,7 @@ private:
     void EraseTile(const Vec3& vWorldPos);
     bool CheckTileAtClick(const Vec3& vWorldPos);
 
-    void CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const wstring& szBGImagePath);
+    void CreateBGAndAddedToScene(const Vec3& vWorldPos, const Vec3& vWorldScale, const Vec3& vSpeed, const wstring& szBGImagePath);
     void EraseAllBackground();
     void LoadBackgrounds();
 
