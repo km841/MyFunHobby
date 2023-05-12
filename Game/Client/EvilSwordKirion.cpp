@@ -120,8 +120,6 @@ void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 		pAnimationLocalEffect->GetAnimator()->AddAnimation(L"Kirion_Slash_Dash", pAnimation);
 	}
 
-	//pAnimationLocalEffect->GetAnimator()->Play(L"Kirion_Slash_Dash", false);
-
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pAnimationLocalEffect, eSceneType));
 }

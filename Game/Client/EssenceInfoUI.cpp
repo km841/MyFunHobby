@@ -71,6 +71,10 @@ void EssenceInfoUI::ShowEssenceInMyPlace()
 		GetMeshRenderer()->GetMaterial()->SetTexture(1, nullptr);
 		return;
 	}
+	else
+	{
+		m_bUnused = false;
+	}
 
 	const EssenceInfo& essenceInfo = pEssence.lock()->GetEssenceInfo();
 	GetMeshRenderer()->GetMaterial()->SetTexture(1, essenceInfo.pEssenceTexture);

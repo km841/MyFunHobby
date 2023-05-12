@@ -88,9 +88,6 @@
 0
 ..\Resources\Texture\Tiles\DarkStone_2.png
 256 192
-2
-..\Resources\Texture\Tiles\DarkStone_1.png
-640 640
 0
 ..\Resources\Texture\Tiles\DarkStone_2.png
 704 640
@@ -925,4 +922,7 @@
 2
 ..\Resources\Texture\Tiles\DarkStone_9.png
 448 448
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+640 640
 0

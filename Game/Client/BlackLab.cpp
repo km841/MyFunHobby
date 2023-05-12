@@ -17,7 +17,7 @@ void BlackLab::Awake()
 {
 	// Add dungeons
 	AddDungeon(make_shared<Ch3BaseCamp>(L"..\\Resources\\Map\\Ch3BaseCampMap.map"));
-	AddDungeon(make_shared<Dungeon_Bone>(L"..\\Resources\\Map\\Ch3Map2.map", L"..\\Resources\\Script\\test4.evtscript"));
+	AddDungeon(make_shared<Dungeon_Bone>(L"..\\Resources\\Map\\Ch3Map6.map", L"..\\Resources\\Script\\test4.evtscript"));
 	AddDungeon(make_shared<Dungeon_Item>(L"..\\Resources\\Map\\Ch3Map4.map", L"..\\Resources\\Script\\test5.evtscript"));
 
 	// Awaken all stages and select the active dungeon.

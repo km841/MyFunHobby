@@ -550,6 +550,9 @@
     <ClInclude Include="LocalEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="DungeonWall.h">
+      <Filter>소스 파일\Game\Object\GameObject\DungeonObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -930,6 +933,9 @@
     </ClCompile>
     <ClCompile Include="LocalEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonWall.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\DungeonObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

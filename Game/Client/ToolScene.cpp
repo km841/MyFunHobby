@@ -29,6 +29,7 @@
 #include "ObjectFactory.h"
 #include "ComponentObject.h"
 #include "DungeonGate.h"
+#include "DungeonWall.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
@@ -200,7 +201,17 @@ void ToolScene::LoadTileMap()
 	for (uint32 i = 0; i < m_TileMapData.vDOData.size(); ++i)
 	{
 		Vec3 vWorldPos = Vec3(m_TileMapData.vDOData[i].vDOPos.x, m_TileMapData.vDOData[i].vDOPos.y, 100.f);
-		CreateDungeonGate(vWorldPos, m_TileMapData.vDOData[i].eStageKind, m_TileMapData.vDOData[i].eDungeonType, m_TileMapData.vDOData[i].szTexPath);
+
+		switch (m_TileMapData.vDOData[i].eDungeonObjType)
+		{
+		case DUNGEON_OBJ_TYPE::DUNGEON_GATE:
+			CreateDungeonGate(vWorldPos, m_TileMapData.vDOData[i].eStageKind, m_TileMapData.vDOData[i].eDungeonType, m_TileMapData.vDOData[i].szTexPath);
+			break;
+
+		case DUNGEON_OBJ_TYPE::DUNGEON_WALL:
+			CreateDungeonWall(vWorldPos, m_TileMapData.vDOData[i].eStageKind);
+			break;
+		}
 	}
 }
 
@@ -233,7 +244,6 @@ void ToolScene::MapEditorUpdate()
 		TILE_TYPE eTileType = static_pointer_cast<Tile>(pTile)->GetTileType();
 		m_TileMapData.vTileData.push_back(TileData(eTileType, szTexPath, ImVec2(vPos.x, vPos.y)));
 	}
-
 	m_TileMapData.iTileCount = static_cast<uint32>(m_TileMapData.vTileData.size());
 
 	auto& vDungeonGateGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::DUNGEON_GATE)];
@@ -246,6 +256,17 @@ void ToolScene::MapEditorUpdate()
 		STAGE_KIND eStageKind = static_pointer_cast<DungeonGate>(pGate)->GetStageKind();
 		DUNGEON_TYPE eDungeonType = static_pointer_cast<DungeonGate>(pGate)->GetDungeonType();
 		m_TileMapData.vDOData.push_back(DungeonObjData{ DUNGEON_OBJ_TYPE::DUNGEON_GATE, eStageKind, eDungeonType, szTexPath, ImVec2(vPos.x, vPos.y) });
+	}
+
+	auto& vDungeonWallGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::DUNGEON_WALL)];
+	for (auto& pWall : vDungeonWallGroup)
+	{
+		shared_ptr<Material> pMaterial = pWall->GetMeshRenderer()->GetMaterial();
+		wstring szTexPath = pMaterial->GetTexture(0)->GetName();
+		Vec3 vPos = pWall->GetTransform()->GetLocalPosition();
+
+		STAGE_KIND eStageKind = static_pointer_cast<DungeonWall>(pWall)->GetStageKind();
+		m_TileMapData.vDOData.push_back(DungeonObjData{ DUNGEON_OBJ_TYPE::DUNGEON_WALL, eStageKind, DUNGEON_TYPE::END, szTexPath, ImVec2(vPos.x, vPos.y) });
 	}
 
 	if (MAP_TOOL->IsDataSynced())
@@ -593,7 +614,6 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Deactivate", pDeactivateAnimation);
 	pGameObject->GetAnimator()->Play(L"DungeonGate_Activate");
 
-
 	pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
 	pGameObject->GetTransform()->SetLocalScale(Vec3(vTexSize.x, vTexSize.y, 1.f));
 	pGameObject->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y + vTexSize.y - (TILE_HALF_SIZE + 10.f), 100.f));
@@ -607,7 +627,46 @@ void ToolScene::CreateDungeonWall(const Vec3& vWorldPos, const wstring& szSelect
 	DungeonObjPair eEnumPair = WstringToDungeonObjPair(szSelectedKey);
 	STAGE_KIND eStageKind = eEnumPair.first;
 
+	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
 
+	shared_ptr<DungeonWall> pDungeonWall = nullptr;
+	switch (eStageKind)
+	{
+	case STAGE_KIND::BLACK_LAB:
+		pDungeonWall = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DungeonWall>(L"Deferred", L"..\\Resources\\Texture\\Sprites\\Dungeon\\Ch3\\DungeonWall\\Image_Ch3_Dungeon_Wall.png", eStageKind);
+		break;
+	case STAGE_KIND::CITADEL_OF_FATE:
+		break;
+	}
+	assert(pDungeonWall);
+
+	Vec3 vTexSize = pDungeonWall->GetMeshRenderer()->GetMaterial()->GetTexture(0)->GetTexSize();
+	pDungeonWall->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y + vTexSize.y - 40.f, 102.f));
+
+	pDungeonWall->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDungeonWall, m_eSceneType));
+}
+
+void ToolScene::CreateDungeonWall(const Vec3& vWorldPos, STAGE_KIND eStageKind)
+{
+	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
+
+	shared_ptr<DungeonWall> pDungeonWall = nullptr;
+	switch (eStageKind)
+	{
+	case STAGE_KIND::BLACK_LAB:
+		pDungeonWall = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DungeonWall>(L"Deferred", L"..\\Resources\\Texture\\Sprites\\Dungeon\\Ch3\\DungeonWall\\Image_Ch3_Dungeon_Wall.png", eStageKind);
+		break;
+	case STAGE_KIND::CITADEL_OF_FATE:
+		break;
+	}
+	assert(pDungeonWall);
+
+	Vec3 vTexSize = pDungeonWall->GetMeshRenderer()->GetMaterial()->GetTexture(0)->GetTexSize();
+	pDungeonWall->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 102.f));
+
+	pDungeonWall->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDungeonWall, m_eSceneType));
 }
 
 void ToolScene::EraseTile(const Vec3& vWorldPos)

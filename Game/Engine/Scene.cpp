@@ -27,6 +27,7 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "ObjectRemoveToSceneEvent.h"
+#include "DungeonWall.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -167,26 +168,15 @@ void Scene::Render_Lights()
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->OMSetRenderTarget();
 	shared_ptr<Camera> pMainCamera = s_vCameras[0];
 
-	if (s_vLights.empty())
-		return;
-
-	shared_ptr<Light> pDirLight = s_vLights[0];
-	pDirLight->Render(pMainCamera);
+	for (auto& pLight : s_vLights)
+	{
+		pLight->Render(pMainCamera);
+	}
 
 	for (auto& pLight : m_vLights)
 	{
 		pLight->Render(pMainCamera);
 	}
-
-	for (auto& pLight : s_vLights)
-	{
-		if (pLight == pDirLight)
-			continue;
-		pLight->Render(pMainCamera);
-	}
-
-
-
 }
 
 void Scene::Render_Final()
@@ -442,6 +432,212 @@ void Scene::RemoveLocalGroup(LAYER_TYPE eLocalLayerType)
 	}
 }
 
+void Scene::LoadBackground(std::wifstream& ifs)
+{
+	uint32 iBGCount = 0;
+	ifs >> iBGCount;
+
+	for (uint32 i = 0; i < iBGCount; ++i)
+	{
+		wstring szTexPath = {};
+		Vec3 vBGPosition = {};
+		Vec3 vBGScale = {};
+		Vec3 vBGSpeed = {};
+
+		ifs >> szTexPath;
+		ifs.ignore(1);
+		ifs >> vBGPosition.x >> vBGPosition.y >> vBGPosition.z;
+		ifs.ignore(1);
+		ifs >> vBGScale.x >> vBGScale.y >> vBGScale.z;
+		ifs.ignore(1);
+		ifs >> vBGSpeed.x >> vBGSpeed.y >> vBGSpeed.z;
+		ifs.ignore(1);
+
+		shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szTexPath);
+		pBackground->GetTransform()->SetLocalPosition(vBGPosition);
+		pBackground->GetTransform()->SetLocalScale(vBGScale);
+		pBackground->SetFollowSpeed(vBGSpeed);
+
+		pBackground->SetFrustum(false);
+		pBackground->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pBackground, m_eSceneType));
+	}
+}
+
+void Scene::LoadTile(std::wifstream& ifs)
+{
+	uint32 iCount = 0;
+	wstring szTexPath = {};
+	Vec2 vTileAlignVec = {};
+
+	ifs >> iCount;
+	ifs.ignore(1);
+
+	assert(iCount != 0);
+	for (uint32 i = 0; i < iCount; ++i)
+	{
+		wstring szTexPath;
+		Vec3 vTileAlignVec;
+		int32 iTileType;
+
+		ifs >> iTileType;
+		ifs.ignore(1);
+		ifs >> szTexPath;
+		ifs.ignore(1);
+		ifs >> vTileAlignVec.x >> vTileAlignVec.y;
+		ifs.ignore(1);
+
+		TILE_TYPE eTileType = static_cast<TILE_TYPE>(iTileType);
+		CreateTile(eTileType, szTexPath, vTileAlignVec);
+	}
+}
+
+void Scene::LoadDungeonObject(std::wifstream& ifs)
+{
+	uint32 iDungeonObjectCount = 0;
+	ifs >> iDungeonObjectCount;
+
+	for (uint32 i = 0; i < iDungeonObjectCount; ++i)
+	{
+		uint32 iDungeonObjTypeEnum = 0;
+		uint32 iStageKindEnum = 0;
+		uint32 iDungeonTypeEnum = 0;
+
+		wstring szTexPath = {};
+		Vec3 vPos = {};
+
+		ifs >> iDungeonObjTypeEnum;
+		ifs.ignore(1);
+
+		ifs >> iStageKindEnum;
+		ifs.ignore(1);
+
+		ifs >> iDungeonTypeEnum;
+		ifs.ignore(1);
+
+		ifs >> szTexPath;
+		ifs.ignore(1);
+
+		ifs >> vPos.x >> vPos.y;
+		ifs.ignore(1);
+
+		STAGE_KIND eStageKind = static_cast<STAGE_KIND>(iStageKindEnum);
+		DUNGEON_TYPE eDungeonType = static_cast<DUNGEON_TYPE>(iDungeonTypeEnum);
+
+		switch (static_cast<DUNGEON_OBJ_TYPE>(iDungeonObjTypeEnum))
+		{
+		case DUNGEON_OBJ_TYPE::DUNGEON_GATE:
+			CreateDungeonGate(eStageKind, eDungeonType, szTexPath, vPos);
+			break;
+
+		case DUNGEON_OBJ_TYPE::DUNGEON_WALL:
+			CreateDungeonWall(eStageKind, szTexPath, vPos);
+			break;
+		}
+	}
+}
+
+void Scene::CreateDungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath, const Vec3& vPos)
+{
+	// 애니메이션 추가
+	shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
+		L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(150.f, 120.f, 1.f), MassProperties(), L"", eStageKind, eDungeonType);
+
+	shared_ptr<Animation> pActivateAnimation = nullptr;
+	shared_ptr<Animation> pDeactivateAnimation = nullptr;
+
+	if (STAGE_KIND::BLACK_LAB == eStageKind)
+	{
+		switch (eDungeonType)
+		{
+		case DUNGEON_TYPE::BASE_CAMP:
+			break;
+		case DUNGEON_TYPE::DUNGEON_ITEM:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
+			break;
+		case DUNGEON_TYPE::DUNGEON_GOLD:
+			break;
+		case DUNGEON_TYPE::DUNGEON_BONE:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
+			break;
+		case DUNGEON_TYPE::VICE_BOSS:
+			break;
+		case DUNGEON_TYPE::STAGE_BOSS:
+			break;
+		}
+	}
+
+	else if (STAGE_KIND::CITADEL_OF_FATE == eStageKind)
+	{
+		switch (eDungeonType)
+		{
+		case DUNGEON_TYPE::BASE_CAMP:
+			break;
+		case DUNGEON_TYPE::DUNGEON_ITEM:
+			break;
+		case DUNGEON_TYPE::DUNGEON_GOLD:
+			break;
+		case DUNGEON_TYPE::DUNGEON_BONE:
+			break;
+		case DUNGEON_TYPE::VICE_BOSS:
+			break;
+		case DUNGEON_TYPE::STAGE_BOSS:
+			break;
+		}
+	}
+
+	assert(pActivateAnimation && pDeactivateAnimation);
+
+	pGameObject->AddComponent(make_shared<Animator>());
+	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Activate", pActivateAnimation);
+	pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Deactivate", pDeactivateAnimation);
+	pGameObject->GetAnimator()->Play(L"DungeonGate_Deactivate");
+
+	shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
+	pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
+	pGameObject->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 100.5f));
+
+	pGameObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, m_eSceneType));
+}
+
+void Scene::CreateDungeonWall(STAGE_KIND eStageKind, const wstring& szTexPath, const Vec3& vPos)
+{
+	shared_ptr<DungeonWall> pDungeonWall = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DungeonWall>(L"Deferred", szTexPath, eStageKind);
+	pDungeonWall->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 102.f));
+
+	pDungeonWall->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDungeonWall, m_eSceneType));
+}
+
+void Scene::CreateTile(TILE_TYPE eTileType, const wstring& szTexPath, const Vec3& vPos)
+{
+	shared_ptr<Tile> pTile = nullptr;
+	int32 iTileType = static_cast<int32>(eTileType);
+	if (TILE_TYPE::NONE == eTileType)
+	{
+		pTile = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<Tile>(
+			L"Deferred", szTexPath, iTileType);
+	}
+	else
+	{
+		pTile = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<Tile>(
+			L"Deferred",
+			false,
+			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),
+			szTexPath, iTileType);
+	}
+
+	pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
+	pTile->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 101.f));
+
+	// 잠들어 있는 Component 깨우기
+	pTile->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
+}
+
 weak_ptr<ComponentObject> Scene::GetMainCamera()
 {
 	assert(!s_vCameras.empty());
@@ -469,175 +665,9 @@ void Scene::Load(const wstring& szPath)
 {
 	std::wifstream ifs(szPath, std::ios::in);
 
-	uint32 iBGCount = 0;
-
-	ifs >> iBGCount;
-	//assert(iBGCount);
-
-	for (uint32 i = 0; i < iBGCount; ++i)
-	{
-		wstring szTexPath = {};
-		Vec3 vBGPosition = {};
-		Vec3 vBGScale = {};
-		Vec3 vBGSpeed = {};
-
-		ifs >> szTexPath;
-		ifs.ignore(1);
-		ifs >> vBGPosition.x >> vBGPosition.y >> vBGPosition.z;
-		ifs.ignore(1);
-		ifs >> vBGScale.x >> vBGScale.y >> vBGScale.z;
-		ifs.ignore(1);
-		ifs >> vBGSpeed.x >> vBGSpeed.y >> vBGSpeed.z;
-		ifs.ignore(1);
-
-		shared_ptr<Background> pBackground = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(L"Deferred", szTexPath);
-		pBackground->GetTransform()->SetLocalPosition(vBGPosition);
-		pBackground->GetTransform()->SetLocalScale(vBGScale);
-		pBackground->SetFollowSpeed(vBGSpeed);
-
-		pBackground->SetFrustum(false);
-		pBackground->Awake();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pBackground, m_eSceneType));
-	}
-
-	uint32 iCount = 0;
-	wstring szTexPath = {};
-	Vec2 vTileAlignVec = {};
-
-	ifs >> iCount;
-	ifs.ignore(1);
-
-	assert(iCount != 0);
-	for (uint32 i = 0; i < iCount; ++i)
-	{
-		wstring szTexPath;
-		Vec2 vTileAlignVec;
-		int32 iTileType;
-
-		ifs >> iTileType;
-		ifs.ignore(1);
-		ifs >> szTexPath;
-		ifs.ignore(1);
-		ifs >> vTileAlignVec.x >> vTileAlignVec.y;
-		ifs.ignore(1);
-
-		shared_ptr<Tile> pTile = nullptr;
-		if (TILE_TYPE::NONE == static_cast<TILE_TYPE>(iTileType))
-		{
-			pTile = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<Tile>(
-				L"Deferred", szTexPath, iTileType);
-		}
-		else
-		{
-			pTile = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<Tile>(
-				L"Deferred",
-				false,
-				ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),
-				szTexPath, iTileType);
-		}
-
-		pTile->GetTransform()->SetLocalScale(Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 1.f));
-		pTile->GetTransform()->SetLocalPosition(Vec3(vTileAlignVec.x, vTileAlignVec.y, 101.f));
-
-		// 잠들어 있는 Component 깨우기
-		pTile->Awake();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
-	}
-
-	uint32 iGateCount = 0;
-	ifs >> iGateCount;
-
-	for (uint32 i = 0; i < iGateCount; ++i)
-	{
-		uint32 iDungeonObjTypeEnum = 0;
-		uint32 iStageKindEnum = 0;
-		uint32 iDungeonTypeEnum = 0;
-
-		wstring szTexPath = {};
-		Vec2 vGatePos = {};
-
-		ifs >> iDungeonObjTypeEnum;
-		ifs.ignore(1);
-
-		ifs >> iStageKindEnum;
-		ifs.ignore(1);
-
-		ifs >> iDungeonTypeEnum;
-		ifs.ignore(1);
-
-		ifs >> szTexPath;
-		ifs.ignore(1);
-
-		ifs >> vGatePos.x >> vGatePos.y;
-		ifs.ignore(1);
-
-
-		STAGE_KIND eStageKind = static_cast<STAGE_KIND>(iStageKindEnum);
-		DUNGEON_TYPE eDungeonType = static_cast<DUNGEON_TYPE>(iDungeonTypeEnum);
-
-		// 애니메이션 추가
-		shared_ptr<DungeonGate> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DungeonGate>(
-			L"Forward", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(150.f, 120.f, 1.f), MassProperties(), L"", eStageKind, eDungeonType);
-
-		shared_ptr<Animation> pActivateAnimation = nullptr;
-		shared_ptr<Animation> pDeactivateAnimation = nullptr;
-
-		if (STAGE_KIND::BLACK_LAB == eStageKind)
-		{
-			switch (eDungeonType)
-			{
-			case DUNGEON_TYPE::BASE_CAMP:
-				break;
-			case DUNGEON_TYPE::DUNGEON_ITEM:
-				pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_activate.anim");
-				pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
-				break;
-			case DUNGEON_TYPE::DUNGEON_GOLD:
-				break;
-			case DUNGEON_TYPE::DUNGEON_BONE:
-				pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
-				pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
-				break;
-			case DUNGEON_TYPE::VICE_BOSS:
-				break;
-			case DUNGEON_TYPE::STAGE_BOSS:
-				break;
-			}
-		}
-
-		else if (STAGE_KIND::CITADEL_OF_FATE == eStageKind)
-		{
-			switch (eDungeonType)
-			{
-			case DUNGEON_TYPE::BASE_CAMP:
-				break;
-			case DUNGEON_TYPE::DUNGEON_ITEM:
-				break;
-			case DUNGEON_TYPE::DUNGEON_GOLD:
-				break;
-			case DUNGEON_TYPE::DUNGEON_BONE:
-				break;
-			case DUNGEON_TYPE::VICE_BOSS:
-				break;
-			case DUNGEON_TYPE::STAGE_BOSS:
-				break;
-			}
-		}
-
-		assert(pActivateAnimation && pDeactivateAnimation);
-
-		pGameObject->AddComponent(make_shared<Animator>());
-		pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Activate", pActivateAnimation);
-		pGameObject->GetAnimator()->AddAnimation(L"DungeonGate_Deactivate", pDeactivateAnimation);
-		pGameObject->GetAnimator()->Play(L"DungeonGate_Deactivate");
-
-		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(szTexPath, szTexPath);
-		pGameObject->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(vGatePos.x, vGatePos.y, 100.f));
-
-		pGameObject->Awake();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, m_eSceneType));
-	}
+	LoadBackground(ifs);
+	LoadTile(ifs);
+	LoadDungeonObject(ifs);
 
 	ifs.close();
 }

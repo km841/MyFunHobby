@@ -172,12 +172,11 @@ void TownScene::Enter()
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::HIGH_WARLOCK));
 		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<ForbiddenSword>());
 		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<EvilSwordKirion>());
-		//pPlayer->ObtainEssence(GET_SINGLE(ObjectFactory)->CreateEssence<Lyweasel>());
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
 		pPlayer->GetLight()->SetLightRange(250.f);
-		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
+		pPlayer->GetLight()->SetDiffuse(Vec3(0.5f, 0.5f, 0.5f));
 
 		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 98.f));
 

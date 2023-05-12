@@ -186,6 +186,7 @@
     <ClInclude Include="DecoObject.h" />
     <ClInclude Include="DropEssence.h" />
     <ClInclude Include="DungeonGateOpenEvent.h" />
+    <ClInclude Include="DungeonWall.h" />
     <ClInclude Include="Dungeon_Bone.h" />
     <ClInclude Include="Ch3BaseCamp.h" />
     <ClInclude Include="CitadelOfFate.h" />
@@ -322,6 +323,7 @@
     <ClCompile Include="DecoObject.cpp" />
     <ClCompile Include="DropEssence.cpp" />
     <ClCompile Include="DungeonGateOpenEvent.cpp" />
+    <ClCompile Include="DungeonWall.cpp" />
     <ClCompile Include="Dungeon_Bone.cpp" />
     <ClCompile Include="Ch3BaseCamp.cpp" />
     <ClCompile Include="CitadelOfFate.cpp" />

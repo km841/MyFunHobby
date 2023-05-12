@@ -24,7 +24,7 @@ LightColor CalculateLightColor(int iLightIndex, float3 vViewPos)
         if (g_light[iLightIndex].range == 0.f)
             vDiffuseRatio = 0.f;
         else 
-            fDistanceRatio = clamp(1.f - fDist / g_light[iLightIndex].range, 0.6f, 1.f);
+            fDistanceRatio = 0.4f - fDist / g_light[iLightIndex].range;
     }
     else
     {

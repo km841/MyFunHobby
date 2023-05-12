@@ -55,15 +55,13 @@ void Ch3BeginTower::CreateLightsAndAddedToScene()
 
 			pDecoObject->AddComponent(make_shared<Light>());
 			pDecoObject->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-			pDecoObject->GetLight()->SetLightRange(100.f);
-			pDecoObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
+			pDecoObject->GetLight()->SetLightRange(150.f);
+			pDecoObject->GetLight()->SetDiffuse(Vec3(0.5f, 0.5f, 0.f));
 
-			pDecoObject->GetTransform()->SetLocalPosition(Vec3(-100.f + j * 70.f * 1.3f, i * 230.f - 170.f, 0.f));
+			pDecoObject->GetTransform()->SetLocalPosition(Vec3(-100.f + j * 75.f * 1.3f, i * 230.f - 170.f, 0.f));
 
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, eSceneType));
 		}
 	}
-
-
 }

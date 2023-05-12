@@ -37,7 +37,6 @@ VS_OUT VS_DirLight(VS_IN _in)
 struct PS_OUT
 {
     float4 vDiffuse : SV_Target0;
-    float4 vAcc : SV_Target1;
 };
 
 PS_OUT PS_DirLight(VS_OUT _in)
@@ -85,9 +84,7 @@ PS_OUT PS_PointLight(VS_OUT _in)
         clip(-1);
     
     LightColor color = CalculateLightColor(iLightIndex, vViewPos);
-    
-    float4 vAccColor = g_tex_1.Sample(g_sam_0, vUV);
-
+   
     output.vDiffuse = color.diffuse + color.ambient;
     return output;
 }

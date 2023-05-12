@@ -50,11 +50,14 @@ bool PlayerState::CheckGrounded()
 			if (m_pPlayer.lock()->GetRigidBody()->GetVelocity(AXIS::Y) < 0.1f)
 			{
 				bool bCenterBtmResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmCenter, vBtmDir, pGameObject, 5.f);
+				bool bLeftBtmResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmLeft, vBtmDir, pGameObject, 5.f);
+				bool bRightBtmResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmRight, vBtmDir, pGameObject, 5.f);
 				bool bLeftTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopLeft, vBtmDir, pGameObject, vMySize.y - 5.f);
 				bool bCenterTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopCenter, vBtmDir, pGameObject, vMySize.y - 5.f);
 				bool bRightTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopRight, vBtmDir, pGameObject, vMySize.y - 5.f);
 
-				if (bCenterBtmResult && (!bLeftTopResult && !bCenterTopResult && !bRightTopResult))
+				if ( (bLeftBtmResult ||  bCenterBtmResult ||  bRightBtmResult) && 
+				   ( !bLeftTopResult && !bCenterTopResult && !bRightTopResult) )
 				{
 					m_pPlayer.lock()->ReorganizeVerticalPosition();
 					return true;

@@ -52,6 +52,15 @@ public:
 
     void RemoveLocalGroup(LAYER_TYPE eLocalLayerType);
 
+private:
+    void LoadBackground(std::wifstream& ifs);
+    void LoadTile(std::wifstream& ifs);
+    void LoadDungeonObject(std::wifstream& ifs);
+
+    void CreateDungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath, const Vec3& vPos);
+    void CreateDungeonWall(STAGE_KIND eStageKind, const wstring& szTexPath, const Vec3& vPos);
+    void CreateTile(TILE_TYPE eTileType, const wstring& szTexPath, const Vec3& vPos);
+
 public:
     // Helper Functions
     weak_ptr<ComponentObject> GetMainCamera();

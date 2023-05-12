@@ -142,7 +142,7 @@ void Engine::ResizeWindow(int32 iWidth, int32 iHeight)
 void Engine::CreateRenderTargetGroups()
 {
 	shared_ptr<Texture> pDepthStencilTexture = 
-		GET_SINGLE(Resources)->CreateTexture(L"DepthStencil", DXGI_FORMAT_D32_FLOAT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL, m_Window.iWidth, m_Window.iHeight);
+		GET_SINGLE(Resources)->CreateTexture(L"DepthStencil", DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL, m_Window.iWidth, m_Window.iHeight);
 
 	// Swap Chain
 	{

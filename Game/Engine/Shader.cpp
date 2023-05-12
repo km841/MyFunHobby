@@ -147,12 +147,16 @@ void Shader::CreateGraphicsShader(const wstring& szPath, ShaderInfo shaderInfo, 
 			break;
 
 		case BLEND_TYPE::ONE_TO_ONE_BLEND:
-			bs.AlphaToCoverageEnable = FALSE;
-			bs.IndependentBlendEnable = FALSE;
-			bs.RenderTarget[0].BlendEnable = TRUE;
-			bs.RenderTarget[0].BlendOp = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+			bs.AlphaToCoverageEnable = false;
+			bs.IndependentBlendEnable = false;
+			bs.RenderTarget[0].BlendEnable = true;
 			bs.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
 			bs.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+			bs.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+			bs.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+			bs.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+			bs.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+			bs.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 			break;
 		}
 

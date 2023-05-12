@@ -210,11 +210,9 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
         }
         else
         {
-            
             g_particle[threadIndex.x].fGravityAcc.y += fGravity * fDeltaTime;
             g_particle[threadIndex.x].vPosition += g_particle[threadIndex.x].vDirection * g_particle[threadIndex.x].fSpeed * fDeltaTime;
             g_particle[threadIndex.x].vPosition.y += g_particle[threadIndex.x].fGravityAcc.y * fDeltaTime;
-
         }
     }
 }
