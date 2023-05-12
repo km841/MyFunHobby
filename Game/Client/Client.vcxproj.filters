@@ -182,6 +182,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\DecoObject\Script">
       <UniqueIdentifier>{f81ba1fc-9cd0-4ad7-bf9a-892ff5e6d7a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\MapReward">
+      <UniqueIdentifier>{cf80bcc9-2548-46cb-ae85-e3fd66bfa4e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -552,6 +555,18 @@
     </ClInclude>
     <ClInclude Include="DungeonWall.h">
       <Filter>소스 파일\Game\Object\GameObject\DungeonObject</Filter>
+    </ClInclude>
+    <ClInclude Include="IfTakedMapReward.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateMapRewardEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="MapReward.h">
+      <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
+    </ClInclude>
+    <ClInclude Include="TreasureBox.h">
+      <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -936,6 +951,18 @@
     </ClCompile>
     <ClCompile Include="DungeonWall.cpp">
       <Filter>소스 파일\Game\Object\GameObject\DungeonObject</Filter>
+    </ClCompile>
+    <ClCompile Include="IfTakedMapReward.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateMapRewardEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="MapReward.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
+    </ClCompile>
+    <ClCompile Include="TreasureBox.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

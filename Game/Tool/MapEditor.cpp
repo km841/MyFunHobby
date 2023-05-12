@@ -602,7 +602,8 @@ void MapEditor::UpdateDESelection()
             MonsterSpawnEventUIUpdate();
             break;
 
-        case DUNGEON_EVENT_KIND::CREATE_TREASURE:
+        case DUNGEON_EVENT_KIND::CREATE_MAP_REWARD:
+            CreateMapRewardEventUIUpdate();
             break;
 
         case DUNGEON_EVENT_KIND::PLAYER_TELEPORT:
@@ -678,7 +679,6 @@ string MapEditor::ConditionEnumToString(CONDITION_TYPE eConditionType)
         return "Player Pos X Exceeds 800.f";
     case CONDITION_TYPE::PLAYER_POS_X_EXCEEDS_1000:
         return "Player Pos X Exceeds 1000.f";
-
     }
 
     return "Not Found";
@@ -690,12 +690,29 @@ string MapEditor::EventEnumToString(DUNGEON_EVENT_KIND eEventKind)
     {
     case DUNGEON_EVENT_KIND::MONSTER_SPAWN:
         return "Monster Spawn";
-    case DUNGEON_EVENT_KIND::CREATE_TREASURE:
-        return "Create Treasure";
+    case DUNGEON_EVENT_KIND::CREATE_MAP_REWARD:
+        return "Create Map Reward";
     case DUNGEON_EVENT_KIND::PLAYER_TELEPORT:
         return "Player Teleport";
     case DUNGEON_EVENT_KIND::DUNGEON_GATE_OPEN:
         return "Dungeon Gate Open";
+    }
+
+    return "Not Found";
+}
+
+string MapEditor::GradeEnumToString(GRADE eGrade)
+{
+    switch (eGrade)
+    {
+    case GRADE::NORMAL:
+        return "Normal";
+    case GRADE::RARE:
+        return "Rare";
+    case GRADE::UNIQUE:
+        return "Unique";
+    case GRADE::REGENDARY:
+        return "Legendary";
     }
 
     return "Not Found";
@@ -740,6 +757,39 @@ void MapEditor::PlayerTeleportEventUIUpdate()
     InsertSeparator();
     ImGui::Text("PlayerTeleport Event Parameters");
     ImGui::InputFloat3("PlayerDescPosition", &m_InputEventInfo.vVec3.x);
+    InsertSeparator();
+}
+
+void MapEditor::CreateMapRewardEventUIUpdate()
+{
+    InsertSeparator();
+    ImGui::Text("Create Map Reward Event Parameters");
+
+    std::vector<string> vGradeKind = {};
+    for (int32 i = 0; i < GRADE_TOTAL_COUNT; ++i)
+    {
+        vGradeKind.push_back(GradeEnumToString(static_cast<GRADE>(i)));
+    }
+
+    static int32 iGradeSelector = 0;
+    if (ImGui::BeginCombo("GradeKind", vGradeKind[iGradeSelector].c_str()))
+    {
+        for (int32 i = 0; i < vGradeKind.size(); i++)
+        {
+            const bool isSelected = (iGradeSelector == i);
+            if (ImGui::Selectable(vGradeKind[i].c_str(), isSelected))
+            {
+                iGradeSelector = i;
+            }
+            if (isSelected)
+            {
+                ImGui::SetItemDefaultFocus();
+            }
+        }
+        ImGui::EndCombo();
+    }
+
+    m_InputEventInfo.eEnum1 = iGradeSelector;
     InsertSeparator();
 }
 

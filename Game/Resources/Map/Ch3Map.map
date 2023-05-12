@@ -1301,9 +1301,19 @@
 1
 ..\Resources\Texture\Tiles\DarkStone_6.png
 2880 0
-1
+3
 0
 0
 3
 ..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Bone\Sprite_Ch3DungeonGate_Bone_Activate.png
 2624 470
+0
+0
+1
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Item\Sprite_Ch3DungeonGate_Item_Activate.png
+1984 460
+1
+0
+6
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
+2304 472

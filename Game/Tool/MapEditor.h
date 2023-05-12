@@ -62,9 +62,11 @@ private:
 
 	string ConditionEnumToString(CONDITION_TYPE eConditionType);
 	string EventEnumToString(DUNGEON_EVENT_KIND eEventKind);
+	string GradeEnumToString(GRADE eGrade);
 
 	void MonsterSpawnEventUIUpdate();
 	void PlayerTeleportEventUIUpdate();
+	void CreateMapRewardEventUIUpdate();
 
 	string MonsterKindEnumToString(MONSTER_KIND eMonsterKind);
 

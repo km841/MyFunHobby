@@ -9,6 +9,7 @@
 #include "PlayerTeleportEvent.h"
 #include "IfPlayerPosXExceedsN.h"
 #include "DungeonGateOpenEvent.h"
+#include "CreateMapRewardEvent.h"
 
 Dungeon::Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstring& szScriptPath)
 	: m_eDungeonType(eDungeonType)
@@ -56,6 +57,7 @@ void Dungeon::Exit()
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::TILE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::BACKGROUND);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DUNGEON_GATE);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DUNGEON_WALL);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DECO);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::PARTICLE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DROP_ESSENCE);
@@ -137,7 +139,8 @@ void Dungeon::LoadEventFromFile(const wstring& szEventScriptPath)
         case DUNGEON_EVENT_KIND::MONSTER_SPAWN:
             pDungeonEvent = make_shared<MonsterSpawnDungeonEvent>(pConditionBlock, static_cast<MONSTER_KIND>(iEnum1), vVec3);
             break;
-        case DUNGEON_EVENT_KIND::CREATE_TREASURE:
+        case DUNGEON_EVENT_KIND::CREATE_MAP_REWARD:
+            pDungeonEvent = make_shared<CreateMapRewardEvent>(pConditionBlock, static_cast<GRADE>(iEnum1), m_eDungeonType );
             break;
         case DUNGEON_EVENT_KIND::PLAYER_TELEPORT:
             pDungeonEvent = make_shared<PlayerTeleportEvent>(pConditionBlock, vVec3);

@@ -125,6 +125,7 @@ enum class LAYER_TYPE : uint8
 	DUNGEON_WALL,
 	DROP_ITEM,
 	DROP_ESSENCE,
+	MAP_REWARD,
 	LOCAL_EFFECT,
 	SCENE_OBJECT_END = 22,
 	POSSESSION = 23,
@@ -346,13 +347,7 @@ enum class SKUL_TYPE
 	POWER,
 };
 
-enum class GRADE
-{
-	NORMAL,
-	RARE,
-	UNIQUE,
-	REGENDARY,
-};
+
 
 enum class SKUL_INDEX
 {

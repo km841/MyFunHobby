@@ -181,6 +181,7 @@
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
     <ClInclude Include="Ch3BeginTower.h" />
+    <ClInclude Include="CreateMapRewardEvent.h" />
     <ClInclude Include="DarkMirrorReflectionScript.h" />
     <ClInclude Include="DarkMirror.h" />
     <ClInclude Include="DecoObject.h" />
@@ -216,12 +217,14 @@
     </ClInclude>
     <ClInclude Include="IfAlwaysTrue.h" />
     <ClInclude Include="IfPlayerPosXExceedsN.h" />
+    <ClInclude Include="IfTakedMapReward.h" />
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoUI.h" />
     <ClInclude Include="LocalEffect.h" />
     <ClInclude Include="Lyweasel.h" />
+    <ClInclude Include="MapReward.h" />
     <ClInclude Include="MonsterSpawnDungeonEvent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -297,6 +300,7 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="TownScene.h" />
+    <ClInclude Include="TreasureBox.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
@@ -318,6 +322,7 @@
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
+    <ClCompile Include="CreateMapRewardEvent.cpp" />
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />
     <ClCompile Include="DarkMirror.cpp" />
     <ClCompile Include="DecoObject.cpp" />
@@ -353,12 +358,14 @@
     </ClCompile>
     <ClCompile Include="IfAlwaysTrue.cpp" />
     <ClCompile Include="IfPlayerPosXExceedsN.cpp" />
+    <ClCompile Include="IfTakedMapReward.cpp" />
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />
     <ClCompile Include="LocalEffect.cpp" />
     <ClCompile Include="Lyweasel.cpp" />
+    <ClCompile Include="MapReward.cpp" />
     <ClCompile Include="MonsterSpawnDungeonEvent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -439,6 +446,7 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="ToolScene.cpp" />
     <ClCompile Include="TownScene.cpp" />
+    <ClCompile Include="TreasureBox.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />

@@ -50,6 +50,9 @@ public:
     const LightInfo& GetLightInfo() { return m_LightInfo; }
     void SetLightDirection(const Vec3& vDirection) { m_LightInfo.vDirection = vDirection; }
 
+    Vec3 GetDiffuse() { return Vec3(m_LightInfo.Color.vDiffuse.x, m_LightInfo.Color.vDiffuse.y, m_LightInfo.Color.vDiffuse.z); }
+
+    void AddDiffuse(const Vec3& vDiffuse) { m_LightInfo.Color.vDiffuse += vDiffuse; }
     void SetDiffuse(const Vec3& vDiffuse) { m_LightInfo.Color.vDiffuse = vDiffuse; }
     void SetAmbient(const Vec3& vAmbient) { m_LightInfo.Color.vAmbient = vAmbient; }
     void SetSpecular(const Vec3& vSpecular) { m_LightInfo.Color.vSpecular = vSpecular; }
