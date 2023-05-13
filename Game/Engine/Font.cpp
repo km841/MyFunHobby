@@ -1,5 +1,9 @@
 #include "pch.h"
 #include "Font.h"
+#include "Transform.h"
+#include "Scenes.h"
+#include "Scene.h"
+#include "ComponentObject.h"
 
 Font::Font()
 	: m_iWindowHeight(0)
@@ -28,6 +32,14 @@ void Font::DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, 
 
 	vNewPos.y = m_iWindowHeight - vPos.y;
 	m_qFontQueue.push(FontInfo{ szText, fFontSize, vNewPos, eWeight, iColor });
+}
+
+void Font::DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Vec3& vWorldPos, FONT_WEIGHT eWeight, uint32 iColor)
+{
+	Vec3 vScreenPos = GET_SINGLE(Scenes)->WorldToScreenPosition(
+		vWorldPos, GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera());
+
+	m_qFontQueue.push(FontInfo{ szText, fFontSize, vScreenPos, eWeight, iColor });
 }
 
 void Font::Render()

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+class LocalEffect;
 class MapReward :
     public GameObject
 {
@@ -13,7 +14,16 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
-private:
+    FORCEINLINE bool IsTaked() { return m_bTaked; }
+
+public:
+    virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
+    virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
+
+protected:
     GRADE m_eGrade;
+    bool m_bTaked;
+    bool m_bIsCollisionWithPlayer;
+    shared_ptr<LocalEffect> m_pHoveringKeyEffect;
 };
 

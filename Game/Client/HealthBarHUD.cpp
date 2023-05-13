@@ -1,5 +1,10 @@
 #include "pch.h"
 #include "HealthBarHUD.h"
+#include "Scenes.h"
+#include "Transform.h"
+#include "Engine.h"
+#include "ComponentObject.h"
+#include "Scene.h"
 
 HealthBarHUD::HealthBarHUD()
 {

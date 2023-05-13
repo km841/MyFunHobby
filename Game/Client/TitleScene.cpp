@@ -27,6 +27,8 @@
 #include "Clock.h"
 #include "Background.h"
 #include "ObjectFactory.h"
+#include "InterfaceManager.h"
+#include "HUD.h"
 
 
 TitleScene::TitleScene()
@@ -88,6 +90,7 @@ void TitleScene::Render()
 
 void TitleScene::Enter()
 {
+	
 	// Light
 	{
 		shared_ptr<ComponentObject> pGameObject = make_shared<ComponentObject>();

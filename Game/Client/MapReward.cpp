@@ -4,6 +4,8 @@
 MapReward::MapReward(GRADE eGrade)
 	: GameObject(LAYER_TYPE::MAP_REWARD)
 	, m_eGrade(eGrade)
+	, m_bTaked(false)
+	, m_bIsCollisionWithPlayer(false)
 {
 }
 
@@ -34,4 +36,20 @@ void MapReward::LateUpdate()
 void MapReward::FinalUpdate()
 {
 	GameObject::FinalUpdate();
+}
+
+void MapReward::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
+{
+	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+	{
+		m_bIsCollisionWithPlayer = true;
+	}
+}
+
+void MapReward::OnTriggerExit(shared_ptr<GameObject> pGameObject)
+{
+	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
+	{
+		m_bIsCollisionWithPlayer = false;
+	}
 }

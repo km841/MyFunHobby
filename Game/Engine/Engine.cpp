@@ -68,10 +68,10 @@ void Engine::Init(const WindowInfo& wInfo)
 	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(LightParams));
 
 	GET_SINGLE(Resources)->Init();
+	GET_SINGLE(InterfaceManager)->Init();
 	GET_SINGLE(Scenes)->Init();
 	GET_SINGLE(Clock)->Init();
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
-	GET_SINGLE(InterfaceManager)->Init();
 	GET_SINGLE(Cemetery)->Init();
 	
 }

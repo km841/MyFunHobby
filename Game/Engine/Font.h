@@ -34,6 +34,7 @@ public:
 	// Font를 오브젝트 단위로 관리할 필요가 없다!
 	void Init(const WindowInfo& windowInfo, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);
 	void DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff);
+	void DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Vec3& vWorldPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff);
 	void Render();
 
 private:

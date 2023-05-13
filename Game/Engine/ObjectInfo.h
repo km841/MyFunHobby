@@ -13,7 +13,7 @@ struct ObjectInfo
 			return L"레어";
 		case GRADE::UNIQUE:
 			return L"유니크";
-		case GRADE::REGENDARY:
+		case GRADE::LEGENDARY:
 			return L"레전더리";
 		}
 		assert(nullptr);

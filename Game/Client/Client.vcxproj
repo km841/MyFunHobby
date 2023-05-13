@@ -180,6 +180,7 @@
     <ClInclude Include="BaseCampOpeningHUD.h" />
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
+    <ClInclude Include="BoneReward.h" />
     <ClInclude Include="Ch3BeginTower.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
     <ClInclude Include="DarkMirrorReflectionScript.h" />
@@ -321,6 +322,7 @@
     <ClCompile Include="BaseCampOpeningHUD.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
+    <ClCompile Include="BoneReward.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />

@@ -145,6 +145,7 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::EVENT_OBJECT);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::DUNGEON_GATE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::DROP_ESSENCE);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER, LAYER_TYPE::MAP_REWARD);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PLAYER_PROJECTILE, LAYER_TYPE::MONSTER);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::POSSESSION, LAYER_TYPE::MONSTER);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::POSSESSION, LAYER_TYPE::TILE);

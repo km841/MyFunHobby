@@ -65,7 +65,9 @@ void SkulAttack::HitMonstersInAttackRange()
 				shared_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
 				pMonster->FlagAsAttacked();
 				CreateHitEffectAndAddedScene(vPos);
-				pGameObject->GetStatus()->TakeDamage(1);
+				pGameObject->GetStatus()->TakeDamage(3);
+
+				
 
 				if (!pGameObject->GetStatus()->IsAlive())
 				{

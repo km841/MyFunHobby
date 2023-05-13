@@ -10,6 +10,7 @@
 #include "IfPlayerPosXExceedsN.h"
 #include "DungeonGateOpenEvent.h"
 #include "CreateMapRewardEvent.h"
+#include "IfTakedMapReward.h"
 
 Dungeon::Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstring& szScriptPath)
 	: m_eDungeonType(eDungeonType)
@@ -58,6 +59,7 @@ void Dungeon::Exit()
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::BACKGROUND);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DUNGEON_GATE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DUNGEON_WALL);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::MAP_REWARD);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DECO);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::PARTICLE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DROP_ESSENCE);
@@ -128,6 +130,10 @@ void Dungeon::LoadEventFromFile(const wstring& szEventScriptPath)
 
         case CONDITION_TYPE::PLAYER_POS_X_EXCEEDS_1000:
             pConditionBlock = make_shared<IfPlayerPosXExceedsN>(1000.f);
+            break;
+
+        case CONDITION_TYPE::TAKE_MAP_REWARD:
+            pConditionBlock = make_shared<IfTakedMapReward>();
             break;
         }
         assert(pConditionBlock);

@@ -35,6 +35,7 @@ ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
 	, m_tTileDragHolder(0.1f)
 	, m_TileMapData{}
+	, m_bShowMousePos(false)
 {
 	m_tTileDragHolder.Start();
 }
@@ -62,8 +63,25 @@ void ToolScene::Update()
 	Scene::Update();
 	UTILITY->ToolUpdate();
 
+	POINT vMousePos = GET_SINGLE(Input)->GetMousePos();
+	shared_ptr<ComponentObject> pCamera = GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock();
+	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(
+		Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 10.f), pCamera->GetCamera());
+
+	if (m_bShowMousePos)
+	{
+		wstring szWorldPosX = std::to_wstring(vWorldPos.x);
+		wstring szWorldPosY = std::to_wstring(vWorldPos.y);
+		vWorldPos.y -= 30.f;
+
+		FONT->DrawStringAtWorldPos(L"X: " + szWorldPosX + L"\nY: " + szWorldPosY, 20.f, vWorldPos, FONT_WEIGHT::BOLD);
+	}
+
 	if (IS_DOWN(KEY_TYPE::G))
 		m_pGrid->FlipState();
+
+	if (IS_DOWN(KEY_TYPE::P))
+		m_bShowMousePos = (m_bShowMousePos + 1) % 2;
 }
 
 void ToolScene::LateUpdate()

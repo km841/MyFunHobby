@@ -163,7 +163,7 @@ shared_ptr<Item> ObjectFactory::CreateEvilSwordKirion()
 	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion_Vignette", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion_Vignette.png");
 	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png");
 	
-	itemInfo.eGrade = GRADE::REGENDARY;
+	itemInfo.eGrade = GRADE::LEGENDARY;
 	itemInfo.pFirstEngrave = make_shared<Arms>();
 	itemInfo.pSecondEngrave = make_shared<Rapidity>();
 

@@ -131,9 +131,6 @@
 2
 ..\Resources\Texture\Tiles\DarkStone_8.png
 -64 640
-2
-..\Resources\Texture\Tiles\DarkStone_1.png
-640 640
 0
 ..\Resources\Texture\Tiles\DarkStone_2.png
 704 640
@@ -161,9 +158,6 @@
 0
 ..\Resources\Texture\Tiles\DarkStone_2.png
 1216 640
-0
-..\Resources\Texture\Tiles\DarkStone_6.png
-640 576
 0
 ..\Resources\Texture\Tiles\DarkStone_6.png
 640 512
@@ -1301,6 +1295,12 @@
 1
 ..\Resources\Texture\Tiles\DarkStone_6.png
 2880 0
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+640 640
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+640 576
 3
 0
 0
@@ -1316,4 +1316,4 @@
 0
 6
 ..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
-2304 472
+2304 448

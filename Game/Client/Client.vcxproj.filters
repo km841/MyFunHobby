@@ -568,6 +568,9 @@
     <ClInclude Include="TreasureBox.h">
       <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
     </ClInclude>
+    <ClInclude Include="BoneReward.h">
+      <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -962,6 +965,9 @@
       <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
     </ClCompile>
     <ClCompile Include="TreasureBox.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneReward.cpp">
       <Filter>소스 파일\Game\Object\GameObject\MapReward</Filter>
     </ClCompile>
   </ItemGroup>

@@ -679,6 +679,8 @@ string MapEditor::ConditionEnumToString(CONDITION_TYPE eConditionType)
         return "Player Pos X Exceeds 800.f";
     case CONDITION_TYPE::PLAYER_POS_X_EXCEEDS_1000:
         return "Player Pos X Exceeds 1000.f";
+    case CONDITION_TYPE::TAKE_MAP_REWARD:
+        return "Take Map Reward";
     }
 
     return "Not Found";
@@ -711,7 +713,7 @@ string MapEditor::GradeEnumToString(GRADE eGrade)
         return "Rare";
     case GRADE::UNIQUE:
         return "Unique";
-    case GRADE::REGENDARY:
+    case GRADE::LEGENDARY:
         return "Legendary";
     }
 

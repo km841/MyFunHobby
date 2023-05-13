@@ -93,6 +93,8 @@ private:
 
     std::vector<shared_ptr<GameObject>> m_vFrameDividers;
     std::vector<shared_ptr<Background>> m_vBackgrounds;
+
+    bool m_bShowMousePos;
     
 };
 
