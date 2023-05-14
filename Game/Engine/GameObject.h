@@ -46,6 +46,7 @@ public:
     shared_ptr<ParticleSystem>  GetParticleSystem();
 
     void AddComponent(shared_ptr<Component> pComponent);
+    void RemoveComponent(COMPONENT_TYPE eComponentType);
 
 public:
     virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) {}

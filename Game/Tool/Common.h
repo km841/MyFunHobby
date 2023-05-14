@@ -44,6 +44,14 @@ struct ImVec3
 	float z = 0.f;
 };
 
+struct LightData
+{
+	ImVec3 vDiffuse;
+	ImVec3 vAmbient;
+	float fRadius;
+	ImVec3 vLightPos;
+};
+
 struct BackgroundData
 {
 	wstring szBGImagePath;
@@ -57,7 +65,6 @@ enum class SRV_KIND
 	TILE,
 	DUNGEON_GATE,
 	DUNGEON_WALL,
-	LIGHT_OBJECT,
 	DECO_OBJECT,
 	END,
 };
@@ -174,6 +181,7 @@ struct TileMapData
 	std::vector<TileData> vTileData;
 	std::vector<DungeonObjData> vDOData;
 	std::vector<DecoObjData> vDecoData;
+	std::vector<LightData> vLightData;
 };
 
 enum class CONDITION_TYPE : uint8

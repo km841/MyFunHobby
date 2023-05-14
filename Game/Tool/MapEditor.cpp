@@ -19,6 +19,9 @@ MapEditor::MapEditor()
     , m_iConditionSelector(0)
     , m_iEventSelector(0)
     , m_iEventListSelector(0)
+    , m_CurrLightData{}
+    , m_InputLightData{}
+    , m_bCreateLightFlag(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f + 100.f;
     m_vWindowSize = ImVec2(m_fTileWindowWidth + 10.f, std::ceil(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size() / 4.0f) * (m_fTileSize + m_fSpacing));
@@ -57,6 +60,7 @@ void MapEditor::Update()
             UpdateBGSelection();
             UpdateDOSelection();
             UpdateDESelection();
+            UpdateLightSelection();
         }
         ImGui::EndTabBar();
     }
@@ -184,6 +188,17 @@ void MapEditor::UpdateOptionSelection()
                     ofs << m_TileMapData.vDecoData[i].vDecoPos.x << L" " << m_TileMapData.vDecoData[i].vDecoPos.y << L'\n';
                 }
 
+                size_t iLightCount = m_TileMapData.vLightData.size();
+                ofs << iLightCount << L'\n';
+
+                for (uint32 i = 0; i < iLightCount; ++i)
+                {
+                    ofs << m_TileMapData.vLightData[i].vDiffuse.x << L" " << m_TileMapData.vLightData[i].vDiffuse.y << L" " << m_TileMapData.vLightData[i].vDiffuse.z << L'\n';
+                    ofs << m_TileMapData.vLightData[i].vAmbient.x << L" " << m_TileMapData.vLightData[i].vAmbient.y << L" " << m_TileMapData.vLightData[i].vAmbient.z << L'\n';
+                    ofs << m_TileMapData.vLightData[i].fRadius << L'\n';
+                    ofs << m_TileMapData.vLightData[i].vLightPos.x << L" " << m_TileMapData.vLightData[i].vLightPos.y << L" " << m_TileMapData.vLightData[i].vLightPos.z << L'\n';
+                }
+
                 ofs.close();
 
             }
@@ -287,6 +302,22 @@ void MapEditor::UpdateOptionSelection()
                     ifs >> m_TileMapData.vDecoData[i].szTexPath;
                     ifs.ignore(1);
                     ifs >> m_TileMapData.vDecoData[i].vDecoPos.x >> m_TileMapData.vDecoData[i].vDecoPos.y;
+                    ifs.ignore(1);
+                }
+
+                uint32 iLightCount = 0;
+                ifs >> iLightCount;
+                m_TileMapData.vLightData.resize(iLightCount);
+
+                for (uint32 i = 0; i < iLightCount; ++i)
+                {
+                    ifs >> m_TileMapData.vLightData[i].vDiffuse.x >> m_TileMapData.vLightData[i].vDiffuse.y >> m_TileMapData.vLightData[i].vDiffuse.z;
+                    ifs.ignore(1);
+                    ifs >> m_TileMapData.vLightData[i].vAmbient.x >> m_TileMapData.vLightData[i].vAmbient.y >> m_TileMapData.vLightData[i].vAmbient.z;
+                    ifs.ignore(1);
+                    ifs >> m_TileMapData.vLightData[i].fRadius;
+                    ifs.ignore(1);
+                    ifs >> m_TileMapData.vLightData[i].vLightPos.x >> m_TileMapData.vLightData[i].vLightPos.y >> m_TileMapData.vLightData[i].vLightPos.z;
                     ifs.ignore(1);
                 }
 
@@ -442,7 +473,6 @@ void MapEditor::UpdateDOSelection()
         int32 iTileGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size());
         int32 iDungeonGateGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_GATE)].size());
         int32 iDungeonWallGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_WALL)].size());
-        int32 iLightObjectGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::LIGHT_OBJECT)].size());
         int32 iDecoObjectGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DECO_OBJECT)].size());
 
         int32 iAccSize = iTileGroupSize;
@@ -487,32 +517,10 @@ void MapEditor::UpdateDOSelection()
             }
         }
 
-
-
-        InsertSeparator();
-        ImGui::Text("LightObject");
-
-        iAccSize += iDungeonGateGroupSize;
-        for (int32 i = 0; i < iLightObjectGroupSize; ++i) {
-            ImGui::PushID(i + iAccSize);
-            ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::LIGHT_OBJECT)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
-
-            if (ImGui::IsItemClicked())
-            {
-                m_iClickedTileIndex = i + iAccSize;
-            }
-
-            ImGui::PopID();
-            if ((i + 1) % 4 != 0)
-            {
-                ImGui::SameLine(0.0f, m_fSpacing);
-            }
-        }
-
         InsertSeparator();
         ImGui::Text("DungeonWall");
 
-        iAccSize += iLightObjectGroupSize;
+        iAccSize += iDungeonGateGroupSize;
         for (int32 i = 0; i < iDungeonWallGroupSize; ++i) {
             ImGui::PushID(i + iAccSize);
             ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_WALL)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
@@ -736,6 +744,66 @@ void MapEditor::UpdateDESelection()
             m_InputEventInfo.eEventKind = static_cast<DUNGEON_EVENT_KIND>(m_iEventSelector);
             m_vEventList.push_back(m_InputEventInfo);
         }
+
+        ImGui::EndTabItem();
+    }
+}
+
+void MapEditor::UpdateLightSelection()
+{
+    if (ImGui::BeginTabItem("Light"))
+    {
+        ImGui::Text("Diffuse              ");
+        ImGui::SameLine();
+        ImGui::InputFloat3("Diffuse", &m_InputLightData.vDiffuse.x);
+
+        ImGui::Text("Ambient              ");
+        ImGui::SameLine();
+        ImGui::InputFloat3("Ambient", &m_InputLightData.vAmbient.x);
+
+        ImGui::Text("Radius               ");
+        ImGui::SameLine();
+        ImGui::InputFloat("Radius", &m_InputLightData.fRadius);
+
+        if (ImGui::Button("Create"))
+        {
+            // PreviewTileø° LightObject ¡„æÓ¡÷±‚
+            m_bCreateLightFlag = true;
+        }
+
+        m_vLightDataList = m_TileMapData.vLightData;
+
+        ImGui::Text("Light List:");
+
+        if (ImGui::ListBoxHeader("##itemsLight", ImVec2(-1, 100)))
+        {
+            for (int i = 0; i < m_vLightDataList.size(); i++)
+            {
+                string szLabel = "Light_" + std::to_string(i);
+                if (ImGui::Selectable(szLabel.c_str(), m_iLightDataSelector == i))
+                {
+                    m_iLightDataSelector = i;
+
+                    if (!m_vLightDataList.empty())
+                    {
+                        m_CurrLightData = m_vLightDataList[i];
+                    }
+                }
+            }
+            ImGui::ListBoxFooter();
+        }
+
+        ImGui::Text("Diffuse               ");
+        ImGui::SameLine();
+        ImGui::InputFloat3("                                ", &m_CurrLightData.vDiffuse.x);
+
+        ImGui::Text("Ambient               ");
+        ImGui::SameLine();
+        ImGui::InputFloat3("                                 ", &m_CurrLightData.vAmbient.x);
+
+        ImGui::Text("Radius                ");
+        ImGui::SameLine();
+        ImGui::InputFloat("                                   ", &m_CurrLightData.fRadius);
 
         ImGui::EndTabItem();
     }

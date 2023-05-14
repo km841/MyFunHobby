@@ -380,6 +380,11 @@ namespace Conv
 		return vTileAlignVec;
 	}
 
+	static ImVec3 Vec3ToImVec3(Vec3 vVec3)
+	{
+		return ImVec3{ vVec3.x, vVec3.y, vVec3.z };
+	}
+
 	static Vec3 ImVec3ToVec3(ImVec3 vVec3)
 	{
 		return Vec3(vVec3.x, vVec3.y, vVec3.z);

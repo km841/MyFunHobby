@@ -31,7 +31,7 @@
 #include "DungeonGate.h"
 #include "DungeonWall.h"
 #include "DecoObject.h"
-#include "LightDecoObject.h"
+#include "LightObject.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
@@ -240,14 +240,15 @@ void ToolScene::LoadTileMap()
 
 		switch (m_TileMapData.vDecoData[i].eDecoObjType)
 		{
-		case DECO_OBJECT_TYPE::LIGHT:
-			CreateLightObject(vWorldPos, m_TileMapData.vDecoData[i].szTexPath);
-			break;
-
 		case DECO_OBJECT_TYPE::NORMAL:
 			CreateDecoObject(vWorldPos, m_TileMapData.vDecoData[i].szTexPath);
 			break;
 		}
+	}
+
+	for (uint32 i = 0; i < m_TileMapData.vLightData.size(); ++i)
+	{
+		CreateLightObject(m_TileMapData.vLightData[i]);
 	}
 }
 
@@ -270,9 +271,9 @@ void ToolScene::MapEditorUpdate()
 	m_TileMapData.vTileData.clear();
 	m_TileMapData.vDOData.clear();
 	m_TileMapData.vDecoData.clear();
+	m_TileMapData.vLightData.clear();
 
 	auto& vTileGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
-
 	for (auto& pTile : vTileGroup)
 	{
 		shared_ptr<Material> pMaterial = pTile->GetMeshRenderer()->GetMaterial();
@@ -317,6 +318,19 @@ void ToolScene::MapEditorUpdate()
 		m_TileMapData.vDecoData.push_back(DecoObjData{ eDecoType, szTexPath, ImVec2(vPos.x, vPos.y)});
 	}
 
+	auto& vLightObjectGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::LIGHT_OBJECT)];
+	for (auto& pLightObject : vLightObjectGroup)
+	{
+		Vec3 vPos = pLightObject->GetTransform()->GetLocalPosition();
+		shared_ptr<Light> pLight = pLightObject->GetLight();
+		Vec3 vDiffuse = pLight->GetDiffuse();
+		Vec3 vAmbient = pLight->GetAmbient();
+		float fRange = pLight->GetRange();
+
+		m_TileMapData.vLightData.push_back(LightData{ 
+			Conv::Vec3ToImVec3(vDiffuse), Conv::Vec3ToImVec3(vAmbient), fRange, Conv::Vec3ToImVec3(vPos) });
+	}
+
 	if (MAP_TOOL->IsDataSynced())
 	{
 		MAP_TOOL->SetTileMapData(m_TileMapData);
@@ -344,18 +358,14 @@ void ToolScene::MapEditorUpdate()
 	//Vec3 vScreenPos = GET_SINGLE(Scenes)->WorldToScreenPosition(vWorldPos, GetMainCamera().lock()->GetCamera());
 	vWorldPos.x += TILE_HALF_SIZE;
 	vWorldPos.y += 5.f;
+	m_pPreviewTile->GetTransform()->SetLocalPosition(vWorldPos);
 
 	if (L"FAILURE" != szSelectedKey)
 	{
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Get<Texture>(szSelectedKey);
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, pTexture);
-
-		Vec3 vPreviewTilePos = vWorldPos;
-
-		m_pPreviewTile->GetTransform()->SetLocalPosition(vPreviewTilePos);
+		m_pPreviewTile->GetTransform()->SetLocalScale(pTexture->GetTexSize());
 	}
-
-	
 
 	if (!IS_UP(KEY_TYPE::LBUTTON) && MAP_TOOL->IsMouseNotOver())
 	{
@@ -380,10 +390,6 @@ void ToolScene::MapEditorUpdate()
 						break;
 					case SRV_KIND::DUNGEON_WALL:
 						CreateDungeonWall(vWorldPos, szSelectedKey);
-						break;
-
-					case SRV_KIND::LIGHT_OBJECT:
-						CreateLightObject(vWorldPos, szSelectedKey);
 						break;
 
 					case SRV_KIND::DECO_OBJECT:
@@ -411,10 +417,6 @@ void ToolScene::MapEditorUpdate()
 						CreateDungeonWall(vWorldPos, szSelectedKey);
 						break;
 
-					case SRV_KIND::LIGHT_OBJECT:
-						CreateLightObject(vWorldPos, szSelectedKey);
-						break;
-
 					case SRV_KIND::DECO_OBJECT:
 						CreateDecoObject(vWorldPos, szSelectedKey);
 						break;
@@ -438,6 +440,33 @@ void ToolScene::MapEditorUpdate()
 			{
 				EraseTile(vWorldPos);
 			}
+		}
+
+		else if (MAP_TOOL->IsCreateLightFlag())
+		{
+			if (m_pPreviewTile->GetLight())
+			{
+				shared_ptr<Light> pLight = m_pPreviewTile->GetLight();
+				auto iter = std::find(m_vLights.begin(), m_vLights.end(), pLight);
+				if (iter != m_vLights.end())
+					m_vLights.erase(iter);
+				m_pPreviewTile->RemoveComponent(COMPONENT_TYPE::LIGHT);
+			}
+
+			LightData lightData = MAP_TOOL->GetLightData();
+			m_pPreviewTile->AddComponent(make_shared<Light>());
+			m_pPreviewTile->GetLight()->SetDiffuse(Conv::ImVec3ToVec3(lightData.vDiffuse));
+			m_pPreviewTile->GetLight()->SetAmbient(Conv::ImVec3ToVec3(lightData.vAmbient));
+			m_pPreviewTile->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
+			m_pPreviewTile->GetLight()->SetLightRange(lightData.fRadius);
+			m_vLights.push_back(m_pPreviewTile->GetLight());
+
+			MAP_TOOL->DisableCreateLightFlag();
+		}
+
+		else if (m_pPreviewTile->GetLight() && IS_DOWN(KEY_TYPE::LBUTTON))
+		{
+			CreateLightObject(vWorldPos);
 		}
 	}
 
@@ -469,6 +498,16 @@ void ToolScene::MapEditorUpdate()
 	{
 		MAP_TOOL->ClearClickedTile();
 		m_pPreviewTile->GetMeshRenderer()->GetMaterial()->SetTexture(0, nullptr);
+
+		if (m_pPreviewTile->GetLight())
+		{
+			shared_ptr<Light> pLight = m_pPreviewTile->GetLight();
+			auto iter = std::find(m_vLights.begin(), m_vLights.end(), pLight);
+			if (iter != m_vLights.end())
+				m_vLights.erase(iter);
+
+			m_pPreviewTile->RemoveComponent(COMPONENT_TYPE::LIGHT);
+		}
 	}
 }
 
@@ -733,15 +772,6 @@ void ToolScene::CreateDungeonWall(const Vec3& vWorldPos, STAGE_KIND eStageKind)
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDungeonWall, m_eSceneType));
 }
 
-void ToolScene::CreateLightObject(const Vec3& vWorldPos, const wstring& szSelectedKey)
-{
-	shared_ptr<LightDecoObject> pLightDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LightDecoObject>(L"Deferred", szSelectedKey);
-	pLightDecoObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 100.f));
-
-	pLightDecoObject->Awake();
-	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLightDecoObject, m_eSceneType));
-}
-
 void ToolScene::CreateDecoObject(const Vec3& vWorldPos, const wstring& szSelectedKey)
 {
 	shared_ptr<DecoObject> pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DecoObject>(L"Deferred", szSelectedKey);
@@ -749,6 +779,41 @@ void ToolScene::CreateDecoObject(const Vec3& vWorldPos, const wstring& szSelecte
 
 	pDecoObject->Awake();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, m_eSceneType));
+}
+
+void ToolScene::CreateLightObject(const Vec3& vWorldPos)
+{
+	shared_ptr<LightObject> pLightObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LightObject>(L"Deferred");
+	pLightObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 95.f));
+
+	pLightObject->AddComponent(make_shared<Light>());
+	pLightObject->GetLight()->SetDiffuse(m_pPreviewTile->GetLight()->GetDiffuse());
+	pLightObject->GetLight()->SetAmbient(m_pPreviewTile->GetLight()->GetAmbient());
+	pLightObject->GetLight()->SetLightRange(m_pPreviewTile->GetLight()->GetRange());
+	pLightObject->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
+
+	pLightObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLightObject, m_eSceneType));
+}
+
+void ToolScene::CreateLightObject(const LightData& lightData)
+{
+	Vec3 vWorldPos = Conv::ImVec3ToVec3(lightData.vLightPos);
+	Vec3 vDiffuse = Conv::ImVec3ToVec3(lightData.vDiffuse);
+	Vec3 vAmbient = Conv::ImVec3ToVec3(lightData.vAmbient);
+	float fRadius = lightData.fRadius;
+
+	shared_ptr<LightObject> pLightObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LightObject>(L"Deferred");
+	pLightObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 100.f));
+
+	pLightObject->AddComponent(make_shared<Light>());
+	pLightObject->GetLight()->SetDiffuse(vDiffuse);
+	pLightObject->GetLight()->SetAmbient(vAmbient);
+	pLightObject->GetLight()->SetLightRange(fRadius);
+	pLightObject->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
+
+	pLightObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLightObject, m_eSceneType));
 }
 
 void ToolScene::EraseTile(const Vec3& vWorldPos)
@@ -827,8 +892,6 @@ SRV_KIND ToolScene::GetSelectedSRVKind(const wstring& szSRVKey)
 		return SRV_KIND::DUNGEON_GATE;
 	else if (szSRVKey.find(L"Wall") != std::wstring::npos)
 		return SRV_KIND::DUNGEON_WALL;
-	else if (szSRVKey.find(L"Light") != std::wstring::npos)
-		return SRV_KIND::LIGHT_OBJECT;
 	else if (szSRVKey.find(L"Deco") != std::wstring::npos)
 		return SRV_KIND::DECO_OBJECT;
 

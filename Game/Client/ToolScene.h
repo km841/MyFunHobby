@@ -63,8 +63,9 @@ private:
     void CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType);
     void CreateDungeonWall(const Vec3& vWorldPos, const wstring& szSelectedKey);
     void CreateDungeonWall(const Vec3& vWorldPos, STAGE_KIND eStageKind);
-    void CreateLightObject(const Vec3& vWorldPos, const wstring& szSelectedKey);
     void CreateDecoObject(const Vec3& vWorldPos, const wstring& szSelectedKey);
+    void CreateLightObject(const Vec3& vWorldPos);
+    void CreateLightObject(const LightData& lightData);
 
     void EraseTile(const Vec3& vWorldPos);
     bool CheckTileAtClick(const Vec3& vWorldPos);

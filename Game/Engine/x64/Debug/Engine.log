@@ -1,17 +1,2 @@
-﻿  Camera.cpp
-  CollisionManager.cpp
-  Engine.cpp
-  EventManager.cpp
-  Font.cpp
-  GameObject.cpp
-  InterfaceManager.cpp
-  IsPlayerInAttackRangeCondition.cpp
-  Movement.cpp
-  ObjectFactory.cpp
-  PlayerHitTask.cpp
-  RemoveObjectTask.cpp
-  Scene.cpp
-  SceneChangeEvent.cpp
-  Scenes.cpp
-  코드를 생성하고 있습니다...
+﻿  Scene.cpp
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

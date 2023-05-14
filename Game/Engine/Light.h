@@ -34,7 +34,7 @@ struct LightParams
 {
     uint32 iLightCount;
     Vec3 vPadding;
-    LightInfo Lights[50];
+    LightInfo Lights[200];
 };
 
 class Light :
@@ -51,6 +51,8 @@ public:
     void SetLightDirection(const Vec3& vDirection) { m_LightInfo.vDirection = vDirection; }
 
     Vec3 GetDiffuse() { return Vec3(m_LightInfo.Color.vDiffuse.x, m_LightInfo.Color.vDiffuse.y, m_LightInfo.Color.vDiffuse.z); }
+    Vec3 GetAmbient() { return Vec3(m_LightInfo.Color.vAmbient.x, m_LightInfo.Color.vAmbient.y, m_LightInfo.Color.vAmbient.z); }
+    float GetRange() { return m_LightInfo.fRange; }
 
     void AddDiffuse(const Vec3& vDiffuse) { m_LightInfo.Color.vDiffuse += vDiffuse; }
     void SetDiffuse(const Vec3& vDiffuse) { m_LightInfo.Color.vDiffuse = vDiffuse; }

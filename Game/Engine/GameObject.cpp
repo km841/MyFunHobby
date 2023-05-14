@@ -198,12 +198,20 @@ void GameObject::AddComponent(shared_ptr<Component> pComponent)
 	}
 }
 
+void GameObject::RemoveComponent(COMPONENT_TYPE eComponentType)
+{
+	if (!m_arrComponents[static_cast<uint8>(eComponentType)])
+		return;
+
+	m_arrComponents[static_cast<uint8>(eComponentType)].reset();
+	m_arrComponents[static_cast<uint8>(eComponentType)] = nullptr;
+}
+
 void GameObject::Release()
 {
 	for (int32 i = 0; i < FIXED_COMPONENT_COUNT; ++i)
 	{
-		if (m_arrComponents[i])
-			m_arrComponents[i].reset();
+		RemoveComponent(static_cast<COMPONENT_TYPE>(i));
 	}
 	m_vScripts.clear();
 	ReturnToPool();

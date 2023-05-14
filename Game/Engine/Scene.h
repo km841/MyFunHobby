@@ -57,11 +57,13 @@ private:
     void LoadTile(std::wifstream& ifs);
     void LoadDungeonObject(std::wifstream& ifs);
     void LoadDecoObject(std::wifstream& ifs);
+    void LoadLightObject(std::wifstream& ifs);
 
     void CreateDungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath, const Vec3& vPos);
     void CreateDungeonWall(STAGE_KIND eStageKind, const wstring& szTexPath, const Vec3& vPos);
     void CreateTile(TILE_TYPE eTileType, const wstring& szTexPath, const Vec3& vPos);
     void CreateDecoObject(DECO_OBJECT_TYPE eDecoObjType, const wstring szTexPath, const Vec3& vPos);
+    void CreateLightObject(const Vec3& vDiffuse, const Vec3& vAmbient, float fRange, const Vec3& vPos);
 
 public:
     // Helper Functions

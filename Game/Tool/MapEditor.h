@@ -47,6 +47,10 @@ public:
 	const BackgroundData& GetSelectedBGData() { return m_CurrBackgroundData; }
 	const std::vector<BackgroundData>& GetBackgroundDataList() { return m_vBackgroundDataList; }
 
+	bool IsCreateLightFlag() { return m_bCreateLightFlag; }
+	void DisableCreateLightFlag() { m_bCreateLightFlag = false; }
+	const LightData& GetLightData() { return m_InputLightData; }
+
 private:
 	void  ColliderTypeUI_Update();
 	void  DrawingTypeUI_Update();
@@ -59,6 +63,7 @@ private:
 	void  UpdateBGSelection();
 	void  UpdateDOSelection();
 	void  UpdateDESelection();
+	void  UpdateLightSelection();
 
 	string ConditionEnumToString(CONDITION_TYPE eConditionType);
 	string EventEnumToString(DUNGEON_EVENT_KIND eEventKind);
@@ -69,6 +74,8 @@ private:
 	void CreateMapRewardEventUIUpdate();
 
 	string MonsterKindEnumToString(MONSTER_KIND eMonsterKind);
+
+	
 
 private:
 	std::array<std::vector<ComPtr<ID3D11ShaderResourceView>>, SRV_KIND_COUNT> m_vSRV;
@@ -102,8 +109,14 @@ private:
 	BackgroundData m_CurrBackgroundData;
 
 	bool m_bChangedBGDataFlag;
-
 	bool m_bBackgroundSend;
+
+	std::vector<LightData> m_vLightDataList;
+	int32 m_iLightDataSelector;
+	LightData m_CurrLightData;
+	LightData m_InputLightData;
+
+	bool m_bCreateLightFlag;
 
 	EventInfo m_InputEventInfo;
 	EventInfo m_CurrEventInfo;

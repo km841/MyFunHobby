@@ -28,7 +28,7 @@
 #include "Animation.h"
 #include "ObjectRemoveToSceneEvent.h"
 #include "DungeonWall.h"
-#include "LightDecoObject.h"
+#include "LightObject.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -564,6 +564,34 @@ void Scene::LoadDecoObject(std::wifstream& ifs)
 	}
 }
 
+void Scene::LoadLightObject(std::wifstream& ifs)
+{
+	uint32 iLightObjectCount = 0;
+	ifs >> iLightObjectCount;
+
+	for (uint32 i = 0; i < iLightObjectCount; ++i)
+	{
+		Vec3 vDiffuse = {};
+		Vec3 vAmbient = {};
+		float fRange = 0.f;
+		Vec3 vPos = {};
+
+		ifs >> vDiffuse.x >> vDiffuse.y >> vDiffuse.z;
+		ifs.ignore(1);
+
+		ifs >> vAmbient.x >> vAmbient.y >> vAmbient.z;
+		ifs.ignore(1);
+
+		ifs >> fRange;
+		ifs.ignore(1);
+
+		ifs >> vPos.x >> vPos.y >> vPos.z;
+		ifs.ignore(1);
+
+		CreateLightObject(vDiffuse, vAmbient, fRange, vPos);
+	}
+}
+
 void Scene::CreateDungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath, const Vec3& vPos)
 {
 	// 애니메이션 추가
@@ -671,18 +699,30 @@ void Scene::CreateDecoObject(DECO_OBJECT_TYPE eDecoObjType, const wstring szTexP
 
 	switch (eDecoObjType)
 	{
-	case DECO_OBJECT_TYPE::LIGHT:
-		pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LightDecoObject>(L"Deferred", szTexPath);
-		break;
 	case DECO_OBJECT_TYPE::NORMAL:
 		pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DecoObject>(L"Deferred", szTexPath);
 		break;
 	}
 
 	assert(pDecoObject);
-	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 100.f));
+	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 95.f));
 	pDecoObject->Awake();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, m_eSceneType));
+}
+
+void Scene::CreateLightObject(const Vec3& vDiffuse, const Vec3& vAmbient, float fRange, const Vec3& vPos)
+{
+	shared_ptr<LightObject> pLightObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LightObject>(L"Deferred");
+
+	pLightObject->AddComponent(make_shared<Light>());
+	pLightObject->GetLight()->SetDiffuse(vDiffuse);
+	pLightObject->GetLight()->SetAmbient(vAmbient);
+	pLightObject->GetLight()->SetLightRange(fRange);
+	pLightObject->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
+
+	pLightObject->GetTransform()->SetLocalPosition(vPos);
+	pLightObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLightObject, m_eSceneType));
 }
 
 weak_ptr<ComponentObject> Scene::GetMainCamera()
@@ -716,6 +756,7 @@ void Scene::Load(const wstring& szPath)
 	LoadTile(ifs);
 	LoadDungeonObject(ifs);
 	LoadDecoObject(ifs);
+	LoadLightObject(ifs);
 
 	ifs.close();
 }
