@@ -54,6 +54,16 @@ void Utility::Init(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pCo
 			vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_WALL)].push_back(pTexture->GetSRV());
 		}
 
+		else if (L"LightImage" == szSplit)
+		{
+			vSRV[static_cast<uint8>(SRV_KIND::LIGHT_OBJECT)].push_back(pTexture->GetSRV());
+		}
+
+		else if (L"DecoImage" == szSplit)
+		{
+			vSRV[static_cast<uint8>(SRV_KIND::DECO_OBJECT)].push_back(pTexture->GetSRV());
+		}
+
 		iCount++;
 	}
 

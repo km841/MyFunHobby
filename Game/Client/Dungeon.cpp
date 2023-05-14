@@ -63,6 +63,7 @@ void Dungeon::Exit()
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DECO);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::PARTICLE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DROP_ESSENCE);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::UNKNOWN);
 }
 
 void Dungeon::AddEvent(shared_ptr<DungeonEvent> pDungeonEvent)

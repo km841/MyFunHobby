@@ -57,6 +57,8 @@ enum class SRV_KIND
 	TILE,
 	DUNGEON_GATE,
 	DUNGEON_WALL,
+	LIGHT_OBJECT,
+	DECO_OBJECT,
 	END,
 };
 
@@ -141,6 +143,12 @@ enum class DUNGEON_OBJ_TYPE
 	DUNGEON_WALL,
 };
 
+enum class DECO_OBJECT_TYPE
+{
+	LIGHT,
+	NORMAL,
+};
+
 struct DungeonObjData
 {
 	DUNGEON_OBJ_TYPE eDungeonObjType;
@@ -151,12 +159,21 @@ struct DungeonObjData
 	ImVec2 vDOPos;
 };
 
+struct DecoObjData
+{
+	DECO_OBJECT_TYPE eDecoObjType;
+
+	wstring szTexPath;
+	ImVec2 vDecoPos;
+};
+
 struct TileMapData
 {
 	wstring szName;
 	uint32  iTileCount;
 	std::vector<TileData> vTileData;
 	std::vector<DungeonObjData> vDOData;
+	std::vector<DecoObjData> vDecoData;
 };
 
 enum class CONDITION_TYPE : uint8

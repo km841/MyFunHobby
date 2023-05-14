@@ -30,6 +30,8 @@
 #include "ComponentObject.h"
 #include "DungeonGate.h"
 #include "DungeonWall.h"
+#include "DecoObject.h"
+#include "LightDecoObject.h"
 
 ToolScene::ToolScene()
 	: Scene(SCENE_TYPE::TOOL)
@@ -57,8 +59,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//MapEditorUpdate();
-	AnimationEditorUpdate();
+	MapEditorUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -231,6 +233,22 @@ void ToolScene::LoadTileMap()
 			break;
 		}
 	}
+
+	for (uint32 i = 0; i < m_TileMapData.vDecoData.size(); ++i)
+	{
+		Vec3 vWorldPos = Vec3(m_TileMapData.vDecoData[i].vDecoPos.x, m_TileMapData.vDecoData[i].vDecoPos.y, 100.f);
+
+		switch (m_TileMapData.vDecoData[i].eDecoObjType)
+		{
+		case DECO_OBJECT_TYPE::LIGHT:
+			CreateLightObject(vWorldPos, m_TileMapData.vDecoData[i].szTexPath);
+			break;
+
+		case DECO_OBJECT_TYPE::NORMAL:
+			CreateDecoObject(vWorldPos, m_TileMapData.vDecoData[i].szTexPath);
+			break;
+		}
+	}
 }
 
 void ToolScene::EraseTileMap()
@@ -251,6 +269,7 @@ void ToolScene::MapEditorUpdate()
 
 	m_TileMapData.vTileData.clear();
 	m_TileMapData.vDOData.clear();
+	m_TileMapData.vDecoData.clear();
 
 	auto& vTileGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::TILE)];
 
@@ -285,6 +304,17 @@ void ToolScene::MapEditorUpdate()
 
 		STAGE_KIND eStageKind = static_pointer_cast<DungeonWall>(pWall)->GetStageKind();
 		m_TileMapData.vDOData.push_back(DungeonObjData{ DUNGEON_OBJ_TYPE::DUNGEON_WALL, eStageKind, DUNGEON_TYPE::END, szTexPath, ImVec2(vPos.x, vPos.y) });
+	}
+
+	auto& vDecoObjectGroup = m_vSceneObjects[static_cast<uint8>(LAYER_TYPE::DECO)];
+	for (auto& pDeco : vDecoObjectGroup)
+	{
+		shared_ptr<Material> pMaterial = pDeco->GetMeshRenderer()->GetMaterial();
+		wstring szTexPath = pMaterial->GetTexture(0)->GetName();
+		Vec3 vPos = pDeco->GetTransform()->GetLocalPosition();
+
+		DECO_OBJECT_TYPE eDecoType = static_pointer_cast<DecoObject>(pDeco)->GetDecoObjectType();
+		m_TileMapData.vDecoData.push_back(DecoObjData{ eDecoType, szTexPath, ImVec2(vPos.x, vPos.y)});
 	}
 
 	if (MAP_TOOL->IsDataSynced())
@@ -351,6 +381,14 @@ void ToolScene::MapEditorUpdate()
 					case SRV_KIND::DUNGEON_WALL:
 						CreateDungeonWall(vWorldPos, szSelectedKey);
 						break;
+
+					case SRV_KIND::LIGHT_OBJECT:
+						CreateLightObject(vWorldPos, szSelectedKey);
+						break;
+
+					case SRV_KIND::DECO_OBJECT:
+						CreateDecoObject(vWorldPos, szSelectedKey);
+						break;
 					}
 
 					m_tTileDragHolder.Start();
@@ -371,6 +409,14 @@ void ToolScene::MapEditorUpdate()
 						break;
 					case SRV_KIND::DUNGEON_WALL:
 						CreateDungeonWall(vWorldPos, szSelectedKey);
+						break;
+
+					case SRV_KIND::LIGHT_OBJECT:
+						CreateLightObject(vWorldPos, szSelectedKey);
+						break;
+
+					case SRV_KIND::DECO_OBJECT:
+						CreateDecoObject(vWorldPos, szSelectedKey);
 						break;
 					}
 				}
@@ -687,6 +733,24 @@ void ToolScene::CreateDungeonWall(const Vec3& vWorldPos, STAGE_KIND eStageKind)
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDungeonWall, m_eSceneType));
 }
 
+void ToolScene::CreateLightObject(const Vec3& vWorldPos, const wstring& szSelectedKey)
+{
+	shared_ptr<LightDecoObject> pLightDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LightDecoObject>(L"Deferred", szSelectedKey);
+	pLightDecoObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 100.f));
+
+	pLightDecoObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLightDecoObject, m_eSceneType));
+}
+
+void ToolScene::CreateDecoObject(const Vec3& vWorldPos, const wstring& szSelectedKey)
+{
+	shared_ptr<DecoObject> pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DecoObject>(L"Deferred", szSelectedKey);
+	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 100.f));
+
+	pDecoObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, m_eSceneType));
+}
+
 void ToolScene::EraseTile(const Vec3& vWorldPos)
 {
 	Vec2 vTileAlignVec = Conv::Vec3ToTileAlignVec2(vWorldPos);
@@ -763,6 +827,10 @@ SRV_KIND ToolScene::GetSelectedSRVKind(const wstring& szSRVKey)
 		return SRV_KIND::DUNGEON_GATE;
 	else if (szSRVKey.find(L"Wall") != std::wstring::npos)
 		return SRV_KIND::DUNGEON_WALL;
+	else if (szSRVKey.find(L"Light") != std::wstring::npos)
+		return SRV_KIND::LIGHT_OBJECT;
+	else if (szSRVKey.find(L"Deco") != std::wstring::npos)
+		return SRV_KIND::DECO_OBJECT;
 
 	return SRV_KIND::END;
 }

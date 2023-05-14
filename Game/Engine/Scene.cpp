@@ -28,6 +28,7 @@
 #include "Animation.h"
 #include "ObjectRemoveToSceneEvent.h"
 #include "DungeonWall.h"
+#include "LightDecoObject.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -537,6 +538,32 @@ void Scene::LoadDungeonObject(std::wifstream& ifs)
 	}
 }
 
+void Scene::LoadDecoObject(std::wifstream& ifs)
+{
+	uint32 iDecoObjectCount = 0;
+	ifs >> iDecoObjectCount;
+
+	for (uint32 i = 0; i < iDecoObjectCount; ++i)
+	{
+		uint32 iDecoObjTypeEnum = 0;
+
+		wstring szTexPath = {};
+		Vec3 vPos = {};
+
+		ifs >> iDecoObjTypeEnum;
+		ifs.ignore(1);
+
+		ifs >> szTexPath;
+		ifs.ignore(1);
+
+		ifs >> vPos.x >> vPos.y;
+		ifs.ignore(1);
+
+		DECO_OBJECT_TYPE eDecoObjectType = static_cast<DECO_OBJECT_TYPE>(iDecoObjTypeEnum);
+		CreateDecoObject(eDecoObjectType, szTexPath, vPos);
+	}
+}
+
 void Scene::CreateDungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, const wstring& szTexPath, const Vec3& vPos)
 {
 	// 애니메이션 추가
@@ -638,6 +665,26 @@ void Scene::CreateTile(TILE_TYPE eTileType, const wstring& szTexPath, const Vec3
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pTile, m_eSceneType));
 }
 
+void Scene::CreateDecoObject(DECO_OBJECT_TYPE eDecoObjType, const wstring szTexPath, const Vec3& vPos)
+{
+	shared_ptr<DecoObject> pDecoObject = nullptr;
+
+	switch (eDecoObjType)
+	{
+	case DECO_OBJECT_TYPE::LIGHT:
+		pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LightDecoObject>(L"Deferred", szTexPath);
+		break;
+	case DECO_OBJECT_TYPE::NORMAL:
+		pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DecoObject>(L"Deferred", szTexPath);
+		break;
+	}
+
+	assert(pDecoObject);
+	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 100.f));
+	pDecoObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, m_eSceneType));
+}
+
 weak_ptr<ComponentObject> Scene::GetMainCamera()
 {
 	assert(!s_vCameras.empty());
@@ -668,6 +715,7 @@ void Scene::Load(const wstring& szPath)
 	LoadBackground(ifs);
 	LoadTile(ifs);
 	LoadDungeonObject(ifs);
+	LoadDecoObject(ifs);
 
 	ifs.close();
 }

@@ -4,7 +4,7 @@ class DecoObject :
     public GameObject
 {
 public:
-    DecoObject();
+    DecoObject(DECO_OBJECT_TYPE eDecoObjType = DECO_OBJECT_TYPE::NORMAL);
     virtual ~DecoObject();
 
     virtual void Awake();
@@ -12,5 +12,10 @@ public:
     virtual void Update();
     virtual void LateUpdate();
     virtual void FinalUpdate();
+
+    FORCEINLINE DECO_OBJECT_TYPE GetDecoObjectType() { return m_eDecoObjType; }
+
+protected:
+    DECO_OBJECT_TYPE m_eDecoObjType;
 };
 

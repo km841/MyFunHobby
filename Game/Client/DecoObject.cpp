@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "DecoObject.h"
 
-DecoObject::DecoObject()
+DecoObject::DecoObject(DECO_OBJECT_TYPE eDecoObjType)
 	: GameObject(LAYER_TYPE::DECO)
+	, m_eDecoObjType(eDecoObjType)
 {
 }
 

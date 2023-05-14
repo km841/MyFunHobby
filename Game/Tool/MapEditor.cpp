@@ -20,7 +20,7 @@ MapEditor::MapEditor()
     , m_iEventSelector(0)
     , m_iEventListSelector(0)
 {
-    m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f;
+    m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f + 100.f;
     m_vWindowSize = ImVec2(m_fTileWindowWidth + 10.f, std::ceil(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size() / 4.0f) * (m_fTileSize + m_fSpacing));
 }
 
@@ -99,7 +99,7 @@ void MapEditor::TileButtonUI_Update()
         }
 
         ImGui::PopID();
-        if ((i + 1) % 4 != 0)
+        if ((i + 1) % 5 != 0)
         {
             ImGui::SameLine(0.0f, m_fSpacing);
         }
@@ -174,8 +174,16 @@ void MapEditor::UpdateOptionSelection()
                     ofs << m_TileMapData.vDOData[i].vDOPos.x << L" " << m_TileMapData.vDOData[i].vDOPos.y << L'\n';
                 }
 
+                size_t iDecoCount = m_TileMapData.vDecoData.size();
+                ofs << iDecoCount << L'\n';
 
-                 
+                for (uint32 i = 0; i < iDecoCount; ++i)
+                {
+                    ofs << static_cast<uint8>(m_TileMapData.vDecoData[i].eDecoObjType) << '\n';
+                    ofs << m_TileMapData.vDecoData[i].szTexPath << L'\n';
+                    ofs << m_TileMapData.vDecoData[i].vDecoPos.x << L" " << m_TileMapData.vDecoData[i].vDecoPos.y << L'\n';
+                }
+
                 ofs.close();
 
             }
@@ -266,6 +274,22 @@ void MapEditor::UpdateOptionSelection()
                     ifs.ignore(1);
                 }
 
+                uint32 iDecoCount = 0;
+                ifs >> iDecoCount;
+                m_TileMapData.vDecoData.resize(iDecoCount);
+
+                for (uint32 i = 0; i < iDecoCount; ++i)
+                {
+                    uint32 iDecoType = 0;
+                    ifs >> iDecoType;
+                    ifs.ignore(1);
+                    m_TileMapData.vDecoData[i].eDecoObjType = static_cast<DECO_OBJECT_TYPE>(iDecoType);
+                    ifs >> m_TileMapData.vDecoData[i].szTexPath;
+                    ifs.ignore(1);
+                    ifs >> m_TileMapData.vDecoData[i].vDecoPos.x >> m_TileMapData.vDecoData[i].vDecoPos.y;
+                    ifs.ignore(1);
+                }
+
                 ifs.close();
             }
             ImGuiFileDialog::Instance()->Close();
@@ -332,19 +356,19 @@ void MapEditor::UpdateBGSelection()
         }
         InsertSeparator();
 
-        ImGui::Text("ImagePath     ");
+        ImGui::Text("ImagePath          ");
         ImGui::SameLine();
         ImGui::InputText("ImagePath", const_cast<char*>(ws2s(m_szBGImagePath).c_str()), m_szBGImagePath.size());
 
-        ImGui::Text("Position      ");
+        ImGui::Text("Position           ");
         ImGui::SameLine();
         ImGui::InputFloat3("Position", &m_vBGPos.x);
 
-        ImGui::Text("Scale         ");
+        ImGui::Text("Scale              ");
         ImGui::SameLine();
         ImGui::InputFloat3("Scale", &m_vBGScale.x);
 
-        ImGui::Text("Speed         ");
+        ImGui::Text("Speed              ");
         ImGui::SameLine();
         ImGui::InputFloat3("Speed", &m_vBGSpeed.x);
 
@@ -380,20 +404,20 @@ void MapEditor::UpdateBGSelection()
         }
 
         InsertSeparator();
-        ImGui::Text("ImagePath     ");
+        ImGui::Text("ImagePath          ");
         ImGui::SameLine();
         ImGui::InputText("                                           ", const_cast<char*>(ws2s(m_CurrBackgroundData.szBGImagePath).c_str()), m_CurrBackgroundData.szBGImagePath.size());
 
 
-        ImGui::Text("Position      ");
+        ImGui::Text("Position           ");
         ImGui::SameLine();
         ImGui::InputFloat3("          ", &m_CurrBackgroundData.vBGPos.x);
 
-        ImGui::Text("Scale         ");
+        ImGui::Text("Scale              ");
         ImGui::SameLine();
         ImGui::InputFloat3("            ", &m_CurrBackgroundData.vBGScale.x);
 
-        ImGui::Text("Speed         ");
+        ImGui::Text("Speed              ");
         ImGui::SameLine();
         ImGui::InputFloat3("             ", &m_CurrBackgroundData.vBGSpeed.x);
 
@@ -414,19 +438,68 @@ void MapEditor::UpdateDOSelection()
 {
     if (ImGui::BeginTabItem("DungeonObject"))
     {
-        ImGui::Text("DungeonGate");
+        
         int32 iTileGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size());
         int32 iDungeonGateGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_GATE)].size());
         int32 iDungeonWallGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_WALL)].size());
+        int32 iLightObjectGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::LIGHT_OBJECT)].size());
+        int32 iDecoObjectGroupSize = static_cast<int32>(m_vSRV[static_cast<uint8>(SRV_KIND::DECO_OBJECT)].size());
 
+        int32 iAccSize = iTileGroupSize;
+
+        
+        ImGui::Text("DecoObject");
+        for (int32 i = 0; i < iDecoObjectGroupSize; ++i) {
+            ImGui::PushID(i + iAccSize);
+            ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::DECO_OBJECT)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
+
+            if (ImGui::IsItemClicked())
+            {
+                m_iClickedTileIndex = i + iAccSize;
+            }
+
+            ImGui::PopID();
+            if ((i + 1) % 4 != 0)
+            {
+                ImGui::SameLine(0.0f, m_fSpacing);
+            }
+        }
+
+
+        InsertSeparator();
+        ImGui::Text("DungeonGate");
+
+        iAccSize += iDecoObjectGroupSize;
         // 던전 게이트나 플레이어와 상호작용하는 오브젝트들, 맵 클리어 후 상자 받침대 등을 추가할 수 있다.
         for (int32 i = 0; i < iDungeonGateGroupSize; ++i) {
-            ImGui::PushID(i + iTileGroupSize);
+            ImGui::PushID(i + iAccSize);
             ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_GATE)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
 
             if (ImGui::IsItemClicked())
             {
-                m_iClickedTileIndex = i + iTileGroupSize;
+                m_iClickedTileIndex = i + iAccSize;
+            }
+
+            ImGui::PopID();
+            if ((i + 1) % 4 != 0)
+            {
+                ImGui::SameLine(0.0f, m_fSpacing);
+            }
+        }
+
+
+
+        InsertSeparator();
+        ImGui::Text("LightObject");
+
+        iAccSize += iDungeonGateGroupSize;
+        for (int32 i = 0; i < iLightObjectGroupSize; ++i) {
+            ImGui::PushID(i + iAccSize);
+            ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::LIGHT_OBJECT)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
+
+            if (ImGui::IsItemClicked())
+            {
+                m_iClickedTileIndex = i + iAccSize;
             }
 
             ImGui::PopID();
@@ -438,14 +511,15 @@ void MapEditor::UpdateDOSelection()
 
         InsertSeparator();
         ImGui::Text("DungeonWall");
-        
+
+        iAccSize += iLightObjectGroupSize;
         for (int32 i = 0; i < iDungeonWallGroupSize; ++i) {
-            ImGui::PushID(i + iTileGroupSize + iDungeonGateGroupSize);
+            ImGui::PushID(i + iAccSize);
             ImGui::ImageButton(m_vSRV[static_cast<uint8>(SRV_KIND::DUNGEON_WALL)][i].Get(), ImVec2(m_fTileSize, m_fTileSize));
 
             if (ImGui::IsItemClicked())
             {
-                m_iClickedTileIndex = i + iTileGroupSize + iDungeonGateGroupSize;
+                m_iClickedTileIndex = i + iAccSize;
             }
 
             ImGui::PopID();

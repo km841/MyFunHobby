@@ -56,7 +56,7 @@ void DungeonWall::FinalUpdate()
 
 void DungeonWall::CreateLightAndAddedToScene()
 {
-	shared_ptr<DecoObject> pLight = make_shared<DecoObject>();
+	shared_ptr<GameObject> pLight = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
 	pLight->AddComponent(make_shared<Transform>());
 	pLight->GetTransform()->SetParent(GetTransform());
 	pLight->GetTransform()->SetLocalPosition(Vec3(0.f, 100.f, 0.f));

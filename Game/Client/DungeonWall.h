@@ -21,7 +21,7 @@ public:
 
 private:
     STAGE_KIND m_eStageKind;
-    weak_ptr<DecoObject> m_pLight;
+    weak_ptr<GameObject> m_pLight;
 
     bool m_bClearFlag;
 };  
