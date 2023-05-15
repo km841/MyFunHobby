@@ -44,6 +44,7 @@ public:
 	FORCEINLINE void SetMaxParticles(uint32 iMaxParticles) { m_iMaxParticles = iMaxParticles; }
 
 	void SetParticleDirection(PARTICLE_DIRECTION eParticleDirection);
+	void SetParticleDirection(const Vec3& vDir);
 private:
 	shared_ptr<StructuredBuffer> m_pParticleBuffer;
 	shared_ptr<StructuredBuffer> m_pSharedBuffer;

@@ -34,6 +34,8 @@ public:
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 	virtual void ScatterParticles(PARTICLE_DIRECTION eParticleDirection) { }
 	virtual void ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection);
+	virtual void ScatterParticles(const Vec3& vDir) { }
+	virtual void ActivateDeadEvent(const Vec3& vDir);
 
 public:
 	void SetParticleTextureNames(const std::vector<wstring> vTextureNames) { m_vTextureNames = vTextureNames; }

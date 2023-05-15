@@ -136,3 +136,17 @@ void ParticleSystem::SetParticleDirection(PARTICLE_DIRECTION eParticleDirection)
 		break;
 	}
 }
+
+void ParticleSystem::SetParticleDirection(const Vec3& vDir)
+{
+	float fAngle = atan2(vDir.x, vDir.y) * 180.f / XM_PI;
+
+	if (fAngle < 0.f)
+		fAngle += 180.f;
+
+	m_fStartAngle = fAngle - 15.f;
+	m_fEndAngle = fAngle + 15.f;
+
+	m_fStartSpeed = vDir.Length() - 200.f;
+	m_fEndSpeed = vDir.Length() + 200.f;
+}

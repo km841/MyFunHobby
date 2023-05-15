@@ -156,3 +156,13 @@ void Monster::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUD, eSceneType));
 }
+
+void Monster::ActivateDeadEvent(const Vec3& vDir)
+{
+	ScatterParticles(vDir);
+
+	CreateDeadEffectAndAddedScene();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUD, eSceneType));
+}

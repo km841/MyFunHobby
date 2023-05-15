@@ -13,7 +13,7 @@
 #include "Input.h"
 #include "Skul.h"
 #include "SkulAttack.h"
-#include "StayAnimLocalEffect.h"
+#include "KirionDashSlashEffect.h"
 
 
 EvilSwordKirion::EvilSwordKirion(const ItemInfo& itemInfo)
@@ -97,7 +97,7 @@ void EvilSwordKirion::CreateSlashEffectAndAddedToScene()
 
 void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 {
-	shared_ptr<StayAnimLocalEffect> pAnimationLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<StayAnimLocalEffect>(L"Forward");
+	shared_ptr<KirionDashSlashEffect> pAnimationLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<KirionDashSlashEffect>(L"Forward");
 	pAnimationLocalEffect->SetDirection(m_pPlayer.lock()->GetDirection());
 
 	Vec3 vPlayerPos = m_pPlayer.lock()->GetTransform()->GetPhysicalPosition();
@@ -114,10 +114,11 @@ void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 
 	pAnimationLocalEffect->AddComponent(make_shared<Animator>());
 
-	// Kirion Slash
+	// Kirion Dash
 	{
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Kirion_Slash_Dash", L"..\\Resources\\Animation\\Item\\Kirion\\kirion_slash_dash.anim");
 		pAnimationLocalEffect->GetAnimator()->AddAnimation(L"Kirion_Slash_Dash", pAnimation);
+		pAnimation->SetHitFrame(3);
 	}
 
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

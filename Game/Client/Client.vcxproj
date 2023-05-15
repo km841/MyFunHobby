@@ -296,7 +296,7 @@
     <ClInclude Include="SkulSkill.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StateMachine.h" />
-    <ClInclude Include="StayAnimLocalEffect.h" />
+    <ClInclude Include="KirionDashSlashEffect.h" />
     <ClInclude Include="SwapState.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScene.h" />
@@ -444,7 +444,7 @@
     <ClCompile Include="SkulSkill.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StateMachine.cpp" />
-    <ClCompile Include="StayAnimLocalEffect.cpp" />
+    <ClCompile Include="KirionDashSlashEffect.cpp" />
     <ClCompile Include="SwapState.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />

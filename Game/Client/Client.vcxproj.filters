@@ -547,7 +547,7 @@
     <ClInclude Include="Dungeon_Item.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClInclude>
-    <ClInclude Include="StayAnimLocalEffect.h">
+    <ClInclude Include="KirionDashSlashEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
     <ClInclude Include="DropEssence.h">
@@ -949,7 +949,7 @@
     <ClCompile Include="Dungeon_Item.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon</Filter>
     </ClCompile>
-    <ClCompile Include="StayAnimLocalEffect.cpp">
+    <ClCompile Include="KirionDashSlashEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="DropEssence.cpp">

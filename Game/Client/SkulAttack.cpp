@@ -73,16 +73,16 @@ void SkulAttack::HitMonstersInAttackRange()
 				if (!pGameObject->GetStatus()->IsAlive())
 				{
 					if (vTargetVec.x > 0.f)
-						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::RIGHT);
+						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(400.f, 400.f, 0.f));
 					else
-						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::LEFT);
+						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(-400.f, 400.f, 0.f));
 				}
 
 				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleAliveCount(30);
 				if (vTargetVec.x > 0.f)
-					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(PARTICLE_DIRECTION::RIGHT);
+					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(Vec3(500.f, 500.f, 0.f));
 				else
-					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(PARTICLE_DIRECTION::LEFT);
+					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(Vec3(-500.f, 500.f, 0.f));
 
 			}
 
