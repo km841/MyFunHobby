@@ -107,8 +107,14 @@ SamplerState g_sam_0 : register(s0);
 
 float4 PS_Main(GS_OUT input) : SV_TARGET
 {
+    float fElapsedTime = g_vec2_0.y;
     float4 output = (float4) 0.0f;
     output = g_tex_0.Sample(g_sam_0, input.uv);
+    
+    float fCurTime = particleBuffer[input.id].fCurTime;
+    float fEndTime = particleBuffer[input.id].fEndTime;
+    
+    output.a = 1.f - fCurTime / fEndTime;
     
     return output;
 }

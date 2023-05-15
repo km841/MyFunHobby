@@ -52,12 +52,15 @@ void ParticleSystem::Update()
 void ParticleSystem::FinalUpdate()
 {
 	m_fElapsedTime += DELTA_TIME;
+	m_fAccTime += DELTA_TIME;
 
 	if (m_iAliveCount > 0)
 	{
 		ParticleShared shared = { m_iAliveCount, }; // 활성화시킬 파티클의 수
 		m_pSharedBuffer->SetData(&shared, 1);
 		m_iAliveCount = 0;
+
+		m_fAccTime = 0.f;
 	}
 
 	else

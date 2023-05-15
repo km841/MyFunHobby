@@ -165,7 +165,7 @@ void CreateMapRewardEvent::CreateRewardEffectAddedToScene(const Vec3& vPos)
 	shared_ptr<AnimationLocalEffect> pEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
 	Vec3 pEffectPos = vPos;
 	pEffectPos.y = vPos.y + 120.f;
-	pEffectPos.z = vPos.z - 3.f;
+	pEffectPos.z = vPos.z - 20.f;
 	pEffect->GetTransform()->SetLocalPosition(pEffectPos);
 
 	pEffect->AddComponent(make_shared<Animator>());

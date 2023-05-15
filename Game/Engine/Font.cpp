@@ -72,30 +72,33 @@ void Font::UpdateDamage()
 			float fRatio = damageInfo.tDuration.GetProgress();
 			damageInfo.vDamagePos.y += sinf(fRatio * XM_PI * 1.5f);
 
-			float fFontSize = 25.f;
+			float fFontSize = 30.f;
 			if (damageInfo.fDamage > 50.f)
 				fFontSize = 50.f;
 			else if (damageInfo.fDamage > 30.f)
 				fFontSize = 40.f;
 			else if (damageInfo.fDamage > 10.f)
-				fFontSize = 30.f;
-			
+				fFontSize = 35.f;
+
+			Vec3 vOutlinePos = damageInfo.vDamagePos;
+			vOutlinePos.y += 1.f;
+
+			DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, vOutlinePos, FONT_WEIGHT::BOLD, 0xff000000);
 			switch (damageInfo.eDamageType)
 			{
 			case DAMAGE_TYPE::FROM_MONSTER:
-				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize + 2.f, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, 0xff000000);
 				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, Color::FromRGB(196, 67, 45));
 				break;
 			case DAMAGE_TYPE::FROM_PLAYER_MELEE:
-				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize + 2.f, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, 0xff000000);
-				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, Color::FromRGB(240, 191, 63));
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, 0xffffffff);
 				break;
 			case DAMAGE_TYPE::FROM_PLAYER_MAGIC:
-				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize + 2.f, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, 0xff000000);
 				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, Color::FromRGB(106, 243, 233));
 				break;
+			case DAMAGE_TYPE::FROM_PLAYER_CRITICAL:
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, Color::FromRGB(240, 191, 63));
+				break;
 			}
-
 
 			damageInfo.tDuration.Update(DELTA_TIME);
 			iter++;
