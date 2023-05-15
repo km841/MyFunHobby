@@ -12,6 +12,8 @@
 #include "ComponentObject.h"
 #include "GoToNextDungeonEvent.h"
 #include "DungeonScene.h"
+#include "ObjectFactory.h"
+#include "LocalEffect.h"
 
 DungeonGate::DungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType)
 	: GameObject(LAYER_TYPE::DUNGEON_GATE)
@@ -29,6 +31,7 @@ DungeonGate::~DungeonGate()
 void DungeonGate::Awake()
 {
 	GameObject::Awake();
+	CreateKeyEffectAndAddedToScene();
 }
 
 void DungeonGate::Start()
@@ -42,6 +45,11 @@ void DungeonGate::Update()
 
 	if (m_bOpen && m_bIsCollisionWithPlayer)
 	{
+		Vec3 vPos = GetTransform()->GetPhysicalPosition();
+		vPos.y -= 130.f;
+		FONT->DrawStringAtWorldPos(L"들어가기", 20.f, vPos, FONT_WEIGHT::BOLD);
+
+		m_pHoveringKeyEffect->Enable();
 		if (IS_DOWN(KEY_TYPE::F))
 		{
 			SCENE_TYPE eSceneType=GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
@@ -51,6 +59,10 @@ void DungeonGate::Update()
 			weak_ptr<Stage> pStage = static_pointer_cast<DungeonScene>(GET_SINGLE(Scenes)->GetActiveScene())->GetActiveStage();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<GoToNextDungeonEvent>(pStage.lock(), m_eDungeonType));
 		}
+	}
+	else
+	{
+		m_pHoveringKeyEffect->Disable();
 	}
 }
 
@@ -78,4 +90,18 @@ void DungeonGate::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 	{
 		m_bIsCollisionWithPlayer = false;
 	}
+}
+
+void DungeonGate::CreateKeyEffectAndAddedToScene()
+{
+	m_pHoveringKeyEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LocalEffect>(
+		L"Forward", L"..\\Resources\\Texture\\Key\\Image_Key_F.png");
+
+	Vec3 vPos = GetTransform()->GetPhysicalPosition();
+	vPos.x -= 55.f;
+	vPos.y -= 140.f;
+	vPos.z -= 5.f;
+
+	m_pHoveringKeyEffect->GetTransform()->SetLocalPosition(vPos);
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pHoveringKeyEffect, SCENE_TYPE::DUNGEON));
 }

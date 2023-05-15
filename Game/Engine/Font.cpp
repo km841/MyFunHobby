@@ -4,6 +4,7 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "ComponentObject.h"
+#include "Clock.h"
 
 Font::Font()
 	: m_iWindowHeight(0)
@@ -42,8 +43,69 @@ void Font::DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Ve
 	m_qFontQueue.push(FontInfo{ szText, fFontSize, vScreenPos, eWeight, iColor });
 }
 
+void Font::DrawDamage(DAMAGE_TYPE eDamageType, float fDamage, const Vec3& vPos)
+{
+	// 변화하는 위치값만 가지고 관리하면 된다.
+	// 글자 색상, 크기는 정해져 있기 때문
+
+	// 데미지 구조체를 두고, 시간 간격에 따라 올라갔다가 내려오는 모션
+
+	Vec3 vNewVec = vPos;
+	vNewVec.y += 30.f;
+	m_vDamages.push_back(DamageInfo{ eDamageType, 0.5f, fDamage, vNewVec });
+}
+
+void Font::UpdateDamage()
+{
+	for (auto iter = m_vDamages.begin(); iter != m_vDamages.end(); )
+	{
+		DamageInfo& damageInfo = *iter;
+		if (!damageInfo.tDuration.IsRunning())
+			damageInfo.tDuration.Start();
+
+		if (damageInfo.tDuration.IsFinished())
+		{
+			iter = m_vDamages.erase(iter);
+		}
+		else
+		{
+			float fRatio = damageInfo.tDuration.GetProgress();
+			damageInfo.vDamagePos.y += sinf(fRatio * XM_PI * 1.5f);
+
+			float fFontSize = 25.f;
+			if (damageInfo.fDamage > 50.f)
+				fFontSize = 50.f;
+			else if (damageInfo.fDamage > 30.f)
+				fFontSize = 40.f;
+			else if (damageInfo.fDamage > 10.f)
+				fFontSize = 30.f;
+			
+			switch (damageInfo.eDamageType)
+			{
+			case DAMAGE_TYPE::FROM_MONSTER:
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize + 2.f, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, 0xff000000);
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, Color::FromRGB(196, 67, 45));
+				break;
+			case DAMAGE_TYPE::FROM_PLAYER_MELEE:
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize + 2.f, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, 0xff000000);
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, Color::FromRGB(240, 191, 63));
+				break;
+			case DAMAGE_TYPE::FROM_PLAYER_MAGIC:
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize + 2.f, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, 0xff000000);
+				DrawStringAtWorldPos(std::to_wstring(static_cast<int32>(damageInfo.fDamage)), fFontSize, damageInfo.vDamagePos, FONT_WEIGHT::NORMAL, Color::FromRGB(106, 243, 233));
+				break;
+			}
+
+
+			damageInfo.tDuration.Update(DELTA_TIME);
+			iter++;
+		}
+	}
+}
+
 void Font::Render()
 {
+	UpdateDamage();
 	while (!m_qFontQueue.empty())
 	{
 		FontInfo fontInfo = m_qFontQueue.front();

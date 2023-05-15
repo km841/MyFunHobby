@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+class LocalEffect;
 class DungeonGate :
     public GameObject
 {
@@ -23,9 +24,14 @@ public:
     virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
 private:
+    void CreateKeyEffectAndAddedToScene();
+
+private:
     STAGE_KIND m_eStageKind;
     DUNGEON_TYPE m_eDungeonType;
     bool m_bIsCollisionWithPlayer;
     bool m_bOpen;
+
+    shared_ptr<LocalEffect> m_pHoveringKeyEffect;
 };
 

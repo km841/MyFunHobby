@@ -14,5 +14,7 @@ public:
 
 private:
     weak_ptr<HealthBarHUD> m_pHealthBar;
+    float m_fPrevHP;
+    float m_fDiff;
 };
 

@@ -24,6 +24,21 @@ struct FontInfo
 	uint32 iFontColor;
 };
 
+enum class DAMAGE_TYPE : uint8
+{
+	FROM_MONSTER,
+	FROM_PLAYER_MELEE,
+	FROM_PLAYER_MAGIC,
+};
+
+struct DamageInfo
+{
+	DAMAGE_TYPE eDamageType;
+	Timer tDuration;
+	float fDamage;
+	Vec3 vDamagePos;
+};
+
 class Font
 {
 public:
@@ -35,6 +50,8 @@ public:
 	void Init(const WindowInfo& windowInfo, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);
 	void DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff);
 	void DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Vec3& vWorldPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff);
+	void DrawDamage(DAMAGE_TYPE eDamageType, float fDamage, const Vec3& vPos);
+	void UpdateDamage();
 	void Render();
 
 private:
@@ -43,6 +60,7 @@ private:
 private:
 	std::array<ComPtr<IFW1FontWrapper>, FONT_WEIGHT_COUNT> m_arrFontWrapperGroup;
 	std::queue<FontInfo> m_qFontQueue;
+	std::vector<DamageInfo> m_vDamages;
 	int32 m_iWindowHeight;
 
 	ComPtr<IDWriteFactory> m_pWriteFactory;

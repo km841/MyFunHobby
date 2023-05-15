@@ -10,6 +10,7 @@
 #include "Physical.h"
 #include "ParticleSystem.h"
 #include "GlobalEffect.h"
+#include "Engine.h"
 
 SkulAttack::SkulAttack(shared_ptr<Skul> pSkul)
 	: m_eActiveAttackOrder(ATTACK_ORDER::ATTACK_A)
@@ -67,7 +68,7 @@ void SkulAttack::HitMonstersInAttackRange()
 				CreateHitEffectAndAddedScene(vPos);
 				pGameObject->GetStatus()->TakeDamage(3);
 
-				
+				FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, 3.f, vPos);
 
 				if (!pGameObject->GetStatus()->IsAlive())
 				{
