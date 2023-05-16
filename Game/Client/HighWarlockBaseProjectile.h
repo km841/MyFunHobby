@@ -24,5 +24,6 @@ private:
 
 private:
     bool m_bDespawn;
+    Timer m_tLifeTimer;
 };
 

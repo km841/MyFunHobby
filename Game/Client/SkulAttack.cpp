@@ -11,6 +11,7 @@
 #include "ParticleSystem.h"
 #include "GlobalEffect.h"
 #include "Engine.h"
+#include "CollisionManager.h"
 
 SkulAttack::SkulAttack(shared_ptr<Skul> pSkul)
 	: m_eActiveAttackOrder(ATTACK_ORDER::ATTACK_A)
@@ -44,6 +45,13 @@ void SkulAttack::HitMonstersInAttackRange()
 	Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
 	if (DIRECTION::LEFT == eDirection)
 		vRightNormal = -vRightNormal;
+
+	
+	GET_SINGLE(CollisionManager)->SetForceInLayer(
+		LAYER_TYPE::PARTICLE,
+		Vec3(vMyPos.x + (DIRECTION::LEFT == eDirection ? -100.f : 100.f), vMyPos.y, vMyPos.z),
+		Vec3(fRadius * 2.f, fRadius * 2.f, 0.f),
+		Vec3(DIRECTION::LEFT == eDirection ? -100.f : 100.f, 100.f, 0.f));
 
 
 	for (auto& pGameObject : vGameObjects)

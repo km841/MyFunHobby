@@ -29,7 +29,10 @@ void PlayerSkillShowScript::LateUpdate()
 	if (pSkill.lock())
 	{
 		if (SKILL_INDEX::SECOND == m_eSkillIndex)
+		{
 			GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SECOND_SKILL_FRAME)->Enable();
+			GetGameObject()->Enable();
+		}
 
 		m_bFlag = pSkill.lock()->IsActive();
 		float fCooldownProgress = pSkill.lock()->GetCooldownProgress();
@@ -43,6 +46,9 @@ void PlayerSkillShowScript::LateUpdate()
 	else
 	{
 		if (SKILL_INDEX::SECOND == m_eSkillIndex)
+		{
 			GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SECOND_SKILL_FRAME)->Disable();
+			GetGameObject()->Disable();
+		}
 	}
 }

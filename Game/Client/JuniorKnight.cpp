@@ -132,9 +132,9 @@ void JuniorKnight::ScatterParticles(const Vec3& vDir)
 
 		Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
 
-		float fDegree = atan2(vDir.x, vDir.y) * 180.f / XM_PI;
-		if (fDegree < 0.f)
-			fDegree += 180.f;
+		float fDegree = atan2(vDir.y, vDir.x) * 180.f / XM_PI;
+		//if (fDegree < 0.f)
+		//	fDegree += 180.f;
 
 		float fForce = vDir.Length();
 

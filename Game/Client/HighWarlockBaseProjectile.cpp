@@ -10,10 +10,13 @@
 #include "Monster.h"
 #include "Transform.h"
 #include "Physical.h"
+#include "Clock.h"
+#include "Engine.h"
 
 POOL_INIT(HighWarlockBaseProjectile);
 HighWarlockBaseProjectile::HighWarlockBaseProjectile()
 	: m_bDespawn(false)
+	, m_tLifeTimer(3.f)
 {
 }
 
@@ -35,6 +38,20 @@ void HighWarlockBaseProjectile::Update()
 {
 	PlayerProjectile::Update();
 
+	if (!m_tLifeTimer.IsRunning())
+		m_tLifeTimer.Start();
+	else
+	{
+		m_tLifeTimer.Update(DELTA_TIME);
+	}
+
+	if (m_tLifeTimer.IsFinished() && !m_bDespawn)
+	{
+		GetRigidBody()->SetVelocity(Vec3::Zero);
+		GetAnimator()->Play(L"HighWarlock_BaseProjectile_Despawn", false);
+		m_bDespawn = true;
+	}
+
 	if (m_bDespawn)
 	{
 		if (GetAnimator()->GetActiveAnimation()->IsFinished())
@@ -42,6 +59,7 @@ void HighWarlockBaseProjectile::Update()
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(shared_from_this(), eSceneType));
 			m_bDespawn = false;
+			m_tLifeTimer.Reset();
 		}
 	}
 }
@@ -69,6 +87,7 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 
 			static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
 			pGameObject->GetStatus()->TakeDamage(1);
+			FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, 1.f, pGameObject->GetTransform()->GetPhysicalPosition());
 
 			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 			vMyPos.z = 0.f;
@@ -80,10 +99,8 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 
 			if (!pGameObject->GetStatus()->IsAlive())
 			{
-				if (vTargetVec.x > 0.f)
-					static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::RIGHT);
-				else
-					static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(PARTICLE_DIRECTION::LEFT);
+				vTargetVec.x *= 5.f;
+				static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(vTargetVec);
 			}
 		}
 	}

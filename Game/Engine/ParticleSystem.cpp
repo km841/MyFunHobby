@@ -139,10 +139,10 @@ void ParticleSystem::SetParticleDirection(PARTICLE_DIRECTION eParticleDirection)
 
 void ParticleSystem::SetParticleDirection(const Vec3& vDir)
 {
-	float fAngle = atan2(vDir.x, vDir.y) * 180.f / XM_PI;
+	float fAngle = atan2(vDir.y, vDir.x) * 180.f / XM_PI;
 
-	if (fAngle < 0.f)
-		fAngle += 180.f;
+	//if (fAngle < 0.f)
+	//	fAngle += 180.f;
 
 	m_fStartAngle = fAngle - 15.f;
 	m_fEndAngle = fAngle + 15.f;
