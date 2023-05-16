@@ -118,7 +118,7 @@ void EvilSwordKirion::CreateDashEffectAndAddedToScene()
 	{
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Kirion_Slash_Dash", L"..\\Resources\\Animation\\Item\\Kirion\\kirion_slash_dash.anim");
 		pAnimationLocalEffect->GetAnimator()->AddAnimation(L"Kirion_Slash_Dash", pAnimation);
-		pAnimation->SetHitFrame(3);
+		pAnimation->SetHitFrame(1);
 	}
 
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

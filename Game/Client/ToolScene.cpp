@@ -59,8 +59,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	MapEditorUpdate();
-	//AnimationEditorUpdate();
+	//MapEditorUpdate();
+	AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();

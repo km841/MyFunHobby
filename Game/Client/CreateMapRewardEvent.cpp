@@ -13,6 +13,7 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "BoneReward.h"
+#include "AnimationLocalEffectOtherLayer.h"
 
 CreateMapRewardEvent::CreateMapRewardEvent(shared_ptr<ConditionBlock> pConditionBlock, GRADE eGrade, DUNGEON_TYPE eDungeonType)
 	: DungeonEvent(DUNGEON_EVENT_KIND::CREATE_MAP_REWARD, pConditionBlock)
@@ -162,7 +163,7 @@ shared_ptr<MapReward> CreateMapRewardEvent::CreateBoneReward(const Vec3& vPos)
 
 void CreateMapRewardEvent::CreateRewardEffectAddedToScene(const Vec3& vPos)
 {
-	shared_ptr<AnimationLocalEffect> pEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
+	shared_ptr<AnimationLocalEffectOtherLayer> pEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffectOtherLayer>(L"Forward");
 	Vec3 pEffectPos = vPos;
 	pEffectPos.y = vPos.y + 120.f;
 	pEffectPos.z = vPos.z - 20.f;

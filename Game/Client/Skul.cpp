@@ -272,6 +272,11 @@ void Skul::CooldownCompletion(SKILL_INDEX eSkillIndex)
 	}
 	break;
 	case SKILL_INDEX::SECOND:
+	{
+		weak_ptr<Interface> pInterface = GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_SECOND);
+		assert(pInterface.lock());
+		static_pointer_cast<SkillBoxHUD>(pInterface.lock())->PlayCompletionAnimation();
+	}
 		break;
 	}
 

@@ -25,11 +25,12 @@
 #include "PlayerSkulThumnailScript.h"
 #include "PlayerHealthBarShowScript.h"
 #include "SkillBoxHUD.h"
-#include "PlayerFirstSkillShowScript.h"
+#include "PlayerSkillShowScript.h"
 #include "UI.h"
 #include "HUD.h"
 #include "ObjectFactory.h"
 #include "BaseCampOpeningHUD.h"
+#include "PlayerSecondSkillFrameHUD.h"
 
 void InterfaceManager::Init()
 {
@@ -103,7 +104,21 @@ void InterfaceManager::CreateHUD()
 		pInterfaceHUD->GetTransform()->SetLocalScale(Vec3(203.f, 66.f, 1.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_INTERFACE] = pInterfaceHUD;
+	}
 
+	// Second Skill Frame
+	{
+		shared_ptr<PlayerSecondSkillFrameHUD> pSecondSkillFrameHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<PlayerSecondSkillFrameHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_Player_Skill2_Frame.png");
+		pSecondSkillFrameHUD->SetFrustum(false);
+
+		pSecondSkillFrameHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pSecondSkillFrameHUD->GetTransform()->SetLocalPosition(Vec3(-3.f, 10.f, -9.f));
+
+		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_SECOND_SKILL_FRAME] = pSecondSkillFrameHUD;
 	}
 
 	// Skul Thumnail HUD
@@ -140,12 +155,12 @@ void InterfaceManager::CreateHUD()
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_HEALTH_BAR] = pHealthBarHUD;
 	}
 
-	// Skill Box HUD
+	// First Skill Box HUD
 	{
 		shared_ptr<SkillBoxHUD> pSkillBoxHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkillBoxHUD>(L"Cooldown");
 		pSkillBoxHUD->SetFrustum(false);
 
-		pSkillBoxHUD->AddComponent(make_shared<PlayerFirstSkillShowScript>(pSkillBoxHUD));
+		pSkillBoxHUD->AddComponent(make_shared<PlayerSkillShowScript>(pSkillBoxHUD, SKILL_INDEX::FIRST));
 		pSkillBoxHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -155,6 +170,23 @@ void InterfaceManager::CreateHUD()
 		pSkillBoxHUD->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_SKILL_BOX_FIRST] = pSkillBoxHUD;
+	}
+
+	// Second Skill Box HUD
+	{
+		shared_ptr<SkillBoxHUD> pSkillBoxHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkillBoxHUD>(L"Cooldown");
+		pSkillBoxHUD->SetFrustum(false);
+
+		pSkillBoxHUD->AddComponent(make_shared<PlayerSkillShowScript>(pSkillBoxHUD, SKILL_INDEX::SECOND));
+		pSkillBoxHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+		pSkillBoxHUD->GetTransform()->SetLocalPosition(Vec3(-1.5f, 11.5f, -10.f));
+		pSkillBoxHUD->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
+
+		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_SKILL_BOX_SECOND] = pSkillBoxHUD;
 	}
 
 	// Player Hit HUD

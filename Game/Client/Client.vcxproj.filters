@@ -188,6 +188,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\DecoObject\LightDecoObject">
       <UniqueIdentifier>{4680aa26-8fe2-45d2-a958-6e447d822dd2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssOrb">
+      <UniqueIdentifier>{3c0ce26f-0b4f-493f-8fd3-8ddd8c8514be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -310,7 +313,7 @@
     <ClInclude Include="PlayerTrackingScript.h">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerFirstSkillShowScript.h">
+    <ClInclude Include="PlayerSkillShowScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
     </ClInclude>
     <ClInclude Include="PlayerProjectile.h">
@@ -577,6 +580,18 @@
     <ClInclude Include="LightObject.h">
       <Filter>소스 파일\Game\Object\GameObject\DecoObject\LightDecoObject</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerSecondSkillFrameHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationLocalEffectOtherLayer.h">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="AbyssOrbSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssOrb</Filter>
+    </ClInclude>
+    <ClInclude Include="AbyssOrb.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssOrb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -712,7 +727,7 @@
     <ClCompile Include="PlayerTrackingScript.cpp">
       <Filter>소스 파일\Game\Object\Script</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerFirstSkillShowScript.cpp">
+    <ClCompile Include="PlayerSkillShowScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
     </ClCompile>
     <ClCompile Include="PlayerProjectile.cpp">
@@ -978,6 +993,18 @@
     </ClCompile>
     <ClCompile Include="LightObject.cpp">
       <Filter>소스 파일\Game\Object\GameObject\DecoObject\LightDecoObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSecondSkillFrameHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationLocalEffectOtherLayer.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="AbyssOrbSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssOrb</Filter>
+    </ClCompile>
+    <ClCompile Include="AbyssOrb.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssOrb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

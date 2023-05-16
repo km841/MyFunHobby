@@ -19,7 +19,7 @@
 #include "PlayerTrackingScript.h"
 #include "CameraMoveScript.h"
 #include "PlayerMoveScript.h"
-#include "PlayerFirstSkillShowScript.h"
+#include "PlayerSkillShowScript.h"
 #include "GlobalEffectSettingScript.h"
 #include "PlayerSkulThumnailScript.h"
 #include "PlayerFunctionScript.h"
@@ -187,11 +187,14 @@ void TownScene::Enter()
 
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR)->SetPlayer(pPlayer);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST)->SetPlayer(pPlayer);
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_SECOND)->SetPlayer(pPlayer);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL)->SetPlayer(pPlayer);
 
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_INTERFACE));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SECOND_SKILL_FRAME));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_SECOND));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HIT));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::MOUSE_POINTER));

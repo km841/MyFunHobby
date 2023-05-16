@@ -70,7 +70,7 @@ void SkillBoxHUD::CreateAndAddCompletionEffectToScene()
 
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
-	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Cooldown_Completion", L"..\\Resources\\Animation\\SkillBox\\cooldown_completion.anim");
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Cooldown_Completion", L"..\\Resources\\Animation\\SkillBox\\cooldown_completion.anim");
 	m_pCompletionEffect->GetAnimator()->AddAnimation(L"Cooldown_Completion", pAnimation);
 
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pCompletionEffect, eSceneType));

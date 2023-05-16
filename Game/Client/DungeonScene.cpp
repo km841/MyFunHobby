@@ -18,7 +18,7 @@
 #include "PlayerTrackingScript.h"
 #include "CameraMoveScript.h"
 #include "PlayerMoveScript.h"
-#include "PlayerFirstSkillShowScript.h"
+#include "PlayerSkillShowScript.h"
 #include "GlobalEffectSettingScript.h"
 #include "PlayerSkulThumnailScript.h"
 

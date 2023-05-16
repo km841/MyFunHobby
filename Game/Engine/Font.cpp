@@ -49,7 +49,6 @@ void Font::DrawDamage(DAMAGE_TYPE eDamageType, float fDamage, const Vec3& vPos)
 	// 글자 색상, 크기는 정해져 있기 때문
 
 	// 데미지 구조체를 두고, 시간 간격에 따라 올라갔다가 내려오는 모션
-
 	Vec3 vNewVec = vPos;
 	vNewVec.y += 30.f;
 	m_vDamages.push_back(DamageInfo{ eDamageType, 0.5f, fDamage, vNewVec });

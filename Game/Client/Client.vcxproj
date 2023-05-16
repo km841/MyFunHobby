@@ -169,10 +169,13 @@
   <ItemGroup>
     <ClInclude Include="AbyssMeteor.h" />
     <ClInclude Include="AbyssMeteorSkill.h" />
+    <ClInclude Include="AbyssOrb.h" />
+    <ClInclude Include="AbyssOrbSkill.h" />
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="AfterImageDrawScript.h" />
     <ClInclude Include="AnimationGlobalEffect.h" />
     <ClInclude Include="AnimationLocalEffect.h" />
+    <ClInclude Include="AnimationLocalEffectOtherLayer.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arms.h" />
     <ClInclude Include="Background.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="MousePointerHUD.h" />
     <ClInclude Include="ObjectFollowScript.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
+    <ClInclude Include="PlayerSecondSkillFrameHUD.h" />
     <ClInclude Include="PlayerTeleportEvent.h" />
     <ClInclude Include="Possession.h" />
     <ClInclude Include="Rapidity.h" />
@@ -265,7 +269,7 @@
     <ClInclude Include="MonsterHUD.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="PathState.h" />
-    <ClInclude Include="PlayerFirstSkillShowScript.h" />
+    <ClInclude Include="PlayerSkillShowScript.h" />
     <ClInclude Include="PlayerHitHUD.h" />
     <ClInclude Include="PlayerProjectile.h" />
     <ClInclude Include="PlayerSkulThumnailScript.h" />
@@ -312,10 +316,13 @@
   <ItemGroup>
     <ClCompile Include="AbyssMeteor.cpp" />
     <ClCompile Include="AbyssMeteorSkill.cpp" />
+    <ClCompile Include="AbyssOrb.cpp" />
+    <ClCompile Include="AbyssOrbSkill.cpp" />
     <ClCompile Include="AfterImage.cpp" />
     <ClCompile Include="AfterImageDrawScript.cpp" />
     <ClCompile Include="AnimationGlobalEffect.cpp" />
     <ClCompile Include="AnimationLocalEffect.cpp" />
+    <ClCompile Include="AnimationLocalEffectOtherLayer.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Arms.cpp" />
     <ClCompile Include="Background.cpp" />
@@ -377,6 +384,7 @@
     <ClCompile Include="MousePointerHUD.cpp" />
     <ClCompile Include="ObjectFollowScript.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
+    <ClCompile Include="PlayerSecondSkillFrameHUD.cpp" />
     <ClCompile Include="PlayerTeleportEvent.cpp" />
     <ClCompile Include="Possession.cpp" />
     <ClCompile Include="Rapidity.cpp" />
@@ -409,7 +417,7 @@
     <ClCompile Include="MonsterHUD.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PathState.cpp" />
-    <ClCompile Include="PlayerFirstSkillShowScript.cpp" />
+    <ClCompile Include="PlayerSkillShowScript.cpp" />
     <ClCompile Include="PlayerHitHUD.cpp" />
     <ClCompile Include="PlayerProjectile.cpp" />
     <ClCompile Include="PlayerSkulThumnailScript.cpp" />

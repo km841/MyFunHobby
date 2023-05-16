@@ -17,6 +17,7 @@
 #include "HighWarlockChargingScript.h"
 #include "LittleBoneAttack.h"
 #include "HighWarlockAttack.h"
+#include "AbyssOrbSkill.h"
 
 
 void Cemetery::Init()
@@ -262,6 +263,27 @@ void Cemetery::CreateSkul()
 			pAbyssMeteorSkill->SetAnimation(pAnimation);
 
 			pHighWarlock->ObtainSkill(pAbyssMeteorSkill);
+		}
+		
+		// Abyss Orb
+		{
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::CHARGING;
+			skillInfo.fCooldown = 5.f;
+			skillInfo.fDuration = 1.f;
+			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_AbyssOrb", L"..\\Resources\\Texture\\HUD\\HighWarlock\\HUD_AbyssOrb.png");
+			skillInfo.szComment = L"오브를 소환한다.";
+			skillInfo.szName = L"어비스 오브";
+
+			shared_ptr<AbyssOrbSkill> pAbyssOrbSkill = make_shared<AbyssOrbSkill>(skillInfo);
+
+			wstring szAnimationName = L"HighWarlock_AbyssOrb";
+			pAbyssOrbSkill->SetAnimationName(szAnimationName);
+
+			shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\HighWarlock\\highwarlock_skill.anim");
+			pAbyssOrbSkill->SetAnimation(pAnimation);
+
+			pHighWarlock->ObtainSkill(pAbyssOrbSkill);
 		}
 
 
