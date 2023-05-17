@@ -705,7 +705,7 @@ void Scene::CreateDecoObject(DECO_OBJECT_TYPE eDecoObjType, const wstring szTexP
 	}
 
 	assert(pDecoObject);
-	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 103.f));
+	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vPos.x, vPos.y, 100.5f));
 	pDecoObject->Awake();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, m_eSceneType));
 }

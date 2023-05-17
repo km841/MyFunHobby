@@ -30,6 +30,9 @@ public:
 	FORCEINLINE void EnableIsDataSend()			 	 { m_bDataSend = true; }
 	FORCEINLINE void DisableIsDataSend()		 	 { m_bDataSend = false; }
 
+	FORCEINLINE bool IsRemoveBGDataFlag() { return m_bRemoveBGDataFlag; }
+	FORCEINLINE void DisableRemoveBGDataFlag() { m_bRemoveBGDataFlag = false; }
+
 	void SetTileMapData(const TileMapData& tileMapData);
 	FORCEINLINE const TileMapData& GetTileMapData() { return m_TileMapData; }
 
@@ -110,6 +113,7 @@ private:
 
 	bool m_bChangedBGDataFlag;
 	bool m_bBackgroundSend;
+	bool m_bRemoveBGDataFlag;
 
 	std::vector<LightData> m_vLightDataList;
 	int32 m_iLightDataSelector;

@@ -12,8 +12,10 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "Scene.h"
 #include "Scenes.h"
+#include "ObjectFactory.h"
 
-SkillBoxHUD::SkillBoxHUD()
+SkillBoxHUD::SkillBoxHUD(SKILL_INDEX eSkillIndex)
+	: m_eSkillIndex(eSkillIndex)
 {
 }
 
@@ -27,6 +29,7 @@ void SkillBoxHUD::Awake()
 	{
 		HUD::Awake();
 		CreateAndAddCompletionEffectToScene();
+		CreateHotKeyHUDAndAddedToScene();
 	}
 }
 
@@ -48,6 +51,22 @@ void SkillBoxHUD::LateUpdate()
 void SkillBoxHUD::FinalUpdate()
 {
 	HUD::FinalUpdate();
+}
+
+void SkillBoxHUD::Enable()
+{
+	GameObject::Enable();
+	if (m_pHotKeyHUD)
+		m_pHotKeyHUD->Enable();
+	
+}
+
+void SkillBoxHUD::Disable()
+{
+	if (m_pHotKeyHUD)
+		m_pHotKeyHUD->Disable();
+
+	GameObject::Disable();
 }
 
 void SkillBoxHUD::CreateAndAddCompletionEffectToScene()
@@ -74,6 +93,26 @@ void SkillBoxHUD::CreateAndAddCompletionEffectToScene()
 	m_pCompletionEffect->GetAnimator()->AddAnimation(L"Cooldown_Completion", pAnimation);
 
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pCompletionEffect, eSceneType));
+}
+
+void SkillBoxHUD::CreateHotKeyHUDAndAddedToScene()
+{
+	switch (m_eSkillIndex)
+	{
+	case SKILL_INDEX::FIRST:
+		m_pHotKeyHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<HUD>(L"Forward", L"..\\Resources\\Texture\\Key\\Image_Key_A.png");
+		break;
+	case SKILL_INDEX::SECOND:
+		m_pHotKeyHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<HUD>(L"Forward", L"..\\Resources\\Texture\\Key\\Image_Key_S.png");
+		break;
+	}
+	
+	assert(m_pHotKeyHUD);
+	m_pHotKeyHUD->GetTransform()->SetParent(GetTransform());
+	m_pHotKeyHUD->GetTransform()->SetLocalPosition(Vec3(0.f, 27.f, -1.f));
+
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pHotKeyHUD, eSceneType));
 }
 
 void SkillBoxHUD::PlayCompletionAnimation()

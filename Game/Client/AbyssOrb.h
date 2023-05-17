@@ -15,10 +15,15 @@ public:
     virtual void FinalUpdate();
 
 private:
+    void CreateLightAndAddedToScene();
+
+private:
     Timer m_tLifeTimer;
     bool m_bCompleted;
     bool m_bDespawn;
 
     Timer m_tDamageTick;
+
+    shared_ptr<GameObject> m_pLight;
 };
 

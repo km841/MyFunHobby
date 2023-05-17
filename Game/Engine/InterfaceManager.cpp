@@ -100,7 +100,7 @@ void InterfaceManager::CreateHUD()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pInterfaceHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 80.f));
+		pInterfaceHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 50.f));
 		pInterfaceHUD->GetTransform()->SetLocalScale(Vec3(203.f, 66.f, 1.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_INTERFACE] = pInterfaceHUD;
@@ -157,7 +157,7 @@ void InterfaceManager::CreateHUD()
 
 	// First Skill Box HUD
 	{
-		shared_ptr<SkillBoxHUD> pSkillBoxHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkillBoxHUD>(L"Cooldown");
+		shared_ptr<SkillBoxHUD> pSkillBoxHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkillBoxHUD>(L"Cooldown", L"", SKILL_INDEX::FIRST);
 		pSkillBoxHUD->SetFrustum(false);
 
 		pSkillBoxHUD->AddComponent(make_shared<PlayerSkillShowScript>(pSkillBoxHUD, SKILL_INDEX::FIRST));
@@ -174,7 +174,7 @@ void InterfaceManager::CreateHUD()
 
 	// Second Skill Box HUD
 	{
-		shared_ptr<SkillBoxHUD> pSkillBoxHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkillBoxHUD>(L"Cooldown");
+		shared_ptr<SkillBoxHUD> pSkillBoxHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SkillBoxHUD>(L"Cooldown", L"", SKILL_INDEX::SECOND);
 		pSkillBoxHUD->SetFrustum(false);
 
 		pSkillBoxHUD->AddComponent(make_shared<PlayerSkillShowScript>(pSkillBoxHUD, SKILL_INDEX::SECOND));

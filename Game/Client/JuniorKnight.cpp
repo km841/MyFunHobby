@@ -33,7 +33,6 @@ void JuniorKnight::Start()
 void JuniorKnight::Update()
 {
 	Monster::Update();
-	// 몬스터 AI 실행
 }
 
 void JuniorKnight::LateUpdate()

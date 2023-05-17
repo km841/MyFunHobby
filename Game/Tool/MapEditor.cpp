@@ -22,6 +22,7 @@ MapEditor::MapEditor()
     , m_CurrLightData{}
     , m_InputLightData{}
     , m_bCreateLightFlag(false)
+    , m_bRemoveBGDataFlag(false)
 {
     m_fTileWindowWidth = (m_fTileSize + m_fSpacing) * 4.7f + 100.f;
     m_vWindowSize = ImVec2(m_fTileWindowWidth + 10.f, std::ceil(m_vSRV[static_cast<uint8>(SRV_KIND::TILE)].size() / 4.0f) * (m_fTileSize + m_fSpacing));
@@ -432,6 +433,12 @@ void MapEditor::UpdateBGSelection()
                 }
             }
             ImGui::ListBoxFooter();
+        }
+
+        if (ImGui::Button("Remove BG"))
+        {
+            m_bRemoveBGDataFlag = true;
+            m_vBackgroundDataList.erase(m_vBackgroundDataList.begin() + m_iBackgroundDataSelector);
         }
 
         InsertSeparator();

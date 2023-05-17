@@ -181,9 +181,13 @@ void DetailInfoUI::InitSkulDetailSubUI()
 		break;
 	case SKILL_INDEX::SECOND:
 		m_pFirstImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, FirstSkillInfo.pSkillTexture);
-		m_pFirstImageUI->GetTransform()->SetLocalScale(Vec3(27.f, 27.f, 1.f));
+		m_pFirstImageUI->GetTransform()->SetLocalScale(Vec3(25.f, 25.f, 1.f));
+		m_pFirstImageUI->GetTransform()->SetLocalPosition(Vec3(-157.5f, -146.5f, -10.f));
 		m_pSecondImageUI->GetMeshRenderer()->GetMaterial()->SetTexture(0, SecondSkillInfo.pSkillTexture);
-		m_pSecondImageUI->GetTransform()->SetLocalScale(Vec3(27.f, 27.f, 1.f));
+		m_pSecondImageUI->GetTransform()->SetLocalScale(Vec3(25.f, 25.f, 1.f));
+		m_pSecondImageUI->GetTransform()->SetLocalPosition(Vec3(157.5f, -146.5f, -10.f));
+		FONT->DrawString(FirstSkillInfo.szName, 20.f, Vec3(878.5f, 133.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
+		FONT->DrawString(SecondSkillInfo.szName, 20.f, Vec3(1273.5f, 133.f, 0.f), FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR);
 		break;
 	}
 }

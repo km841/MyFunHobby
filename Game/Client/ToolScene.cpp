@@ -59,8 +59,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//MapEditorUpdate();
-	AnimationEditorUpdate();
+	MapEditorUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -491,6 +491,20 @@ void ToolScene::MapEditorUpdate()
 		m_vBackgrounds[iBackgroundIndex]->SetFollowSpeed(Conv::ImVec3ToVec3(backgroundData.vBGSpeed));
 
 		MAP_TOOL->DisableChangedBGDataFlag();
+	}
+
+	if (MAP_TOOL->IsRemoveBGDataFlag())
+	{
+		int32 iBackgroundIndex = MAP_TOOL->GetSelectedBGIndex();
+
+		auto& vGameObjects = GetGameObjects(LAYER_TYPE::BACKGROUND);
+
+		auto iter = vGameObjects.begin() + iBackgroundIndex;
+		iter->get()->Release();
+		vGameObjects.erase(vGameObjects.begin() + iBackgroundIndex);
+		m_vBackgrounds.erase(m_vBackgrounds.begin() + iBackgroundIndex);
+
+		MAP_TOOL->DisableRemoveBGDataFlag();
 	}
 	
 

@@ -26,7 +26,7 @@ void HighWarlockSwapSkill::CreateConditionFunction()
 void HighWarlockSwapSkill::Enter()
 {
 	weak_ptr<HighWarlock> pHighWarlock = static_pointer_cast<HighWarlock>(m_pSkul.lock());
-	pHighWarlock.lock()->ActiveAbyssField();
+	pHighWarlock.lock()->CreateAbyssFieldAndAddedToScene();
 }
 
 void HighWarlockSwapSkill::Exit()

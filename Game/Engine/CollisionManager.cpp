@@ -102,13 +102,10 @@ void CollisionManager::SetForceInLayerAndFollowPlayer(LAYER_TYPE eLayerType, con
 
 				Vec3 vDiff = vPlayerPos - vObjectPos;
 				if (vDiff.x < 0.f)
-				{
 					vRandomImpulse.x = -fabs(vRandomImpulse.y);
-				}
 				else
-				{
 					vRandomImpulse.x = fabs(vRandomImpulse.y);
-				}
+				
 
 				vRandomImpulse.x += static_cast<float>(RANDOM(-50, 50));
 			}

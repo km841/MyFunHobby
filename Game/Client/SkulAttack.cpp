@@ -46,13 +46,11 @@ void SkulAttack::HitMonstersInAttackRange()
 	if (DIRECTION::LEFT == eDirection)
 		vRightNormal = -vRightNormal;
 
-	
 	GET_SINGLE(CollisionManager)->SetForceInLayer(
 		LAYER_TYPE::PARTICLE,
 		Vec3(vMyPos.x + (DIRECTION::LEFT == eDirection ? -100.f : 100.f), vMyPos.y, vMyPos.z),
 		Vec3(fRadius * 2.f, fRadius * 2.f, 0.f),
 		Vec3(DIRECTION::LEFT == eDirection ? -100.f : 100.f, 100.f, 0.f));
-
 
 	for (auto& pGameObject : vGameObjects)
 	{
@@ -72,33 +70,27 @@ void SkulAttack::HitMonstersInAttackRange()
 			if (fDegree > fStartAngle && fDegree < fEndAngle)
 			{
 				shared_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
+
 				pMonster->FlagAsAttacked();
 				CreateHitEffectAndAddedScene(vPos);
 				pGameObject->GetStatus()->TakeDamage(3);
 
 				FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, 3.f, vPos);
 
+				// Monster Dead Event Occurs
 				if (!pGameObject->GetStatus()->IsAlive())
 				{
-					if (vTargetVec.x > 0.f)
-						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(400.f, 400.f, 0.f));
-					else
-						static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(-400.f, 400.f, 0.f));
+					static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(vTargetVec.x < 0.f ? -400.f : 400.f, 400.f, 0.f));
 				}
 
+				// Generate Particles
 				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleAliveCount(30);
-				if (vTargetVec.x > 0.f)
-					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(Vec3(500.f, 500.f, 0.f));
-				else
-					pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(Vec3(-500.f, 500.f, 0.f));
-
+				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(Vec3(vTargetVec.x < 0.f ? -500.f : 500.f, 500.f, 0.f));
 			}
 
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.05f, Vec3(500.f, 0.f, 0.f));
-
 		}
 	}
-
 }
 
 

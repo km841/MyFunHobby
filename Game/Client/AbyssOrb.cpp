@@ -29,6 +29,7 @@ AbyssOrb::~AbyssOrb()
 void AbyssOrb::Awake()
 {
 	PlayerProjectile::Awake();
+	CreateLightAndAddedToScene();
 }
 
 void AbyssOrb::Start()
@@ -82,6 +83,7 @@ void AbyssOrb::Update()
 						{
 							Disable();
 							SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+							GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pLight, eSceneType));
 							GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
 
 						}
@@ -124,5 +126,19 @@ void AbyssOrb::LateUpdate()
 void AbyssOrb::FinalUpdate()
 {
 	PlayerProjectile::FinalUpdate();
+}
+
+void AbyssOrb::CreateLightAndAddedToScene()
+{
+	m_pLight = make_shared<GameObject>(LAYER_TYPE::UNKNOWN);
+	m_pLight->AddComponent(make_shared<Transform>());
+	m_pLight->GetTransform()->SetParent(GetTransform());
+	m_pLight->AddComponent(make_shared<Light>());
+	m_pLight->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
+	m_pLight->GetLight()->SetLightRange(600.f);
+	m_pLight->GetLight()->SetDiffuse(Vec3(0.2f, 1.f, 0.2f));
+
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pLight, eSceneType));
 }
 
