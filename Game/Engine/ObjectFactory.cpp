@@ -37,6 +37,10 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 	case MONSTER_KIND::JUNIOR_KNIGHT:
 		pMonster = CreateJuniorKnight(vMonsterPos);
 		break;
+
+	case MONSTER_KIND::ERODED_KNIGHT:
+		pMonster = CreateErodedKnight(vMonsterPos);
+		break;
 	}
 
 	assert(pMonster);
@@ -122,6 +126,82 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 
 	pJuniorKnight->GetTransform()->SetLocalPosition(vMonsterPos);
 	return pJuniorKnight;
+}
+
+shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
+{
+	shared_ptr<JuniorKnight> pErodedKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	pErodedKnight->AddComponent(make_shared<AI>());
+	pErodedKnight->AddComponent(make_shared<Animator>());
+	pErodedKnight->AddComponent(make_shared<Movement>());
+
+	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
+	std::vector<wstring> vTextureNames;
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_1.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_2.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_3.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_4.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
+	pErodedKnight->SetParticleTextureNames(vTextureNames);
+
+	shared_ptr<Selector> pParentSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pHitSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pWalkSequence = make_shared<Sequence>();
+
+	pParentSelector->AddChild(pDeadSequence);
+	pParentSelector->AddChild(pHitSequence);
+	pParentSelector->AddChild(pAttackSequence);
+	pParentSelector->AddChild(pWalkSequence);
+
+	shared_ptr<MoveTask> pMoveTask = make_shared<MoveTask>(pErodedKnight);
+	shared_ptr<IsPlayerNearCondition> pNearCondition = make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedKnight);
+	shared_ptr<RunAnimateTask> pRunWalkAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Walk");
+	shared_ptr<RunAnimateTask> pRunAttackAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Attack");
+	shared_ptr<RunAnimateTask> pRunIdleAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Idle");
+	shared_ptr<RunAnimateTask> pRunHitAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Weak_Hit");
+	shared_ptr<DelayTask> pDelayTask = make_shared<DelayTask>(pErodedKnight, 1.f);
+	shared_ptr<IsHitCondition> pHitCondition = make_shared<IsHitCondition>(pErodedKnight);
+
+	shared_ptr<IsDeadCondition> pDeadCondition = make_shared<IsDeadCondition>(pErodedKnight);
+	shared_ptr<RemoveObjectTask> pRemoveTask = make_shared<RemoveObjectTask>(pErodedKnight);
+	shared_ptr<IsPlayerInAttackRangeCondition> pPlayerInAttackRangeCondition = make_shared<IsPlayerInAttackRangeCondition>(m_pPlayer.lock(), pErodedKnight);
+	shared_ptr<PlayerHitTask> pPlayerHitTask = make_shared<PlayerHitTask>(m_pPlayer.lock(), pErodedKnight);
+
+	pDeadSequence->AddChild(pDeadCondition);
+	pDeadSequence->AddChild(pRemoveTask);
+
+	pHitSequence->AddChild(pHitCondition);
+	pHitSequence->AddChild(pRunHitAnimation);
+	pHitSequence->AddChild(pDelayTask);
+
+	pAttackSequence->AddChild(pNearCondition);
+	pAttackSequence->AddChild(pRunAttackAnimation);
+	pAttackSequence->AddChild(pPlayerInAttackRangeCondition);
+	pAttackSequence->AddChild(pPlayerHitTask);
+
+	pWalkSequence->AddChild(pRunWalkAnimation);
+	pWalkSequence->AddChild(pMoveTask);
+
+	pErodedKnight->GetAI()->SetBehaviorRootNode(pParentSelector);
+
+	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Idle", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_idle.anim");
+	shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Walk", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_walk.anim");
+	shared_ptr<Animation> pAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Attack", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_attack.anim");
+	shared_ptr<Animation> pWeakHitAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Weak_Hit", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_weak_hit.anim");
+	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Idle", pIdleAnimation);
+	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Walk", pWalkAnimation);
+	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Attack", pAttackAnimation);
+	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Weak_Hit", pWeakHitAnimation);
+	pErodedKnight->GetAnimator()->Play(L"ErodedKnight_Idle");
+
+	pAttackAnimation->SetHitFrame(1);
+
+	pErodedKnight->UnflagAsAttacked();
+
+	pErodedKnight->GetTransform()->SetLocalPosition(vMonsterPos);
+	return pErodedKnight;
 }
 
 void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)

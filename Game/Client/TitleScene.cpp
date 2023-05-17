@@ -98,7 +98,7 @@ void TitleScene::Enter()
 		pGameObject->AddComponent(make_shared<Light>());
 		pGameObject->GetLight()->SetLightDirection(Vec3(0.f, 0.f, 1.f));
 		pGameObject->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
-		pGameObject->GetLight()->SetDiffuse(Vec3(0.6f, 0.6f, 0.6f));
+		pGameObject->GetLight()->SetDiffuse(Vec3(0.7f, 0.7f, 0.7f));
 		//pGameObject->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 		AddGameObject(pGameObject);
 	}

@@ -949,7 +949,13 @@ string MapEditor::MonsterKindEnumToString(MONSTER_KIND eMonsterKind)
     switch (eMonsterKind)
     {
     case MONSTER_KIND::JUNIOR_KNIGHT:
-        return "JuniorKnight";
+        return "Junior Knight";
+
+    case MONSTER_KIND::ERODED_KNIGHT:
+        return "Eroded Knight";
+
+    case MONSTER_KIND::ERODED_HEAVY_INFANTRY:
+        return "Eroded Heavy Infantry";
     }
 
     return "Not Found";

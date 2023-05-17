@@ -60,6 +60,7 @@ private:
 	inline MONSTER_KIND GetMonsterKind();
 
 	shared_ptr<Monster> CreateJuniorKnight(const Vec3& vMonsterPos);
+	shared_ptr<Monster> CreateErodedKnight(const Vec3& vMonsterPos);
 	void CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos);
 
 	//============
@@ -222,6 +223,10 @@ inline void ObjectFactory::CreateMonsterAndAddedScene(const Vec3& vMonsterPos)
 	{
 	case MONSTER_KIND::JUNIOR_KNIGHT:
 		pMonster = CreateJuniorKnight(vMonsterPos);
+		break;
+
+	case MONSTER_KIND::ERODED_KNIGHT:
+		pMonster = CreateErodedKnight(vMonsterPos);
 		break;
 	}
 
