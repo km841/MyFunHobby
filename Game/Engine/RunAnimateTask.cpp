@@ -18,8 +18,8 @@ BEHAVIOR_RESULT RunAnimateTask::Run()
 {
 	if (m_pGameObject.lock()->GetAnimator())
 	{
-
-		if (m_szAnimationName != m_pGameObject.lock()->GetAnimator()->GetActiveAnimation()->GetName())
+		const wstring& szName = m_pGameObject.lock()->GetAnimator()->GetActiveAnimation()->GetName();
+		if (m_szAnimationName != szName)
 		{
 			m_pGameObject.lock()->GetAnimator()->Play(m_szAnimationName, m_bLoop, m_iSection);
 		}

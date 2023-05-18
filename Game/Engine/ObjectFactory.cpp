@@ -13,7 +13,7 @@
 #include "IsPlayerNearCondition.h"
 #include "BehaviorTask.h"
 #include "Sequence.h"
-#include "MoveTask.h"
+#include "PatrolTask.h"
 #include "RunAnimateTask.h"
 #include "Selector.h"
 #include "DelayTask.h"
@@ -22,6 +22,11 @@
 #include "RemoveObjectTask.h"
 #include "IsPlayerInAttackRangeCondition.h"
 #include "PlayerHitTask.h"
+#include "TimerCondition.h"
+#include "IsMonsterStateCondition.h"
+#include "ChangeMonsterStateTask.h"
+#include "TrackingOfMeleeTask.h"
+#include "KnightAttackTask.h"
 
 
 /* Engrave */
@@ -54,11 +59,11 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 
 shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 {
-	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
 	pJuniorKnight->AddComponent(make_shared<AI>());
 	pJuniorKnight->AddComponent(make_shared<Animator>());
 	pJuniorKnight->AddComponent(make_shared<Movement>());
-
+	
 	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
 	std::vector<wstring> vTextureNames;
 	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_1.png");
@@ -68,47 +73,61 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
 	pJuniorKnight->SetParticleTextureNames(vTextureNames);
 
-	shared_ptr<Selector> pParentSelector = make_shared<Selector>();
+	shared_ptr<Selector> pRootNode = make_shared<Selector>();
+	shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pPatrolSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pPatrolSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pPlayerEncounterSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pTraceSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pTraceSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();	
+	shared_ptr<Sequence> pWeakHitSequence = make_shared<Sequence>();
 	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
-	shared_ptr<Sequence> pHitSequence = make_shared<Sequence>();
-	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
-	shared_ptr<Sequence> pWalkSequence = make_shared<Sequence>();
 
-	pParentSelector->AddChild(pDeadSequence);
-	pParentSelector->AddChild(pHitSequence);
-	pParentSelector->AddChild(pAttackSequence);
-	pParentSelector->AddChild(pWalkSequence);
+	pRootNode->AddChild(pDeadSequence);
+	pDeadSequence->AddChild(make_shared<IsDeadCondition>(pJuniorKnight));
+	pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pJuniorKnight));
 
-	shared_ptr<MoveTask> pMoveTask = make_shared<MoveTask>(pJuniorKnight);
-	shared_ptr<IsPlayerNearCondition> pNearCondition = make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pJuniorKnight);
-	shared_ptr<RunAnimateTask> pRunWalkAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Walk");
-	shared_ptr<RunAnimateTask> pRunAttackAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Attack");
-	shared_ptr<RunAnimateTask> pRunIdleAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Idle");
-	shared_ptr<RunAnimateTask> pRunHitAnimation = make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Weak_Hit");
-	shared_ptr<DelayTask> pDelayTask = make_shared<DelayTask>(pJuniorKnight, 1.f);
-	shared_ptr<IsHitCondition> pHitCondition = make_shared<IsHitCondition>(pJuniorKnight);
+	//pRootNode->AddChild(pWeakHitSequence);
+	//pWeakHitSequence->AddChild(make_shared<IsHitCondition>(pJuniorKnight));
+	//pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Weak_Hit"));
+	//pWeakHitSequence->AddChild(make_shared<TimerCondition>(pJuniorKnight, 1.f));
+	//pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::IDLE));
 
-	shared_ptr<IsDeadCondition> pDeadCondition = make_shared<IsDeadCondition>(pJuniorKnight);
-	shared_ptr<RemoveObjectTask> pRemoveTask = make_shared<RemoveObjectTask>(pJuniorKnight);
-	shared_ptr<IsPlayerInAttackRangeCondition> pPlayerInAttackRangeCondition = make_shared<IsPlayerInAttackRangeCondition>(m_pPlayer.lock(), pJuniorKnight);
-	shared_ptr<PlayerHitTask> pPlayerHitTask = make_shared<PlayerHitTask>(m_pPlayer.lock(), pJuniorKnight);
+	pRootNode->AddChild(pIdleSequence);
+	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pJuniorKnight, MONSTER_STATE::IDLE));
+	pIdleSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Idle"));
+	pIdleSequence->AddChild(make_shared<TimerCondition>(pJuniorKnight, 1.f));
+	pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::PATROL));
 
-	pDeadSequence->AddChild(pDeadCondition);
-	pDeadSequence->AddChild(pRemoveTask);
+	pRootNode->AddChild(pPatrolSequence);
+	pPatrolSequence->AddChild(make_shared<IsMonsterStateCondition>(pJuniorKnight, MONSTER_STATE::PATROL));
+	pPatrolSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Walk"));
+	pPatrolSequence->AddChild(pPatrolSubSelector);
+	pPatrolSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::IDLE));
 
-	pHitSequence->AddChild(pHitCondition);
-	pHitSequence->AddChild(pRunHitAnimation);
-	pHitSequence->AddChild(pDelayTask);
+	pPatrolSubSelector->AddChild(make_shared<PatrolTask>(pJuniorKnight, 50.f, 200.f));
+	pPatrolSubSelector->AddChild(pPlayerEncounterSequence);
 
-	pAttackSequence->AddChild(pNearCondition);
-	pAttackSequence->AddChild(pRunAttackAnimation);
-	pAttackSequence->AddChild(pPlayerInAttackRangeCondition);
-	pAttackSequence->AddChild(pPlayerHitTask);
+	pPlayerEncounterSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pJuniorKnight));
+	pPlayerEncounterSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::TRACE));
 
-	pWalkSequence->AddChild(pRunWalkAnimation);
-	pWalkSequence->AddChild(pMoveTask);
+	pRootNode->AddChild(pTraceSequence);
+	pTraceSequence->AddChild(make_shared<IsMonsterStateCondition>(pJuniorKnight, MONSTER_STATE::TRACE));
+	pTraceSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Walk"));
+	pTraceSequence->AddChild(pTraceSubSelector);
 
-	pJuniorKnight->GetAI()->SetBehaviorRootNode(pParentSelector);
+	pTraceSubSelector->AddChild(make_shared<TrackingOfMeleeTask>(m_pPlayer.lock(), pJuniorKnight));
+	pTraceSubSelector->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::ATTACK));
+
+	pRootNode->AddChild(pAttackSequence);
+	pAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pJuniorKnight, MONSTER_STATE::ATTACK));
+	pAttackSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Attack", false));
+	pAttackSequence->AddChild(make_shared<KnightAttackTask>(m_pPlayer.lock(), pJuniorKnight));
+	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::IDLE));
+	
+
+	pJuniorKnight->GetAI()->SetBehaviorRootNode(pRootNode);
 
 	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"JuniorKnight_Idle", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_idle.anim");
 	shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->LoadAnimation(L"JuniorKnight_Walk", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_walk.anim");
@@ -142,49 +161,65 @@ shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_3.png");
 	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_4.png");
 	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
+
 	pErodedKnight->SetParticleTextureNames(vTextureNames);
 
-	shared_ptr<Selector> pParentSelector = make_shared<Selector>();
-	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
-	shared_ptr<Sequence> pHitSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pRootNode = make_shared<Selector>();
+	shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pPatrolSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pPatrolSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pPlayerEncounterSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pTraceSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pTraceSubSelector = make_shared<Selector>();
 	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
-	shared_ptr<Sequence> pWalkSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pWeakHitSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
 
-	pParentSelector->AddChild(pDeadSequence);
-	pParentSelector->AddChild(pHitSequence);
-	pParentSelector->AddChild(pAttackSequence);
-	pParentSelector->AddChild(pWalkSequence);
+	pRootNode->AddChild(pDeadSequence);
+	pDeadSequence->AddChild(make_shared<IsDeadCondition>(pErodedKnight));
+	pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pErodedKnight));
 
-	shared_ptr<MoveTask> pMoveTask = make_shared<MoveTask>(pErodedKnight);
-	shared_ptr<IsPlayerNearCondition> pNearCondition = make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedKnight);
-	shared_ptr<RunAnimateTask> pRunWalkAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Walk");
-	shared_ptr<RunAnimateTask> pRunAttackAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Attack");
-	shared_ptr<RunAnimateTask> pRunIdleAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Idle");
-	shared_ptr<RunAnimateTask> pRunHitAnimation = make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Weak_Hit");
-	shared_ptr<DelayTask> pDelayTask = make_shared<DelayTask>(pErodedKnight, 1.f);
-	shared_ptr<IsHitCondition> pHitCondition = make_shared<IsHitCondition>(pErodedKnight);
+	pRootNode->AddChild(pWeakHitSequence);
+	pWeakHitSequence->AddChild(make_shared<IsHitCondition>(pErodedKnight));
+	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Weak_Hit"));
+	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pErodedKnight, 1.f));
+	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::IDLE));
 
-	shared_ptr<IsDeadCondition> pDeadCondition = make_shared<IsDeadCondition>(pErodedKnight);
-	shared_ptr<RemoveObjectTask> pRemoveTask = make_shared<RemoveObjectTask>(pErodedKnight);
-	shared_ptr<IsPlayerInAttackRangeCondition> pPlayerInAttackRangeCondition = make_shared<IsPlayerInAttackRangeCondition>(m_pPlayer.lock(), pErodedKnight);
-	shared_ptr<PlayerHitTask> pPlayerHitTask = make_shared<PlayerHitTask>(m_pPlayer.lock(), pErodedKnight);
+	pRootNode->AddChild(pIdleSequence);
+	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::IDLE));
+	pIdleSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Idle"));
+	pIdleSequence->AddChild(make_shared<TimerCondition>(pErodedKnight, 1.f));
+	pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::PATROL));
 
-	pDeadSequence->AddChild(pDeadCondition);
-	pDeadSequence->AddChild(pRemoveTask);
+	pRootNode->AddChild(pPatrolSequence);
+	pPatrolSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::PATROL));
+	pPatrolSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Walk"));
+	pPatrolSequence->AddChild(pPatrolSubSelector);
+	pPatrolSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::IDLE));
 
-	pHitSequence->AddChild(pHitCondition);
-	pHitSequence->AddChild(pRunHitAnimation);
-	pHitSequence->AddChild(pDelayTask);
+	pPatrolSubSelector->AddChild(make_shared<PatrolTask>(pErodedKnight, 50.f, 200.f));
+	pPatrolSubSelector->AddChild(pPlayerEncounterSequence);
 
-	pAttackSequence->AddChild(pNearCondition);
-	pAttackSequence->AddChild(pRunAttackAnimation);
-	pAttackSequence->AddChild(pPlayerInAttackRangeCondition);
-	pAttackSequence->AddChild(pPlayerHitTask);
+	pPlayerEncounterSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedKnight));
+	pPlayerEncounterSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::TRACE));
 
-	pWalkSequence->AddChild(pRunWalkAnimation);
-	pWalkSequence->AddChild(pMoveTask);
+	pRootNode->AddChild(pTraceSequence);
+	pTraceSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::TRACE));
+	pTraceSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Walk"));
+	pTraceSequence->AddChild(pTraceSubSelector);
 
-	pErodedKnight->GetAI()->SetBehaviorRootNode(pParentSelector);
+	pTraceSubSelector->AddChild(make_shared<TrackingOfMeleeTask>(m_pPlayer.lock(), pErodedKnight));
+	pTraceSubSelector->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::ATTACK));
+
+	pRootNode->AddChild(pAttackSequence);
+	pAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::ATTACK));
+	pAttackSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Attack", false));
+	pAttackSequence->AddChild(make_shared<KnightAttackTask>(m_pPlayer.lock(), pErodedKnight));
+	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::IDLE));
+
+
+
+	pErodedKnight->GetAI()->SetBehaviorRootNode(pRootNode);
 
 	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Idle", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_idle.anim");
 	shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Walk", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_walk.anim");

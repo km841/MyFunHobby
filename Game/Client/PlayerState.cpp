@@ -12,6 +12,8 @@
 #include "GlobalEffect.h"
 #include "Animator.h"
 #include "Tile.h"
+#include "ComponentObject.h"
+#include "Camera.h"
 
 PlayerState::PlayerState(shared_ptr<Player> pPlayer)
 	: m_pPlayer(pPlayer)
@@ -33,19 +35,24 @@ bool PlayerState::CheckGrounded()
 	Vec3 vTopRight = Vec3(vMyPos.x + vMySize.x, vMyPos.y + vMySize.y, vMyPos.z);
 
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
+	const auto& pMainCamera = GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera();
 
 	bool bResult = {};
 	Vec3 vBtmDir = -VEC3_UP_NORMAL;
 
 	for (const auto& pGameObject : vGameObjects)
 	{
-		// 발판일 경우, 해당 타일의 겹침까지 확인
-		switch (static_pointer_cast<Tile>(pGameObject)->GetTileType())
-		{
-		case TILE_TYPE::NONE:
-			break;
+		TILE_TYPE eTileType = static_pointer_cast<Tile>(pGameObject)->GetTileType();
 
-		case TILE_TYPE::FOOTHOLD:
+		if (TILE_TYPE::NONE == eTileType)
+			continue;
+
+		if (!pMainCamera->ContainsSphere(
+			pGameObject->GetTransform()->GetPhysicalPosition(), 
+			pGameObject->GetTransform()->GetBoundingSphereRadius()))
+			continue;
+
+		if (TILE_TYPE::FOOTHOLD == eTileType)
 		{
 			if (m_pPlayer.lock()->GetRigidBody()->GetVelocity(AXIS::Y) < 0.1f)
 			{
@@ -56,8 +63,8 @@ bool PlayerState::CheckGrounded()
 				bool bCenterTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopCenter, vBtmDir, pGameObject, vMySize.y - 5.f);
 				bool bRightTopResult = m_pPlayer.lock()->GetCollider()->Raycast(vTopRight, vBtmDir, pGameObject, vMySize.y - 5.f);
 
-				if ( (bLeftBtmResult ||  bCenterBtmResult ||  bRightBtmResult) && 
-				   ( !bLeftTopResult && !bCenterTopResult && !bRightTopResult) )
+				if ((bLeftBtmResult || bCenterBtmResult || bRightBtmResult) &&
+					(!bLeftTopResult && !bCenterTopResult && !bRightTopResult))
 				{
 					m_pPlayer.lock()->ReorganizeVerticalPosition();
 					return true;
@@ -65,9 +72,8 @@ bool PlayerState::CheckGrounded()
 
 			}
 		}
-			break;
 
-		case TILE_TYPE::WALL:
+		else if (TILE_TYPE::WALL == eTileType)
 		{
 			bResult = m_pPlayer.lock()->GetCollider()->Raycast(vBtmLeft, vBtmDir, pGameObject, 5.f);
 			if (bResult)
@@ -81,9 +87,6 @@ bool PlayerState::CheckGrounded()
 			if (bResult)
 				return true;
 		}
-			break;
-		}
-
 	}
 
 	return false;

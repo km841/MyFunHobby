@@ -23,6 +23,7 @@ JuniorKnight::~JuniorKnight()
 void JuniorKnight::Awake()
 {
 	Monster::Awake();
+	m_Status.KnightMonsterDefaultSetting();
 }
 
 void JuniorKnight::Start()

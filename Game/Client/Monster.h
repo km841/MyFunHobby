@@ -29,6 +29,9 @@ public:
 	FORCEINLINE void FlagAsExtraAttacked() { m_bExtraHitFlag = true; }
 	FORCEINLINE void UnflagAsExtraAttacked() { m_bExtraHitFlag = false; }
 
+	FORCEINLINE MONSTER_STATE GetMonsterState() { return m_eMonsterState; }
+	FORCEINLINE void		  SetMonsterState(MONSTER_STATE eMonsterState) { m_eMonsterState = eMonsterState; }
+
 public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
@@ -56,5 +59,8 @@ protected:
 
 	std::vector<wstring> m_vTextureNames;
 	shared_ptr<GlobalEffect> m_pParticleGenerator;
+
+	MONSTER_STATE m_eMonsterState;
+
 };
 

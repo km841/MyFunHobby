@@ -155,8 +155,8 @@ void Physical::InitializeActor()
 	{
 	case ACTOR_TYPE::STATIC:
 		break;
-	case ACTOR_TYPE::PROJECTILE_DYNAMIC:
 	case ACTOR_TYPE::MONSTER_DYNAMIC:
+	case ACTOR_TYPE::PROJECTILE_DYNAMIC:
 	case ACTOR_TYPE::DYNAMIC:
 		GetRigidBody()->SetLinearDamping(0.5f);
 		GetRigidBody()->SetLinearMaxVelocityForDynamic(1000.f);

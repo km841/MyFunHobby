@@ -208,8 +208,7 @@ void CS_Main(uint3 threadIndex : SV_DispatchThreadID)
     else
     {
         g_particle[threadIndex.x].fCurTime += fDeltaTime;
-
-        
+ 
         if (g_particle[threadIndex.x].fEndTime < g_particle[threadIndex.x].fCurTime)
         {
             g_particle[threadIndex.x].iAlive = 0;

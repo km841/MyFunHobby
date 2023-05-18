@@ -152,7 +152,6 @@ void Camera::Render_Deferred()
 {
     for (const auto& pGameObject : m_vDeferredObjects)
     {
-
         if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
         {
             weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
@@ -162,9 +161,9 @@ void Camera::Render_Deferred()
             }
         }
         else
-         pGameObject->GetMeshRenderer()->Render(shared_from_this());
+            pGameObject->GetMeshRenderer()->Render(shared_from_this());
 
-		//if (pGameObject->GetDebugRenderer())
-		//	pGameObject->GetDebugRenderer()->Render(shared_from_this());
+		if (pGameObject->GetDebugRenderer())
+			pGameObject->GetDebugRenderer()->Render(shared_from_this());
     }
 }

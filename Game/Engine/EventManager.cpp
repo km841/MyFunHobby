@@ -19,6 +19,8 @@
 #include "PlayEvent.h"
 #include "GoToNextDungeonEvent.h"
 #include "Stage.h"
+#include "MonsterChangeStateEvent.h"
+#include "Monster.h"
 
 void EventManager::AddEvent(unique_ptr<Event> pEvent)
 {
@@ -53,6 +55,10 @@ void EventManager::ProcessEvents()
 
 		case EVENT_TYPE::PLAYER_CHANGE_STATE:
 			ProcessPlayerChangeStateEvent(static_cast<PlayerChangeStateEvent*>(pEvent.get()));
+			break;
+
+		case EVENT_TYPE::MONSTER_CHANGE_STATE:
+			ProcessMonsterChangeStateEvent(static_cast<MonsterChangeStateEvent*>(pEvent.get()));
 			break;
 
 		case EVENT_TYPE::FORCE_ON_OBJECT_EVENT:
@@ -109,6 +115,12 @@ void EventManager::ProcessPlayerChangeStateEvent(PlayerChangeStateEvent* pEvent)
 {
 	shared_ptr<Player> pPlayer = pEvent->GetPlayer();
 	pPlayer->ChangePlayerState(pEvent->GetNextPlayerState());
+}
+
+void EventManager::ProcessMonsterChangeStateEvent(MonsterChangeStateEvent* pEvent)
+{
+	shared_ptr<Monster> pMonster = pEvent->GetMonster();
+	pMonster->SetMonsterState(pEvent->GetNextMonsterState());
 }
 
 void EventManager::ProcessForceOnObjectEvent(ForceOnObjectEvent* pEvent)

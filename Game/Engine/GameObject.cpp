@@ -15,6 +15,7 @@
 #include "Scenes.h"
 #include "ParticleSystem.h"
 #include "Tile.h"
+#include "ComponentObject.h"
 
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -224,6 +225,8 @@ void GameObject::ReorganizePosition()
 	assert(GetRigidBody());
 
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
+	const auto& pMainCamera = GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera();
+
 	Vec3 vResult = {};
 	for (const auto& pGameObject : vGameObjects)
 	{
@@ -255,10 +258,17 @@ void GameObject::ReorganizeVerticalPosition()
 	assert(GetRigidBody());
 
 	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
+	const auto& pMainCamera = GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera();
+
 	Vec3 vResult = {};
 	for (const auto& pGameObject : vGameObjects)
 	{
 		if (TILE_TYPE::NONE == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+			continue;
+
+		if (!pMainCamera->ContainsSphere(
+			pGameObject->GetTransform()->GetPhysicalPosition(),
+			pGameObject->GetTransform()->GetBoundingSphereRadius()))
 			continue;
 
 		vResult = GetCollider()->ComputePenetration(pGameObject);

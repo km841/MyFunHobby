@@ -70,7 +70,7 @@ cbuffer LIGHT_PARAMS : register(b2)
 {
     int g_lightCount;
     float3 g_lightPadding;
-    LightInfo g_light[50];
+    LightInfo g_light[200];
 }
 
 #endif

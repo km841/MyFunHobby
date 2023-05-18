@@ -218,7 +218,7 @@ Vec3 Collider::ComputePenetration(shared_ptr<GameObject> pGameObject)
 
 		bool bIsPenet = PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
 		if (bIsPenet)
-			return Vec3(Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth));
+			return Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth);
 	}
 	break;
 
@@ -229,7 +229,7 @@ Vec3 Collider::ComputePenetration(shared_ptr<GameObject> pGameObject)
 		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
 		bool bIsPenet = PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, capsuleGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
 		if (bIsPenet)
-			return Vec3(Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth));
+			return Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth);
 	}
 	break;
 
@@ -240,7 +240,7 @@ Vec3 Collider::ComputePenetration(shared_ptr<GameObject> pGameObject)
 		PxSphereGeometry capsuleGeom = GetPhysical()->GetGeometries()->sphereGeom;
 		bool bIsPenet = PxGeometryQuery::computePenetration(m_vPenetDir, m_fPenetDepth, capsuleGeom, GetTransform()->GetPxTransform(), otherGeom, otherTransform);
 		if (bIsPenet)
-			return Vec3(Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth));
+			return Conv::PxVec3ToVec3(m_vPenetDir * m_fPenetDepth);
 	}
 	break;
 	}

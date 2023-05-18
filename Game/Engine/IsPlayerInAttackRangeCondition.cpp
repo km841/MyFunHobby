@@ -27,6 +27,8 @@ BEHAVIOR_RESULT IsPlayerInAttackRangeCondition::Run()
 	if (m_pGameObject.lock()->GetAnimator()->GetActiveAnimation()->IsHitFrame())
 	{
 		m_pGameObject.lock()->GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
+
+
 		if (vTargetVec.Length() < 400.f)
 		{
 			if (vTargetVec.x > 0.f)

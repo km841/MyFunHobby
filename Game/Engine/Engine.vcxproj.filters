@@ -217,7 +217,7 @@
     <ClInclude Include="PlayerHitTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
-    <ClInclude Include="MoveTask.h">
+    <ClInclude Include="PatrolTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
     <ClInclude Include="DelayTask.h">
@@ -255,6 +255,24 @@
     </ClInclude>
     <ClInclude Include="GoToNextDungeonEvent.h">
       <Filter>Object\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="IsMonsterStateCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeMonsterStateTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterChangeStateEvent.h">
+      <Filter>Object\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="TrackingOfMeleeTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightAttackTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -468,7 +486,7 @@
     <ClCompile Include="IsPlayerNearCondition.cpp">
       <Filter>Object\AI\MonsterAI\Condition</Filter>
     </ClCompile>
-    <ClCompile Include="MoveTask.cpp">
+    <ClCompile Include="PatrolTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHitTask.cpp">
@@ -500,6 +518,24 @@
     </ClCompile>
     <ClCompile Include="GoToNextDungeonEvent.cpp">
       <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="IsMonsterStateCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeMonsterStateTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterChangeStateEvent.cpp">
+      <Filter>Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="TrackingOfMeleeTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightAttackTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

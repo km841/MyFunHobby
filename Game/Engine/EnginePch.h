@@ -257,8 +257,23 @@ struct Status
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
-		fSpeed = 400.f;
+		fSpeed = 200.f;
 		bAlive = true;
+		fRecogDist = 100.f;
+		fAttackDist = 50.f;
+	}
+
+	void KnightMonsterDefaultSetting()
+	{
+		iMaxHP = 5;
+		iCurHP = 5;
+		iShield = 0;
+		iAttack = 1;
+		iDefence = 1;
+		fSpeed = 200.f;
+		bAlive = true;
+		fRecogDist = 300.f;
+		fAttackDist = 100.f;
 	}
 
 	void TakeDamage(int32 iDamage)
@@ -298,6 +313,8 @@ public:
 	int32 iDefence;
 	float fSpeed;
 	bool  bAlive;
+	float fRecogDist;
+	float fAttackDist;
 };
 
 enum class ATTACK_TYPE

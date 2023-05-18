@@ -16,7 +16,6 @@ BEHAVIOR_RESULT IsHitCondition::Run()
 {
 	if (static_pointer_cast<Monster>(m_pGameObject.lock())->IsHitFlag())
 	{
-		m_pGameObject.lock()->GetRigidBody()->SetVelocity(AXIS::X, 0.f);
 		return BEHAVIOR_RESULT::SUCCESS;
 	}
 	else

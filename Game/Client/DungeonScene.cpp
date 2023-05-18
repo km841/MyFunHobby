@@ -64,18 +64,6 @@
 #include "AI.h"
 #include "ParticleSystem.h"
 
-/* Behavior Component */
-#include "IsPlayerNearCondition.h"
-#include "BehaviorTask.h"
-#include "Sequence.h"
-#include "MoveTask.h"
-#include "RunAnimateTask.h"
-#include "Selector.h"
-#include "DelayTask.h"
-#include "IsHitCondition.h"
-#include "IsDeadCondition.h"
-#include "RemoveObjectTask.h"
-
 /* Stage */
 #include "BlackLab.h"
 #include "CitadelOfFate.h"
