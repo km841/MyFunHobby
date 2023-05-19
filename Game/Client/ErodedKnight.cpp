@@ -9,9 +9,13 @@
 #include "Scenes.h"
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "LocalEffect.h"
+#include "Animator.h"
+#include "Animation.h"
 
 POOL_INIT(ErodedKnight);
 ErodedKnight::ErodedKnight()
+	: m_bDeadFlag(false)
 {
 }
 
@@ -22,6 +26,7 @@ ErodedKnight::~ErodedKnight()
 void ErodedKnight::Awake()
 {
 	Monster::Awake();
+	m_Status.ErodedKnightMonsterDefaultSetting();
 }
 
 void ErodedKnight::Start()
@@ -44,8 +49,22 @@ void ErodedKnight::FinalUpdate()
 	Monster::FinalUpdate();
 }
 
+
 void ErodedKnight::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		GetRigidBody()->RemoveGravity();
+		GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+		//GetPhysical()->GetActor<PxRigidDynamic>()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
+		//GetPhysical()->GetActor<PxRigidDynamic>()->setLinearVelocity(PxVec3(0.f, 0.f, 0.f));
+		//GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, 0.f));
+	}
+
+	if (LAYER_TYPE::PLAYER_PROJECTILE == pGameObject->GetLayerType())
+	{
+		int a = 0;
+	}
 }
 
 void ErodedKnight::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
@@ -106,4 +125,31 @@ void ErodedKnight::ScatterParticles(const Vec3& vDir)
 void ErodedKnight::ActivateDeadEvent(const Vec3& vDir)
 {
 	Monster::ActivateDeadEvent(vDir);
+}
+
+void ErodedKnight::ActivateDeadEvent()
+{
+	CreateExclamationEffectAndAddedToScene();
+	m_bDeadFlag = true;
+}
+
+void ErodedKnight::CreateExclamationEffectAndAddedToScene()
+{
+	shared_ptr<LocalEffect> pLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<LocalEffect>(L"Forward");
+	pLocalEffect->AddComponent(make_shared<Animator>());
+
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ExclamationEffect", L"..\\Resources\\Animation\\MonsterCommon\\sign_exclamation_mark.anim");
+	pLocalEffect->GetAnimator()->AddAnimation(L"ExclamationEffect", pAnimation);
+	pLocalEffect->GetAnimator()->Play(L"ExclamationEffect", true, -1);
+
+	pLocalEffect->GetTransform()->SetParent(GetTransform());
+
+	uint8 iDirection = static_cast<uint8>(GetDirection());
+	pLocalEffect->GetTransform()->SetLocalPosition(Vec3(iDirection ? 15.f : -15.f, 90.f, 0.f));
+
+	pLocalEffect->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLocalEffect, eSceneType));
+
+	m_pExclamation = pLocalEffect;
 }

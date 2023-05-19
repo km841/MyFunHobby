@@ -12,5 +12,8 @@ public:
     virtual void Update();
     virtual void LateUpdate();
     virtual void FinalUpdate();
+
+private:
+    DECLARE_POOL(LocalEffect);
 };
 

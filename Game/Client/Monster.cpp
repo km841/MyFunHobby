@@ -50,6 +50,7 @@ void Monster::Awake()
 void Monster::Start()
 {
 	GameObject::Start();
+	m_eMonsterState = MONSTER_STATE::IDLE;
 }
 
 void Monster::Update()
@@ -66,7 +67,6 @@ void Monster::FinalUpdate()
 {
 	GameObject::FinalUpdate();
 }
-
 
 void Monster::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
@@ -161,6 +161,16 @@ void Monster::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)
 void Monster::ActivateDeadEvent(const Vec3& vDir)
 {
 	ScatterParticles(vDir);
+
+	CreateDeadEffectAndAddedScene();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUD, eSceneType));
+}
+
+void Monster::ActivateDeadEvent()
+{
+	ScatterParticles(m_vParticleDir);
 
 	CreateDeadEffectAndAddedScene();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

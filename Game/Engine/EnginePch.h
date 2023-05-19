@@ -276,6 +276,19 @@ struct Status
 		fAttackDist = 100.f;
 	}
 
+	void ErodedKnightMonsterDefaultSetting()
+	{
+		iMaxHP = 5;
+		iCurHP = 5;
+		iShield = 0;
+		iAttack = 1;
+		iDefence = 1;
+		fSpeed = 300.f;
+		bAlive = true;
+		fRecogDist = 300.f;
+		fAttackDist = 100.f;
+	}
+
 	void TakeDamage(int32 iDamage)
 	{
 		assert(iDamage > 0);

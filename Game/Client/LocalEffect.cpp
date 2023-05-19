@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "LocalEffect.h"
-
+POOL_INIT(LocalEffect);
 LocalEffect::LocalEffect()
 	: GameObject(LAYER_TYPE::LOCAL_EFFECT)
 {

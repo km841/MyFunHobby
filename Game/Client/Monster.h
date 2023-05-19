@@ -32,6 +32,9 @@ public:
 	FORCEINLINE MONSTER_STATE GetMonsterState() { return m_eMonsterState; }
 	FORCEINLINE void		  SetMonsterState(MONSTER_STATE eMonsterState) { m_eMonsterState = eMonsterState; }
 
+	FORCEINLINE const Vec3&   GetParticleDir() { return m_vParticleDir; }
+	FORCEINLINE void		  SetParticleDir(const Vec3& vDir) { m_vParticleDir = vDir; }
+
 public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
@@ -39,6 +42,7 @@ public:
 	virtual void ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection);
 	virtual void ScatterParticles(const Vec3& vDir) { }
 	virtual void ActivateDeadEvent(const Vec3& vDir);
+	virtual void ActivateDeadEvent();
 
 public:
 	void SetParticleTextureNames(const std::vector<wstring> vTextureNames) { m_vTextureNames = vTextureNames; }
@@ -53,6 +57,8 @@ protected:
 protected:
 	bool m_bHitFlag;
 	bool m_bExtraHitFlag;
+
+	Vec3 m_vParticleDir;
 
 	shared_ptr<MonsterHPHUD> m_pMonsterHPHUDFrame;
 	shared_ptr<MonsterHPHUD> m_pMonsterHPHUD;

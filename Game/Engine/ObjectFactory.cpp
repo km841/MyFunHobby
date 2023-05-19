@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ObjectFactory.h"
 #include "JuniorKnight.h"
+#include "ErodedKnight.h"
 #include "PlayerChangeStateEvent.h"
 #include "Sequence.h"
 #include "Selector.h"
@@ -27,11 +28,15 @@
 #include "ChangeMonsterStateTask.h"
 #include "TrackingOfMeleeTask.h"
 #include "KnightAttackTask.h"
-
+#include "UnflagAsAttackedFlagTask.h"
+#include "DeadEventTriggerTask.h"
 
 /* Engrave */
 #include "Rapidity.h"
 #include "Arms.h"
+
+/* Script */
+#include "ErodedKnightDeadScript.h"
 
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
 {
@@ -51,6 +56,7 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 	assert(pMonster);
 
 	pMonster->Awake();
+	pMonster->Start();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pMonster, eSceneType));
 
@@ -88,11 +94,11 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	pDeadSequence->AddChild(make_shared<IsDeadCondition>(pJuniorKnight));
 	pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pJuniorKnight));
 
-	//pRootNode->AddChild(pWeakHitSequence);
-	//pWeakHitSequence->AddChild(make_shared<IsHitCondition>(pJuniorKnight));
-	//pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Weak_Hit"));
-	//pWeakHitSequence->AddChild(make_shared<TimerCondition>(pJuniorKnight, 1.f));
-	//pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::IDLE));
+	pRootNode->AddChild(pWeakHitSequence);
+	pWeakHitSequence->AddChild(make_shared<IsMonsterStateCondition>(pJuniorKnight, MONSTER_STATE::WEAK_HIT));
+	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Weak_Hit"));
+	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pJuniorKnight, 0.5f));
+	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::TRACE));
 
 	pRootNode->AddChild(pIdleSequence);
 	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pJuniorKnight, MONSTER_STATE::IDLE));
@@ -126,7 +132,6 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	pAttackSequence->AddChild(make_shared<KnightAttackTask>(m_pPlayer.lock(), pJuniorKnight));
 	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::IDLE));
 	
-
 	pJuniorKnight->GetAI()->SetBehaviorRootNode(pRootNode);
 
 	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"JuniorKnight_Idle", L"..\\Resources\\Animation\\JuniorKnight\\junior_knight_idle.anim");
@@ -149,10 +154,11 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 
 shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 {
-	shared_ptr<JuniorKnight> pErodedKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	shared_ptr<ErodedKnight> pErodedKnight = CreateObjectHasPhysicalFromPool<ErodedKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
 	pErodedKnight->AddComponent(make_shared<AI>());
 	pErodedKnight->AddComponent(make_shared<Animator>());
 	pErodedKnight->AddComponent(make_shared<Movement>());
+	pErodedKnight->AddComponent(make_shared<ErodedKnightDeadScript>());
 
 	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
 	std::vector<wstring> vTextureNames;
@@ -176,14 +182,15 @@ shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
 
 	pRootNode->AddChild(pDeadSequence);
-	pDeadSequence->AddChild(make_shared<IsDeadCondition>(pErodedKnight));
-	pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pErodedKnight));
+	pDeadSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::DEAD));
+	pDeadSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Dead"));
+	pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedKnight));
 
 	pRootNode->AddChild(pWeakHitSequence);
-	pWeakHitSequence->AddChild(make_shared<IsHitCondition>(pErodedKnight));
+	pWeakHitSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::WEAK_HIT));
 	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Weak_Hit"));
-	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pErodedKnight, 1.f));
-	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::IDLE));
+	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pErodedKnight, 0.5f));
+	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::TRACE));
 
 	pRootNode->AddChild(pIdleSequence);
 	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::IDLE));
@@ -217,18 +224,18 @@ shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 	pAttackSequence->AddChild(make_shared<KnightAttackTask>(m_pPlayer.lock(), pErodedKnight));
 	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::IDLE));
 
-
-
 	pErodedKnight->GetAI()->SetBehaviorRootNode(pRootNode);
 
 	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Idle", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_idle.anim");
 	shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Walk", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_walk.anim");
 	shared_ptr<Animation> pAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Attack", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_attack.anim");
 	shared_ptr<Animation> pWeakHitAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Weak_Hit", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_weak_hit.anim");
+	shared_ptr<Animation> pDeadAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedKnight_Dead", L"..\\Resources\\Animation\\ErodedKnight\\Eroded_knight_dead.anim");
 	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Idle", pIdleAnimation);
 	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Walk", pWalkAnimation);
 	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Attack", pAttackAnimation);
 	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Weak_Hit", pWeakHitAnimation);
+	pErodedKnight->GetAnimator()->AddAnimation(L"ErodedKnight_Dead", pDeadAnimation);
 	pErodedKnight->GetAnimator()->Play(L"ErodedKnight_Idle");
 
 	pAttackAnimation->SetHitFrame(1);

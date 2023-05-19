@@ -33,7 +33,7 @@ void Animator::CreateAnimation(const std::vector<FrameData> vFrameDataList)
 	m_mAnimations[vFrameDataList[0].szName] = pAnimation;
 }
 
-void Animator::Play(const wstring& szName, bool bLoop, uint32 iSection)
+void Animator::Play(const wstring& szName, bool bLoop, int32 iSection)
 {
 	shared_ptr<Animation> pAnimation = FindAnimation(szName);
 	assert(pAnimation);

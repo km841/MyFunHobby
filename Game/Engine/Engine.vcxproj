@@ -180,6 +180,7 @@
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="ContactCallback.h" />
     <ClInclude Include="Context.h" />
+    <ClInclude Include="DeadEventTriggerTask.h" />
     <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="DelayTask.h" />
     <ClInclude Include="Device.h" />
@@ -255,6 +256,7 @@
     <ClInclude Include="TrackingOfMeleeTask.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="InterfaceManager.h" />
+    <ClInclude Include="UnflagAsAttackedFlagTask.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +275,7 @@
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="ContactCallback.cpp" />
     <ClCompile Include="Context.cpp" />
+    <ClCompile Include="DeadEventTriggerTask.cpp" />
     <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="DelayTask.cpp" />
     <ClCompile Include="Device.cpp" />
@@ -349,6 +352,7 @@
     <ClCompile Include="TrackingOfMeleeTask.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="InterfaceManager.cpp" />
+    <ClCompile Include="UnflagAsAttackedFlagTask.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>

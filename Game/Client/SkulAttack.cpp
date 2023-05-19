@@ -71,7 +71,7 @@ void SkulAttack::HitMonstersInAttackRange()
 			{
 				shared_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
 
-				pMonster->FlagAsAttacked();
+				pMonster->SetMonsterState(MONSTER_STATE::WEAK_HIT);
 				CreateHitEffectAndAddedScene(vPos);
 				pGameObject->GetStatus()->TakeDamage(3);
 
@@ -80,6 +80,8 @@ void SkulAttack::HitMonstersInAttackRange()
 				// Monster Dead Event Occurs
 				if (!pGameObject->GetStatus()->IsAlive())
 				{
+					pMonster->SetMonsterState(MONSTER_STATE::DEAD);
+					pMonster->SetParticleDir(Vec3(vTargetVec.x < 0.f ? -400.f : 400.f, 400.f, 0.f));
 					static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(vTargetVec.x < 0.f ? -400.f : 400.f, 400.f, 0.f));
 				}
 

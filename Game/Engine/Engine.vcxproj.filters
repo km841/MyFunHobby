@@ -274,6 +274,12 @@
     <ClInclude Include="KnightAttackTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="UnflagAsAttackedFlagTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadEventTriggerTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -535,6 +541,12 @@
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
     <ClCompile Include="KnightAttackTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="UnflagAsAttackedFlagTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadEventTriggerTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>

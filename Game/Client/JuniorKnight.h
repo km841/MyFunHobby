@@ -1,7 +1,7 @@
 #pragma once
 #include "Monster.h"
 class JuniorKnight :
-    public Monster
+	public Monster
 {
 public:
 	JuniorKnight();
