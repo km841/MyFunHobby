@@ -22,5 +22,8 @@ public:
 public:
 	virtual void ScatterParticles(const Vec3& vDir);
 	virtual void ActivateDeadEvent(const Vec3& vDir);
+
+private:
+	DECLARE_POOL(ErodedHeavyInfantry);
 };
 

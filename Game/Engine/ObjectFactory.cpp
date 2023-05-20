@@ -2,6 +2,7 @@
 #include "ObjectFactory.h"
 #include "JuniorKnight.h"
 #include "ErodedKnight.h"
+#include "ErodedHeavyInfantry.h"
 #include "PlayerChangeStateEvent.h"
 #include "Sequence.h"
 #include "Selector.h"
@@ -50,6 +51,10 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 
 	case MONSTER_KIND::ERODED_KNIGHT:
 		pMonster = CreateErodedKnight(vMonsterPos);
+		break;
+
+	case MONSTER_KIND::ERODED_HEAVY_INFANTRY:
+		pMonster = CreateErodedHeavyInfantry(vMonsterPos);
 		break;
 	}
 
@@ -244,6 +249,100 @@ shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 
 	pErodedKnight->GetTransform()->SetLocalPosition(vMonsterPos);
 	return pErodedKnight;
+}
+
+shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonsterPos)
+{
+	shared_ptr<ErodedHeavyInfantry> pErodedHeavyInfantry = CreateObjectHasPhysicalFromPool<ErodedHeavyInfantry>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	pErodedHeavyInfantry->AddComponent(make_shared<AI>());
+	pErodedHeavyInfantry->AddComponent(make_shared<Animator>());
+	pErodedHeavyInfantry->AddComponent(make_shared<Movement>());
+	pErodedHeavyInfantry->AddComponent(make_shared<ErodedKnightDeadScript>());
+
+	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
+	std::vector<wstring> vTextureNames;
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_1.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_2.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_3.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_4.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
+
+	pErodedHeavyInfantry->SetParticleTextureNames(vTextureNames);
+
+	shared_ptr<Selector> pRootNode = make_shared<Selector>();
+	shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pPatrolSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pPatrolSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pPlayerEncounterSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pTraceSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pTraceSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pWeakHitSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
+
+	pRootNode->AddChild(pDeadSequence);
+	pDeadSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::DEAD));
+	pDeadSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Dead"));
+	pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedHeavyInfantry));
+
+	pRootNode->AddChild(pWeakHitSequence);
+	pWeakHitSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::WEAK_HIT));
+	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Weak_Hit"));
+	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.5f));
+	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::TRACE));
+
+	pRootNode->AddChild(pIdleSequence);
+	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::IDLE));
+	pIdleSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Idle"));
+	pIdleSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 1.f));
+	pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::PATROL));
+
+	pRootNode->AddChild(pPatrolSequence);
+	pPatrolSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::PATROL));
+	pPatrolSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Walk"));
+	pPatrolSequence->AddChild(pPatrolSubSelector);
+	pPatrolSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::IDLE));
+
+	pPatrolSubSelector->AddChild(make_shared<PatrolTask>(pErodedHeavyInfantry, 50.f, 200.f));
+	pPatrolSubSelector->AddChild(pPlayerEncounterSequence);
+
+	pPlayerEncounterSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedHeavyInfantry));
+	pPlayerEncounterSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::TRACE));
+
+	pRootNode->AddChild(pTraceSequence);
+	pTraceSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::TRACE));
+	pTraceSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Walk"));
+	pTraceSequence->AddChild(pTraceSubSelector);
+
+	pTraceSubSelector->AddChild(make_shared<TrackingOfMeleeTask>(m_pPlayer.lock(), pErodedHeavyInfantry));
+	pTraceSubSelector->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK));
+
+	pRootNode->AddChild(pAttackSequence);
+	pAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK));
+	pAttackSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Attack", false));
+	pAttackSequence->AddChild(make_shared<KnightAttackTask>(m_pPlayer.lock(), pErodedHeavyInfantry));
+	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::IDLE));
+
+	pErodedHeavyInfantry->GetAI()->SetBehaviorRootNode(pRootNode);
+
+	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedHeavyInfantry_Idle", L"..\\Resources\\Animation\\ErodedKnight\\eroded_heavy_infantry_idle.anim");
+	shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedHeavyInfantry_Walk", L"..\\Resources\\Animation\\ErodedKnight\\eroded_heavy_infantry_walk.anim");
+	shared_ptr<Animation> pAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedHeavyInfantry_Attack", L"..\\Resources\\Animation\\ErodedKnight\\eroded_heavy_infantry_attack.anim");
+	shared_ptr<Animation> pWeakHitAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedHeavyInfantry_Weak_Hit", L"..\\Resources\\Animation\\ErodedKnight\\eroded_heavy_infantry_weak_hit.anim");
+	shared_ptr<Animation> pDeadAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedHeavyInfantry_Dead", L"..\\Resources\\Animation\\ErodedKnight\\eroded_heavy_infantry_dead.anim");
+	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"ErodedHeavyInfantry_Idle", pIdleAnimation);
+	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"ErodedHeavyInfantry_Walk", pWalkAnimation);
+	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"ErodedHeavyInfantry_Attack", pAttackAnimation);
+	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"ErodedHeavyInfantry_Weak_Hit", pWeakHitAnimation);
+	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"ErodedHeavyInfantry_Dead", pDeadAnimation);
+	pErodedHeavyInfantry->GetAnimator()->Play(L"ErodedHeavyInfantry_Idle");
+
+	pAttackAnimation->SetHitFrame(1);
+
+	pErodedHeavyInfantry->UnflagAsAttacked();
+
+	pErodedHeavyInfantry->GetTransform()->SetLocalPosition(vMonsterPos);
+	return pErodedHeavyInfantry;
 }
 
 void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)

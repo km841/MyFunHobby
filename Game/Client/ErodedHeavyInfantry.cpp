@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ErodedHeavyInfantry.h"
 
+POOL_INIT(ErodedHeavyInfantry);
 ErodedHeavyInfantry::ErodedHeavyInfantry()
 {
 }

@@ -194,6 +194,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Monster\ErodedKnight">
       <UniqueIdentifier>{a9aeeaa2-4fad-4d5b-ad9a-b3a7a077e10a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\ErodedHeavyInfantry">
+      <UniqueIdentifier>{9dd95fa5-18cd-40cb-8bce-d68998d4ddf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -595,14 +598,14 @@
     <ClInclude Include="AbyssOrb.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssOrb</Filter>
     </ClInclude>
-    <ClInclude Include="ErodedHeavyInfantry.h">
-      <Filter>소스 파일\Game\Object\GameObject\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="ErodedKnight.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedKnight</Filter>
     </ClInclude>
     <ClInclude Include="ErodedKnightDeadScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedKnight</Filter>
+    </ClInclude>
+    <ClInclude Include="ErodedHeavyInfantry.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedHeavyInfantry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1018,14 +1021,14 @@
     <ClCompile Include="AbyssOrb.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssOrb</Filter>
     </ClCompile>
-    <ClCompile Include="ErodedHeavyInfantry.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="ErodedKnight.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedKnight</Filter>
     </ClCompile>
     <ClCompile Include="ErodedKnightDeadScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedKnight</Filter>
+    </ClCompile>
+    <ClCompile Include="ErodedHeavyInfantry.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedHeavyInfantry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
