@@ -681,7 +681,7 @@ void Scene::CreateTile(TILE_TYPE eTileType, const wstring& szTexPath, const Vec3
 		pTile = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<Tile>(
 			L"Deferred",
 			false,
-			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.01f),
+			ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(TILE_HALF_SIZE, TILE_HALF_SIZE, 50.f), MassProperties(100.f, 100.f, 0.1f),
 			szTexPath, iTileType);
 	}
 

@@ -206,6 +206,7 @@
     </ClInclude>
     <ClInclude Include="DungeonGate.h" />
     <ClInclude Include="Dungeon_Item.h" />
+    <ClInclude Include="ErodedEnt.h" />
     <ClInclude Include="ErodedHeavyInfantry.h" />
     <ClInclude Include="ErodedKnight.h" />
     <ClInclude Include="ErodedKnightDeadScript.h" />
@@ -356,6 +357,7 @@
     </ClCompile>
     <ClCompile Include="DungeonGate.cpp" />
     <ClCompile Include="Dungeon_Item.cpp" />
+    <ClCompile Include="ErodedEnt.cpp" />
     <ClCompile Include="ErodedHeavyInfantry.cpp" />
     <ClCompile Include="ErodedKnight.cpp" />
     <ClCompile Include="ErodedKnightDeadScript.cpp" />

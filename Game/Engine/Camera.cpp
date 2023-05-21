@@ -163,7 +163,7 @@ void Camera::Render_Deferred()
         else
             pGameObject->GetMeshRenderer()->Render(shared_from_this());
 
-		//if (pGameObject->GetDebugRenderer())
-		//	pGameObject->GetDebugRenderer()->Render(shared_from_this());
+		if (pGameObject->GetDebugRenderer())
+			pGameObject->GetDebugRenderer()->Render(shared_from_this());
     }
 }

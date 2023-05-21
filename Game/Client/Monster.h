@@ -53,6 +53,7 @@ protected:
 	void CreateMonsterHPHUD();
 	void CreateDeadEffectAndAddedScene();
 	void CreateParticleGeneratorAndAddedToScene();
+	void SetMonsterHPBarWidthAndUnder(float fWidth, float fUnder);
 
 protected:
 	bool m_bHitFlag;

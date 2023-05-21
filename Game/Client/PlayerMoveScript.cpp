@@ -62,7 +62,9 @@ void PlayerMoveScript::LateUpdate()
 	{
 		if (pPlayer->GetJumpCount() && 
 			PLAYER_STATE::DASH != pPlayer->GetPlayerStateEnum() && 
-			PLAYER_STATE::CHARGING != pPlayer->GetPlayerStateEnum())
+			PLAYER_STATE::CHARGING != pPlayer->GetPlayerStateEnum() &&
+			PLAYER_STATE::SWAP != pPlayer->GetPlayerStateEnum() &&
+			PLAYER_STATE::SKILL != pPlayer->GetPlayerStateEnum())
 		{
 			vVelocity = VEC3_UP_NORMAL * m_fJumpSpeed;
 			GetRigidBody()->SetVelocity(vVelocity);

@@ -289,6 +289,19 @@ struct Status
 		fAttackDist = 100.f;
 	}
 
+	void ErodedHeavyInfantryMonsterDefaultSetting()
+	{
+		iMaxHP = 5;
+		iCurHP = 5;
+		iShield = 0;
+		iAttack = 1;
+		iDefence = 1;
+		fSpeed = 300.f;
+		bAlive = true;
+		fRecogDist = 500.f;
+		fAttackDist = 200.f;
+	}
+
 	void TakeDamage(int32 iDamage)
 	{
 		assert(iDamage > 0);

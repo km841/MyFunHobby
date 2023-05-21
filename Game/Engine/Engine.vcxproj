@@ -199,6 +199,7 @@
     <ClInclude Include="FW1Precompiled.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GoToNextDungeonEvent.h" />
+    <ClInclude Include="InfantryTackleTask.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IsDeadCondition.h" />
     <ClInclude Include="IsHitCondition.h" />
@@ -246,6 +247,7 @@
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
+    <ClInclude Include="SetDirectionTowardPlayerTask.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="StructuredBuffer.h" />
@@ -290,6 +292,7 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GoToNextDungeonEvent.cpp" />
+    <ClCompile Include="InfantryTackleTask.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="IsDeadCondition.cpp" />
     <ClCompile Include="IsHitCondition.cpp" />
@@ -342,6 +345,7 @@
     <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
+    <ClCompile Include="SetDirectionTowardPlayerTask.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="StructuredBuffer.cpp" />

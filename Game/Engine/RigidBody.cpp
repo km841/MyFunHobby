@@ -95,6 +95,27 @@ void RigidBody::SetLinearVelocityForDynamic(const PxVec3& vLinearVelocity)
 	pDynamicActor->setLinearVelocity(vLinearVelocity);
 }
 
+void RigidBody::SetLinearVelocityForDynamic(AXIS eAxis, float fVelocity)
+{
+	assert(GetPhysical());
+	PxRigidDynamic* pDynamicActor = GetPhysical()->GetActor<PxRigidDynamic>();
+	assert(pDynamicActor);
+	PxVec3 vVelocity = pDynamicActor->getLinearVelocity();
+
+	switch (eAxis)
+	{
+	case AXIS::X:
+		pDynamicActor->setLinearVelocity(PxVec3(fVelocity, vVelocity.y, vVelocity.z));
+		break;
+	case AXIS::Y:
+		pDynamicActor->setLinearVelocity(PxVec3(vVelocity.x, fVelocity, vVelocity.z));
+		break;
+	case AXIS::Z:
+		pDynamicActor->setLinearVelocity(PxVec3(vVelocity.x, vVelocity.y, fVelocity));
+		break;
+	}
+}
+
 // for dynamic actors
 void RigidBody::SetAngularVelocityForDynamic(const PxVec3& vAngularVelocity)
 {

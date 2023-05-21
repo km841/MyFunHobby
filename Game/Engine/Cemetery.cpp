@@ -115,10 +115,10 @@ void Cemetery::CreateSkul()
 			pNoHead_AttackB_Animation->SetHitFrame(1);
 
 			shared_ptr<LittleBoneAttack> pLittleBoneAttackMethod = make_shared<LittleBoneAttack>(pLittleBone);
-			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pAttackA_Animation , -20.f, 90.f, 100.f, iHasHeadEnum });
-			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pNoHead_AttackA_Animation , -20.f, 90.f, 100.f, iNoHeadEnum });
-			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pAttackB_Animation , -20.f, 90.f, 100.f, iHasHeadEnum });
-			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pNoHead_AttackB_Animation , -20.f, 90.f, 100.f, iNoHeadEnum });
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pAttackA_Animation , -20.f, 90.f, 150.f, iHasHeadEnum });
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pNoHead_AttackA_Animation , -20.f, 90.f, 150.f, iNoHeadEnum });
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pAttackB_Animation , -20.f, 90.f, 150.f, iHasHeadEnum });
+			pLittleBoneAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pNoHead_AttackB_Animation , -20.f, 90.f, 150.f, iNoHeadEnum });
 
 			pLittleBone->SetAttackMethod(pLittleBoneAttackMethod);
 		}

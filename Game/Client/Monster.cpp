@@ -148,6 +148,14 @@ void Monster::CreateParticleGeneratorAndAddedToScene()
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(m_pParticleGenerator, eSceneType));
 }
 
+void Monster::SetMonsterHPBarWidthAndUnder(float fWidth, float fUnder)
+{
+	m_pMonsterHPHUD->GetTransform()->SetLocalPosition(Vec3(0.f, fUnder, -2.f));
+	m_pMonsterHPHUD->GetTransform()->SetLocalScale(Vec3(fWidth, 3.f, 1.f));
+	m_pMonsterHPHUDFrame->GetTransform()->SetLocalPosition(Vec3(0.f, fUnder, -1.f));
+	m_pMonsterHPHUDFrame->GetTransform()->SetLocalScale(Vec3(fWidth + 5.f, 5.f, 1.f));
+}
+
 void Monster::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)
 {
 	ScatterParticles(eParticleDirection);

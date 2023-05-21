@@ -10,6 +10,7 @@
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
 
+
 POOL_INIT(JuniorKnight);
 JuniorKnight::JuniorKnight()
 {
@@ -24,6 +25,8 @@ void JuniorKnight::Awake()
 {
 	Monster::Awake();
 	m_Status.KnightMonsterDefaultSetting();
+
+
 }
 
 void JuniorKnight::Start()

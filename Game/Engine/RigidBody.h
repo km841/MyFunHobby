@@ -31,6 +31,7 @@ public:
     // for dynamic actors
     void SetMassForDynamic(float fMass);
     void SetLinearVelocityForDynamic(const PxVec3& vLinearVelocity);
+    void SetLinearVelocityForDynamic(AXIS eAxis, float fVelocity);
     void SetAngularVelocityForDynamic(const PxVec3& vAngularVelocity);
     void AddForceForDynamic(const PxVec3& vForce, PxForceMode::Enum eForceMode);
     void SetLinearDamping(float fDamping);

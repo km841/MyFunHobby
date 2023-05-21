@@ -49,7 +49,6 @@ void ErodedKnight::FinalUpdate()
 	Monster::FinalUpdate();
 }
 
-
 void ErodedKnight::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())

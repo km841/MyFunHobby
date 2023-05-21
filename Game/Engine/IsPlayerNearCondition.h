@@ -6,7 +6,7 @@ class IsPlayerNearCondition :
     public BehaviorCondition
 {
 public:
-    IsPlayerNearCondition(shared_ptr<Player> pPlayer, shared_ptr<GameObject> pGameObject);
+    IsPlayerNearCondition(shared_ptr<Player> pPlayer, shared_ptr<GameObject> pGameObject, float fDistance = 0.f);
     virtual ~IsPlayerNearCondition();
 
 public:
@@ -14,5 +14,6 @@ public:
 
 private:
     weak_ptr<Player> m_pPlayer;
+    float m_fDistance;
 };
 
