@@ -2,6 +2,7 @@
 #include "ObjectFactory.h"
 #include "JuniorKnight.h"
 #include "ErodedKnight.h"
+#include "ErodedEnt.h"
 #include "ErodedHeavyInfantry.h"
 #include "PlayerChangeStateEvent.h"
 #include "Sequence.h"
@@ -35,6 +36,7 @@
 #include "SetDirectionTowardPlayerTask.h"
 #include "IsFinishedRageAttackCondition.h"
 #include "IncreaseAttackCountTask.h"
+#include "RandomDirectionTask.h"
 
 /* Engrave */
 #include "Rapidity.h"
@@ -44,6 +46,7 @@
 #include "ErodedKnightDeadScript.h"
 #include "ErodedHeavyInfantryTackleScript.h"
 #include "ErodedHeavyInfantryAttackScript.h"
+#include "ErodedHeavyInfantryDeadScript.h"
 
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
 {
@@ -61,6 +64,10 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 
 	case MONSTER_KIND::ERODED_HEAVY_INFANTRY:
 		pMonster = CreateErodedHeavyInfantry(vMonsterPos);
+		break;
+
+	case MONSTER_KIND::ERODED_ENT:
+		pMonster = CreateErodedEnt(vMonsterPos);
 		break;
 	}
 
@@ -263,6 +270,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	pErodedHeavyInfantry->AddComponent(make_shared<AI>());
 	pErodedHeavyInfantry->AddComponent(make_shared<Animator>());
 	pErodedHeavyInfantry->AddComponent(make_shared<Movement>());
+	pErodedHeavyInfantry->AddComponent(make_shared<ErodedHeavyInfantryDeadScript>());
 	pErodedHeavyInfantry->AddComponent(make_shared<ErodedHeavyInfantryTackleScript>());
 	pErodedHeavyInfantry->AddComponent(make_shared<ErodedHeavyInfantryAttackScript>());
 
@@ -312,16 +320,9 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	pRootNode->AddChild(pDeadSequence);
 	pDeadSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::DEAD));
 	pDeadSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Dead"));
-	pDeadSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 2.f));
-	pDeadSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_READY));
-	//pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedHeavyInfantry));
-
-	pRootNode->AddChild(pRageAttackReadySequence);
-	pRageAttackReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_READY));
-	pRageAttackReadySequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Attack_Ready"));
-	pRageAttackReadySequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.8f));
-	pRageAttackReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_START));
-
+	pDeadSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 3.f));
+	pDeadSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_START));
+	
 	pRootNode->AddChild(pRageAttackStartSequence);
 	pRageAttackStartSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_START));
 	pRageAttackStartSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Attack_Start", false));
@@ -331,17 +332,32 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	pRootNode->AddChild(pRageAttackSequence);
 	pRageAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK));
 	pRageAttackSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Attack", false));
-	pRageAttackSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.5f));
+	pRageAttackSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.3f));
 	pRageAttackSequence->AddChild(pRageAttackReturnSelector);
 
 	pRageAttackReturnSelector->AddChild(pRageAttackSubSequence);
 	pRageAttackReturnSelector->AddChild(pIncreaseAttackCountSequence);
 
 	pIncreaseAttackCountSequence->AddChild(make_shared<IncreaseAttackCountTask>(pErodedHeavyInfantry));
-	pIncreaseAttackCountSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_READY, true));
+	pIncreaseAttackCountSequence->AddChild(make_shared<RandomDirectionTask>(pErodedHeavyInfantry));
+	pIncreaseAttackCountSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_START, true));
 
-	pRageAttackSubSequence->AddChild(make_shared<IsFinishedRageAttackCondition>(pErodedHeavyInfantry, 5));
+	pRageAttackSubSequence->AddChild(make_shared<IsFinishedRageAttackCondition>(pErodedHeavyInfantry, 4));
 	pRageAttackSubSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_TACKLE_READY, true));
+
+	pRootNode->AddChild(pRageTackleReadySequence);
+	pRageTackleReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_TACKLE_READY));
+	pRageTackleReadySequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Tackle_Ready", false));
+	pRageTackleReadySequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedHeavyInfantry));
+	pRageTackleReadySequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(m_pPlayer.lock(), pErodedHeavyInfantry));
+	pRageTackleReadySequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.8f));
+	pRageTackleReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_TACKLE_LOOP));
+
+	pRootNode->AddChild(pRageTackleLoopSequence);
+	pRageTackleLoopSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_TACKLE_LOOP));
+	pRageTackleLoopSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Tackle_Loop", false));
+	pRageTackleLoopSequence->AddChild(make_shared<InfantryTackleTask>(m_pPlayer.lock(), pErodedHeavyInfantry));
+	pRageTackleLoopSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_TACKLE_END));
 
 	pRootNode->AddChild(pIdleSequence);
 	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::IDLE));
@@ -449,14 +465,132 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"Rage_ErodedHeavyInfantry_Tackle_Loop", pRageTackleLoopAnimation);
 	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"Rage_ErodedHeavyInfantry_Tackle_End", pRageTackleEndAnimation);
 
-	pErodedHeavyInfantry->GetAnimator()->Play(L"ErodedHeavyInfantry_Idle");
-
 	pAttackAnimation->SetHitFrame(1);
 
+	pErodedHeavyInfantry->GetAnimator()->Play(L"ErodedHeavyInfantry_Idle");
 	pErodedHeavyInfantry->UnflagAsAttacked();
 
 	pErodedHeavyInfantry->GetTransform()->SetLocalPosition(vMonsterPos);
 	return pErodedHeavyInfantry;
+}
+
+shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
+{
+	shared_ptr<ErodedEnt> pErodedEnt = CreateObjectHasPhysicalFromPool<ErodedEnt>(L"Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	pErodedEnt->AddComponent(make_shared<AI>());
+	pErodedEnt->AddComponent(make_shared<Animator>());
+	pErodedEnt->AddComponent(make_shared<Movement>());
+	pErodedEnt->AddComponent(make_shared<ErodedKnightDeadScript>());
+
+	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
+	std::vector<wstring> vTextureNames;
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_1.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_2.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_3.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_4.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
+
+	pErodedEnt->SetParticleTextureNames(vTextureNames);
+
+	shared_ptr<Selector> pRootNode = make_shared<Selector>();
+	shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pPatrolSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pPatrolSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pHeadingToSkillSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pHeadingToAttackSequence = make_shared<Sequence>();
+
+	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pAttackReturnSequence = make_shared<Sequence>();
+
+	shared_ptr<Sequence> pSkillSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pSkillEndSequence = make_shared<Sequence>();
+
+	shared_ptr<Sequence> pWeakHitSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
+
+	pRootNode->AddChild(pDeadSequence);
+	pDeadSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::DEAD));
+	pDeadSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Dead"));
+	pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedEnt));
+
+	pRootNode->AddChild(pWeakHitSequence);
+	pWeakHitSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::WEAK_HIT));
+	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Weak_Hit"));
+	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.5f));
+	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::IDLE));
+
+	pRootNode->AddChild(pIdleSequence);
+	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::IDLE));
+	pIdleSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Idle"));
+	pIdleSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 1.f));
+	pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::PATROL));
+
+	pRootNode->AddChild(pPatrolSequence);
+	pPatrolSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::PATROL));
+	pPatrolSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Walk"));
+	pPatrolSequence->AddChild(pPatrolSubSelector);
+	pPatrolSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::IDLE));
+
+	pPatrolSubSelector->AddChild(make_shared<PatrolTask>(pErodedEnt, 50.f, 200.f));
+	pPatrolSubSelector->AddChild(pHeadingToSkillSequence);
+	pPatrolSubSelector->AddChild(pHeadingToAttackSequence);
+
+	pHeadingToSkillSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedEnt, 500.f));
+	pHeadingToSkillSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::SKILL1));
+
+	pHeadingToAttackSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedEnt, 300.f));
+	pHeadingToAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::ATTACK));
+
+	pRootNode->AddChild(pAttackSequence);
+	pAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::ATTACK));
+	pAttackSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Attack", false));
+	pAttackSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 1.3f));
+	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::ATTACK_END));
+
+	pRootNode->AddChild(pAttackReturnSequence);
+	pAttackReturnSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::ATTACK_END));
+	pAttackReturnSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Attack_Return", false));
+	pAttackReturnSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.3f));
+	pAttackReturnSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::IDLE));
+
+	pRootNode->AddChild(pSkillSequence);
+	pSkillSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::SKILL1));
+	pSkillSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Skill", false));
+	pSkillSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.8f));
+	pSkillSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::SKILL1_END));
+
+	pRootNode->AddChild(pSkillEndSequence);
+	pSkillEndSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::SKILL1_END));
+	pSkillEndSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Skill_End", false));
+	pSkillEndSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.8f));
+	pSkillEndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::IDLE));
+
+	pErodedEnt->GetAI()->SetBehaviorRootNode(pRootNode);
+
+	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Idle", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_idle.anim");
+	shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Walk", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_walk.anim");
+	shared_ptr<Animation> pAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Attack", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_thorn.anim");
+	shared_ptr<Animation> pAttackReturnAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Attack_Return", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_thorn_return.anim");
+	shared_ptr<Animation> pSkillAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Skill", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_skill.anim");
+	shared_ptr<Animation> pSkillEndAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Skill_End", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_skill_end.anim");
+	shared_ptr<Animation> pWeakHitAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Weak_Hit", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_weak_hit.anim");
+	shared_ptr<Animation> pDeadAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ErodedEnt_Dead", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_dead.anim");
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Idle", pIdleAnimation);
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Walk", pWalkAnimation);
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Attack", pAttackAnimation);
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Attack_Return", pAttackReturnAnimation);
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Skill", pSkillAnimation);
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Skill_End", pSkillEndAnimation);
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Weak_Hit", pWeakHitAnimation);
+	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Dead", pDeadAnimation);
+	pErodedEnt->GetAnimator()->Play(L"ErodedEnt_Idle");
+
+	pAttackAnimation->SetHitFrame(1);
+
+	pErodedEnt->UnflagAsAttacked();
+
+	pErodedEnt->GetTransform()->SetLocalPosition(vMonsterPos);
+	return pErodedEnt;
 }
 
 void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)

@@ -62,6 +62,7 @@ private:
 	shared_ptr<Monster> CreateJuniorKnight(const Vec3& vMonsterPos);
 	shared_ptr<Monster> CreateErodedKnight(const Vec3& vMonsterPos);
 	shared_ptr<Monster> CreateErodedHeavyInfantry(const Vec3& vMonsterPos);
+	shared_ptr<Monster> CreateErodedEnt(const Vec3& vMonsterPos);
 	void CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos);
 
 	//============

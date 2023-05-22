@@ -956,6 +956,9 @@ string MapEditor::MonsterKindEnumToString(MONSTER_KIND eMonsterKind)
 
     case MONSTER_KIND::ERODED_HEAVY_INFANTRY:
         return "Eroded Heavy Infantry";
+
+    case MONSTER_KIND::ERODED_ENT:
+        return "Eroded Ent";
     }
 
     return "Not Found";

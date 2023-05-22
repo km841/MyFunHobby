@@ -3,21 +3,21 @@ eroded_ent_thorn_return
 ..\Resources\Texture\Sprites\ErodedEnt\Sprite_Eroded_Ent_Thorn_Return.png
 25 0
 200 222
-0 0
-1
+0 23.5
+0.1
 275 0
 200 222
-0 0
-1
+1 20.5
+0.1
 525 0
 200 222
-0 0
-1
+0 13.5
+0.1
 775 0
 200 222
-0 0
-1
+0 9.5
+0.1
 1025 0
 200 222
-0 0
-1
+-1 9.5
+0.1

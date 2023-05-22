@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+class LocalEffect;
 class ErodedEnt :
     public Monster
 {
@@ -28,6 +29,13 @@ public:
 	virtual void ActivateDeadEvent() override;
 
 private:
+	void CreateExclamationEffectAndAddedToScene();
+
+private:
 	bool m_bDeadFlag;
+	weak_ptr<LocalEffect> m_pExclamation;
+
+private:
+	DECLARE_POOL(ErodedEnt);
 };
 

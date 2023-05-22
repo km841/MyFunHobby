@@ -237,6 +237,7 @@
     <ClInclude Include="PxDispatcher.h" />
     <ClInclude Include="PxEnvironment.h" />
     <ClInclude Include="PxEnvironmentSetting.h" />
+    <ClInclude Include="RandomDirectionTask.h" />
     <ClInclude Include="RemoveObjectTask.h" />
     <ClInclude Include="RenderTargetGroup.h" />
     <ClInclude Include="ReportCallback.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="PxDispatcher.cpp" />
     <ClCompile Include="PxEnvironment.cpp" />
     <ClCompile Include="PxEnvironmentSetting.cpp" />
+    <ClCompile Include="RandomDirectionTask.cpp" />
     <ClCompile Include="RemoveObjectTask.cpp" />
     <ClCompile Include="RenderTargetGroup.cpp" />
     <ClCompile Include="ReportCallback.cpp" />

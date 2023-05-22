@@ -27,7 +27,8 @@ void ErodedHeavyInfantryTackleScript::LateUpdate()
 
 	weak_ptr<Monster> pMonster = static_pointer_cast<Monster>(GetGameObject());
 
-	if (MONSTER_STATE::TACKLE_LOOP == pMonster.lock()->GetMonsterState())
+	if (MONSTER_STATE::TACKLE_LOOP == pMonster.lock()->GetMonsterState() ||
+		MONSTER_STATE::RAGE_TACKLE_LOOP == pMonster.lock()->GetMonsterState())
 	{
 		uint8 iDirection = static_cast<uint8>(m_pFlashAura.lock()->GetDirection());
 		m_pFlashAura.lock()->Enable();

@@ -3,10 +3,23 @@
 #include "RigidBody.h"
 #include "MonsterHPHUD.h"
 #include "Transform.h"
+#include "RigidBody.h"
+#include "Physical.h"
+#include "Resources.h"
+#include "ObjectFactory.h"
+#include "Particle.h"
+#include "Scene.h"
+#include "Scenes.h"
+#include "EventManager.h"
+#include "ObjectAddedToSceneEvent.h"
+#include "LocalEffect.h"
+#include "Animator.h"
+#include "Animation.h"
 
 POOL_INIT(ErodedHeavyInfantry);
 ErodedHeavyInfantry::ErodedHeavyInfantry()
 	: m_iAttackCount(0)
+	, m_bDeadFlag(false)
 {
 }
 
@@ -83,4 +96,31 @@ void ErodedHeavyInfantry::ScatterParticles(const Vec3& vDir)
 
 void ErodedHeavyInfantry::ActivateDeadEvent(const Vec3& vDir)
 {
+}
+
+void ErodedHeavyInfantry::ActivateDeadEvent()
+{
+	CreateExclamationEffectAndAddedToScene();
+	m_bDeadFlag = true;
+}
+
+void ErodedHeavyInfantry::CreateExclamationEffectAndAddedToScene()
+{
+	shared_ptr<LocalEffect> pLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<LocalEffect>(L"Forward");
+	pLocalEffect->AddComponent(make_shared<Animator>());
+
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"ExclamationEffect", L"..\\Resources\\Animation\\MonsterCommon\\sign_exclamation_mark.anim");
+	pLocalEffect->GetAnimator()->AddAnimation(L"ExclamationEffect", pAnimation);
+	pLocalEffect->GetAnimator()->Play(L"ExclamationEffect", true, -1);
+
+	pLocalEffect->GetTransform()->SetParent(GetTransform());
+
+	uint8 iDirection = static_cast<uint8>(GetDirection());
+	pLocalEffect->GetTransform()->SetLocalPosition(Vec3(iDirection ? 15.f : -15.f, 160.f, -1.f));
+
+	pLocalEffect->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLocalEffect, eSceneType));
+
+	m_pExclamation = pLocalEffect;
 }
