@@ -208,6 +208,8 @@
     <ClInclude Include="Dungeon_Item.h" />
     <ClInclude Include="ErodedEnt.h" />
     <ClInclude Include="ErodedHeavyInfantry.h" />
+    <ClInclude Include="ErodedHeavyInfantryAttackScript.h" />
+    <ClInclude Include="ErodedHeavyInfantryTackleScript.h" />
     <ClInclude Include="ErodedKnight.h" />
     <ClInclude Include="ErodedKnightDeadScript.h" />
     <ClInclude Include="Essence.h" />
@@ -359,6 +361,8 @@
     <ClCompile Include="Dungeon_Item.cpp" />
     <ClCompile Include="ErodedEnt.cpp" />
     <ClCompile Include="ErodedHeavyInfantry.cpp" />
+    <ClCompile Include="ErodedHeavyInfantryAttackScript.cpp" />
+    <ClCompile Include="ErodedHeavyInfantryTackleScript.cpp" />
     <ClCompile Include="ErodedKnight.cpp" />
     <ClCompile Include="ErodedKnightDeadScript.cpp" />
     <ClCompile Include="Essence.cpp" />

@@ -613,6 +613,12 @@
     <ClInclude Include="ErodedEnt.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
     </ClInclude>
+    <ClInclude Include="ErodedHeavyInfantryTackleScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedHeavyInfantry</Filter>
+    </ClInclude>
+    <ClInclude Include="ErodedHeavyInfantryAttackScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedHeavyInfantry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1038,6 +1044,12 @@
     </ClCompile>
     <ClCompile Include="ErodedEnt.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
+    </ClCompile>
+    <ClCompile Include="ErodedHeavyInfantryTackleScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedHeavyInfantry</Filter>
+    </ClCompile>
+    <ClCompile Include="ErodedHeavyInfantryAttackScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedHeavyInfantry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -33,6 +33,8 @@
 #include "DeadEventTriggerTask.h"
 #include "InfantryTackleTask.h"
 #include "SetDirectionTowardPlayerTask.h"
+#include "IsFinishedRageAttackCondition.h"
+#include "IncreaseAttackCountTask.h"
 
 /* Engrave */
 #include "Rapidity.h"
@@ -40,6 +42,8 @@
 
 /* Script */
 #include "ErodedKnightDeadScript.h"
+#include "ErodedHeavyInfantryTackleScript.h"
+#include "ErodedHeavyInfantryAttackScript.h"
 
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
 {
@@ -259,7 +263,8 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	pErodedHeavyInfantry->AddComponent(make_shared<AI>());
 	pErodedHeavyInfantry->AddComponent(make_shared<Animator>());
 	pErodedHeavyInfantry->AddComponent(make_shared<Movement>());
-	pErodedHeavyInfantry->AddComponent(make_shared<ErodedKnightDeadScript>());
+	pErodedHeavyInfantry->AddComponent(make_shared<ErodedHeavyInfantryTackleScript>());
+	pErodedHeavyInfantry->AddComponent(make_shared<ErodedHeavyInfantryAttackScript>());
 
 	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
 	std::vector<wstring> vTextureNames;
@@ -292,10 +297,51 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	shared_ptr<Sequence> pTackleLoopSequence = make_shared<Sequence>();
 	shared_ptr<Sequence> pTackleEndSequence = make_shared<Sequence>();
 
+	shared_ptr<Sequence> pRageAttackReadySequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pRageAttackStartSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pRageAttackSequence = make_shared<Sequence>();
+
+	shared_ptr<Sequence> pRageTackleReadySequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pRageTackleLoopSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pRageTackleEndSequence = make_shared<Sequence>();
+
+	shared_ptr<Sequence> pRageAttackSubSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pRageAttackReturnSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pIncreaseAttackCountSequence = make_shared<Sequence>();
+
 	pRootNode->AddChild(pDeadSequence);
 	pDeadSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::DEAD));
 	pDeadSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Dead"));
-	pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedHeavyInfantry));
+	pDeadSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 2.f));
+	pDeadSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_READY));
+	//pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedHeavyInfantry));
+
+	pRootNode->AddChild(pRageAttackReadySequence);
+	pRageAttackReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_READY));
+	pRageAttackReadySequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Attack_Ready"));
+	pRageAttackReadySequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.8f));
+	pRageAttackReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_START));
+
+	pRootNode->AddChild(pRageAttackStartSequence);
+	pRageAttackStartSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_START));
+	pRageAttackStartSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Attack_Start", false));
+	pRageAttackStartSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.1f));
+	pRageAttackStartSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK));
+
+	pRootNode->AddChild(pRageAttackSequence);
+	pRageAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK));
+	pRageAttackSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"Rage_ErodedHeavyInfantry_Attack", false));
+	pRageAttackSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.5f));
+	pRageAttackSequence->AddChild(pRageAttackReturnSelector);
+
+	pRageAttackReturnSelector->AddChild(pRageAttackSubSequence);
+	pRageAttackReturnSelector->AddChild(pIncreaseAttackCountSequence);
+
+	pIncreaseAttackCountSequence->AddChild(make_shared<IncreaseAttackCountTask>(pErodedHeavyInfantry));
+	pIncreaseAttackCountSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_ATTACK_READY, true));
+
+	pRageAttackSubSequence->AddChild(make_shared<IsFinishedRageAttackCondition>(pErodedHeavyInfantry, 5));
+	pRageAttackSubSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::RAGE_TACKLE_READY, true));
 
 	pRootNode->AddChild(pIdleSequence);
 	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::IDLE));
@@ -323,14 +369,8 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	pAttackReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK_READY));
 	pAttackReadySequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Attack_Ready", false));
 	pAttackReadySequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(m_pPlayer.lock(), pErodedHeavyInfantry));
-	pAttackReadySequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.6f));
-	pAttackReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK_LOOP));
-
-	pRootNode->AddChild(pAttackLoopSequence);
-	pAttackLoopSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK_LOOP));
-	pAttackLoopSequence->AddChild(make_shared<RunAnimateTask>(pErodedHeavyInfantry, L"ErodedHeavyInfantry_Attack_Loop"));
-	pAttackLoopSequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 3.f));
-	pAttackLoopSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK_START));
+	pAttackReadySequence->AddChild(make_shared<TimerCondition>(pErodedHeavyInfantry, 0.8f));
+	pAttackReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK_START));
 
 	pRootNode->AddChild(pAttackStartSequence);
 	pAttackStartSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedHeavyInfantry, MONSTER_STATE::ATTACK_START));

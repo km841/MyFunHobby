@@ -22,6 +22,13 @@ public:
 public:
 	virtual void ScatterParticles(const Vec3& vDir);
 	virtual void ActivateDeadEvent(const Vec3& vDir);
+	
+	FORCEINLINE int32 GetAttackCount()      { return m_iAttackCount; }
+	FORCEINLINE void  IncreaseAttackCount() { m_iAttackCount++; }
+	FORCEINLINE void  ClearAttackCount()	{ m_iAttackCount = 0; }
+
+private:
+	int32 m_iAttackCount;
 
 private:
 	DECLARE_POOL(ErodedHeavyInfantry);

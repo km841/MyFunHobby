@@ -6,6 +6,7 @@
 
 POOL_INIT(ErodedHeavyInfantry);
 ErodedHeavyInfantry::ErodedHeavyInfantry()
+	: m_iAttackCount(0)
 {
 }
 

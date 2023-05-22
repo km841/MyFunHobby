@@ -199,9 +199,11 @@
     <ClInclude Include="FW1Precompiled.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GoToNextDungeonEvent.h" />
+    <ClInclude Include="IncreaseAttackCountTask.h" />
     <ClInclude Include="InfantryTackleTask.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IsDeadCondition.h" />
+    <ClInclude Include="IsFinishedRageAttackCondition.h" />
     <ClInclude Include="IsHitCondition.h" />
     <ClInclude Include="IsMonsterStateCondition.h" />
     <ClInclude Include="IsPlayerInAttackRangeCondition.h" />
@@ -292,9 +294,11 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GoToNextDungeonEvent.cpp" />
+    <ClCompile Include="IncreaseAttackCountTask.cpp" />
     <ClCompile Include="InfantryTackleTask.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="IsDeadCondition.cpp" />
+    <ClCompile Include="IsFinishedRageAttackCondition.cpp" />
     <ClCompile Include="IsHitCondition.cpp" />
     <ClCompile Include="IsMonsterStateCondition.cpp" />
     <ClCompile Include="IsPlayerInAttackRangeCondition.cpp" />
