@@ -47,6 +47,7 @@
 #include "ErodedHeavyInfantryTackleScript.h"
 #include "ErodedHeavyInfantryAttackScript.h"
 #include "ErodedHeavyInfantryDeadScript.h"
+#include "ErodedEntSkillScript.h"
 
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
 {
@@ -481,6 +482,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pErodedEnt->AddComponent(make_shared<Animator>());
 	pErodedEnt->AddComponent(make_shared<Movement>());
 	pErodedEnt->AddComponent(make_shared<ErodedKnightDeadScript>());
+	pErodedEnt->AddComponent(make_shared<ErodedEntSkillScript>());
 
 	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
 	std::vector<wstring> vTextureNames;
@@ -498,13 +500,11 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	shared_ptr<Selector> pPatrolSubSelector = make_shared<Selector>();
 	shared_ptr<Sequence> pHeadingToSkillSequence = make_shared<Sequence>();
 	shared_ptr<Sequence> pHeadingToAttackSequence = make_shared<Sequence>();
-
 	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
 	shared_ptr<Sequence> pAttackReturnSequence = make_shared<Sequence>();
-
+	shared_ptr<Sequence> pSkillReadySequence = make_shared<Sequence>();
 	shared_ptr<Sequence> pSkillSequence = make_shared<Sequence>();
 	shared_ptr<Sequence> pSkillEndSequence = make_shared<Sequence>();
-
 	shared_ptr<Sequence> pWeakHitSequence = make_shared<Sequence>();
 	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
 
@@ -536,7 +536,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pPatrolSubSelector->AddChild(pHeadingToAttackSequence);
 
 	pHeadingToSkillSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedEnt, 500.f));
-	pHeadingToSkillSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::SKILL1));
+	pHeadingToSkillSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::SKILL1_READY));
 
 	pHeadingToAttackSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pErodedEnt, 300.f));
 	pHeadingToAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::ATTACK));
@@ -553,10 +553,16 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pAttackReturnSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.3f));
 	pAttackReturnSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::IDLE));
 
+	pRootNode->AddChild(pSkillReadySequence);
+	pSkillReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::SKILL1_READY));
+	pSkillReadySequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Idle", false));
+	pSkillReadySequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.5f));
+	pSkillReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::SKILL1));
+
 	pRootNode->AddChild(pSkillSequence);
 	pSkillSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::SKILL1));
 	pSkillSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Skill", false));
-	pSkillSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.8f));
+	pSkillSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 1.3f));
 	pSkillSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::SKILL1_END));
 
 	pRootNode->AddChild(pSkillEndSequence);
