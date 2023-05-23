@@ -3,6 +3,7 @@
 #include "JuniorKnight.h"
 #include "ErodedKnight.h"
 #include "ErodedEnt.h"
+#include "Alchemist.h"
 #include "ErodedHeavyInfantry.h"
 #include "PlayerChangeStateEvent.h"
 #include "Sequence.h"
@@ -69,6 +70,10 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 
 	case MONSTER_KIND::ERODED_ENT:
 		pMonster = CreateErodedEnt(vMonsterPos);
+		break;
+
+	case MONSTER_KIND::ALCHEMIST:
+		pMonster = CreateAlchemist(vMonsterPos);
 		break;
 	}
 
@@ -544,6 +549,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pRootNode->AddChild(pAttackSequence);
 	pAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::ATTACK));
 	pAttackSequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Attack", false));
+	pAttackSequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(m_pPlayer.lock(), pErodedEnt));
 	pAttackSequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 1.3f));
 	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::ATTACK_END));
 
@@ -556,6 +562,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pRootNode->AddChild(pSkillReadySequence);
 	pSkillReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedEnt, MONSTER_STATE::SKILL1_READY));
 	pSkillReadySequence->AddChild(make_shared<RunAnimateTask>(pErodedEnt, L"ErodedEnt_Idle", false));
+	pSkillReadySequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(m_pPlayer.lock(), pErodedEnt));
 	pSkillReadySequence->AddChild(make_shared<TimerCondition>(pErodedEnt, 0.5f));
 	pSkillReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedEnt, MONSTER_STATE::SKILL1));
 
@@ -597,6 +604,88 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 
 	pErodedEnt->GetTransform()->SetLocalPosition(vMonsterPos);
 	return pErodedEnt;
+}
+
+shared_ptr<Monster> ObjectFactory::CreateAlchemist(const Vec3 vMonsterPos)
+{
+	shared_ptr<Alchemist> pAlchemist = CreateObjectHasPhysicalFromPool<Alchemist>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	pAlchemist->AddComponent(make_shared<AI>());
+	pAlchemist->AddComponent(make_shared<Animator>());
+	pAlchemist->AddComponent(make_shared<Movement>());
+
+	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
+	std::vector<wstring> vTextureNames;
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_1.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_2.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_3.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_4.png");
+	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
+	pAlchemist->SetParticleTextureNames(vTextureNames);
+
+	shared_ptr<Selector> pRootNode = make_shared<Selector>();
+	shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pPatrolSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pHeadingToAttackSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pPatrolSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pPlayerEncounterSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pTraceSequence = make_shared<Sequence>();
+	shared_ptr<Selector> pTraceSubSelector = make_shared<Selector>();
+	shared_ptr<Sequence> pAttackSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pWeakHitSequence = make_shared<Sequence>();
+	shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
+
+	pRootNode->AddChild(pDeadSequence);
+	pDeadSequence->AddChild(make_shared<IsDeadCondition>(pAlchemist));
+	pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pAlchemist));
+
+	pRootNode->AddChild(pWeakHitSequence);
+	pWeakHitSequence->AddChild(make_shared<IsMonsterStateCondition>(pAlchemist, MONSTER_STATE::WEAK_HIT));
+	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pAlchemist, L"Alchemist_Weak_Hit"));
+	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pAlchemist, 0.5f));
+	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pAlchemist, MONSTER_STATE::IDLE));
+
+	pRootNode->AddChild(pIdleSequence);
+	pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pAlchemist, MONSTER_STATE::IDLE));
+	pIdleSequence->AddChild(make_shared<RunAnimateTask>(pAlchemist, L"Alchemist_Idle"));
+	pIdleSequence->AddChild(make_shared<TimerCondition>(pAlchemist, 1.f));
+	pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pAlchemist, MONSTER_STATE::PATROL));
+
+	pRootNode->AddChild(pPatrolSequence);
+	pPatrolSequence->AddChild(make_shared<IsMonsterStateCondition>(pAlchemist, MONSTER_STATE::PATROL));
+	pPatrolSequence->AddChild(make_shared<RunAnimateTask>(pAlchemist, L"Alchemist_Walk"));
+	pPatrolSequence->AddChild(pPatrolSubSelector);
+	
+	pPatrolSubSelector->AddChild(make_shared<PatrolTask>(pAlchemist, 50.f, 200.f));
+	pPatrolSubSelector->AddChild(pHeadingToAttackSequence);
+
+	pHeadingToAttackSequence->AddChild(make_shared<IsPlayerNearCondition>(m_pPlayer.lock(), pAlchemist, 500.f));
+	pHeadingToAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pAlchemist, MONSTER_STATE::ATTACK, false));
+
+	pRootNode->AddChild(pAttackSequence);
+	pAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pAlchemist, MONSTER_STATE::ATTACK));
+	pAttackSequence->AddChild(make_shared<RunAnimateTask>(pAlchemist, L"Alchemist_Attack", false));
+	pAttackSequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(m_pPlayer.lock(), pAlchemist));
+	pAttackSequence->AddChild(make_shared<TimerCondition>(pAlchemist, 1.f));
+	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pAlchemist, MONSTER_STATE::IDLE));
+
+	pAlchemist->GetAI()->SetBehaviorRootNode(pRootNode);
+
+	shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Alchemist_Idle", L"..\\Resources\\Animation\\Alchemist\\Alchemist_idle.anim");
+	shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Alchemist_Walk", L"..\\Resources\\Animation\\Alchemist\\Alchemist_walk.anim");
+	shared_ptr<Animation> pAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Alchemist_Attack", L"..\\Resources\\Animation\\Alchemist\\Alchemist_attack.anim");
+	shared_ptr<Animation> pWeakHitAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Alchemist_Weak_Hit", L"..\\Resources\\Animation\\Alchemist\\Alchemist_weak_hit.anim");
+	pAlchemist->GetAnimator()->AddAnimation(L"Alchemist_Idle", pIdleAnimation);
+	pAlchemist->GetAnimator()->AddAnimation(L"Alchemist_Walk", pWalkAnimation);
+	pAlchemist->GetAnimator()->AddAnimation(L"Alchemist_Attack", pAttackAnimation);
+	pAlchemist->GetAnimator()->AddAnimation(L"Alchemist_Weak_Hit", pWeakHitAnimation);
+	pAlchemist->GetAnimator()->Play(L"Alchemist_Idle");
+
+	pAttackAnimation->SetHitFrame(1);
+
+	pAlchemist->UnflagAsAttacked();
+
+	pAlchemist->GetTransform()->SetLocalPosition(vMonsterPos);
+	return pAlchemist;
 }
 
 void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)

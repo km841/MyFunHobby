@@ -50,7 +50,7 @@ void Background::Update()
 
 		if (vDiff.Length() > 0.f)
 		{
-			float fInterpolationFactor = 0.2f;
+			float fInterpolationFactor = 0.5f;
 
 			if (m_vFollowSpeed.x)
 				vDiff.x /= m_vFollowSpeed.x;
@@ -62,7 +62,7 @@ void Background::Update()
 			else
 				vDiff.y = 0.f;
 
-			vDiff.y /= 2.f;
+			//vDiff.y /= 2.f;
 			const Vec3& vMyPos = GetTransform()->GetLocalPosition();
 			Vec3 vTargetPosition = vMyPos + vDiff;
 			Vec3 vInterpolatedPosition = vMyPos + (vTargetPosition - vMyPos) * fInterpolationFactor;

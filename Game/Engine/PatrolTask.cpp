@@ -8,6 +8,7 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "Tile.h"
+#include "Physical.h"
 
 PatrolTask::PatrolTask(shared_ptr<GameObject> pGameObject, float fStartDistance, float fEndDistance)
 	: BehaviorTask(pGameObject)
@@ -64,8 +65,21 @@ BEHAVIOR_RESULT PatrolTask::Run()
 			return BEHAVIOR_RESULT::SUCCESS;
 		}
 
+		Vec3 vMySize = m_pGameObject.lock()->GetPhysical()->GetGeometrySize();
+		Vec3 vNextPos = vCurPosition;
+
+		vNextPos.x += iDirection ? -vMySize.x - 10.f : vMySize.x + 10.f;
+		vNextPos.y -= vMySize.y + 10.f;
+
+		if (!GET_SINGLE(Scenes)->GetActiveScene()->IsExistTileThisPos(Conv::Vec3ToTileAlignVec2(vNextPos)))
+		{
+			m_bSettingDist = false;
+			m_bIsTileInDirection = true;
+			return BEHAVIOR_RESULT::SUCCESS;
+		}
+
 		m_vPrevPosition = vCurPosition;
 	}
+
 	return BEHAVIOR_RESULT::FAILURE;
-	
 }

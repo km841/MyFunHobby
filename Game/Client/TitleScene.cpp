@@ -90,7 +90,6 @@ void TitleScene::Render()
 
 void TitleScene::Enter()
 {
-	
 	// Light
 	{
 		shared_ptr<ComponentObject> pGameObject = make_shared<ComponentObject>();

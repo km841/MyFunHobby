@@ -959,6 +959,9 @@ string MapEditor::MonsterKindEnumToString(MONSTER_KIND eMonsterKind)
 
     case MONSTER_KIND::ERODED_ENT:
         return "Eroded Ent";
+
+    case MONSTER_KIND::ALCHEMIST:
+        return "Alchemist";
     }
 
     return "Not Found";

@@ -420,6 +420,42 @@ void Scene::ShakeCameraAxis(float fMaxTime, const Vec3& vImpulse)
 	m_vCameraShakeImpulse = vImpulse;
 }
 
+bool Scene::IsExistTileThisPos(const Vec2& vTilePos)
+{
+	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
+	const auto& pMainCamera = GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera();
+
+	for (const auto& pGameObject : vGameObjects)
+	{
+		if (TILE_TYPE::NONE == static_pointer_cast<Tile>(pGameObject)->GetTileType())
+			continue;
+
+		Vec3 vPos = pGameObject->GetTransform()->GetPhysicalPosition();
+
+		if (vTilePos.x == vPos.x &&
+			vTilePos.y == vPos.y)
+			return true;
+	}
+
+	return false;
+}
+
+bool Scene::RaycastToTileGroup(shared_ptr<GameObject> pGameObject, const Vec3& vOrigin, const Vec3& vDir, float fMaxDistance)
+{
+	const auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::TILE);
+
+	for (const auto& pTile : vGameObjects)
+	{
+		if (TILE_TYPE::WALL != static_pointer_cast<Tile>(pGameObject)->GetTileType())
+			continue;
+
+		if (pGameObject->GetCollider()->Raycast(vOrigin, vDir, pTile, fMaxDistance))
+			return true;
+	}
+
+	return false;
+}
+
 void Scene::RemoveLocalGroup(LAYER_TYPE eLocalLayerType)
 {
 	auto& vLocalGroup = GetGameObjects(eLocalLayerType);

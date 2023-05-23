@@ -52,7 +52,6 @@ public:
 public:
 	template<typename T>
 	void CreateMonsterAndAddedScene(const Vec3& vMonsterPos);
-
 	void CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos);
 
 private:
@@ -63,6 +62,7 @@ private:
 	shared_ptr<Monster> CreateErodedKnight(const Vec3& vMonsterPos);
 	shared_ptr<Monster> CreateErodedHeavyInfantry(const Vec3& vMonsterPos);
 	shared_ptr<Monster> CreateErodedEnt(const Vec3& vMonsterPos);
+	shared_ptr<Monster> CreateAlchemist(const Vec3 vMonsterPos);
 	void CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos);
 
 	//============

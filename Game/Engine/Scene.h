@@ -48,6 +48,9 @@ public:
     void RemoveGameObject(shared_ptr<GameObject> pGameObject);
     void ShakeCameraAxis(float fMaxTime, const Vec3& vImpulse);
 
+    bool IsExistTileThisPos(const Vec2& vTilePos);
+    bool RaycastToTileGroup(shared_ptr<GameObject> pGameObject, const Vec3& vOrigin, const Vec3& vDir, float fMaxDistance);
+
     virtual void InitializeCameraAndPlayerPos() { }
 
     void RemoveLocalGroup(LAYER_TYPE eLocalLayerType);

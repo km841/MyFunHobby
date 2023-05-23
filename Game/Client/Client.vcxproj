@@ -173,6 +173,7 @@
     <ClInclude Include="AbyssOrbSkill.h" />
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="AfterImageDrawScript.h" />
+    <ClInclude Include="Alchemist.h" />
     <ClInclude Include="AnimationGlobalEffect.h" />
     <ClInclude Include="AnimationLocalEffect.h" />
     <ClInclude Include="AnimationLocalEffectOtherLayer.h" />
@@ -328,6 +329,7 @@
     <ClCompile Include="AbyssOrbSkill.cpp" />
     <ClCompile Include="AfterImage.cpp" />
     <ClCompile Include="AfterImageDrawScript.cpp" />
+    <ClCompile Include="Alchemist.cpp" />
     <ClCompile Include="AnimationGlobalEffect.cpp" />
     <ClCompile Include="AnimationLocalEffect.cpp" />
     <ClCompile Include="AnimationLocalEffectOtherLayer.cpp" />
