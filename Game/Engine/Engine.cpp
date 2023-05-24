@@ -120,12 +120,12 @@ void Engine::Destroy()
 
 void Engine::ShowFPS()
 {
-	//uint32 fps = GET_SINGLE(Clock)->GetFPS();
+	uint32 fps = GET_SINGLE(Clock)->GetFPS();
 
-	//WCHAR text[100] = L"";
-	//::wsprintf(text, L"FPS : %d", fps);
+	WCHAR text[100] = L"";
+	::wsprintf(text, L"FPS : %d", fps);
 
-	//::SetWindowText(m_Window.hHwnd, text);
+	::SetWindowText(m_Window.hHwnd, text);
 }
 
 

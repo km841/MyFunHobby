@@ -13,6 +13,7 @@
 
 AlchemistFlaskThrowScript::AlchemistFlaskThrowScript()
 	: m_bThrowFlag(false)
+	, m_fThrowPower(500.f)
 {
 }
 
@@ -36,10 +37,7 @@ void AlchemistFlaskThrowScript::LateUpdate()
 void AlchemistFlaskThrowScript::CreateFlaskAndAddedToScene()
 {
 	shared_ptr<AlchemistFlask> pFlask = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<AlchemistFlask>(L"Deferred", false, ACTOR_TYPE::PROJECTILE_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(), L"..\\Resources\\Texture\\Sprites\\Alchemist\\Image_Alchemist_Flask.png");
-	//shared_ptr<AlchemistFlask> pFlask = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AlchemistFlask>(L"Deferred", L"..\\Resources\\Texture\\Sprites\\Alchemist\\Image_Alchemist_Flask.png");
-	
 
-// 플레이어 위치 계산
 	Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
 	Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 	Vec3 vFlaskPos = vMyPos;
@@ -51,7 +49,8 @@ void AlchemistFlaskThrowScript::CreateFlaskAndAddedToScene()
 	float fRadian = atan2(vDiff.y, vDiff.x);
 	float fDegree = fRadian * 180.f / XM_PI;
 
-	float fPower = 500.f;
+	float fPower = m_fThrowPower;
+
 	if (fDegree > 15.f)
 		fPower *= 2.f;
 

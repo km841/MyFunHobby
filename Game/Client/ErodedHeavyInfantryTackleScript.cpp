@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "ObjectReturnToPoolEvent.h"
 
 ErodedHeavyInfantryTackleScript::ErodedHeavyInfantryTackleScript()
 {
@@ -38,6 +39,11 @@ void ErodedHeavyInfantryTackleScript::LateUpdate()
 	else
 	{
 		m_pFlashAura.lock()->Disable();
+	}
+
+	if (MONSTER_STATE::RAGE_TACKLE_END == pMonster.lock()->GetMonsterState())
+	{
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(m_pFlashAura.lock(), SCENE_TYPE::DUNGEON));
 	}
 }
 

@@ -59,8 +59,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//MapEditorUpdate();
-	AnimationEditorUpdate();
+	MapEditorUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -353,7 +353,7 @@ void ToolScene::MapEditorUpdate()
 	wstring szSelectedKey = UTILITY->GetSelectedTileKey();
 
 	const POINT& vMousePos = GET_SINGLE(Input)->GetMousePos();
-	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 100.f);
+	Vec3 vPosition = Vec3(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 79.f);
 	Vec3 vWorldPos = GET_SINGLE(Scenes)->ScreenToWorldPosition(vPosition, GetMainCamera().lock()->GetCamera());
 	//Vec3 vScreenPos = GET_SINGLE(Scenes)->WorldToScreenPosition(vWorldPos, GetMainCamera().lock()->GetCamera());
 	vWorldPos.x += TILE_HALF_SIZE;
@@ -378,23 +378,26 @@ void ToolScene::MapEditorUpdate()
 		{
 			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
 			{
-				if (!CheckTileAtClick(vWorldPos) && m_tTileDragHolder.IsFinished())
+				if (m_tTileDragHolder.IsFinished())
 				{
-					switch (eSRVKind)
+					if (SRV_KIND::TILE == eSRVKind && !CheckTileAtClick(vWorldPos))
 					{
-					case SRV_KIND::TILE:
 						CreateTile(vWorldPos, eTileType);
-						break;
-					case SRV_KIND::DUNGEON_GATE:
-						CreateDungeonGate(vWorldPos, szSelectedKey);
-						break;
-					case SRV_KIND::DUNGEON_WALL:
-						CreateDungeonWall(vWorldPos, szSelectedKey);
-						break;
-
-					case SRV_KIND::DECO_OBJECT:
-						CreateDecoObject(vWorldPos, szSelectedKey);
-						break;
+					}
+					else
+					{
+						switch (eSRVKind)
+						{
+						case SRV_KIND::DUNGEON_GATE:
+							CreateDungeonGate(vWorldPos, szSelectedKey);
+							break;
+						case SRV_KIND::DUNGEON_WALL:
+							CreateDungeonWall(vWorldPos, szSelectedKey);
+							break;
+						case SRV_KIND::DECO_OBJECT:
+							CreateDecoObject(vWorldPos, szSelectedKey);
+							break;
+						}
 					}
 
 					m_tTileDragHolder.Start();
@@ -403,20 +406,20 @@ void ToolScene::MapEditorUpdate()
 
 			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
 			{
-				if (!CheckTileAtClick(vWorldPos))
+				if (SRV_KIND::TILE == eSRVKind && !CheckTileAtClick(vWorldPos))
+				{
+					CreateTile(vWorldPos, eTileType);
+				}
+				else
 				{
 					switch (eSRVKind)
 					{
-					case SRV_KIND::TILE:
-						CreateTile(vWorldPos, eTileType);
-						break;
 					case SRV_KIND::DUNGEON_GATE:
 						CreateDungeonGate(vWorldPos, szSelectedKey);
 						break;
 					case SRV_KIND::DUNGEON_WALL:
 						CreateDungeonWall(vWorldPos, szSelectedKey);
 						break;
-
 					case SRV_KIND::DECO_OBJECT:
 						CreateDecoObject(vWorldPos, szSelectedKey);
 						break;
@@ -789,7 +792,7 @@ void ToolScene::CreateDungeonWall(const Vec3& vWorldPos, STAGE_KIND eStageKind)
 void ToolScene::CreateDecoObject(const Vec3& vWorldPos, const wstring& szSelectedKey)
 {
 	shared_ptr<DecoObject> pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DecoObject>(L"Deferred", szSelectedKey);
-	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 100.f));
+	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 99.f));
 
 	pDecoObject->Awake();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, m_eSceneType));

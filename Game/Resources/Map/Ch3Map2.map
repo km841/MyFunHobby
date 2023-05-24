@@ -1,25 +1,29 @@
-5
+6
 ..\Resources\Texture\Map\Image_Ch3_BackgroundColor.png
 800 450 200
 5000 5000 1
 0 0 0
 ..\Resources\Texture\Map\Image_Ch3_Background_2.png
-0 850 150
+0 850 120
 1678 749 1
 12 12 0
 ..\Resources\Texture\Map\Image_Ch3_Background_2.png
-1200 650 150
+1200 850 130
 1678 749 1
-1 1 0
+4 4 0
 ..\Resources\Texture\Map\Image_Ch3_Background_5.png
-1600 1050 180
+1600 1050 190
 808 365 1
 1 1 0
 ..\Resources\Texture\Map\Image_Ch3_Background_5.png
--1000 950 180
+-1000 950 190
 808 365 1
 1 1 0
-439
+..\Resources\Texture\Map\Image_Ch3_Background_7.png
+800 600 180
+1610 800 1
+2 2 0
+440
 0
 ..\Resources\Texture\Tiles\DarkStone_2.png
 -896 192
@@ -71,9 +75,6 @@
 2
 ..\Resources\Texture\Tiles\DarkStone_8.png
 0 640
-2
-..\Resources\Texture\Tiles\DarkStone_8.png
--64 640
 0
 ..\Resources\Texture\Tiles\DarkStone_2.png
 704 640
@@ -98,9 +99,6 @@
 0
 ..\Resources\Texture\Tiles\DarkStone_2.png
 1152 640
-0
-..\Resources\Texture\Tiles\DarkStone_2.png
-1216 640
 0
 ..\Resources\Texture\Tiles\DarkStone_6.png
 640 512
@@ -1337,6 +1335,15 @@
 0
 ..\Resources\Texture\Tiles\A_Transparent_1.png
 2944 832
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+-64 640
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+192 448
+0
+..\Resources\Texture\Tiles\DarkStone_4.png
+1216 640
 3
 0
 0

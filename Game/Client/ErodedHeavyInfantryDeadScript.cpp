@@ -15,7 +15,7 @@
 #include "CollisionManager.h"
 
 ErodedHeavyInfantryDeadScript::ErodedHeavyInfantryDeadScript()
-	: m_tStayTimer(1.5f)
+	: m_tStayTimer(1.7f)
 {
 }
 

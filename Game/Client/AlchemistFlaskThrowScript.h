@@ -15,5 +15,6 @@ private:
 
 private:
     bool m_bThrowFlag;
+    float m_fThrowPower;
 };
 
