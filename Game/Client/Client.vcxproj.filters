@@ -203,6 +203,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Monster\Alchemist">
       <UniqueIdentifier>{3a40485f-c868-41d7-81d4-9d7e9133c995}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\Projectile">
+      <UniqueIdentifier>{d3b324f6-8a11-4194-9873-9cf1f1ad8df4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -629,6 +632,15 @@
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
     </ClInclude>
     <ClInclude Include="Alchemist.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
+    </ClInclude>
+    <ClInclude Include="AlchemistFlaskThrowScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterProjectile.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="AlchemistFlask.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1070,6 +1082,15 @@
       <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
     </ClCompile>
     <ClCompile Include="Alchemist.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
+    </ClCompile>
+    <ClCompile Include="AlchemistFlaskThrowScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterProjectile.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="AlchemistFlask.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
     </ClCompile>
   </ItemGroup>

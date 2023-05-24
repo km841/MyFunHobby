@@ -49,6 +49,7 @@
 #include "ErodedHeavyInfantryAttackScript.h"
 #include "ErodedHeavyInfantryDeadScript.h"
 #include "ErodedEntSkillScript.h"
+#include "AlchemistFlaskThrowScript.h"
 
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
 {
@@ -612,6 +613,7 @@ shared_ptr<Monster> ObjectFactory::CreateAlchemist(const Vec3 vMonsterPos)
 	pAlchemist->AddComponent(make_shared<AI>());
 	pAlchemist->AddComponent(make_shared<Animator>());
 	pAlchemist->AddComponent(make_shared<Movement>());
+	pAlchemist->AddComponent(make_shared<AlchemistFlaskThrowScript>());
 
 	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
 	std::vector<wstring> vTextureNames;
@@ -665,7 +667,7 @@ shared_ptr<Monster> ObjectFactory::CreateAlchemist(const Vec3 vMonsterPos)
 	pAttackSequence->AddChild(make_shared<IsMonsterStateCondition>(pAlchemist, MONSTER_STATE::ATTACK));
 	pAttackSequence->AddChild(make_shared<RunAnimateTask>(pAlchemist, L"Alchemist_Attack", false));
 	pAttackSequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(m_pPlayer.lock(), pAlchemist));
-	pAttackSequence->AddChild(make_shared<TimerCondition>(pAlchemist, 1.f));
+	pAttackSequence->AddChild(make_shared<TimerCondition>(pAlchemist, 1.5f));
 	pAttackSequence->AddChild(make_shared<ChangeMonsterStateTask>(pAlchemist, MONSTER_STATE::IDLE));
 
 	pAlchemist->GetAI()->SetBehaviorRootNode(pRootNode);
@@ -680,7 +682,7 @@ shared_ptr<Monster> ObjectFactory::CreateAlchemist(const Vec3 vMonsterPos)
 	pAlchemist->GetAnimator()->AddAnimation(L"Alchemist_Weak_Hit", pWeakHitAnimation);
 	pAlchemist->GetAnimator()->Play(L"Alchemist_Idle");
 
-	pAttackAnimation->SetHitFrame(1);
+	pAttackAnimation->SetHitFrame(3);
 
 	pAlchemist->UnflagAsAttacked();
 
