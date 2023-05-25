@@ -74,7 +74,7 @@ float2 Distortion(float2 vUV, float fAccTime, float fProgress)
     float fRadius = length(vUV);
     float fTheta = atan2(vUV.y, vUV.x);
     
-    float fPulse = sin(20 * fRadius - 5.0 * fAccTime) * fProgress;
+    float fPulse = sin(40 * fRadius - 10.0 * fAccTime) * fProgress;
     
     float2 fPulseRect = float2(fPulse * cos(fTheta), fPulse * sin(fTheta));
     

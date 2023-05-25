@@ -20,6 +20,8 @@ PlayerMoveScript::PlayerMoveScript()
 	: m_fSpeed(400.f)
 	, m_fJumpSpeed(1300.f)
 	, m_FilterShaders{}
+	, m_tPauseTimer(3.f)
+	, m_bPauseFlag(false)
 {
 }
 
@@ -31,6 +33,26 @@ void PlayerMoveScript::LateUpdate()
 {
 	Vec3 vVelocity = {};
 	shared_ptr<Player> pPlayer = static_pointer_cast<Player>(GetGameObject());
+
+	if (pPlayer->IsPause())
+	{
+		if (!m_bPauseFlag)
+		{
+			m_bPauseFlag = true;
+			m_tPauseTimer.Start();
+		}
+
+		m_tPauseTimer.Update(DELTA_TIME);
+		if (m_tPauseTimer.IsFinished())
+		{
+			m_bPauseFlag = false;
+			pPlayer->Play();
+		}
+
+		pPlayer->GetRigidBody()->SetVelocity(Vec3::Zero);
+
+		return;
+	}
 
 	if (IS_PRESS(KEY_TYPE::LEFT))
 	{

@@ -34,6 +34,7 @@ Player::Player()
 	, m_iJumpCount(2)
 	, m_bSwapActiveFlag(false)
 	, m_tSwapCooldown(5.f)
+	, m_bPause(true)
 {
 	m_Status.PlayerDefaultSetting();
 	m_pStateMachine = make_shared<StateMachine>();

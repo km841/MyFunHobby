@@ -65,6 +65,10 @@ public:
 	weak_ptr<Essence>	  GetEssence();
 	void				  ActiveEssenceWhenDashEnterTiming();
 
+	FORCEINLINE void Pause() { m_bPause = true; }
+	FORCEINLINE void Play()  { m_bPause = false; }
+	FORCEINLINE bool IsPause() { return m_bPause; }
+
 public:
 	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
 	virtual void OnCollisionExit(shared_ptr<GameObject> pGameObject) override;
@@ -89,5 +93,6 @@ private:
 
 	Timer									m_tSwapCooldown;
 	bool								    m_bSwapActiveFlag;
+	bool									m_bPause;
 };
 

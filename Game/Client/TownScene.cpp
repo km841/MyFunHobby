@@ -167,7 +167,7 @@ void TownScene::Enter()
 		pPlayer->GetLight()->SetLightRange(350.f);
 		pPlayer->GetLight()->SetDiffuse(Vec3(0.6f, 0.6f, 0.6f));
 
-		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 200.f, 98.f));
+		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 150.f, 98.f));
 
 		pPlayer->SetFrustum(false);
 		AddGameObject(pPlayer);

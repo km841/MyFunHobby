@@ -14,5 +14,8 @@ private:
     PlayerFilterShaders m_FilterShaders;
     float m_fSpeed;
     float m_fJumpSpeed;
+
+    bool m_bPauseFlag;
+    Timer m_tPauseTimer;
 };
 

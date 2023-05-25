@@ -1,16 +1,4 @@
-﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\final.cso
-FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\lighting.cso
-FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\particle.cso
-FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\utils.cso
-  pch.cpp
+﻿  pch.cpp
   AI.cpp
   Animation.cpp
   Animator.cpp
