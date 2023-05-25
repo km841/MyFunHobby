@@ -32,6 +32,8 @@ public:
 	FORCEINLINE MONSTER_STATE GetMonsterState() { return m_eMonsterState; }
 	FORCEINLINE void		  SetMonsterState(MONSTER_STATE eMonsterState) { m_eMonsterState = eMonsterState; }
 
+	FORCEINLINE MONSTER_TYPE GetMonsterType() { return m_eMonsterType; }
+
 	FORCEINLINE const Vec3&   GetParticleDir() { return m_vParticleDir; }
 	FORCEINLINE void		  SetParticleDir(const Vec3& vDir) { m_vParticleDir = vDir; }
 
@@ -68,6 +70,7 @@ protected:
 	shared_ptr<GlobalEffect> m_pParticleGenerator;
 
 	MONSTER_STATE m_eMonsterState;
+	MONSTER_TYPE m_eMonsterType;
 
 };
 

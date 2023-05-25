@@ -39,6 +39,7 @@ Scene::Scene(SCENE_TYPE eSceneType)
 	, m_fFadeEffectRatio(1.f)
 	, m_eActiveSceneEvent(EVENT_TYPE::END)
 	, m_tCameraShakeTimer(0)
+	, m_fAccTime(0.f)
 {
 
 }
@@ -273,11 +274,12 @@ void Scene::EventUpdate()
 
 	else
 	{
+
+		auto& curEvent = m_vSceneEvents.front();
 		switch (m_eActiveSceneEvent)
 		{
 		case EVENT_TYPE::SCENE_FADE_EVENT:
 		{
-			auto& curEvent = m_vSceneEvents.front();
 			SCENE_FADE_EFFECT eSceneFadeEffect = static_cast<SCENE_FADE_EFFECT>(curEvent.iDetailEnum);
 			curEvent.fCurTime += DELTA_TIME;
 
@@ -295,7 +297,38 @@ void Scene::EventUpdate()
 				m_vSceneEvents.erase(m_vSceneEvents.begin());
 			}
 		}
-		break;
+			break;
+
+		case EVENT_TYPE::ACTIVATE_DISTORTION:
+		{
+			curEvent.fCurTime += DELTA_TIME;
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(1, curEvent.fCurTime);
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(2, 1.f - curEvent.fCurTime / curEvent.fEndTime);
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(0, 1); // Distortion Flag
+
+			if (curEvent.fEndTime < curEvent.fCurTime)
+			{
+				GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(0, 0); // Distortion Flag
+				m_eActiveSceneEvent = EVENT_TYPE::END;
+				m_vSceneEvents.erase(m_vSceneEvents.begin());
+			}
+		}
+			break;
+
+		case EVENT_TYPE::ACTIVATE_AFTEREFFECT:
+		{
+			curEvent.fCurTime += DELTA_TIME;
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(1, m_fAccTime);
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(1, 1); // AfterEffect Flag
+
+			if (curEvent.fEndTime < curEvent.fCurTime)
+			{
+				GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(1, 0); // AfterEffect Flag
+				m_eActiveSceneEvent = EVENT_TYPE::END;
+				m_vSceneEvents.erase(m_vSceneEvents.begin());
+			}
+		}
+			break;
 		}
 	}
 }

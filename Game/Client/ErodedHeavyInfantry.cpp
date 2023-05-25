@@ -21,6 +21,7 @@ ErodedHeavyInfantry::ErodedHeavyInfantry()
 	: m_iAttackCount(0)
 	, m_bDeadFlag(false)
 {
+	m_eMonsterType = MONSTER_TYPE::NONE_HIT;
 }
 
 ErodedHeavyInfantry::~ErodedHeavyInfantry()

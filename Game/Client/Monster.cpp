@@ -32,6 +32,7 @@ Monster::Monster()
 	, m_bExtraHitFlag(false)
 	, m_bHitFlag(false)
 	, m_eMonsterState(MONSTER_STATE::IDLE)
+	, m_eMonsterType(MONSTER_TYPE::NORMAL)
 {
 }
 

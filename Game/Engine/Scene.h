@@ -98,6 +98,8 @@ protected:
     Vec3 m_vCameraShakeImpulse;
 
     std::vector<shared_ptr<Light>> m_vLights;
+
+    float m_fAccTime;
     
 
 protected:

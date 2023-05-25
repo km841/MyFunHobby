@@ -66,5 +66,19 @@ float Rand(float2 co)
     return 0.5 + (frac(sin(dot(co.xy, float2(12.9898, 78.233))) * 43758.5453)) * 0.5;
 }
 
-
+float2 Distortion(float2 vUV, float fAccTime, float fProgress)
+{
+    // Align Center
+    vUV -= 0.5f;
+   
+    float fRadius = length(vUV);
+    float fTheta = atan2(vUV.y, vUV.x);
+    
+    float fPulse = sin(20 * fRadius - 5.0 * fAccTime) * fProgress;
+    
+    float2 fPulseRect = float2(fPulse * cos(fTheta), fPulse * sin(fTheta));
+    
+    vUV += 0.5f;
+    return vUV + 0.02 * fPulseRect;
+}
 #endif

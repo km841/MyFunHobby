@@ -71,7 +71,9 @@ void SkulAttack::HitMonstersInAttackRange()
 			{
 				shared_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
 
-				pMonster->SetMonsterState(MONSTER_STATE::WEAK_HIT);
+				if (MONSTER_TYPE::NORMAL == pMonster->GetMonsterType())
+					pMonster->SetMonsterState(MONSTER_STATE::WEAK_HIT);
+
 				CreateHitEffectAndAddedScene(vPos);
 				pGameObject->GetStatus()->TakeDamage(3);
 
