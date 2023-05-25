@@ -64,8 +64,12 @@ void Stage::GoToNextDungeon(DUNGEON_TYPE eDungeonType)
 	}
 }
 
-void Stage::AddDungeon(shared_ptr<Dungeon> pDungeon)
+void Stage::AddDungeon(shared_ptr<Dungeon> pDungeon, const Vec4& vLimitRect)
 {
 	pDungeon->m_pStage = shared_from_this();
+
+	if (Vec4::Zero != vLimitRect)
+		pDungeon->SetLimitRect(vLimitRect);
+
 	m_vDungeons.push_back(pDungeon);
 }

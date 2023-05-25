@@ -33,20 +33,20 @@ void Background::Update()
 {
 	GameObject::Update();
 	
-	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+	weak_ptr<ComponentObject> pCameraObject = GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera();
 
-	if (!pPlayer.lock())
+	if (!pCameraObject.lock())
 		return;
 
-	if (Vec3::Zero == m_vPlayerPrevPos)
+	if (Vec3::Zero == m_vCameraPrevPos)
 	{
-		m_vPlayerPrevPos = pPlayer.lock()->GetActiveSkul()->GetTransform()->GetWorldPosition();
+		m_vCameraPrevPos = pCameraObject.lock()->GetTransform()->GetWorldPosition();
 	}
 	
 	else
 	{
-		Vec3 vPlayerPos = pPlayer.lock()->GetActiveSkul()->GetTransform()->GetWorldPosition();
-		Vec3 vDiff = vPlayerPos - m_vPlayerPrevPos;
+		Vec3 vCameraPos = pCameraObject.lock()->GetTransform()->GetWorldPosition();
+		Vec3 vDiff = vCameraPos - m_vCameraPrevPos;
 
 		if (vDiff.Length() > 0.f)
 		{
@@ -62,14 +62,13 @@ void Background::Update()
 			else
 				vDiff.y = 0.f;
 
-			//vDiff.y /= 2.f;
 			const Vec3& vMyPos = GetTransform()->GetLocalPosition();
 			Vec3 vTargetPosition = vMyPos + vDiff;
 			Vec3 vInterpolatedPosition = vMyPos + (vTargetPosition - vMyPos) * fInterpolationFactor;
 			GetTransform()->SetLocalPosition(vInterpolatedPosition);
 		}
 
-		m_vPlayerPrevPos = vPlayerPos;
+		m_vCameraPrevPos = vCameraPos;
 	}
 }
 

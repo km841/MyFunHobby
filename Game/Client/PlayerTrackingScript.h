@@ -15,5 +15,6 @@ public:
 private:
     weak_ptr<Player> m_pPlayer;
     float m_fDepth;
+    float m_fTrackingSpeed;
 };
 

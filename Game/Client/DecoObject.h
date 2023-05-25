@@ -17,5 +17,8 @@ public:
 
 protected:
     DECO_OBJECT_TYPE m_eDecoObjType;
+
+private:
+    DECLARE_POOL(DecoObject);
 };
 

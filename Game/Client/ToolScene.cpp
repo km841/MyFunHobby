@@ -38,6 +38,7 @@ ToolScene::ToolScene()
 	, m_tTileDragHolder(0.1f)
 	, m_TileMapData{}
 	, m_bShowMousePos(false)
+	, m_bTileAlignMode(false)
 {
 	m_tTileDragHolder.Start();
 }
@@ -79,11 +80,20 @@ void ToolScene::Update()
 		FONT->DrawStringAtWorldPos(L"X: " + szWorldPosX + L"\nY: " + szWorldPosY, 20.f, vWorldPos, FONT_WEIGHT::BOLD);
 	}
 
+	if (m_bTileAlignMode)
+	{
+		vWorldPos.y -= 30.f;
+		FONT->DrawStringAtWorldPos(L"TileAlign..", 20.f, vWorldPos, FONT_WEIGHT::BOLD);
+	}
+
 	if (IS_DOWN(KEY_TYPE::G))
 		m_pGrid->FlipState();
 
 	if (IS_DOWN(KEY_TYPE::P))
 		m_bShowMousePos = (m_bShowMousePos + 1) % 2;
+
+	if (IS_DOWN(KEY_TYPE::T))
+		m_bTileAlignMode = (m_bTileAlignMode + 1) % 2;
 }
 
 void ToolScene::LateUpdate()
@@ -374,6 +384,14 @@ void ToolScene::MapEditorUpdate()
 		TILE_TYPE eTileType = static_cast<TILE_TYPE>(MAP_TOOL->GetClickedColliderType());
 		SRV_KIND eSRVKind = GetSelectedSRVKind(szSelectedKey);
 
+		if (m_bTileAlignMode)
+		{
+			Vec2 vTileAlignVec2 = Conv::Vec3ToTileAlignVec2(vWorldPos);
+			vWorldPos.x = vTileAlignVec2.x;
+			vWorldPos.y = vTileAlignVec2.y;
+		}
+
+
 		if (OUTPUT_TYPE::WRITE == eOutputType && (L"FAILURE" != szSelectedKey))
 		{
 			if ((DRAWING_TYPE::DRAGGING == eDrawingType) && IS_PRESS(KEY_TYPE::LBUTTON))
@@ -386,18 +404,41 @@ void ToolScene::MapEditorUpdate()
 					}
 					else
 					{
-						switch (eSRVKind)
+
+						if (!m_bTileAlignMode)
 						{
-						case SRV_KIND::DUNGEON_GATE:
-							CreateDungeonGate(vWorldPos, szSelectedKey);
-							break;
-						case SRV_KIND::DUNGEON_WALL:
-							CreateDungeonWall(vWorldPos, szSelectedKey);
-							break;
-						case SRV_KIND::DECO_OBJECT:
-							CreateDecoObject(vWorldPos, szSelectedKey);
-							break;
+							switch (eSRVKind)
+							{
+							case SRV_KIND::DUNGEON_GATE:
+								CreateDungeonGate(vWorldPos, szSelectedKey);
+								break;
+							case SRV_KIND::DUNGEON_WALL:
+								CreateDungeonWall(vWorldPos, szSelectedKey);
+								break;
+							case SRV_KIND::DECO_OBJECT:
+								CreateDecoObject(vWorldPos, szSelectedKey);
+								break;
+							}
 						}
+						else
+						{
+							if (!CheckTileAtClick(vWorldPos))
+							{
+								switch (eSRVKind)
+								{
+								case SRV_KIND::DUNGEON_GATE:
+									CreateDungeonGate(vWorldPos, szSelectedKey);
+									break;
+								case SRV_KIND::DUNGEON_WALL:
+									CreateDungeonWall(vWorldPos, szSelectedKey);
+									break;
+								case SRV_KIND::DECO_OBJECT:
+									CreateDecoObject(vWorldPos, szSelectedKey);
+									break;
+								}
+							}
+						}
+
 					}
 
 					m_tTileDragHolder.Start();
@@ -406,11 +447,7 @@ void ToolScene::MapEditorUpdate()
 
 			else if ((DRAWING_TYPE::POINT == eDrawingType) && IS_DOWN(KEY_TYPE::LBUTTON))
 			{
-				if (SRV_KIND::TILE == eSRVKind && !CheckTileAtClick(vWorldPos))
-				{
-					CreateTile(vWorldPos, eTileType);
-				}
-				else
+				if (!m_bTileAlignMode)
 				{
 					switch (eSRVKind)
 					{
@@ -425,6 +462,25 @@ void ToolScene::MapEditorUpdate()
 						break;
 					}
 				}
+				else
+				{
+					if (!CheckTileAtClick(vWorldPos))
+					{
+						switch (eSRVKind)
+						{
+						case SRV_KIND::DUNGEON_GATE:
+							CreateDungeonGate(vWorldPos, szSelectedKey);
+							break;
+						case SRV_KIND::DUNGEON_WALL:
+							CreateDungeonWall(vWorldPos, szSelectedKey);
+							break;
+						case SRV_KIND::DECO_OBJECT:
+							CreateDecoObject(vWorldPos, szSelectedKey);
+							break;
+						}
+					}
+				}
+
 			}
 		}
 
@@ -791,11 +847,14 @@ void ToolScene::CreateDungeonWall(const Vec3& vWorldPos, STAGE_KIND eStageKind)
 
 void ToolScene::CreateDecoObject(const Vec3& vWorldPos, const wstring& szSelectedKey)
 {
-	shared_ptr<DecoObject> pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DecoObject>(L"Deferred", szSelectedKey);
+	shared_ptr<DecoObject> pDecoObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<DecoObject>(L"Deferred", szSelectedKey);
 	pDecoObject->GetTransform()->SetLocalPosition(Vec3(vWorldPos.x, vWorldPos.y, 99.f));
 
 	pDecoObject->Awake();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDecoObject, m_eSceneType));
+
+	if (m_bTileAlignMode)
+		m_mTileMap[Vec2(vWorldPos.x, vWorldPos.y)] = true;
 }
 
 void ToolScene::CreateLightObject(const Vec3& vWorldPos)

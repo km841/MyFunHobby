@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "DecoObject.h"
+POOL_INIT(DecoObject);
 
 DecoObject::DecoObject(DECO_OBJECT_TYPE eDecoObjType)
 	: GameObject(LAYER_TYPE::DECO)

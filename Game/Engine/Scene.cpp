@@ -469,6 +469,41 @@ void Scene::RemoveLocalGroup(LAYER_TYPE eLocalLayerType)
 	}
 }
 
+Vec4 Scene::GetObjectLimitRect()
+{
+	float fMinX = 0.f;
+	float fMaxX = 0.f;
+	float fMinY = 0.f;
+	float fMaxY = 0.f;
+
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
+	{
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
+		{
+			if (!pGameObject->GetTransform())
+				continue;
+
+			Vec3 vPos = Vec3::Zero;
+			Vec3 vSize = pGameObject->GetTransform()->GetLocalScale();
+			if (pGameObject->GetPhysical())
+				vPos = pGameObject->GetTransform()->GetPhysicalPosition();
+			
+			else
+				vPos = pGameObject->GetTransform()->GetLocalPosition();
+
+			if (Vec3::Zero == vPos)
+				continue;
+			
+			fMinX = min(fMinX, vPos.x - vSize.x / 2.f);
+			fMinY = min(fMinY, vPos.y + vSize.y / 2.f);
+			fMaxX = max(fMaxX, vPos.x + vSize.x / 2.f);
+			fMaxY = max(fMaxY, vPos.y - vSize.y / 2.f);
+		}
+	}
+
+	return Vec4(fMinX, fMinY, fMaxX, fMaxY);
+}
+
 void Scene::LoadBackground(std::wifstream& ifs)
 {
 	uint32 iBGCount = 0;

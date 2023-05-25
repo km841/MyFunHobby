@@ -25,5 +25,7 @@ private:
 
     Timer m_tStayTimer;
     float m_fAlphaValue;
+    
+   
 };
 

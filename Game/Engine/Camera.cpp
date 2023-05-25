@@ -133,6 +133,11 @@ void Camera::EnableAllCullingMask()
     }
 }
 
+void Camera::SetLimitRect(const Vec4& vLimitRect)
+{
+    m_vLimitRect = vLimitRect;
+}
+
 void Camera::Render_Forward()
 {
     for (const auto& pGameObject : m_vForwardObjects)

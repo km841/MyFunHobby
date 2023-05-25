@@ -98,6 +98,6 @@ private:
     std::vector<shared_ptr<Background>> m_vBackgrounds;
 
     bool m_bShowMousePos;
-    
+    bool m_bTileAlignMode;
 };
 

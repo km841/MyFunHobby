@@ -19,7 +19,7 @@ public:
 
 public:
 	void GoToNextDungeon(DUNGEON_TYPE eDungeonType);
-	void AddDungeon(shared_ptr<Dungeon> pDungeon);
+	void AddDungeon(shared_ptr<Dungeon> pDungeon, const Vec4& vLimitRect = Vec4::Zero);
 
 protected:
 	STAGE_KIND m_eStageKind;

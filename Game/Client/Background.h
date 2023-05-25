@@ -17,7 +17,7 @@ public:
 
 private:
     Vec3 m_vFollowSpeed;
-    Vec3 m_vPlayerPrevPos;
+    Vec3 m_vCameraPrevPos;
 
 };
 

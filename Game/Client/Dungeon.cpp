@@ -11,6 +11,8 @@
 #include "DungeonGateOpenEvent.h"
 #include "CreateMapRewardEvent.h"
 #include "IfTakedMapReward.h"
+#include "ComponentObject.h"
+#include "Camera.h"
 
 Dungeon::Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstring& szScriptPath)
 	: m_eDungeonType(eDungeonType)
@@ -49,6 +51,8 @@ void Dungeon::Enter()
 {
     if (!m_szMapPath.empty())
         GET_SINGLE(Scenes)->GetActiveScene()->Load(m_szMapPath);
+
+    SetCameraLimitArea();
 
     GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 }
@@ -163,4 +167,15 @@ void Dungeon::LoadEventFromFile(const wstring& szEventScriptPath)
     }
 
     ifs.close();
+}
+
+void Dungeon::CalculateCameraLimitArea()
+{
+    Vec4 vLimitRect = GET_SINGLE(Scenes)->GetActiveScene()->GetObjectLimitRect();
+    GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera()->SetLimitRect(vLimitRect);
+}
+
+void Dungeon::SetCameraLimitArea()
+{
+    GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera()->SetLimitRect(m_vLimitRect);
 }

@@ -33,6 +33,9 @@ public:
 
     void SetCameraSpeed(const Vec3& vCameraSpeed) { m_vCameraSpeed = vCameraSpeed; }
     const Vec3& GetCameraSpeed() { return m_vCameraSpeed; }
+    void SetLimitRect(const Vec4& vLimitRect);
+
+    const Vec4& GetLimitRect() { return m_vLimitRect; }
 
 public:
     void Render_Forward();
@@ -55,6 +58,7 @@ private:
     Frustum         m_Frustum;
 
     Vec3            m_vCameraSpeed;
+    Vec4            m_vLimitRect;
 
     std::vector<shared_ptr<GameObject>> m_vForwardObjects;
     std::vector<shared_ptr<GameObject>> m_vDeferredObjects;

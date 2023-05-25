@@ -54,6 +54,8 @@ public:
     virtual void InitializeCameraAndPlayerPos() { }
 
     void RemoveLocalGroup(LAYER_TYPE eLocalLayerType);
+    
+    Vec4 GetObjectLimitRect();
 
 private:
     void LoadBackground(std::wifstream& ifs);
