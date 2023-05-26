@@ -182,6 +182,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arms.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BackgroundMoveScript.h" />
     <ClInclude Include="BaseCamp.h" />
     <ClInclude Include="BaseCampOpeningHUD.h" />
     <ClInclude Include="BGCameraScript.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Arms.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BackgroundMoveScript.cpp" />
     <ClCompile Include="BaseCamp.cpp" />
     <ClCompile Include="BaseCampOpeningHUD.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />

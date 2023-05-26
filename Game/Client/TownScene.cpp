@@ -25,6 +25,7 @@
 #include "PlayerFunctionScript.h"
 #include "BGCameraScript.h"
 #include "DarkMirrorReflectionScript.h"
+#include "BackgroundMoveScript.h"
 
 /* Manager */
 #include "Resources.h"
@@ -143,6 +144,46 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PARTICLE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::PLAYER_PROJECTILE);
+
+	// Far Clouds
+	{
+		shared_ptr<Background> pClouds = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(
+			L"Deferred", L"..\\Resources\\Texture\\Map\\Image_Town_Background_Cloud2.png");
+
+		pClouds->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 400.f, fHeight / 2.f - 600.f, 195.f));
+		pClouds->SetFollowSpeed(Vec3(4.f, 4.f, 1.f));
+
+		pClouds->SetFrustum(false);
+		AddGameObject(pClouds);
+	}
+
+	// Clouds
+	{
+		shared_ptr<Background> pClouds = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(
+			L"Deferred", L"..\\Resources\\Texture\\Map\\Image_Town_Background_Cloud.png");
+
+		pClouds->AddComponent(make_shared<BackgroundMoveScript>(-50.f));
+
+		pClouds->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 190.f));
+		pClouds->SetFollowSpeed(Vec3(8.f, 8.f, 1.f));
+		
+		pClouds->SetFrustum(false);
+		AddGameObject(pClouds);
+	}
+
+	// Clouds
+	{
+		shared_ptr<Background> pClouds = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(
+			L"Deferred", L"..\\Resources\\Texture\\Map\\Image_Town_Background_Cloud.png");
+
+		pClouds->AddComponent(make_shared<BackgroundMoveScript>(-50.f));
+
+		pClouds->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f + 3000.f, fHeight / 2.f, 190.f));
+		pClouds->SetFollowSpeed(Vec3(8.f, 8.f, 1.f));
+
+		pClouds->SetFrustum(false);
+		AddGameObject(pClouds);
+	}
 	
 	// Player
 	{

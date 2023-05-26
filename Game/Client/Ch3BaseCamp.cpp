@@ -53,19 +53,6 @@ void Ch3BaseCamp::Enter()
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-	// Ch3 Begin Tower
-	{
-		shared_ptr<Ch3BeginTower> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Ch3BeginTower>(
-			L"Deferred", L"..\\Resources\\Texture\\DecoObject\\Image_Ch3BeginTower.png");
-
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(-1400.f, fHeight / 2.f + 65.f, 110.f));
-		//pGameObject->GetTransform()->SetLocalScale(Vec3(134.f, 363.f, 1.f));
-
-		pGameObject->Awake();
-		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
-	}
-
 	// Essence
 	{
 		shared_ptr<DropEssence> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropEssence>(

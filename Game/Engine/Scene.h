@@ -74,7 +74,7 @@ public:
     // Helper Functions
     weak_ptr<ComponentObject> GetMainCamera();
     weak_ptr<ComponentObject> GetUICamera();
-    shared_ptr<Player>          GetPlayer();
+    shared_ptr<Player>        GetPlayer();
 
 public:
     virtual void Load(const wstring& szPath);

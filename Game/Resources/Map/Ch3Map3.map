@@ -849,7 +849,7 @@
 6
 ..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
 3136 64
-220
+227
 1
 ..\Resources\Texture\DungeonObject\DecoImage_Flag_1.png
 1554.76 242.842
@@ -1510,7 +1510,28 @@
 1
 ..\Resources\Texture\DungeonObject\DecoImage_Pipe_3.png
 2471.59 255.924
-13
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_1.png
+1987.24 41.1996
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_5.png
+2092.83 55.5996
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_3.png
+682.942 46.485
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_6.png
+1138.06 39.4825
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_4.png
+348.311 313.667
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_2.png
+456.311 314.467
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_1.png
+569.911 296.067
+22
 12 0 0
 0 0 0
 0
@@ -1563,3 +1584,39 @@
 0 0 0
 500
 1857.02 87.3472 100
+0.5 0.5 1
+0 0 0
+300
+688.56 27.4631 95
+0.5 0.5 1
+0 0 0
+200
+460.56 309.063 95
+0.5 0.5 1
+0 0 0
+200
+461.36 260.263 95
+0.5 0.5 1
+0 0 0
+150
+358.96 258.663 95
+0.5 0.5 1
+0 0 0
+150
+355.76 309.063 95
+0.5 0.5 1
+0 0 0
+150
+578.96 261.063 95
+0.5 1 0.5
+0 0 0
+150
+1140.67 7.61676 95
+0.5 0.5 1
+0 0 0
+150
+1997.74 15.606 95
+0.5 0.5 1
+0 0 0
+250
+2103.34 33.206 95

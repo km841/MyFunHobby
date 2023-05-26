@@ -1,7 +1,11 @@
-1
-..\Resources\Texture\Map\Image_Town_Background.png
-1580 -1170 870
+2
+..\Resources\Texture\Map\Image_Town_Background2.png
+1580 -1270 150
 2000 2200 1
+0 0 0
+..\Resources\Texture\Map\Image_Town_BackgroundColor.png
+800 -100 200
+3000 2000 1
 0 0 0
 70
 0
@@ -214,3 +218,6 @@
 0
 ..\Resources\Texture\Tiles\A_Transparent_1.png
 2112 -1152
+0
+0
+0

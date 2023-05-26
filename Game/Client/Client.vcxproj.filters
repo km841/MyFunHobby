@@ -643,6 +643,9 @@
     <ClInclude Include="AlchemistFlask.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
     </ClInclude>
+    <ClInclude Include="BackgroundMoveScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1092,6 +1095,9 @@
     </ClCompile>
     <ClCompile Include="AlchemistFlask.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Alchemist</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundMoveScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
