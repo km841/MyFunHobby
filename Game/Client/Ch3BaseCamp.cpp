@@ -11,9 +11,11 @@
 #include "DungeonGateOpenEvent.h"
 #include "IfAlwaysTrue.h"
 #include "DropEssence.h"
+#include "InterfaceManager.h"
+#include "HUD.h"
 
-Ch3BaseCamp::Ch3BaseCamp(const wstring& szMapPath)
-	: BaseCamp(szMapPath)
+Ch3BaseCamp::Ch3BaseCamp(const wstring& szMapPath, const wstring& szScriptPath)
+	: BaseCamp(szMapPath, szScriptPath)
 {
 }
 
@@ -50,22 +52,22 @@ void Ch3BaseCamp::Enter()
 {
 	BaseCamp::Enter();
 
-	float fWidth = static_cast<float>(g_pEngine->GetWidth());
-	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+
+	// UI Event 추가 (입장)
+	//auto hud = GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING);
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING)->Action();
 
 	// Essence
-	{
-		shared_ptr<DropEssence> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropEssence>(
-			L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\Essence\\Lyweasel\\Lyweasel.png", ESSENCE_KIND::LYWEASEL);
+	//{
+	//	shared_ptr<DropEssence> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropEssence>(
+	//		L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\Essence\\Lyweasel\\Lyweasel.png", ESSENCE_KIND::LYWEASEL);
 
-		pGameObject->GetTransform()->SetLocalPosition(Vec3(-1200.f, 200.f, 100.f));
+	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(-1200.f, 200.f, 100.f));
 
-		pGameObject->Awake();
-		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
-	}
-
-	AddEvent(make_shared<DungeonGateOpenEvent>(make_shared<IfAlwaysTrue>()));
+	//	pGameObject->Awake();
+	//	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	//	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
+	//}
 }
 
 void Ch3BaseCamp::Exit()

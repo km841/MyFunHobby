@@ -23,6 +23,7 @@ Camera::Camera()
     , m_fFov(XM_PI / 4.f)
     , m_fScale(1.25f)
     , m_iCullingMask(0)
+    , m_bDebugMode(false)
 {
 }
 
@@ -168,7 +169,10 @@ void Camera::Render_Deferred()
         else
             pGameObject->GetMeshRenderer()->Render(shared_from_this());
 
-		//if (pGameObject->GetDebugRenderer())
-		//	pGameObject->GetDebugRenderer()->Render(shared_from_this());
+        if (m_bDebugMode)
+        {
+            if (pGameObject->GetDebugRenderer())
+                pGameObject->GetDebugRenderer()->Render(shared_from_this());
+        }
     }
 }

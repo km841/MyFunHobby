@@ -25,9 +25,6 @@ public:
 	virtual void ActivateDeadEvent(const Vec3& vDir);
 	virtual void ActivateDeadEvent() override;
 
-	FORCEINLINE bool GetDeadFlag() { return m_bDeadFlag; }
-	FORCEINLINE void SetDeadFlag(bool bDeadFlag) { m_bDeadFlag = bDeadFlag; }
-
 	FORCEINLINE int32 GetAttackCount()      { return m_iAttackCount; }
 	FORCEINLINE void  IncreaseAttackCount() { m_iAttackCount++; }
 	FORCEINLINE void  ClearAttackCount()	{ m_iAttackCount = 0; }
@@ -39,7 +36,6 @@ private:
 
 private:
 	int32 m_iAttackCount;
-	bool m_bDeadFlag;
 	weak_ptr<LocalEffect> m_pExclamation;
 
 private:

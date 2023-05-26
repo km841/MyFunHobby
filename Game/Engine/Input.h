@@ -20,6 +20,7 @@ enum class KEY_TYPE
 	F = 'F',
 	P = 'P',
 	T = 'T',
+	O = 'O',
 
 	ENTER = VK_RETURN,
 	SPACE = VK_SPACE,

@@ -29,6 +29,7 @@
 #include "ObjectRemoveToSceneEvent.h"
 #include "DungeonWall.h"
 #include "LightObject.h"
+#include "Input.h"
 
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
@@ -97,6 +98,11 @@ void Scene::Update()
 
 	EventUpdate();
 	CameraShakeUpdate();
+
+	if (IS_DOWN(KEY_TYPE::O))
+	{
+		GetMainCamera().lock()->GetCamera()->FlipDebugMode();
+	}
 }
 
 void Scene::LateUpdate()

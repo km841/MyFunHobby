@@ -100,7 +100,7 @@ protected:
     std::vector<shared_ptr<Light>> m_vLights;
 
     float m_fAccTime;
-    
+    bool m_bDebugMode;
 
 protected:
     static std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> s_vGlobalObjects;

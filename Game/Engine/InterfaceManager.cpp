@@ -216,12 +216,11 @@ void InterfaceManager::CreateHUD()
 
 	// BaseCamp Opening HUD
 	{
-		shared_ptr<BaseCampOpeningHUD> pOpeningHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<BaseCampOpeningHUD>(
-			L"Forward", true, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\HUD\\Dungeon\\Ch3\\Image_Ch3_BaseCamp_OpeningUI.png");
+		shared_ptr<BaseCampOpeningHUD> pOpeningHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<BaseCampOpeningHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\Dungeon\\Ch3\\Image_Ch3_BaseCamp_OpeningUI.png");
 		pOpeningHUD->SetFrustum(false);
-
-		pOpeningHUD->GetTransform()->SetLocalScale(Vec3(212.f, 125.f, 1.f));
+		pOpeningHUD->Disable();
 		pOpeningHUD->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 50.f));
+		pOpeningHUD->GetTransform()->SetLocalScale(Vec3(212.f, 125.f, 1.f));
 		m_mInterfaceMap[INTERFACE_TYPE::BASECAMP_OPENING] = pOpeningHUD;
 	}
 

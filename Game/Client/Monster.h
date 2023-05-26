@@ -37,6 +37,9 @@ public:
 	FORCEINLINE const Vec3&   GetParticleDir() { return m_vParticleDir; }
 	FORCEINLINE void		  SetParticleDir(const Vec3& vDir) { m_vParticleDir = vDir; }
 
+	FORCEINLINE bool GetDeadFlag() { return m_bDeadFlag; }
+	FORCEINLINE void SetDeadFlag(bool bDeadFlag) { m_bDeadFlag = bDeadFlag; }
+
 public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
@@ -60,6 +63,7 @@ protected:
 protected:
 	bool m_bHitFlag;
 	bool m_bExtraHitFlag;
+	bool m_bDeadFlag;
 
 	Vec3 m_vParticleDir;
 

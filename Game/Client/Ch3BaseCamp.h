@@ -4,7 +4,7 @@ class Ch3BaseCamp :
     public BaseCamp
 {
 public:
-	Ch3BaseCamp(const wstring& szMapPath);
+	Ch3BaseCamp(const wstring& szMapPath, const wstring& szScriptPath = L"");
 	virtual ~Ch3BaseCamp();
 
 public:

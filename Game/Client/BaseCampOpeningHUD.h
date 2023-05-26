@@ -14,8 +14,15 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
+    virtual void Action();
+    void UpdateAction();
+
 private:
-    Timer m_tDuration;
-    float m_fInitSpeed;
+    Timer m_tStayTimer;
+    Timer m_tUpTimer;
+    Timer m_tDownTimer;
+    float m_fSpeed;
+    float m_fHudSpeed;
+    bool m_bActionFlag;
 };
 

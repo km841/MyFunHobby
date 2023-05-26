@@ -37,6 +37,8 @@ public:
 
     const Vec4& GetLimitRect() { return m_vLimitRect; }
 
+    FORCEINLINE void FlipDebugMode() { m_bDebugMode = (m_bDebugMode + 1) % 2; }
+
 public:
     void Render_Forward();
     void Render_Deferred();
@@ -59,6 +61,8 @@ private:
 
     Vec3            m_vCameraSpeed;
     Vec4            m_vLimitRect;
+
+    bool            m_bDebugMode;
 
     std::vector<shared_ptr<GameObject>> m_vForwardObjects;
     std::vector<shared_ptr<GameObject>> m_vDeferredObjects;
