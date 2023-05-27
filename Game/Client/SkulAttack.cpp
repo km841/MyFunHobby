@@ -81,7 +81,7 @@ void SkulAttack::HitMonstersInAttackRange()
 				CreateHitEffectAndAddedScene(vPos);
 				Damage damage = CalculateDamage();
 				
-				pGameObject->GetStatus()->TakeDamage(damage.second);
+				pGameObject->GetStatus()->TakeDamage(static_cast<int32>(damage.second));
 				FONT->DrawDamage(damage.first, damage.second, vPos);
 
 				// Monster Dead Event Occurs
@@ -105,7 +105,8 @@ void SkulAttack::HitMonstersInAttackRange()
 Damage SkulAttack::CalculateDamage()
 {
 	float fDamage = m_pSkul.lock()->GetPlayer().lock()->GetStatus()->iAttack + m_fDamage;
-	bool bIsCritical = RANDOM(1, 10) <= 3;
+	float fCritical = m_pSkul.lock()->GetPlayer().lock()->GetStatus()->fCriticalPercent;
+	bool bIsCritical = RANDOM(1, 100) <= fCritical;
 	DAMAGE_TYPE eDamageType = bIsCritical ? DAMAGE_TYPE::FROM_PLAYER_CRITICAL : DAMAGE_TYPE::FROM_PLAYER_MELEE;
 
 	return std::make_pair(eDamageType, bIsCritical ? fDamage * 1.5f : fDamage);

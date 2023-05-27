@@ -142,6 +142,7 @@ void Monster::CreateParticleGeneratorAndAddedToScene()
 	m_pParticleGenerator = make_shared<GlobalEffect>();
 	m_pParticleGenerator->AddComponent(make_shared<Transform>());
 	m_pParticleGenerator->GetTransform()->SetParent(GetTransform());
+	m_pParticleGenerator->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, -1.f));
 	m_pParticleGenerator->AddComponent(make_shared<ParticleSystem>());
 	m_pParticleGenerator->SetFrustum(false);
 

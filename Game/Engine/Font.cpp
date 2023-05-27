@@ -45,8 +45,11 @@ void Font::DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Ve
 
 void Font::DrawDamage(DAMAGE_TYPE eDamageType, float fDamage, const Vec3& vPos)
 {
+	int32 iRandomX = RANDOM(-30, 30);
 	Vec3 vNewVec = vPos;
-	vNewVec.y += 80.f;
+	vNewVec.y += 80.f + iRandomX / 2.f;
+	vNewVec.x += iRandomX;
+	
 	m_vDamages.push_back(DamageInfo{ eDamageType, 0.5f, fDamage, vNewVec });
 }
 

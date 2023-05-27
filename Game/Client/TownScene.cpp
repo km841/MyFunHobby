@@ -201,13 +201,13 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Movement>());
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::LITTLE_BONE));
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::HIGH_WARLOCK));
-		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<ForbiddenSword>());
-		pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<EvilSwordKirion>());
+		//pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<ForbiddenSword>());
+		//pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<EvilSwordKirion>());
 
 		pPlayer->AddComponent(make_shared<Light>());
 		pPlayer->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
 		pPlayer->GetLight()->SetLightRange(350.f);
-		pPlayer->GetLight()->SetDiffuse(Vec3(0.6f, 0.6f, 0.6f));
+		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
 		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 150.f, 98.f));
 

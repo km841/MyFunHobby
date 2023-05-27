@@ -171,7 +171,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	pJuniorKnight->GetAnimator()->AddAnimation(L"JuniorKnight_Weak_Hit", pWeakHitAnimation);
 	pJuniorKnight->GetAnimator()->Play(L"JuniorKnight_Idle");
 
-	pAttackAnimation->SetHitFrame(1);
+	pAttackAnimation->SetHitFrame(2);
 
 	pJuniorKnight->UnflagAsAttacked();
 

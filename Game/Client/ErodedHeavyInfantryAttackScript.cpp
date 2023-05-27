@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "CollisionManager.h"
 
 ErodedHeavyInfantryAttackScript::ErodedHeavyInfantryAttackScript()
 	: m_bAttackFlag(false)
@@ -35,6 +36,27 @@ void ErodedHeavyInfantryAttackScript::LateUpdate()
 	else
 	{
 		m_bAttackFlag = false;
+	}
+
+	if (MONSTER_STATE::ATTACK == pMonster.lock()->GetMonsterState())
+	{
+		if (GetAnimator()->GetActiveAnimation()->IsHitFrame())
+		{
+			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
+			GET_SINGLE(CollisionManager)->SetForceInLayer(
+				LAYER_TYPE::PARTICLE,
+				vMyPos,
+				Vec3(1500.f, 300.f, 0.f),
+				Vec3(0.f, 1500.f, 0.f));
+
+			GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(
+				vMyPos,
+				Vec3(1500.f, 300.f, 0.f),
+				Vec3(0.f, 1500.f, 0.f)
+				, 8.f);
+
+			GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
+		}
 	}
 }
 
