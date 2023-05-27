@@ -11,6 +11,8 @@
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
 #include "CollisionManager.h"
+#include "Player.h"
+#include "Engine.h"
 
 ErodedHeavyInfantryAttackScript::ErodedHeavyInfantryAttackScript()
 	: m_bAttackFlag(false)
@@ -54,6 +56,33 @@ void ErodedHeavyInfantryAttackScript::LateUpdate()
 				Vec3(1500.f, 300.f, 0.f),
 				Vec3(0.f, 1500.f, 0.f)
 				, 8.f);
+
+			GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
+		}
+	}
+
+	if (MONSTER_STATE::RAGE_ATTACK == pMonster.lock()->GetMonsterState())
+	{
+		if (GetAnimator()->GetActiveAnimation()->IsHitFrame())
+		{
+			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
+
+			Vec3 vVolume = Vec3(300.f, 600.f, 1.f);
+			weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+			Vec3 vPlayerPos = pPlayer.lock()->GetTransform()->GetPhysicalPosition();
+
+			Vec3 vDiff = vPlayerPos - vMyPos;
+			uint8 iDirection = static_cast<uint8>(pMonster.lock()->GetDirection());
+
+			Vec3 vLeftTop = Vec3(vMyPos.x + (iDirection ? -vVolume.x: 0.f), vMyPos.y + vVolume.y, 0.f);
+			Vec3 vRightBtm = Vec3(vMyPos.x + (iDirection ? 0.f : vVolume.x), vMyPos.y - 100.f, 0.f);
+
+			if (vPlayerPos.x > vLeftTop.x && vPlayerPos.x < vRightBtm.x &&
+				vPlayerPos.y > vRightBtm.y && vPlayerPos.y < vLeftTop.y)
+			{
+				pPlayer.lock()->TakeDamage(4);
+				FONT->DrawDamage(DAMAGE_TYPE::FROM_MONSTER, 4.f, vPlayerPos);
+			}
 
 			GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
 		}

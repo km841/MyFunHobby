@@ -36,10 +36,16 @@ void SkulInfoUI::Update()
 
 	// 자신의 Index에 맞는 스컬 이미지 가져오기
 	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+
 	weak_ptr<Skul> pSkul = pPlayer.lock()->GetSkul(m_eSkulIndex).lock();
 	if (pSkul.lock())
 	{
+		m_bUnused = false;
 		GetMeshRenderer()->GetMaterial()->SetTexture(1, pSkul.lock()->GetThumnailImage().lock());
+	}
+	else
+	{
+		m_bUnused = true;
 	}
 }
 

@@ -51,6 +51,9 @@
 #include "ErodedHeavyInfantryDeadScript.h"
 #include "ErodedEntSkillScript.h"
 #include "AlchemistFlaskThrowScript.h"
+#include "ErodedEntDeadScript.h"
+#include "ErodedEntAttackScript.h"
+
 
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
 {
@@ -477,6 +480,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 	pErodedHeavyInfantry->GetAnimator()->AddAnimation(L"Rage_ErodedHeavyInfantry_Tackle_End", pRageTackleEndAnimation);
 
 	pAttackAnimation->SetHitFrame(1);
+	pRageAttackAnimation->SetHitFrame(1);
 
 	pErodedHeavyInfantry->GetAnimator()->Play(L"ErodedHeavyInfantry_Idle");
 	pErodedHeavyInfantry->UnflagAsAttacked();
@@ -491,8 +495,9 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pErodedEnt->AddComponent(make_shared<AI>());
 	pErodedEnt->AddComponent(make_shared<Animator>());
 	pErodedEnt->AddComponent(make_shared<Movement>());
-	pErodedEnt->AddComponent(make_shared<ErodedKnightDeadScript>());
+	pErodedEnt->AddComponent(make_shared<ErodedEntDeadScript>());
 	pErodedEnt->AddComponent(make_shared<ErodedEntSkillScript>());
+	pErodedEnt->AddComponent(make_shared<ErodedEntAttackScript>());
 
 	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
 	std::vector<wstring> vTextureNames;
@@ -603,7 +608,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pErodedEnt->GetAnimator()->AddAnimation(L"ErodedEnt_Dead", pDeadAnimation);
 	pErodedEnt->GetAnimator()->Play(L"ErodedEnt_Idle");
 
-	pAttackAnimation->SetHitFrame(1);
+	pAttackAnimation->SetHitFrame(6);
 
 	pErodedEnt->UnflagAsAttacked();
 
@@ -708,6 +713,25 @@ void ObjectFactory::CreateSpawnEffectAndAddedScene(const Vec3& vMonsterPos)
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pSpawnEffect, eSceneType));
 }
 
+shared_ptr<Item> ObjectFactory::CreateItem(ITEM_KIND eItemKind)
+{
+	shared_ptr<Item> pItem = nullptr;
+	switch (eItemKind)
+	{
+	case ITEM_KIND::FORBIDDEN_SWORD:
+		pItem = CreateForbiddenSword();
+		break;
+	case ITEM_KIND::EVIL_SWORD_KIRION:
+		pItem = CreateEvilSwordKirion();
+		break;
+	}
+
+	assert(pItem);
+
+	pItem->SetPlayer(m_pPlayer.lock());
+	return pItem;
+}
+
 shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 {
 	ItemInfo itemInfo = {};
@@ -768,4 +792,24 @@ shared_ptr<Essence> ObjectFactory::CreateLyweasel()
 shared_ptr<Essence> ObjectFactory::CreateWisp()
 {
 	return shared_ptr<Essence>();
+}
+
+shared_ptr<Essence> ObjectFactory::CreateEssence(ESSENCE_KIND eEssenceKind)
+{
+	shared_ptr<Essence> pEssence = nullptr;
+
+	switch (eEssenceKind)
+	{
+	case ESSENCE_KIND::LYWEASEL:
+		pEssence = CreateLyweasel();
+		break;
+	case ESSENCE_KIND::WISP:
+		pEssence = CreateWisp();
+		break;
+	}
+
+	assert(pEssence);
+
+	pEssence->SetPlayer(m_pPlayer.lock());
+	return pEssence;
 }

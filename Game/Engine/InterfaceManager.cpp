@@ -83,7 +83,7 @@ void InterfaceManager::CreateUI()
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pInventoryUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 40.f));
+		pInventoryUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 30.f));
 		m_mInterfaceMap[INTERFACE_TYPE::INVENTORY] = pInventoryUI;
 	}
 }

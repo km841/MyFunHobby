@@ -46,7 +46,7 @@ void DropEssence::Update()
 	if (m_bIsCollisionWithPlayer && IS_DOWN(KEY_TYPE::F))
 	{
 		weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
-		pPlayer.lock()->ObtainEssence(GET_SINGLE(ObjectFactory)->CreateEssence<Lyweasel>());
+		pPlayer.lock()->ObtainEssence(GET_SINGLE(ObjectFactory)->CreateEssence(m_eEssenceKind));
 
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));

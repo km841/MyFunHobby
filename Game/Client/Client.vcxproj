@@ -195,6 +195,8 @@
     <ClInclude Include="DecoObject.h" />
     <ClInclude Include="DropEssence.h" />
     <ClInclude Include="DropingRewards.h" />
+    <ClInclude Include="DropItem.h" />
+    <ClInclude Include="DropSkul.h" />
     <ClInclude Include="DungeonGateOpenEvent.h" />
     <ClInclude Include="DungeonWall.h" />
     <ClInclude Include="Dungeon_Bone.h" />
@@ -212,6 +214,8 @@
     <ClInclude Include="DungeonGate.h" />
     <ClInclude Include="Dungeon_Item.h" />
     <ClInclude Include="ErodedEnt.h" />
+    <ClInclude Include="ErodedEntAttackScript.h" />
+    <ClInclude Include="ErodedEntDeadScript.h" />
     <ClInclude Include="ErodedEntSkillScript.h" />
     <ClInclude Include="ErodedHeavyInfantry.h" />
     <ClInclude Include="ErodedHeavyInfantryAttackScript.h" />
@@ -356,6 +360,8 @@
     <ClCompile Include="DecoObject.cpp" />
     <ClCompile Include="DropEssence.cpp" />
     <ClCompile Include="DropingRewards.cpp" />
+    <ClCompile Include="DropItem.cpp" />
+    <ClCompile Include="DropSkul.cpp" />
     <ClCompile Include="DungeonGateOpenEvent.cpp" />
     <ClCompile Include="DungeonWall.cpp" />
     <ClCompile Include="Dungeon_Bone.cpp" />
@@ -373,6 +379,8 @@
     <ClCompile Include="DungeonGate.cpp" />
     <ClCompile Include="Dungeon_Item.cpp" />
     <ClCompile Include="ErodedEnt.cpp" />
+    <ClCompile Include="ErodedEntAttackScript.cpp" />
+    <ClCompile Include="ErodedEntDeadScript.cpp" />
     <ClCompile Include="ErodedEntSkillScript.cpp" />
     <ClCompile Include="ErodedHeavyInfantry.cpp" />
     <ClCompile Include="ErodedHeavyInfantryAttackScript.cpp" />

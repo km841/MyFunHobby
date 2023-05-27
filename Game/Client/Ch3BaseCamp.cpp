@@ -51,10 +51,6 @@ void Ch3BaseCamp::FinalUpdate()
 void Ch3BaseCamp::Enter()
 {
 	BaseCamp::Enter();
-
-
-	// UI Event 추가 (입장)
-	//auto hud = GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING)->Action();
 
 	// Essence

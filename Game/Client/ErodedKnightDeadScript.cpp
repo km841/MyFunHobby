@@ -13,6 +13,7 @@
 #include "Animator.h"
 #include "LocalEffect.h"
 #include "CollisionManager.h"
+#include "Player.h"
 
 ErodedKnightDeadScript::ErodedKnightDeadScript()
 	: m_tStayTimer(1.5f)
@@ -36,6 +37,8 @@ void ErodedKnightDeadScript::LateUpdate()
 
 		if (m_tStayTimer.IsFinished())
 		{
+			Vec3 vMyPos = pErodedKnight.lock()->GetTransform()->GetPhysicalPosition();
+
 			// BOOM!
 			GET_SINGLE(CollisionManager)->SetForceInLayer(
 				LAYER_TYPE::PARTICLE,
@@ -43,6 +46,15 @@ void ErodedKnightDeadScript::LateUpdate()
 				Vec3(300.f, 300.f, 0.f),
 				Vec3(0.f, 600.f, 0.f)
 			);
+
+			Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
+			Vec3 vDiff = vPlayerPos - vMyPos;
+
+			GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(
+				vMyPos,
+				Vec3(200.f, 200.f, 0.f),
+				Vec3(vDiff.x < 0.f ? 300.f : -300.f, 1000.f, 0.f)
+				, 8.f);
 
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			pErodedKnight.lock()->SetDeadFlag(false);

@@ -209,6 +209,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\DropingRewards">
       <UniqueIdentifier>{c3d5095b-e8b2-4441-a9fe-265a09e49f68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\DropObject">
+      <UniqueIdentifier>{0616cc6a-2b6a-4544-8891-1c2ef0fa9813}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -571,9 +574,6 @@
     <ClInclude Include="KirionDashSlashEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="DropEssence.h">
-      <Filter>소스 파일\Game\Object\Essence</Filter>
-    </ClInclude>
     <ClInclude Include="LocalEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
@@ -651,6 +651,21 @@
     </ClInclude>
     <ClInclude Include="DropingRewards.h">
       <Filter>소스 파일\Game\Object\GameObject\DropingRewards</Filter>
+    </ClInclude>
+    <ClInclude Include="ErodedEntDeadScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
+    </ClInclude>
+    <ClInclude Include="ErodedEntAttackScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
+    </ClInclude>
+    <ClInclude Include="DropEssence.h">
+      <Filter>소스 파일\Game\Object\DropObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DropSkul.h">
+      <Filter>소스 파일\Game\Object\DropObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItem.h">
+      <Filter>소스 파일\Game\Object\DropObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1027,9 +1042,6 @@
     <ClCompile Include="KirionDashSlashEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="DropEssence.cpp">
-      <Filter>소스 파일\Game\Object\Essence</Filter>
-    </ClCompile>
     <ClCompile Include="LocalEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClCompile>
@@ -1107,6 +1119,21 @@
     </ClCompile>
     <ClCompile Include="DropingRewards.cpp">
       <Filter>소스 파일\Game\Object\GameObject\DropingRewards</Filter>
+    </ClCompile>
+    <ClCompile Include="ErodedEntDeadScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
+    </ClCompile>
+    <ClCompile Include="ErodedEntAttackScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\ErodedEnt</Filter>
+    </ClCompile>
+    <ClCompile Include="DropEssence.cpp">
+      <Filter>소스 파일\Game\Object\DropObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItem.cpp">
+      <Filter>소스 파일\Game\Object\DropObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DropSkul.cpp">
+      <Filter>소스 파일\Game\Object\DropObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

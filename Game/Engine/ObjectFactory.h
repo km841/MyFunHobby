@@ -71,6 +71,7 @@ private:
 public:
 	template<typename T>
 	shared_ptr<Item> CreateItem();
+	shared_ptr<Item> CreateItem(ITEM_KIND eItemKind);
 
 private:
 	template<typename T>
@@ -85,6 +86,7 @@ private:
 public:
 	template<typename T>
 	shared_ptr<Essence> CreateEssence();
+	shared_ptr<Essence> CreateEssence(ESSENCE_KIND eEssenceKind);
 
 private:
 	template<typename T>
@@ -269,6 +271,7 @@ inline shared_ptr<Essence> ObjectFactory::CreateEssence()
 {
 	ESSENCE_KIND eEssenceKind = GetEssenceKind<T>();
 	shared_ptr<Essence> pEssence = nullptr;
+	
 	switch (eEssenceKind)
 	{
 	case ESSENCE_KIND::LYWEASEL:

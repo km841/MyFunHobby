@@ -28,6 +28,8 @@ public:
 	virtual void ActivateDeadEvent(const Vec3& vDir);
 	virtual void ActivateDeadEvent() override;
 
+	FORCEINLINE weak_ptr<LocalEffect> GetExclamationEffect() { return m_pExclamation; }
+
 private:
 	void CreateExclamationEffectAndAddedToScene();
 

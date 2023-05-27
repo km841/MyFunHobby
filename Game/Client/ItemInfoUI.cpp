@@ -84,6 +84,10 @@ void ItemInfoUI::ShowItemInMyPlace()
 		m_bUnused = true;
 		return;
 	}
+	else
+	{
+		m_bUnused = false;
+	}
 
 	const ItemInfo& itemInfo = pItem.lock()->GetItemInfo();
 	assert(itemInfo.pItemTexture);

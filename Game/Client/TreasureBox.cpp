@@ -11,6 +11,8 @@
 #include "EventManager.h"
 #include "LocalEffect.h"
 #include "Animator.h"
+#include "DropItem.h"
+#include "RigidBody.h"
 
 TreasureBox::TreasureBox(GRADE eGrade)
 	: MapReward(eGrade)
@@ -39,9 +41,10 @@ void TreasureBox::Update()
 	if (m_bIsCollisionWithPlayer && !m_bTaked)
 	{
 		Vec3 vPos = GetTransform()->GetPhysicalPosition();
-		vPos.x += 10.f;
-		vPos.y -= 60.f;
-		FONT->DrawStringAtWorldPos(L"살펴보기", 20.f, vPos, FONT_WEIGHT::BOLD);
+		Vec3 vFontPos = vPos;
+		vFontPos.x += 10.f;
+		vFontPos.y -= 60.f;
+		FONT->DrawStringAtWorldPos(L"살펴보기", 20.f, vFontPos, FONT_WEIGHT::BOLD);
 		// F키 띄우기
 		m_pHoveringKeyEffect->Enable();
 		if (IS_DOWN(KEY_TYPE::F))
@@ -49,7 +52,44 @@ void TreasureBox::Update()
 			// Active Open Animation! 
 			GetAnimator()->Play(L"TreasureBox_Open", false);
 
-			// Item Drop!
+			// Temp Code
+			wstring szPathList[] = {
+				L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png",
+				L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png"
+			};
+			// Temp Code
+			ITEM_KIND eItemKind[] = {
+				ITEM_KIND::FORBIDDEN_SWORD,
+				ITEM_KIND::EVIL_SWORD_KIRION,
+			};
+
+			// Temp Code
+			for (uint8 i = 0; i < 2; ++i)
+			{
+				shared_ptr<DropItem> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropItem>(
+					L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties(), szPathList[i], eItemKind[i]);
+				Vec3 vItemPos = vPos;
+				vItemPos.z -= 1;
+				pGameObject->GetTransform()->SetLocalPosition(vItemPos);
+
+				float fAngle = i ? 75.f : 105.f;
+				float fRadian = fAngle * XM_PI / 180.f;
+
+				PxVec3 vRightNormal = PxVec3(1.f, 0.f, 0.f);
+				PxVec3 vRotatedNormal = PxVec3(
+					vRightNormal.x * cosf(fRadian) + vRightNormal.y * sinf(fRadian),
+					vRightNormal.x * sinf(fRadian) - vRightNormal.y * cosf(fRadian),
+					0.f
+				);
+
+				pGameObject->GetRigidBody()->SetLinearVelocityForDynamic(vRotatedNormal * 500.f);
+
+				pGameObject->Awake();
+				SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+				GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
+			}
+
+				// Item Drop!
 			m_bTaked = true;
 		}
 	}

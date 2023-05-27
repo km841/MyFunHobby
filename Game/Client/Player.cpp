@@ -177,6 +177,9 @@ void Player::RefreshAnimation()
 
 void Player::SkulCooldownUpdate()
 {
+	if (!m_arrSkuls[0] || !m_arrSkuls[1])
+		return;
+
 	SKUL_INDEX eSkulIndex = m_pActiveSkul->GetSkulIndex();
 	switch (eSkulIndex)
 	{

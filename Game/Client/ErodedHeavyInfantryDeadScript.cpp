@@ -13,6 +13,7 @@
 #include "Animator.h"
 #include "LocalEffect.h"
 #include "CollisionManager.h"
+#include "Player.h"
 
 ErodedHeavyInfantryDeadScript::ErodedHeavyInfantryDeadScript()
 	: m_tStayTimer(1.7f)
@@ -36,13 +37,23 @@ void ErodedHeavyInfantryDeadScript::LateUpdate()
 
 		if (m_tStayTimer.IsFinished())
 		{
+			Vec3 vMyPos = pErodedInfantry.lock()->GetTransform()->GetPhysicalPosition();
 			// BOOM!
 			GET_SINGLE(CollisionManager)->SetForceInLayer(
 				LAYER_TYPE::PARTICLE,
-				pErodedInfantry.lock()->GetTransform()->GetPhysicalPosition(),
+				vMyPos,
 				Vec3(300.f, 300.f, 0.f),
 				Vec3(0.f, 600.f, 0.f)
 			);
+
+			Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
+			Vec3 vDiff = vPlayerPos - vMyPos;
+
+			GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(
+				vMyPos,
+				Vec3(300.f, 300.f, 0.f),
+				Vec3(vDiff.x < 0.f ? 300.f : -300.f, 1000.f, 0.f)
+				, 8.f);
 
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			pErodedInfantry.lock()->SetDeadFlag(false);
