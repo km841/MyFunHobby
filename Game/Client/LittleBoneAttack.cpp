@@ -21,6 +21,7 @@
 LittleBoneAttack::LittleBoneAttack(shared_ptr<Skul> pSkul)
 	: SkulAttack(pSkul)
 {
+	m_fDamage = 3.f;
 }
 
 LittleBoneAttack::~LittleBoneAttack()

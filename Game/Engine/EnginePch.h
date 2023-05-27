@@ -237,6 +237,9 @@ struct Status
 		, iDefence(0)
 		, fSpeed(0)
 		, bAlive(true)
+		, fAttackDist(0.f)
+		, fRecogDist(0.f)
+		, fCriticalPercent(0.f)
 	{}
 
 	void PlayerDefaultSetting()
@@ -248,12 +251,13 @@ struct Status
 		iDefence = 1;
 		fSpeed = 400.f;
 		bAlive = true;
+		fCriticalPercent = 30.f;
 	}
 
 	void MonsterDefaultSetting()
 	{
-		iMaxHP = 5;
-		iCurHP = 5;
+		iMaxHP = 10;
+		iCurHP = 10;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -265,8 +269,8 @@ struct Status
 
 	void KnightMonsterDefaultSetting()
 	{
-		iMaxHP = 5;
-		iCurHP = 5;
+		iMaxHP = 20;
+		iCurHP = 20;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -278,8 +282,8 @@ struct Status
 
 	void AlchemistMonsterDefaultSetting()
 	{
-		iMaxHP = 5;
-		iCurHP = 5;
+		iMaxHP = 20;
+		iCurHP = 20;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -291,8 +295,8 @@ struct Status
 
 	void ErodedKnightMonsterDefaultSetting()
 	{
-		iMaxHP = 5;
-		iCurHP = 5;
+		iMaxHP = 30;
+		iCurHP = 30;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -304,8 +308,8 @@ struct Status
 
 	void ErodedHeavyInfantryMonsterDefaultSetting()
 	{
-		iMaxHP = 5;
-		iCurHP = 5;
+		iMaxHP = 50;
+		iCurHP = 50;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -354,6 +358,7 @@ public:
 	bool  bAlive;
 	float fRecogDist;
 	float fAttackDist;
+	float fCriticalPercent;
 };
 
 enum class ATTACK_TYPE

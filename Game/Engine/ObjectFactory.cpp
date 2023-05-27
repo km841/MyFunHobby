@@ -38,6 +38,7 @@
 #include "IsFinishedRageAttackCondition.h"
 #include "IncreaseAttackCountTask.h"
 #include "RandomDirectionTask.h"
+#include "VelocityDownTask.h"
 
 /* Engrave */
 #include "Rapidity.h"
@@ -122,6 +123,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 	pRootNode->AddChild(pWeakHitSequence);
 	pWeakHitSequence->AddChild(make_shared<IsMonsterStateCondition>(pJuniorKnight, MONSTER_STATE::WEAK_HIT));
 	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pJuniorKnight, L"JuniorKnight_Weak_Hit"));
+	pWeakHitSequence->AddChild(make_shared<VelocityDownTask>(pJuniorKnight));
 	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pJuniorKnight, 0.5f));
 	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pJuniorKnight, MONSTER_STATE::TRACE));
 
@@ -209,11 +211,13 @@ shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 	pRootNode->AddChild(pDeadSequence);
 	pDeadSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::DEAD));
 	pDeadSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Dead"));
+	pDeadSequence->AddChild(make_shared<VelocityDownTask>(pErodedKnight));
 	pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pErodedKnight));
 
 	pRootNode->AddChild(pWeakHitSequence);
 	pWeakHitSequence->AddChild(make_shared<IsMonsterStateCondition>(pErodedKnight, MONSTER_STATE::WEAK_HIT));
 	pWeakHitSequence->AddChild(make_shared<RunAnimateTask>(pErodedKnight, L"ErodedKnight_Weak_Hit"));
+	pWeakHitSequence->AddChild(make_shared<VelocityDownTask>(pErodedKnight));
 	pWeakHitSequence->AddChild(make_shared<TimerCondition>(pErodedKnight, 0.5f));
 	pWeakHitSequence->AddChild(make_shared<ChangeMonsterStateTask>(pErodedKnight, MONSTER_STATE::TRACE));
 

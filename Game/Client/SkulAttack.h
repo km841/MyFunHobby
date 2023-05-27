@@ -1,6 +1,8 @@
 #pragma once
 class Skul;
 class AnimationGlobalEffect;
+
+using Damage = std::pair<DAMAGE_TYPE, float>;
 class SkulAttack
 {
 public:
@@ -24,13 +26,15 @@ public:
 
 protected:
 	void HitMonstersInAttackRange();
-	
+	Damage CalculateDamage();
 
 protected:
 	uint8 m_iMaxCount;
 	weak_ptr<Skul> m_pSkul;
 	ATTACK_ORDER m_eActiveAttackOrder;
 	std::array<std::array<AttackInfo, ATTACK_ORDER_COUNT>, MAX_ENUMS> m_arrAttackInfo;
+
+	float m_fDamage;
 
 	shared_ptr<Animation> m_pHitAnimation;
 };

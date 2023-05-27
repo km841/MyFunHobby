@@ -40,6 +40,7 @@ public:
     void SetAngularMaxVelocityForDynamic(float fMaxVelocity);
     void ApplyGravityForDynamic();
     void RemoveGravityForDynamic();
+    void SetRotationZForDynamic(float fRotationZ);
 
 private:
     bool m_bGravityApplied;

@@ -206,6 +206,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Monster\Projectile">
       <UniqueIdentifier>{d3b324f6-8a11-4194-9873-9cf1f1ad8df4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\DropingRewards">
+      <UniqueIdentifier>{c3d5095b-e8b2-4441-a9fe-265a09e49f68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -645,6 +648,9 @@
     </ClInclude>
     <ClInclude Include="BackgroundMoveScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="DropingRewards.h">
+      <Filter>소스 파일\Game\Object\GameObject\DropingRewards</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1098,6 +1104,9 @@
     </ClCompile>
     <ClCompile Include="BackgroundMoveScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="DropingRewards.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\DropingRewards</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

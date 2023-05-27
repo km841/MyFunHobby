@@ -25,7 +25,7 @@
 #include "AnimationLocalEffect.h"
 #include "ObjectReturnToPoolEvent.h"
 #include "ParticleSystem.h"
-
+#include "DropingRewards.h"
 
 Monster::Monster()
 	: GameObject(LAYER_TYPE::MONSTER)
@@ -168,9 +168,106 @@ void Monster::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUD, eSceneType));
 }
 
+void Monster::ScatterGold()
+{
+	int32 iRandCount = RANDOM(1, 5);
+
+	for (int32 i = 0; i < iRandCount; ++i)
+	{
+		shared_ptr<DropingRewards> pGold = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<DropingRewards>(
+			L"Deferred", false,
+			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(10.f, 10.f, 1.f));
+
+		pGold->AddComponent(make_shared<Animator>());
+
+		// Gold Spin
+		{
+			shared_ptr<Animation> pSpinAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Gold_Spin", L"..\\Resources\\Animation\\MonsterCommon\\gold_spin.anim");
+			pGold->GetAnimator()->AddAnimation(L"Gold_Spin", pSpinAnimation);
+		}
+
+		// Gold Get
+		{
+			shared_ptr<Animation> pGetAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Rewards_Get", L"..\\Resources\\Animation\\MonsterCommon\\gold_get.anim");
+			pGold->GetAnimator()->AddAnimation(L"Rewards_Get", pGetAnimation);
+		}
+
+		pGold->GetAnimator()->Play(L"Gold_Spin");
+
+		Vec3 vMyPos = GetTransform()->GetWorldPosition();
+		vMyPos.z = 90.f;
+		pGold->GetTransform()->SetLocalPosition(vMyPos);
+
+		Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
+
+		int32 iRandomDegree = RANDOM(75, 105);
+		float fRandomRadian = (iRandomDegree * XM_PI) / 180.f;
+		float fRotatedX = vRightNormal.x * cosf(fRandomRadian) - vRightNormal.y * sinf(fRandomRadian);
+		float fRotatedY = vRightNormal.x * sinf(fRandomRadian) + vRightNormal.y * cosf(fRandomRadian);
+
+		int32 iRandomForce = RANDOM(400, 600);
+
+		int32 iRandomAngularVelocity = RANDOM(-30, 30);
+		Vec3 vRotatedVec = Vec3(fRotatedX, fRotatedY, 0.f);
+		pGold->Awake();
+		pGold->GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, static_cast<float>(iRandomAngularVelocity)));
+		pGold->GetPhysical()->GetActor<PxRigidDynamic>()->setLinearVelocity(Conv::Vec3ToPxVec3(vRotatedVec * static_cast<float>(iRandomForce)));
+
+		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGold, eSceneType));
+	}
+}
+
+void Monster::ScatterDarkQuartz()
+{
+	int32 iRandCount = RANDOM(1, 5);
+	const wstring szPath = L"..\\Resources\\Texture\\Sprites\\MonsterCommon\\DarkQuartz\\Image_DarkQuartz_";
+	for (int32 i = 0; i < iRandCount; ++i)
+	{
+		int32 iRandomImageNumber = RANDOM(1, 4);
+		wstring szRandomPath = szPath + std::to_wstring(iRandomImageNumber) + L".png";
+
+		shared_ptr<DropingRewards> pDarkQuartz = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<DropingRewards>(
+			L"Deferred", false,
+			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(10.f, 10.f, 1.f), szRandomPath);
+
+		pDarkQuartz->AddComponent(make_shared<Animator>());
+
+		// Gold Get
+		{
+			shared_ptr<Animation> pGetAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Rewards_Get", L"..\\Resources\\Animation\\MonsterCommon\\darkquartz_get.anim");
+			pDarkQuartz->GetAnimator()->AddAnimation(L"Rewards_Get", pGetAnimation);
+		}
+
+		Vec3 vMyPos = GetTransform()->GetWorldPosition();
+		vMyPos.z = 90.f;
+		pDarkQuartz->GetTransform()->SetLocalPosition(vMyPos);
+
+		Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
+
+		int32 iRandomDegree = RANDOM(45, 135);
+		float fRandomRadian = (iRandomDegree * XM_PI) / 180.f;
+		float fRotatedX = vRightNormal.x * cosf(fRandomRadian) - vRightNormal.y * sinf(fRandomRadian);
+		float fRotatedY = vRightNormal.x * sinf(fRandomRadian) + vRightNormal.y * cosf(fRandomRadian);
+
+		int32 iRandomForce = RANDOM(400, 600);
+
+		int32 iRandomAngularVelocity = RANDOM(-30, 30);
+		Vec3 vRotatedVec = Vec3(fRotatedX, fRotatedY, 0.f);
+		pDarkQuartz->Awake();
+		pDarkQuartz->GetPhysical()->GetActor<PxRigidDynamic>()->setAngularVelocity(PxVec3(0.f, 0.f, static_cast<float>(iRandomAngularVelocity)));
+		pDarkQuartz->GetPhysical()->GetActor<PxRigidDynamic>()->setLinearVelocity(Conv::Vec3ToPxVec3(vRotatedVec * static_cast<float>(iRandomForce)));
+
+		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDarkQuartz, eSceneType));
+	}
+}
+
 void Monster::ActivateDeadEvent(const Vec3& vDir)
 {
 	ScatterParticles(vDir);
+	ScatterGold();
+	ScatterDarkQuartz();
 
 	CreateDeadEffectAndAddedScene();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

@@ -194,6 +194,7 @@
     <ClInclude Include="DarkMirror.h" />
     <ClInclude Include="DecoObject.h" />
     <ClInclude Include="DropEssence.h" />
+    <ClInclude Include="DropingRewards.h" />
     <ClInclude Include="DungeonGateOpenEvent.h" />
     <ClInclude Include="DungeonWall.h" />
     <ClInclude Include="Dungeon_Bone.h" />
@@ -354,6 +355,7 @@
     <ClCompile Include="DarkMirror.cpp" />
     <ClCompile Include="DecoObject.cpp" />
     <ClCompile Include="DropEssence.cpp" />
+    <ClCompile Include="DropingRewards.cpp" />
     <ClCompile Include="DungeonGateOpenEvent.cpp" />
     <ClCompile Include="DungeonWall.cpp" />
     <ClCompile Include="Dungeon_Bone.cpp" />

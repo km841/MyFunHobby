@@ -46,6 +46,8 @@ public:
 	virtual void ScatterParticles(PARTICLE_DIRECTION eParticleDirection) { }
 	virtual void ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection);
 	virtual void ScatterParticles(const Vec3& vDir) { }
+	virtual void ScatterGold();
+	virtual void ScatterDarkQuartz();
 	virtual void ActivateDeadEvent(const Vec3& vDir);
 	virtual void ActivateDeadEvent();
 

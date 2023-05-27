@@ -190,3 +190,14 @@ void RigidBody::RemoveGravityForDynamic()
 	assert(pDynamicActor);
 	pDynamicActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
+
+void RigidBody::SetRotationZForDynamic(float fRotationZ)
+{
+	assert(GetPhysical());
+	PxRigidDynamic* pDynamicActor = GetPhysical()->GetActor<PxRigidDynamic>();
+	assert(pDynamicActor);
+
+	auto transform = pDynamicActor->getGlobalPose();
+	transform.q.z = fRotationZ;
+	pDynamicActor->setGlobalPose(transform);
+}

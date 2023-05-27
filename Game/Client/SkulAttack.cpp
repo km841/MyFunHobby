@@ -17,6 +17,7 @@ SkulAttack::SkulAttack(shared_ptr<Skul> pSkul)
 	: m_eActiveAttackOrder(ATTACK_ORDER::ATTACK_A)
 	, m_pSkul(pSkul)
 	, m_iMaxCount(0)
+	, m_fDamage(1)
 {
 }
 
@@ -78,9 +79,10 @@ void SkulAttack::HitMonstersInAttackRange()
 					pMonster->SetMonsterState(MONSTER_STATE::WEAK_HIT);
 
 				CreateHitEffectAndAddedScene(vPos);
-				pGameObject->GetStatus()->TakeDamage(3);
-
-				FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, 3.f, vPos);
+				Damage damage = CalculateDamage();
+				
+				pGameObject->GetStatus()->TakeDamage(damage.second);
+				FONT->DrawDamage(damage.first, damage.second, vPos);
 
 				// Monster Dead Event Occurs
 				if (!pGameObject->GetStatus()->IsAlive())
@@ -98,6 +100,15 @@ void SkulAttack::HitMonstersInAttackRange()
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.05f, Vec3(500.f, 0.f, 0.f));
 		}
 	}
+}
+
+Damage SkulAttack::CalculateDamage()
+{
+	float fDamage = m_pSkul.lock()->GetPlayer().lock()->GetStatus()->iAttack + m_fDamage;
+	bool bIsCritical = RANDOM(1, 10) <= 3;
+	DAMAGE_TYPE eDamageType = bIsCritical ? DAMAGE_TYPE::FROM_PLAYER_CRITICAL : DAMAGE_TYPE::FROM_PLAYER_MELEE;
+
+	return std::make_pair(eDamageType, bIsCritical ? fDamage * 1.5f : fDamage);
 }
 
 

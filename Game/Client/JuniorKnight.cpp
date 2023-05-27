@@ -118,6 +118,7 @@ void JuniorKnight::ScatterParticles(PARTICLE_DIRECTION eParticleDirection)
 void JuniorKnight::ActivateDeadEvent(PARTICLE_DIRECTION eParticleDirection)
 {
 	Monster::ActivateDeadEvent(eParticleDirection);
+
 }
 
 void JuniorKnight::ScatterParticles(const Vec3& vDir)

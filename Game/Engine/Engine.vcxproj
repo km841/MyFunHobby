@@ -263,6 +263,7 @@
     <ClInclude Include="InterfaceManager.h" />
     <ClInclude Include="UnflagAsAttackedFlagTask.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="VelocityDownTask.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
@@ -364,6 +365,7 @@
     <ClCompile Include="InterfaceManager.cpp" />
     <ClCompile Include="UnflagAsAttackedFlagTask.cpp" />
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="VelocityDownTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl" />

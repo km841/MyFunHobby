@@ -24,14 +24,6 @@ struct FontInfo
 	uint32 iFontColor;
 };
 
-enum class DAMAGE_TYPE : uint8
-{
-	FROM_MONSTER,
-	FROM_PLAYER_MELEE,
-	FROM_PLAYER_MAGIC,
-	FROM_PLAYER_CRITICAL,
-};
-
 struct DamageInfo
 {
 	DAMAGE_TYPE eDamageType;
