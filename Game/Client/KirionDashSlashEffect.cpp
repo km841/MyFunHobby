@@ -65,6 +65,9 @@ void KirionDashSlashEffect::Update()
 						GetTransform()->GetLocalPosition(), 
 						GetTransform()->GetLocalScale(), 
 						Vec3(0.f, 100.f, 0.f));
+
+					
+
 					GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
 				}
 			}

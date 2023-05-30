@@ -212,6 +212,9 @@
     <Filter Include="소스 파일\Game\Object\DropObject">
       <UniqueIdentifier>{0616cc6a-2b6a-4544-8891-1c2ef0fa9813}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\HUD\DropRewardHUD">
+      <UniqueIdentifier>{6c2dee6d-8190-48be-a376-b35aa6028354}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -666,6 +669,15 @@
     </ClInclude>
     <ClInclude Include="DropItem.h">
       <Filter>소스 파일\Game\Object\DropObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItemHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="DropSkulHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="DropEssenceHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1134,6 +1146,15 @@
     </ClCompile>
     <ClCompile Include="DropSkul.cpp">
       <Filter>소스 파일\Game\Object\DropObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItemHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="DropEssenceHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="DropSkulHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

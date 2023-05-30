@@ -176,7 +176,7 @@ void Monster::ScatterGold()
 	for (int32 i = 0; i < iRandCount; ++i)
 	{
 		shared_ptr<DropingRewards> pGold = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<DropingRewards>(
-			L"Deferred", false,
+			L"Forward", false,
 			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(10.f, 10.f, 1.f));
 
 		pGold->AddComponent(make_shared<Animator>());
@@ -229,7 +229,7 @@ void Monster::ScatterDarkQuartz()
 		wstring szRandomPath = szPath + std::to_wstring(iRandomImageNumber) + L".png";
 
 		shared_ptr<DropingRewards> pDarkQuartz = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<DropingRewards>(
-			L"Deferred", false,
+			L"Forward", false,
 			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(10.f, 10.f, 1.f), szRandomPath);
 
 		pDarkQuartz->AddComponent(make_shared<Animator>());

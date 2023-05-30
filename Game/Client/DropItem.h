@@ -4,7 +4,7 @@ class DropItem :
     public GameObject
 {
 public:
-    DropItem(ITEM_KIND eItemKind);
+    DropItem(ITEM_KIND eItemKind, DROP_ITEM_INDEX eItemIndex);
     virtual ~DropItem();
 
     virtual void Awake();
@@ -25,5 +25,7 @@ public:
 private:
     ITEM_KIND m_eItemKind;
     bool m_bIsCollisionWithPlayer;
+    bool m_bFixed;
+    DROP_ITEM_INDEX m_eItemIndex;
 };
 

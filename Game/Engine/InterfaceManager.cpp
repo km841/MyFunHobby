@@ -31,6 +31,8 @@
 #include "ObjectFactory.h"
 #include "BaseCampOpeningHUD.h"
 #include "PlayerSecondSkillFrameHUD.h"
+#include "DropItemHUD.h"
+#include "DropSkulHUD.h"
 
 void InterfaceManager::Init()
 {
@@ -224,5 +226,31 @@ void InterfaceManager::CreateHUD()
 		m_mInterfaceMap[INTERFACE_TYPE::BASECAMP_OPENING] = pOpeningHUD;
 	}
 
+	// Drop Item First HUD
+	{
+		shared_ptr<DropItemHUD> pDropItemHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DropItemHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_PopupItem.png");
+		pDropItemHUD->SetFrustum(false);
+		pDropItemHUD->Disable();
+
+		m_mInterfaceMap[INTERFACE_TYPE::DROP_ITEM_FIRST] = pDropItemHUD;
+	}
+
+	// Drop Item Second HUD
+	{
+		shared_ptr<DropItemHUD> pDropItemHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DropItemHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_PopupItem.png");
+		pDropItemHUD->SetFrustum(false);
+		pDropItemHUD->Disable();
+
+		m_mInterfaceMap[INTERFACE_TYPE::DROP_ITEM_SECOND] = pDropItemHUD;
+	}
+
+	// Drop Skul HUD
+	{
+		shared_ptr<DropSkulHUD> pDropSkulHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DropSkulHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_PopupSkul.png");
+		pDropSkulHUD->SetFrustum(false);
+		pDropSkulHUD->Disable();
+
+		m_mInterfaceMap[INTERFACE_TYPE::DROP_SKUL] = pDropSkulHUD;
+	}
 
 }

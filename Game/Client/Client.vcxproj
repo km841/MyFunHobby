@@ -194,9 +194,12 @@
     <ClInclude Include="DarkMirror.h" />
     <ClInclude Include="DecoObject.h" />
     <ClInclude Include="DropEssence.h" />
+    <ClInclude Include="DropEssenceHUD.h" />
     <ClInclude Include="DropingRewards.h" />
     <ClInclude Include="DropItem.h" />
+    <ClInclude Include="DropItemHUD.h" />
     <ClInclude Include="DropSkul.h" />
+    <ClInclude Include="DropSkulHUD.h" />
     <ClInclude Include="DungeonGateOpenEvent.h" />
     <ClInclude Include="DungeonWall.h" />
     <ClInclude Include="Dungeon_Bone.h" />
@@ -359,9 +362,12 @@
     <ClCompile Include="DarkMirror.cpp" />
     <ClCompile Include="DecoObject.cpp" />
     <ClCompile Include="DropEssence.cpp" />
+    <ClCompile Include="DropEssenceHUD.cpp" />
     <ClCompile Include="DropingRewards.cpp" />
     <ClCompile Include="DropItem.cpp" />
+    <ClCompile Include="DropItemHUD.cpp" />
     <ClCompile Include="DropSkul.cpp" />
+    <ClCompile Include="DropSkulHUD.cpp" />
     <ClCompile Include="DungeonGateOpenEvent.cpp" />
     <ClCompile Include="DungeonWall.cpp" />
     <ClCompile Include="Dungeon_Bone.cpp" />

@@ -28,8 +28,8 @@ void Tool::Update()
 {
 	UpdateGui();
 
-	//m_pAnimEditor->Update();
-	m_pMapEditor->Update();
+	m_pAnimEditor->Update();
+	//m_pMapEditor->Update();
 	// Changed
 }
 

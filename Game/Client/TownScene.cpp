@@ -235,6 +235,9 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::MOUSE_POINTER));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(UI_TYPE::INVENTORY));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_ITEM_FIRST));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_ITEM_SECOND));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_SKUL));
 
 	//Scene Change Event Object
 	{

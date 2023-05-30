@@ -17,11 +17,13 @@ public:
     void CreateTouchEffectAddedToScene();
 
 public:
+    virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject);
     virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
     virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
 private:
     SKUL_KIND m_eSkulKind;
     bool m_bIsCollisionWithPlayer;
+    bool m_bFixed;
 };
 
