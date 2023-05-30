@@ -215,6 +215,9 @@
     <Filter Include="소스 파일\Game\Object\Interface\HUD\DropRewardHUD">
       <UniqueIdentifier>{6c2dee6d-8190-48be-a376-b35aa6028354}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\NPC\Spider">
+      <UniqueIdentifier>{6cfe97dd-ea64-4287-a9c8-0bcc94ca28e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -678,6 +681,12 @@
     </ClInclude>
     <ClInclude Include="DropEssenceHUD.h">
       <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC_Spider.h">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterHitShaderScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1155,6 +1164,12 @@
     </ClCompile>
     <ClCompile Include="DropSkulHUD.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD\DropRewardHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC_Spider.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\NPC\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHitShaderScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

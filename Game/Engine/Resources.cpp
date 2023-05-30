@@ -342,6 +342,18 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Deferred", pShader);
 	}
 
+	// Deferred
+	{
+		ShaderInfo shaderInfo =
+		{
+			SHADER_TYPE::DEFERRED,
+		};
+
+		shared_ptr<Shader> pShader = make_shared<Shader>();
+		pShader->CreateGraphicsShader(L"..\\Resources\\Shader\\monster_deferred.fx", shaderInfo);
+		Add<Shader>(L"Monster_Deferred", pShader);
+	}
+
 	// Fade In / Out
 	{
 		ShaderInfo shaderInfo =
@@ -547,6 +559,15 @@ void Resources::CreateDefaultMaterial()
 
 		pMaterial->SetShader(pShader);
 		Add<Material>(L"Deferred", pMaterial);
+	}
+
+	// Monster Deferred
+	{
+		shared_ptr<Material> pMaterial = make_shared<Material>();
+		shared_ptr<Shader> pShader = Get<Shader>(L"Monster_Deferred");
+
+		pMaterial->SetShader(pShader);
+		Add<Material>(L"Monster_Deferred", pMaterial);
 	}
 
 	// Dir Light

@@ -58,7 +58,37 @@ void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 		LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
 		if (!m_bTouch)
+		{
 			m_bTouch = true;
+
+			if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
+			{
+				weak_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
+				int32 iDamage = 4;
+				pGameObject->GetStatus()->TakeDamage(iDamage);
+
+				Vec3 vMonsterPos = pMonster.lock()->GetTransform()->GetPhysicalPosition();
+				if (!pGameObject->GetStatus()->IsAlive())
+				{
+					pMonster.lock()->SetMonsterState(MONSTER_STATE::DEAD);
+					FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, iDamage, vMonsterPos);
+				}
+				else
+				{
+					if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
+					{
+						FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, iDamage, vMonsterPos);
+						pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);
+					}
+
+					else
+					{
+						FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, iDamage, vMonsterPos);
+					}
+				}
+			}
+			
+		}
 	}
 }
 

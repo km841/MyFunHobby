@@ -13,6 +13,9 @@
 #include "DropEssence.h"
 #include "InterfaceManager.h"
 #include "HUD.h"
+#include "NPC_Spider.h"
+#include "Animator.h"
+#include "Animation.h"
 
 Ch3BaseCamp::Ch3BaseCamp(const wstring& szMapPath, const wstring& szScriptPath)
 	: BaseCamp(szMapPath, szScriptPath)
@@ -53,17 +56,21 @@ void Ch3BaseCamp::Enter()
 	BaseCamp::Enter();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING)->Action();
 
-	// Essence
-	//{
-	//	shared_ptr<DropEssence> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropEssence>(
-	//		L"Deferred", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 30.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\Essence\\Lyweasel\\Lyweasel.png", ESSENCE_KIND::LYWEASEL);
+	// NPC Spider
+	{
+		shared_ptr<NPC_Spider> pSpider = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<NPC_Spider>(L"Forward", false,
+			ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 10.f), MassProperties());
 
-	//	pGameObject->GetTransform()->SetLocalPosition(Vec3(-1200.f, 200.f, 100.f));
+		pSpider->GetTransform()->SetLocalPosition(Vec3(715.f, 151.f, 100.f));
+		pSpider->AddComponent(make_shared<Animator>());
 
-	//	pGameObject->Awake();
-	//	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-	//	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
-	//}
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Spider_Idle", L"..\\Resources\\Animation\\Spider\\npc_spider_idle.anim");
+		pSpider->GetAnimator()->AddAnimation(L"Spider_Idle", pAnimation);
+		pSpider->GetAnimator()->Play(L"Spider_Idle");
+
+		pSpider->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pSpider, SCENE_TYPE::DUNGEON));
+	}
 }
 
 void Ch3BaseCamp::Exit()

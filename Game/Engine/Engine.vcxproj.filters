@@ -702,5 +702,8 @@
     <FxCompile Include="..\Resources\Shader\mirror.fx">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="..\Resources\Shader\monster_deferred.fx">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

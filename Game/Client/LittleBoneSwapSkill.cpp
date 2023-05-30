@@ -5,10 +5,13 @@
 #include "RigidBody.h"
 #include "Clock.h"
 #include "Player.h"
+#include "Transform.h"
+#include "CollisionManager.h"
 
 LittleBoneSwapSkill::LittleBoneSwapSkill(const SkillInfo& skillInfo)
 	: SkulSkill(skillInfo)
 	, m_fSpeed(200.f)
+	, m_tDamageTick(0.2f)
 {
 }
 
@@ -17,8 +20,26 @@ void LittleBoneSwapSkill::Update()
 	SkulSkill::Update();
 	uint8 iDirection = static_cast<uint8>(m_pSkul.lock()->GetDirection());
 
-
 	m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(AXIS::X, iDirection ? -m_fSpeed : m_fSpeed);
+
+	if (!m_tDamageTick.IsRunning())
+		m_tDamageTick.Start();
+
+	m_tDamageTick.Update(DELTA_TIME);
+
+	const Vec3& vSize = m_pSkul.lock()->GetTransform()->GetLocalScale();
+	Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();
+	
+	if (m_tDamageTick.IsFinished())
+	{
+		GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(
+			vMyPos,
+			vSize * 2.f,
+			Vec3(0.f, 0.f, 0.f),
+			1.f, DAMAGE_TYPE::FROM_PLAYER_MELEE);
+
+		m_tDamageTick.Reset();
+	}
 }
 
 void LittleBoneSwapSkill::CreateConditionFunction()

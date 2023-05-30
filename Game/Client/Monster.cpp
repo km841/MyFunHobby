@@ -279,6 +279,8 @@ void Monster::ActivateDeadEvent(const Vec3& vDir)
 void Monster::ActivateDeadEvent()
 {
 	ScatterParticles(m_vParticleDir);
+	ScatterGold();
+	ScatterDarkQuartz();
 
 	CreateDeadEffectAndAddedScene();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

@@ -82,7 +82,7 @@ void TreasureBox::Update()
 					0.f
 				);
 
-				pGameObject->GetRigidBody()->SetLinearVelocityForDynamic(vRotatedNormal * 500.f);
+				pGameObject->GetRigidBody()->SetLinearVelocityForDynamic(vRotatedNormal * 800.f);
 
 				pGameObject->Awake();
 				SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

@@ -96,6 +96,69 @@ void CollisionManager::SetForceInPlayerAndTakeDamage(const Vec3& vPos, const Vec
 	}
 }
 
+void CollisionManager::SetForceInMonsterAndTakeDamage(const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse, float fDamage, DAMAGE_TYPE eDamageType)
+{
+	auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::MONSTER);
+	Vec3 vLeftTop = Vec3(vPos.x - vVolume.x / 2.f, vPos.y + vVolume.y / 2.f, 0.f);
+	Vec3 vRightBtm = Vec3(vPos.x + vVolume.x / 2.f, vPos.y - vVolume.y / 2.f, 0.f);
+
+	for (auto& pGameObject : vGameObjects)
+	{
+		weak_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
+
+		if (MONSTER_STATE::DEAD == pMonster.lock()->GetMonsterState())
+			continue;
+
+		Vec3 vObjectPos = pGameObject->GetTransform()->GetPhysicalPosition();
+		Vec3 vDamagePos = vObjectPos;
+		if (vPos == vObjectPos)
+			continue;
+
+		if (vObjectPos.x > vLeftTop.x && vObjectPos.x < vRightBtm.x &&
+			vObjectPos.y > vRightBtm.y && vObjectPos.y < vLeftTop.y)
+		{
+			float fRandomAngular = static_cast<float>(RANDOM(-10, 10));
+			pGameObject->GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, fRandomAngular));
+
+			Vec3 vRandomImpulse = vImpulse;
+			vRandomImpulse.y = static_cast<float>(RANDOM(static_cast<int32>(vImpulse.y - 200.f), static_cast<int32>(vImpulse.y + 200.f)));
+
+			if (vRandomImpulse.x < 1.f)
+			{
+				vRandomImpulse.x = static_cast<float>(RANDOM(-50, 50));
+			}
+
+			pGameObject->GetStatus()->TakeDamage(static_cast<uint32>(fDamage));
+			if (!pGameObject->GetStatus()->IsAlive())
+			{
+				pMonster.lock()->SetMonsterState(MONSTER_STATE::DEAD);
+				//pMonster.lock()->SetParticleDir(Vec3(0.f, 400.f, 0.f));
+				vDamagePos.y += vImpulse.y / 6.f;
+				FONT->DrawDamage(eDamageType, fDamage, vDamagePos);
+				continue;
+			}
+			else
+			{
+				if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
+				{
+					vDamagePos.y += vImpulse.y / 6.f;
+					FONT->DrawDamage(eDamageType, fDamage, vDamagePos);
+
+					pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);
+
+					if (vImpulse != Vec3::Zero)
+						GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pGameObject, Conv::Vec3ToPxVec3(vRandomImpulse)));
+				}
+
+				else
+				{
+					FONT->DrawDamage(eDamageType, fDamage, vObjectPos);
+				}
+			}
+		}
+	}
+}
+
 void CollisionManager::SetForceFromDotInLayerAndTakeDamage(LAYER_TYPE eLayerType, const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse, float fDamage)
 {
 	auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(eLayerType);

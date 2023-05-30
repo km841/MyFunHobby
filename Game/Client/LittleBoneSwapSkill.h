@@ -15,5 +15,6 @@ public:
 
 private:
 	float m_fSpeed;
+	Timer m_tDamageTick;
 };
 

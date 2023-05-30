@@ -59,7 +59,7 @@ void ErodedKnightDeadScript::LateUpdate()
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			pErodedKnight.lock()->SetDeadFlag(false);
 			CreateExplosionEffectAndAddedToScene();
-			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(pErodedKnight.lock()->GetExclamationEffect().lock(), eSceneType));
+			pErodedKnight.lock()->RemoveExclamationEffect();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(GetGameObject(), eSceneType));
 		}
 	}

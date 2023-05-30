@@ -42,6 +42,9 @@
       <FullPath>C:\MyProject\Game\Output\mirror.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\MyProject\Game\Output\monster_deferred.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\MyProject\Game\Output\monster_hp.cso</FullPath>
     </ContentFile>
     <ContentFile>

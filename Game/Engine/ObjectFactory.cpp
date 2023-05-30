@@ -53,6 +53,7 @@
 #include "AlchemistFlaskThrowScript.h"
 #include "ErodedEntDeadScript.h"
 #include "ErodedEntAttackScript.h"
+#include "MonsterHitShaderScript.h"
 
 
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
@@ -83,6 +84,7 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 	}
 
 	assert(pMonster);
+	pMonster->AddComponent(make_shared<MonsterHitShaderScript>());
 
 	pMonster->Awake();
 	pMonster->Start();
@@ -94,7 +96,7 @@ void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const 
 
 shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 {
-	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	shared_ptr<JuniorKnight> pJuniorKnight = CreateObjectHasPhysicalFromPool<JuniorKnight>(L"Monster_Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
 	pJuniorKnight->AddComponent(make_shared<AI>());
 	pJuniorKnight->AddComponent(make_shared<Animator>());
 	pJuniorKnight->AddComponent(make_shared<Movement>());
@@ -121,6 +123,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 
 	pRootNode->AddChild(pDeadSequence);
 	pDeadSequence->AddChild(make_shared<IsDeadCondition>(pJuniorKnight));
+	pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pJuniorKnight));
 	pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pJuniorKnight));
 
 	pRootNode->AddChild(pWeakHitSequence);
@@ -184,7 +187,7 @@ shared_ptr<Monster> ObjectFactory::CreateJuniorKnight(const Vec3& vMonsterPos)
 
 shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 {
-	shared_ptr<ErodedKnight> pErodedKnight = CreateObjectHasPhysicalFromPool<ErodedKnight>(L"Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	shared_ptr<ErodedKnight> pErodedKnight = CreateObjectHasPhysicalFromPool<ErodedKnight>(L"Monster_Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
 	pErodedKnight->AddComponent(make_shared<AI>());
 	pErodedKnight->AddComponent(make_shared<Animator>());
 	pErodedKnight->AddComponent(make_shared<Movement>());
@@ -280,7 +283,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedKnight(const Vec3& vMonsterPos)
 
 shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonsterPos)
 {
-	shared_ptr<ErodedHeavyInfantry> pErodedHeavyInfantry = CreateObjectHasPhysicalFromPool<ErodedHeavyInfantry>(L"Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(100.f, 100.f, 50.f), MassProperties(10.f, 10.f, 0.01f));
+	shared_ptr<ErodedHeavyInfantry> pErodedHeavyInfantry = CreateObjectHasPhysicalFromPool<ErodedHeavyInfantry>(L"Monster_Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(100.f, 100.f, 50.f), MassProperties(10.f, 10.f, 0.01f));
 	pErodedHeavyInfantry->AddComponent(make_shared<AI>());
 	pErodedHeavyInfantry->AddComponent(make_shared<Animator>());
 	pErodedHeavyInfantry->AddComponent(make_shared<Movement>());
@@ -491,7 +494,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedHeavyInfantry(const Vec3& vMonste
 
 shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 {
-	shared_ptr<ErodedEnt> pErodedEnt = CreateObjectHasPhysicalFromPool<ErodedEnt>(L"Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	shared_ptr<ErodedEnt> pErodedEnt = CreateObjectHasPhysicalFromPool<ErodedEnt>(L"Monster_Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
 	pErodedEnt->AddComponent(make_shared<AI>());
 	pErodedEnt->AddComponent(make_shared<Animator>());
 	pErodedEnt->AddComponent(make_shared<Movement>());
@@ -618,7 +621,7 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 
 shared_ptr<Monster> ObjectFactory::CreateAlchemist(const Vec3 vMonsterPos)
 {
-	shared_ptr<Alchemist> pAlchemist = CreateObjectHasPhysicalFromPool<Alchemist>(L"Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
+	shared_ptr<Alchemist> pAlchemist = CreateObjectHasPhysicalFromPool<Alchemist>(L"Monster_Deferred", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 50.f, 50.f), MassProperties(100.f, 100.f, 0.01f));
 	pAlchemist->AddComponent(make_shared<AI>());
 	pAlchemist->AddComponent(make_shared<Animator>());
 	pAlchemist->AddComponent(make_shared<Movement>());
@@ -647,6 +650,7 @@ shared_ptr<Monster> ObjectFactory::CreateAlchemist(const Vec3 vMonsterPos)
 
 	pRootNode->AddChild(pDeadSequence);
 	pDeadSequence->AddChild(make_shared<IsDeadCondition>(pAlchemist));
+	pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pAlchemist));
 	pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pAlchemist));
 
 	pRootNode->AddChild(pWeakHitSequence);

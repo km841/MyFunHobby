@@ -8,6 +8,7 @@ public:
 
 	void SetForceInLayer(LAYER_TYPE eLayerType, const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse);
 	void SetForceInPlayerAndTakeDamage(const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse, float fDamage);
+	void SetForceInMonsterAndTakeDamage(const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse, float fDamage, DAMAGE_TYPE eDamageType);
 	void SetForceFromDotInLayerAndTakeDamage(LAYER_TYPE eLayerType, const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse, float fDamage);
 	void SetForceInLayerAndFollowPlayer(LAYER_TYPE eLayerType, const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse);
 private:

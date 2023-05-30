@@ -20,6 +20,7 @@
 #include "ForceOnObjectEvent.h"
 #include "Engine.h"
 #include "Clock.h"
+#include "CollisionManager.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor()
@@ -97,41 +98,8 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 		GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.15f, Vec3(100.f, 1000.f, 0.f));
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
-		auto& vParticles = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::PARTICLE);
-		for (auto& pParticle : vParticles)
-		{
-			Vec3 vParticlePos = pParticle->GetTransform()->GetPhysicalPosition();
-			Vec3 vTargetVec = vParticlePos - vMyPos;
-
-			if (vTargetVec.Length() < m_fMaxDistance)
-			{
-				float fRandomXImpulse = static_cast<float>(RANDOM(0, static_cast<int32>(m_fImpulse)));
-				if (vTargetVec.x < 0.f)
-					fRandomXImpulse = -fRandomXImpulse;
-
-				PxVec3 vImpulse = PxVec3(fRandomXImpulse, m_fImpulse, 0.f);
-				GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pParticle, vImpulse));
-			}
-		}
-
-		auto& vMonsters = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::MONSTER);
-		for (auto& pMonster : vMonsters)
-		{
-			Vec3 vMonsterPos = pMonster->GetTransform()->GetPhysicalPosition();
-			Vec3 vTargetVec = vMonsterPos - vMyPos;
-
-			if (vTargetVec.Length() < m_fMaxDistance)
-			{
-				float fRandomXImpulse = static_cast<float>(RANDOM(0, 100));
-				if (vTargetVec.x < 0.f)
-					fRandomXImpulse = -fRandomXImpulse;
-
-				PxVec3 vImpulse = PxVec3(fRandomXImpulse, 200.f, 0.f);
-
-				static_pointer_cast<Monster>(pMonster)->FlagAsAttacked();
-				GET_SINGLE(EventManager)->AddEvent(make_unique<ForceOnObjectEvent>(pMonster, vImpulse));
-			}
-		}
+		GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(m_fMaxDistance, m_fMaxDistance, 0.f), Vec3(0.f, m_fImpulse, 0.f));
+		GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(m_fMaxDistance, m_fMaxDistance, 0.f), Vec3(0.f, m_fImpulse, 0.f), 20.f, DAMAGE_TYPE::FROM_PLAYER_MAGIC);
 	}
 }
 

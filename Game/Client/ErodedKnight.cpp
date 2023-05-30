@@ -12,6 +12,7 @@
 #include "LocalEffect.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "ObjectReturnToPoolEvent.h"
 
 POOL_INIT(ErodedKnight);
 ErodedKnight::ErodedKnight()
@@ -130,6 +131,11 @@ void ErodedKnight::ActivateDeadEvent()
 {
 	CreateExclamationEffectAndAddedToScene();
 	m_bDeadFlag = true;
+}
+
+void ErodedKnight::RemoveExclamationEffect()
+{
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(m_pExclamation.lock(), SCENE_TYPE::DUNGEON));
 }
 
 void ErodedKnight::CreateExclamationEffectAndAddedToScene()

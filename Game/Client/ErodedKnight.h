@@ -29,6 +29,7 @@ public:
 	FORCEINLINE void SetDeadFlag(bool bDeadFlag) { m_bDeadFlag = bDeadFlag; }
 
 	FORCEINLINE weak_ptr<LocalEffect> GetExclamationEffect() { return m_pExclamation; }
+	void RemoveExclamationEffect();
 
 private:
 	void CreateExclamationEffectAndAddedToScene();

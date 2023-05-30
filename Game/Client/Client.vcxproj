@@ -250,12 +250,14 @@
     <ClInclude Include="LocalEffect.h" />
     <ClInclude Include="Lyweasel.h" />
     <ClInclude Include="MapReward.h" />
+    <ClInclude Include="MonsterHitShaderScript.h" />
     <ClInclude Include="MonsterProjectile.h" />
     <ClInclude Include="MonsterSpawnDungeonEvent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="MousePointerHUD.h" />
+    <ClInclude Include="NPC_Spider.h" />
     <ClInclude Include="ObjectFollowScript.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
     <ClInclude Include="PlayerSecondSkillFrameHUD.h" />
@@ -418,12 +420,14 @@
     <ClCompile Include="LocalEffect.cpp" />
     <ClCompile Include="Lyweasel.cpp" />
     <ClCompile Include="MapReward.cpp" />
+    <ClCompile Include="MonsterHitShaderScript.cpp" />
     <ClCompile Include="MonsterProjectile.cpp" />
     <ClCompile Include="MonsterSpawnDungeonEvent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="MousePointerHUD.cpp" />
+    <ClCompile Include="NPC_Spider.cpp" />
     <ClCompile Include="ObjectFollowScript.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
     <ClCompile Include="PlayerSecondSkillFrameHUD.cpp" />

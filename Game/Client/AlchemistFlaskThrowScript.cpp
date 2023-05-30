@@ -36,7 +36,7 @@ void AlchemistFlaskThrowScript::LateUpdate()
 
 void AlchemistFlaskThrowScript::CreateFlaskAndAddedToScene()
 {
-	shared_ptr<AlchemistFlask> pFlask = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<AlchemistFlask>(L"Deferred", false, ACTOR_TYPE::PROJECTILE_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(), L"..\\Resources\\Texture\\Sprites\\Alchemist\\Image_Alchemist_Flask.png");
+	shared_ptr<AlchemistFlask> pFlask = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<AlchemistFlask>(L"Forward", false, ACTOR_TYPE::PROJECTILE_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(), L"..\\Resources\\Texture\\Sprites\\Alchemist\\Image_Alchemist_Flask.png");
 
 	Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
 	Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
@@ -66,6 +66,10 @@ void AlchemistFlaskThrowScript::CreateFlaskAndAddedToScene()
 	pFlask->Awake();
 	pFlask->GetRigidBody()->SetLinearVelocityForDynamic(Conv::Vec3ToPxVec3(vRotatedNormal * fPower));
 	pFlask->GetRigidBody()->SetAngularVelocityForDynamic(Conv::Vec3ToPxVec3(Vec3(0.f, 0.f, 10.f)));
+
+	pFlask->AddComponent(make_shared<Animator>());
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Flask_Despawn", L"..\\Resources\\Animation\\Alchemist\\alchemist_flask_despawn.anim");
+	pFlask->GetAnimator()->AddAnimation(L"Flask_Despawn", pAnimation);
 
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pFlask, eSceneType));

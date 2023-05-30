@@ -79,6 +79,12 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
 	{
 		// 속도를 0으로 만들고 애니메이션 변경
+
+		weak_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
+
+		if (MONSTER_STATE::DEAD == pMonster.lock()->GetMonsterState())
+			return;
+
 		if (!m_bDespawn)
 		{
 			GetRigidBody()->SetVelocity(Vec3::Zero);
@@ -88,6 +94,8 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 			static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
 			pGameObject->GetStatus()->TakeDamage(1);
 			FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, 1.f, pGameObject->GetTransform()->GetPhysicalPosition());
+			if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
+				pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);
 
 			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 			vMyPos.z = 0.f;
@@ -100,7 +108,8 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 			if (!pGameObject->GetStatus()->IsAlive())
 			{
 				vTargetVec.x *= 5.f;
-				static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(vTargetVec);
+				pMonster.lock()->SetMonsterState(MONSTER_STATE::DEAD);
+				pMonster.lock()->ActivateDeadEvent(vTargetVec);
 			}
 		}
 	}
