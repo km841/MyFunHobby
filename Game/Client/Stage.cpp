@@ -52,7 +52,7 @@ void Stage::GoToNextDungeon(DUNGEON_TYPE eDungeonType)
 {
 	for (auto& pDungeon : m_vDungeons)
 	{
-		if (eDungeonType == pDungeon->GetDungeonType())
+		if (eDungeonType == pDungeon->GetDungeonType() && !pDungeon->IsVisited())
 		{
 			if (m_pActiveDungeon.lock())
 				m_pActiveDungeon.lock()->Exit();

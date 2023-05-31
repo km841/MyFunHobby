@@ -720,12 +720,19 @@ void Scene::CreateDungeonGate(STAGE_KIND eStageKind, DUNGEON_TYPE eDungeonType, 
 		case DUNGEON_TYPE::DUNGEON_ITEM:
 			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_activate.anim");
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
+			pGameObject->GetTransform()->SetGlobalOffset(Vec2(0.f, 15.f));
 			break;
 		case DUNGEON_TYPE::DUNGEON_GOLD:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Gold_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Gold\\ch3dungeongate_gold_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Gold_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Gold\\ch3dungeongate_gold_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::DUNGEON_BONE:
 			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
+			break;
+		case DUNGEON_TYPE::SHOP:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::VICE_BOSS:
 			break;

@@ -40,6 +40,11 @@ void LittleBoneHead::Update()
 		//PX_SCENE->GetScene()->removeActor(*GetPhysical()->GetActor());
 		//PX_SCENE->GetScene()->flushSimulation();
 	}
+	else
+	{
+		uint8 iDirection = static_cast<uint8>(GetDirection());
+		GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(iDirection ? -1000 : 1000, 0.f, 0.f));
+	}
 }
 
 void LittleBoneHead::LateUpdate()
@@ -50,6 +55,12 @@ void LittleBoneHead::LateUpdate()
 void LittleBoneHead::FinalUpdate()
 {
 	Possession::FinalUpdate();
+}
+
+void LittleBoneHead::Initialize()
+{
+	GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
+	DisableTouchFlag();
 }
 
 void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
@@ -87,6 +98,8 @@ void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 					}
 				}
 			}
+
+			
 			
 		}
 	}

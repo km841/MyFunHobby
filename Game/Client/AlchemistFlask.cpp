@@ -8,6 +8,8 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "Tile.h"
+#include "CollisionManager.h"
+#include "Transform.h"
 
 POOL_INIT(AlchemistFlask);
 AlchemistFlask::AlchemistFlask()
@@ -41,6 +43,10 @@ void AlchemistFlask::Update()
 		GetRigidBody()->SetAngularDamping(PX_MAX_F32);
 		GetRigidBody()->SetLinearDamping(PX_MAX_F32);
 		GetAnimator()->Play(L"Flask_Despawn", false);
+
+		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
+		Vec3 vMySize = GetTransform()->GetLocalPosition();
+		GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(vMyPos, Vec3(100.f, 100.f, 0.f), Vec3::Zero, 3.f);
 		m_bDespawnFlag = false;
 	}
 
@@ -87,8 +93,6 @@ void AlchemistFlask::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 			m_bDespawnFlag = true;
 			m_bChecked = true;
 		}
-		// Player Take Damage!
-
 	}
 }
 

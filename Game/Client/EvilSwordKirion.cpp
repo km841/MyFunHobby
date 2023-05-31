@@ -14,6 +14,7 @@
 #include "Skul.h"
 #include "SkulAttack.h"
 #include "KirionDashSlashEffect.h"
+#include "ObjectAttackAtHitFrameScript.h"
 
 
 EvilSwordKirion::EvilSwordKirion(const ItemInfo& itemInfo)
@@ -78,6 +79,7 @@ void EvilSwordKirion::CreateSlashEffectAndAddedToScene()
 	pAnimationLocalEffect->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
 
 	pAnimationLocalEffect->AddComponent(make_shared<Animator>());
+	pAnimationLocalEffect->AddComponent(make_shared<ObjectAttackAtHitFrameScript>(pAnimationLocalEffect, DAMAGE_TYPE::FROM_PLAYER_MAGIC, 1.f));
 
 	wstring szRandomAnim = {};
 	szRandomAnim.push_back(RANDOM('a', 'd'));
@@ -87,6 +89,8 @@ void EvilSwordKirion::CreateSlashEffectAndAddedToScene()
 	{
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Kirion_Slash", L"..\\Resources\\Animation\\Item\\Kirion\\kirion_slash_" + szRandomAnim);
 		pAnimationLocalEffect->GetAnimator()->AddAnimation(L"Kirion_Slash", pAnimation);
+
+		pAnimation->SetHitFrame(1);
 	}
 
 	pAnimationLocalEffect->GetAnimator()->Play(L"Kirion_Slash", false);

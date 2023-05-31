@@ -17,6 +17,8 @@ public:
 
 public:
     void SetThrowVelocity(const Vec3& vVelocity) { m_vVelocity = vVelocity; }
+    void DisableTouchFlag() { m_bTouch = false; }
+    void Initialize();
 
 public:
     virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;

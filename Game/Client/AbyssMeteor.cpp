@@ -99,7 +99,7 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(m_fMaxDistance, m_fMaxDistance, 0.f), Vec3(0.f, m_fImpulse, 0.f));
-		GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(m_fMaxDistance, m_fMaxDistance, 0.f), Vec3(0.f, m_fImpulse, 0.f), 20.f, DAMAGE_TYPE::FROM_PLAYER_MAGIC);
+		GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(m_fMaxDistance * 2.f, m_fMaxDistance * 2.f, 0.f), Vec3(0.f, m_fImpulse, 0.f), 20.f, DAMAGE_TYPE::FROM_PLAYER_MAGIC);
 	}
 }
 

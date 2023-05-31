@@ -14,6 +14,7 @@
 #include "Animator.h"
 #include "BoneReward.h"
 #include "AnimationLocalEffectOtherLayer.h"
+#include "GoldReward.h"
 
 CreateMapRewardEvent::CreateMapRewardEvent(shared_ptr<ConditionBlock> pConditionBlock, GRADE eGrade, DUNGEON_TYPE eDungeonType)
 	: DungeonEvent(DUNGEON_EVENT_KIND::CREATE_MAP_REWARD, pConditionBlock)
@@ -113,7 +114,21 @@ shared_ptr<MapReward> CreateMapRewardEvent::CreateItemReward(const Vec3& vPos)
 
 shared_ptr<MapReward> CreateMapRewardEvent::CreateGoldReward(const Vec3& vPos)
 {
-	return shared_ptr<MapReward>();
+	shared_ptr<GoldReward> pGoldReward = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<GoldReward>(L"Deferred", false,
+		ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(30.f, 100.f, 1.f), MassProperties());
+
+	pGoldReward->AddComponent(make_shared<Animator>());
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"GoldReward_Activate", L"..\\Resources\\Animation\\Dungeon\\MapReward\\gold_reward_activate.anim");
+	assert(pAnimation);
+	pGoldReward->GetAnimator()->AddAnimation(L"GoldReward_Activate", pAnimation);
+	pGoldReward->GetAnimator()->Play(L"GoldReward_Activate");
+
+	Vec3 vGoldPos = vPos;
+	vGoldPos.z = vPos.z - 1.f;
+	vGoldPos.y = vPos.y - 20.f;
+	pGoldReward->GetTransform()->SetLocalPosition(vGoldPos);
+
+	return pGoldReward;
 }
 
 shared_ptr<MapReward> CreateMapRewardEvent::CreateBoneReward(const Vec3& vPos)

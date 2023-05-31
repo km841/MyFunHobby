@@ -17,6 +17,7 @@
 #include "AnimationGlobalEffect.h"
 #include "AnimationLocalEffectOtherLayer.h"
 #include "ObjectFactory.h"
+#include "AbyssFieldDamageTickScript.h"
 
 HighWarlock::HighWarlock(const SkulInfo& skulInfo)
 	: Skul(skulInfo)
@@ -71,6 +72,7 @@ void HighWarlock::EnableAndInitChargedEffect()
 void HighWarlock::CreateAbyssFieldAndAddedToScene()
 {
 	shared_ptr<AnimationLocalEffectOtherLayer> pAbyssField = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffectOtherLayer>(L"Forward");
+	pAbyssField->AddComponent(make_shared<AbyssFieldDamageTickScript>());
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	Vec3 vMyPos = m_pPlayer.lock()->GetTransform()->GetPhysicalPosition();

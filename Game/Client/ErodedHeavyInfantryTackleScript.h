@@ -16,5 +16,6 @@ private:
 
 private:
     weak_ptr<LocalEffect> m_pFlashAura;
+    Timer m_tDamageTick;
 };
 

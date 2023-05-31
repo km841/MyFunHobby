@@ -72,7 +72,7 @@ void TreasureBox::Update()
 				vItemPos.z -= 1;
 				pGameObject->GetTransform()->SetLocalPosition(vItemPos);
 
-				float fAngle = i ? 75.f : 105.f;
+				float fAngle = i ? 85.f : 95.f;
 				float fRadian = fAngle * XM_PI / 180.f;
 
 				PxVec3 vRightNormal = PxVec3(1.f, 0.f, 0.f);

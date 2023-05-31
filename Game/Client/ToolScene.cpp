@@ -60,8 +60,8 @@ void ToolScene::Start()
 
 void ToolScene::Update()
 {
-	//MapEditorUpdate();
-	AnimationEditorUpdate();
+	MapEditorUpdate();
+	//AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -681,10 +681,17 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::DUNGEON_GOLD:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Gold_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Gold\\ch3dungeongate_gold_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Gold_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Gold\\ch3dungeongate_gold_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::DUNGEON_BONE:
 			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
+			break;
+
+		case DUNGEON_TYPE::SHOP:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::VICE_BOSS:
 			break;
@@ -752,11 +759,19 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Item_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Item\\ch3dungeongate_item_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::DUNGEON_GOLD:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Gold_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Gold\\ch3dungeongate_gold_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Gold_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Gold\\ch3dungeongate_gold_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::DUNGEON_BONE:
 			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
 			break;
+
+		case DUNGEON_TYPE::SHOP:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_deactivate.anim");
+			break;
+
 		case DUNGEON_TYPE::VICE_BOSS:
 			break;
 		case DUNGEON_TYPE::STAGE_BOSS:
@@ -991,6 +1006,22 @@ DungeonObjPair ToolScene::WstringToDungeonObjPair(const wstring& szSelectedKey)
 	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
 		szSelectedKey.find(L"Bone") != std::wstring::npos)
 		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::DUNGEON_BONE);
+
+	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
+		szSelectedKey.find(L"Gold") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::DUNGEON_GOLD);
+
+	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
+		szSelectedKey.find(L"Gold") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::DUNGEON_GOLD);
+
+	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
+		szSelectedKey.find(L"Shop") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::SHOP);
+
+	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
+		szSelectedKey.find(L"Shop") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::SHOP);
 
 	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
 		szSelectedKey.find(L"Wall") != std::wstring::npos)

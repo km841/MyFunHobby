@@ -17,6 +17,7 @@
 Dungeon::Dungeon(DUNGEON_TYPE eDungeonType, const wstring& szMapPath, const wstring& szScriptPath)
 	: m_eDungeonType(eDungeonType)
 	, m_szMapPath(szMapPath)
+    , m_bVisited(false)
 {
     if (L"" != szScriptPath)
         LoadEventFromFile(szScriptPath);
@@ -53,7 +54,7 @@ void Dungeon::Enter()
         GET_SINGLE(Scenes)->GetActiveScene()->Load(m_szMapPath);
 
     SetCameraLimitArea();
-
+    m_bVisited = true;
     GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 }
 

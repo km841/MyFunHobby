@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AbyssFieldDamageTickScript.h" />
     <ClInclude Include="AbyssMeteor.h" />
     <ClInclude Include="AbyssMeteorSkill.h" />
     <ClInclude Include="AbyssOrb.h" />
@@ -215,6 +216,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="DungeonGate.h" />
+    <ClInclude Include="Dungeon_Gold.h" />
     <ClInclude Include="Dungeon_Item.h" />
     <ClInclude Include="ErodedEnt.h" />
     <ClInclude Include="ErodedEntAttackScript.h" />
@@ -235,6 +237,7 @@
     <ClInclude Include="Engrave.h" />
     <ClInclude Include="EvilSwordKirion.h" />
     <ClInclude Include="DetailInfoUI.h" />
+    <ClInclude Include="GoldReward.h" />
     <ClInclude Include="IfAllDeadMonsterInDungeon.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -258,6 +261,7 @@
     </ClInclude>
     <ClInclude Include="MousePointerHUD.h" />
     <ClInclude Include="NPC_Spider.h" />
+    <ClInclude Include="ObjectAttackAtHitFrameScript.h" />
     <ClInclude Include="ObjectFollowScript.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
     <ClInclude Include="PlayerSecondSkillFrameHUD.h" />
@@ -298,6 +302,7 @@
     <ClInclude Include="PlayerSkulThumnailScript.h" />
     <ClInclude Include="RotateHeadScript.h" />
     <ClInclude Include="ForbiddenSword.h" />
+    <ClInclude Include="Dungeon_Shop.h" />
     <ClInclude Include="SkillBoxHUD.h" />
     <ClInclude Include="SkillState.h" />
     <ClInclude Include="Skul.h" />
@@ -337,6 +342,7 @@
     <ClInclude Include="Wisp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbyssFieldDamageTickScript.cpp" />
     <ClCompile Include="AbyssMeteor.cpp" />
     <ClCompile Include="AbyssMeteorSkill.cpp" />
     <ClCompile Include="AbyssOrb.cpp" />
@@ -385,6 +391,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="DungeonGate.cpp" />
+    <ClCompile Include="Dungeon_Gold.cpp" />
     <ClCompile Include="Dungeon_Item.cpp" />
     <ClCompile Include="ErodedEnt.cpp" />
     <ClCompile Include="ErodedEntAttackScript.cpp" />
@@ -405,6 +412,7 @@
     <ClCompile Include="Engrave.cpp" />
     <ClCompile Include="EvilSwordKirion.cpp" />
     <ClCompile Include="DetailInfoUI.cpp" />
+    <ClCompile Include="GoldReward.cpp" />
     <ClCompile Include="IfAllDeadMonsterInDungeon.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -428,6 +436,7 @@
     </ClCompile>
     <ClCompile Include="MousePointerHUD.cpp" />
     <ClCompile Include="NPC_Spider.cpp" />
+    <ClCompile Include="ObjectAttackAtHitFrameScript.cpp" />
     <ClCompile Include="ObjectFollowScript.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
     <ClCompile Include="PlayerSecondSkillFrameHUD.cpp" />
@@ -469,6 +478,7 @@
     <ClCompile Include="PlayerSkulThumnailScript.cpp" />
     <ClCompile Include="RotateHeadScript.cpp" />
     <ClCompile Include="ForbiddenSword.cpp" />
+    <ClCompile Include="Dungeon_Shop.cpp" />
     <ClCompile Include="SkillBoxHUD.cpp" />
     <ClCompile Include="SkillState.cpp" />
     <ClCompile Include="Skul.cpp" />

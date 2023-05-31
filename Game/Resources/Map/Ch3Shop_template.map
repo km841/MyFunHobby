@@ -1,0 +1,222 @@
+4
+..\Resources\Texture\Map\Image_Shop_Background_Moon.png
+500 750 200
+1024 488 1
+1 1 0
+..\Resources\Texture\Map\Image_Shop_Background_Cloud_Far.png
+800 550 180
+1014 288 1
+1.5 1.5 0
+..\Resources\Texture\Map\Image_Shop_Background_Cloud_Near.png
+800 650 170
+1024 245 1
+4 4 0
+..\Resources\Texture\Map\Image_Shop_Background_House.png
+500 450 160
+1016 355 1
+10 10 0
+30
+0
+..\Resources\Texture\Tiles\Grass_10.png
+-448 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+-384 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+-320 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+-256 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+-192 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+-128 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+-64 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+0 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+64 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+128 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+192 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+256 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+320 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+384 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+448 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+512 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+576 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+640 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+704 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+768 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+832 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+896 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+960 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+1024 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+1088 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+1152 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+1216 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+1280 256
+0
+..\Resources\Texture\Tiles\Grass_14.png
+1344 256
+0
+..\Resources\Texture\Tiles\Grass_38.png
+1408 256
+0
+37
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-256 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 0
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 0
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 0
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+640 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+640 128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+640 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+640 0
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+640 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+640 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+960 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+960 128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+960 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+960 0
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+960 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+960 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+1280 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+1280 128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+1280 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+1280 0
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+1280 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+1280 -128
+0

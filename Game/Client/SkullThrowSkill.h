@@ -15,5 +15,6 @@ public:
 
 private:
 	float m_fThrowSpeed;
+	float m_bContinue;
 };
 

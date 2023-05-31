@@ -14,6 +14,7 @@
 #include "LocalEffect.h"
 #include "CollisionManager.h"
 #include "Player.h"
+#include "ObjectAttackAtHitFrameScript.h"
 
 ErodedEntSkillScript::ErodedEntSkillScript()
 	: m_bSkillFlag(false)
@@ -88,6 +89,8 @@ void ErodedEntSkillScript::CreateSkillEffectAndAddedToScene()
 {
 	shared_ptr<AnimationLocalEffect> pLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
 
+	
+	pLocalEffect->AddComponent(make_shared<ObjectAttackAtHitFrameScript>(pLocalEffect, DAMAGE_TYPE::FROM_MONSTER, 3.f));
 	pLocalEffect->GetTransform()->SetGlobalOffset(Vec2(0.f, -25.f));
 	pLocalEffect->GetTransform()->SetLocalPosition(m_vPlayerPos);
 	pLocalEffect->AddComponent(make_shared<Animator>());
@@ -96,6 +99,8 @@ void ErodedEntSkillScript::CreateSkillEffectAndAddedToScene()
 	{
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Skill_Effect", L"..\\Resources\\Animation\\ErodedEnt\\eroded_ent_thorn_effect.anim");
 		pLocalEffect->GetAnimator()->AddAnimation(L"Skill_Effect", pAnimation);
+
+		pAnimation->SetHitFrame(2);
 	}
 
 	pLocalEffect->GetAnimator()->Play(L"Skill_Effect", false);

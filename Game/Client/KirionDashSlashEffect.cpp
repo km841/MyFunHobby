@@ -66,6 +66,13 @@ void KirionDashSlashEffect::Update()
 						GetTransform()->GetLocalScale(), 
 						Vec3(0.f, 100.f, 0.f));
 
+					GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(
+						GetTransform()->GetLocalPosition(),
+						GetTransform()->GetLocalScale(),
+						Vec3(0.f, 0.f, 0.f),
+						1.f,
+						DAMAGE_TYPE::FROM_PLAYER_MAGIC
+					);
 					
 
 					GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
