@@ -27,20 +27,20 @@ void Font::Init(const WindowInfo& windowInfo, ComPtr<ID3D11Device> pDevice, ComP
 	CreateFontWrapperGroup();
 }
 
-void Font::DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight, uint32 iColor)
+void Font::DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight, uint32 iColor, FONT_ALIGN eFontAlign)
 {
 	Vec3 vNewPos = vPos;
 
 	vNewPos.y = m_iWindowHeight - vPos.y;
-	m_qFontQueue.push(FontInfo{ szText, fFontSize, vNewPos, eWeight, iColor });
+	m_qFontQueue.push(FontInfo{ szText, fFontSize, vNewPos, eWeight, iColor, eFontAlign });
 }
 
-void Font::DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Vec3& vWorldPos, FONT_WEIGHT eWeight, uint32 iColor)
+void Font::DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Vec3& vWorldPos, FONT_WEIGHT eWeight, uint32 iColor, FONT_ALIGN eFontAlign)
 {
 	Vec3 vScreenPos = GET_SINGLE(Scenes)->WorldToScreenPosition(
 		vWorldPos, GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera());
 
-	m_qFontQueue.push(FontInfo{ szText, fFontSize, vScreenPos, eWeight, iColor });
+	m_qFontQueue.push(FontInfo{ szText, fFontSize, vScreenPos, eWeight, iColor, eFontAlign });
 }
 
 void Font::DrawDamage(DAMAGE_TYPE eDamageType, float fDamage, const Vec3& vPos)
@@ -119,7 +119,7 @@ void Font::Render()
 			fontInfo.vFontPos.x, 
 			fontInfo.vFontPos.y, 
 			fontInfo.iFontColor, 
-			FW1_RESTORESTATE | FW1_CENTER);
+			FW1_RESTORESTATE | static_cast<FW1_TEXT_FLAG>(fontInfo.eFontAlign));
 	}
 }
 

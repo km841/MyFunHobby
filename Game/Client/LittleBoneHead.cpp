@@ -75,26 +75,26 @@ void LittleBoneHead::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 			if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
 			{
 				weak_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
-				int32 iDamage = 4;
-				pGameObject->GetStatus()->TakeDamage(iDamage);
+				float fDamage = 4.f;
+				pGameObject->GetStatus()->TakeDamage(static_cast<int32>(fDamage));
 
 				Vec3 vMonsterPos = pMonster.lock()->GetTransform()->GetPhysicalPosition();
 				if (!pGameObject->GetStatus()->IsAlive())
 				{
 					pMonster.lock()->SetMonsterState(MONSTER_STATE::DEAD);
-					FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, iDamage, vMonsterPos);
+					FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, fDamage, vMonsterPos);
 				}
 				else
 				{
 					if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
 					{
-						FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, iDamage, vMonsterPos);
+						FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, fDamage, vMonsterPos);
 						pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);
 					}
 
 					else
 					{
-						FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, iDamage, vMonsterPos);
+						FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, fDamage, vMonsterPos);
 					}
 				}
 			}

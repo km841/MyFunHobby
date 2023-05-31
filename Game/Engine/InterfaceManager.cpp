@@ -33,6 +33,8 @@
 #include "PlayerSecondSkillFrameHUD.h"
 #include "DropItemHUD.h"
 #include "DropSkulHUD.h"
+#include "ClobberHUD.h"
+#include "PlayerClubberShowScript.h"
 
 void InterfaceManager::Init()
 {
@@ -93,14 +95,13 @@ void InterfaceManager::CreateUI()
 void InterfaceManager::CreateHUD()
 {
 	shared_ptr<PlayerInterfaceHUD> pInterfaceHUD = nullptr;
+	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 	
 	// Player Interface HUD
 	{
 		pInterfaceHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<PlayerInterfaceHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_Player_Normal_Frame.tga");
 		pInterfaceHUD->SetFrustum(false);
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pInterfaceHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 50.f));
 		pInterfaceHUD->GetTransform()->SetLocalScale(Vec3(203.f, 66.f, 1.f));
@@ -115,9 +116,6 @@ void InterfaceManager::CreateHUD()
 
 		pSecondSkillFrameHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
 		pSecondSkillFrameHUD->GetTransform()->SetLocalPosition(Vec3(-3.f, 10.f, -9.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_SECOND_SKILL_FRAME] = pSecondSkillFrameHUD;
@@ -130,9 +128,6 @@ void InterfaceManager::CreateHUD()
 
 		pSkulThumnailHUD->AddComponent(make_shared<PlayerSkulThumnailScript>(pSkulThumnailHUD));
 		pSkulThumnailHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pSkulThumnailHUD->GetTransform()->SetLocalPosition(Vec3(-145.f, 18.f, -10.f));
 		pSkulThumnailHUD->GetTransform()->SetLocalScale(Vec3(45.f, 45.f, 0.f));
@@ -148,9 +143,6 @@ void InterfaceManager::CreateHUD()
 		pHealthBarHUD->AddComponent(make_shared<PlayerHealthBarShowScript>(pHealthBarHUD));
 		pHealthBarHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
 		pHealthBarHUD->GetTransform()->SetLocalPosition(Vec3(1.f, -32.5f, -10.f));
 		pHealthBarHUD->GetTransform()->SetLocalScale(Vec3(115.f, 8.f, 1.f));
 
@@ -164,9 +156,6 @@ void InterfaceManager::CreateHUD()
 
 		pSkillBoxHUD->AddComponent(make_shared<PlayerSkillShowScript>(pSkillBoxHUD, SKILL_INDEX::FIRST));
 		pSkillBoxHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pSkillBoxHUD->GetTransform()->SetLocalPosition(Vec3(-63.f, 11.5f, -10.f));
 		pSkillBoxHUD->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
@@ -182,9 +171,6 @@ void InterfaceManager::CreateHUD()
 		pSkillBoxHUD->AddComponent(make_shared<PlayerSkillShowScript>(pSkillBoxHUD, SKILL_INDEX::SECOND));
 		pSkillBoxHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
 
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-
 		pSkillBoxHUD->GetTransform()->SetLocalPosition(Vec3(-1.5f, 11.5f, -10.f));
 		pSkillBoxHUD->GetTransform()->SetLocalScale(Vec3(24.f, 24.f, 1.f));
 
@@ -199,9 +185,6 @@ void InterfaceManager::CreateHUD()
 
 		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"PlayerHit", L"..\\Resources\\Animation\\Player\\player_hit.anim");
 		pPlayerHitHUD->GetAnimator()->AddAnimation(L"PlayerHit", pAnimation);
-
-		float fWidth = static_cast<float>(g_pEngine->GetWidth());
-		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
 		pPlayerHitHUD->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 80.f));
 		
@@ -252,5 +235,17 @@ void InterfaceManager::CreateHUD()
 
 		m_mInterfaceMap[INTERFACE_TYPE::DROP_SKUL] = pDropSkulHUD;
 	}
+
+	// Clobber HUD
+	{
+		shared_ptr<ClobberHUD> pClobberHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ClobberHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_Player_Clobber.png");
+		pClobberHUD->SetFrustum(false);
+		pClobberHUD->GetTransform()->SetLocalPosition(Vec3(fWidth - 190.f, fHeight / 2.f - 270.f, 50.f));
+		pClobberHUD->AddComponent(make_shared<PlayerClubberShowScript>());
+
+		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_CLOBBER] = pClobberHUD;
+	}
+
+	
 
 }

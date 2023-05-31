@@ -1,11 +1,71 @@
-﻿  BaseCamp.cpp
-  BlackLab.cpp
-  Ch3BaseCamp.cpp
-  Dungeon.cpp
-  Dungeon_Bone.cpp
-  Dungeon_Gold.cpp
-  Dungeon_Item.cpp
-  Dungeon_Shop.cpp
-  Stage.cpp
+﻿  AbyssMeteor.cpp
+  AbyssMeteorSkill.cpp
+  AbyssOrbSkill.cpp
+  AfterImageDrawScript.cpp
+  AlchemistFlaskThrowScript.cpp
+  AttackState.cpp
+  BGCameraScript.cpp
+  Background.cpp
+  ChargingState.cpp
+  DarkAbilInfoUI.cpp
+  DarkMirrorReflectionScript.cpp
+  DashState.cpp
+  DropEssence.cpp
+  DropItem.cpp
+  DropSkul.cpp
+  DungeonGate.cpp
+  DungeonScene.cpp
+  ErodedEntAttackScript.cpp
+  ErodedEntDeadScript.cpp
+  ErodedEntSkillScript.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  ErodedHeavyInfantryAttackScript.cpp
+  ErodedHeavyInfantryDeadScript.cpp
+  ErodedKnightDeadScript.cpp
+  EssenceInfoUI.cpp
+  EvilSwordKirion.cpp
+  HighWarlock.cpp
+  HighWarlockAttack.cpp
+  HighWarlockChargingScript.cpp
+  IdleState.cpp
+  IfPlayerPosXExceedsN.cpp
+  ItemInfoUI.cpp
+  JumpAttackState.cpp
+  JumpFallState.cpp
+  JumpRiseState.cpp
+  LittleBone.cpp
+  LittleBoneAttack.cpp
+  LittleBoneSwapSkill.cpp
+  Lyweasel.cpp
+  ObjectAttackAtHitFrameScript.cpp
+  ObjectFollowScript.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  PathState.cpp
+  Player.cpp
+  PlayerClubberShowScript.cpp
+  PlayerFunctionScript.cpp
+  PlayerHealthBarShowScript.cpp
+  PlayerInterfaceHUD.cpp
+  PlayerMoveScript.cpp
+  PlayerSkillShowScript.cpp
+  PlayerSkulThumnailScript.cpp
+  PlayerState.cpp
+  PlayerTeleportEvent.cpp
+  PlayerTrackingScript.cpp
+  SceneChangeEventObject.cpp
+  SkillState.cpp
+  Skul.cpp
+  SkulAttack.cpp
+  SkulInfoUI.cpp
+  SkullThrowSkill.cpp
+  StateMachine.cpp
+  SwapState.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  TitleScene.cpp
+  TownScene.cpp
+  WalkState.cpp
   코드를 생성하고 있습니다...
   Client.vcxproj -> C:\MyProject\Game\Output\Client.exe

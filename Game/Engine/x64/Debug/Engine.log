@@ -1,2 +1,20 @@
-﻿  Scene.cpp
+﻿  Camera.cpp
+  CollisionManager.cpp
+  Component.cpp
+  Engine.cpp
+  EventManager.cpp
+  InfantryTackleTask.cpp
+  IsPlayerInAttackRangeCondition.cpp
+  IsPlayerNearCondition.cpp
+  KnightAttackTask.cpp
+  Light.cpp
+  Movement.cpp
+  ObjectFactory.cpp
+  PlayerChangeStateEvent.cpp
+  PlayerHitTask.cpp
+  RandomDirectionTask.cpp
+  Scene.cpp
+  SetDirectionTowardPlayerTask.cpp
+  TrackingOfMeleeTask.cpp
+  코드를 생성하고 있습니다...
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

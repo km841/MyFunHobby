@@ -7,6 +7,22 @@ class Skul;
 class GlobalEffect;
 class Item;
 class Essence;
+
+struct Clobber
+{
+	Clobber()
+		: iDarkHeart(1)
+		, iBoneFragments(10)
+		, iGold(100)
+		, iDarkQuartz(1000)
+	{}
+
+	int32 iDarkHeart;
+	int32 iBoneFragments;
+	int32 iGold;
+	int32 iDarkQuartz;
+};
+
 class Player :
 	  public GameObject
 {
@@ -38,7 +54,7 @@ public:
 	FORCEINLINE bool					 IsSwapPossible()							   { return m_tSwapCooldown.IsFinished(); }
 	FORCEINLINE float					 GetSwapCooldownProgress()					   { return m_tSwapCooldown.GetProgress(); }
 	FORCEINLINE weak_ptr<Skul>			 GetSkul(SKUL_INDEX eSkulIndex)				   { return m_arrSkuls[static_cast<uint8>(eSkulIndex)]; }
-
+	FORCEINLINE Clobber&				 GetClobber()								   { return m_Clobber; }
 	// About states
 	weak_ptr<PlayerState> GetPlayerState();
 	void				  ChangePlayerState(PLAYER_STATE ePlayerState);
@@ -91,6 +107,7 @@ private:
 	PLAYER_STATE							m_ePlayerState;
 	int32									m_iJumpCount;
 
+	Clobber									m_Clobber;
 	Timer									m_tSwapCooldown;
 	bool								    m_bSwapActiveFlag;
 	bool									m_bPause;

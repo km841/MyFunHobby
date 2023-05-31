@@ -10,6 +10,13 @@ enum class FONT_WEIGHT
 	END,
 };
 
+enum class FONT_ALIGN
+{
+	LEFT,
+	CENTER,
+	RIGHT,
+};
+
 enum
 {
 	FONT_WEIGHT_COUNT = FONT_WEIGHT::END,
@@ -22,6 +29,8 @@ struct FontInfo
 	Vec3 vFontPos;
 	FONT_WEIGHT eFontWeight;
 	uint32 iFontColor;
+	FONT_ALIGN eFontAlign;
+	
 };
 
 struct DamageInfo
@@ -41,8 +50,8 @@ public:
 public:
 	// Font를 오브젝트 단위로 관리할 필요가 없다!
 	void Init(const WindowInfo& windowInfo, ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pContext);
-	void DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff);
-	void DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Vec3& vWorldPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff);
+	void DrawString(const wstring& szText, float fFontSize, const Vec3& vPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff, FONT_ALIGN eFontAlign = FONT_ALIGN::CENTER);
+	void DrawStringAtWorldPos(const wstring& szText, float fFontSize, const Vec3& vWorldPos, FONT_WEIGHT eWeight = FONT_WEIGHT::NORMAL, uint32 iColor = 0xffffffff, FONT_ALIGN eFontAlign = FONT_ALIGN::CENTER);
 	void DrawDamage(DAMAGE_TYPE eDamageType, float fDamage, const Vec3& vPos);
 	void UpdateDamage();
 	void Render();
