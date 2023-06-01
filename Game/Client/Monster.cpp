@@ -198,7 +198,7 @@ void Monster::ScatterGold()
 		Vec3 vMyPos = GetTransform()->GetWorldPosition();
 		vMyPos.z = 90.f;
 		pGold->GetTransform()->SetLocalPosition(vMyPos);
-
+		pGold->Init(static_cast<int32>(DROPING_REWARD_KIND::GOLD));
 		Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
 
 		int32 iRandomDegree = RANDOM(75, 105);
@@ -232,6 +232,7 @@ void Monster::ScatterDarkQuartz()
 			L"Forward", false,
 			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(10.f, 10.f, 1.f), szRandomPath);
 
+		pDarkQuartz->Init(static_cast<int32>(DROPING_REWARD_KIND::DARK_QUARTZ));
 		pDarkQuartz->AddComponent(make_shared<Animator>());
 
 		// Gold Get

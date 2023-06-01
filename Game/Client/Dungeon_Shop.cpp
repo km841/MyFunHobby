@@ -170,32 +170,20 @@ void Dungeon_Shop::RenderExhibitionItemPrice()
 	}
 }
 
-void Dungeon_Shop::CreateItemToPath()
-{
-	wstring szPathList[] = {
-		L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png",
-		L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png"
-	};
-
-	for (int32 i = 0; i < ITEM_KIND_COUNT; ++i)
-	{
-		assert(ARRAYSIZE(szPathList) > i);
-		m_mItemToPath[static_cast<ITEM_KIND>(i)] = szPathList[i];
-	}
-}
-
 void Dungeon_Shop::RenewShopItemList()
 {
-	CreateItemToPath();
 	std::vector<ITEM_KIND> vItemKinds;
 	std::vector<ITEM_KIND> vPlayerItemKinds = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetItemList();
-	for (int32 i = 0; i < ITEM_KIND_COUNT; ++i)
+	for (int32 i = 0; i < ITEM_LEGENDARY_END; ++i)
 	{
 		if (std::find(vPlayerItemKinds.begin(), vPlayerItemKinds.end(), static_cast<ITEM_KIND>(i)) 
 			== vPlayerItemKinds.end())
 		{
 			vItemKinds.push_back(static_cast<ITEM_KIND>(i));
 		}
+
+		if (vItemKinds.size() >= 4)
+			break;
 	}
 
 	float fAccXPos = 330.f;
@@ -203,7 +191,7 @@ void Dungeon_Shop::RenewShopItemList()
 	{
 		int32 iRandomPrice = RANDOM(600, 800);
 		shared_ptr<ExhibitionItem> pExhibitionItem = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<ExhibitionItem>(
-			L"Forward", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 200.f, 1.f), MassProperties(), m_mItemToPath[vItemKinds[i]], vItemKinds[i], iRandomPrice);
+			L"Forward", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 200.f, 1.f), MassProperties(), Item::GetItemKindToDropItemPath(vItemKinds[i]), vItemKinds[i], iRandomPrice);
 		pExhibitionItem->GetTransform()->SetLocalPosition(Vec3(fAccXPos, 440.f, 99.f));
 
 		pExhibitionItem->Awake();

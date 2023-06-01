@@ -61,7 +61,7 @@ void ToolScene::Start()
 void ToolScene::Update()
 {
 	MapEditorUpdate();
-	//AnimationEditorUpdate();
+	AnimationEditorUpdate();
 
 	Scene::Update();
 	UTILITY->ToolUpdate();
@@ -176,7 +176,7 @@ void ToolScene::Enter()
 		m_pSpriteTexture->AddComponent(pMeshRenderer);
 		m_pSpriteTexture->AddComponent(make_shared<Transform>());
 		m_pSpriteTexture->AddComponent(make_shared<Animator>());
-		m_pSpriteTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
+		m_pSpriteTexture->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 60.f));
 
 		AddGameObject(m_pSpriteTexture);
 	}

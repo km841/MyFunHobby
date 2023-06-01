@@ -188,7 +188,9 @@
     <ClInclude Include="BaseCampOpeningHUD.h" />
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
+    <ClInclude Include="BoneOfMana.h" />
     <ClInclude Include="BoneReward.h" />
+    <ClInclude Include="BrightDawn.h" />
     <ClInclude Include="Ch3BeginTower.h" />
     <ClInclude Include="ClobberHUD.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
@@ -240,6 +242,7 @@
     <ClInclude Include="DetailInfoUI.h" />
     <ClInclude Include="ExhibitionItem.h" />
     <ClInclude Include="GoldReward.h" />
+    <ClInclude Include="GunpowderSword.h" />
     <ClInclude Include="IfAllDeadMonsterInDungeon.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -249,8 +252,10 @@
     <ClInclude Include="IfTakedMapReward.h" />
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="InventoryUI.h" />
+    <ClInclude Include="InvisibleKnife.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoUI.h" />
+    <ClInclude Include="JennysChainSickle.h" />
     <ClInclude Include="LightObject.h" />
     <ClInclude Include="LocalEffect.h" />
     <ClInclude Include="Lyweasel.h" />
@@ -271,6 +276,8 @@
     <ClInclude Include="PlayerTeleportEvent.h" />
     <ClInclude Include="Possession.h" />
     <ClInclude Include="Rapidity.h" />
+    <ClInclude Include="RavenLordsFeather.h" />
+    <ClInclude Include="RingOfMoon.h" />
     <ClInclude Include="SceneChangeEventObject.h" />
     <ClInclude Include="ChargingState.h" />
     <ClInclude Include="DashState.h" />
@@ -333,12 +340,15 @@
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="KirionDashSlashEffect.h" />
     <ClInclude Include="SwapState.h" />
+    <ClInclude Include="SwordOfSun.h" />
+    <ClInclude Include="ThiefsBlackIronDaggers.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="TownScene.h" />
     <ClInclude Include="TreasureBox.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="VoodooDoll.h" />
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
     <ClInclude Include="NPC_Wolf.h" />
@@ -366,7 +376,9 @@
     <ClCompile Include="BaseCampOpeningHUD.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
+    <ClCompile Include="BoneOfMana.cpp" />
     <ClCompile Include="BoneReward.cpp" />
+    <ClCompile Include="BrightDawn.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />
@@ -418,6 +430,7 @@
     <ClCompile Include="DetailInfoUI.cpp" />
     <ClCompile Include="ExhibitionItem.cpp" />
     <ClCompile Include="GoldReward.cpp" />
+    <ClCompile Include="GunpowderSword.cpp" />
     <ClCompile Include="IfAllDeadMonsterInDungeon.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -427,8 +440,10 @@
     <ClCompile Include="IfTakedMapReward.cpp" />
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
+    <ClCompile Include="InvisibleKnife.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />
+    <ClCompile Include="JennysChainSickle.cpp" />
     <ClCompile Include="LightObject.cpp" />
     <ClCompile Include="LocalEffect.cpp" />
     <ClCompile Include="Lyweasel.cpp" />
@@ -449,6 +464,8 @@
     <ClCompile Include="PlayerTeleportEvent.cpp" />
     <ClCompile Include="Possession.cpp" />
     <ClCompile Include="Rapidity.cpp" />
+    <ClCompile Include="RavenLordsFeather.cpp" />
+    <ClCompile Include="RingOfMoon.cpp" />
     <ClCompile Include="SceneChangeEventObject.cpp" />
     <ClCompile Include="ChargingState.cpp" />
     <ClCompile Include="Client.cpp" />
@@ -516,12 +533,15 @@
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="KirionDashSlashEffect.cpp" />
     <ClCompile Include="SwapState.cpp" />
+    <ClCompile Include="SwordOfSun.cpp" />
+    <ClCompile Include="ThiefsBlackIronDaggers.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="ToolScene.cpp" />
     <ClCompile Include="TownScene.cpp" />
     <ClCompile Include="TreasureBox.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="VoodooDoll.cpp" />
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />
     <ClCompile Include="NPC_Wolf.cpp" />

@@ -13,6 +13,7 @@
 #include "Animator.h"
 #include "DropItem.h"
 #include "RigidBody.h"
+#include "Player.h"
 
 TreasureBox::TreasureBox(GRADE eGrade)
 	: MapReward(eGrade)
@@ -52,44 +53,43 @@ void TreasureBox::Update()
 			// Active Open Animation! 
 			GetAnimator()->Play(L"TreasureBox_Open", false);
 
-			//// Temp Code
-			//wstring szPathList[] = {
-			//	L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png",
-			//	L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png"
-			//};
-			//// Temp Code
-			//ITEM_KIND eItemKind[] = {
-			//	ITEM_KIND::FORBIDDEN_SWORD,
-			//	ITEM_KIND::EVIL_SWORD_KIRION,
-			//};
+			std::vector<ITEM_KIND> vDropItemKinds = {};
+			std::vector<ITEM_KIND> vTotalItemKinds = Item::GetItemKindsOfGrade(m_eGrade);
+			std::vector<ITEM_KIND> vPlayerItemKinds = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetItemList();
+			for (int32 i = 0; i < vTotalItemKinds.size(); ++i)
+			{
+				if (std::find(vPlayerItemKinds.begin(), vPlayerItemKinds.end(), vTotalItemKinds[i]) == vPlayerItemKinds.end())
+					vDropItemKinds.push_back(static_cast<ITEM_KIND>(i));
 
-			//// Temp Code
-			//for (uint8 i = 0; i < 2; ++i)
-			//{
-			//	shared_ptr<DropItem> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropItem>(
-			//		L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties(), szPathList[i], eItemKind[i], i ? DROP_ITEM_INDEX::FIRST : DROP_ITEM_INDEX::SECOND);
-			//	Vec3 vItemPos = vPos;
-			//	vItemPos.z -= 1;
-			//	pGameObject->GetTransform()->SetLocalPosition(vItemPos);
+				if (vDropItemKinds.size() >= 2)
+					break;
+			}
 
-			//	float fAngle = i ? 85.f : 95.f;
-			//	float fRadian = fAngle * XM_PI / 180.f;
+			for (uint8 i = 0; i < vDropItemKinds.size(); ++i)
+			{
+				shared_ptr<DropItem> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropItem>(
+					L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties(), Item::GetItemKindToDropItemPath(vDropItemKinds[i]), vDropItemKinds[i], i ? DROP_ITEM_INDEX::FIRST : DROP_ITEM_INDEX::SECOND);
+				Vec3 vItemPos = vPos;
+				vItemPos.z -= 1;
+				pGameObject->GetTransform()->SetLocalPosition(vItemPos);
 
-			//	PxVec3 vRightNormal = PxVec3(1.f, 0.f, 0.f);
-			//	PxVec3 vRotatedNormal = PxVec3(
-			//		vRightNormal.x * cosf(fRadian) + vRightNormal.y * sinf(fRadian),
-			//		vRightNormal.x * sinf(fRadian) - vRightNormal.y * cosf(fRadian),
-			//		0.f
-			//	);
+				float fAngle = i ? 85.f : 95.f;
+				float fRadian = fAngle * XM_PI / 180.f;
 
-			//	pGameObject->GetRigidBody()->SetLinearVelocityForDynamic(vRotatedNormal * 800.f);
+				PxVec3 vRightNormal = PxVec3(1.f, 0.f, 0.f);
+				PxVec3 vRotatedNormal = PxVec3(
+					vRightNormal.x * cosf(fRadian) + vRightNormal.y * sinf(fRadian),
+					vRightNormal.x * sinf(fRadian) - vRightNormal.y * cosf(fRadian),
+					0.f
+				);
 
-			//	pGameObject->Awake();
-			//	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-			//	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
-			//}
+				pGameObject->GetRigidBody()->SetLinearVelocityForDynamic(vRotatedNormal * 800.f);
 
-				// Item Drop!
+				pGameObject->Awake();
+				SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+				GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
+			}
+
 			m_bTaked = true;
 		}
 	}

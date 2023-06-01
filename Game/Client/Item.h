@@ -22,6 +22,10 @@ public:
     virtual void ActiveMethodWhenHitTiming() { }
     virtual void ActiveMethodWhenDashTiming() { }
 
+public:
+    static std::vector<ITEM_KIND> GetItemKindsOfGrade(GRADE eGrade);
+    static wstring GetItemKindToDropItemPath(ITEM_KIND eItemKind);
+
 private:
     ItemInfo m_ItemInfo;
 

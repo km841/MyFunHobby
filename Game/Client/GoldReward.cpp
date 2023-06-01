@@ -69,7 +69,6 @@ void GoldReward::FinalUpdate()
 
 void GoldReward::ScatterGold()
 {
-
 	for (int32 i = 0; i < 20; ++i)
 	{
 		shared_ptr<DropingRewards> pGold = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<DropingRewards>(

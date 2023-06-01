@@ -65,9 +65,10 @@ void DropingRewards::Update()
 					switch (m_eDropingRewardKind)
 					{
 					case DROPING_REWARD_KIND::GOLD:
-						pPlayer.lock()->GetClobber()->iGold += RANDOM(5, 30);
+						pPlayer.lock()->GetClobber()->iGold += RANDOM(1, 10);
 						break;
 					case DROPING_REWARD_KIND::DARK_QUARTZ:
+						pPlayer.lock()->GetClobber()->iDarkQuartz += 1;
 						break;
 					}
 

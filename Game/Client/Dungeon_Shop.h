@@ -20,10 +20,7 @@ public:
 	virtual void Exit();
 
 	void RenderExhibitionItemPrice();
-
-	void CreateItemToPath();
 	void RenewShopItemList();
 	std::vector<weak_ptr<ExhibitionItem>> m_vExhibitionItemList;
-	std::map<ITEM_KIND, wstring> m_mItemToPath;
 };
 

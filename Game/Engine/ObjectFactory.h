@@ -79,6 +79,16 @@ private:
 
 	shared_ptr<Item> CreateForbiddenSword();
 	shared_ptr<Item> CreateEvilSwordKirion();
+	shared_ptr<Item> CreateJennysChainSickle();
+	shared_ptr<Item> CreateInvisibleKnife();
+	shared_ptr<Item> CreateRingOfMoon();
+	shared_ptr<Item> CreateSwordOfSun();
+	shared_ptr<Item> CreateBoneOfMana();
+	shared_ptr<Item> CreateThiefsBlackIronDaggers();
+	shared_ptr<Item> CreateGunpowderSword();
+	shared_ptr<Item> CreateRavenLordsFeather();
+	shared_ptr<Item> CreateVoodooDoll();
+	shared_ptr<Item> CreateBrightDawn();
 
 	//===============
 	// About Essence

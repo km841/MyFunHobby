@@ -715,6 +715,36 @@
     <ClInclude Include="ExhibitionItem.h">
       <Filter>소스 파일\Game\Object\GameObject\ExhibitionItem</Filter>
     </ClInclude>
+    <ClInclude Include="JennysChainSickle.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="InvisibleKnife.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordOfSun.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RingOfMoon.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ThiefsBlackIronDaggers.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneOfMana.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GunpowderSword.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="VoodooDoll.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RavenLordsFeather.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BrightDawn.h">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1221,6 +1251,36 @@
     </ClCompile>
     <ClCompile Include="ExhibitionItem.cpp">
       <Filter>소스 파일\Game\Object\GameObject\ExhibitionItem</Filter>
+    </ClCompile>
+    <ClCompile Include="InvisibleKnife.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="JennysChainSickle.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="RingOfMoon.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordOfSun.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneOfMana.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GunpowderSword.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ThiefsBlackIronDaggers.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="RavenLordsFeather.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="VoodooDoll.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BrightDawn.cpp">
+      <Filter>소스 파일\Game\Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

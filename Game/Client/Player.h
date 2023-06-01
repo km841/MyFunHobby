@@ -51,7 +51,7 @@ public:
 	FORCEINLINE void					 EnableSwapActiveFlag()						   { m_bSwapActiveFlag = true; }
 	FORCEINLINE void					 DisableSwapActiveFlag()					   { m_bSwapActiveFlag = false; }
 	FORCEINLINE bool					 IsSwapActiveFlag()							   { return m_bSwapActiveFlag; }
-	FORCEINLINE bool					 IsSwapPossible()							   { return m_tSwapCooldown.IsFinished(); }
+	FORCEINLINE bool					 IsSwapPossible()							   { return m_tSwapCooldown.IsFinished()/* && m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)]*/; }
 	FORCEINLINE float					 GetSwapCooldownProgress()					   { return m_tSwapCooldown.GetProgress(); }
 	FORCEINLINE weak_ptr<Skul>			 GetSkul(SKUL_INDEX eSkulIndex)				   { return m_arrSkuls[static_cast<uint8>(eSkulIndex)]; }
 	FORCEINLINE Clobber*				 GetClobber()								   { return &m_Clobber; }

@@ -49,7 +49,7 @@ void PlayerFunctionScript::LateUpdate()
 
 	if (IS_DOWN(KEY_TYPE::SPACE))
 	{
-		if (pPlayer->IsSwapPossible())
+		if (pPlayer->IsSwapPossible() && pPlayer->GetSkul(SKUL_INDEX::SECOND).lock())
 			pPlayer->EnableSwapActiveFlag();
 	}
 
