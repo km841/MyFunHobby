@@ -739,6 +739,7 @@ shared_ptr<Item> ObjectFactory::CreateItem(ITEM_KIND eItemKind)
 shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 {
 	ItemInfo itemInfo = {};
+	itemInfo.eItemKind = ITEM_KIND::FORBIDDEN_SWORD;
 	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword_Vignette", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword_Vignette.png");
 	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png");
 	
@@ -758,6 +759,7 @@ shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 shared_ptr<Item> ObjectFactory::CreateEvilSwordKirion()
 {
 	ItemInfo itemInfo = {};
+	itemInfo.eItemKind = ITEM_KIND::EVIL_SWORD_KIRION;
 	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion_Vignette", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion_Vignette.png");
 	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png");
 	

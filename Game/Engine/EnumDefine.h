@@ -353,7 +353,12 @@ enum class ITEM_KIND
 {
 	FORBIDDEN_SWORD,
 	EVIL_SWORD_KIRION,
+	END,
+};
 
+enum
+{
+	ITEM_KIND_COUNT = ITEM_KIND::END,
 };
 
 enum class SKUL_KIND
@@ -477,5 +482,12 @@ enum class DROP_ITEM_INDEX : uint8
 {
 	FIRST,
 	SECOND,
+	END,
+};
+
+enum class DROPING_REWARD_KIND
+{
+	GOLD,
+	DARK_QUARTZ,
 	END,
 };

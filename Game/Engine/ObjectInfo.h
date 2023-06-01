@@ -48,6 +48,7 @@ struct ItemInfo
 	shared_ptr<Texture> pItemTexture;
 	shared_ptr<Engrave> pFirstEngrave;
 	shared_ptr<Engrave> pSecondEngrave;
+	ITEM_KIND eItemKind;
 };
 
 struct SkillInfo

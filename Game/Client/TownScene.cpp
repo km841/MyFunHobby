@@ -299,7 +299,7 @@ void TownScene::Enter()
 
 	//RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 	RegisterSceneEvent(EVENT_TYPE::ACTIVATE_DISTORTION, 0, 1.f);
-	RegisterSceneEvent(EVENT_TYPE::ACTIVATE_AFTEREFFECT, 0, 3.f);
+	RegisterSceneEvent(EVENT_TYPE::ACTIVATE_AFTEREFFECT, 0, 2.f);
 
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE));
 	GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DIALOGUE)->Disable();
@@ -310,6 +310,7 @@ void TownScene::Enter()
 
 void TownScene::Exit()
 {
+	RemoveSceneEvent();
 	// 모든 Actor를 씬에서 제거한다.
 	GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::TILE);
 	GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::BACKGROUND);

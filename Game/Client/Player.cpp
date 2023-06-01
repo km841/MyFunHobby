@@ -284,6 +284,19 @@ weak_ptr<Item> Player::GetItem(ITEM_PLACE eItemPlace)
 	return m_arrItems[static_cast<uint8>(eItemPlace)];
 }
 
+std::vector<ITEM_KIND> Player::GetItemList()
+{
+	std::vector<ITEM_KIND> vItemKinds;
+
+	for (int32 i = 0; i < m_arrItems.size(); ++i)
+	{
+		if (m_arrItems[i])
+			vItemKinds.push_back(m_arrItems[i]->GetItemInfo().eItemKind);
+	}
+
+	return vItemKinds;
+}
+
 void Player::ItemUpdate()
 {
 	for (int32 i = 0; i < MAX_ITEMS; ++i)

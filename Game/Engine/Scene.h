@@ -43,6 +43,7 @@ public:
 
     FORCEINLINE void                     RegisterSceneEvent(EVENT_TYPE eEventType, uint8 iDetailEnum, float fEndTime) { m_vSceneEvents.push_back(SceneEventInfo{ eEventType, iDetailEnum, fEndTime }); }
     FORCEINLINE SCENE_TYPE               GetSceneType() { return m_eSceneType; }
+    void                                 RemoveSceneEvent();
     void                                 AddGameObject(shared_ptr<GameObject> pGameObject);
     std::vector<shared_ptr<GameObject>>& GetGameObjects(LAYER_TYPE eLayerType);
     void RemoveGameObject(shared_ptr<GameObject> pGameObject);

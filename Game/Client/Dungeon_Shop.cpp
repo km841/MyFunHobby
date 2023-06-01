@@ -4,6 +4,7 @@
 #include "ObjectFactory.h"
 #include "Engine.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "ObjectRemoveToSceneEvent.h"
 #include "Scene.h"
 #include "Scenes.h"
 #include "Resources.h"
@@ -11,6 +12,9 @@
 #include "EventManager.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "ExhibitionItem.h"
+#include "Player.h"
+#include "Clock.h"
 
 Dungeon_Shop::Dungeon_Shop(const wstring& szMapPath, const wstring& szScriptPath)
 	: Dungeon(DUNGEON_TYPE::SHOP, szMapPath, szScriptPath)
@@ -44,6 +48,7 @@ void Dungeon_Shop::LateUpdate()
 void Dungeon_Shop::FinalUpdate()
 {
 	Dungeon::FinalUpdate();
+	RenderExhibitionItemPrice();
 }
 
 void Dungeon_Shop::Enter()
@@ -122,10 +127,90 @@ void Dungeon_Shop::Enter()
 
 
 	// Renew Shop Item List!
-	
+	RenewShopItemList();
 }
 
 void Dungeon_Shop::Exit()
 {
 	Dungeon::Exit();
+
+	for (int32 i = 0; i < m_vExhibitionItemList.size(); ++i)
+	{
+		m_vExhibitionItemList[i].lock()->Destroy();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_vExhibitionItemList[i].lock(), SCENE_TYPE::DUNGEON));
+	}
+
+	m_vExhibitionItemList.clear();
+}
+
+void Dungeon_Shop::RenderExhibitionItemPrice()
+{
+	if (m_vExhibitionItemList.empty())
+		return;
+
+	if (GET_SINGLE(Clock)->IsPause())
+		return;
+
+	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+	int32 iPlayerGold = pPlayer.lock()->GetClobber()->iGold;
+	for (auto iter = m_vExhibitionItemList.begin(); iter != m_vExhibitionItemList.end(); )
+	{
+		if (iter->lock()->IsDestroy())
+		{
+			iter = m_vExhibitionItemList.erase(iter);
+			continue;
+		}
+
+		int32 iPrice = iter->lock()->GetPrice();
+		wstring szPrice = std::to_wstring(iPrice);
+		Vec3 vItemPos = iter->lock()->GetTransform()->GetPhysicalPosition();
+		vItemPos.y -= 127.f;
+		FONT->DrawStringAtWorldPos(szPrice, 25.f, vItemPos, FONT_WEIGHT::BOLD, iPlayerGold >= iPrice ? 0xffffffff : 0xff0000ff, FONT_ALIGN::CENTER);
+		iter++;
+	}
+}
+
+void Dungeon_Shop::CreateItemToPath()
+{
+	wstring szPathList[] = {
+		L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png",
+		L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png"
+	};
+
+	for (int32 i = 0; i < ITEM_KIND_COUNT; ++i)
+	{
+		assert(ARRAYSIZE(szPathList) > i);
+		m_mItemToPath[static_cast<ITEM_KIND>(i)] = szPathList[i];
+	}
+}
+
+void Dungeon_Shop::RenewShopItemList()
+{
+	CreateItemToPath();
+	std::vector<ITEM_KIND> vItemKinds;
+	std::vector<ITEM_KIND> vPlayerItemKinds = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetItemList();
+	for (int32 i = 0; i < ITEM_KIND_COUNT; ++i)
+	{
+		if (std::find(vPlayerItemKinds.begin(), vPlayerItemKinds.end(), static_cast<ITEM_KIND>(i)) 
+			== vPlayerItemKinds.end())
+		{
+			vItemKinds.push_back(static_cast<ITEM_KIND>(i));
+		}
+	}
+
+	float fAccXPos = 330.f;
+	for (int32 i = 0; i < vItemKinds.size(); ++i)
+	{
+		int32 iRandomPrice = RANDOM(600, 800);
+		shared_ptr<ExhibitionItem> pExhibitionItem = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<ExhibitionItem>(
+			L"Forward", false, ACTOR_TYPE::STATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 200.f, 1.f), MassProperties(), m_mItemToPath[vItemKinds[i]], vItemKinds[i], iRandomPrice);
+		pExhibitionItem->GetTransform()->SetLocalPosition(Vec3(fAccXPos, 440.f, 99.f));
+
+		pExhibitionItem->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pExhibitionItem, SCENE_TYPE::DUNGEON));
+
+		fAccXPos += 170.f;
+
+		m_vExhibitionItemList.push_back(pExhibitionItem);
+	}
 }

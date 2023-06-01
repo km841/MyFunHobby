@@ -43,7 +43,7 @@ void LittleBoneHead::Update()
 	else
 	{
 		uint8 iDirection = static_cast<uint8>(GetDirection());
-		GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(iDirection ? -1000 : 1000, 0.f, 0.f));
+		GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(iDirection ? -1000.f : 1000.f, 0.f, 0.f));
 	}
 }
 

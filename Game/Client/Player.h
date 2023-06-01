@@ -11,10 +11,10 @@ class Essence;
 struct Clobber
 {
 	Clobber()
-		: iDarkHeart(1)
-		, iBoneFragments(10)
-		, iGold(100)
-		, iDarkQuartz(1000)
+		: iDarkHeart(0)
+		, iBoneFragments(0)
+		, iGold(800)
+		, iDarkQuartz(0)
 	{}
 
 	int32 iDarkHeart;
@@ -54,7 +54,7 @@ public:
 	FORCEINLINE bool					 IsSwapPossible()							   { return m_tSwapCooldown.IsFinished(); }
 	FORCEINLINE float					 GetSwapCooldownProgress()					   { return m_tSwapCooldown.GetProgress(); }
 	FORCEINLINE weak_ptr<Skul>			 GetSkul(SKUL_INDEX eSkulIndex)				   { return m_arrSkuls[static_cast<uint8>(eSkulIndex)]; }
-	FORCEINLINE Clobber&				 GetClobber()								   { return m_Clobber; }
+	FORCEINLINE Clobber*				 GetClobber()								   { return &m_Clobber; }
 	// About states
 	weak_ptr<PlayerState> GetPlayerState();
 	void				  ChangePlayerState(PLAYER_STATE ePlayerState);
@@ -67,13 +67,14 @@ public:
 	void			      SwapCooldownUpdate();
 
 	// About items
-	shared_ptr<Item>	  ObtainItem(shared_ptr<Item> pItem);
-	ITEM_PLACE			  GetNearEmptyItemPlace();
-	weak_ptr<Item>		  GetItem(ITEM_PLACE eItemPlace);
-	void				  ItemUpdate();
-	void				  TakeDamage(uint32 iDamage);
-	void				  ActiveItemWhenHitTiming();
-	void				  ActiveItemWhenDashTiming();
+	shared_ptr<Item>	   ObtainItem(shared_ptr<Item> pItem);
+	ITEM_PLACE			   GetNearEmptyItemPlace();
+	weak_ptr<Item>		   GetItem(ITEM_PLACE eItemPlace);
+	std::vector<ITEM_KIND> GetItemList();
+	void				   ItemUpdate();
+	void				   TakeDamage(uint32 iDamage);
+	void				   ActiveItemWhenHitTiming();
+	void				   ActiveItemWhenDashTiming();
 
 	// About essence
 	shared_ptr<Essence>   ObtainEssence(shared_ptr<Essence> pEssence);

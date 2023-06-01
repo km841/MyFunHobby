@@ -41,6 +41,7 @@ Scene::Scene(SCENE_TYPE eSceneType)
 	, m_eActiveSceneEvent(EVENT_TYPE::END)
 	, m_tCameraShakeTimer(0)
 	, m_fAccTime(0.f)
+	, m_bDebugMode(false)
 {
 
 }
@@ -367,6 +368,12 @@ void Scene::CameraShakeUpdate()
 			}
 		}
 	}
+}
+
+void Scene::RemoveSceneEvent()
+{
+	m_vSceneEvents.clear();
+	m_eActiveSceneEvent = EVENT_TYPE::END;
 }
 
 void Scene::AddGameObject(shared_ptr<GameObject> pGameObject)

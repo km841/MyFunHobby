@@ -1,5 +1,7 @@
 #pragma once
 #include "Dungeon.h"
+#define EXHIBITION_ITEM_COUNT 4
+class ExhibitionItem;
 class Dungeon_Shop :
     public Dungeon
 {
@@ -16,5 +18,12 @@ public:
 
 	virtual void Enter();
 	virtual void Exit();
+
+	void RenderExhibitionItemPrice();
+
+	void CreateItemToPath();
+	void RenewShopItemList();
+	std::vector<weak_ptr<ExhibitionItem>> m_vExhibitionItemList;
+	std::map<ITEM_KIND, wstring> m_mItemToPath;
 };
 

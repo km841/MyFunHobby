@@ -9,12 +9,14 @@
 #include "EventManager.h"
 #include "RigidBody.h"
 #include "Transform.h"
+#include "Player.h"
 
 POOL_INIT(DropingRewards);
 DropingRewards::DropingRewards()
 	: GameObject(LAYER_TYPE::DROPING_REWARDS)
 	, m_bDestroy(false)
 	, m_tDuration(1.f)
+	, m_eDropingRewardKind(DROPING_REWARD_KIND::END)
 {
 }
 
@@ -58,6 +60,16 @@ void DropingRewards::Update()
 				{
 					m_bDestroy = false;
 					m_tDuration.Reset();
+
+					weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+					switch (m_eDropingRewardKind)
+					{
+					case DROPING_REWARD_KIND::GOLD:
+						pPlayer.lock()->GetClobber()->iGold += RANDOM(5, 30);
+						break;
+					case DROPING_REWARD_KIND::DARK_QUARTZ:
+						break;
+					}
 
 					SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 					GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(shared_from_this(), eSceneType));

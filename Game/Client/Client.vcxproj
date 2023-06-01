@@ -238,6 +238,7 @@
     <ClInclude Include="Engrave.h" />
     <ClInclude Include="EvilSwordKirion.h" />
     <ClInclude Include="DetailInfoUI.h" />
+    <ClInclude Include="ExhibitionItem.h" />
     <ClInclude Include="GoldReward.h" />
     <ClInclude Include="IfAllDeadMonsterInDungeon.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -415,6 +416,7 @@
     <ClCompile Include="Engrave.cpp" />
     <ClCompile Include="EvilSwordKirion.cpp" />
     <ClCompile Include="DetailInfoUI.cpp" />
+    <ClCompile Include="ExhibitionItem.cpp" />
     <ClCompile Include="GoldReward.cpp" />
     <ClCompile Include="IfAllDeadMonsterInDungeon.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

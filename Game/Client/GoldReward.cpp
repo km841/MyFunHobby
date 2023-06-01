@@ -74,7 +74,7 @@ void GoldReward::ScatterGold()
 	{
 		shared_ptr<DropingRewards> pGold = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysicalFromPool<DropingRewards>(
 			L"Forward", false,
-			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(10.f, 10.f, 1.f));
+			ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 10.f), MassProperties(10.f, 10.f, 1.f), L"", static_cast<int32>(DROPING_REWARD_KIND::GOLD));
 
 		pGold->AddComponent(make_shared<Animator>());
 
