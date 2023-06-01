@@ -133,10 +133,10 @@ void AnimationEditor::OpenButtonUI_Update()
 
 void AnimationEditor::SaveButtonUI_Update()
 {
-    if (ImGui::Button("Save"))
-        ImGuiFileDialog::Instance()->OpenDialog("Save", "Save File", ".anim", ".");
+    if (ImGui::Button("AnimationSave"))
+        ImGuiFileDialog::Instance()->OpenDialog("AnimationSave", "Save File", ".anim", ".");
 
-    if (ImGuiFileDialog::Instance()->Display("Save"))
+    if (ImGuiFileDialog::Instance()->Display("AnimationSave"))
     {
         assert(!m_vFrameDataList.empty());
 

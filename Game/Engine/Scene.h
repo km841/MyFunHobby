@@ -58,6 +58,8 @@ public:
     
     Vec4 GetObjectLimitRect();
 
+    std::vector<DUNGEON_TYPE> GetDungeonGateTypesFromMapFile(const wstring& szPath);
+
 private:
     void LoadBackground(std::wifstream& ifs);
     void LoadTile(std::wifstream& ifs);

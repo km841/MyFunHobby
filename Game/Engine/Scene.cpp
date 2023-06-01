@@ -550,6 +550,93 @@ Vec4 Scene::GetObjectLimitRect()
 	return Vec4(fMinX, fMinY, fMaxX, fMaxY);
 }
 
+std::vector<DUNGEON_TYPE> Scene::GetDungeonGateTypesFromMapFile(const wstring& szPath)
+{
+	std::vector<DUNGEON_TYPE> vDungeonGateTypes = {};
+	std::wifstream ifs(szPath, std::ios::in);
+
+#pragma region PASS
+	{
+		uint32 iBGCount = 0;
+		ifs >> iBGCount;
+
+		for (uint32 i = 0; i < iBGCount; ++i)
+		{
+			wstring szTexPath = {};
+			Vec3 vBGPosition = {};
+			Vec3 vBGScale = {};
+			Vec3 vBGSpeed = {};
+
+			ifs >> szTexPath;
+			ifs.ignore(1);
+			ifs >> vBGPosition.x >> vBGPosition.y >> vBGPosition.z;
+			ifs.ignore(1);
+			ifs >> vBGScale.x >> vBGScale.y >> vBGScale.z;
+			ifs.ignore(1);
+			ifs >> vBGSpeed.x >> vBGSpeed.y >> vBGSpeed.z;
+			ifs.ignore(1);
+		}
+
+		uint32 iCount = 0;
+		wstring szTexPath = {};
+		Vec2 vTileAlignVec = {};
+
+		ifs >> iCount;
+		ifs.ignore(1);
+
+		assert(iCount != 0);
+		for (uint32 i = 0; i < iCount; ++i)
+		{
+			wstring szTexPath;
+			Vec3 vTileAlignVec;
+			int32 iTileType;
+
+			ifs >> iTileType;
+			ifs.ignore(1);
+			ifs >> szTexPath;
+			ifs.ignore(1);
+			ifs >> vTileAlignVec.x >> vTileAlignVec.y;
+			ifs.ignore(1);
+		}
+	}
+
+
+	uint32 iDungeonObjectCount = 0;
+	ifs >> iDungeonObjectCount;
+
+	for (uint32 i = 0; i < iDungeonObjectCount; ++i)
+	{
+		uint32 iDungeonObjTypeEnum = 0;
+		uint32 iStageKindEnum = 0;
+		uint32 iDungeonTypeEnum = 0;
+
+		wstring szTexPath = {};
+		Vec3 vPos = {};
+
+		ifs >> iDungeonObjTypeEnum;
+		ifs.ignore(1);
+
+		ifs >> iStageKindEnum;
+		ifs.ignore(1);
+
+		ifs >> iDungeonTypeEnum;
+		ifs.ignore(1);
+
+		ifs >> szTexPath;
+		ifs.ignore(1);
+
+		ifs >> vPos.x >> vPos.y;
+		ifs.ignore(1);
+#pragma endregion
+		STAGE_KIND eStageKind = static_cast<STAGE_KIND>(iStageKindEnum);
+		DUNGEON_TYPE eDungeonType = static_cast<DUNGEON_TYPE>(iDungeonTypeEnum);
+		if (!iDungeonObjTypeEnum) // 0 == DungeonGate
+			vDungeonGateTypes.push_back(eDungeonType);
+	}
+
+	return vDungeonGateTypes;
+}
+
 void Scene::LoadBackground(std::wifstream& ifs)
 {
 	uint32 iBGCount = 0;

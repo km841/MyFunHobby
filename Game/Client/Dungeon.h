@@ -30,6 +30,8 @@ public:
 
 	DUNGEON_TYPE GetDungeonType() { return m_eDungeonType; }
 
+	FORCEINLINE const wstring& GetMapPath() { return m_szMapPath; }
+
 protected:
 	weak_ptr<Stage> m_pStage;
 	DUNGEON_TYPE m_eDungeonType;

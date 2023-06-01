@@ -1,5 +1,7 @@
 #pragma once
 class Dungeon;
+
+using DungeonInfo = std::tuple<bool, std::vector<DUNGEON_TYPE>, shared_ptr<Dungeon>>;
 class Stage
 	: public std::enable_shared_from_this<Stage>
 {
@@ -20,6 +22,8 @@ public:
 public:
 	void GoToNextDungeon(DUNGEON_TYPE eDungeonType);
 	void AddDungeon(shared_ptr<Dungeon> pDungeon, const Vec4& vLimitRect = Vec4::Zero);
+	void AlignDungeons();
+	void Weaving(int32 iIndex, const std::vector<DungeonInfo>& vDungeonInfo, std::vector<bool>& vVisited);
 
 protected:
 	STAGE_KIND m_eStageKind;

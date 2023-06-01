@@ -16,6 +16,7 @@
 #include <type_traits>
 #include <optional>
 #include <bitset>
+#include <numeric>
 
 #include <filesystem>
 namespace fs = std::filesystem;
