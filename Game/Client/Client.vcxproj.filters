@@ -745,6 +745,9 @@
     <ClInclude Include="BrightDawn.h">
       <Filter>소스 파일\Game\Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="JennysChainSickleSlashEffect.h">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1281,6 +1284,9 @@
     </ClCompile>
     <ClCompile Include="BrightDawn.cpp">
       <Filter>소스 파일\Game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="JennysChainSickleSlashEffect.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

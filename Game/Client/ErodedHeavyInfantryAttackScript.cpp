@@ -57,6 +57,7 @@ void ErodedHeavyInfantryAttackScript::LateUpdate()
 				Vec3(0.f, 1500.f, 0.f)
 				, 8.f);
 
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(100.f, 1000.f, 0.f));
 			GetAnimator()->GetActiveAnimation()->CheckToHitFrame();
 		}
 	}

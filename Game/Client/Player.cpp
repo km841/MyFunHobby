@@ -151,6 +151,19 @@ shared_ptr<Item> Player::ObtainItem(shared_ptr<Item> pItem)
 	return nullptr;
 }
 
+void Player::RemoveItem(shared_ptr<Item> pItem)
+{
+	for (int32 i = 0; i < m_arrItems.size(); ++i)
+	{
+		if (m_arrItems[i] == pItem)
+		{
+			m_arrItems[i].reset();
+			m_arrItems[i] = nullptr;
+			break;
+		}
+	}
+}
+
 void Player::SwapSkul()
 {
 	if (!m_arrSkuls[static_cast<uint8>(SKUL_INDEX::SECOND)])
@@ -231,6 +244,24 @@ void Player::ActiveItemWhenDashTiming()
 	{
 		if (m_arrItems[i])
 			m_arrItems[i]->ActiveMethodWhenDashTiming();
+	}
+}
+
+void Player::ActiveItemWhenJumpAttackEnterTiming()
+{
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		if (m_arrItems[i])
+			m_arrItems[i]->ActiveItemWhenJumpAttackEnterTiming();
+	}
+}
+
+void Player::ActiveItemWhenMonsterKillTiming()
+{
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		if (m_arrItems[i])
+			m_arrItems[i]->ActiveItemWhenMonsterKillTiming();
 	}
 }
 

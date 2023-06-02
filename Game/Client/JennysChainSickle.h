@@ -13,5 +13,7 @@ public:
     void Update();
     void LateUpdate();
     void FinalUpdate();
+
+    virtual void ActiveItemWhenJumpAttackEnterTiming();
 };
 

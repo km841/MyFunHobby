@@ -68,6 +68,7 @@ public:
 
 	// About items
 	shared_ptr<Item>	   ObtainItem(shared_ptr<Item> pItem);
+	void				   RemoveItem(shared_ptr<Item> pItem);
 	ITEM_PLACE			   GetNearEmptyItemPlace();
 	weak_ptr<Item>		   GetItem(ITEM_PLACE eItemPlace);
 	std::vector<ITEM_KIND> GetItemList();
@@ -75,6 +76,8 @@ public:
 	void				   TakeDamage(uint32 iDamage);
 	void				   ActiveItemWhenHitTiming();
 	void				   ActiveItemWhenDashTiming();
+	void				   ActiveItemWhenJumpAttackEnterTiming();
+	void				   ActiveItemWhenMonsterKillTiming();
 
 	// About essence
 	shared_ptr<Essence>   ObtainEssence(shared_ptr<Essence> pEssence);

@@ -174,6 +174,7 @@ enum class SCENE_FADE_EFFECT : uint8
 	NONE,
 	FADE_IN,
 	FADE_OUT,
+	WHITE_FADE_IN,
 };
 
 enum class FADE_TYPE : uint8

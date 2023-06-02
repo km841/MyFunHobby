@@ -91,11 +91,13 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 		{
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
+			GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::WHITE_FADE_IN), 0.5f);
 		}
 
 		Disable();
 		EnableAndInitSmokeEffect();
-		GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.15f, Vec3(100.f, 1000.f, 0.f));
+		GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(100.f, 1000.f, 0.f));
+		GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(1000.f, 100.f, 0.f));
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(m_fMaxDistance, m_fMaxDistance, 0.f), Vec3(0.f, m_fImpulse, 0.f));

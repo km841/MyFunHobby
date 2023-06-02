@@ -90,6 +90,8 @@ void SkulAttack::HitMonstersInAttackRange()
 					pMonster->SetMonsterState(MONSTER_STATE::DEAD);
 					pMonster->SetParticleDir(Vec3(vTargetVec.x < 0.f ? -400.f : 400.f, 400.f, 0.f));
 					static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(vTargetVec.x < 0.f ? -800.f : 800.f, 800.f, 0.f));
+
+					m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenMonsterKillTiming();
 				}
 
 				// Generate Particles

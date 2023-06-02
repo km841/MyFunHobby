@@ -207,23 +207,18 @@
 0
 ..\Resources\Texture\Tiles\DarkStone_4.png
 1728 320
-3
+2
 0
 0
 4
 ..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Shop\Sprite_Ch3DungeonGate_Shop_Activate.png
 832 470
-0
-0
-3
-..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Bone\Sprite_Ch3DungeonGate_Bone_Activate.png
-1472 460
 1
 0
-6
+7
 ..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
 1152 448
-91
+93
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
 1088 256
@@ -497,6 +492,12 @@
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
 1600 -192
+1
+..\Resources\Texture\DungeonObject\DecoImage_LostDoor.png
+1517.51 470.841
+1
+..\Resources\Texture\DungeonObject\DecoImage_LostDoor.png
+1517.51 470.841
 22
 1 1 0
 0 0 0
@@ -577,12 +578,12 @@
 1 1 1
 0 0 0
 1000
-1128.73 587.521 95
+1128.73 587.521 100
 1 1 1
 0 0 0
 200
-716.46 409.378 95
+716.46 409.378 100
 1 1 1
 0 0 0
 200
-1560.46 422.978 95
+1560.46 422.978 100

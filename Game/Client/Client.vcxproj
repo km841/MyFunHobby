@@ -256,6 +256,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemInfoUI.h" />
     <ClInclude Include="JennysChainSickle.h" />
+    <ClInclude Include="JennysChainSickleSlashEffect.h" />
     <ClInclude Include="LightObject.h" />
     <ClInclude Include="LocalEffect.h" />
     <ClInclude Include="Lyweasel.h" />
@@ -444,6 +445,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemInfoUI.cpp" />
     <ClCompile Include="JennysChainSickle.cpp" />
+    <ClCompile Include="JennysChainSickleSlashEffect.cpp" />
     <ClCompile Include="LightObject.cpp" />
     <ClCompile Include="LocalEffect.cpp" />
     <ClCompile Include="Lyweasel.cpp" />

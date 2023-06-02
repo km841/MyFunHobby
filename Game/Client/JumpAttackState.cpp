@@ -63,6 +63,7 @@ void JumpAttackState::Update()
 void JumpAttackState::Enter()
 {
 	PlayAnimation();
+	m_pPlayer.lock()->ActiveItemWhenJumpAttackEnterTiming();
 }
 
 void JumpAttackState::Exit()

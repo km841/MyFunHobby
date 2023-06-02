@@ -726,27 +726,17 @@
 0
 ..\Resources\Texture\Tiles\A_Transparent_1.png
 -1920 384
-4
+2
 0
 0
 2
 ..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Gold\Sprite_Ch3DungeonGate_Gold_Activate.png
--1664 908
-0
-0
-2
-..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Gold\Sprite_Ch3DungeonGate_Gold_Activate.png
--1664 908
+-1760 908
 1
 0
 7
 ..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
--1344 920
-1
-0
-7
-..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
--1344 920
+-1440 920
 154
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png

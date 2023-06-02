@@ -21,6 +21,8 @@ public:
 
     virtual void ActiveMethodWhenHitTiming() { }
     virtual void ActiveMethodWhenDashTiming() { }
+    virtual void ActiveItemWhenJumpAttackEnterTiming() { }
+    virtual void ActiveItemWhenMonsterKillTiming() { }
 
 public:
     static std::vector<ITEM_KIND> GetItemKindsOfGrade(GRADE eGrade);

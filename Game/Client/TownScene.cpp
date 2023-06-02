@@ -297,7 +297,7 @@ void TownScene::Enter()
 	
 	//ActivateDistortion(3.f);
 
-	//RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
+	
 	RegisterSceneEvent(EVENT_TYPE::ACTIVATE_DISTORTION, 0, 1.f);
 	RegisterSceneEvent(EVENT_TYPE::ACTIVATE_AFTEREFFECT, 0, 2.f);
 

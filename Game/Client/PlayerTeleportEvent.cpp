@@ -23,7 +23,9 @@ void PlayerTeleportEvent::Update()
 
 void PlayerTeleportEvent::ExecuteEvent()
 {
-	GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->SetPhysicalPosition(m_vDescPos);
+	Vec3 vPlayerPos = m_vDescPos;
+	vPlayerPos.z -= 1.f;
+	GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->SetPhysicalPosition(vPlayerPos);
 
 
 	GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetTransform()->SetLocalPosition(Vec3(m_vDescPos.x, m_vDescPos.y, 1.f));

@@ -15,6 +15,21 @@ struct SceneEventInfo
     float fCurTime;
 };
 
+struct CameraShakeInfo
+{
+    CameraShakeInfo()
+        : tCameraShakeTimer(0.f)
+    {}
+
+    CameraShakeInfo(float fEndTime, const Vec3& vImpulse)
+        : tCameraShakeTimer(fEndTime)
+        , vCameraShakeImpulse(vImpulse)
+    {}
+
+    Timer tCameraShakeTimer;
+    Vec3 vCameraShakeImpulse;
+};
+
 class Scene
 {
 public:
@@ -97,8 +112,8 @@ protected:
     float m_fFadeEffectRatio;
     EVENT_TYPE m_eActiveSceneEvent;
 
-    Timer m_tCameraShakeTimer;
-    Vec3 m_vCameraShakeImpulse;
+    std::queue<CameraShakeInfo> m_qCameraShakeInfo;
+    CameraShakeInfo m_ActiveCameraShakeInfo;
 
     std::vector<shared_ptr<Light>> m_vLights;
 

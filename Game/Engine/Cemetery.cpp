@@ -249,7 +249,7 @@ void Cemetery::CreateSkul()
 			SkillInfo skillInfo = {};
 			skillInfo.eSkillType = SKILL_TYPE::CHARGING;
 			skillInfo.fCooldown = 5.f;
-			skillInfo.fDuration = 1.f;
+			skillInfo.fDuration = 0.5f;
 			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_AbyssMeteor", L"..\\Resources\\Texture\\HUD\\HighWarlock\\HUD_AbyssMeteor.png");
 			skillInfo.szComment = L"메테오를 소환한다.";
 			skillInfo.szName = L"어비스 메테오";
@@ -270,7 +270,7 @@ void Cemetery::CreateSkul()
 			SkillInfo skillInfo = {};
 			skillInfo.eSkillType = SKILL_TYPE::CHARGING;
 			skillInfo.fCooldown = 5.f;
-			skillInfo.fDuration = 1.f;
+			skillInfo.fDuration = 0.5f;
 			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_AbyssOrb", L"..\\Resources\\Texture\\HUD\\HighWarlock\\HUD_AbyssOrb.png");
 			skillInfo.szComment = L"오브를 소환한다.";
 			skillInfo.szName = L"어비스 오브";

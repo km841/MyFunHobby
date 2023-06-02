@@ -68,7 +68,7 @@ void AbyssOrbSkill::Enter()
 	vPlayerPos.z += 0.5f;
 
 	uint8 iDirection = static_cast<uint8>(m_pSkul.lock()->GetDirection());
-
+	vPlayerPos.x += iDirection ? -100.f : 100.f;
 	pAbyssOrb->GetTransform()->SetLocalPosition(vPlayerPos);
 	pAbyssOrb->GetRigidBody()->SetVelocity(AXIS::X, iDirection ? -100.f : 100.f);
 
