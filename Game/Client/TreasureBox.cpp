@@ -59,7 +59,7 @@ void TreasureBox::Update()
 			for (int32 i = 0; i < vTotalItemKinds.size(); ++i)
 			{
 				if (std::find(vPlayerItemKinds.begin(), vPlayerItemKinds.end(), vTotalItemKinds[i]) == vPlayerItemKinds.end())
-					vDropItemKinds.push_back(static_cast<ITEM_KIND>(i));
+					vDropItemKinds.push_back(vTotalItemKinds[i]);
 
 				if (vDropItemKinds.size() >= 2)
 					break;

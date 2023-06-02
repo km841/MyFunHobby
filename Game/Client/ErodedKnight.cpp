@@ -13,6 +13,8 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "ObjectReturnToPoolEvent.h"
+#include "ObjectRemoveToSceneEvent.h"
+#include "MonsterHPHUD.h"
 
 POOL_INIT(ErodedKnight);
 ErodedKnight::ErodedKnight()
@@ -130,6 +132,9 @@ void ErodedKnight::ActivateDeadEvent(const Vec3& vDir)
 void ErodedKnight::ActivateDeadEvent()
 {
 	CreateExclamationEffectAndAddedToScene();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUD, eSceneType));
 	m_bDeadFlag = true;
 }
 

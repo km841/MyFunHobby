@@ -28,7 +28,7 @@ BEHAVIOR_RESULT TrackingOfMeleeTask::Run()
 	vTargetNormal.z = 0.f;
 
 	m_pGameObject.lock()->SetDirection(vTargetNormal.x < 0.f ? DIRECTION::LEFT : DIRECTION::RIGHT);
-	m_pGameObject.lock()->GetRigidBody()->SetLinearVelocityForDynamic(Conv::Vec3ToPxVec3(vTargetNormal * status->fSpeed));
+	m_pGameObject.lock()->GetRigidBody()->SetLinearVelocityForDynamic(AXIS::X, vTargetNormal.x * status->fSpeed);
 
 	if (status->fAttackDist > vTargetVec.Length())
 	{

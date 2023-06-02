@@ -37,6 +37,7 @@ void ErodedHeavyInfantryDeadScript::LateUpdate()
 
 		if (m_tStayTimer.IsFinished())
 		{
+			pErodedInfantry.lock()->ClearAttackCount();
 			Vec3 vMyPos = pErodedInfantry.lock()->GetTransform()->GetPhysicalPosition();
 			// BOOM!
 			GET_SINGLE(CollisionManager)->SetForceInLayer(

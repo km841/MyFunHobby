@@ -1,0 +1,1345 @@
+6
+..\Resources\Texture\Map\Image_Ch3_Background_2.png
+-400 300 150
+2517 1123 1
+4 4 0
+..\Resources\Texture\Map\Image_Ch3_BackgroundColor2.png
+-600 650 200
+3588 1592 1
+1 1 0
+..\Resources\Texture\Map\Image_Ch3_Background_11.png
+-800 -200 160
+177 375 1
+2 2 0
+..\Resources\Texture\Map\Image_Ch3_Background_13.png
+0 400 165
+85 335 1
+1.8 1.8 0
+..\Resources\Texture\Map\Image_Ch3_Background_1.png
+-1800 600 170
+1737 756 1
+1.5 1.5 0
+..\Resources\Texture\Map\Image_Ch3_Background_1.png
+-400 400 180
+1737 756 1
+1.2 1.1 0
+234
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+-1856 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1792 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1728 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1664 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1600 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1536 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1472 0
+0
+..\Resources\Texture\Tiles\DarkStone_4.png
+-1408 0
+0
+..\Resources\Texture\Tiles\Ch3TopTile_8.png
+-1408 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1472 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1536 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1600 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1664 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1728 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1792 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1856 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_5.png
+-1088 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-1024 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-960 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_8.png
+-896 448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_6.png
+-1280 512
+0
+..\Resources\Texture\Tiles\Ch3TopTile_6.png
+-1344 512
+0
+..\Resources\Texture\Tiles\Ch3TopTile_6.png
+-1152 512
+0
+..\Resources\Texture\Tiles\Ch3TopTile_6.png
+-1216 512
+0
+..\Resources\Texture\Tiles\Ch3TopTile_9.png
+-1408 512
+0
+..\Resources\Texture\Tiles\Ch3TopTile_10.png
+-1088 512
+0
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-896 512
+0
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-896 576
+0
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-896 640
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+-1152 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1088 0
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1024 0
+0
+..\Resources\Texture\Tiles\DarkStone_4.png
+-960 0
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-1152 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-960 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1024 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1088 -64
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+-704 128
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-640 128
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-576 128
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-512 128
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-448 128
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-384 128
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-704 64
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-704 0
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-704 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-640 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-576 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-512 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-448 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-384 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-384 0
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-384 64
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-576 0
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-512 64
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-448 64
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-448 0
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-512 0
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-640 0
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-576 64
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-640 64
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+-128 384
+0
+..\Resources\Texture\Tiles\DarkStone_4.png
+128 384
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+64 384
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+0 384
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-64 384
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-128 320
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-128 256
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-128 192
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+128 320
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+128 256
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+128 192
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+64 192
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+0 192
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-64 192
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+0 256
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-64 256
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+0 320
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+64 256
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+64 320
+1
+..\Resources\Texture\Tiles\DarkStone_6.png
+-64 320
+0
+..\Resources\Texture\Tiles\DarkStone_4.png
+-896 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-960 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1024 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1088 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1152 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1216 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1280 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1344 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1408 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1472 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1536 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1600 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1664 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1728 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1792 768
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1856 768
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+-1920 768
+0
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-896 704
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-1920 704
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-1920 640
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-1920 576
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+-1920 512
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+-256 448
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+-448 448
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-384 448
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-320 448
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+-704 704
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+-512 704
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-640 704
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-576 704
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+-704 576
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-640 576
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-576 576
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+-512 576
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -64
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -128
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -192
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -256
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -320
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -384
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -448
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -512
+0
+..\Resources\Texture\Tiles\DarkStone_1.png
+-1344 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1280 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1216 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1152 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1088 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-1024 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-960 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-896 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-832 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-768 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-704 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-640 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-576 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-512 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-448 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-384 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-320 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-256 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-192 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-128 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-64 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+0 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+64 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+128 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+192 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+256 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+320 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+384 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+448 -576
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -448
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -384
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -320
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -256
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -192
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -128
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -64
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 0
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 64
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 128
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 192
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 256
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 320
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 384
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 448
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 512
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 576
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 640
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 704
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 768
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 832
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 896
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 960
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 1024
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 1088
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 1152
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 1216
+0
+..\Resources\Texture\Tiles\DarkStone_4.png
+512 -576
+0
+..\Resources\Texture\Tiles\DarkStone_5.png
+576 -512
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+576 -576
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+128 -384
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+320 -384
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+320 -192
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+128 -192
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+384 0
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+192 0
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+448 192
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+256 192
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+256 -384
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+192 -384
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+256 -192
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+192 -192
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+320 0
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+256 0
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+320 192
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+384 192
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-1408 -576
+2
+..\Resources\Texture\Tiles\DarkStone_7.png
+-1152 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-1088 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-1024 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-960 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-896 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-832 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-768 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-704 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-640 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-576 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-512 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-448 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-384 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-320 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-256 -320
+2
+..\Resources\Texture\Tiles\DarkStone_8.png
+-192 -320
+2
+..\Resources\Texture\Tiles\DarkStone_9.png
+-128 -320
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 832
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 896
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 960
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 1024
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 1088
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 1152
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 1216
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 1280
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 1344
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1984 1408
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1920 320
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1920 256
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1920 192
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1920 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1920 64
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1920 0
+0
+..\Resources\Texture\Tiles\Ch3TopTile_5.png
+-1920 448
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-1920 384
+4
+0
+0
+2
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Gold\Sprite_Ch3DungeonGate_Gold_Activate.png
+-1664 908
+0
+0
+2
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Gold\Sprite_Ch3DungeonGate_Gold_Activate.png
+-1664 908
+1
+0
+7
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
+-1344 920
+1
+0
+7
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
+-1344 920
+154
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1664 640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1408 704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1408 640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1408 576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1088 704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1088 640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1088 576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+-1536 512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+-1472 512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+-960 512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+-1024 512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -320
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -256
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 0
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 256
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 320
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 960
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 1024
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 1088
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 1152
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 1216
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+704 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+704 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+704 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+704 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+768 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+320 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+448 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+448 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+448 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+448 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+448 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+0 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-320 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-640 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-640 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-640 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-640 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-640 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-960 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-960 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-960 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-960 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-960 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1280 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1280 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1280 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1280 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1280 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -320
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -256
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1600 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -128
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -192
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -256
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -320
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -768
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -832
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
+-1728 -896
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_1.png
+-1461.22 168.373
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bottle_2.png
+-1525.52 86.1886
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_2.png
+-1053.6 168.725
+1
+..\Resources\Texture\DungeonObject\DecoImage_Chair_2.png
+-1124.8 72.7246
+1
+..\Resources\Texture\DungeonObject\DecoImage_Skeleton_2.png
+-246.924 351.872
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_8.png
+-575.664 294.496
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_10.png
+-363.404 614.604
+1
+..\Resources\Texture\DungeonObject\DecoImage_Table_5.png
+-488.538 194.448
+1
+..\Resources\Texture\DungeonObject\DecoImage_Table_1.png
+-651.388 198.716
+1
+..\Resources\Texture\DungeonObject\DecoImage_Chair_1.png
+-366.879 512.36
+1
+..\Resources\Texture\DungeonObject\DecoImage_Pipe_3.png
+-15.5016 126.57
+1
+..\Resources\Texture\DungeonObject\DecoImage_Skeleton_1.png
+22.2061 34.871
+1
+..\Resources\Texture\DungeonObject\DecoImage_Cage_2.png
+-110.594 18.871
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_1.png
+-839.062 -151.213
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_1.png
+-678.729 -134.441
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_5.png
+-611.165 -150.441
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_3.png
+-304.338 -217.642
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_5.png
+-1071.51 -202.043
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_3.png
+-1294.98 -475.067
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_6.png
+-1162.18 -471.867
+1
+..\Resources\Texture\DungeonObject\DecoImage_Box_1.png
+192.007 -327.214
+1
+..\Resources\Texture\DungeonObject\DecoImage_Flag_1.png
+306.566 -263.103
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_1.png
+203.696 -66.4252
+1
+..\Resources\Texture\DungeonObject\DecoImage_Table_1.png
+287.35 -122.446
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_1.png
+-189.869 -157.178
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_5.png
+9.97036 551.283
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_6.png
+304.56 291.854
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bottle_1.png
+397.932 285.482
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_1.png
+-91.3156 482.418
+1
+..\Resources\Texture\DungeonObject\DecoImage_Pipe_1.png
+-1661.61 371.601
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_3.png
+-1328.99 424.698
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_3.png
+-1801.08 297.191
+1
+..\Resources\Texture\DungeonObject\DecoImage_Skeleton_2.png
+-1705.2 285.897
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_7.png
+-527.542 -400.109
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_9.png
+-600.857 -421.709
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_4.png
+-1042.89 -455.507
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_5.png
+-856.49 -453.907
+1
+..\Resources\Texture\DungeonObject\DecoImage_Cage_5.png
+-414.473 -165.306
+33
+1 1 0
+0 0 0
+100
+-1459.88 253.588 100
+1 1 0
+0 0 0
+100
+-1490.28 211.188 100
+1 1 0
+0 0 0
+100
+-1433.48 215.988 100
+1 1 0
+0 0 0
+100
+-1050.88 255.988 100
+1 1 0
+0 0 0
+100
+-1082.88 214.388 100
+1 1 0
+0 0 0
+100
+-539.27 342.562 100
+1 1 0
+0 0 0
+100
+-840.541 -57.6849 100
+1 1 0
+0 0 0
+100
+-870.941 -100.885 100
+1 1 0
+0 0 0
+100
+-811.741 -97.6849 100
+1 1 0
+0 0 0
+100
+-191.43 -67.0411 100
+1 1 0
+0 0 0
+100
+-217.83 -111.841 100
+1 1 0
+0 0 0
+100
+-165.03 -107.841 100
+0.5 0.5 0
+0 0 0
+400
+-1465.13 112.547 100
+0.5 0.5 0
+0 0 0
+400
+-1075.5 125.347 100
+0.5 0.5 0
+0 0 0
+400
+-832.775 -209.622 100
+0.5 0.5 0
+0 0 0
+400
+-185.269 -212.715 100
+0.2 0.2 0
+0 0 0
+800
+-552.344 194.29 100
+0.2 0.2 0.2
+0 0 0
+800
+30.9878 585.819 100
+0.5 1 0.5
+0 0 0
+200
+303.628 264.882 100
+0.5 1 0.5
+0 0 0
+200
+-1167.87 -501.036 100
+0.5 0.5 1
+0 0 0
+200
+-856.673 -486.636 100
+0.5 0.5 1
+0 0 0
+200
+-1034.27 -497.036 100
+0.5 0.5 1
+0 0 0
+200
+-1279.07 -512.236 100
+0.5 0.5 1
+0 0 0
+200
+-1072.67 -250.636 100
+0.5 0.5 1
+0 0 0
+200
+-300.836 -269.036 100
+0.5 0.5 1
+0 0 0
+200
+-677.833 -155.793 100
+0.5 0.5 1
+0 0 0
+200
+-613.833 -189.393 100
+0.5 0.5 1
+0 0 0
+200
+-598.633 -475.003 100
+0.5 0.5 1
+0 0 0
+200
+-526.633 -428.603 100
+0.5 0.5 1
+0 0 0
+200
+-1326.35 384.057 100
+0.5 0.5 1
+0 0 0
+200
+-1805.51 250.137 100
+0.5 0.5 1
+0 0 0
+200
+204.307 -89.6889 100
+0.5 0.5 1
+0 0 0
+200
+-77.7793 455.652 100

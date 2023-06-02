@@ -23,7 +23,7 @@
 -200 450 170
 1687 376 1
 1 1 0
-160
+158
 0
 ..\Resources\Texture\Tiles\DarkStone_3.png
 -640 320
@@ -233,15 +233,6 @@
 -192 -448
 0
 ..\Resources\Texture\Tiles\DarkStone_3.png
--128 -448
-0
-..\Resources\Texture\Tiles\DarkStone_3.png
--64 -448
-0
-..\Resources\Texture\Tiles\DarkStone_4.png
-0 -448
-0
-..\Resources\Texture\Tiles\DarkStone_3.png
 192 -576
 0
 ..\Resources\Texture\Tiles\DarkStone_3.png
@@ -273,9 +264,6 @@
 0
 ..\Resources\Texture\Tiles\DarkStone_4.png
 832 -576
-0
-..\Resources\Texture\Tiles\DarkStone_1.png
-64 -576
 0
 ..\Resources\Texture\Tiles\DarkStone_3.png
 128 -576
@@ -344,12 +332,6 @@
 896 -576
 0
 ..\Resources\Texture\Tiles\DarkStone_6.png
-0 -512
-0
-..\Resources\Texture\Tiles\DarkStone_6.png
-0 -576
-0
-..\Resources\Texture\Tiles\DarkStone_6.png
 -256 256
 0
 ..\Resources\Texture\Tiles\DarkStone_6.png
@@ -369,12 +351,6 @@
 0
 ..\Resources\Texture\Tiles\Ch3TopTile_4.png
 -64 768
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--64 832
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--64 896
 0
 ..\Resources\Texture\Tiles\DarkStone_6.png
 192 128
@@ -505,7 +481,35 @@
 ..\Resources\Texture\Tiles\Ch3TopTile_4.png
 -768 320
 0
-176
+..\Resources\Texture\Tiles\DarkStone_1.png
+0 -576
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+64 -576
+0
+..\Resources\Texture\Tiles\DarkStone_4.png
+-64 -448
+0
+..\Resources\Texture\Tiles\DarkStone_6.png
+-64 -512
+0
+..\Resources\Texture\Tiles\DarkStone_3.png
+-128 -448
+0
+..\Resources\Texture\Tiles\Ch3TopTile_9.png
+-64 832
+2
+0
+0
+2
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Gold\Sprite_Ch3DungeonGate_Gold_Activate.png
+640 -436
+1
+0
+7
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonWall\Image_Ch3_Dungeon_Wall.png
+320 -424
+204
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
 -192 -512
@@ -1034,4 +1038,148 @@
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
 -960 1152
-0
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_5.png
+-287.5 438.401
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_10.png
+-151.867 357.687
+1
+..\Resources\Texture\DungeonObject\DecoImage_Pipe_1.png
+-758.09 563.522
+1
+..\Resources\Texture\DungeonObject\DecoImage_Pipe_1.png
+-758.09 563.522
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_8.png
+175.352 357.428
+1
+..\Resources\Texture\DungeonObject\DecoImage_Chair_1.png
+70.2904 256.196
+1
+..\Resources\Texture\DungeonObject\DecoImage_Cage_5.png
+-331.542 -224.639
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_1.png
+-120.208 -279.898
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_2.png
+2.72131 64.1097
+1
+..\Resources\Texture\DungeonObject\DecoImage_Flag_1.png
+11.7239 -268.75
+1
+..\Resources\Texture\DungeonObject\DecoImage_Table_1.png
+-481.259 -184.789
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_2.png
+-616.459 -87.9888
+1
+..\Resources\Texture\DungeonObject\DecoImage_Skeleton_2.png
+-409.897 156.21
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_2.png
+-476.297 186.61
+1
+..\Resources\Texture\DungeonObject\DecoImage_HangingLight_9.png
+-554.697 147.41
+1
+..\Resources\Texture\DungeonObject\DecoImage_Pipe_2.png
+-616.297 189.81
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_1.png
+-273.867 -26.4101
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_3.png
+-257.664 -344.225
+1
+..\Resources\Texture\DungeonObject\DecoImage_Box_1.png
+67.5484 -70.0927
+1
+..\Resources\Texture\DungeonObject\DecoImage_Flag_2.png
+179.46 48.4063
+1
+..\Resources\Texture\DungeonObject\DecoImage_Skeleton_1.png
+26.2468 726.037
+1
+..\Resources\Texture\DungeonObject\DecoImage_Pipe_3.png
+326.247 769.237
+1
+..\Resources\Texture\DungeonObject\DecoImage_Skeleton_2.png
+310.247 670.037
+1
+..\Resources\Texture\DungeonObject\DecoImage_Cage_5.png
+139.856 732.717
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+-66.0602 885.911
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+-66.8602 885.911
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+0 896
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
+-64 896
+15
+1 1 0
+0 0 0
+100
+207.289 403.205 100
+1 1 0
+0 0 0
+100
+-612.095 4.59235 100
+1 1 0
+0 0 0
+100
+-640.095 -37.0077 100
+1 1 0
+0 0 0
+100
+-115.406 -195.722 100
+1 1 0
+0 0 0
+100
+-138.606 -234.922 100
+1 1 0
+0 0 0
+100
+-100.206 -234.122 100
+0.5 0.5 0
+0 0 0
+400
+-111.238 -337.52 100
+0.5 0.5 0
+0 0 0
+400
+-608.666 -132.06 100
+0.5 0.5 0
+0 0 0
+400
+231.534 300.68 100
+0.5 0.5 1
+0 0 0
+400
+-260.539 406.564 100
+0.5 0.5 1
+0 0 0
+400
+-258.636 -66.3514 100
+0.5 0.5 1
+0 0 0
+400
+-235.226 -371.236 100
+0.5 0.5 1
+0 0 0
+200
+-475.298 169.123 100
+0.5 0.5 1
+0 0 0
+200
+1.93122 42.9376 100
+0.2 0.2 0.2
+0 0 0
+500
+-594.049 417.863 100

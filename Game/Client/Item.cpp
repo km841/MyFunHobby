@@ -47,11 +47,11 @@ std::vector<ITEM_KIND> Item::GetItemKindsOfGrade(GRADE eGrade)
 		iEndIndex = ITEM_RARE_END;
 		break;
 	case GRADE::UNIQUE:
-		iStartIndex = ITEM_RARE_END + 1;
+		iStartIndex = ITEM_RARE_END;
 		iEndIndex = ITEM_UNIQUE_END;
 		break;
 	case GRADE::LEGENDARY:
-		iStartIndex = ITEM_UNIQUE_END + 1;
+		iStartIndex = ITEM_UNIQUE_END;
 		iEndIndex = ITEM_LEGENDARY_END;
 		break;
 	}

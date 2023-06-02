@@ -12,6 +12,8 @@
 #include "LocalEffect.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "ObjectRemoveToSceneEvent.h"
+#include "MonsterHPHUD.h"
 
 POOL_INIT(ErodedEnt);
 ErodedEnt::ErodedEnt()
@@ -129,6 +131,9 @@ void ErodedEnt::ActivateDeadEvent(const Vec3& vDir)
 void ErodedEnt::ActivateDeadEvent()
 {
 	CreateExclamationEffectAndAddedToScene();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUDFrame, eSceneType));
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pMonsterHPHUD, eSceneType));
 	m_bDeadFlag = true;
 }
 

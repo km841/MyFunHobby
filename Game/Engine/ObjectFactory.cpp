@@ -750,6 +750,24 @@ shared_ptr<Item> ObjectFactory::CreateItem(ITEM_KIND eItemKind)
 	case ITEM_KIND::RING_OF_MOON:
 		pItem = CreateRingOfMoon();
 		break;
+	case ITEM_KIND::BONE_OF_MANA:
+		pItem = CreateBoneOfMana();
+		break;
+	case ITEM_KIND::GUNPOWDER_SWORD:
+		pItem = CreateGunpowderSword();
+		break;
+	case ITEM_KIND::THIEFS_BLACK_IRON_DAGGERS:
+		pItem = CreateThiefsBlackIronDaggers();
+		break;
+	case ITEM_KIND::VOODOO_DOLL:
+		pItem = CreateVoodooDoll();
+		break;
+	case ITEM_KIND::RAVEN_LORDS_FEATHER:
+		pItem = CreateRavenLordsFeather();
+		break;
+	case ITEM_KIND::BRIGHT_DAWN:
+		pItem = CreateBrightDawn();
+		break;
 	}
 
 	assert(pItem);
@@ -771,7 +789,7 @@ shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 	
 	itemInfo.szName = L"봉인된 검";
 	itemInfo.szComment = L"강력한 힘으로 억제되어 있는 검. 미세한 떨림이 느껴진다.";
-	itemInfo.szExplanation = L"물리공격력이 15% 증가합니다.\n300명의 적 처치 시 이 아이템은 '마검: 키리온'으로 변합니다";
+	itemInfo.szExplanation = L"물리공격력이 15% 증가합니다.\n10명의 적 처치 시 이 아이템은 '마검: 키리온'으로 변합니다";
 
 	shared_ptr<Item> pForbiddenSword = make_shared<ForbiddenSword>(itemInfo);
 
@@ -891,7 +909,7 @@ shared_ptr<Item> ObjectFactory::CreateBoneOfMana()
 
 	itemInfo.szName = L"마나의 뼈";
 	itemInfo.szComment = L"대체 어떤 부유한 스켈레톤이 이런걸 만들어서 쓸까?";
-	itemInfo.szExplanation = L"스킬 사용 시 자신을 감싸는 마나 폭풍을 일으켜 마법데미지를 입힙니다.\n보유한 밸런스 타입 스컬 개수에 따라 마나폭풍의 데미지와 범위가(20 % / 60 %) 증가합니다.";
+	itemInfo.szExplanation = L"스킬 사용 시 자신을 감싸는 마나 폭풍을 일으켜 마법데미지를 입힙니다.";
 
 	shared_ptr<Item> pBoneOfMana = make_shared<BoneOfMana>(itemInfo);
 

@@ -62,18 +62,18 @@ void BoneReward::Update()
 			// Active Open Animation! 
 			GetAnimator()->Play(L"Deactivate_Bone", false);
 
-			//shared_ptr<DropSkul> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropSkul>(
-			//	L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\HUD\\HighWarlock\\Image_HighWarlock_Drop.png", SKUL_KIND::HIGH_WARLOCK);
-			//Vec3 vSkulPos = GetTransform()->GetPhysicalPosition();
-			//vSkulPos.z -= 1;
-			//pGameObject->GetTransform()->SetLocalPosition(vSkulPos);
+			shared_ptr<DropSkul> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropSkul>(
+				L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\HUD\\HighWarlock\\Image_HighWarlock_Drop.png", SKUL_KIND::HIGH_WARLOCK);
+			Vec3 vSkulPos = GetTransform()->GetPhysicalPosition();
+			vSkulPos.z -= 1;
+			pGameObject->GetTransform()->SetLocalPosition(vSkulPos);
 
-			//PxVec3 vUpNormal = PxVec3(0.f, 1.f, 0.f);
-			//pGameObject->GetRigidBody()->SetLinearVelocityForDynamic(vUpNormal * 500.f);
+			PxVec3 vUpNormal = PxVec3(0.f, 1.f, 0.f);
+			pGameObject->GetRigidBody()->SetLinearVelocityForDynamic(vUpNormal * 500.f);
 
-			//pGameObject->Awake();
-			//SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-			//GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
+			pGameObject->Awake();
+			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, eSceneType));
 
 			// Skul Drop!
 			m_bTaked = true;
