@@ -7,6 +7,7 @@ class Skul;
 class GlobalEffect;
 class Item;
 class Essence;
+class Monster;
 
 struct Clobber
 {
@@ -78,6 +79,7 @@ public:
 	void				   ActiveItemWhenDashTiming();
 	void				   ActiveItemWhenJumpAttackEnterTiming();
 	void				   ActiveItemWhenMonsterKillTiming();
+	void				   ActiveItemWhenMonsterHitTiming(shared_ptr<Monster> pMonster);
 
 	// About essence
 	shared_ptr<Essence>   ObtainEssence(shared_ptr<Essence> pEssence);

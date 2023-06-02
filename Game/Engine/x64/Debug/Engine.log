@@ -1,16 +1,15 @@
 ﻿  Camera.cpp
-  CollisionManager.cpp
   Component.cpp
   Engine.cpp
   EventManager.cpp
   InfantryTackleTask.cpp
-  InterfaceManager.cpp
   IsPlayerInAttackRangeCondition.cpp
   IsPlayerNearCondition.cpp
   KnightAttackTask.cpp
   Light.cpp
   Movement.cpp
   ObjectFactory.cpp
+  CollisionManager.cpp
   PlayerChangeStateEvent.cpp
   PlayerHitTask.cpp
   RandomDirectionTask.cpp

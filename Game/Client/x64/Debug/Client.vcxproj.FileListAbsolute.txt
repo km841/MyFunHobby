@@ -1,1 +1,0 @@
-C:\MyProject\Game\Client\x64\Debug\Client.vcxproj.CopyComplete

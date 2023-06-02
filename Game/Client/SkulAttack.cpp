@@ -55,10 +55,13 @@ void SkulAttack::HitMonstersInAttackRange()
 
 	for (auto& pGameObject : vGameObjects)
 	{
-		Vec3 vPos = pGameObject->GetTransform()->GetPhysicalPosition();
-		vPos.z = 0.f;
+		Vec3 vMonsterPos = pGameObject->GetTransform()->GetPhysicalPosition();
+		vMonsterPos.z = 0.f;
 
-		Vec3 vTargetVec = vPos - vMyPos;
+		Vec3 vTargetPos = pGameObject->GetTransform()->GetPhysicalPosition();
+		vTargetPos.z -= 1.f;
+
+		Vec3 vTargetVec = vMonsterPos - vMyPos;
 		float fDistance = vTargetVec.Length();
 
 		Vec3 vTargetNormal = vTargetVec;
@@ -78,11 +81,11 @@ void SkulAttack::HitMonstersInAttackRange()
 				if (MONSTER_TYPE::NORMAL == pMonster->GetMonsterType())
 					pMonster->SetMonsterState(MONSTER_STATE::WEAK_HIT);
 
-				CreateHitEffectAndAddedScene(vPos);
+				CreateHitEffectAndAddedScene(vMonsterPos);
 				Damage damage = CalculateDamage();
 				
 				pGameObject->GetStatus()->TakeDamage(static_cast<int32>(damage.second));
-				FONT->DrawDamage(damage.first, damage.second, vPos);
+				FONT->DrawDamage(damage.first, damage.second, vMonsterPos);
 
 				// Monster Dead Event Occurs
 				if (!pGameObject->GetStatus()->IsAlive())
@@ -92,6 +95,10 @@ void SkulAttack::HitMonstersInAttackRange()
 					static_pointer_cast<Monster>(pGameObject)->ActivateDeadEvent(Vec3(vTargetVec.x < 0.f ? -800.f : 800.f, 800.f, 0.f));
 
 					m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenMonsterKillTiming();
+				}
+				else
+				{
+					m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenMonsterHitTiming(pMonster);
 				}
 
 				// Generate Particles

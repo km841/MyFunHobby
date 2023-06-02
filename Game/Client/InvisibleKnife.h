@@ -13,5 +13,7 @@ public:
     void Update();
     void LateUpdate();
     void FinalUpdate();
+
+    virtual void ActiveItemWhenMonsterHitTiming(shared_ptr<Monster> pMonster);
 };
 

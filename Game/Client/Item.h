@@ -2,6 +2,7 @@
 #include "Object.h"
 class Texture;
 class Player;
+class Monster;
 class Item :
     public Object
 {
@@ -23,6 +24,7 @@ public:
     virtual void ActiveMethodWhenDashTiming() { }
     virtual void ActiveItemWhenJumpAttackEnterTiming() { }
     virtual void ActiveItemWhenMonsterKillTiming() { }
+    virtual void ActiveItemWhenMonsterHitTiming(shared_ptr<Monster> pMonster) { }
 
 public:
     static std::vector<ITEM_KIND> GetItemKindsOfGrade(GRADE eGrade);

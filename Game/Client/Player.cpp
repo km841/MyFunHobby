@@ -27,6 +27,7 @@
 #include "PlayerHitHUD.h"
 #include "Item.h"
 #include "Essence.h"
+#include "Monster.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -262,6 +263,15 @@ void Player::ActiveItemWhenMonsterKillTiming()
 	{
 		if (m_arrItems[i])
 			m_arrItems[i]->ActiveItemWhenMonsterKillTiming();
+	}
+}
+
+void Player::ActiveItemWhenMonsterHitTiming(shared_ptr<Monster> pMonster)
+{
+	for (int32 i = 0; i < MAX_ITEMS; ++i)
+	{
+		if (m_arrItems[i])
+			m_arrItems[i]->ActiveItemWhenMonsterHitTiming(pMonster);
 	}
 }
 
