@@ -748,6 +748,9 @@
     <ClInclude Include="JennysChainSickleSlashEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Ch3BossDungeon.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1287,6 +1290,9 @@
     </ClCompile>
     <ClCompile Include="JennysChainSickleSlashEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch3BossDungeon.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

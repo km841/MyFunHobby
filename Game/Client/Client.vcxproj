@@ -192,6 +192,7 @@
     <ClInclude Include="BoneReward.h" />
     <ClInclude Include="BrightDawn.h" />
     <ClInclude Include="Ch3BeginTower.h" />
+    <ClInclude Include="Ch3BossDungeon.h" />
     <ClInclude Include="ClobberHUD.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
     <ClInclude Include="DarkMirrorReflectionScript.h" />
@@ -381,6 +382,7 @@
     <ClCompile Include="BoneReward.cpp" />
     <ClCompile Include="BrightDawn.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
+    <ClCompile Include="Ch3BossDungeon.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />

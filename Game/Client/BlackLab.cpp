@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BlackLab.h"
 #include "Ch3BaseCamp.h"
+#include "Ch3BossDungeon.h"
 #include "Dungeon_Bone.h"
 #include "Dungeon_Item.h"
 #include "Dungeon_Gold.h"

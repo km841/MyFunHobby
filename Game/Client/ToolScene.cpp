@@ -688,14 +688,17 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_activate.anim");
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Bone_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Bone\\ch3dungeongate_bone_deactivate.anim");
 			break;
-
 		case DUNGEON_TYPE::SHOP:
 			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_activate.anim");
 			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Shop_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Shop\\ch3dungeongate_shop_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::VICE_BOSS:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_ViceBoss_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\ViceBoss\\ch3dungeongate_viceboss_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_ViceBoss_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\ViceBoss\\ch3dungeongate_viceboss_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::STAGE_BOSS:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Boss_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Boss\\ch3dungeongate_boss_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Boss_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Boss\\ch3dungeongate_boss_deactivate.anim");
 			break;
 		}
 	}
@@ -773,8 +776,12 @@ void ToolScene::CreateDungeonGate(const Vec3& vWorldPos, STAGE_KIND eStageKind, 
 			break;
 
 		case DUNGEON_TYPE::VICE_BOSS:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_ViceBoss_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\ViceBoss\\ch3dungeongate_viceboss_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_ViceBoss_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\ViceBoss\\ch3dungeongate_viceboss_deactivate.anim");
 			break;
 		case DUNGEON_TYPE::STAGE_BOSS:
+			pActivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Boss_Activate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Boss\\ch3dungeongate_boss_activate.anim");
+			pDeactivateAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Ch3DungeonGate_Boss_Deactivate", L"..\\Resources\\Animation\\Dungeon\\Ch3\\DungeonGate\\Boss\\ch3dungeongate_boss_deactivate.anim");
 			break;
 		}
 	}
@@ -1022,6 +1029,22 @@ DungeonObjPair ToolScene::WstringToDungeonObjPair(const wstring& szSelectedKey)
 	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
 		szSelectedKey.find(L"Shop") != std::wstring::npos)
 		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::SHOP);
+
+	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
+		szSelectedKey.find(L"ViceBoss") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::VICE_BOSS);
+
+	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
+		szSelectedKey.find(L"ViceBoss") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::VICE_BOSS);
+
+	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
+		szSelectedKey.find(L"Boss") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::BLACK_LAB, DUNGEON_TYPE::STAGE_BOSS);
+
+	else if (szSelectedKey.find(L"Ch4") != std::wstring::npos &&
+		szSelectedKey.find(L"Boss") != std::wstring::npos)
+		return DungeonObjPair(STAGE_KIND::CITADEL_OF_FATE, DUNGEON_TYPE::STAGE_BOSS);
 
 	else if (szSelectedKey.find(L"Ch3") != std::wstring::npos &&
 		szSelectedKey.find(L"Wall") != std::wstring::npos)
