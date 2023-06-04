@@ -98,7 +98,7 @@ void Font::UpdateDamage()
 				break;
 			}
 
-			damageInfo.tDuration.Update(DELTA_TIME);
+			damageInfo.tDuration.Update(WORLD_DELTA_TIME);
 			iter++;
 		}
 	}

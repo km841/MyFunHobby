@@ -47,7 +47,7 @@ BEHAVIOR_RESULT PatrolTask::Run()
 		const Status* status = m_pGameObject.lock()->GetStatus();
 		PxVec3 vVelocity = PxVec3(status->fSpeed, 0.f, 0.f);
 
-		m_fRandDist -= vVelocity.x * DELTA_TIME;
+		m_fRandDist -= vVelocity.x * OBJECT_DELTA_TIME;
 		vVelocity.x = iDirection ? -vVelocity.x : vVelocity.x;
 
 		m_pGameObject.lock()->GetTransform()->GetRigidBody()->SetLinearVelocityForDynamic(vVelocity);

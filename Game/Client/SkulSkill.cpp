@@ -14,13 +14,13 @@ SkulSkill::SkulSkill(const SkillInfo& skillInfo)
 
 void SkulSkill::Update()
 {
-	m_tDuration.Update(DELTA_TIME);
+	m_tDuration.Update(OBJECT_DELTA_TIME);
 }
 
 
 void SkulSkill::UpdateSkillCooldown()
 {
-	m_tCooldown.Update(DELTA_TIME);
+	m_tCooldown.Update(OBJECT_DELTA_TIME);
 }
 
 

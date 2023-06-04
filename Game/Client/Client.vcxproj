@@ -261,6 +261,7 @@
     <ClInclude Include="LightObject.h" />
     <ClInclude Include="LocalEffect.h" />
     <ClInclude Include="Lyweasel.h" />
+    <ClInclude Include="MadScientist.h" />
     <ClInclude Include="MapReward.h" />
     <ClInclude Include="MonsterHitShaderScript.h" />
     <ClInclude Include="MonsterProjectile.h" />
@@ -451,6 +452,7 @@
     <ClCompile Include="LightObject.cpp" />
     <ClCompile Include="LocalEffect.cpp" />
     <ClCompile Include="Lyweasel.cpp" />
+    <ClCompile Include="MadScientist.cpp" />
     <ClCompile Include="MapReward.cpp" />
     <ClCompile Include="MonsterHitShaderScript.cpp" />
     <ClCompile Include="MonsterProjectile.cpp" />

@@ -47,7 +47,7 @@ void AbyssOrb::Update()
 
 	if (m_tLifeTimer.IsRunning())
 	{
-		m_tLifeTimer.Update(DELTA_TIME);
+		m_tLifeTimer.Update(OBJECT_DELTA_TIME);
 		if (m_tLifeTimer.IsFinished())
 		{
 			if (!m_bCompleted)
@@ -105,7 +105,7 @@ void AbyssOrb::Update()
 			if (!m_tDamageTick.IsRunning())
 				m_tDamageTick.Start();
 
-			m_tDamageTick.Update(DELTA_TIME);
+			m_tDamageTick.Update(OBJECT_DELTA_TIME);
 
 			if (m_tDamageTick.IsFinished())
 			{

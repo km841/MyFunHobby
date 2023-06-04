@@ -1,0 +1,143 @@
+2
+..\Resources\Texture\Map\Image_Ch3_Boss_Background.png
+800 450 200
+1089 488.5 1
+8 8 0
+..\Resources\Texture\Map\Image_Ch3_Boss_Ground.png
+500 80 180
+800 94 1
+0 0 0
+33
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-64 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+0 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+64 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+128 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+192 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+256 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+320 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+384 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+448 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+512 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+576 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+640 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+704 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+768 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+832 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+896 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+960 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+1024 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+1088 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 192
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 256
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 320
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 384
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 448
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 512
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 576
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 640
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 704
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 768
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+-128 832
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+1152 128
+0
+..\Resources\Texture\Tiles\A_Transparent_1.png
+1216 128
+0
+5
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_5.png
+-17.1499 264.419
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_3.png
+92.6316 246.819
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_3.png
+92.6316 246.819
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_4.png
+227.582 267.619
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bubble_1.png
+313.431 244.419
+4
+0.5 0.5 1
+0 0 0
+200
+324.126 215.619 100
+0.5 0.5 1
+0 0 0
+200
+235.326 214.019 100
+0.5 0.5 1
+0 0 0
+200
+101.726 212.419 100
+0.5 0.5 1
+0 0 0
+200
+-11.074 214.819 100

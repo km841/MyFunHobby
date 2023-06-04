@@ -47,7 +47,7 @@ void Animation::Update()
 
 	PushData();
 
-	m_fAccTime += DELTA_TIME;
+	m_fAccTime += WORLD_DELTA_TIME;
 	if (m_vFrameDataList[m_iCurFrame].fDuration < m_fAccTime)
 	{
 		m_fAccTime = 0.f;

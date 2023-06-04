@@ -39,7 +39,7 @@ void DungeonWall::Update()
 		if (vDiffuse.x > 1.f)
 			m_bClearFlag = false;
 
-		m_pLight.lock()->GetLight()->AddDiffuse(Vec3(.5f, .5f, .5f) * DELTA_TIME);
+		m_pLight.lock()->GetLight()->AddDiffuse(Vec3(.5f, .5f, .5f) * OBJECT_DELTA_TIME);
 	}
 
 }

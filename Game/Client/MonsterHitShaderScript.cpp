@@ -27,7 +27,7 @@ void MonsterHitShaderScript::LateUpdate()
 
 	if (0.f < m_fRatio)
 	{
-		m_fRatio -= DELTA_TIME * 10.f;
+		m_fRatio -= OBJECT_DELTA_TIME * 10.f;
 	}
 
 	m_ePrevState = eCurState;

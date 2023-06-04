@@ -65,11 +65,11 @@ void TitleScene::Update()
 	}
 
 	if (m_tStayTimer.IsRunning())
-		m_tStayTimer.Update(DELTA_TIME);
+		m_tStayTimer.Update(WORLD_DELTA_TIME);
 
 	if (m_tStayTimer.IsFinished())
 	{
-		m_fAlphaValue += DELTA_TIME;
+		m_fAlphaValue += WORLD_DELTA_TIME;
 		FONT->DrawString(L"아무 키나 누르세요", 22.f, Vec3(810.f, 60.f, 0.f), 
 			FONT_WEIGHT::ULTRA_BOLD, Color::FromRGB(203, 138, 241, (sinf(m_fAlphaValue) + 1.f) / 2.f));
 	}

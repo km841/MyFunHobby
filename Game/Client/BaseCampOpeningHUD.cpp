@@ -70,10 +70,10 @@ void BaseCampOpeningHUD::UpdateAction()
 
 	else if (!m_tDownTimer.IsFinished())
 	{
-		m_tDownTimer.Update(DELTA_TIME);
+		m_tDownTimer.Update(WORLD_DELTA_TIME);
 		const Vec3& vMyPos = GetTransform()->GetLocalPosition();
 
-		GetTransform()->SetLocalPosition(Vec3(vMyPos.x, vMyPos.y - m_fSpeed * DELTA_TIME, vMyPos.z));
+		GetTransform()->SetLocalPosition(Vec3(vMyPos.x, vMyPos.y - m_fSpeed * OBJECT_DELTA_TIME, vMyPos.z));
 	}
 
 	else if (m_tDownTimer.IsFinished() && !m_tStayTimer.IsFinished())
@@ -81,7 +81,7 @@ void BaseCampOpeningHUD::UpdateAction()
 		if (!m_tStayTimer.IsRunning())
 			m_tStayTimer.Start();
 
-		m_tStayTimer.Update(DELTA_TIME);
+		m_tStayTimer.Update(WORLD_DELTA_TIME);
 	}
 
 	else if (m_tStayTimer.IsFinished())
@@ -89,9 +89,9 @@ void BaseCampOpeningHUD::UpdateAction()
 		if (!m_tUpTimer.IsRunning())
 			m_tUpTimer.Start();
 
-		m_tUpTimer.Update(DELTA_TIME);
+		m_tUpTimer.Update(WORLD_DELTA_TIME);
 		const Vec3& vMyPos = GetTransform()->GetLocalPosition();
-		GetTransform()->SetLocalPosition(Vec3(vMyPos.x, vMyPos.y + m_fSpeed * DELTA_TIME, vMyPos.z));
+		GetTransform()->SetLocalPosition(Vec3(vMyPos.x, vMyPos.y + m_fSpeed * WORLD_DELTA_TIME, vMyPos.z));
 
 
 	}

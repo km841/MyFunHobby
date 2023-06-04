@@ -35,5 +35,5 @@ void BGCameraScript::LateUpdate()
 	vDiffNormal.z = 0.f;
 
 	GetCamera()->SetCameraSpeed(vDiffNormal * 2000.f);
-	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 2000.f * DELTA_TIME);
+	GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * 2000.f * OBJECT_DELTA_TIME);
 }

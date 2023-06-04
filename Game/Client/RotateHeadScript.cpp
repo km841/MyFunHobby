@@ -21,7 +21,7 @@ RotateHeadScript::~RotateHeadScript()
 void RotateHeadScript::LateUpdate()
 {
 	float fRotatedZ = m_pProjectile.lock()->GetTransform()->GetLocalRotation().z;
-	fRotatedZ += m_fAngularSpeed * DELTA_TIME;
+	fRotatedZ += m_fAngularSpeed * OBJECT_DELTA_TIME;
 	
 	
 }

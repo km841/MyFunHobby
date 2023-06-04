@@ -26,7 +26,7 @@ void GlobalEffect::Update()
 {
 	GameObject::Update();
 	if (m_tDuration.IsRunning())
-		m_tDuration.Update(DELTA_TIME);
+		m_tDuration.Update(OBJECT_DELTA_TIME);
 }
 
 void GlobalEffect::LateUpdate()

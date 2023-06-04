@@ -39,7 +39,7 @@ void DropEssence::Update()
 
 	static float fWaveValue = 0.f;
 	static float fAcc = 0.f;
-	fAcc += DELTA_TIME;
+	fAcc += OBJECT_DELTA_TIME;
 	fWaveValue = sinf(fAcc) * 0.05f;
 	GetTransform()->SetPhysicalPosition(Vec3(vMyPos.x, vMyPos.y + fWaveValue, vMyPos.z));
 

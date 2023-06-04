@@ -43,7 +43,7 @@ void PlayerTrackingScript::LateUpdate()
 	{
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
-		Vec3 vNextPos = vMyPos + vDiffNormal * fTrackingSpeed * DELTA_TIME;
+		Vec3 vNextPos = vMyPos + vDiffNormal * fTrackingSpeed * WORLD_DELTA_TIME;
 		
 		float fCheckLeftX = vNextPos.x - fWidth / 2.f;
 		float fCheckRightX = vNextPos.x + fWidth / 2.f;
@@ -64,7 +64,7 @@ void PlayerTrackingScript::LateUpdate()
 	}
 	else
 	{
-		GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * fTrackingSpeed * DELTA_TIME);
+		GetTransform()->SetLocalPosition(vMyPos + vDiffNormal * fTrackingSpeed * WORLD_DELTA_TIME);
 	}
 
 

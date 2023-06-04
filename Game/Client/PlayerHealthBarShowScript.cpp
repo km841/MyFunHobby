@@ -36,7 +36,7 @@ void PlayerHealthBarShowScript::LateUpdate()
 	float fRatio = m_pHealthBar.lock()->GetPlayer().lock()->GetStatus()->GetHPRatio();
 	if (m_fDiff > 0.f)
 	{
-		m_fDiff -= 30.f * DELTA_TIME;
+		m_fDiff -= 30.f * OBJECT_DELTA_TIME;
 		fCurHP += m_fDiff;
 
 		fRatio = fCurHP / m_pHealthBar.lock()->GetPlayer().lock()->GetStatus()->iMaxHP;

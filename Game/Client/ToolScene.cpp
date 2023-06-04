@@ -276,7 +276,7 @@ void ToolScene::EraseTileMap()
 
 void ToolScene::MapEditorUpdate()
 {
-	m_tTileDragHolder.Update(DELTA_TIME);
+	m_tTileDragHolder.Update(WORLD_DELTA_TIME);
 
 	m_TileMapData.vTileData.clear();
 	m_TileMapData.vDOData.clear();

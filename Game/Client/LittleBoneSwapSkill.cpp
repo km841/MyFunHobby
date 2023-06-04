@@ -25,7 +25,7 @@ void LittleBoneSwapSkill::Update()
 	if (!m_tDamageTick.IsRunning())
 		m_tDamageTick.Start();
 
-	m_tDamageTick.Update(DELTA_TIME);
+	m_tDamageTick.Update(OBJECT_DELTA_TIME);
 
 	const Vec3& vSize = m_pSkul.lock()->GetTransform()->GetLocalScale();
 	Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();

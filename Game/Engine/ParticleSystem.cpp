@@ -51,8 +51,8 @@ void ParticleSystem::Update()
 
 void ParticleSystem::FinalUpdate()
 {
-	m_fElapsedTime += DELTA_TIME;
-	m_fAccTime += DELTA_TIME;
+	m_fElapsedTime += WORLD_DELTA_TIME;
+	m_fAccTime += WORLD_DELTA_TIME;
 
 	if (m_iAliveCount > 0)
 	{
@@ -76,7 +76,7 @@ void ParticleSystem::FinalUpdate()
 	m_pComputeMaterial->SetInt(0, m_iMaxParticles);
 	m_pComputeMaterial->SetFloat(0, m_fEndTime);
 	m_pComputeMaterial->SetFloat(1, m_fGravity);
-	m_pComputeMaterial->SetVec2(0, Vec2(DELTA_TIME, m_fElapsedTime));
+	m_pComputeMaterial->SetVec2(0, Vec2(WORLD_DELTA_TIME, m_fElapsedTime));
 	m_pComputeMaterial->SetVec2(1, Vec2(m_fStartSpeed, m_fEndSpeed));
 	m_pComputeMaterial->SetVec2(2, Vec2(m_fStartAngle, m_fEndAngle));
 

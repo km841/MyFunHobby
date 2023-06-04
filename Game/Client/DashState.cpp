@@ -37,7 +37,7 @@ void DashState::Awake()
 
 void DashState::Update()
 {
-	m_tDuration.Update(DELTA_TIME);
+	m_tDuration.Update(OBJECT_DELTA_TIME);
 
 	uint8 iDirection = static_cast<uint8>(m_pPlayer.lock()->GetDirection());
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, iDirection ? -m_fDashSpeed : m_fDashSpeed);

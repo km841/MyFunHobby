@@ -212,7 +212,7 @@ void Player::SwapCooldownUpdate()
 {
 	if (!IsSwapPossible())
 	{
-		m_tSwapCooldown.Update(DELTA_TIME);
+		m_tSwapCooldown.Update(OBJECT_DELTA_TIME);
 		if (IsSwapPossible())
 		{
 			weak_ptr<Interface> pInterface = GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::PLAYER_SKUL_THUMNAIL);

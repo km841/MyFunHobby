@@ -42,7 +42,7 @@ void HighWarlockBaseProjectile::Update()
 		m_tLifeTimer.Start();
 	else
 	{
-		m_tLifeTimer.Update(DELTA_TIME);
+		m_tLifeTimer.Update(OBJECT_DELTA_TIME);
 	}
 
 	if (m_tLifeTimer.IsFinished() && !m_bDespawn)

@@ -39,7 +39,7 @@ void KirionDashSlashEffect::Update()
 
 	if (m_tStayTime.IsRunning())
 	{
-		m_tStayTime.Update(DELTA_TIME);
+		m_tStayTime.Update(OBJECT_DELTA_TIME);
 	}
 	else
 	{

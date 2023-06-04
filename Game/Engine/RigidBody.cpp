@@ -30,7 +30,7 @@ void RigidBody::FinalUpdate()
 	if (m_bGravityApplied)
 	{
 		if (m_vVelocity.y> m_vMaxVelocity.y)
-			m_vVelocity += m_vGravityAccel * DELTA_TIME;
+			m_vVelocity += m_vGravityAccel * OBJECT_DELTA_TIME;
 	}
 }
 

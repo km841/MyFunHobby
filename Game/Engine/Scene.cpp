@@ -287,7 +287,7 @@ void Scene::EventUpdate()
 		case EVENT_TYPE::SCENE_FADE_EVENT:
 		{
 			SCENE_FADE_EFFECT eSceneFadeEffect = static_cast<SCENE_FADE_EFFECT>(curEvent.iDetailEnum);
-			curEvent.fCurTime += DELTA_TIME;
+			curEvent.fCurTime += OBJECT_DELTA_TIME;
 
 			if (SCENE_FADE_EFFECT::FADE_IN == eSceneFadeEffect)
 				m_fFadeEffectRatio = curEvent.fCurTime / curEvent.fEndTime;
@@ -310,7 +310,7 @@ void Scene::EventUpdate()
 
 		case EVENT_TYPE::ACTIVATE_DISTORTION:
 		{
-			curEvent.fCurTime += DELTA_TIME;
+			curEvent.fCurTime += OBJECT_DELTA_TIME;
 			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(1, curEvent.fCurTime);
 			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(2, 1.f - curEvent.fCurTime / curEvent.fEndTime);
 			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(0, 1); // Distortion Flag
@@ -326,7 +326,7 @@ void Scene::EventUpdate()
 
 		case EVENT_TYPE::ACTIVATE_AFTEREFFECT:
 		{
-			curEvent.fCurTime += DELTA_TIME;
+			curEvent.fCurTime += OBJECT_DELTA_TIME;
 			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(1, m_fAccTime);
 			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(1, 1); // AfterEffect Flag
 
@@ -355,7 +355,7 @@ void Scene::CameraShakeUpdate()
 
 	if (m_ActiveCameraShakeInfo.tCameraShakeTimer.IsRunning())
 	{
-		m_ActiveCameraShakeInfo.tCameraShakeTimer.Update(DELTA_TIME);
+		m_ActiveCameraShakeInfo.tCameraShakeTimer.Update(OBJECT_DELTA_TIME);
 		float fProgress = m_ActiveCameraShakeInfo.tCameraShakeTimer.GetProgress();
 
 		shared_ptr<Camera> pMainCamera = s_vCameras[0];
@@ -365,12 +365,12 @@ void Scene::CameraShakeUpdate()
 		Vec3 vCamPos = pMainCamera->GetTransform()->GetLocalPosition();
 		if (fProgress < 0.5f)
 		{
-			vCamPos += m_ActiveCameraShakeInfo.vCameraShakeImpulse * DELTA_TIME;
+			vCamPos += m_ActiveCameraShakeInfo.vCameraShakeImpulse * OBJECT_DELTA_TIME;
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
 		}
 		else
 		{
-			vCamPos -= m_ActiveCameraShakeInfo.vCameraShakeImpulse * DELTA_TIME;
+			vCamPos -= m_ActiveCameraShakeInfo.vCameraShakeImpulse * OBJECT_DELTA_TIME;
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
 
 			if (m_ActiveCameraShakeInfo.tCameraShakeTimer.IsFinished())

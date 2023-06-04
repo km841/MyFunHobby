@@ -50,7 +50,7 @@ void AbyssMeteor::Start()
 void AbyssMeteor::Update()
 {
 	PlayerProjectile::Update();
-	GetRigidBody()->AddVelocity(AXIS::Y, -20.f * DELTA_TIME);
+	GetRigidBody()->AddVelocity(AXIS::Y, -20.f * OBJECT_DELTA_TIME);
 }
 
 void AbyssMeteor::LateUpdate()

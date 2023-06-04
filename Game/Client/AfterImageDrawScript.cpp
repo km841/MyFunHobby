@@ -34,7 +34,7 @@ void AfterImageDrawScript::LateUpdate()
 
 	if (pAfterImage->IsEnable())
 	{
-		m_tDuration.Update(DELTA_TIME);
+		m_tDuration.Update(OBJECT_DELTA_TIME);
 
 		const FrameData& currFrameData = pAfterImage->GetFrameData();
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(currFrameData.szTexPath, currFrameData.szTexPath);

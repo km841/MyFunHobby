@@ -18,7 +18,7 @@ ObjectFadeInOutScript::~ObjectFadeInOutScript()
 
 void ObjectFadeInOutScript::LateUpdate()
 {
-	m_tStayTime.Update(DELTA_TIME);
+	m_tStayTime.Update(OBJECT_DELTA_TIME);
 
 	if (!m_tStayTime.IsFinished())
 	{
@@ -40,7 +40,7 @@ void ObjectFadeInOutScript::LateUpdate()
 			m_tDuration.Start();
 		}
 
-		m_tDuration.Update(DELTA_TIME);
+		m_tDuration.Update(OBJECT_DELTA_TIME);
 
 		if (!m_tDuration.IsFinished())
 		{

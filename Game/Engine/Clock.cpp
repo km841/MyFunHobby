@@ -13,18 +13,18 @@ void Clock::Update()
 	uint64 iCurrentCount;
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&iCurrentCount));
 
-	m_fDeltaTime = (iCurrentCount - m_iPrevCount) / static_cast<float>(m_iFrequency);
-
-	if (m_fDeltaTime > (1.f / 60.f))
-		m_fDeltaTime = (1.f / 60.f);
+	m_fWorldDeltaTime = (iCurrentCount - m_iPrevCount) / static_cast<float>(m_iFrequency);
+	m_fObjectDeltaTime = m_fWorldDeltaTime;
+	if (m_fWorldDeltaTime > (1.f / 60.f))
+		m_fWorldDeltaTime = (1.f / 60.f);
 
 	if (m_bPause)
-		m_fDeltaTime = 0.000001f;
+		m_fObjectDeltaTime = 0.000001f;
 
 	m_iPrevCount = iCurrentCount;
 
 	m_iFrameCount++;
-	m_fFrameTime += m_fDeltaTime;
+	m_fFrameTime += m_fWorldDeltaTime;
 
 	if (m_fFrameTime > 1.f)
 	{

@@ -43,7 +43,7 @@ void ErodedHeavyInfantryTackleScript::LateUpdate()
 		if (!m_tDamageTick.IsRunning())
 			m_tDamageTick.Start();
 
-		m_tDamageTick.Update(DELTA_TIME);
+		m_tDamageTick.Update(OBJECT_DELTA_TIME);
 
 		if (m_tDamageTick.IsFinished())
 		{

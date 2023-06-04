@@ -8,7 +8,8 @@ public:
 	void   Update();
 
 	FORCEINLINE uint32 GetFPS()       const { return m_iFPS; }
-	FORCEINLINE float  GetDeltaTime() const { return m_fDeltaTime; }
+	FORCEINLINE float  GetWorldDeltaTime() const { return m_fWorldDeltaTime; }
+	FORCEINLINE float  GetObjectDeltaTime() const { return m_fObjectDeltaTime; }
 	FORCEINLINE void   Pause()				{ m_bPause = true; }
 	FORCEINLINE void   Play()				{ m_bPause = false; }
 
@@ -24,7 +25,9 @@ private:
 	uint32 m_iFrameCount;
 
 	float  m_fFrameTime;
-	float  m_fDeltaTime;
+	float  m_fObjectDeltaTime;
+	float  m_fWorldDeltaTime;
+
 
 	bool m_bPause = false;
 

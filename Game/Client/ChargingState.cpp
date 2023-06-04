@@ -20,7 +20,7 @@ void ChargingState::Update()
 	{
 		if (IS_PRESS(KEY_TYPE::A))
 		{
-			tChargingDuration.Update(DELTA_TIME);
+			tChargingDuration.Update(OBJECT_DELTA_TIME);
 			pActiveSkill.lock()->StoreChargingProgress(tChargingDuration.GetProgress());
 		}
 
@@ -34,7 +34,7 @@ void ChargingState::Update()
 	{
 		if (IS_PRESS(KEY_TYPE::S))
 		{
-			tChargingDuration.Update(DELTA_TIME);
+			tChargingDuration.Update(OBJECT_DELTA_TIME);
 			pActiveSkill.lock()->StoreChargingProgress(tChargingDuration.GetProgress());
 		}
 

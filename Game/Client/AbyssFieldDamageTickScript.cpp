@@ -18,7 +18,7 @@ void AbyssFieldDamageTickScript::LateUpdate()
 	if (!m_tDamageTick.IsRunning())
 		m_tDamageTick.Start();
 
-	m_tDamageTick.Update(DELTA_TIME);
+	m_tDamageTick.Update(OBJECT_DELTA_TIME);
 
 	const Vec3& vSize = GetTransform()->GetLocalScale();
 	Vec3 vMyPos = GetTransform()->GetLocalPosition();

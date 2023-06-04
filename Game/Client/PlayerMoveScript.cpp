@@ -42,7 +42,7 @@ void PlayerMoveScript::LateUpdate()
 			m_tPauseTimer.Start();
 		}
 
-		m_tPauseTimer.Update(DELTA_TIME);
+		m_tPauseTimer.Update(OBJECT_DELTA_TIME);
 		if (m_tPauseTimer.IsFinished())
 		{
 			m_bPauseFlag = false;

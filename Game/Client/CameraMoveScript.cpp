@@ -19,27 +19,27 @@ void CameraMoveScript::LateUpdate()
 
 	if (IS_PRESS(KEY_TYPE::W))
 	{
-		vPos += GetTransform()->GetUp() * m_fSpeed * DELTA_TIME;
+		vPos += GetTransform()->GetUp() * m_fSpeed * OBJECT_DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::S))
 	{
-		vPos -= GetTransform()->GetUp() * m_fSpeed * DELTA_TIME;
+		vPos -= GetTransform()->GetUp() * m_fSpeed * OBJECT_DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::A))
 	{
-		vPos -= GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
+		vPos -= GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::D))
 	{
-		vPos += GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
+		vPos += GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
 	}
 
 	if (IS_PRESS(KEY_TYPE::Q))
 	{
-		vPos += GetTransform()->GetRight() * m_fSpeed * DELTA_TIME;
+		vPos += GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
 	}
 
 	//if (IS_PRESS(KEY_TYPE::Z))

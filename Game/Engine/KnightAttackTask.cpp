@@ -58,7 +58,7 @@ BEHAVIOR_RESULT KnightAttackTask::Run()
 
 	if (0.f < m_fSlidingRange)
 	{
-		m_fSlidingRange -= m_fSlidingSpeed * DELTA_TIME;
+		m_fSlidingRange -= m_fSlidingSpeed * OBJECT_DELTA_TIME;
 	}
 	else
 	{

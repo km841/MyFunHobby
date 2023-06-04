@@ -38,7 +38,7 @@ BEHAVIOR_RESULT InfantryTackleTask::Run()
 	else
 	{
 		const auto& status = m_pGameObject.lock()->GetStatus();
-		m_fDistance -= 700.f * DELTA_TIME;
+		m_fDistance -= 700.f * OBJECT_DELTA_TIME;
 		m_pGameObject.lock()->GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(DIRECTION::LEFT == m_eDirection ? -700.f : 700.f, 0.f, 0.f));
 	}
 

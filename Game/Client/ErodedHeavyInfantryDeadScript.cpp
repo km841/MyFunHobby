@@ -33,7 +33,7 @@ void ErodedHeavyInfantryDeadScript::LateUpdate()
 		if (!m_tStayTimer.IsRunning())
 			m_tStayTimer.Start();
 
-		m_tStayTimer.Update(DELTA_TIME);
+		m_tStayTimer.Update(OBJECT_DELTA_TIME);
 
 		if (m_tStayTimer.IsFinished())
 		{
