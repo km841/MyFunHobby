@@ -109,7 +109,8 @@ struct Color
 		return Color{ static_cast<uint32>((iAlpha << 24) | (iBlue << 16) | (iGreen << 8) | iRed)  };
 	};
 
-	operator uint32() { return iValue; }
+	operator uint32()		{ return iValue; }
+	operator uint32() const { return iValue; }
 };
 
 struct WindowInfo

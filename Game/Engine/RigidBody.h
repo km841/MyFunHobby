@@ -21,11 +21,13 @@ public:
     FORCEINLINE void        AddVelocity(const Vec3& vVelocity) { m_vVelocity += vVelocity;   }
     FORCEINLINE void        SetVelocity(const Vec3& vVelocity) { m_vVelocity = vVelocity;    }
 
+
 public:
     // for kinematic actors
     float GetVelocity(AXIS eAxis);
     void  SetVelocity(AXIS eAxis, float fVelocity);
     void  AddVelocity(AXIS eAxis, float fVelocity);
+    void  ReserveSpeedForSeconds(const Vec3& vVelocity, float fDuration);
 
 public:
     // for dynamic actors
@@ -47,5 +49,8 @@ private:
     Vec3 m_vGravityAccel;
     Vec3 m_vVelocity;
     Vec3 m_vMaxVelocity;
+
+    Vec3 m_vReserveVelocity;
+    Timer m_tReserveTimer;
 };
 

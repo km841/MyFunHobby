@@ -34,6 +34,9 @@ void PlayerMoveScript::LateUpdate()
 	Vec3 vVelocity = {};
 	shared_ptr<Player> pPlayer = static_pointer_cast<Player>(GetGameObject());
 
+	if (GET_SINGLE(Clock)->IsPause())
+		return;
+
 	if (pPlayer->IsPause())
 	{
 		if (!m_bPauseFlag)
@@ -50,7 +53,6 @@ void PlayerMoveScript::LateUpdate()
 		}
 
 		pPlayer->GetRigidBody()->SetVelocity(Vec3::Zero);
-
 		return;
 	}
 

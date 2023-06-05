@@ -10,6 +10,7 @@
 #include "EventManager.h"
 #include "PauseEvent.h"
 #include "PlayEvent.h"
+#include "Clock.h"
 
 PlayerFunctionScript::PlayerFunctionScript()
 {
@@ -22,6 +23,9 @@ PlayerFunctionScript::~PlayerFunctionScript()
 void PlayerFunctionScript::LateUpdate()
 {
 	shared_ptr<Player> pPlayer = static_pointer_cast<Player>(GetGameObject());
+
+	if (GET_SINGLE(Clock)->IsPause())
+		return;
 
 	if (IS_DOWN(KEY_TYPE::A))
 	{

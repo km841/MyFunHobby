@@ -14,6 +14,7 @@ RigidBody::RigidBody(bool bGravityApplied)
 	, m_bGravityApplied(bGravityApplied)
 	, m_vGravityAccel(Vec3(0.f, -4500.f, 0.f))
 	, m_vMaxVelocity(Vec3(1000.f, -1500.f, 1.f))
+	, m_tReserveTimer(0.f)
 {
 }
 
@@ -31,6 +32,19 @@ void RigidBody::FinalUpdate()
 	{
 		if (m_vVelocity.y> m_vMaxVelocity.y)
 			m_vVelocity += m_vGravityAccel * OBJECT_DELTA_TIME;
+	}
+
+	if (m_tReserveTimer.IsRunning())
+	{
+		m_tReserveTimer.Update(WORLD_DELTA_TIME);
+		m_vVelocity = m_vReserveVelocity;
+
+		if (m_tReserveTimer.IsFinished())
+		{
+			m_tReserveTimer.Stop();
+			m_vReserveVelocity = Vec3::Zero;
+			m_vVelocity = Vec3::Zero;
+		}
 	}
 }
 
@@ -76,6 +90,13 @@ void RigidBody::AddVelocity(AXIS eAxis, float fVelocity)
 		m_vVelocity.y += fVelocity;
 		break;
 	}
+}
+
+void RigidBody::ReserveSpeedForSeconds(const Vec3& vVelocity, float fDuration)
+{
+	m_vReserveVelocity = vVelocity;
+	m_tReserveTimer.SetEndTime(fDuration);
+	m_tReserveTimer.Start();
 }
 
 // for dynamic actors

@@ -3,7 +3,9 @@
 #include "GameObject.h"
 #include "PlayerState.h"
 #include "IdleState.h"
+#include "PauseIdleState.h"
 #include "WalkState.h"
+#include "PauseWalkState.h"
 #include "JumpRiseState.h"
 #include "JumpFallState.h"
 #include "JumpAttackState.h"
@@ -22,7 +24,9 @@ StateMachine::StateMachine()
 void StateMachine::Awake()
 {
 	m_mStateMap[PLAYER_STATE::IDLE]		   = make_shared<IdleState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::PAUSE_IDLE]  = make_shared<PauseIdleState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::WALK]        = make_shared<WalkState>(m_pPlayer.lock());
+	m_mStateMap[PLAYER_STATE::PAUSE_WALK]  = make_shared<PauseWalkState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::JUMP_RISE]   = make_shared<JumpRiseState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::JUMP_FALL]   = make_shared<JumpFallState>(m_pPlayer.lock());
 	m_mStateMap[PLAYER_STATE::ATTACK]      = make_shared<AttackState>(m_pPlayer.lock());

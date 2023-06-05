@@ -19,6 +19,8 @@ void PlayerClubberShowScript::LateUpdate()
 
 	if (!pPlayer.lock())
 		return;
+	if (GetGameObject()->IsDisable())
+		return;
 
 	Clobber* playerClobber = pPlayer.lock()->GetClobber();
 	wstring szDarkHeart = std::to_wstring(playerClobber->iDarkHeart);

@@ -754,6 +754,45 @@
     <ClInclude Include="MadScientist.h">
       <Filter>소스 파일\Game\Object\GameObject\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="PauseIdleState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseWalkState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWalkEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerChangeStateDungeonEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="IfFinishedTimer.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveDialogueEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectDisableEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEnableEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="EnablePlayerHUDEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="DisablePlayerHUDEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="NothingEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeAnimationEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeObjectPosEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1299,6 +1338,45 @@
     </ClCompile>
     <ClCompile Include="MadScientist.cpp">
       <Filter>소스 파일\Game\Object\GameObject\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseIdleState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseWalkState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWalkEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerChangeStateDungeonEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="IfFinishedTimer.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiveDialogueEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectDisableEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEnableEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="DisablePlayerHUDEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="EnablePlayerHUDEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="NothingEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeAnimationEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeObjectPosEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -68,13 +68,13 @@ void InterfaceManager::CreateUI()
 {
 	// Dialogue UI
 	{
-		shared_ptr<DialogueUI> pDialogueUI = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DialogueUI>(L"Forward", L"..\\Resources\\Texture\\UI\\UI_Dialog.tga");
+		shared_ptr<DialogueUI> pDialogueUI = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DialogueUI>(L"Forward", L"..\\Resources\\Texture\\UI\\UI_Dialog_Renew.png");
 		pDialogueUI->SetFrustum(false);
 
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 
-		pDialogueUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f - 420.f, fHeight / 2.f - 270.f, 40.f));
+		pDialogueUI->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 280.f, 40.f));
 		m_mInterfaceMap[INTERFACE_TYPE::DIALOGUE] = pDialogueUI;
 	}
 

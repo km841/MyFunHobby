@@ -172,6 +172,7 @@
     <ClInclude Include="AbyssMeteorSkill.h" />
     <ClInclude Include="AbyssOrb.h" />
     <ClInclude Include="AbyssOrbSkill.h" />
+    <ClInclude Include="ActiveDialogueEvent.h" />
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="AfterImageDrawScript.h" />
     <ClInclude Include="Alchemist.h" />
@@ -193,11 +194,14 @@
     <ClInclude Include="BrightDawn.h" />
     <ClInclude Include="Ch3BeginTower.h" />
     <ClInclude Include="Ch3BossDungeon.h" />
+    <ClInclude Include="ChangeAnimationEvent.h" />
+    <ClInclude Include="ChangeObjectPosEvent.h" />
     <ClInclude Include="ClobberHUD.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
     <ClInclude Include="DarkMirrorReflectionScript.h" />
     <ClInclude Include="DarkMirror.h" />
     <ClInclude Include="DecoObject.h" />
+    <ClInclude Include="DisablePlayerHUDEvent.h" />
     <ClInclude Include="DropEssence.h" />
     <ClInclude Include="DropEssenceHUD.h" />
     <ClInclude Include="DropingRewards.h" />
@@ -222,6 +226,7 @@
     <ClInclude Include="DungeonGate.h" />
     <ClInclude Include="Dungeon_Gold.h" />
     <ClInclude Include="Dungeon_Item.h" />
+    <ClInclude Include="EnablePlayerHUDEvent.h" />
     <ClInclude Include="ErodedEnt.h" />
     <ClInclude Include="ErodedEntAttackScript.h" />
     <ClInclude Include="ErodedEntDeadScript.h" />
@@ -249,6 +254,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="IfAlwaysTrue.h" />
+    <ClInclude Include="IfFinishedTimer.h" />
     <ClInclude Include="IfPlayerPosXExceedsN.h" />
     <ClInclude Include="IfTakedMapReward.h" />
     <ClInclude Include="InfoUI.h" />
@@ -270,13 +276,20 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="MousePointerHUD.h" />
+    <ClInclude Include="NothingEvent.h" />
     <ClInclude Include="NPC_Spider.h" />
     <ClInclude Include="ObjectAttackAtHitFrameScript.h" />
+    <ClInclude Include="ObjectDisableEvent.h" />
+    <ClInclude Include="ObjectEnableEvent.h" />
     <ClInclude Include="ObjectFollowScript.h" />
+    <ClInclude Include="PauseIdleState.h" />
+    <ClInclude Include="PauseWalkState.h" />
     <ClInclude Include="PlayerClubberShowScript.h" />
     <ClInclude Include="PlayerFunctionScript.h" />
     <ClInclude Include="PlayerSecondSkillFrameHUD.h" />
+    <ClInclude Include="PlayerChangeStateDungeonEvent.h" />
     <ClInclude Include="PlayerTeleportEvent.h" />
+    <ClInclude Include="PlayerWalkEvent.h" />
     <ClInclude Include="Possession.h" />
     <ClInclude Include="Rapidity.h" />
     <ClInclude Include="RavenLordsFeather.h" />
@@ -363,6 +376,7 @@
     <ClCompile Include="AbyssMeteorSkill.cpp" />
     <ClCompile Include="AbyssOrb.cpp" />
     <ClCompile Include="AbyssOrbSkill.cpp" />
+    <ClCompile Include="ActiveDialogueEvent.cpp" />
     <ClCompile Include="AfterImage.cpp" />
     <ClCompile Include="AfterImageDrawScript.cpp" />
     <ClCompile Include="Alchemist.cpp" />
@@ -384,11 +398,14 @@
     <ClCompile Include="BrightDawn.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
     <ClCompile Include="Ch3BossDungeon.cpp" />
+    <ClCompile Include="ChangeAnimationEvent.cpp" />
+    <ClCompile Include="ChangeObjectPosEvent.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />
     <ClCompile Include="DarkMirror.cpp" />
     <ClCompile Include="DecoObject.cpp" />
+    <ClCompile Include="DisablePlayerHUDEvent.cpp" />
     <ClCompile Include="DropEssence.cpp" />
     <ClCompile Include="DropEssenceHUD.cpp" />
     <ClCompile Include="DropingRewards.cpp" />
@@ -413,6 +430,7 @@
     <ClCompile Include="DungeonGate.cpp" />
     <ClCompile Include="Dungeon_Gold.cpp" />
     <ClCompile Include="Dungeon_Item.cpp" />
+    <ClCompile Include="EnablePlayerHUDEvent.cpp" />
     <ClCompile Include="ErodedEnt.cpp" />
     <ClCompile Include="ErodedEntAttackScript.cpp" />
     <ClCompile Include="ErodedEntDeadScript.cpp" />
@@ -440,6 +458,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="IfAlwaysTrue.cpp" />
+    <ClCompile Include="IfFinishedTimer.cpp" />
     <ClCompile Include="IfPlayerPosXExceedsN.cpp" />
     <ClCompile Include="IfTakedMapReward.cpp" />
     <ClCompile Include="InfoUI.cpp" />
@@ -461,13 +480,20 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="MousePointerHUD.cpp" />
+    <ClCompile Include="NothingEvent.cpp" />
     <ClCompile Include="NPC_Spider.cpp" />
     <ClCompile Include="ObjectAttackAtHitFrameScript.cpp" />
+    <ClCompile Include="ObjectDisableEvent.cpp" />
+    <ClCompile Include="ObjectEnableEvent.cpp" />
     <ClCompile Include="ObjectFollowScript.cpp" />
+    <ClCompile Include="PauseIdleState.cpp" />
+    <ClCompile Include="PauseWalkState.cpp" />
     <ClCompile Include="PlayerClubberShowScript.cpp" />
     <ClCompile Include="PlayerFunctionScript.cpp" />
     <ClCompile Include="PlayerSecondSkillFrameHUD.cpp" />
+    <ClCompile Include="PlayerChangeStateDungeonEvent.cpp" />
     <ClCompile Include="PlayerTeleportEvent.cpp" />
+    <ClCompile Include="PlayerWalkEvent.cpp" />
     <ClCompile Include="Possession.cpp" />
     <ClCompile Include="Rapidity.cpp" />
     <ClCompile Include="RavenLordsFeather.cpp" />

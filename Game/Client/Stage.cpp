@@ -100,7 +100,7 @@ void Stage::AlignDungeons()
 
 void Stage::Weaving(int32 iIndex, const std::vector<DungeonInfo>& vDungeonInfo, std::vector<bool>& vVisited)
 {
-	int32 iHalfSize = vDungeonInfo.size() / 2;
+	int32 iHalfSize = static_cast<int32>(vDungeonInfo.size()) / 2;
 	vVisited[iIndex] = true;
 
 	int32 iTotal = std::accumulate(vVisited.begin(), vVisited.end(), 0);
