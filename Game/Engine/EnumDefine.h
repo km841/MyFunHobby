@@ -320,6 +320,7 @@ enum class OBJECT_TYPE : uint8
 	PROPERTIES,
 	ITEM,
 	ESSENCE,
+	SPINE,
 
 	END
 };

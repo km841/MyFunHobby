@@ -1,4 +1,5 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 #include <memory>
 
@@ -14,6 +15,7 @@
 
 #include <vector>
 #include <array>
+#include <spine/spine.h>
 
 using int8 = __int8;
 using int16 = __int16;

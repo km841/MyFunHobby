@@ -7,13 +7,14 @@
 #include "Shader.h"
 #include "Animation.h"
 
-
+class SpineResource;
 class Resources
 {
 	DECLARE_SINGLE(Resources);
 
 public:
 	void Init();
+	void Destroy();
 
 	shared_ptr<Texture> CreateTexture(const wstring& szName, DXGI_FORMAT eFormat, uint32 eType, uint32 iWidth, uint32 iHeight);
 	shared_ptr<Texture> CreateTextureFromResource(const wstring& szName, DXGI_FORMAT eFormat, uint32 eType, ComPtr<ID3D11Texture2D> iTexture);
@@ -35,6 +36,7 @@ public:
 	shared_ptr<Mesh> LoadPointMesh();
 
 	shared_ptr<Animation> LoadAnimation(const wstring& szKey, const wstring& szPath);
+	shared_ptr<SpineResource> LoadSkeletonData(const string& szKey, const string& szAtlasPath, const string& szBinaryPath);
 
 	void CreateDefaultShader();
 	void CreateDefaultMaterial();
@@ -42,6 +44,7 @@ public:
 private:
 	using KeyObjMap = std::map<wstring, shared_ptr<Object>>;
 	std::array<KeyObjMap, OBJECT_TYPE_COUNT> m_arrResources;
+	spine::TextureLoader* m_pTextureLoader;
 
 
 };

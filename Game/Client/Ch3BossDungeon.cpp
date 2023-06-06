@@ -27,6 +27,7 @@
 #include "NothingEvent.h"
 #include "ChangeAnimationEvent.h"
 #include "ChangeObjectPosEvent.h"
+#include "Chimera.h"
 
 Ch3BossDungeon::Ch3BossDungeon(const wstring& szMapPath, const wstring& szScriptPath)
 	: Dungeon(DUNGEON_TYPE::STAGE_BOSS, szMapPath, szScriptPath)
@@ -161,9 +162,10 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Second", false));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"잘 봐.", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Third", false));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(0.3f)));
+	AddEvent(make_shared<ChangeObjectPosEvent>(pAlwaysTrueCondition, pMadScientist, Vec3(960.f, 265.f, 101.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Dead", false));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
 	// EnableDialogueUI, Message
@@ -174,6 +176,14 @@ void Ch3BossDungeon::Enter()
 	// TimerCondition
 	
 	
+	// Create Chimera
+	{
+		shared_ptr<Chimera> pChimera = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Chimera>(L"Forward");
+		pChimera->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 100.f));
+
+		pChimera->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pMadScientist, SCENE_TYPE::DUNGEON));
+	}
 
 
 	// 과학자 내부적으로 카운트를 보유하고 해당 카운트를 통해 애니메이션 변경

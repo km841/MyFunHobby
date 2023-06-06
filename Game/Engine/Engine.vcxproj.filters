@@ -298,6 +298,12 @@
     <ClInclude Include="VelocityDownTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="SpineTextureLoader.h">
+      <Filter>Resource\Spine</Filter>
+    </ClInclude>
+    <ClInclude Include="SpineResource.h">
+      <Filter>Resource\Spine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -585,6 +591,12 @@
     <ClCompile Include="VelocityDownTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
+    <ClCompile Include="SpineTextureLoader.cpp">
+      <Filter>Resource\Spine</Filter>
+    </ClCompile>
+    <ClCompile Include="SpineResource.cpp">
+      <Filter>Resource\Spine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -637,6 +649,9 @@
     </Filter>
     <Filter Include="Engine\Font">
       <UniqueIdentifier>{d25d4582-9d2a-4b5e-afd7-fc9bb4e2cd82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Spine">
+      <UniqueIdentifier>{b1af827e-87d2-4e9f-8f9f-7087da842b51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

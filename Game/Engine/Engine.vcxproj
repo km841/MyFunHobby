@@ -84,12 +84,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)Tool\;$(SolutionDir)Library\Include\;$(SolutionDir)Engine\dll\debug\;$(IncludePath);$(SolutionDir)Client\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)..\Tool\MapTool\</IncludePath>
+    <IncludePath>$(SolutionDir)Tool\;$(SolutionDir)Library\Include\;$(SolutionDir)Engine\dll\debug\;$(IncludePath);$(SolutionDir)Client\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)..\Tool\MapTool\;$(SolutionDir)Library\Include\spine\;$(SolutionDir)Library\Include\spine</IncludePath>
     <LibraryPath>$(SolutionDir)Library\Lib\;$(SolutionDir)Output\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)Tool\;$(SolutionDir)Library\Include\;$(SolutionDir)Engine\dll\release\;$(IncludePath);$(SolutionDir)Client\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)..\Tool\MapTool\</IncludePath>
+    <IncludePath>$(SolutionDir)Tool\;$(SolutionDir)Library\Include\;$(SolutionDir)Engine\dll\release\;$(IncludePath);$(SolutionDir)Client\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)Library\Include\ImGui\;$(SolutionDir)..\Tool\MapTool\;$(SolutionDir)Library\Include\spine\;$(SolutionDir)Library\Include\spine</IncludePath>
     <LibraryPath>$(SolutionDir)Library\Lib\;$(SolutionDir)Output\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -253,6 +253,8 @@
     <ClInclude Include="SetDirectionTowardPlayerTask.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
+    <ClInclude Include="SpineResource.h" />
+    <ClInclude Include="SpineTextureLoader.h" />
     <ClInclude Include="StructuredBuffer.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="Texture.h" />
@@ -355,6 +357,8 @@
     <ClCompile Include="SetDirectionTowardPlayerTask.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
+    <ClCompile Include="SpineResource.cpp" />
+    <ClCompile Include="SpineTextureLoader.cpp" />
     <ClCompile Include="StructuredBuffer.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="Texture.cpp" />

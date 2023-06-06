@@ -39,7 +39,7 @@ public:
     FORCEINLINE void               SetGlobalOffset(const Vec2& vOffset)          { m_vGlobalOffset = vOffset; }
     FORCEINLINE const Vec2&        GetGlobalOffset()                             { return m_vGlobalOffset; }
 
-    FORCEINLINE float              GetBoundingSphereRadius()                     { return max(max(m_vLocalScale.x, m_vLocalScale.y), m_vLocalScale.z); }
+    FORCEINLINE float              GetBoundingSphereRadius()                     { return std::max(std::max(m_vLocalScale.x, m_vLocalScale.y), m_vLocalScale.z); }
 
    
 

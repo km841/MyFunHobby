@@ -4,11 +4,29 @@
 #include "Material.h"
 #include "Shader.h"
 #include "Engine.h"
+#include "SpineTextureLoader.h"
+#include "SpineResource.h"
 
 void Resources::Init()
 {
+	m_pTextureLoader = new SpineTextureLoader;
+
 	CreateDefaultShader();
 	CreateDefaultMaterial();
+}
+
+void Resources::Destroy()
+{
+	if (m_pTextureLoader)
+		delete m_pTextureLoader;
+
+	for (auto pResource : m_arrResources[static_cast<uint8>(OBJECT_TYPE::SPINE)])
+	{
+		pResource.second.reset();
+		pResource.second = nullptr;
+	}
+
+	//static_cast<spine::DefaultSpineExtension*>(spine::getDefaultExtension())->Destroy();
 }
 
 shared_ptr<Texture> Resources::CreateTexture(const wstring& szName, DXGI_FORMAT eFormat, uint32 eType, uint32 iWidth, uint32 iHeight)
@@ -199,8 +217,26 @@ shared_ptr<Animation> Resources::LoadAnimation(const wstring& szKey, const wstri
 	return pAnimation;
 }
 
+shared_ptr<SpineResource> Resources::LoadSkeletonData(const string& szKey, const string& szAtlasPath, const string& szBinaryPath)
+{
+	spine::Atlas* pAtlas = new spine::Atlas(szAtlasPath.c_str(), m_pTextureLoader);
+	spine::SkeletonBinary binary(pAtlas);
+	binary.setScale(2.f);
+
+	spine::SkeletonData* pSkeletonData = binary.readSkeletonDataFile(szBinaryPath.c_str());
+	assert(pSkeletonData);
+
+	shared_ptr<SpineResource> pSpineResource = make_shared<SpineResource>(pSkeletonData);
+	pSpineResource->Init();
+
+	Add<SpineResource>(s2ws(szKey), pSpineResource);
+	return pSpineResource;
+}
+
 void Resources::CreateDefaultShader()
 {
+	
+	
 	// Preview
 	{
 		ShaderInfo shaderInfo =

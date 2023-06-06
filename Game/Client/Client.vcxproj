@@ -84,12 +84,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)Library\Include\;$(SolutionDir)Engine\;$(SolutionDir)Tool\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Library\Include\;$(SolutionDir)Engine\;$(SolutionDir)Tool\;$(SolutionDir)Library\Include\spine;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Library\Lib\;$(SolutionDir)Output\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)Library\Include\;$(SolutionDir)Engine\;$(SolutionDir)Tool\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Library\Include\;$(SolutionDir)Engine\;$(SolutionDir)Tool\;$(SolutionDir)Library\Include\spine;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Library\Lib\;$(SolutionDir)Output\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -137,7 +137,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\;$(SolutionDir)Library\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -156,7 +156,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\;$(SolutionDir)Library\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -196,6 +196,7 @@
     <ClInclude Include="Ch3BossDungeon.h" />
     <ClInclude Include="ChangeAnimationEvent.h" />
     <ClInclude Include="ChangeObjectPosEvent.h" />
+    <ClInclude Include="Chimera.h" />
     <ClInclude Include="ClobberHUD.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
     <ClInclude Include="DarkMirrorReflectionScript.h" />
@@ -400,6 +401,7 @@
     <ClCompile Include="Ch3BossDungeon.cpp" />
     <ClCompile Include="ChangeAnimationEvent.cpp" />
     <ClCompile Include="ChangeObjectPosEvent.cpp" />
+    <ClCompile Include="Chimera.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />

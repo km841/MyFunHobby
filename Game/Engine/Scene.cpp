@@ -551,10 +551,10 @@ Vec4 Scene::GetObjectLimitRect()
 			if (Vec3::Zero == vPos)
 				continue;
 			
-			fMinX = min(fMinX, vPos.x - vSize.x / 2.f);
-			fMinY = min(fMinY, vPos.y + vSize.y / 2.f);
-			fMaxX = max(fMaxX, vPos.x + vSize.x / 2.f);
-			fMaxY = max(fMaxY, vPos.y - vSize.y / 2.f);
+			fMinX = std::min(fMinX, vPos.x - vSize.x / 2.f);
+			fMinY = std::min(fMinY, vPos.y + vSize.y / 2.f);
+			fMaxX = std::max(fMaxX, vPos.x + vSize.x / 2.f);
+			fMaxY = std::max(fMaxY, vPos.y - vSize.y / 2.f);
 		}
 	}
 

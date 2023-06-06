@@ -115,6 +115,7 @@ void Engine::RenderEnd()
 void Engine::Destroy()
 {
 	//GET_SINGLE(Cemetery)->Destroy();
+	GET_SINGLE(Resources)->Destroy();
 	FreeLibrary(m_hModule);
 }
 

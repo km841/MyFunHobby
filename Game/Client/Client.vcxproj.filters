@@ -221,6 +221,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\ExhibitionItem">
       <UniqueIdentifier>{94771d2a-d4d1-46d9-acba-5861407a75b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\Chimera">
+      <UniqueIdentifier>{26e651c4-6fd4-4d69-bfd6-05b30da9764a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -792,6 +795,9 @@
     </ClInclude>
     <ClInclude Include="ChangeObjectPosEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Chimera.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1377,6 +1383,9 @@
     </ClCompile>
     <ClCompile Include="ChangeObjectPosEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Chimera.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
