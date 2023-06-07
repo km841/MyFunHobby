@@ -799,6 +799,9 @@
     <ClInclude Include="Chimera.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClInclude>
+    <ClInclude Include="ChimeraSprite.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1385,6 +1388,9 @@
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
     <ClCompile Include="Chimera.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    </ClCompile>
+    <ClCompile Include="ChimeraSprite.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClCompile>
   </ItemGroup>

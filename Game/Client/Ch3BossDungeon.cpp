@@ -168,28 +168,17 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<ChangeObjectPosEvent>(pAlwaysTrueCondition, pMadScientist, Vec3(960.f, 265.f, 101.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Dead", false));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	// EnableDialogueUI, Message
-	// 애니메이션 변경
-	// TimerCondition
-	// EnableDialogueUI, Message
-	// 애니메이션 변경
-	// TimerCondition
-	
-	
+
 	// Create Chimera
 	{
 		shared_ptr<Chimera> pChimera = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Chimera>(L"Forward");
-		pChimera->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 100.f));
-
+		pChimera->GetTransform()->SetLocalPosition(Vec3(300.f, 0.f, 100.f));
+		pChimera->GetTransform()->SetLocalScale(Vec3(300.f, 300.f, 1.f));
+		pChimera->Disable();
 		pChimera->Awake();
+		pChimera->PlayAnimation("animation");
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimera, SCENE_TYPE::DUNGEON));
 	}
-
-
-	// 과학자 내부적으로 카운트를 보유하고 해당 카운트를 통해 애니메이션 변경
-	// 카운트는 플레이어가 대화를 스킵할 떄나 대화가 자동으로 넘어갈 때 올라간다
-	// UI 감추기
-
 }
 
 void Ch3BossDungeon::Exit()

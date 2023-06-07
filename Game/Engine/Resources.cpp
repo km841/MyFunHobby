@@ -225,8 +225,6 @@ shared_ptr<SpineResource> Resources::LoadSkeletonData(const string& szKey, const
 
 void Resources::CreateDefaultShader()
 {
-	
-	
 	// Preview
 	{
 		ShaderInfo shaderInfo =

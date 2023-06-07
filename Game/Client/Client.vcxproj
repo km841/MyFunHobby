@@ -197,6 +197,7 @@
     <ClInclude Include="ChangeAnimationEvent.h" />
     <ClInclude Include="ChangeObjectPosEvent.h" />
     <ClInclude Include="Chimera.h" />
+    <ClInclude Include="ChimeraSprite.h" />
     <ClInclude Include="ClobberHUD.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
     <ClInclude Include="DarkMirrorReflectionScript.h" />
@@ -402,6 +403,7 @@
     <ClCompile Include="ChangeAnimationEvent.cpp" />
     <ClCompile Include="ChangeObjectPosEvent.cpp" />
     <ClCompile Include="Chimera.cpp" />
+    <ClCompile Include="ChimeraSprite.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />
