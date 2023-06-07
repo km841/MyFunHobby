@@ -182,7 +182,7 @@ void Ch3BossDungeon::Enter()
 		pChimera->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 100.f));
 
 		pChimera->Awake();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pMadScientist, SCENE_TYPE::DUNGEON));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimera, SCENE_TYPE::DUNGEON));
 	}
 
 

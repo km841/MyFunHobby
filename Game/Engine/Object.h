@@ -5,11 +5,13 @@ class Object
 public:
 	Object(OBJECT_TYPE eType);
 	virtual ~Object();
+	virtual void Destroy() { }
 
 	FORCEINLINE void SetName(const wstring& szName) { m_szName = szName; }
 	FORCEINLINE const wstring& GetName() const { return m_szName; }
 
 	FORCEINLINE OBJECT_TYPE GetType() const { return m_eType; }
+
 
 protected:
 	friend class Resources;

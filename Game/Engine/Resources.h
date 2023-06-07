@@ -44,9 +44,6 @@ public:
 private:
 	using KeyObjMap = std::map<wstring, shared_ptr<Object>>;
 	std::array<KeyObjMap, OBJECT_TYPE_COUNT> m_arrResources;
-	spine::TextureLoader* m_pTextureLoader;
-
-
 };
 
 template<typename T>
@@ -110,6 +107,8 @@ inline OBJECT_TYPE Resources::GetObjectType()
 		return OBJECT_TYPE::COMPONENT;
 	else if (std::is_same_v<T, Animation>)
 		return OBJECT_TYPE::ANIMATION;
+	else if (std::is_same_v<T, SpineResource>)
+		return OBJECT_TYPE::SPINE;
 	else
 		return OBJECT_TYPE::NONE;
 }

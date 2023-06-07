@@ -40,6 +40,15 @@ void Scenes::Render()
 	m_pActiveScene->Render();
 }
 
+void Scenes::Destroy()
+{
+	for (auto& pScene : m_arrScenes)
+	{
+		if (pScene)
+			pScene->Destroy();
+	}
+}
+
 void Scenes::ChangeScene(SCENE_TYPE eSceneType)
 {
 	if (m_pActiveScene)

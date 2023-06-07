@@ -12,6 +12,7 @@ public:
     void Start();
     void Update();
     void Render();
+    void Destroy();
 
     FORCEINLINE shared_ptr<Scene> GetActiveScene() const { return m_pActiveScene; }
     void ChangeScene(SCENE_TYPE eSceneType);

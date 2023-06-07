@@ -171,6 +171,27 @@ void Scene::Render()
 	Render_Font();
 }
 
+void Scene::Destroy()
+{
+	for (int32 i = 0; i < SCENE_OBJECT_TYPE_COUNT; ++i)
+	{
+		for (const shared_ptr<GameObject>& pGameObject : m_vSceneObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Destroy();
+		}
+	}
+
+	for (int32 i = 0; i < GLOBAL_OBJECT_TYPE_COUNT; ++i)
+	{
+		for (const shared_ptr<GameObject> pGameObject : s_vGlobalObjects[i])
+		{
+			if (pGameObject)
+				pGameObject->Destroy();
+		}
+	}
+}
+
 void Scene::Render_Lights()
 {
 	g_pEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->OMSetRenderTarget();

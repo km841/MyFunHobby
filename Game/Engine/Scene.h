@@ -44,6 +44,8 @@ public:
     virtual void FinalUpdate();
     virtual void Render();
 
+    virtual void Destroy();
+
 public:
     virtual void Enter() { }
     virtual void Exit()  { }

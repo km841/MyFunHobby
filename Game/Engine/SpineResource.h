@@ -4,8 +4,9 @@ class SpineResource :
     public Object
 {
 public:
-    SpineResource(spine::SkeletonData* pSkeletonData);
+    SpineResource(const string& szAtlasPath, const string& szBinaryPath);
     virtual ~SpineResource();
+    virtual void Destroy();
 
     void Init();
 
@@ -13,7 +14,9 @@ public:
     FORCEINLINE spine::AnimationStateData* GetAnimationStateData() { return m_pAnimationStateData; }
 
 private:
+    spine::Atlas* m_pAtlas;
     spine::SkeletonData* m_pSkeletonData;
     spine::AnimationStateData* m_pAnimationStateData;
+    spine::TextureLoader* m_pTextureLoader;
 };
 

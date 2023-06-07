@@ -1,5 +1,7 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
+#define SAFE_DELETE(p)       { if(p) { delete (p);     (p)=NULL; } }
+
 #include <Windows.h>
 #include <memory>
 

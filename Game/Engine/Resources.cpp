@@ -9,7 +9,6 @@
 
 void Resources::Init()
 {
-	m_pTextureLoader = new SpineTextureLoader;
 
 	CreateDefaultShader();
 	CreateDefaultMaterial();
@@ -17,11 +16,9 @@ void Resources::Init()
 
 void Resources::Destroy()
 {
-	if (m_pTextureLoader)
-		delete m_pTextureLoader;
-
-	for (auto pResource : m_arrResources[static_cast<uint8>(OBJECT_TYPE::SPINE)])
+	for (auto& pResource : m_arrResources[static_cast<uint8>(OBJECT_TYPE::SPINE)])
 	{
+		pResource.second->Destroy();
 		pResource.second.reset();
 		pResource.second = nullptr;
 	}
@@ -219,14 +216,7 @@ shared_ptr<Animation> Resources::LoadAnimation(const wstring& szKey, const wstri
 
 shared_ptr<SpineResource> Resources::LoadSkeletonData(const string& szKey, const string& szAtlasPath, const string& szBinaryPath)
 {
-	spine::Atlas* pAtlas = new spine::Atlas(szAtlasPath.c_str(), m_pTextureLoader);
-	spine::SkeletonBinary binary(pAtlas);
-	binary.setScale(2.f);
-
-	spine::SkeletonData* pSkeletonData = binary.readSkeletonDataFile(szBinaryPath.c_str());
-	assert(pSkeletonData);
-
-	shared_ptr<SpineResource> pSpineResource = make_shared<SpineResource>(pSkeletonData);
+	shared_ptr<SpineResource> pSpineResource = make_shared<SpineResource>(szAtlasPath, szBinaryPath);
 	pSpineResource->Init();
 
 	Add<SpineResource>(s2ws(szKey), pSpineResource);

@@ -9,37 +9,28 @@ Chimera::Chimera()
 	: GameObject(LAYER_TYPE::MONSTER)
 	, m_pSkeleton(nullptr)
 	, m_pAnimationState(nullptr)
+	, m_pSpineResource(nullptr)
 {
 }
 
 Chimera::~Chimera()
 {
-	if (m_pSkeleton)
-	{
-		delete m_pSkeleton;
-		m_pSkeleton = nullptr;
-	}
 
-	if (m_pAnimationState)
-	{
-		delete m_pAnimationState;
-		m_pAnimationState = nullptr;
-	}
 }
 
 void Chimera::Awake()
 {
 	GameObject::Awake();
 
-	shared_ptr<SpineResource> pSkeletonData = GET_SINGLE(Resources)->LoadSkeletonData("ChimeraSkeleton", "..\\Resources\\Spine\\chimera.atlas", "..\\Resources\\Spine\\chimera.json");
-	m_pSkeleton = new spine::Skeleton(pSkeletonData->GetSkeletonData());
+	m_pSpineResource = GET_SINGLE(Resources)->LoadSkeletonData("ChimeraSkeleton", "..\\Resources\\Spine\\chimera.atlas", "..\\Resources\\Spine\\chimera.json");
+	m_pSkeleton = new spine::Skeleton(m_pSpineResource->GetSkeletonData());
 	assert(m_pSkeleton);
 
 	const Vec3& vMyPos = GetTransform()->GetLocalPosition();
 
 	m_pSkeleton->setX(vMyPos.x);
 	m_pSkeleton->setY(vMyPos.y);
-	m_pAnimationState = new spine::AnimationState(pSkeletonData->GetAnimationStateData());
+	m_pAnimationState = new spine::AnimationState(m_pSpineResource->GetAnimationStateData());
 }
 
 void Chimera::Start()
@@ -63,4 +54,19 @@ void Chimera::LateUpdate()
 void Chimera::FinalUpdate()
 {
 	GameObject::FinalUpdate();
+}
+
+void Chimera::Destroy()
+{
+	if (m_pSkeleton)
+	{
+		delete m_pSkeleton;
+		m_pSkeleton = nullptr;
+	}
+
+	if (m_pAnimationState)
+	{
+		delete m_pAnimationState;
+		m_pAnimationState = nullptr;
+	}
 }
