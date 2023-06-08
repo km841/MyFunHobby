@@ -82,6 +82,11 @@ void Chimera::PlayAnimation(const string& szAnimName, bool bLoop)
 	m_pAnimationState->setAnimation(0, szAnimName.c_str(), bLoop);
 }
 
+void Chimera::AddAnimation(const string& szAnimName, float fDelay, bool bLoop)
+{
+	m_pAnimationState->addAnimation(0, szAnimName.c_str(), bLoop, fDelay);
+}
+
 void Chimera::CreateChimeraSpritesAndAddedToScene()
 {
 	for (int32 i = 0; i < CHIMERA_SPRITES_COUNT; ++i)
@@ -95,7 +100,7 @@ void Chimera::CreateChimeraSpritesAndAddedToScene()
 
 		m_vChimeraSprites.push_back(pChimeraSprite);
 
-		if (i == 7)
+		if (i== 9)
 			pChimeraSprite->Disable();
 	}
 }

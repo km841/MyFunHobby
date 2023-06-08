@@ -176,7 +176,14 @@ void Ch3BossDungeon::Enter()
 		pChimera->GetTransform()->SetLocalScale(Vec3(300.f, 300.f, 1.f));
 		pChimera->Disable();
 		pChimera->Awake();
-		pChimera->PlayAnimation("animation");
+
+		pChimera->AddAnimation("Appear", 0.f, false);
+		pChimera->AddAnimation("Roar_Start", 0.f, false);
+		pChimera->AddAnimation("Roar", 2.f, false);
+		pChimera->AddAnimation("Roar_Loop", 0.f);
+		pChimera->AddAnimation("Roar_Start", 2.f, false);
+		pChimera->AddAnimation("Roar", 2.f, false);
+		pChimera->AddAnimation("Roar_Loop", 0.f);
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimera, SCENE_TYPE::DUNGEON));
 	}
 }

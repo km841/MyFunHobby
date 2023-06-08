@@ -31,6 +31,7 @@ public:
 
 public:
     void                       PlayAnimation(const string& szAnimName, bool bLoop = true);
+    void                       AddAnimation(const string& szAnimName, float fDelay, bool bLoop = true);
 
 private:
     void                       CreateChimeraSpritesAndAddedToScene();
