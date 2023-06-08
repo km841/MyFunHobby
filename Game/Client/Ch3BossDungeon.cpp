@@ -28,6 +28,7 @@
 #include "ChangeAnimationEvent.h"
 #include "ChangeObjectPosEvent.h"
 #include "Chimera.h"
+#include "AwakenChimeraEvent.h"
 
 Ch3BossDungeon::Ch3BossDungeon(const wstring& szMapPath, const wstring& szScriptPath)
 	: Dungeon(DUNGEON_TYPE::STAGE_BOSS, szMapPath, szScriptPath)
@@ -112,6 +113,17 @@ void Ch3BossDungeon::Enter()
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pMadScientist, SCENE_TYPE::DUNGEON));
 	}
 
+	// Create Chimera
+	shared_ptr<Chimera> pChimera = nullptr;
+	{
+		pChimera = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<Chimera>(L"Forward", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f), MassProperties(), L"", pMadScientist);
+		pChimera->GetTransform()->SetLocalPosition(Vec3(550.f, 75.f, 100.f));
+
+		pChimera->Awake();
+		pChimera->Disable();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimera, SCENE_TYPE::DUNGEON));
+	}
+
 
 	shared_ptr<IfAlwaysTrue> pAlwaysTrueCondition = make_shared<IfAlwaysTrue>();
 
@@ -142,12 +154,12 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(7.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Crazy"));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 3.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 1.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Back", false));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 3.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 1.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"재미없는 녀석이구나.", 1.f));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
@@ -159,7 +171,7 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<ChangeObjectPosEvent>(pAlwaysTrueCondition, pMadScientist, Vec3(990.f, 265.f, 101.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_First", false));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"마석의 힘을 제대로 사용하면 어떤 일이 벌어지는지.", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Second", false));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"잘 봐.", 1.f));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
@@ -167,25 +179,13 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(0.3f)));
 	AddEvent(make_shared<ChangeObjectPosEvent>(pAlwaysTrueCondition, pMadScientist, Vec3(960.f, 265.f, 101.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Dead", false));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
+	AddEvent(make_shared<AwakenChimeraEvent>(make_shared<IfAlwaysTrue>(), pChimera));
+	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
+	// 이름 띄우고 체력 바 내리기
 
-	// Create Chimera
-	{
-		shared_ptr<Chimera> pChimera = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Chimera>(L"Forward");
-		pChimera->GetTransform()->SetLocalPosition(Vec3(300.f, 0.f, 100.f));
-		pChimera->GetTransform()->SetLocalScale(Vec3(300.f, 300.f, 1.f));
-		pChimera->Disable();
-		pChimera->Awake();
 
-		pChimera->AddAnimation("Appear", 0.f, false);
-		pChimera->AddAnimation("Roar_Start", 0.f, false);
-		pChimera->AddAnimation("Roar", 2.f, false);
-		pChimera->AddAnimation("Roar_Loop", 0.f);
-		pChimera->AddAnimation("Roar_Start", 2.f, false);
-		pChimera->AddAnimation("Roar", 2.f, false);
-		pChimera->AddAnimation("Roar_Loop", 0.f);
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimera, SCENE_TYPE::DUNGEON));
-	}
+
 }
 
 void Ch3BossDungeon::Exit()

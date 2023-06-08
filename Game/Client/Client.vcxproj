@@ -183,6 +183,7 @@
     <ClInclude Include="AnimationLocalEffectOtherLayer.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arms.h" />
+    <ClInclude Include="AwakenChimeraEvent.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BackgroundMoveScript.h" />
     <ClInclude Include="BaseCamp.h" />
@@ -191,12 +192,15 @@
     <ClInclude Include="BlackLab.h" />
     <ClInclude Include="BoneOfMana.h" />
     <ClInclude Include="BoneReward.h" />
+    <ClInclude Include="BossOpeningHUD.h" />
     <ClInclude Include="BrightDawn.h" />
     <ClInclude Include="Ch3BeginTower.h" />
     <ClInclude Include="Ch3BossDungeon.h" />
     <ClInclude Include="ChangeAnimationEvent.h" />
     <ClInclude Include="ChangeObjectPosEvent.h" />
     <ClInclude Include="Chimera.h" />
+    <ClInclude Include="ChimeraFallParticlesScript.h" />
+    <ClInclude Include="ChimeraRoar.h" />
     <ClInclude Include="ChimeraSprite.h" />
     <ClInclude Include="ClobberHUD.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
@@ -389,6 +393,7 @@
     <ClCompile Include="AnimationLocalEffectOtherLayer.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Arms.cpp" />
+    <ClCompile Include="AwakenChimeraEvent.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BackgroundMoveScript.cpp" />
     <ClCompile Include="BaseCamp.cpp" />
@@ -397,12 +402,15 @@
     <ClCompile Include="BlackLab.cpp" />
     <ClCompile Include="BoneOfMana.cpp" />
     <ClCompile Include="BoneReward.cpp" />
+    <ClCompile Include="BossOpeningHUD.cpp" />
     <ClCompile Include="BrightDawn.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
     <ClCompile Include="Ch3BossDungeon.cpp" />
     <ClCompile Include="ChangeAnimationEvent.cpp" />
     <ClCompile Include="ChangeObjectPosEvent.cpp" />
     <ClCompile Include="Chimera.cpp" />
+    <ClCompile Include="ChimeraFallParticlesScript.cpp" />
+    <ClCompile Include="ChimeraRoar.cpp" />
     <ClCompile Include="ChimeraSprite.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />

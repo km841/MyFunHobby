@@ -802,6 +802,18 @@
     <ClInclude Include="ChimeraSprite.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClInclude>
+    <ClInclude Include="AwakenChimeraEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ChimeraRoar.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    </ClInclude>
+    <ClInclude Include="BossOpeningHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="ChimeraFallParticlesScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1391,6 +1403,18 @@
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClCompile>
     <ClCompile Include="ChimeraSprite.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    </ClCompile>
+    <ClCompile Include="AwakenChimeraEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="ChimeraRoar.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    </ClCompile>
+    <ClCompile Include="BossOpeningHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="ChimeraFallParticlesScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClCompile>
   </ItemGroup>

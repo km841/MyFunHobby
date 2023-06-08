@@ -35,7 +35,7 @@ void Physics::Init(bool bUseDebugger)
 
 void Physics::Update()
 {
-	GetScene()->simulate(OBJECT_DELTA_TIME);
+	GetScene()->simulate(WORLD_DELTA_TIME);
 	GetScene()->fetchResults(true);
 }
 

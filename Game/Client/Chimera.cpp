@@ -15,13 +15,26 @@
 #include "EventManager.h"
 #include "ObjectFactory.h"
 #include "ObjectRemoveToSceneEvent.h"
+#include "MadScientist.h"
+#include "Animator.h"
+#include "Animation.h"
+#include "ChimeraRoar.h"
+#include "InterfaceManager.h"
+#include "BossOpeningHUD.h"
+#include "Engine.h"
+#include "ChimeraFallParticlesScript.h"
+#include "Player.h"
 
-Chimera::Chimera()
+Chimera* Chimera::s_pChimera = {};
+
+Chimera::Chimera(shared_ptr<MadScientist> pMadScientist)
 	: GameObject(LAYER_TYPE::MONSTER)
 	, m_pSkeleton(nullptr)
 	, m_pAnimationState(nullptr)
 	, m_pSpineResource(nullptr)
+	, m_pMadScientist(pMadScientist)
 {
+	s_pChimera = this;
 }
 
 Chimera::~Chimera()
@@ -77,6 +90,69 @@ void Chimera::Destroy()
 	m_vChimeraSprites.clear();
 }
 
+void Chimera::Enable()
+{
+	GameObject::Enable();
+	for (int32 i = 0; i < m_vChimeraSprites.size(); ++i)
+	{
+		m_vChimeraSprites[i].lock()->Enable();
+	}
+}
+
+void Chimera::Disable()
+{
+	for (int32 i = 0; i < m_vChimeraSprites.size(); ++i)
+	{
+		m_vChimeraSprites[i].lock()->Disable();
+	}
+	GameObject::Disable();
+}
+
+
+void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spine::TrackEntry* entry, spine::Event* event)
+{
+	const spine::String& animationName = (entry && entry->getAnimation()) ? entry->getAnimation()->getName() : spine::String("");
+	assert(!animationName.isEmpty());
+	string szAnimName = animationName.buffer();
+
+	switch (type)
+	{
+	case spine::EventType_Start:
+	{
+		
+
+		if ("Appear" == szAnimName)
+		{
+			static_pointer_cast<BossOpeningHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::BOSS_OPENING))->SetStageKind(STAGE_KIND::BLACK_LAB);
+			GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::BOSS_OPENING)->Action();
+			s_pChimera->DestroyMadScientist();
+			s_pChimera->DropParticles();
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
+			
+		}
+
+		if ("Roar_Loop" == szAnimName)
+		{
+			s_pChimera->CreateRoarAndAddedToScene();
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
+			GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::ACTIVATE_DISTORTION, 0, 2.f);
+		}
+	}
+		break;
+	case spine::EventType_Interrupt:
+		break;
+	case spine::EventType_End:
+		break;
+	case spine::EventType_Complete:
+		break;
+	case spine::EventType_Dispose:
+		break;
+	case spine::EventType_Event:
+		break;
+	}
+	fflush(stdout);
+}
+
 void Chimera::PlayAnimation(const string& szAnimName, bool bLoop)
 {
 	m_pAnimationState->setAnimation(0, szAnimName.c_str(), bLoop);
@@ -87,6 +163,53 @@ void Chimera::AddAnimation(const string& szAnimName, float fDelay, bool bLoop)
 	m_pAnimationState->addAnimation(0, szAnimName.c_str(), bLoop, fDelay);
 }
 
+void Chimera::DestroyMadScientist()
+{
+	m_pMadScientist.lock()->Destroy();
+}
+
+void Chimera::DropParticles()
+{
+	const float fTopY = static_cast<float>(g_pEngine->GetHeight());
+
+	const wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\Chimera\\Image_Fall_Particle0";
+	Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
+
+	for (int32 i = 1; i <= 20; ++i)
+	{
+		wstring szFullPath = szResourcePath + std::to_wstring(RANDOM(1, 8)) + L".png";
+		shared_ptr<GameObject> pGameObject = 
+			GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<GameObject>(L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(10.f, 10.f, 1.f), MassProperties(), szFullPath, LAYER_TYPE::UNKNOWN);
+		pGameObject->AddComponent(make_shared<ChimeraFallParticlesScript>());
+
+		Vec3 vObjectPos = vPlayerPos;
+		vObjectPos.x += static_cast<float>(RANDOM(-500, 500));
+		vObjectPos.y += static_cast<float>(RANDOM(400, 1000));
+		vObjectPos.z -= 1.f;
+		pGameObject->GetTransform()->SetLocalPosition(vObjectPos);
+
+		pGameObject->Awake();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, SCENE_TYPE::DUNGEON));
+	}
+}
+
+void Chimera::CreateRoarAndAddedToScene()
+{
+	shared_ptr<ChimeraRoar> pChimeraRoar = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ChimeraRoar>(L"Forward");
+	pChimeraRoar->GetTransform()->SetParent(GetTransform());
+	pChimeraRoar->GetTransform()->SetLocalPosition(Vec3(250.f, 450.f, 0.f));
+	pChimeraRoar->AddComponent(make_shared<Animator>());
+	// Chimera Roar
+	{
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Chimera_Roar", L"..\\Resources\\Animation\\Chimera\\chimera_roar.anim");
+		pChimeraRoar->GetAnimator()->AddAnimation(L"Chimera_Roar", pAnimation);
+		pChimeraRoar->GetAnimator()->Play(L"Chimera_Roar");
+	}
+
+	pChimeraRoar->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimeraRoar, SCENE_TYPE::DUNGEON));
+}
+
 void Chimera::CreateChimeraSpritesAndAddedToScene()
 {
 	for (int32 i = 0; i < CHIMERA_SPRITES_COUNT; ++i)
@@ -94,14 +217,15 @@ void Chimera::CreateChimeraSpritesAndAddedToScene()
 		shared_ptr<ChimeraSprite> pChimeraSprite = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ChimeraSprite>(L"Forward", L"..\\Resources\\Spine\\chimera.png");
 		pChimeraSprite->GetTransform()->SetParent(GetTransform());
 		pChimeraSprite->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, -i * 0.1f));
+		pChimeraSprite->GetTransform()->SetLocalScale(Vec3(350.f, 350.f, 1.f));
 
 		pChimeraSprite->Awake();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimeraSprite, SCENE_TYPE::DUNGEON));
 
 		m_vChimeraSprites.push_back(pChimeraSprite);
 
-		if (i== 9)
-			pChimeraSprite->Disable();
+		//if (i== 9)
+		//	pChimeraSprite->Disable();
 	}
 }
 
@@ -119,6 +243,7 @@ void Chimera::CreateSpineData()
 	m_pSkeleton->setY(vMyPos.y);
 	m_pAnimationState = new spine::AnimationState(m_pSpineResource->GetAnimationStateData());
 	assert(m_pAnimationState);
+	m_pAnimationState->setListener(Listener);
 }
 
 void Chimera::SpineDataUpdate()

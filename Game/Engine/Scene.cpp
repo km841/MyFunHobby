@@ -384,14 +384,26 @@ void Scene::CameraShakeUpdate()
 			return;
 
 		Vec3 vCamPos = pMainCamera->GetTransform()->GetLocalPosition();
-		if (fProgress < 0.5f)
+		uint8 bRandom = RANDOM(0, 3);
+		if (!bRandom)
 		{
 			vCamPos += m_ActiveCameraShakeInfo.vCameraShakeImpulse * WORLD_DELTA_TIME;
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
 		}
 		else
 		{
-			vCamPos -= m_ActiveCameraShakeInfo.vCameraShakeImpulse * WORLD_DELTA_TIME;
+			if (m_ActiveCameraShakeInfo.vCameraShakeImpulse.x > 0.f && m_ActiveCameraShakeInfo.vCameraShakeImpulse.y > 0.f)
+			{
+				if (bRandom == 2) // Up
+					vCamPos.y += m_ActiveCameraShakeInfo.vCameraShakeImpulse.y * WORLD_DELTA_TIME * 2.f;
+				else if (bRandom == 3) // Down
+					vCamPos.y -= m_ActiveCameraShakeInfo.vCameraShakeImpulse.y * WORLD_DELTA_TIME * 2.f;
+			}
+			else
+			{
+				vCamPos -= m_ActiveCameraShakeInfo.vCameraShakeImpulse * WORLD_DELTA_TIME;
+			}
+			
 			pMainCamera->GetTransform()->SetLocalPosition(vCamPos);
 
 			if (m_ActiveCameraShakeInfo.tCameraShakeTimer.IsFinished())

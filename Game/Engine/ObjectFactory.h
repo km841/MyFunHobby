@@ -129,7 +129,6 @@ shared_ptr<T> ObjectFactory::CreateObjectHasPhysical(const wstring& szMaterialNa
 			vSize = pTexture->GetTexSize();
 	}
 
-	pObject->AddComponent(make_shared<Physical>(eActorType, eGeometryType, vSize, massProperties));
 	shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
 	pMeshRenderer->SetMaterial(pMaterial);
 	pMeshRenderer->SetMesh(pMesh);

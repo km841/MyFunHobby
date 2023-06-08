@@ -35,6 +35,7 @@
 #include "DropSkulHUD.h"
 #include "ClobberHUD.h"
 #include "PlayerClubberShowScript.h"
+#include "BossOpeningHUD.h"
 
 void InterfaceManager::Init()
 {
@@ -246,6 +247,14 @@ void InterfaceManager::CreateHUD()
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_CLOBBER] = pClobberHUD;
 	}
 
+	// Drop Skul HUD
+	{
+		shared_ptr<BossOpeningHUD> pBossOpeningHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<BossOpeningHUD>(L"Forward");
+		pBossOpeningHUD->SetFrustum(false);
+		pBossOpeningHUD->Disable();
+
+		m_mInterfaceMap[INTERFACE_TYPE::BOSS_OPENING] = pBossOpeningHUD;
+	}
 	
 
 }

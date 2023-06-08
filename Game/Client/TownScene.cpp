@@ -241,6 +241,7 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_ITEM_FIRST));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_ITEM_SECOND));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_SKUL));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BOSS_OPENING));
 
 	//Scene Change Event Object
 	{

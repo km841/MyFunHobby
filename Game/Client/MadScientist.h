@@ -13,5 +13,9 @@ public:
 	void Update();
 	void LateUpdate();
 	void FinalUpdate();
+	void Destroy();
+	
+private:
+	std::vector<wstring> m_vTextureNames;
 };
 

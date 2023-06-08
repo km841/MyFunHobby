@@ -121,25 +121,6 @@ struct WindowInfo
 	bool bWindowed;
 };
 
-namespace spine
-{
-	struct Vertex
-	{
-		Vertex()
-			:x(0.f)
-			,y(0.f)
-			,u(0.f)
-			,v(0.f)
-		{
-			int b = sizeof(*this);
-			int a = 0;
-		}
-		~Vertex() = default;
-
-		float x, y;
-		float u, v;
-	};
-}
 
 struct Vertex
 {
