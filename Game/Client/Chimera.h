@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "Monster.h"
 
 #define CHIMERA_SPRITES_COUNT 23
 #define MAGNIFICATION 400
@@ -17,7 +17,7 @@ class ChimeraSprite;
 class SpineResource;
 class MadScientist;
 class Chimera :
-    public GameObject
+    public Monster
 {
 public:
     Chimera(shared_ptr<MadScientist> pMadScientist);
@@ -44,18 +44,21 @@ public:
     void                       DestroyMadScientist();
     void                       DropParticles();
     void                       CreateRoarAndAddedToScene();
+    void                       SetCurAnimationName(const string& szAnimName) { m_szCurAnimationName = szAnimName; }
+    const string&              GetCurAnimationName() { return m_szCurAnimationName; }
 
 private:
     void                       CreateChimeraSpritesAndAddedToScene();
     void                       CreateSpineData();
     void                       SpineDataUpdate();
     void                       ChimeraSpritesUpdate();
+
     
     std::vector<Vertex> CalculateVertexData(spine::Slot* pSlot, spine::RegionAttachment* pRegionAttachment);
 
 private:
     static Chimera* s_pChimera;
-
+    string m_szCurAnimationName;
     spine::Skeleton*                     m_pSkeleton;
     spine::AnimationState*               m_pAnimationState;
                                     

@@ -244,6 +244,7 @@
     <ClInclude Include="Resources.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="RunAnimateTask.h" />
+    <ClInclude Include="RunSpineAnimateTask.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneChangeEvent.h" />
     <ClInclude Include="SceneFadeEvent.h" />
@@ -348,6 +349,7 @@
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="RunAnimateTask.cpp" />
+    <ClCompile Include="RunSpineAnimateTask.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneChangeEvent.cpp" />
     <ClCompile Include="SceneFadeEvent.cpp" />

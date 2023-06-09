@@ -28,13 +28,13 @@
 Chimera* Chimera::s_pChimera = {};
 
 Chimera::Chimera(shared_ptr<MadScientist> pMadScientist)
-	: GameObject(LAYER_TYPE::MONSTER)
-	, m_pSkeleton(nullptr)
+	: m_pSkeleton(nullptr)
 	, m_pAnimationState(nullptr)
 	, m_pSpineResource(nullptr)
 	, m_pMadScientist(pMadScientist)
 {
 	s_pChimera = this;
+	m_eMonsterState = MONSTER_STATE::RAGE_ATTACK_END;
 }
 
 Chimera::~Chimera()
@@ -114,6 +114,7 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 	const spine::String& animationName = (entry && entry->getAnimation()) ? entry->getAnimation()->getName() : spine::String("");
 	assert(!animationName.isEmpty());
 	string szAnimName = animationName.buffer();
+	s_pChimera->SetCurAnimationName(szAnimName);
 
 	switch (type)
 	{
@@ -257,7 +258,7 @@ void Chimera::ChimeraSpritesUpdate()
 {
 	std::vector<uint32> vIndices = { 0, 1, 2, 2, 3, 0 };
 	Texture* pTexture = nullptr;
-	for (int32 i = 0, n = m_vChimeraSprites.size(); i < n; ++i)
+	for (size_t i = 0, n = m_vChimeraSprites.size(); i < n; ++i)
 	{
 		spine::Slot* pSlot = m_pSkeleton->getDrawOrder()[i];
 		spine::Attachment* pAttachment = pSlot->getAttachment();

@@ -275,6 +275,7 @@
     <ClInclude Include="Lyweasel.h" />
     <ClInclude Include="MadScientist.h" />
     <ClInclude Include="MapReward.h" />
+    <ClInclude Include="MonsterChangeStateDungeonEvent.h" />
     <ClInclude Include="MonsterHitShaderScript.h" />
     <ClInclude Include="MonsterProjectile.h" />
     <ClInclude Include="MonsterSpawnDungeonEvent.h">
@@ -485,6 +486,7 @@
     <ClCompile Include="Lyweasel.cpp" />
     <ClCompile Include="MadScientist.cpp" />
     <ClCompile Include="MapReward.cpp" />
+    <ClCompile Include="MonsterChangeStateDungeonEvent.cpp" />
     <ClCompile Include="MonsterHitShaderScript.cpp" />
     <ClCompile Include="MonsterProjectile.cpp" />
     <ClCompile Include="MonsterSpawnDungeonEvent.cpp">

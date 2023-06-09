@@ -304,6 +304,9 @@
     <ClInclude Include="SpineResource.h">
       <Filter>Resource\Spine</Filter>
     </ClInclude>
+    <ClInclude Include="RunSpineAnimateTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -596,6 +599,9 @@
     </ClCompile>
     <ClCompile Include="SpineResource.cpp">
       <Filter>Resource\Spine</Filter>
+    </ClCompile>
+    <ClCompile Include="RunSpineAnimateTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

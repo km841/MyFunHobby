@@ -24,7 +24,7 @@ private:
     int32 m_iContext;
     Timer m_tDuration;
 
-    const Vec3 m_vTalkerFontPos = Vec3(625.f, 192.f, 0.f);
+    const Vec3 m_vTalkerFontPos = Vec3(630.f, 192.f, 0.f);
     const Vec3 m_vLineFontPos = Vec3(500.f, 145.f, 0.f);
     const Color m_TalkerFontColor = Color::FromRGB(211, 198, 192);
     const Color m_LineFontColor = Color::FromRGB(174, 156, 122);

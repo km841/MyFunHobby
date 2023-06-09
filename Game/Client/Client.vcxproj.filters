@@ -814,6 +814,9 @@
     <ClInclude Include="ChimeraFallParticlesScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterChangeStateDungeonEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1416,6 +1419,9 @@
     </ClCompile>
     <ClCompile Include="ChimeraFallParticlesScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterChangeStateDungeonEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
