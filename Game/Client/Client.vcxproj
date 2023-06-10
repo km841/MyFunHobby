@@ -372,6 +372,7 @@
     <ClInclude Include="TownScene.h" />
     <ClInclude Include="TreasureBox.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="VenomBallProjectile.h" />
     <ClInclude Include="VoodooDoll.h" />
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
@@ -589,6 +590,7 @@
     <ClCompile Include="TownScene.cpp" />
     <ClCompile Include="TreasureBox.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="VenomBallProjectile.cpp" />
     <ClCompile Include="VoodooDoll.cpp" />
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />

@@ -18,5 +18,5 @@ void ChimeraFallParticlesScript::LateUpdate()
 {
 	Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 	if (vMyPos.y < -1000.f)
-		GET_SINGLE(EventManager)->AddEvent(make_unique< ObjectRemoveToSceneEvent>(GetGameObject(), SCENE_TYPE::DUNGEON));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(GetGameObject(), SCENE_TYPE::DUNGEON));
 }

@@ -157,7 +157,7 @@ void Ch3BossDungeon::Enter()
 		pRootNode->AddChild(pSkill1Sequence);
 		pSkill1Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL1));
 		pSkill1Sequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Shot", false));
-		pSkill1Sequence->AddChild(make_shared<TimerCondition>(pChimera, 0.8f));
+		pSkill1Sequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
 
 		pRootNode->AddChild(pSkill1EndSequence);
 		pSkill1EndSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL1_END));

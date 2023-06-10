@@ -38,7 +38,9 @@ void Texture::Load(const wstring& szPath)
 
 	m_pSRV->GetResource(reinterpret_cast<ID3D11Resource**>(m_pTexture.GetAddressOf()));
 	m_szName = szPath;
-	m_vTexSize = Vec3(static_cast<float>(m_scratchImage.GetMetadata().width), static_cast<float>(m_scratchImage.GetMetadata().height), 1.f);
+	m_vTexSize = Vec3(
+		static_cast<float>(m_scratchImage.GetMetadata().width), 
+		static_cast<float>(m_scratchImage.GetMetadata().height), 1.f);
 }
 
 void Texture::Create(uint32 eType, DXGI_FORMAT eFormat, uint32 iWidth, uint32 iHeight)
