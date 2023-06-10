@@ -307,6 +307,12 @@
     <ClInclude Include="RunSpineAnimateTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationClearTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="AddSpineAnimationTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -601,6 +607,12 @@
       <Filter>Resource\Spine</Filter>
     </ClCompile>
     <ClCompile Include="RunSpineAnimateTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationClearTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="AddSpineAnimationTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>

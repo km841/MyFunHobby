@@ -41,6 +41,7 @@ public:
 public:
     void                       PlayAnimation(const string& szAnimName, bool bLoop = true);
     void                       AddAnimation(const string& szAnimName, float fDelay, bool bLoop = true);
+    void                       ClearAnimation() { m_szCurAnimationName = ""; m_pAnimationState->clearTrack(0); }
     void                       DestroyMadScientist();
     void                       DropParticles();
     void                       CreateRoarAndAddedToScene();

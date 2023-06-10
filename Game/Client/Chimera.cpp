@@ -120,8 +120,6 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 	{
 	case spine::EventType_Start:
 	{
-		
-
 		if ("Appear" == szAnimName)
 		{
 			static_pointer_cast<BossOpeningHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::BOSS_OPENING))->SetStageKind(STAGE_KIND::BLACK_LAB);
@@ -157,11 +155,23 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 void Chimera::PlayAnimation(const string& szAnimName, bool bLoop)
 {
 	m_pAnimationState->setAnimation(0, szAnimName.c_str(), bLoop);
+	m_szCurAnimationName = szAnimName;
 }
 
 void Chimera::AddAnimation(const string& szAnimName, float fDelay, bool bLoop)
 {
-	m_pAnimationState->addAnimation(0, szAnimName.c_str(), bLoop, fDelay);
+	bool bFlag = true;
+	for (int32 i = 0; i < m_pAnimationState->getTracks().size(); ++i)
+	{
+		spine::String szName = m_pAnimationState->getTracks()[i]->getAnimation()->getName();
+		if (string(szName.buffer()) == szAnimName)
+			bFlag = false;
+	}
+	
+	if (bFlag)
+	{
+		m_pAnimationState->addAnimation(0, szAnimName.c_str(), bLoop, fDelay);
+	}
 }
 
 void Chimera::DestroyMadScientist()

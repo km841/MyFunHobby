@@ -13,7 +13,7 @@ BEHAVIOR_RESULT TimerCondition::Run()
 	if (!m_tDuration.IsRunning() || m_tDuration.IsFinished())
 		m_tDuration.Start();
 
-	m_tDuration.Update(OBJECT_DELTA_TIME);
+	m_tDuration.Update(WORLD_DELTA_TIME);
 
 	if (m_tDuration.IsFinished())
 		return BEHAVIOR_RESULT::SUCCESS;

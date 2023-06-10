@@ -202,6 +202,7 @@
     <ClInclude Include="ChimeraFallParticlesScript.h" />
     <ClInclude Include="ChimeraRoar.h" />
     <ClInclude Include="ChimeraSprite.h" />
+    <ClInclude Include="ChimeraVenomBallScript.h" />
     <ClInclude Include="ClobberHUD.h" />
     <ClInclude Include="CreateMapRewardEvent.h" />
     <ClInclude Include="DarkMirrorReflectionScript.h" />
@@ -413,6 +414,7 @@
     <ClCompile Include="ChimeraFallParticlesScript.cpp" />
     <ClCompile Include="ChimeraRoar.cpp" />
     <ClCompile Include="ChimeraSprite.cpp" />
+    <ClCompile Include="ChimeraVenomBallScript.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
     <ClCompile Include="CreateMapRewardEvent.cpp" />
     <ClCompile Include="DarkMirrorReflectionScript.cpp" />
