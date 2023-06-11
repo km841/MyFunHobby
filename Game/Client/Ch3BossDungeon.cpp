@@ -140,13 +140,16 @@ void Ch3BossDungeon::Enter()
 		shared_ptr<Sequence> pSkill1ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill1Sequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill1EndSequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pSkill2ReadySequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pSkill2Sequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pSkill2EndSequence = make_shared<Sequence>();
 		
 		pRootNode->AddChild(pIdleSequence);
 		pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::IDLE));
 		pIdleSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Idle"));
 		pIdleSequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
 		// Setting Random State!
-		pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL1_READY));
+		pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL2_READY));
 
 		pRootNode->AddChild(pSkill1ReadySequence);
 		pSkill1ReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL1_READY));
@@ -165,12 +168,28 @@ void Ch3BossDungeon::Enter()
 		pSkill1EndSequence->AddChild(make_shared<TimerCondition>(pChimera, 0.5f));
 		pSkill1EndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::IDLE));
 
+		pRootNode->AddChild(pSkill2ReadySequence);
+		pSkill2ReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL2_READY));
+		pSkill2ReadySequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Roar_Start", false));
+		pSkill2ReadySequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
+		pSkill2ReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL2));
 
+		pRootNode->AddChild(pSkill2Sequence);
+		pSkill2Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL2));
+		pSkill2Sequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Roar", false));
+		pSkill2Sequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
+		pSkill2Sequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL2_END));
+
+		pRootNode->AddChild(pSkill2EndSequence);
+		pSkill2EndSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL2_END));
+		pSkill2EndSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Roar_Skill_Loop", true));
+		pSkill2EndSequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
+		pSkill2EndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::IDLE));
+
+		
 
 		//pSkill1Sequence->AddChild(make_shared<AnimationClearTask>(pChimera));
 		//pSkill1Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL1));
-
-
 		pChimera->GetAI()->SetBehaviorRootNode(pRootNode);
 
 		pChimera->Awake();

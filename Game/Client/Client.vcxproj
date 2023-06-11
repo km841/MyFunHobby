@@ -201,6 +201,7 @@
     <ClInclude Include="Chimera.h" />
     <ClInclude Include="ChimeraFallParticlesScript.h" />
     <ClInclude Include="ChimeraRoar.h" />
+    <ClInclude Include="ChimeraRoarScript.h" />
     <ClInclude Include="ChimeraSprite.h" />
     <ClInclude Include="ChimeraVenomBallScript.h" />
     <ClInclude Include="ClobberHUD.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="Chimera.cpp" />
     <ClCompile Include="ChimeraFallParticlesScript.cpp" />
     <ClCompile Include="ChimeraRoar.cpp" />
+    <ClCompile Include="ChimeraRoarScript.cpp" />
     <ClCompile Include="ChimeraSprite.cpp" />
     <ClCompile Include="ChimeraVenomBallScript.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />

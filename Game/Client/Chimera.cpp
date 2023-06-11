@@ -127,7 +127,12 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 			s_pChimera->DestroyMadScientist();
 			s_pChimera->DropParticles();
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
-			
+		}
+
+		if ("Roar_Skill_Loop" == szAnimName)
+		{
+			s_pChimera->CreateRoarAndAddedToScene();
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
 		}
 
 		if ("Roar_Loop" == szAnimName)
