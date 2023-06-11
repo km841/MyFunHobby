@@ -201,7 +201,8 @@
     <ClInclude Include="Chimera.h" />
     <ClInclude Include="ChimeraFallParticlesScript.h" />
     <ClInclude Include="ChimeraRoar.h" />
-    <ClInclude Include="ChimeraRoarScript.h" />
+    <ClInclude Include="VenomFall.h" />
+    <ClInclude Include="ChimeraVenomFallScript.h" />
     <ClInclude Include="ChimeraSprite.h" />
     <ClInclude Include="ChimeraVenomBallScript.h" />
     <ClInclude Include="ClobberHUD.h" />
@@ -374,6 +375,7 @@
     <ClInclude Include="TreasureBox.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="VenomBallProjectile.h" />
+    <ClInclude Include="VenomSplash.h" />
     <ClInclude Include="VoodooDoll.h" />
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
@@ -415,7 +417,8 @@
     <ClCompile Include="Chimera.cpp" />
     <ClCompile Include="ChimeraFallParticlesScript.cpp" />
     <ClCompile Include="ChimeraRoar.cpp" />
-    <ClCompile Include="ChimeraRoarScript.cpp" />
+    <ClCompile Include="VenomFall.cpp" />
+    <ClCompile Include="ChimeraVenomFallScript.cpp" />
     <ClCompile Include="ChimeraSprite.cpp" />
     <ClCompile Include="ChimeraVenomBallScript.cpp" />
     <ClCompile Include="ClobberHUD.cpp" />
@@ -593,6 +596,7 @@
     <ClCompile Include="TreasureBox.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="VenomBallProjectile.cpp" />
+    <ClCompile Include="VenomSplash.cpp" />
     <ClCompile Include="VoodooDoll.cpp" />
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />

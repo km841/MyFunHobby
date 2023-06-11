@@ -239,9 +239,6 @@ void Chimera::CreateChimeraSpritesAndAddedToScene()
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimeraSprite, SCENE_TYPE::DUNGEON));
 
 		m_vChimeraSprites.push_back(pChimeraSprite);
-
-		//if (i== 9)
-		//	pChimeraSprite->Disable();
 	}
 }
 

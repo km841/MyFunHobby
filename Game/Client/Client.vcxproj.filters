@@ -224,6 +224,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Monster\Chimera">
       <UniqueIdentifier>{26e651c4-6fd4-4d69-bfd6-05b30da9764a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\Chimera\Skill">
+      <UniqueIdentifier>{9809db01-8fac-41c3-b3b2-bcd1c6e0461b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -817,14 +820,20 @@
     <ClInclude Include="MonsterChangeStateDungeonEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
+    <ClInclude Include="VenomFall.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="ChimeraVenomFallScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClInclude>
     <ClInclude Include="ChimeraVenomBallScript.h">
-      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClInclude>
     <ClInclude Include="VenomBallProjectile.h">
-      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="ChimeraRoarScript.h">
-      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    <ClInclude Include="VenomSplash.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1432,14 +1441,20 @@
     <ClCompile Include="MonsterChangeStateDungeonEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
+    <ClCompile Include="VenomFall.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ChimeraVenomFallScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClCompile>
     <ClCompile Include="ChimeraVenomBallScript.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClCompile>
     <ClCompile Include="VenomBallProjectile.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="ChimeraRoarScript.cpp">
-      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera</Filter>
+    <ClCompile Include="VenomSplash.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

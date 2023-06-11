@@ -40,6 +40,7 @@
 #include "AddSpineAnimationTask.h"
 #include "AnimationClearTask.h"
 #include "ChimeraVenomBallScript.h"
+#include "ChimeraVenomFallScript.h"
 
 #include "Selector.h"
 #include "Sequence.h"
@@ -134,6 +135,7 @@ void Ch3BossDungeon::Enter()
 		pChimera->GetTransform()->SetLocalPosition(Vec3(550.f, 75.f, 100.f));
 		pChimera->AddComponent(make_shared<AI>());
 		pChimera->AddComponent(make_shared<ChimeraVenomBallScript>());
+		pChimera->AddComponent(make_shared<ChimeraVenomFallScript>());
 
 		shared_ptr<Selector> pRootNode = make_shared<Selector>();
 		shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
