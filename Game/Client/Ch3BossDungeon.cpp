@@ -165,6 +165,7 @@ void Ch3BossDungeon::Enter()
 		shared_ptr<Sequence> pSkill3EndSequence = make_shared<Sequence>();
 
 		// Breath Skill
+		shared_ptr<Sequence> pSkill4ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill4Sequence = make_shared<Sequence>();
 		
 		pRootNode->AddChild(pIdleSequence);
@@ -225,7 +226,13 @@ void Ch3BossDungeon::Enter()
 		pSkill3EndSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL3_END));
 		pSkill3EndSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Grab_Smash", false));
 		pSkill3EndSequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
-		pSkill3EndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL4));
+		pSkill3EndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL4_READY));
+
+		pRootNode->AddChild(pSkill4ReadySequence);
+		pSkill4ReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL4_READY));
+		pSkill4ReadySequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Grab_Loop"));
+		pSkill4ReadySequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
+		pSkill4ReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL4));
 
 		pRootNode->AddChild(pSkill4Sequence);
 		pSkill4Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL4));

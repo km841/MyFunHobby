@@ -1,9 +1,21 @@
-﻿  Camera.cpp
-  Component.cpp
-  Frustum.cpp
-  GameObject.cpp
-  Scene.cpp
+﻿  SceneChangeEvent.cpp
+  SceneFadeEvent.cpp
   Scenes.cpp
+  Selector.cpp
+  Sequence.cpp
+  SetDirectionTowardPlayerTask.cpp
+  Shader.cpp
+  SimpleMath.cpp
+  SpineResource.cpp
+  SpineTextureLoader.cpp
+  StructuredBuffer.cpp
+  SwapChain.cpp
+  Texture.cpp
+  TimerCondition.cpp
+  TrackingOfMeleeTask.cpp
   Transform.cpp
+  UnflagAsAttackedFlagTask.cpp
+  Utility.cpp
+  VelocityDownTask.cpp
   코드를 생성하고 있습니다...
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

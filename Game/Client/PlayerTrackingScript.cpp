@@ -25,7 +25,7 @@ void PlayerTrackingScript::LateUpdate()
 	{
 		const Vec3& vFixedPos = GetCamera()->GetFixedPosition();
 		Vec3 vDiff = vFixedPos - GetTransform()->GetLocalPosition();
-		if (vDiff.Length() > 10.f)
+		if (vDiff.Length() > 30.f)
 			GetTransform()->SetLocalPosition(vFixedPos);
 
 		return;

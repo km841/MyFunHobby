@@ -47,6 +47,8 @@ void Chimera::Awake()
 	GameObject::Awake();
 	CreateSpineData();
 	CreateChimeraSpritesAndAddedToScene();
+	CreateParticleGeneratorAndAddedToScene();
+	m_Status.BossMonsterDefaultSetting();
 
 }
 
@@ -145,7 +147,7 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 
 		if ("Grab_Smash" == szAnimName)
 		{
-			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
 		}
 	}
 		break;

@@ -10,6 +10,7 @@
 #include "Animator.h"
 #include "RigidBody.h"
 #include "AnimationLocalEffect.h"
+#include "ChimeraFallingObject.h"
 
 ChimeraGrabScript::ChimeraGrabScript()
 	: m_bCheckedBegin(false)
@@ -43,12 +44,12 @@ void ChimeraGrabScript::LateUpdate()
 		if (!m_bCheckedSkill)
 		{
 			CreateFallingObjectAndAddedToScene();
-			m_bCheckedBegin = true;
+			m_bCheckedSkill = true;
 		}
 	}
 	else
 	{
-		m_bCheckedBegin = false;
+		m_bCheckedSkill = false;
 	}
 }
 
@@ -77,4 +78,31 @@ void ChimeraGrabScript::CreateWarningSignAndAddedToScene()
 void ChimeraGrabScript::CreateFallingObjectAndAddedToScene()
 {
 	// 지정된 위치에 투하
+	
+	wstring szPathList[] =
+	{
+		L"..\\Resources\\Texture\\Sprites\\Chimera\\Image_Fall_Object01.png",
+		L"..\\Resources\\Texture\\Sprites\\Chimera\\Image_Fall_Object02.png"
+	};
+
+	for (int32 i = 0; i < 2; ++i)
+	{
+		shared_ptr<ChimeraFallingObject> pFallingObject = 
+			GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<ChimeraFallingObject>(L"Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 70.f + (i * 50.f), 30.f), MassProperties(), szPathList[i]);
+
+		Vec3 vPos = GetTransform()->GetPhysicalPosition();
+		vPos.x += i * 350.f - 350.f;
+		vPos.y += 650.f;
+		vPos.z += 0.5f;
+		pFallingObject->GetTransform()->SetLocalPosition(vPos);
+
+		pFallingObject->GetRigidBody()->SetLinearVelocityForDynamic(AXIS::Y, -300.f);
+
+		pFallingObject->Awake();
+		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pFallingObject, eSceneType));
+	}
+
+	
 }
+

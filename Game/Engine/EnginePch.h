@@ -322,6 +322,19 @@ struct Status
 		fAttackDist = 200.f;
 	}
 
+	void BossMonsterDefaultSetting()
+	{
+		iMaxHP = 1000;
+		iCurHP = 1000;
+		iShield = 0;
+		iAttack = 1;
+		iDefence = 1;
+		fSpeed = 300.f;
+		bAlive = true;
+		fRecogDist = 500.f;
+		fAttackDist = 200.f;
+	}
+
 	void TakeDamage(int32 iDamage)
 	{
 		assert(iDamage > 0);

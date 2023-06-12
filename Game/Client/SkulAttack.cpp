@@ -100,7 +100,6 @@ void SkulAttack::HitMonstersInAttackRange()
 				{
 					m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenMonsterHitTiming(pMonster);
 				}
-
 				// Generate Particles
 				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleAliveCount(30);
 				pMonster->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(Vec3(vTargetVec.x < 0.f ? -500.f : 500.f, 500.f, 0.f));
