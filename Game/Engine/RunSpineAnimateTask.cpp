@@ -12,6 +12,7 @@ RunSpineAnimateTask::RunSpineAnimateTask(shared_ptr<GameObject> pGameObject, con
 BEHAVIOR_RESULT RunSpineAnimateTask::Run()
 {
 	weak_ptr<Chimera> pChimera = static_pointer_cast<Chimera>(m_pGameObject.lock());
+	auto name = pChimera.lock()->GetCurAnimationName();
 	if (pChimera.lock()->GetCurAnimationName() == m_szAnimationName)
 		return BEHAVIOR_RESULT::SUCCESS;
 

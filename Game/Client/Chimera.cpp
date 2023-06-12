@@ -114,12 +114,13 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 	const spine::String& animationName = (entry && entry->getAnimation()) ? entry->getAnimation()->getName() : spine::String("");
 	assert(!animationName.isEmpty());
 	string szAnimName = animationName.buffer();
-	s_pChimera->SetCurAnimationName(szAnimName);
+	
 
 	switch (type)
 	{
 	case spine::EventType_Start:
 	{
+		s_pChimera->SetCurAnimationName(szAnimName);
 		if ("Appear" == szAnimName)
 		{
 			static_pointer_cast<BossOpeningHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::BOSS_OPENING))->SetStageKind(STAGE_KIND::BLACK_LAB);
@@ -140,6 +141,11 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 			s_pChimera->CreateRoarAndAddedToScene();
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
 			GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::ACTIVATE_DISTORTION, 0, 2.f);
+		}
+
+		if ("Grab_Smash" == szAnimName)
+		{
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
 		}
 	}
 		break;

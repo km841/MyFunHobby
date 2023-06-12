@@ -20,7 +20,7 @@ private:
 private:
     bool m_bFinishedIntroFlag;
     bool m_bFinishedOutroFlag;
+    bool m_bCreatedSplashFlag;
     Timer m_tLoopDuration;
-    Timer m_tSplashTick;
 };
 

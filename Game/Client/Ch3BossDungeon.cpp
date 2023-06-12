@@ -139,19 +139,27 @@ void Ch3BossDungeon::Enter()
 
 		shared_ptr<Selector> pRootNode = make_shared<Selector>();
 		shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
+
 		shared_ptr<Sequence> pSkill1ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill1Sequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill1EndSequence = make_shared<Sequence>();
+
 		shared_ptr<Sequence> pSkill2ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill2Sequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill2EndSequence = make_shared<Sequence>();
+
+		shared_ptr<Sequence> pSkill3ReadySequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pSkill3Sequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pSkill3EndSequence = make_shared<Sequence>();
+
+		shared_ptr<Sequence> pSkill4Sequence = make_shared<Sequence>();
 		
 		pRootNode->AddChild(pIdleSequence);
 		pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::IDLE));
 		pIdleSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Idle"));
-		pIdleSequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
+		pIdleSequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
 		// Setting Random State!
-		pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL2_READY));
+		pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL3_READY));
 
 		pRootNode->AddChild(pSkill1ReadySequence);
 		pSkill1ReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL1_READY));
@@ -185,13 +193,33 @@ void Ch3BossDungeon::Enter()
 		pRootNode->AddChild(pSkill2EndSequence);
 		pSkill2EndSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL2_END));
 		pSkill2EndSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Roar_Skill_Loop", true));
-		pSkill2EndSequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
+		pSkill2EndSequence->AddChild(make_shared<TimerCondition>(pChimera, 8.f));
 		pSkill2EndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::IDLE));
 
-		
+		pRootNode->AddChild(pSkill3ReadySequence);
+		pSkill3ReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL3_READY));
+		pSkill3ReadySequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Grab_Start", false));
+		pSkill3ReadySequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
+		pSkill3ReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL3));
 
-		//pSkill1Sequence->AddChild(make_shared<AnimationClearTask>(pChimera));
-		//pSkill1Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL1));
+		pRootNode->AddChild(pSkill3Sequence);
+		pSkill3Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL3));
+		pSkill3Sequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Grab_Back", false));
+		pSkill3Sequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
+		pSkill3Sequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL3_END));
+
+		pRootNode->AddChild(pSkill3EndSequence);
+		pSkill3EndSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL3_END));
+		pSkill3EndSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Grab_Smash", false));
+		pSkill3EndSequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
+		pSkill3EndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL4));
+
+		pRootNode->AddChild(pSkill4Sequence);
+		pSkill4Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL4));
+		pSkill4Sequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Breath", false));
+		pSkill4Sequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
+		pSkill4Sequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::IDLE));
+
 		pChimera->GetAI()->SetBehaviorRootNode(pRootNode);
 
 		pChimera->Awake();

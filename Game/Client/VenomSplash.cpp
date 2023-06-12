@@ -7,6 +7,7 @@
 #include "EventManager.h"
 #include "Scenes.h"
 #include "Scene.h"
+#include "RigidBody.h"
 
 VenomSplash::VenomSplash()
 	: GameObject(LAYER_TYPE::MONSTER_PROJECTILE)
@@ -14,7 +15,7 @@ VenomSplash::VenomSplash()
 	, m_bChecked(false)
 	, m_bIntroFinishedFlag(false)
 	, m_bOutroFinishedFlag(false)
-	, m_tLoopTimer(2.f)
+	, m_tLoopTimer(2.5f)
 {
 }
 
@@ -40,13 +41,17 @@ void VenomSplash::Update()
 	{
 		if (!m_bChecked)
 		{
+			GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
+			GetRigidBody()->SetRotationZForDynamic(0.f);
+			GetRigidBody()->SetAngularDamping(PX_MAX_F32);
+			GetRigidBody()->SetLinearDamping(PX_MAX_F32);
 			m_bChecked = true;
 			GetAnimator()->Play(L"VenomSplash_Intro", false);
 		}
 
 		else
 		{
-			if (GetAnimator()->GetActiveAnimation()->IsFinished())
+			if (!m_bIntroFinishedFlag && GetAnimator()->GetActiveAnimation()->IsFinished())
 			{
 				m_bIntroFinishedFlag = true;
 				GetAnimator()->Play(L"VenomSplash_Loop");

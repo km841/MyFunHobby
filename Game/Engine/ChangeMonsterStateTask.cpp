@@ -15,7 +15,7 @@ ChangeMonsterStateTask::ChangeMonsterStateTask(shared_ptr<GameObject> pGameObjec
 BEHAVIOR_RESULT ChangeMonsterStateTask::Run()
 {
 	m_pGameObject.lock()->GetRigidBody()->SetLinearVelocityForDynamic(AXIS::X, 0.f);
-	GET_SINGLE(EventManager)->AddEvent(make_unique<MonsterChangeStateEvent>(static_pointer_cast<Monster>(m_pGameObject.lock()), m_eMonsterState));
+	static_pointer_cast<Monster>(m_pGameObject.lock())->SetMonsterState(m_eMonsterState);
 
 	if (!m_bCondition)
 		return BEHAVIOR_RESULT::FAILURE;

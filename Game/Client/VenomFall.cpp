@@ -17,8 +17,8 @@ VenomFall::VenomFall()
 	: GameObject(LAYER_TYPE::UNKNOWN)
 	, m_bFinishedIntroFlag(false)
 	, m_bFinishedOutroFlag(false)
+	, m_bCreatedSplashFlag(false)
 	, m_tLoopDuration(2.f)
-	, m_tSplashTick(0.25f)
 {
 }
 
@@ -42,8 +42,15 @@ void VenomFall::Update()
 
 	if (!m_bFinishedIntroFlag)
 	{
+		if (!m_bCreatedSplashFlag)
+		{
+			CreateVenomSplashAndAddedToScene();
+			m_bCreatedSplashFlag = true;
+		}
+
 		if (GetAnimator()->GetActiveAnimation()->IsFinished())
 		{
+			
 			m_bFinishedIntroFlag = true;
 			GetAnimator()->Play(L"VenomFall_Loop");
 
@@ -61,20 +68,6 @@ void VenomFall::Update()
 			{
 				GetAnimator()->Play(L"VenomFall_Outro", false);
 				m_bFinishedOutroFlag = true;
-			}
-
-			if (!m_tSplashTick.IsRunning())
-			{
-				m_tSplashTick.Start();
-			}
-			else
-			{
-				m_tSplashTick.Update(WORLD_DELTA_TIME);
-				if (m_tSplashTick.IsFinished())
-				{
-					CreateVenomSplashAndAddedToScene();
-					m_tSplashTick.Reset();
-				}
 			}
 		}
 
@@ -126,14 +119,15 @@ void VenomFall::CreateVenomSplashAndAddedToScene()
 	}
 
 	Vec3 vPos = GetTransform()->GetLocalPosition();
-	vPos.y += 300.f;
+	vPos.y += 900.f;
+	vPos.z -= 0.5f;
 	pProjectile->GetTransform()->SetLocalPosition(vPos);
 	pProjectile->GetTransform()->SetLocalScale(Vec3(30.f, 30.f, 30.f));
 
 	//pProjectile->GetAnimator()->Play(L"VenomSplash_Intro", false);
 
 	pProjectile->Awake();
-	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, -1.f, 0.f) * 1000.f);
+	//pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, -1.f, 0.f) * 00.f);
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pProjectile, eSceneType));
 }
