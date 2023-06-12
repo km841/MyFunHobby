@@ -37,6 +37,11 @@ public:
 
     const Vec4& GetLimitRect() { return m_vLimitRect; }
 
+    void SetFixedCamera(const Vec3& vFixedPos) { m_bFixedCamera = true; m_vFixedPos = vFixedPos; }
+    void UnfixCamera() { m_bFixedCamera = false;}
+    bool IsFixed() { return m_bFixedCamera; }
+    const Vec3& GetFixedPosition() { return m_vFixedPos; }
+
     FORCEINLINE void FlipDebugMode() { m_bDebugMode = (m_bDebugMode + 1) % 2; }
 
 public:
@@ -63,6 +68,8 @@ private:
     Vec4            m_vLimitRect;
 
     bool            m_bDebugMode;
+    bool            m_bFixedCamera;
+    Vec3            m_vFixedPos;
 
     std::vector<shared_ptr<GameObject>> m_vForwardObjects;
     std::vector<shared_ptr<GameObject>> m_vDeferredObjects;

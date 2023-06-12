@@ -392,7 +392,8 @@ void Scene::CameraShakeUpdate()
 		}
 		else
 		{
-			if (m_ActiveCameraShakeInfo.vCameraShakeImpulse.x > 0.f && m_ActiveCameraShakeInfo.vCameraShakeImpulse.y > 0.f)
+			if (m_ActiveCameraShakeInfo.vCameraShakeImpulse.x > 0.f && 
+				m_ActiveCameraShakeInfo.vCameraShakeImpulse.y > 0.f)
 			{
 				if (bRandom == 2) // Up
 					vCamPos.y += m_ActiveCameraShakeInfo.vCameraShakeImpulse.y * WORLD_DELTA_TIME * 2.f;

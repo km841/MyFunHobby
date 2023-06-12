@@ -24,6 +24,7 @@ Camera::Camera()
     , m_fScale(1.25f)
     , m_iCullingMask(0)
     , m_bDebugMode(false)
+    , m_bFixedCamera(false)
 {
 }
 

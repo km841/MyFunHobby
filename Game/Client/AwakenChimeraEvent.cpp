@@ -32,5 +32,6 @@ void AwakenChimeraEvent::ExecuteEvent()
 	m_pChimera.lock()->AddAnimation("Roar_Start", 2.f, false);
 	m_pChimera.lock()->AddAnimation("Roar", 2.f, false);
 	m_pChimera.lock()->AddAnimation("Roar_Loop", 0.f);
+	m_pChimera.lock()->AddAnimation("Idle", 2.f);
 	// Chimera Enable & Play Animation
 }

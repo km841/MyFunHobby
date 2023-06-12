@@ -127,25 +127,25 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 			GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::BOSS_OPENING)->Action();
 			s_pChimera->DestroyMadScientist();
 			s_pChimera->DropParticles();
-			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
 		}
 
 		if ("Roar_Skill_Loop" == szAnimName)
 		{
 			s_pChimera->CreateRoarAndAddedToScene();
-			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
 		}
 
 		if ("Roar_Loop" == szAnimName)
 		{
 			s_pChimera->CreateRoarAndAddedToScene();
-			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
 			GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::ACTIVATE_DISTORTION, 0, 2.f);
 		}
 
 		if ("Grab_Smash" == szAnimName)
 		{
-			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 0.f, 0.f));
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
 		}
 	}
 		break;

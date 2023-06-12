@@ -31,6 +31,8 @@
 #include "AwakenChimeraEvent.h"
 #include "MonsterChangeStateDungeonEvent.h"
 #include "AI.h"
+#include "ComponentObject.h"
+#include "Camera.h"
 
 // Behavior Node
 #include "TimerCondition.h"
@@ -39,8 +41,14 @@
 #include "RunSpineAnimateTask.h"
 #include "AddSpineAnimationTask.h"
 #include "AnimationClearTask.h"
+#include "CameraFixedEvent.h"
+#include "CameraUnfixEvent.h"
+
+
+
 #include "ChimeraVenomBallScript.h"
 #include "ChimeraVenomFallScript.h"
+#include "ChimeraGrabScript.h"
 
 #include "Selector.h"
 #include "Sequence.h"
@@ -136,22 +144,27 @@ void Ch3BossDungeon::Enter()
 		pChimera->AddComponent(make_shared<AI>());
 		pChimera->AddComponent(make_shared<ChimeraVenomBallScript>());
 		pChimera->AddComponent(make_shared<ChimeraVenomFallScript>());
+		pChimera->AddComponent(make_shared<ChimeraGrabScript>());
 
 		shared_ptr<Selector> pRootNode = make_shared<Selector>();
 		shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
 
+		// Venom Ball Skill
 		shared_ptr<Sequence> pSkill1ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill1Sequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill1EndSequence = make_shared<Sequence>();
 
+		// Venom Fall Skill
 		shared_ptr<Sequence> pSkill2ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill2Sequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill2EndSequence = make_shared<Sequence>();
 
+		// Grab Skill
 		shared_ptr<Sequence> pSkill3ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill3Sequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill3EndSequence = make_shared<Sequence>();
 
+		// Breath Skill
 		shared_ptr<Sequence> pSkill4Sequence = make_shared<Sequence>();
 		
 		pRootNode->AddChild(pIdleSequence);
@@ -205,7 +218,7 @@ void Ch3BossDungeon::Enter()
 		pRootNode->AddChild(pSkill3Sequence);
 		pSkill3Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL3));
 		pSkill3Sequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Grab_Back", false));
-		pSkill3Sequence->AddChild(make_shared<TimerCondition>(pChimera, 1.f));
+		pSkill3Sequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
 		pSkill3Sequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL3_END));
 
 		pRootNode->AddChild(pSkill3EndSequence);
@@ -235,6 +248,7 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<PlayerWalkEvent>(pAlwaysTrueCondition, Vec3(300.f, 0.f, 0.f), 2.f));
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(make_shared<IfFinishedTimer>(2.f), PLAYER_STATE::PAUSE_IDLE));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
+	AddEvent(make_shared<CameraFixedEvent>(pAlwaysTrueCondition, Vec3(590.f, 355.f, 1.f)));
 	AddEvent(make_shared<ObjectEnableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"발 밑 조심해.", 1.f));
 	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
@@ -291,9 +305,6 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pChimera, MONSTER_STATE::IDLE));
 
 	// 이름 띄우고 체력 바 내리기
-
-
-
 }
 
 void Ch3BossDungeon::Exit()

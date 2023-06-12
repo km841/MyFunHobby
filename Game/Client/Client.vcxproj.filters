@@ -835,6 +835,15 @@
     <ClInclude Include="VenomSplash.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="ChimeraGrabScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraFixedEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraUnfixEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1455,6 +1464,15 @@
     </ClCompile>
     <ClCompile Include="VenomSplash.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ChimeraGrabScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraFixedEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraUnfixEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
