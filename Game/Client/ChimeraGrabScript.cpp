@@ -39,7 +39,7 @@ void ChimeraGrabScript::LateUpdate()
 		m_bCheckedBegin = false;
 	}
 
-	if (MONSTER_STATE::SKILL3 == pChimera.lock()->GetMonsterState())
+	if (MONSTER_STATE::SKILL3_END == pChimera.lock()->GetMonsterState())
 	{
 		if (!m_bCheckedSkill)
 		{

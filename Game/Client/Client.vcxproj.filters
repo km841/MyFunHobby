@@ -853,6 +853,9 @@
     <ClInclude Include="ChimeraVenomFallScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script</Filter>
     </ClInclude>
+    <ClInclude Include="ChimeraBreathFireEffectScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1487,6 +1490,9 @@
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script</Filter>
     </ClCompile>
     <ClCompile Include="ChimeraVenomFallScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="ChimeraBreathFireEffectScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script</Filter>
     </ClCompile>
   </ItemGroup>

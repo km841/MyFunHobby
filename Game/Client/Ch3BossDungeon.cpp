@@ -49,6 +49,7 @@
 #include "ChimeraVenomBallScript.h"
 #include "ChimeraVenomFallScript.h"
 #include "ChimeraGrabScript.h"
+#include "ChimeraBreathScript.h"
 
 #include "Selector.h"
 #include "Sequence.h"
@@ -145,6 +146,7 @@ void Ch3BossDungeon::Enter()
 		pChimera->AddComponent(make_shared<ChimeraVenomBallScript>());
 		pChimera->AddComponent(make_shared<ChimeraVenomFallScript>());
 		pChimera->AddComponent(make_shared<ChimeraGrabScript>());
+		pChimera->AddComponent(make_shared<ChimeraBreathScript>());
 
 		shared_ptr<Selector> pRootNode = make_shared<Selector>();
 		shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();

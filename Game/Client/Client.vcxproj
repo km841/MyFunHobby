@@ -201,6 +201,7 @@
     <ClInclude Include="ChangeAnimationEvent.h" />
     <ClInclude Include="ChangeObjectPosEvent.h" />
     <ClInclude Include="Chimera.h" />
+    <ClInclude Include="ChimeraBreathFireEffectScript.h" />
     <ClInclude Include="ChimeraBreathScript.h" />
     <ClInclude Include="ChimeraFallingObject.h" />
     <ClInclude Include="ChimeraFallParticlesScript.h" />
@@ -422,6 +423,7 @@
     <ClCompile Include="ChangeAnimationEvent.cpp" />
     <ClCompile Include="ChangeObjectPosEvent.cpp" />
     <ClCompile Include="Chimera.cpp" />
+    <ClCompile Include="ChimeraBreathFireEffectScript.cpp" />
     <ClCompile Include="ChimeraBreathScript.cpp" />
     <ClCompile Include="ChimeraFallingObject.cpp" />
     <ClCompile Include="ChimeraFallParticlesScript.cpp" />
