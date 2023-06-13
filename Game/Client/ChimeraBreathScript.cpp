@@ -85,4 +85,5 @@ void ChimeraBreathScript::CreateBreathFireAndAddedToScene()
 
 void ChimeraBreathScript::CreateBreathProjectileAddedToScene(float fRadian)
 {
+
 }

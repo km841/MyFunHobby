@@ -6,10 +6,16 @@
 #include "Scene.h"
 #include "ObjectRemoveToSceneEvent.h"
 #include "EventManager.h"
+#include "Animator.h"
+#include "Animation.h"
+#include "ChimeraBreathProjectile.h"
+#include "ObjectFactory.h"
 
 ChimeraBreathFireEffectScript::ChimeraBreathFireEffectScript()
 	: m_tDuration(1.5f)
-	, m_vOrigin(Vec3(870.f, 440.f, 99.f))
+	, m_vOrigin(Vec3(900.f, 440.f, 99.f))
+	, m_bOutroFlag(false)
+	, m_tBreathTick(0.05f)
 {
 }
 
@@ -36,12 +42,69 @@ void ChimeraBreathFireEffectScript::LateUpdate()
 		);
 
 		Vec3 vTarget = Vec3(50.f, 40.f, 0.f);
-		GetTransform()->SetLocalPosition(m_vOrigin + vRotated * 150.f + vTarget * m_tDuration.GetProgress());
+		Vec3 vFinalPos = m_vOrigin + vRotated * 150.f + vTarget * m_tDuration.GetProgress();
+		GetTransform()->SetLocalPosition(vFinalPos);
 		GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, fRadian + XM_PIDIV4));
+
+		if (!m_tBreathTick.IsRunning())
+		{
+			m_tBreathTick.Start();
+		}
+		else
+		{
+			m_tBreathTick.Update(WORLD_DELTA_TIME);
+
+			if (m_tBreathTick.IsFinished())
+			{
+				CreateBreathProjectileAndAddedToScene(vFinalPos, vRotated);
+				m_tBreathTick.Reset();
+			}
+		}
+
+		
 		if (m_tDuration.IsFinished())
 		{
-			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(GetGameObject(), eSceneType));
+			if (!m_bOutroFlag)
+			{
+				GetAnimator()->Play(L"Venom_Breath_Fire_Outro", false);
+				m_bOutroFlag = true;
+			}
+
+			if (GetAnimator()->GetActiveAnimation()->IsFinished())
+			{
+				SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+				GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(GetGameObject(), eSceneType));
+			}
 		}
 	}
+}
+
+void ChimeraBreathFireEffectScript::CreateBreathProjectileAndAddedToScene(const Vec3& vPos, const Vec3& vDir)
+{
+	shared_ptr<ChimeraBreathProjectile> pProjectile =
+		GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<ChimeraBreathProjectile>(L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 30.f, 30.f), MassProperties());
+	
+	pProjectile->SetDirection(DIRECTION::LEFT);
+	pProjectile->GetTransform()->SetLocalPosition(vPos);
+	pProjectile->AddComponent(make_shared<Animator>());
+	pProjectile->AddComponent(make_shared<DebugRenderer>());
+
+	// Venom Projectile
+	{
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VenomProjectile", L"..\\Resources\\Animation\\Chimera\\chimera_venom_breath_projectile.anim");
+		pProjectile->GetAnimator()->AddAnimation(L"VenomProjectile", pAnimation);
+	}
+
+	// Venom Projectile Despawn
+	{
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VenomProjectile_Despawn", L"..\\Resources\\Animation\\Chimera\\chimera_venom_breath_projectile_despawn.anim");
+		pProjectile->GetAnimator()->AddAnimation(L"VenomProjectile_Despawn", pAnimation);
+	}
+
+	pProjectile->GetAnimator()->Play(L"VenomProjectile");
+	pProjectile->Awake();
+
+	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(Conv::Vec3ToPxVec3(vDir * 300.f));
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pProjectile, eSceneType));
 }

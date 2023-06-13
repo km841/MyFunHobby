@@ -23,7 +23,6 @@ void AwakenChimeraEvent::Update()
 void AwakenChimeraEvent::ExecuteEvent()
 {
 	// Alchemist Destroy
-	GET_SINGLE(Clock)->Play();
 	m_pChimera.lock()->Enable();
 	m_pChimera.lock()->AddAnimation("Appear", 0.f, false);
 	m_pChimera.lock()->AddAnimation("Roar_Start", 0.f, false);

@@ -61,7 +61,7 @@ void ChimeraVenomBallScript::LateUpdate()
 void ChimeraVenomBallScript::CreateVenomBallAndAddedToScene()
 {
 	shared_ptr<VenomBallProjectile> pProjectile =
-		GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VenomBallProjectile>(L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
+		GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VenomBallProjectile>(L"Forward", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
 	
 	pProjectile->AddComponent(make_shared<Animator>());
 
@@ -80,7 +80,7 @@ void ChimeraVenomBallScript::CreateVenomBallAndAddedToScene()
 
 	pProjectile->GetAnimator()->Play(L"VenomBall");
 	Vec3 vPos = GetTransform()->GetPhysicalPosition();
-	vPos += Vec3(350.f, 550.f, 0.f);
+	vPos += Vec3(-100.f, 450.f, 0.f);
 	pProjectile->GetTransform()->SetLocalPosition(vPos);
 
 	PxVec3 vDir = PxVec3(-1.f, 1.f, 0.f);

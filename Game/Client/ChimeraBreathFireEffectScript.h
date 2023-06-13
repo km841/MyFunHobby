@@ -11,7 +11,12 @@ public:
     virtual void LateUpdate() override;
 
 private:
+    void CreateBreathProjectileAndAddedToScene(const Vec3& vPos, const Vec3& vDir);
+
+private:
     Timer m_tDuration;
+    Timer m_tBreathTick;
     Vec3 m_vOrigin;
+    bool m_bOutroFlag;
 };
 

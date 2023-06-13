@@ -69,7 +69,7 @@ void ChimeraVenomFallScript::CreateVenomFallAndAddedToScene()
 
 		pProjectile->GetAnimator()->Play(L"VenomFall_Intro", false);
 		Vec3 vPos = GetTransform()->GetPhysicalPosition();
-		vPos += Vec3(-550.f + (350.f * i) + static_cast<float>(RANDOM(100, 300)), 480.f, 0.f);
+		vPos += Vec3(-950.f + (350.f * i) + static_cast<float>(RANDOM(100, 300)), 380.f, 0.f);
 		pProjectile->GetTransform()->SetLocalPosition(vPos);
 
 		pProjectile->Awake();

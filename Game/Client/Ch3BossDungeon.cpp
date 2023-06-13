@@ -43,6 +43,9 @@
 #include "AnimationClearTask.h"
 #include "CameraFixedEvent.h"
 #include "CameraUnfixEvent.h"
+#include "PauseDungeonEvent.h"
+#include "PlayDungeonEvent.h"
+#include "ChangeChimeraRandomStateTask.h"
 
 
 
@@ -93,7 +96,7 @@ void Ch3BossDungeon::Enter()
 	Dungeon::Enter();
 
 	// Player State Change
-	GET_SINGLE(Clock)->Pause();
+
 	GET_SINGLE(EventManager)->AddEvent(make_unique<PlayerChangeStateEvent>(GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer(), PLAYER_STATE::PAUSE_IDLE));
 
 	// 과학자 소환
@@ -141,7 +144,7 @@ void Ch3BossDungeon::Enter()
 	shared_ptr<Chimera> pChimera = nullptr;
 	{
 		pChimera = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<Chimera>(L"Forward", false, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(100.f, 100.f, 1.f), MassProperties(), L"", pMadScientist);
-		pChimera->GetTransform()->SetLocalPosition(Vec3(550.f, 75.f, 100.f));
+		pChimera->GetTransform()->SetLocalPosition(Vec3(1000.f, 225.f, 100.f));
 		pChimera->AddComponent(make_shared<AI>());
 		pChimera->AddComponent(make_shared<ChimeraVenomBallScript>());
 		pChimera->AddComponent(make_shared<ChimeraVenomFallScript>());
@@ -169,13 +172,15 @@ void Ch3BossDungeon::Enter()
 		// Breath Skill
 		shared_ptr<Sequence> pSkill4ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill4Sequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pSkill4EndSequence = make_shared<Sequence>();
 		
 		pRootNode->AddChild(pIdleSequence);
 		pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::IDLE));
 		pIdleSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Idle"));
 		pIdleSequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
+		pIdleSequence->AddChild(make_shared<ChangeChimeraRandomStateTask>(pChimera));
 		// Setting Random State!
-		pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL3_READY));
+		//pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL3_READY));
 
 		pRootNode->AddChild(pSkill1ReadySequence);
 		pSkill1ReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL1_READY));
@@ -240,7 +245,13 @@ void Ch3BossDungeon::Enter()
 		pSkill4Sequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL4));
 		pSkill4Sequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Breath", false));
 		pSkill4Sequence->AddChild(make_shared<TimerCondition>(pChimera, 2.f));
-		pSkill4Sequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::IDLE));
+		pSkill4Sequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::SKILL4_END));
+
+		pRootNode->AddChild(pSkill4EndSequence);
+		pSkill4EndSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::SKILL4_END));
+		pSkill4EndSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Breath_End", false));
+		pSkill4EndSequence->AddChild(make_shared<TimerCondition>(pChimera, 3.f));
+		pSkill4EndSequence->AddChild(make_shared<ChangeMonsterStateTask>(pChimera, MONSTER_STATE::IDLE));
 
 		pChimera->GetAI()->SetBehaviorRootNode(pRootNode);
 
@@ -253,6 +264,7 @@ void Ch3BossDungeon::Enter()
 	shared_ptr<IfAlwaysTrue> pAlwaysTrueCondition = make_shared<IfAlwaysTrue>();
 
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(pAlwaysTrueCondition, PLAYER_STATE::PAUSE_WALK));
+	AddEvent(make_shared<PauseDungeonEvent>(pAlwaysTrueCondition));
 	AddEvent(make_shared<DisablePlayerHUDEvent>(pAlwaysTrueCondition));
 	AddEvent(make_shared<PlayerWalkEvent>(pAlwaysTrueCondition, Vec3(300.f, 0.f, 0.f), 2.f));
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(make_shared<IfFinishedTimer>(2.f), PLAYER_STATE::PAUSE_IDLE));
@@ -260,7 +272,7 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<CameraFixedEvent>(pAlwaysTrueCondition, Vec3(590.f, 355.f, 1.f)));
 	AddEvent(make_shared<ObjectEnableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"발 밑 조심해.", 1.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
 	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"닿기만 해도 치명적인 약품이 한가득이야.", 2.f));
 	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"결국 여기까지 왔구나.", 1.5f));
@@ -298,21 +310,26 @@ void Ch3BossDungeon::Enter()
 	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_First", false));
 	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"마석의 힘을 제대로 사용하면 어떤 일이 벌어지는지.", 1.f));
 	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
-	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Second", false));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"잘 봐.", 1.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
-	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Third", false));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(0.3f)));
+	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Second", false));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"잘 봐.", 1.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
+	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Third", false));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(0.3f)));
 	AddEvent(make_shared<ChangeObjectPosEvent>(pAlwaysTrueCondition, pMadScientist, Vec3(960.f, 265.f, 101.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Dead", false));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
+	
+	// HP Bar- 
+
+	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<AwakenChimeraEvent>(make_shared<IfAlwaysTrue>(), pChimera));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(10.f)));
-	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<EnablePlayerHUDEvent>(pAlwaysTrueCondition));
-	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(make_shared<IfFinishedTimer>(2.f), PLAYER_STATE::IDLE));
-	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pChimera, MONSTER_STATE::IDLE));
+	// Play Event- ok
 
+	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(make_shared<IfFinishedTimer>(2.f), PLAYER_STATE::IDLE));
+	AddEvent(make_shared<PlayDungeonEvent>(pAlwaysTrueCondition));
+	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pChimera, MONSTER_STATE::IDLE));
 	// 이름 띄우고 체력 바 내리기
 }
 

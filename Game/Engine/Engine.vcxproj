@@ -176,6 +176,7 @@
     <ClInclude Include="BehaviorTask.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cemetery.h" />
+    <ClInclude Include="ChangeChimeraRandomStateTask.h" />
     <ClInclude Include="ChangeMonsterStateTask.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
@@ -282,6 +283,7 @@
     <ClCompile Include="BehaviorTask.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cemetery.cpp" />
+    <ClCompile Include="ChangeChimeraRandomStateTask.cpp" />
     <ClCompile Include="ChangeMonsterStateTask.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />

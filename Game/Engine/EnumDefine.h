@@ -214,6 +214,7 @@ enum class INTERFACE_TYPE : uint8
 	DROP_SKUL,
 	DROP_ESSENCE,
 	BOSS_OPENING,
+	BOSS_HP,
 	END,
 };
 
@@ -242,6 +243,7 @@ enum class HUD_TYPE : uint8
 	DROP_SKUL,
 	DROP_ESSENCE,
 	BOSS_OPENING,
+	BOSS_HP,
 	END,
 };
 

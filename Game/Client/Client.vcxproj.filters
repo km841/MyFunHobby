@@ -856,6 +856,18 @@
     <ClInclude Include="ChimeraBreathFireEffectScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script</Filter>
     </ClInclude>
+    <ClInclude Include="ChimeraBreathProjectile.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="ChapterBossHPHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayDungeonEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseDungeonEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1494,6 +1506,18 @@
     </ClCompile>
     <ClCompile Include="ChimeraBreathFireEffectScript.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="ChimeraBreathProjectile.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ChapterBossHPHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseDungeonEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayDungeonEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

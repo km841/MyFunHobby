@@ -151,6 +151,7 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::MONSTER);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::TILE, LAYER_TYPE::FALLING_OBJECT);
+	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER_PROJECTILE, LAYER_TYPE::FALLING_OBJECT);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PARTICLE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::PLAYER_PROJECTILE);
 
@@ -243,6 +244,7 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_ITEM_SECOND));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_SKUL));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BOSS_OPENING));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BOSS_HP));
 
 	//Scene Change Event Object
 	{

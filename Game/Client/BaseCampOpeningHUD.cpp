@@ -92,8 +92,6 @@ void BaseCampOpeningHUD::UpdateAction()
 		m_tUpTimer.Update(WORLD_DELTA_TIME);
 		const Vec3& vMyPos = GetTransform()->GetLocalPosition();
 		GetTransform()->SetLocalPosition(Vec3(vMyPos.x, vMyPos.y + m_fSpeed * WORLD_DELTA_TIME, vMyPos.z));
-
-
 	}
 
 	else if (m_tUpTimer.IsFinished())

@@ -95,7 +95,7 @@ void VenomFall::FinalUpdate()
 void VenomFall::CreateVenomSplashAndAddedToScene()
 {
 	shared_ptr<VenomSplash> pProjectile =
-		GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VenomSplash>(L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 30.f, 30.f), MassProperties());
+		GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VenomSplash>(L"Forward", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 30.f, 30.f), MassProperties());
 
 	pProjectile->AddComponent(make_shared<Animator>());
 	pProjectile->AddComponent(make_shared<DebugRenderer>());
@@ -120,14 +120,9 @@ void VenomFall::CreateVenomSplashAndAddedToScene()
 
 	Vec3 vPos = GetTransform()->GetLocalPosition();
 	vPos.y += 900.f;
-	vPos.z -= 0.5f;
+	vPos.z -= 10.f;
 	pProjectile->GetTransform()->SetLocalPosition(vPos);
-	pProjectile->GetTransform()->SetLocalScale(Vec3(30.f, 30.f, 30.f));
-
-	//pProjectile->GetAnimator()->Play(L"VenomSplash_Intro", false);
-
 	pProjectile->Awake();
-	//pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, -1.f, 0.f) * 00.f);
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pProjectile, eSceneType));
 }

@@ -8,6 +8,7 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "RigidBody.h"
+#include "Transform.h"
 
 VenomSplash::VenomSplash()
 	: GameObject(LAYER_TYPE::MONSTER_PROJECTILE)

@@ -36,6 +36,7 @@
 #include "ClobberHUD.h"
 #include "PlayerClubberShowScript.h"
 #include "BossOpeningHUD.h"
+#include "ChapterBossHPHUD.h"
 
 void InterfaceManager::Init()
 {
@@ -247,7 +248,7 @@ void InterfaceManager::CreateHUD()
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_CLOBBER] = pClobberHUD;
 	}
 
-	// Drop Skul HUD
+	// Boss Opening HUD
 	{
 		shared_ptr<BossOpeningHUD> pBossOpeningHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<BossOpeningHUD>(L"Forward");
 		pBossOpeningHUD->SetFrustum(false);
@@ -255,6 +256,16 @@ void InterfaceManager::CreateHUD()
 
 		m_mInterfaceMap[INTERFACE_TYPE::BOSS_OPENING] = pBossOpeningHUD;
 	}
-	
 
+	// Chapter Boss HP HUD
+	{
+		shared_ptr<ChapterBossHPHUD> pChapterBossHPHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ChapterBossHPHUD>(L"Forward");
+		pChapterBossHPHUD->SetFrustum(false);
+		pChapterBossHPHUD->Disable();
+		pChapterBossHPHUD->GetTransform()->SetLocalScale(Vec3(306.f, 58.f, 1.f));
+
+		m_mInterfaceMap[INTERFACE_TYPE::BOSS_HP] = pChapterBossHPHUD;
+	}
+	
+	
 }

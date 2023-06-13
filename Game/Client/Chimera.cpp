@@ -35,6 +35,7 @@ Chimera::Chimera(shared_ptr<MadScientist> pMadScientist)
 {
 	s_pChimera = this;
 	m_eMonsterState = MONSTER_STATE::RAGE_ATTACK_END;
+	m_eMonsterType = MONSTER_TYPE::NONE_HIT;
 }
 
 Chimera::~Chimera()
@@ -156,6 +157,12 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 	case spine::EventType_End:
 		break;
 	case spine::EventType_Complete:
+	{
+		if ("Breath_End" == szAnimName)
+		{
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
+		}
+	}
 		break;
 	case spine::EventType_Dispose:
 		break;
@@ -221,7 +228,7 @@ void Chimera::CreateRoarAndAddedToScene()
 {
 	shared_ptr<ChimeraRoar> pChimeraRoar = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ChimeraRoar>(L"Forward");
 	pChimeraRoar->GetTransform()->SetParent(GetTransform());
-	pChimeraRoar->GetTransform()->SetLocalPosition(Vec3(250.f, 450.f, 0.f));
+	pChimeraRoar->GetTransform()->SetLocalPosition(Vec3(-200.f, 350.f, 0.f));
 	pChimeraRoar->AddComponent(make_shared<Animator>());
 	// Chimera Roar
 	{
@@ -242,6 +249,7 @@ void Chimera::CreateChimeraSpritesAndAddedToScene()
 		pChimeraSprite->GetTransform()->SetParent(GetTransform());
 		pChimeraSprite->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, -i * 0.1f));
 		pChimeraSprite->GetTransform()->SetLocalScale(Vec3(350.f, 350.f, 1.f));
+		pChimeraSprite->GetTransform()->SetGlobalOffset(Vec2(-800.f, -270.f));
 
 		pChimeraSprite->Awake();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimeraSprite, SCENE_TYPE::DUNGEON));
