@@ -6,7 +6,7 @@ class ChapterBossHPHUD :
     public HUD
 {
 public:
-    ChapterBossHPHUD(shared_ptr<Monster> pBoss);
+    ChapterBossHPHUD();
     virtual ~ChapterBossHPHUD();
 
 public:
@@ -18,11 +18,18 @@ public:
 
     virtual void Action();
 
+    virtual void Enable();
+    virtual void Disable();
+
+    void              SetBoss(shared_ptr<Monster> pMonster) { m_pBoss = pMonster; }
     weak_ptr<Monster> GetBoss() { return m_pBoss; }
     
     void UpdateAction();
 
     void SetStageKind(STAGE_KIND eStageKind);
+
+private:
+    void CreateHPHUDAndAddedToScene();
 
 private:
     STAGE_KIND m_eStageKind;
@@ -31,5 +38,6 @@ private:
     float m_fSpeed;
 
     weak_ptr<Monster> m_pBoss;
+    weak_ptr<HUD> m_pHPHUD;
 };
 

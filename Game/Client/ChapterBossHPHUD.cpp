@@ -7,13 +7,14 @@
 #include "MeshRenderer.h"
 #include "Texture.h"
 #include "Resources.h"
+#include "ObjectFactory.h"
+#include "BossHPScript.h"
 
-ChapterBossHPHUD::ChapterBossHPHUD(shared_ptr<Monster> pBoss)
+ChapterBossHPHUD::ChapterBossHPHUD()
 	:m_eStageKind(STAGE_KIND::END)
 	, m_bAction(false)
 	, m_tDuration(0.5f)
 	, m_fSpeed(300.f)
-	, m_pBoss(pBoss)
 {
 }
 
@@ -56,11 +57,25 @@ void ChapterBossHPHUD::Action()
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
 	GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight, 50.f));
-
+	CreateHPHUDAndAddedToScene();
 	assert(m_eStageKind != STAGE_KIND::END);
 	m_bAction = true;
 	Enable();
 
+}
+
+void ChapterBossHPHUD::Enable()
+{
+	HUD::Enable();
+	if (m_pHPHUD.lock())
+		m_pHPHUD.lock()->Enable();
+}
+
+void ChapterBossHPHUD::Disable()
+{
+	if (m_pHPHUD.lock())
+		m_pHPHUD.lock()->Disable();
+	HUD::Disable();
 }
 
 void ChapterBossHPHUD::UpdateAction()
@@ -105,5 +120,21 @@ void ChapterBossHPHUD::SetStageKind(STAGE_KIND eStageKind)
 		assert(nullptr);
 		break;
 	}
+}
 
+
+
+void ChapterBossHPHUD::CreateHPHUDAndAddedToScene()
+{
+	shared_ptr<HUD> pHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<HUD>(L"MonsterHP", L"..\\Resources\\Texture\\HUD\\HealthBar\\BossHealthBar_SecondPhase.png");
+	pHUD->AddComponent(make_shared<BossHPScript>(m_pBoss.lock()));
+	pHUD->GetTransform()->SetParent(GetTransform());
+	pHUD->GetTransform()->SetLocalPosition(Vec3(0.f, 1.f, -0.5f));
+	pHUD->GetTransform()->SetLocalScale(Vec3(317.f, 10.f, 1.f));
+	
+	pHUD->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pHUD, eSceneType));
+
+	m_pHPHUD = pHUD;
 }

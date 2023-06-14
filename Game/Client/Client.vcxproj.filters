@@ -230,6 +230,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Monster\Chimera\Skill\Script">
       <UniqueIdentifier>{5fcb7435-1b06-407f-9476-1666b9eabc39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD">
+      <UniqueIdentifier>{0cf480cb-bde9-4006-8edc-b2b779d503a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -859,9 +862,6 @@
     <ClInclude Include="ChimeraBreathProjectile.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="ChapterBossHPHUD.h">
-      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
-    </ClInclude>
     <ClInclude Include="PlayDungeonEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
@@ -870,6 +870,12 @@
     </ClInclude>
     <ClInclude Include="EnableChapterBossHPBarEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="ChapterBossHPHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHPScript.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1513,9 +1519,6 @@
     <ClCompile Include="ChimeraBreathProjectile.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\Chimera\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="ChapterBossHPHUD.cpp">
-      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon</Filter>
-    </ClCompile>
     <ClCompile Include="PauseDungeonEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
@@ -1524,6 +1527,12 @@
     </ClCompile>
     <ClCompile Include="EnableChapterBossHPBarEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="ChapterBossHPHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHPScript.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

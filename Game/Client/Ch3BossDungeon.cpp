@@ -323,7 +323,7 @@ void Ch3BossDungeon::Enter()
 	
 	// HP Bar- 
 
-	AddEvent(make_shared<EnableChapterBossHPBarEvent>(pAlwaysTrueCondition, STAGE_KIND::BLACK_LAB));
+	AddEvent(make_shared<EnableChapterBossHPBarEvent>(pAlwaysTrueCondition, STAGE_KIND::BLACK_LAB, pChimera));
 	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<AwakenChimeraEvent>(make_shared<IfAlwaysTrue>(), pChimera));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(10.f)));
