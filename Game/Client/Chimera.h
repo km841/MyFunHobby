@@ -44,6 +44,7 @@ public:
     void                       ClearAnimation() { m_szCurAnimationName = ""; m_pAnimationState->clearTrack(0); }
     void                       DestroyMadScientist();
     void                       DropParticles();
+    void                       BreakFallingObject();
     void                       CreateRoarAndAddedToScene();
     void                       SetCurAnimationName(const string& szAnimName) { m_szCurAnimationName = szAnimName; }
     const string&              GetCurAnimationName() { return m_szCurAnimationName; }

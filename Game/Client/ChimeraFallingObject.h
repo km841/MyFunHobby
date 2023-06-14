@@ -16,6 +16,9 @@ public:
     virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
 
 private:
+    void CreateSmokeEffectAndAddedToScene();
+
+private:
     bool m_bChecked;
     bool m_bTriggerFlag;
 };

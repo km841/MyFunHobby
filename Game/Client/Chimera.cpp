@@ -161,6 +161,8 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 		if ("Breath_End" == szAnimName)
 		{
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
+			s_pChimera->BreakFallingObject();
+			// Breaking
 		}
 	}
 		break;
@@ -222,6 +224,10 @@ void Chimera::DropParticles()
 		pGameObject->Awake();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pGameObject, SCENE_TYPE::DUNGEON));
 	}
+}
+
+void Chimera::BreakFallingObject()
+{
 }
 
 void Chimera::CreateRoarAndAddedToScene()

@@ -12,10 +12,10 @@
 #include "ObjectFactory.h"
 
 ChimeraBreathFireEffectScript::ChimeraBreathFireEffectScript()
-	: m_tDuration(1.5f)
-	, m_vOrigin(Vec3(900.f, 440.f, 99.f))
+	: m_tDuration(2.f)
+	, m_vOrigin(Vec3(950.f, 490.f, 99.f))
 	, m_bOutroFlag(false)
-	, m_tBreathTick(0.05f)
+	, m_tBreathTick(0.075f)
 {
 }
 
@@ -33,7 +33,7 @@ void ChimeraBreathFireEffectScript::LateUpdate()
 	else
 	{
 		m_tDuration.Update(WORLD_DELTA_TIME);
-		float fRadian =  (1.f - m_tDuration.GetProgress()) * XM_PIDIV4 + (XM_PIDIV2 + XM_PIDIV4);
+		float fRadian =  (1.f - m_tDuration.GetProgress()) * XM_PIDIV2 + (XM_PIDIV2 + XM_PIDIV4);
 		Vec3 vRightVector = VEC3_RIGHT_NORMAL;
 		Vec3 vRotated = Vec3(
 			vRightVector.x * cosf(fRadian) + vRightVector.y * sinf(fRadian),
@@ -41,8 +41,8 @@ void ChimeraBreathFireEffectScript::LateUpdate()
 			0.f
 		);
 
-		Vec3 vTarget = Vec3(50.f, 40.f, 0.f);
-		Vec3 vFinalPos = m_vOrigin + vRotated * 150.f + vTarget * m_tDuration.GetProgress();
+		Vec3 vTarget = Vec3(10.f, 2.f, 0.f);
+		Vec3 vFinalPos = m_vOrigin + vRotated * 100.f + vTarget * m_tDuration.GetProgress();
 		GetTransform()->SetLocalPosition(vFinalPos);
 		GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, fRadian + XM_PIDIV4));
 
@@ -104,7 +104,7 @@ void ChimeraBreathFireEffectScript::CreateBreathProjectileAndAddedToScene(const 
 	pProjectile->GetAnimator()->Play(L"VenomProjectile");
 	pProjectile->Awake();
 
-	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(Conv::Vec3ToPxVec3(vDir * 300.f));
+	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(Conv::Vec3ToPxVec3(vDir * 600.f));
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pProjectile, eSceneType));
 }

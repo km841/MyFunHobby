@@ -14,7 +14,7 @@
 
 ChimeraBreathScript::ChimeraBreathScript()
 	: m_bChecked(false)
-	, m_tBreathTick(0.2f)
+	, m_tBreathTick(0.25f)
 {
 }
 
