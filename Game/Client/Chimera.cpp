@@ -24,6 +24,7 @@
 #include "Engine.h"
 #include "ChimeraFallParticlesScript.h"
 #include "Player.h"
+#include "ChimeraFallingObject.h"
 
 Chimera* Chimera::s_pChimera = {};
 
@@ -162,6 +163,12 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 		{
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
 			s_pChimera->BreakFallingObject();
+
+			auto& vFallingObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::FALLING_OBJECT);
+			for (auto& pFallingObject : vFallingObjects)
+			{
+				static_pointer_cast<ChimeraFallingObject>(pFallingObject)->SetDestroy();
+			}
 			// Breaking
 		}
 	}

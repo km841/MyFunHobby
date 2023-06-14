@@ -221,6 +221,7 @@ enum class DUNGEON_EVENT_KIND : uint8
 	CAMERA_UNFIX,
 	PAUSE,
 	PLAY,
+	ENABLE_BOSS_HP_HUD,
 	END,
 };
 

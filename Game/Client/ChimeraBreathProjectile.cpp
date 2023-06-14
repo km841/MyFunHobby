@@ -11,6 +11,7 @@
 #include "CollisionManager.h"
 #include "Transform.h"
 #include "Clock.h"
+#include "Physical.h"
 
 ChimeraBreathProjectile::ChimeraBreathProjectile()
 	: m_bChecked(false)
@@ -43,9 +44,13 @@ void ChimeraBreathProjectile::Update()
 		GetRigidBody()->SetRotationZForDynamic(0.f);
 		GetRigidBody()->SetAngularDamping(PX_MAX_F32);
 		GetRigidBody()->SetLinearDamping(PX_MAX_F32);
-		GetAnimator()->Play(L"VenomProjectile_Despawn", false);
+		GetPhysical()->GetActor<PxRigidDynamic>()->setRigidDynamicLockFlags(
+			PxRigidDynamicLockFlag::eLOCK_LINEAR_Z |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
+			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 
-		
+		GetAnimator()->Play(L"VenomProjectile_Despawn", false);
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		Vec3 vMySize = GetTransform()->GetLocalPosition();

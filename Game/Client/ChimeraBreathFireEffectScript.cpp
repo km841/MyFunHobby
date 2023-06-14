@@ -54,7 +54,7 @@ void ChimeraBreathFireEffectScript::LateUpdate()
 		{
 			m_tBreathTick.Update(WORLD_DELTA_TIME);
 
-			if (m_tBreathTick.IsFinished())
+			if (m_tBreathTick.IsFinished() && !m_tDuration.IsFinished())
 			{
 				CreateBreathProjectileAndAddedToScene(vFinalPos, vRotated);
 				m_tBreathTick.Reset();
@@ -103,6 +103,8 @@ void ChimeraBreathFireEffectScript::CreateBreathProjectileAndAddedToScene(const 
 
 	pProjectile->GetAnimator()->Play(L"VenomProjectile");
 	pProjectile->Awake();
+	pProjectile->GetRigidBody()->SetRotationZForDynamic(XM_PIDIV4);
+	pProjectile->GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, XM_PIDIV4));
 
 	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(Conv::Vec3ToPxVec3(vDir * 600.f));
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

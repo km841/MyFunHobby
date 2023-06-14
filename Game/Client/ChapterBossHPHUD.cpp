@@ -8,11 +8,12 @@
 #include "Texture.h"
 #include "Resources.h"
 
-ChapterBossHPHUD::ChapterBossHPHUD()
+ChapterBossHPHUD::ChapterBossHPHUD(shared_ptr<Monster> pBoss)
 	:m_eStageKind(STAGE_KIND::END)
 	, m_bAction(false)
-	, m_tDuration(1.f)
+	, m_tDuration(0.5f)
 	, m_fSpeed(300.f)
+	, m_pBoss(pBoss)
 {
 }
 
@@ -52,6 +53,10 @@ void ChapterBossHPHUD::FinalUpdate()
 
 void ChapterBossHPHUD::Action()
 {
+	float fWidth = static_cast<float>(g_pEngine->GetWidth());
+	float fHeight = static_cast<float>(g_pEngine->GetHeight());
+	GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight, 50.f));
+
 	assert(m_eStageKind != STAGE_KIND::END);
 	m_bAction = true;
 	Enable();
@@ -66,7 +71,7 @@ void ChapterBossHPHUD::UpdateAction()
 	if (!m_tDuration.IsRunning())
 	{
 		m_tDuration.Start();
-		GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight, 50.f));
+		//GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight, 50.f));
 	}
 
 	else
@@ -74,7 +79,7 @@ void ChapterBossHPHUD::UpdateAction()
 		m_tDuration.Update(WORLD_DELTA_TIME);
 
 		const Vec3& vMyPos = GetTransform()->GetLocalPosition();
-		GetTransform()->SetLocalPosition(Vec3(vMyPos.x, vMyPos.y - m_fSpeed * OBJECT_DELTA_TIME, vMyPos.z));
+		GetTransform()->SetLocalPosition(Vec3(vMyPos.x, vMyPos.y - m_fSpeed * WORLD_DELTA_TIME, vMyPos.z));
 
 		if (m_tDuration.IsFinished())
 		{

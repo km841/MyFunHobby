@@ -15,6 +15,8 @@ ChimeraFallingObject::ChimeraFallingObject()
 	: GameObject(LAYER_TYPE::FALLING_OBJECT)
 	, m_bChecked(false)
 	, m_bTriggerFlag(false)
+	, m_bDestroyed(false)
+	, m_bDestroyedChecked(false)
 {
 }
 
@@ -51,6 +53,18 @@ void ChimeraFallingObject::Update()
 		else
 		{
 			GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
+		}
+	}
+
+	if (m_bDestroyed)
+	{
+		if (!m_bDestroyedChecked)
+		{
+			// Destroy Smoke
+			CreateDestroySmokeAndAddedToScene();
+			m_bDestroyedChecked = true;
+			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
 		}
 	}
 }
@@ -90,15 +104,32 @@ void ChimeraFallingObject::CreateSmokeEffectAndAddedToScene()
 		pEffect->GetAnimator()->AddAnimation(L"LandingSmoke", pAnimation);
 	}
 
-
-	//{
-	//	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DestroySmoke", L"..\\Resources\\Animation\\Chimera\\falling_object_destroy_smoke.anim");
-	//	pProjectile->GetAnimator()->AddAnimation(L"DestroySmoke", pAnimation);
-	//}
-
 	pEffect->GetAnimator()->Play(L"LandingSmoke", false);
 	pEffect->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pEffect, eSceneType));
 
+}
+
+void ChimeraFallingObject::CreateDestroySmokeAndAddedToScene()
+{
+	shared_ptr<AnimationLocalEffect> pEffect =
+		GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<AnimationLocalEffect>(L"Forward");
+
+	Vec3 vPos = GetTransform()->GetPhysicalPosition();
+	vPos.z -= 0.5f;
+	pEffect->GetTransform()->SetLocalPosition(vPos);
+
+	pEffect->AddComponent(make_shared<Animator>());
+
+	// Destroy Smoke
+	{
+		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"DestroySmoke", L"..\\Resources\\Animation\\Chimera\\falling_object_destroy_smoke.anim");
+		pEffect->GetAnimator()->AddAnimation(L"DestroySmoke", pAnimation);
+	}
+
+	pEffect->GetAnimator()->Play(L"DestroySmoke", false);
+	pEffect->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pEffect, eSceneType));
 }

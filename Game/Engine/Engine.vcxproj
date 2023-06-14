@@ -187,6 +187,7 @@
     <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="DelayTask.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="EnableChapterBossHPBarTask.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
     <ClInclude Include="EnumDefine.h" />
@@ -294,6 +295,7 @@
     <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="DelayTask.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="EnableChapterBossHPBarTask.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EnginePch.cpp" />
     <ClCompile Include="Event.cpp" />

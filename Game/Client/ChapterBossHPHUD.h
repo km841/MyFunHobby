@@ -1,10 +1,12 @@
 #pragma once
 #include "HUD.h"
+
+class Monster;
 class ChapterBossHPHUD :
     public HUD
 {
 public:
-    ChapterBossHPHUD();
+    ChapterBossHPHUD(shared_ptr<Monster> pBoss);
     virtual ~ChapterBossHPHUD();
 
 public:
@@ -15,6 +17,8 @@ public:
     virtual void FinalUpdate();
 
     virtual void Action();
+
+    weak_ptr<Monster> GetBoss() { return m_pBoss; }
     
     void UpdateAction();
 
@@ -25,5 +29,7 @@ private:
     bool m_bAction;
     Timer m_tDuration;
     float m_fSpeed;
+
+    weak_ptr<Monster> m_pBoss;
 };
 

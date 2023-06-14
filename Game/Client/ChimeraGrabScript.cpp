@@ -61,7 +61,7 @@ void ChimeraGrabScript::CreateWarningSignAndAddedToScene()
 
 	Vec3 vPos = GetTransform()->GetPhysicalPosition();
 	vPos.x -= 400.f;
-	vPos.z -= 0.5f;
+	vPos.z -= 3.5f;
 
 	pLocalEffect->AddComponent(make_shared<Animator>());
 	pLocalEffect->GetTransform()->SetLocalPosition(vPos);
@@ -88,12 +88,12 @@ void ChimeraGrabScript::CreateFallingObjectAndAddedToScene()
 	for (int32 i = 0; i < 2; ++i)
 	{
 		shared_ptr<ChimeraFallingObject> pFallingObject = 
-			GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<ChimeraFallingObject>(L"Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 70.f + (i * 50.f), 30.f), MassProperties(), szPathList[i]);
+			GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<ChimeraFallingObject>(L"Deferred", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 70.f, 30.f), MassProperties(), szPathList[i]);
 
 		Vec3 vPos = GetTransform()->GetPhysicalPosition();
 		vPos.x += i * 350.f - 850.f;
 		vPos.y += 650.f;
-		vPos.z += 0.5f;
+		vPos.z += 3.5f;
 		pFallingObject->GetTransform()->SetLocalPosition(vPos);
 
 		pFallingObject->GetRigidBody()->SetLinearVelocityForDynamic(AXIS::Y, -300.f);

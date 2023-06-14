@@ -262,7 +262,7 @@ void InterfaceManager::CreateHUD()
 		shared_ptr<ChapterBossHPHUD> pChapterBossHPHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ChapterBossHPHUD>(L"Forward");
 		pChapterBossHPHUD->SetFrustum(false);
 		pChapterBossHPHUD->Disable();
-		pChapterBossHPHUD->GetTransform()->SetLocalScale(Vec3(306.f, 58.f, 1.f));
+		pChapterBossHPHUD->GetTransform()->SetLocalScale(Vec3(356.f, 68.f, 1.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::BOSS_HP] = pChapterBossHPHUD;
 	}

@@ -15,11 +15,17 @@ public:
 
     virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject) override;
 
+    void SetDestroy() { m_bDestroyed = true; }
+
 private:
     void CreateSmokeEffectAndAddedToScene();
+    void CreateDestroySmokeAndAddedToScene();
+    
 
 private:
     bool m_bChecked;
     bool m_bTriggerFlag;
+    bool m_bDestroyed;
+    bool m_bDestroyedChecked;
 };
 

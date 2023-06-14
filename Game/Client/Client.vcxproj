@@ -209,6 +209,7 @@
     <ClInclude Include="ChimeraFallParticlesScript.h" />
     <ClInclude Include="ChimeraGrabScript.h" />
     <ClInclude Include="ChimeraRoar.h" />
+    <ClInclude Include="EnableChapterBossHPBarEvent.h" />
     <ClInclude Include="PauseDungeonEvent.h" />
     <ClInclude Include="PlayDungeonEvent.h" />
     <ClInclude Include="VenomFall.h" />
@@ -435,6 +436,7 @@
     <ClCompile Include="ChimeraFallParticlesScript.cpp" />
     <ClCompile Include="ChimeraGrabScript.cpp" />
     <ClCompile Include="ChimeraRoar.cpp" />
+    <ClCompile Include="EnableChapterBossHPBarEvent.cpp" />
     <ClCompile Include="PauseDungeonEvent.cpp" />
     <ClCompile Include="PlayDungeonEvent.cpp" />
     <ClCompile Include="VenomFall.cpp" />
