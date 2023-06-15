@@ -48,6 +48,7 @@
 #include "EnableChapterBossHPBarEvent.h"
 #include "ChangeChimeraRandomStateTask.h"
 #include "EnableChapterBossHPBarTask.h"
+#include "RemoveToSceneTask.h"
 
 
 
@@ -175,7 +176,16 @@ void Ch3BossDungeon::Enter()
 		shared_ptr<Sequence> pSkill4ReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill4Sequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pSkill4EndSequence = make_shared<Sequence>();
+
+		// Dead
+		shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
 		
+		pRootNode->AddChild(pDeadSequence);
+		pDeadSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::DEAD));
+		pDeadSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Dead", false));
+		pDeadSequence->AddChild(make_shared<TimerCondition>(pChimera, 5.f));
+		pDeadSequence->AddChild(make_shared<RemoveToSceneTask>(pChimera));
+
 		pRootNode->AddChild(pIdleSequence);
 		pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pChimera, MONSTER_STATE::IDLE));
 		pIdleSequence->AddChild(make_shared<RunSpineAnimateTask>(pChimera, "Idle"));

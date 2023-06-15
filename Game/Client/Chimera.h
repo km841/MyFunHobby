@@ -34,6 +34,7 @@ public:
     virtual void Enable();
     virtual void Disable();
 
+    virtual void ActivateDeadEvent(const Vec3& vDir) { }
 public:
     static void  Listener(spine::AnimationState* state, 
         spine::EventType type, spine::TrackEntry* entry, spine::Event* event);
@@ -54,6 +55,8 @@ private:
     void                       CreateSpineData();
     void                       SpineDataUpdate();
     void                       ChimeraSpritesUpdate();
+    void                       ClearBoss();
+    void                       SetDeathFlag() { m_bDeathFlag = true; }
 
     
     std::vector<Vertex> CalculateVertexData(spine::Slot* pSlot, spine::RegionAttachment* pRegionAttachment);
@@ -68,5 +71,7 @@ private:
     std::vector<weak_ptr<ChimeraSprite>> m_vChimeraSprites;
 
     weak_ptr<MadScientist> m_pMadScientist;
+
+    bool m_bDeathFlag;
 };
 

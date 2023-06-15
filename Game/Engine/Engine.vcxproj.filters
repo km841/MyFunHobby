@@ -319,6 +319,9 @@
     <ClInclude Include="EnableChapterBossHPBarTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="RemoveToSceneTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -625,6 +628,9 @@
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
     <ClCompile Include="EnableChapterBossHPBarTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoveToSceneTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>

@@ -33,6 +33,7 @@ Chimera::Chimera(shared_ptr<MadScientist> pMadScientist)
 	, m_pAnimationState(nullptr)
 	, m_pSpineResource(nullptr)
 	, m_pMadScientist(pMadScientist)
+	, m_bDeathFlag(false)
 {
 	s_pChimera = this;
 	m_eMonsterState = MONSTER_STATE::RAGE_ATTACK_END;
@@ -62,8 +63,12 @@ void Chimera::Start()
 void Chimera::Update()
 {
 	GameObject::Update();
-	SpineDataUpdate();
-
+	if (!m_bDeathFlag)
+		SpineDataUpdate();
+	
+	else
+		ClearBoss();
+	
 }
 
 void Chimera::LateUpdate()
@@ -90,8 +95,14 @@ void Chimera::Destroy()
 		delete m_pAnimationState;
 		m_pAnimationState = nullptr;
 	}
+	
+	for (int32 i = 0; i < m_vChimeraSprites.size(); ++i)
+	{
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_vChimeraSprites[i].lock(), SCENE_TYPE::DUNGEON));
+	}
 
 	m_vChimeraSprites.clear();
+	
 }
 
 void Chimera::Enable()
@@ -170,6 +181,12 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 				static_pointer_cast<ChimeraFallingObject>(pFallingObject)->SetDestroy();
 			}
 			// Breaking
+		}
+
+		if ("Dead" == szAnimName)
+		{
+			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
+			s_pChimera->SetDeathFlag();
 		}
 	}
 		break;
@@ -290,9 +307,12 @@ void Chimera::CreateSpineData()
 
 void Chimera::SpineDataUpdate()
 {
+
+
 	m_pAnimationState->update(WORLD_DELTA_TIME);
 	m_pAnimationState->apply(*m_pSkeleton);
 	m_pSkeleton->updateWorldTransform();
+	
 }
 
 void Chimera::ChimeraSpritesUpdate()
@@ -318,6 +338,13 @@ void Chimera::ChimeraSpritesUpdate()
 			m_vChimeraSprites[i].lock()->GetMeshRenderer()->SetMesh(pMesh);
 		}
 	}
+}
+
+void Chimera::ClearBoss()
+{
+	Destroy();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), SCENE_TYPE::DUNGEON));
+	
 }
 
 std::vector<Vertex> Chimera::CalculateVertexData(spine::Slot* pSlot, spine::RegionAttachment* pRegionAttachment)

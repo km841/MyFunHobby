@@ -9,6 +9,8 @@
 #include "Resources.h"
 #include "ObjectFactory.h"
 #include "BossHPScript.h"
+#include "EventManager.h"
+#include "ObjectRemoveToSceneEvent.h"
 
 ChapterBossHPHUD::ChapterBossHPHUD()
 	:m_eStageKind(STAGE_KIND::END)
@@ -39,7 +41,18 @@ void ChapterBossHPHUD::Update()
 	if (m_bAction)
 	{
 		UpdateAction();
+
+		if (!m_pBoss.lock()->GetStatus()->IsAlive())
+		{
+			if (m_pHPHUD.lock())
+			{
+				
+				m_bAction = false;
+			}
+		}
 	}
+
+
 }
 
 void ChapterBossHPHUD::LateUpdate()

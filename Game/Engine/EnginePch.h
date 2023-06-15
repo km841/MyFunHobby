@@ -324,8 +324,8 @@ struct Status
 
 	void BossMonsterDefaultSetting()
 	{
-		iMaxHP = 1000;
-		iCurHP = 1000;
+		iMaxHP = 100;
+		iCurHP = 100;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
