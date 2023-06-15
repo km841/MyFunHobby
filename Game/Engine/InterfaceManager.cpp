@@ -44,6 +44,14 @@ void InterfaceManager::Init()
 	CreateHUD();
 }
 
+void InterfaceManager::Destroy()
+{
+	for (auto& pInterface : m_mInterfaceMap)
+	{
+		pInterface.second->Destroy();
+	}
+}
+
 shared_ptr<Interface> InterfaceManager::Get(INTERFACE_TYPE eInterfaceType)
 {
 	auto iter = m_mInterfaceMap.find(eInterfaceType);

@@ -7,6 +7,7 @@ class InterfaceManager
 	DECLARE_SINGLE(InterfaceManager);
 public:
 	void Init();
+	void Destroy();
 
 	shared_ptr<Interface> Get(INTERFACE_TYPE eInterfaceType);
 	shared_ptr<UI> Get(UI_TYPE eUIType);

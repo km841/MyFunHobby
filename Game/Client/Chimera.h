@@ -57,6 +57,7 @@ private:
     void                       ChimeraSpritesUpdate();
     void                       ClearBoss();
     void                       SetDeathFlag() { m_bDeathFlag = true; }
+    void                       CreateWarningSignAndAddedToScene();
 
     
     std::vector<Vertex> CalculateVertexData(spine::Slot* pSlot, spine::RegionAttachment* pRegionAttachment);

@@ -66,6 +66,230 @@
 #include "MonsterHitShaderScript.h"
 
 
+void ObjectFactory::Init()
+{
+	CreateItemInfo();
+}
+
+void ObjectFactory::CreateItemInfo()
+{
+	// Forbidden Sword
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::FORBIDDEN_SWORD;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword_Vignette", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png");
+
+		itemInfo.eGrade = GRADE::UNIQUE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"봉인된 검";
+		itemInfo.szComment = L"강력한 힘으로 억제되어 있는 검. 미세한 떨림이 느껴진다.";
+		itemInfo.szExplanation = L"물리공격력이 15% 증가합니다.\n10명의 적 처치 시 이 아이템은 '마검: 키리온'으로 변합니다";
+		m_mItemInfoMap[ITEM_KIND::FORBIDDEN_SWORD] = itemInfo;
+	}
+
+	// Kirion
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::EVIL_SWORD_KIRION;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion_Vignette", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png");
+
+		itemInfo.eGrade = GRADE::LEGENDARY;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"마검: 키리온";
+		itemInfo.szComment = L"생명력을 흡수하는 저주받은 마검, 피가 흐르는 이는 절대로 지닐 수 없다.";
+		itemInfo.szExplanation = L"물리공격력이 60% 증가합니다.\n기본공격 및 대쉬 시 참격이 발생하여 물리데미지를 입힙니다.";
+		m_mItemInfoMap[ITEM_KIND::EVIL_SWORD_KIRION] = itemInfo;
+	}
+
+	// Jennys Chain Sickle
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::JENNYS_CHAIN_SICKLE;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"JennysChainSickle_Vignette", L"..\\Resources\\Texture\\Item\\JennysChainSickle\\Image_JennysChainSickle_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"JennysChainSickle", L"..\\Resources\\Texture\\Item\\JennysChainSickle\\Image_JennysChainSickle.png");
+
+		itemInfo.eGrade = GRADE::RARE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"제니의 사슬낫";
+		itemInfo.szComment = L"처음 뵙겠어요 오라버니. 하지만 여기까지에요.";
+		itemInfo.szExplanation = L"공중에서 기본공격 시 사슬낫을 휘둘러 물리데미지를 입힙니다.";
+		m_mItemInfoMap[ITEM_KIND::JENNYS_CHAIN_SICKLE] = itemInfo;
+	}
+
+	// Invisible Knife
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::INVISIBLE_KNIFE;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"InvisibleKnife_Vignette", L"..\\Resources\\Texture\\Item\\InvisibleKnife\\Image_InvisibleKnife_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"InvisibleKnife", L"..\\Resources\\Texture\\Item\\InvisibleKnife\\Image_InvisibleKnife.png");
+
+		itemInfo.eGrade = GRADE::RARE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"보이지 않는 검";
+		itemInfo.szComment = L"날이 보이지 않는 검. 누군가 찔리면 영혼이 다친다고 한다.";
+		itemInfo.szExplanation = L"치명타 시 보이지 않는 검으로 찔러 추가 마법데미지를 입힙니다.\n치명타 확률이 10 % 증가합니다.";
+		m_mItemInfoMap[ITEM_KIND::INVISIBLE_KNIFE] = itemInfo;
+	}
+
+	// Sword Of Sun
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::SWORD_OF_SUN;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"SwordOfSun_Vignette", L"..\\Resources\\Texture\\Item\\SwordOfSun\\Image_SwordOfSun_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"SwordOfSun", L"..\\Resources\\Texture\\Item\\SwordOfSun\\Image_SwordOfSun.png");
+
+		itemInfo.eGrade = GRADE::RARE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"태양의 검";
+		itemInfo.szComment = L"무언가를 그리워하는 듯한, 태양의 문양이 새겨진 검.";
+		itemInfo.szExplanation = L"물리공격력이 40% 증가합니다.";
+		m_mItemInfoMap[ITEM_KIND::SWORD_OF_SUN] = itemInfo;
+	}
+
+	// Ring Of Moon
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::RING_OF_MOON;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"RingOfMoon_Vignette", L"..\\Resources\\Texture\\Item\\RingOfMoon\\Image_RingOfMoon_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"RingOfMoon", L"..\\Resources\\Texture\\Item\\RingOfMoon\\Image_RingOfMoon.png");
+
+		itemInfo.eGrade = GRADE::RARE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"달의 반지";
+		itemInfo.szComment = L"누군가를 기다리는 듯한, 달의 문양이 새겨진 반지.";
+		itemInfo.szExplanation = L"마법공격력이 40% 증가합니다.";
+		m_mItemInfoMap[ITEM_KIND::RING_OF_MOON] = itemInfo;
+	}
+
+	// Bone Of Mana
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::BONE_OF_MANA;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"BoneOfMana_Vignette", L"..\\Resources\\Texture\\Item\\BoneOfMana\\Image_BoneOfMana_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"BoneOfMana", L"..\\Resources\\Texture\\Item\\BoneOfMana\\Image_BoneOfMana.png");
+
+		itemInfo.eGrade = GRADE::UNIQUE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"마나의 뼈";
+		itemInfo.szComment = L"대체 어떤 부유한 스켈레톤이 이런걸 만들어서 쓸까?";
+		itemInfo.szExplanation = L"스킬 사용 시 자신을 감싸는 마나 폭풍을 일으켜 마법데미지를 입힙니다.";
+		m_mItemInfoMap[ITEM_KIND::BONE_OF_MANA] = itemInfo;
+	}
+
+	// GunpowderSword
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::GUNPOWDER_SWORD;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"GunpowderSword_Vignette", L"..\\Resources\\Texture\\Item\\GunpowderSword\\Image_GunpowderSword_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"GunpowderSword", L"..\\Resources\\Texture\\Item\\GunpowderSword\\Image_GunpowderSword.png");
+
+		itemInfo.eGrade = GRADE::UNIQUE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"화약검";
+		itemInfo.szComment = L"\"이걸 살 때만 해도 분명히 휘두르기만 하면 빵빵 터진다고 했다고!\"- 모험가 칼리반";
+		itemInfo.szExplanation = L"치명타 시 폭발이 일어나 물리데미지를 입힙니다.";
+		m_mItemInfoMap[ITEM_KIND::GUNPOWDER_SWORD] = itemInfo;
+	}
+
+	// Thief
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::THIEFS_BLACK_IRON_DAGGERS;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ThiefsBlackIronDaggers_Vignette", L"..\\Resources\\Texture\\Item\\ThiefsBlackIronDaggers\\Image_ThiefsBlackIronDaggers_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"ThiefsBlackIronDaggers", L"..\\Resources\\Texture\\Item\\ThiefsBlackIronDaggers\\Image_ThiefsBlackIronDaggers.png");
+
+		itemInfo.eGrade = GRADE::UNIQUE;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"도적의 흑철단검";
+		itemInfo.szComment = L"빛의 흡수력이 뛰어난 흑철로 만들어 어둠 속에서는 잘 보이지 않는다.";
+		itemInfo.szExplanation = L"적을 공격할 때마다 2초간 치명타 확률이 2% 증가합니다.\n이 효과는 20회까지 중첩됩니다.";
+		m_mItemInfoMap[ITEM_KIND::THIEFS_BLACK_IRON_DAGGERS] = itemInfo;
+	}
+
+	// Voodoo Doll
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::VOODOO_DOLL;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"VoodooDoll_Vignette", L"..\\Resources\\Texture\\Item\\VoodooDoll\\Image_VoodooDoll_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"VoodooDoll", L"..\\Resources\\Texture\\Item\\VoodooDoll\\Image_VoodooDoll.png");
+
+		itemInfo.eGrade = GRADE::LEGENDARY;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"부두 인형";
+		itemInfo.szComment = L"저주받은 자여, 그대는 죽어도 죽지 못해 영원토록 구천을 떠돌게 될 것이다.";
+		itemInfo.szExplanation = L"죽음에 이르는 데미지를 입을 시 40의 체력을 회복하고 죽음을 극복하며 부두 인형이 찢어집니다.";
+		m_mItemInfoMap[ITEM_KIND::VOODOO_DOLL] = itemInfo;
+	}
+
+	// Raven Lords Feather
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::RAVEN_LORDS_FEATHER;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"RavenLordsFeather_Vignette", L"..\\Resources\\Texture\\Item\\RavenLordsFeather\\Image_RavenLordsFeather_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"RavenLordsFeather", L"..\\Resources\\Texture\\Item\\RavenLordsFeather\\Image_RavenLordsFeather.png");
+
+		itemInfo.eGrade = GRADE::LEGENDARY;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"까마귀 군주의 깃털";
+		itemInfo.szComment = L"두 세계 간 원리 원칙과 존재의 밀도 차이가 흡입력을 만들어 낸다.";
+		itemInfo.szExplanation = L"교대 시 주변 적들에게 마법데미지를 입히고 소용돌이의 중심으로 끌어당깁니다.";
+		m_mItemInfoMap[ITEM_KIND::RAVEN_LORDS_FEATHER] = itemInfo;
+	}
+
+	// Bright Dawn
+	{
+		ItemInfo itemInfo = {};
+		itemInfo.eItemKind = ITEM_KIND::BRIGHT_DAWN;
+		itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"BrightDawn_Vignette", L"..\\Resources\\Texture\\Item\\BrightDawn\\Image_BrightDawn_Vignette.png");
+		itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"BrightDawn", L"..\\Resources\\Texture\\Item\\BrightDawn\\Image_BrightDawn.png");
+
+		itemInfo.eGrade = GRADE::LEGENDARY;
+		itemInfo.pFirstEngrave = make_shared<Arms>();
+		itemInfo.pSecondEngrave = make_shared<Rapidity>();
+
+		itemInfo.szName = L"찬란한 여명";
+		itemInfo.szComment = L"여명이 밝아오니, 예정 된 승리를 기다리리라";
+		itemInfo.szExplanation = L"물리공격력 및 마법공격력이 80% 증가합니다.\n적 공격 시 여명의 빛이 일어나 물리와 마법 중 더 높은 공격력에 따라 주변 적에게 데미지를 입힙니다.(쿨타임 : 50초)";
+		m_mItemInfoMap[ITEM_KIND::BRIGHT_DAWN] = itemInfo;
+	}
+}
+
+const ItemInfo& ObjectFactory::GetItemInfo(ITEM_KIND eItemKind)
+{
+	auto iter = m_mItemInfoMap.find(eItemKind);
+	assert(iter != m_mItemInfoMap.end());
+	return iter->second;
+}
+
+void ObjectFactory::Destroy()
+{
+	m_mItemInfoMap.clear();
+}
+
 void ObjectFactory::CreateMonsterAndAddedScene(MONSTER_KIND eMonsterKind, const Vec3& vMonsterPos)
 {
 	shared_ptr<Monster> pMonster = nullptr;
@@ -778,237 +1002,72 @@ shared_ptr<Item> ObjectFactory::CreateItem(ITEM_KIND eItemKind)
 
 shared_ptr<Item> ObjectFactory::CreateForbiddenSword()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::FORBIDDEN_SWORD;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword_Vignette", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"ForbiddenSword", L"..\\Resources\\Texture\\Item\\ForbiddenSword\\Image_ForbiddenSword.png");
-	
-	itemInfo.eGrade = GRADE::UNIQUE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-	
-	itemInfo.szName = L"봉인된 검";
-	itemInfo.szComment = L"강력한 힘으로 억제되어 있는 검. 미세한 떨림이 느껴진다.";
-	itemInfo.szExplanation = L"물리공격력이 15% 증가합니다.\n10명의 적 처치 시 이 아이템은 '마검: 키리온'으로 변합니다";
-
-	shared_ptr<Item> pForbiddenSword = make_shared<ForbiddenSword>(itemInfo);
-
+	shared_ptr<Item> pForbiddenSword = make_shared<ForbiddenSword>(GetItemInfo(ITEM_KIND::FORBIDDEN_SWORD));
 	return pForbiddenSword;
 }
-
 shared_ptr<Item> ObjectFactory::CreateEvilSwordKirion()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::EVIL_SWORD_KIRION;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion_Vignette", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"EvilSwordKirion", L"..\\Resources\\Texture\\Item\\EvilSwordKirion\\Image_EvilSwordKirion.png");
-	
-	itemInfo.eGrade = GRADE::LEGENDARY;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"마검: 키리온";
-	itemInfo.szComment = L"생명력을 흡수하는 저주받은 마검, 피가 흐르는 이는 절대로 지닐 수 없다.";
-	itemInfo.szExplanation = L"물리공격력이 60% 증가합니다.\n기본공격 및 대쉬 시 참격이 발생하여 물리데미지를 입힙니다.";
-
-	shared_ptr<Item> pDemonSwordKirion = make_shared<EvilSwordKirion>(itemInfo);
-
+	shared_ptr<Item> pDemonSwordKirion = make_shared<EvilSwordKirion>(GetItemInfo(ITEM_KIND::EVIL_SWORD_KIRION));
 	return pDemonSwordKirion;
 }
 
 shared_ptr<Item> ObjectFactory::CreateJennysChainSickle()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::JENNYS_CHAIN_SICKLE;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"JennysChainSickle_Vignette", L"..\\Resources\\Texture\\Item\\JennysChainSickle\\Image_JennysChainSickle_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"JennysChainSickle", L"..\\Resources\\Texture\\Item\\JennysChainSickle\\Image_JennysChainSickle.png");
-
-	itemInfo.eGrade = GRADE::RARE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"제니의 사슬낫";
-	itemInfo.szComment = L"처음 뵙겠어요 오라버니. 하지만 여기까지에요.";
-	itemInfo.szExplanation = L"공중에서 기본공격 시 사슬낫을 휘둘러 물리데미지를 입힙니다.";
-
-	shared_ptr<Item> pJennysChainSickle = make_shared<JennysChainSickle>(itemInfo);
-
+	shared_ptr<Item> pJennysChainSickle = make_shared<JennysChainSickle>(GetItemInfo(ITEM_KIND::JENNYS_CHAIN_SICKLE));
 	return pJennysChainSickle;
 }
 
 shared_ptr<Item> ObjectFactory::CreateInvisibleKnife()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::INVISIBLE_KNIFE;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"InvisibleKnife_Vignette", L"..\\Resources\\Texture\\Item\\InvisibleKnife\\Image_InvisibleKnife_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"InvisibleKnife", L"..\\Resources\\Texture\\Item\\InvisibleKnife\\Image_InvisibleKnife.png");
-
-	itemInfo.eGrade = GRADE::RARE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"보이지 않는 검";
-	itemInfo.szComment = L"날이 보이지 않는 검. 누군가 찔리면 영혼이 다친다고 한다.";
-	itemInfo.szExplanation = L"치명타 시 보이지 않는 검으로 찔러 추가 마법데미지를 입힙니다.\n치명타 확률이 10 % 증가합니다.";
-
-	shared_ptr<Item> pInvisibleKnife = make_shared<InvisibleKnife>(itemInfo);
-
+	shared_ptr<Item> pInvisibleKnife = make_shared<InvisibleKnife>(GetItemInfo(ITEM_KIND::INVISIBLE_KNIFE));
 	return pInvisibleKnife;
 }
 
 shared_ptr<Item> ObjectFactory::CreateRingOfMoon()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::RING_OF_MOON;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"RingOfMoon_Vignette", L"..\\Resources\\Texture\\Item\\RingOfMoon\\Image_RingOfMoon_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"RingOfMoon", L"..\\Resources\\Texture\\Item\\RingOfMoon\\Image_RingOfMoon.png");
-
-	itemInfo.eGrade = GRADE::RARE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"달의 반지";
-	itemInfo.szComment = L"누군가를 기다리는 듯한, 달의 문양이 새겨진 반지.";
-	itemInfo.szExplanation = L"마법공격력이 40% 증가합니다.";
-
-	shared_ptr<Item> pRingOfMoon = make_shared<RingOfMoon>(itemInfo);
-
+	shared_ptr<Item> pRingOfMoon = make_shared<RingOfMoon>(GetItemInfo(ITEM_KIND::RING_OF_MOON));
 	return pRingOfMoon;
 }
 
 shared_ptr<Item> ObjectFactory::CreateSwordOfSun()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::SWORD_OF_SUN;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"SwordOfSun_Vignette", L"..\\Resources\\Texture\\Item\\SwordOfSun\\Image_SwordOfSun_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"SwordOfSun", L"..\\Resources\\Texture\\Item\\SwordOfSun\\Image_SwordOfSun.png");
-
-	itemInfo.eGrade = GRADE::RARE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"태양의 검";
-	itemInfo.szComment = L"무언가를 그리워하는 듯한, 태양의 문양이 새겨진 검.";
-	itemInfo.szExplanation = L"물리공격력이 40% 증가합니다.";
-
-	shared_ptr<Item> pSwordOfSun = make_shared<SwordOfSun>(itemInfo);
-
+	shared_ptr<Item> pSwordOfSun = make_shared<SwordOfSun>(GetItemInfo(ITEM_KIND::SWORD_OF_SUN));
 	return pSwordOfSun;
 }
 
 shared_ptr<Item> ObjectFactory::CreateBoneOfMana()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::BONE_OF_MANA;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"BoneOfMana_Vignette", L"..\\Resources\\Texture\\Item\\BoneOfMana\\Image_BoneOfMana_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"BoneOfMana", L"..\\Resources\\Texture\\Item\\BoneOfMana\\Image_BoneOfMana.png");
-
-	itemInfo.eGrade = GRADE::UNIQUE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"마나의 뼈";
-	itemInfo.szComment = L"대체 어떤 부유한 스켈레톤이 이런걸 만들어서 쓸까?";
-	itemInfo.szExplanation = L"스킬 사용 시 자신을 감싸는 마나 폭풍을 일으켜 마법데미지를 입힙니다.";
-
-	shared_ptr<Item> pBoneOfMana = make_shared<BoneOfMana>(itemInfo);
-
+	shared_ptr<Item> pBoneOfMana = make_shared<BoneOfMana>(GetItemInfo(ITEM_KIND::BONE_OF_MANA));
 	return pBoneOfMana;
 }
 
 shared_ptr<Item> ObjectFactory::CreateThiefsBlackIronDaggers()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::THIEFS_BLACK_IRON_DAGGERS;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"ThiefsBlackIronDaggers_Vignette", L"..\\Resources\\Texture\\Item\\ThiefsBlackIronDaggers\\Image_ThiefsBlackIronDaggers_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"ThiefsBlackIronDaggers", L"..\\Resources\\Texture\\Item\\ThiefsBlackIronDaggers\\Image_ThiefsBlackIronDaggers.png");
-
-	itemInfo.eGrade = GRADE::UNIQUE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"도적의 흑철단검";
-	itemInfo.szComment = L"빛의 흡수력이 뛰어난 흑철로 만들어 어둠 속에서는 잘 보이지 않는다.";
-	itemInfo.szExplanation = L"적을 공격할 때마다 2초간 치명타 확률이 2% 증가합니다.\n이 효과는 20회까지 중첩됩니다.";
-
-	shared_ptr<Item> pThiefsBlackIronDaggers = make_shared<ThiefsBlackIronDaggers>(itemInfo);
-
+	shared_ptr<Item> pThiefsBlackIronDaggers = make_shared<ThiefsBlackIronDaggers>(GetItemInfo(ITEM_KIND::THIEFS_BLACK_IRON_DAGGERS));
 	return pThiefsBlackIronDaggers;
 }
 
 shared_ptr<Item> ObjectFactory::CreateGunpowderSword()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::GUNPOWDER_SWORD;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"GunpowderSword_Vignette", L"..\\Resources\\Texture\\Item\\GunpowderSword\\Image_GunpowderSword_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"GunpowderSword", L"..\\Resources\\Texture\\Item\\GunpowderSword\\Image_GunpowderSword.png");
-
-	itemInfo.eGrade = GRADE::UNIQUE;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"화약검";
-	itemInfo.szComment = L"\"이걸 살 때만 해도 분명히 휘두르기만 하면 빵빵 터진다고 했다고!\"- 모험가 칼리반";
-	itemInfo.szExplanation = L"치명타 시 폭발이 일어나 물리데미지를 입힙니다.";
-
-	shared_ptr<Item> pGunpowderSword = make_shared<GunpowderSword>(itemInfo);
+	shared_ptr<Item> pGunpowderSword = make_shared<GunpowderSword>(GetItemInfo(ITEM_KIND::GUNPOWDER_SWORD));
 	return pGunpowderSword;
 }
 
 shared_ptr<Item> ObjectFactory::CreateRavenLordsFeather()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::RAVEN_LORDS_FEATHER;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"RavenLordsFeather_Vignette", L"..\\Resources\\Texture\\Item\\RavenLordsFeather\\Image_RavenLordsFeather_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"RavenLordsFeather", L"..\\Resources\\Texture\\Item\\RavenLordsFeather\\Image_RavenLordsFeather.png");
-
-	itemInfo.eGrade = GRADE::LEGENDARY;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"까마귀 군주의 깃털";
-	itemInfo.szComment = L"두 세계 간 원리 원칙과 존재의 밀도 차이가 흡입력을 만들어 낸다.";
-	itemInfo.szExplanation = L"교대 시 주변 적들에게 마법데미지를 입히고 소용돌이의 중심으로 끌어당깁니다.";
-
-	shared_ptr<Item> pRavenLordsFeather = make_shared<RavenLordsFeather>(itemInfo);
+	shared_ptr<Item> pRavenLordsFeather = make_shared<RavenLordsFeather>(GetItemInfo(ITEM_KIND::RAVEN_LORDS_FEATHER));
 	return pRavenLordsFeather;
 }
 
 shared_ptr<Item> ObjectFactory::CreateVoodooDoll()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::VOODOO_DOLL;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"VoodooDoll_Vignette", L"..\\Resources\\Texture\\Item\\VoodooDoll\\Image_VoodooDoll_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"VoodooDoll", L"..\\Resources\\Texture\\Item\\VoodooDoll\\Image_VoodooDoll.png");
-
-	itemInfo.eGrade = GRADE::LEGENDARY;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"부두 인형";
-	itemInfo.szComment = L"저주받은 자여, 그대는 죽어도 죽지 못해 영원토록 구천을 떠돌게 될 것이다.";
-	itemInfo.szExplanation = L"죽음에 이르는 데미지를 입을 시 40의 체력을 회복하고 죽음을 극복하며 부두 인형이 찢어집니다.";
-
-	shared_ptr<Item> pVoodooDoll = make_shared<VoodooDoll>(itemInfo);
+	shared_ptr<Item> pVoodooDoll = make_shared<VoodooDoll>(GetItemInfo(ITEM_KIND::VOODOO_DOLL));
 	return pVoodooDoll;
 }
 
 shared_ptr<Item> ObjectFactory::CreateBrightDawn()
 {
-	ItemInfo itemInfo = {};
-	itemInfo.eItemKind = ITEM_KIND::BRIGHT_DAWN;
-	itemInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"BrightDawn_Vignette", L"..\\Resources\\Texture\\Item\\BrightDawn\\Image_BrightDawn_Vignette.png");
-	itemInfo.pItemTexture = GET_SINGLE(Resources)->Load<Texture>(L"BrightDawn", L"..\\Resources\\Texture\\Item\\BrightDawn\\Image_BrightDawn.png");
-
-	itemInfo.eGrade = GRADE::LEGENDARY;
-	itemInfo.pFirstEngrave = make_shared<Arms>();
-	itemInfo.pSecondEngrave = make_shared<Rapidity>();
-
-	itemInfo.szName = L"찬란한 여명";
-	itemInfo.szComment = L"여명이 밝아오니, 예정 된 승리를 기다리리라";
-	itemInfo.szExplanation = L"물리공격력 및 마법공격력이 80% 증가합니다.\n적 공격 시 여명의 빛이 일어나 물리와 마법 중 더 높은 공격력에 따라 주변 적에게 데미지를 입힙니다.(쿨타임 : 50초)";
-
-	shared_ptr<Item> pBrightDawn = make_shared<BrightDawn>(itemInfo);
+	shared_ptr<Item> pBrightDawn = make_shared<BrightDawn>(GetItemInfo(ITEM_KIND::BRIGHT_DAWN));
 	return pBrightDawn;
 }
 

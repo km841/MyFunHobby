@@ -28,6 +28,7 @@ public:
 
 private:
     void CreateDetailHUDAndAddedToScene();
+    void DrawItemDetail();
 
 protected:
     bool m_bIsCollisionWithPlayer;
@@ -36,5 +37,6 @@ protected:
     ITEM_KIND m_eItemKind;
 
     weak_ptr<GameObject> m_pDetailHUD;
+    weak_ptr<GameObject> m_pVignetteHUD;
 };
 

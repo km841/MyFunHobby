@@ -86,7 +86,7 @@ void ChimeraVenomBallScript::CreateVenomBallAndAddedToScene()
 	PxVec3 vDir = PxVec3(-1.f, 1.f, 0.f);
 	vDir.normalize();
 
-	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(vDir * static_cast<int32>(RANDOM(550, 750)));
+	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(vDir * static_cast<int32>(RANDOM(350, 950)));
 
 	pProjectile->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

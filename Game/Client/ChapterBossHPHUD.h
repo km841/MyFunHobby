@@ -15,6 +15,7 @@ public:
     virtual void Update();
     virtual void LateUpdate();
     virtual void FinalUpdate();
+    virtual void Destroy();
 
     virtual void Action();
 

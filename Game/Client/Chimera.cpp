@@ -25,6 +25,9 @@
 #include "ChimeraFallParticlesScript.h"
 #include "Player.h"
 #include "ChimeraFallingObject.h"
+#include "ObjectAddedToSceneEvent.h"
+#include "RigidBody.h"
+#include "AnimationLocalEffect.h"
 
 Chimera* Chimera::s_pChimera = {};
 
@@ -101,6 +104,7 @@ void Chimera::Destroy()
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_vChimeraSprites[i].lock(), SCENE_TYPE::DUNGEON));
 	}
 
+
 	m_vChimeraSprites.clear();
 	
 }
@@ -161,12 +165,14 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 		if ("Grab_Smash" == szAnimName)
 		{
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
+			
 		}
 	}
 		break;
 	case spine::EventType_Interrupt:
 		break;
 	case spine::EventType_End:
+
 		break;
 	case spine::EventType_Complete:
 	{
@@ -181,6 +187,10 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 				static_pointer_cast<ChimeraFallingObject>(pFallingObject)->SetDestroy();
 			}
 			// Breaking
+		}
+		if ("Grab_Back" == szAnimName)
+		{
+			s_pChimera->CreateWarningSignAndAddedToScene();
 		}
 
 		if ("Dead" == szAnimName)
@@ -307,8 +317,6 @@ void Chimera::CreateSpineData()
 
 void Chimera::SpineDataUpdate()
 {
-
-
 	m_pAnimationState->update(WORLD_DELTA_TIME);
 	m_pAnimationState->apply(*m_pSkeleton);
 	m_pSkeleton->updateWorldTransform();
@@ -345,6 +353,26 @@ void Chimera::ClearBoss()
 	Destroy();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), SCENE_TYPE::DUNGEON));
 	
+}
+
+void Chimera::CreateWarningSignAndAddedToScene()
+{
+	shared_ptr<AnimationLocalEffect> pLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
+
+	Vec3 vPos = GetTransform()->GetPhysicalPosition();
+	vPos.x -= 400.f;
+	vPos.z -= 3.5f;
+
+	pLocalEffect->AddComponent(make_shared<Animator>());
+	pLocalEffect->GetTransform()->SetLocalPosition(vPos);
+
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"WarningSign", L"..\\Resources\\Animation\\MonsterCommon\\monster_common_attack_sign.anim");
+	pLocalEffect->GetAnimator()->AddAnimation(L"WarningSign", pAnimation);
+	pLocalEffect->GetAnimator()->Play(L"WarningSign", false);
+
+	pLocalEffect->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLocalEffect, eSceneType));
 }
 
 std::vector<Vertex> Chimera::CalculateVertexData(spine::Slot* pSlot, spine::RegionAttachment* pRegionAttachment)

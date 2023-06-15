@@ -65,7 +65,7 @@ void AbyssOrbSkill::Enter()
 	shared_ptr<AbyssOrb> pAbyssOrb = CreateAbyssOrb();
 
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPxTransform().p);
-	vPlayerPos.z += 0.5f;
+	vPlayerPos.z += 1.f;
 
 	uint8 iDirection = static_cast<uint8>(m_pSkul.lock()->GetDirection());
 	vPlayerPos.x += iDirection ? -100.f : 100.f;

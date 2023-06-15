@@ -27,6 +27,11 @@ class ObjectFactory
 	DECLARE_SINGLE(ObjectFactory);
 
 public:
+	void Init();
+	void CreateItemInfo();
+	const ItemInfo& GetItemInfo(ITEM_KIND eItemKind);
+	void Destroy();
+
 	FORCEINLINE void SetPlayer(shared_ptr<Player> pPlayer) { m_pPlayer = pPlayer; }
 	template<typename T, typename ... Types>
 	shared_ptr<T> CreateObjectHasPhysical(const wstring& szMaterialName, bool bApplyGravity,
@@ -107,6 +112,7 @@ private:
 
 private:
 	weak_ptr<Player> m_pPlayer;
+	std::map<ITEM_KIND, ItemInfo> m_mItemInfoMap;
 };
 
 template<typename T, typename ... Types>

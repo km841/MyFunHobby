@@ -57,6 +57,9 @@ void VenomSplash::Update()
 				m_bIntroFinishedFlag = true;
 				GetAnimator()->Play(L"VenomSplash_Loop");
 				m_tLoopTimer.Start();
+
+
+
 			}
 
 			if (m_bIntroFinishedFlag)

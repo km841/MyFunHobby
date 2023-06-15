@@ -30,7 +30,7 @@ void ChimeraGrabScript::LateUpdate()
 	{
 		if (!m_bCheckedBegin)
 		{
-			CreateWarningSignAndAddedToScene();
+			//CreateWarningSignAndAddedToScene();
 			m_bCheckedBegin = true;
 		}
 	}

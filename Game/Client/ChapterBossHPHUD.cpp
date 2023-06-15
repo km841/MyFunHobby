@@ -65,6 +65,15 @@ void ChapterBossHPHUD::FinalUpdate()
 	HUD::FinalUpdate();
 }
 
+void ChapterBossHPHUD::Destroy()
+{
+	if (m_pHPHUD.lock())
+	{
+		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pHPHUD.lock(), eSceneType));
+	}
+}
+
 void ChapterBossHPHUD::Action()
 {
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
