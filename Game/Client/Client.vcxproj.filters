@@ -898,6 +898,9 @@
     <ClInclude Include="DisableCameraTrackingEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
+    <ClInclude Include="VeteranHeroLandingScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1572,6 +1575,9 @@
     </ClCompile>
     <ClCompile Include="EnableCameraTrackingEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="VeteranHeroLandingScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

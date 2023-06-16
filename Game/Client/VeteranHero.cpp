@@ -1,7 +1,12 @@
 #include "pch.h"
 #include "VeteranHero.h"
+#include "RigidBody.h"
+#include "Animator.h"
+#include "Animation.h"
 
 VeteranHero::VeteranHero()
+	: m_bLandingFlag(false)
+	, m_bLandingChecked(false)
 {
 }
 
@@ -22,6 +27,18 @@ void VeteranHero::Start()
 void VeteranHero::Update()
 {
 	GameObject::Update();
+
+	if (m_bLandingFlag)
+	{
+		if (!m_bLandingChecked)
+		{
+			GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
+			m_bLandingChecked = true;
+			SetMonsterState(MONSTER_STATE::LANDING);
+			GetAnimator()->Play(L"VeteranHero_Landing", false);
+		}
+	}
+
 }
 
 void VeteranHero::LateUpdate()
@@ -32,4 +49,16 @@ void VeteranHero::LateUpdate()
 void VeteranHero::FinalUpdate()
 {
 	GameObject::FinalUpdate();
+}
+
+void VeteranHero::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
+{
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		m_bLandingFlag = true;
+	}
+}
+
+void VeteranHero::OnCollisionExit(shared_ptr<GameObject> pGameObject)
+{
 }

@@ -394,6 +394,7 @@
     <ClInclude Include="VenomBallProjectile.h" />
     <ClInclude Include="VenomSplash.h" />
     <ClInclude Include="VeteranHero.h" />
+    <ClInclude Include="VeteranHeroLandingScript.h" />
     <ClInclude Include="VoodooDoll.h" />
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
@@ -633,6 +634,7 @@
     <ClCompile Include="VenomBallProjectile.cpp" />
     <ClCompile Include="VenomSplash.cpp" />
     <ClCompile Include="VeteranHero.cpp" />
+    <ClCompile Include="VeteranHeroLandingScript.cpp" />
     <ClCompile Include="VoodooDoll.cpp" />
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />
