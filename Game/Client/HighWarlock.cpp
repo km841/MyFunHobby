@@ -76,7 +76,7 @@ void HighWarlock::CreateAbyssFieldAndAddedToScene()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	Vec3 vMyPos = m_pPlayer.lock()->GetTransform()->GetPhysicalPosition();
-	//vMyPos.z -= 5.f;
+	vMyPos.z += 1.f;
 
 	pAbyssField->GetTransform()->SetLocalPosition(vMyPos);
 

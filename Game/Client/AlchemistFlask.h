@@ -22,6 +22,8 @@ public:
 private:
     bool m_bDespawnFlag;
     bool m_bChecked;
+    bool m_bTimerOverFlag;
+    Timer m_tLifeTime;
 
 private:
     DECLARE_POOL(AlchemistFlask);

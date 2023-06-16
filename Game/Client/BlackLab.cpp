@@ -2,6 +2,7 @@
 #include "BlackLab.h"
 #include "Ch3BaseCamp.h"
 #include "Ch3BossDungeon.h"
+#include "Ch3ViceBossDungeon.h"
 #include "Dungeon_Bone.h"
 #include "Dungeon_Item.h"
 #include "Dungeon_Gold.h"
@@ -27,6 +28,7 @@ void BlackLab::Awake()
 	AddDungeon(make_shared<Dungeon_Shop>(L"..\\Resources\\Map\\Ch3ShopMap2.map", L"..\\Resources\\Script\\ch3_shop1_script.evtscript"), Vec4(-650.f, 2000.f, 2200.f, -400.f));
 	AddDungeon(make_shared<Dungeon_Gold>(L"..\\Resources\\Map\\Ch3Map3.map", L"..\\Resources\\Script\\ch3_script_3.evtscript"), Vec4(-1500.f, 2000.f, 3800.f, -400.f));
 	AddDungeon(make_shared<Ch3BossDungeon>(L"..\\Resources\\Map\\Ch3BossMap.map", L"..\\Resources\\Script\\ch3_bossmap_script.evtscript"), Vec4(-230.f, 930.f, 1400.f, -70.f));
+	AddDungeon(make_shared<Ch3ViceBossDungeon>(L"..\\Resources\\Map\\Ch3ViceBossMap.map", L"..\\Resources\\Script\\ch3_vicebossmap_script.evtscript"), Vec4(-1400.f, 930.f, 3000.f, -700.f));
 
 	//AlignDungeons();
 	// Awaken all stages and select the active dungeon.

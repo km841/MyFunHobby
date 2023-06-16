@@ -10,11 +10,14 @@
 #include "Tile.h"
 #include "CollisionManager.h"
 #include "Transform.h"
+#include "Clock.h"
 
 POOL_INIT(AlchemistFlask);
 AlchemistFlask::AlchemistFlask()
 	: m_bDespawnFlag(false)
 	, m_bChecked(false)
+	, m_bTimerOverFlag(false)
+	, m_tLifeTime(5.f)
 {
 }
 
@@ -36,6 +39,12 @@ void AlchemistFlask::Update()
 {
 	MonsterProjectile::Update();
 
+	if (!m_tLifeTime.IsRunning())
+		m_tLifeTime.Start();
+	else
+		m_tLifeTime.Update(WORLD_DELTA_TIME);
+	
+
 	if (m_bDespawnFlag)
 	{
 		GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
@@ -52,9 +61,16 @@ void AlchemistFlask::Update()
 
 	if (GetAnimator()->GetActiveAnimation() && GetAnimator()->GetActiveAnimation()->IsFinished())
 	{
+		m_tLifeTime.Reset();
 		m_bChecked = false;
 		SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(shared_from_this(), eSceneType));
+	}
+
+	if (!m_bTimerOverFlag && m_tLifeTime.IsFinished() && !m_bDespawnFlag)
+	{
+		m_bTimerOverFlag = true;
+		m_bDespawnFlag = true;
 	}
 
 }
@@ -73,12 +89,12 @@ void AlchemistFlask::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
-		// Despawn!
-		if (!m_bChecked)
-		{
-			m_bDespawnFlag = true;
-			m_bChecked = true;
-		}
+		//// Despawn!
+		//if (!m_bChecked)
+		//{
+		//	m_bDespawnFlag = true;
+		//	m_bChecked = true;
+		//}
 		
 	}
 }

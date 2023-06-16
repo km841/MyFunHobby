@@ -877,6 +877,9 @@
     <ClInclude Include="BossHPScript.h">
       <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
     </ClInclude>
+    <ClInclude Include="Ch3ViceBossDungeon.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1533,6 +1536,9 @@
     </ClCompile>
     <ClCompile Include="BossHPScript.cpp">
       <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch3ViceBossDungeon.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

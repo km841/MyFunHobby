@@ -199,6 +199,7 @@
     <ClInclude Include="CameraUnfixEvent.h" />
     <ClInclude Include="Ch3BeginTower.h" />
     <ClInclude Include="Ch3BossDungeon.h" />
+    <ClInclude Include="Ch3ViceBossDungeon.h" />
     <ClInclude Include="ChangeAnimationEvent.h" />
     <ClInclude Include="ChangeObjectPosEvent.h" />
     <ClInclude Include="ChapterBossHPHUD.h" />
@@ -427,6 +428,7 @@
     <ClCompile Include="CameraUnfixEvent.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
     <ClCompile Include="Ch3BossDungeon.cpp" />
+    <ClCompile Include="Ch3ViceBossDungeon.cpp" />
     <ClCompile Include="ChangeAnimationEvent.cpp" />
     <ClCompile Include="ChangeObjectPosEvent.cpp" />
     <ClCompile Include="ChapterBossHPHUD.cpp" />
