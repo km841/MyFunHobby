@@ -19,6 +19,7 @@ PauseIdleState::PauseIdleState(shared_ptr<Player> pPlayer)
 
 void PauseIdleState::Update()
 {
+
 }
 
 void PauseIdleState::Enter()
@@ -26,7 +27,6 @@ void PauseIdleState::Enter()
 	PlayAnimation();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
-
 	m_pPlayer.lock()->RefreshJumpCount();
 }
 

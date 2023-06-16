@@ -196,6 +196,7 @@
     <ClInclude Include="BossOpeningHUD.h" />
     <ClInclude Include="BrightDawn.h" />
     <ClInclude Include="CameraFixedEvent.h" />
+    <ClInclude Include="CameraMovingEvent.h" />
     <ClInclude Include="CameraUnfixEvent.h" />
     <ClInclude Include="Ch3BeginTower.h" />
     <ClInclude Include="Ch3BossDungeon.h" />
@@ -211,8 +212,11 @@
     <ClInclude Include="ChimeraFallParticlesScript.h" />
     <ClInclude Include="ChimeraGrabScript.h" />
     <ClInclude Include="ChimeraRoar.h" />
+    <ClInclude Include="DisableCameraTrackingEvent.h" />
+    <ClInclude Include="EnableCameraTrackingEvent.h" />
     <ClInclude Include="EnableChapterBossHPBarEvent.h" />
     <ClInclude Include="PauseDungeonEvent.h" />
+    <ClInclude Include="PauseJumpFallState.h" />
     <ClInclude Include="PlayDungeonEvent.h" />
     <ClInclude Include="VenomFall.h" />
     <ClInclude Include="ChimeraVenomFallScript.h" />
@@ -389,6 +393,7 @@
     <ClInclude Include="UI.h" />
     <ClInclude Include="VenomBallProjectile.h" />
     <ClInclude Include="VenomSplash.h" />
+    <ClInclude Include="VeteranHero.h" />
     <ClInclude Include="VoodooDoll.h" />
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
@@ -425,6 +430,7 @@
     <ClCompile Include="BossOpeningHUD.cpp" />
     <ClCompile Include="BrightDawn.cpp" />
     <ClCompile Include="CameraFixedEvent.cpp" />
+    <ClCompile Include="CameraMovingEvent.cpp" />
     <ClCompile Include="CameraUnfixEvent.cpp" />
     <ClCompile Include="Ch3BeginTower.cpp" />
     <ClCompile Include="Ch3BossDungeon.cpp" />
@@ -440,8 +446,11 @@
     <ClCompile Include="ChimeraFallParticlesScript.cpp" />
     <ClCompile Include="ChimeraGrabScript.cpp" />
     <ClCompile Include="ChimeraRoar.cpp" />
+    <ClCompile Include="DisableCameraTrackingEvent.cpp" />
+    <ClCompile Include="EnableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableChapterBossHPBarEvent.cpp" />
     <ClCompile Include="PauseDungeonEvent.cpp" />
+    <ClCompile Include="PauseJumpFallState.cpp" />
     <ClCompile Include="PlayDungeonEvent.cpp" />
     <ClCompile Include="VenomFall.cpp" />
     <ClCompile Include="ChimeraVenomFallScript.cpp" />
@@ -623,6 +632,7 @@
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="VenomBallProjectile.cpp" />
     <ClCompile Include="VenomSplash.cpp" />
+    <ClCompile Include="VeteranHero.cpp" />
     <ClCompile Include="VoodooDoll.cpp" />
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />

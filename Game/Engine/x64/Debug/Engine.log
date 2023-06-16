@@ -1,6 +1,2 @@
-﻿  Engine.cpp
-  InterfaceManager.cpp
-  ObjectFactory.cpp
-  Scene.cpp
-  코드를 생성하고 있습니다...
+﻿  Camera.cpp
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

@@ -21,6 +21,7 @@ PlayerTrackingScript::~PlayerTrackingScript()
 
 void PlayerTrackingScript::LateUpdate()
 {
+
 	if (GetCamera()->IsFixed())
 	{
 		const Vec3& vFixedPos = GetCamera()->GetFixedPosition();
@@ -30,6 +31,9 @@ void PlayerTrackingScript::LateUpdate()
 
 		return;
 	}
+
+	if (GetCamera()->IsTrackingUnused())
+		return;
 
 	Vec3 vPlayerPos = Conv::PxVec3ToVec3(m_pPlayer.lock()->GetTransform()->GetPxTransform().p);
 	vPlayerPos.y += 100.f;

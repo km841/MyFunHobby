@@ -233,6 +233,9 @@
     <Filter Include="소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD">
       <UniqueIdentifier>{0cf480cb-bde9-4006-8edc-b2b779d503a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\VeteranHero">
+      <UniqueIdentifier>{c46c0d95-1f13-4d4c-8430-e976d01239d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -879,6 +882,21 @@
     </ClInclude>
     <ClInclude Include="Ch3ViceBossDungeon.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
+    </ClInclude>
+    <ClInclude Include="VeteranHero.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseJumpFallState.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMovingEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="EnableCameraTrackingEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="DisableCameraTrackingEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1539,6 +1557,21 @@
     </ClCompile>
     <ClCompile Include="Ch3ViceBossDungeon.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\Ch3</Filter>
+    </ClCompile>
+    <ClCompile Include="VeteranHero.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseJumpFallState.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMovingEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="DisableCameraTrackingEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="EnableCameraTrackingEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

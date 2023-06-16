@@ -399,7 +399,7 @@
 ..\Resources\Texture\Tiles\Ch3TopTile_7.png
 704 0
 0
-132
+198
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
 -512 128
@@ -796,4 +796,202 @@
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_2.png
 -896 64
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1216 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1216 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1216 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1536 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1536 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1536 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1856 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1856 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1856 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2176 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2176 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2176 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2496 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2496 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2496 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-640 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-640 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-640 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-512 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-512 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-512 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_4.png
+-832 -384
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_4.png
+-832 -448
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_4.png
+-832 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-704 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-704 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-704 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-448 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-448 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-448 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-128 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-128 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+-128 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+128 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+128 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+128 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+384 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+384 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+384 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+640 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+640 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+640 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+896 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+896 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+896 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1152 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1152 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1152 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1408 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1408 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1408 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1408 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1728 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1728 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1728 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+1728 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2048 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2048 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2048 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2368 -512
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2368 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2368 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2368 -704
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2496 -576
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2496 -640
+1
+..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
+2496 -704
 0

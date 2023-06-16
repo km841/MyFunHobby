@@ -20,6 +20,12 @@ PauseWalkState::PauseWalkState(shared_ptr<Player> pPlayer)
 
 void PauseWalkState::Update()
 {
+	const Vec3& vVelocity = m_pPlayer.lock()->GetRigidBody()->GetVelocity();
+	if (vVelocity.y < 0.f)
+	{
+		AddChangeStateEvent(PLAYER_STATE::PAUSE_JUMP_FALL);
+		return;
+	}
 }
 
 void PauseWalkState::Enter()

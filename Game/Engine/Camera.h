@@ -16,6 +16,7 @@ public:
     Camera();
     virtual ~Camera();
 
+    virtual void    Update() override;
     virtual void    FinalUpdate() override;
 
     FORCEINLINE void             SetProjectionType(PROJECTION_TYPE eType)     { m_eType = eType; }
@@ -34,13 +35,19 @@ public:
     void SetCameraSpeed(const Vec3& vCameraSpeed) { m_vCameraSpeed = vCameraSpeed; }
     const Vec3& GetCameraSpeed() { return m_vCameraSpeed; }
     void SetLimitRect(const Vec4& vLimitRect);
+    
 
     const Vec4& GetLimitRect() { return m_vLimitRect; }
 
+    void SetTargetPos(const Vec3& vPos, float fTime);
     void SetFixedCamera(const Vec3& vFixedPos) { m_bFixedCamera = true; m_vFixedPos = vFixedPos; }
     void UnfixCamera() { m_bFixedCamera = false;}
     bool IsFixed() { return m_bFixedCamera; }
     const Vec3& GetFixedPosition() { return m_vFixedPos; }
+
+    void DisableTracking() { m_bTrackingUnused = true; }
+    void EnableTracking() { m_bTrackingUnused = false; }
+    bool IsTrackingUnused() { return m_bTrackingUnused; }
 
     FORCEINLINE void FlipDebugMode() { m_bDebugMode = (m_bDebugMode + 1) % 2; }
 
@@ -70,6 +77,13 @@ private:
     bool            m_bDebugMode;
     bool            m_bFixedCamera;
     Vec3            m_vFixedPos;
+
+    bool            m_bTrackingUnused;
+
+    Vec3            m_vTargetPos;
+    Vec3            m_vInitDir;
+    Timer           m_tTrackingTimer;
+    float           m_fTrackingSpeed;
 
     std::vector<shared_ptr<GameObject>> m_vForwardObjects;
     std::vector<shared_ptr<GameObject>> m_vDeferredObjects;

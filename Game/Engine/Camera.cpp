@@ -14,6 +14,7 @@
 #include "ParticleSystem.h"
 #include "Resources.h"
 #include "Animator.h"
+#include "Clock.h"
 
 Camera::Camera()
 	:Component(COMPONENT_TYPE::CAMERA)
@@ -25,11 +26,33 @@ Camera::Camera()
     , m_iCullingMask(0)
     , m_bDebugMode(false)
     , m_bFixedCamera(false)
+    , m_tTrackingTimer(0.f)
+    , m_fTrackingSpeed(0.f)
+    , m_bTrackingUnused(false)
 {
 }
 
 Camera::~Camera()
 {
+}
+
+void Camera::Update()
+{
+    if (m_tTrackingTimer.IsRunning())
+    {
+        m_tTrackingTimer.Update(WORLD_DELTA_TIME);
+
+        Vec3 vMyPos = GetTransform()->GetLocalPosition();
+        GetTransform()->SetLocalPosition(vMyPos + m_vInitDir * m_fTrackingSpeed * WORLD_DELTA_TIME);
+
+        if (m_tTrackingTimer.IsFinished())
+        {
+            m_vTargetPos = Vec3::Zero;
+            m_vInitDir = Vec3::Zero;
+            m_fTrackingSpeed = 0.f;
+            m_tTrackingTimer.Stop();
+        }
+    }
 }
 
 void Camera::FinalUpdate()
@@ -138,6 +161,23 @@ void Camera::EnableAllCullingMask()
 void Camera::SetLimitRect(const Vec4& vLimitRect)
 {
     m_vLimitRect = vLimitRect;
+}
+
+void Camera::SetTargetPos(const Vec3& vPos, float fTime)
+{
+    assert(m_vTargetPos == Vec3::Zero);
+    m_vTargetPos = vPos;
+    m_tTrackingTimer.SetEndTime(fTime);
+    m_tTrackingTimer.Start();
+
+    Vec3 vMyPos = GetTransform()->GetLocalPosition();
+    m_vTargetPos.z = vMyPos.z;
+
+    m_vInitDir =  m_vTargetPos - vMyPos;
+    float fLength = m_vInitDir.Length();
+    m_fTrackingSpeed = fLength / fTime;
+
+    m_vInitDir.Normalize();
 }
 
 void Camera::Render_Forward()
