@@ -100,7 +100,7 @@ void Ch3ViceBossDungeon::Enter()
 	// Veteran Hero
 	shared_ptr<VeteranHero> pVeteranHero = nullptr;
 	{
-		pVeteranHero = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VeteranHero>(L"Forward", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
+		pVeteranHero = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VeteranHero>(L"Forward", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
 		pVeteranHero->AddComponent(make_shared<Animator>());
 		pVeteranHero->AddComponent(make_shared<AI>());
 		pVeteranHero->AddComponent(make_shared<VeteranHeroLandingScript>());
@@ -187,11 +187,7 @@ void Ch3ViceBossDungeon::Enter()
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(pAlwaysTrueCondition, PLAYER_STATE::IDLE));
 	AddEvent(make_shared<EnablePlayerHUDEvent>(pAlwaysTrueCondition));
 	AddEvent(make_shared<PlayDungeonEvent>(pAlwaysTrueCondition));
-
-	// VeteranHero Change State!
-// Camera Moving Event
-// 
-//AddEvent(make_shared<CameraFixedEvent>(pAlwaysTrueCondition, Vec3(590.f, 355.f, 1.f)));
+	//AddEvent(make_shared<CameraFixedEvent>(pAlwaysTrueCondition, Vec3(590.f, 355.f, 1.f)));
 }
 
 void Ch3ViceBossDungeon::Exit()
