@@ -30,9 +30,10 @@ void VeteranHero::Update()
 
 	if (m_bLandingFlag)
 	{
-		if (!m_bLandingChecked)
+		if (MONSTER_STATE::LANDING_READY == MONSTER_STATE::LANDING_READY && !m_bLandingChecked)
 		{
 			GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
+			GetRigidBody()->SetLinearMaxVelocityForDynamic(2000.f);
 			m_bLandingChecked = true;
 			SetMonsterState(MONSTER_STATE::LANDING);
 			GetAnimator()->Play(L"VeteranHero_Landing", false);

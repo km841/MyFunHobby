@@ -19,7 +19,7 @@
 800 0 190
 1798 800 1
 1 1 0
-126
+124
 0
 ..\Resources\Texture\Tiles\DarkStone_1.png
 -832 -320
@@ -168,153 +168,6 @@
 ..\Resources\Texture\Tiles\DarkStone_6.png
 -320 -512
 0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--768 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--832 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--640 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--576 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--704 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--512 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_1.png
--384 0
-0
-..\Resources\Texture\Tiles\Ch3TopTile_5.png
--384 -64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--448 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_10.png
--384 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--320 0
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--320 64
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--320 128
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--320 192
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--320 256
-0
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
--320 320
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-576 0
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-640 0
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 64
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 192
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 256
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 128
-1
-..\Resources\Texture\Tiles\Ch3TopTile_1.png
-512 64
-1
-..\Resources\Texture\Tiles\Ch3TopTile_1.png
-512 128
-1
-..\Resources\Texture\Tiles\Ch3TopTile_1.png
-512 192
-1
-..\Resources\Texture\Tiles\Ch3TopTile_1.png
-512 256
-1
-..\Resources\Texture\Tiles\Ch3TopTile_5.png
-512 0
-1
-..\Resources\Texture\Tiles\Ch3TopTile_9.png
-512 320
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-448 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-384 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-320 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-256 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-192 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-128 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-64 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-0 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--64 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--128 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--192 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
--256 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_9.png
--320 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_10.png
-512 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 320
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 384
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 448
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 512
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 576
-1
-..\Resources\Texture\Tiles\Ch3TopTile_4.png
-768 640
-0
-..\Resources\Texture\Tiles\Ch3TopTile_8.png
--320 -64
-0
 ..\Resources\Texture\Tiles\A_Transparent_1.png
 -896 -256
 0
@@ -326,9 +179,6 @@
 0
 ..\Resources\Texture\Tiles\A_Transparent_1.png
 -896 -64
-0
-..\Resources\Texture\Tiles\A_Transparent_1.png
--896 0
 0
 ..\Resources\Texture\Tiles\DarkStone_3.png
 1920 -320
@@ -392,12 +242,156 @@
 0
 ..\Resources\Texture\Tiles\A_Transparent_1.png
 2624 320
-0
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-832 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-768 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-704 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-640 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-576 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-512 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-448 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-384 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_8.png
+-320 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-320 128
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-320 192
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-320 256
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+-320 320
+1
+..\Resources\Texture\Tiles\Ch3TopTile_9.png
+-320 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-256 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-192 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-128 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+-64 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+0 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+64 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+128 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+192 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+256 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+320 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+384 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_7.png
+448 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_10.png
+512 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_1.png
+512 320
+1
+..\Resources\Texture\Tiles\Ch3TopTile_1.png
+512 256
+1
+..\Resources\Texture\Tiles\Ch3TopTile_1.png
+512 192
+1
+..\Resources\Texture\Tiles\Ch3TopTile_1.png
+512 128
+1
+..\Resources\Texture\Tiles\Ch3TopTile_1.png
+512 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_5.png
+512 0
+1
+..\Resources\Texture\Tiles\Ch3TopTile_6.png
+576 0
+1
+..\Resources\Texture\Tiles\Ch3TopTile_6.png
+640 0
+1
+..\Resources\Texture\Tiles\Ch3TopTile_6.png
+704 0
+1
 ..\Resources\Texture\Tiles\Ch3TopTile_8.png
 768 0
-0
-..\Resources\Texture\Tiles\Ch3TopTile_7.png
-704 0
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+704 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+704 128
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 64
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 128
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 192
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 256
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 320
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 384
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 448
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 512
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 576
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 640
+1
+..\Resources\Texture\Tiles\Ch3TopTile_4.png
+768 704
 0
 198
 1
