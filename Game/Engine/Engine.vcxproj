@@ -257,6 +257,8 @@
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
     <ClInclude Include="SetDirectionTowardPlayerTask.h" />
+    <ClInclude Include="SetVelocityForDynamicObjectTask.h" />
+    <ClInclude Include="SetVelocityGoToPlayerPosTask.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="SpineResource.h" />
@@ -272,6 +274,7 @@
     <ClInclude Include="UnflagAsAttackedFlagTask.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="VelocityDownTask.h" />
+    <ClInclude Include="VelocityZeroForKinematicTask.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddSpineAnimationTask.cpp" />
@@ -367,6 +370,8 @@
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="SetDirectionTowardPlayerTask.cpp" />
+    <ClCompile Include="SetVelocityForDynamicObjectTask.cpp" />
+    <ClCompile Include="SetVelocityGoToPlayerPosTask.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="SpineResource.cpp" />
@@ -382,6 +387,7 @@
     <ClCompile Include="UnflagAsAttackedFlagTask.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="VelocityDownTask.cpp" />
+    <ClCompile Include="VelocityZeroForKinematicTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl" />

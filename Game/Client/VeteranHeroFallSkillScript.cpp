@@ -13,6 +13,7 @@
 #include "ObjectFactory.h"
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "MagicSword.h"
 
 VeteranHeroFallSkillScript::VeteranHeroFallSkillScript()
 	: m_bSkillReadyFlag(false)
@@ -35,7 +36,7 @@ void VeteranHeroFallSkillScript::LateUpdate()
 	{
 		if (!m_bSkillReadyFlag)
 		{
-			GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, 2000.f, 0.f));
+			GetRigidBody()->SetVelocity(Vec3(0.f, 2000.f, 0.f));
 			m_bSkillReadyFlag = true;
 			CreateJumpSmokeAndAddedToScene();
 		}
@@ -43,9 +44,9 @@ void VeteranHeroFallSkillScript::LateUpdate()
 		Vec3 vPos = GetTransform()->GetPhysicalPosition();
 		if (vPos.y > 300.f)
 		{
-			GetPhysical()->GetActor<PxRigidDynamic>()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+			GetRigidBody()->RemoveGravity();
 			pVeteranHero.lock()->SetMonsterState(MONSTER_STATE::SKILL1);
-			pVeteranHero.lock()->GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
+			pVeteranHero.lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 			m_tDelayTime.Start();
 		}
 	}
@@ -63,13 +64,14 @@ void VeteranHeroFallSkillScript::LateUpdate()
 		{
 			GetAnimator()->Play(L"VeteranHero_FallDown", false);
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(0.f, 300.f, 0.f));
-			GetPhysical()->GetActor<PxRigidDynamic>()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
-			Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
-			vPlayerPos.z += 1.f;
-			GetTransform()->SetPhysicalPosition(vPlayerPos);
+			GetRigidBody()->RemoveGravity();
+			m_vFallDownPos.z += 1.f;
+			m_vFallDownPos.y = -450.f;
+			GetTransform()->SetPhysicalPosition(m_vFallDownPos);
 			m_bSkillFlag = true;
 			m_tFallStayTime.Start();
 
+			CreateMagicSwordsAndAddedToScene();
 			// Spawn Swords
 		}
 
@@ -120,6 +122,8 @@ void VeteranHeroFallSkillScript::CreateWarningSignAndAddedToScene()
 	Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
 	vPlayerPos.z -= 1.f;
 	vPlayerPos.y = -400.f;
+
+	m_vFallDownPos = vPlayerPos;
 	pAnimationLocalEffect->GetTransform()->SetLocalPosition(vPlayerPos);
 
 	pAnimationLocalEffect->AddComponent(make_shared<Animator>());
@@ -129,4 +133,34 @@ void VeteranHeroFallSkillScript::CreateWarningSignAndAddedToScene()
 
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pAnimationLocalEffect, eSceneType));
+}
+
+void VeteranHeroFallSkillScript::CreateMagicSwordsAndAddedToScene()
+{
+	for (int32 i = 0; i < 2; ++i)
+	{
+		for (int32 j = 0; j < 2; ++j)
+		{
+			shared_ptr<MagicSword> pSword = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<MagicSword>(L"Forward", L"", i ? 0.5f : 0.f);
+
+			float fOffset = 100.f * (i + 1);
+			Vec3 vPos = GetTransform()->GetPhysicalPosition();
+			vPos.z -= 1.f;
+			vPos.x += j ? -fOffset : fOffset;
+			vPos.y = -450.f;
+			pSword->GetTransform()->SetLocalPosition(vPos);
+
+			pSword->AddComponent(make_shared<Animator>());
+			shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"MagicSword", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_magic_sword.anim");
+			pSword->GetAnimator()->AddAnimation(L"MagicSword", pAnimation);
+
+			pAnimation->SetHitFrame(1);
+
+			pSword->Awake();
+			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pSword, eSceneType));
+		}
+
+	}
+
 }

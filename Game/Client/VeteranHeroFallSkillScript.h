@@ -13,6 +13,7 @@ public:
 private:
     void CreateJumpSmokeAndAddedToScene();
     void CreateWarningSignAndAddedToScene();
+    void CreateMagicSwordsAndAddedToScene();
 
 private:
     bool m_bSkillReadyFlag;
@@ -20,5 +21,6 @@ private:
     bool m_bWarningSignFlag;
     Timer m_tDelayTime;
     Timer m_tFallStayTime;
+    Vec3 m_vFallDownPos;
 };
 

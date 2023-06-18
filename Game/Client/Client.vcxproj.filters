@@ -904,6 +904,9 @@
     <ClInclude Include="VeteranHeroFallSkillScript.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
     </ClInclude>
+    <ClInclude Include="MagicSword.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1583,6 +1586,9 @@
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
     </ClCompile>
     <ClCompile Include="VeteranHeroFallSkillScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicSword.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
     </ClCompile>
   </ItemGroup>

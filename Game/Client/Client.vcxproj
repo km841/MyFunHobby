@@ -215,6 +215,7 @@
     <ClInclude Include="DisableCameraTrackingEvent.h" />
     <ClInclude Include="EnableCameraTrackingEvent.h" />
     <ClInclude Include="EnableChapterBossHPBarEvent.h" />
+    <ClInclude Include="MagicSword.h" />
     <ClInclude Include="PauseDungeonEvent.h" />
     <ClInclude Include="PauseJumpFallState.h" />
     <ClInclude Include="PlayDungeonEvent.h" />
@@ -451,6 +452,7 @@
     <ClCompile Include="DisableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableChapterBossHPBarEvent.cpp" />
+    <ClCompile Include="MagicSword.cpp" />
     <ClCompile Include="PauseDungeonEvent.cpp" />
     <ClCompile Include="PauseJumpFallState.cpp" />
     <ClCompile Include="PlayDungeonEvent.cpp" />

@@ -322,6 +322,15 @@
     <ClInclude Include="RemoveToSceneTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="SetVelocityForDynamicObjectTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="SetVelocityGoToPlayerPosTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="VelocityZeroForKinematicTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -631,6 +640,15 @@
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
     <ClCompile Include="RemoveToSceneTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="SetVelocityForDynamicObjectTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="SetVelocityGoToPlayerPosTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="VelocityZeroForKinematicTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1008,6 +1008,13 @@ shared_ptr<Player> Scene::GetPlayer()
 	return static_pointer_cast<Player>(vGameObjects[0]);
 }
 
+weak_ptr<ComponentObject> Scene::GetDirLight()
+{
+	assert(!s_vLights.empty());
+	weak_ptr<Light> pDirLight = s_vLights[0];
+	return static_pointer_cast<ComponentObject>(pDirLight.lock()->GetGameObject());
+}
+
 void Scene::Load(const wstring& szPath)
 {
 	std::wifstream ifs(szPath, std::ios::in);

@@ -15,8 +15,8 @@ public:
 	void FinalUpdate();
 
 public:
-	virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject);
-	virtual void OnCollisionExit(shared_ptr<GameObject> pGameObject);
+	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
+	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
 private:
 	bool m_bLandingFlag;

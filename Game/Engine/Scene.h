@@ -95,6 +95,7 @@ public:
     weak_ptr<ComponentObject> GetMainCamera();
     weak_ptr<ComponentObject> GetUICamera();
     shared_ptr<Player>        GetPlayer();
+    weak_ptr<ComponentObject> GetDirLight();
 
 public:
     virtual void Load(const wstring& szPath);

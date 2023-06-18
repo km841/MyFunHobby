@@ -72,25 +72,39 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     float fProgress = g_float_2;
     float fFadeRatio = g_float_0;
     
+    float4 vColor = g_tex_0.Sample(g_sam_0, _in.uv);
     
-    float4 vColor = 0;
+    float4 vVelocity = g_tex_1.Sample(g_sam_0, _in.uv);
+    int iNumBlurSampling = 5;
+    
+    vVelocity.xy /= (float) iNumBlurSampling;
+    vVelocity.x *= 3.f;
+    int iCount = 1;
+    
+    for (int i = iCount; i < iNumBlurSampling; ++i)
+    {
+        float4 vBlurColor = g_tex_0.Sample(g_sam_0, _in.uv + vVelocity.xy * (float) i);
+        vColor += vBlurColor;
+        iCount++;
+    }
+    
+    vColor /= iCount;
+    
     if (iDistortionFlag)
     {
         float2 vDistortionUV = Distortion(_in.uv, fAccTime, fProgress);
         vColor = g_tex_0.Sample(g_sam_0, vDistortionUV);
     }
-    else
-    {
-        vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-    }
+    //else
+    //{
+    //    vColor = g_tex_0.Sample(g_sam_0, _in.uv);
+    //}
     
     if (iAfterEffectFlag)
     {
         vColor = AfterColor(_in.uv, fAccTime);
     }
-       
-    
-
+     
     float4 vLightColor = g_tex_2.Sample(g_sam_0, _in.uv) * fFadeRatio;
     return vColor * vLightColor;
 }

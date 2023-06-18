@@ -23,10 +23,10 @@ void VeteranHeroLandingScript::LateUpdate()
 	{
 		if (!m_bLandingReadyCompleteFlag)
 		{
-			PxVec3 vNormal = PxVec3(-1.f, 1.f, 0.f);
-			vNormal.normalize();
-			GetRigidBody()->SetLinearVelocityForDynamic(vNormal * 700.f);
-			GetPhysical()->GetActor<PxRigidDynamic>()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
+			Vec3 vNormal = Vec3(-1.f, 1.f, 0.f);
+			vNormal.Normalize();
+			GetRigidBody()->SetVelocity(vNormal * 700.f);
+			GetRigidBody()->ApplyGravity();
 			m_bLandingReadyCompleteFlag = true;
 		}
 	}

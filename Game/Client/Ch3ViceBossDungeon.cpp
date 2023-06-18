@@ -38,9 +38,11 @@
 #include "IfPlayerPosXExceedsN.h"
 #include "DisableCameraTrackingEvent.h"
 #include "EnableCameraTrackingEvent.h"
-
+#include "Player.h"
 #include "Sequence.h"
 #include "Selector.h"
+#include "Movement.h"
+#include "Light.h"
 
 #include "TimerCondition.h"
 #include "IsMonsterStateCondition.h"
@@ -56,6 +58,11 @@
 #include "ChangeChimeraRandomStateTask.h"
 #include "EnableChapterBossHPBarTask.h"
 #include "RemoveToSceneTask.h"
+#include "IsPlayerNearCondition.h"
+#include "SetDirectionTowardPlayerTask.h"
+#include "SetVelocityForDynamicObjectTask.h"
+#include "SetVelocityGoToPlayerPosTask.h"
+#include "VelocityZeroForKinematicTask.h"
 
 #include "VeteranHeroLandingScript.h"
 #include "VeteranHeroFallSkillScript.h"
@@ -98,15 +105,23 @@ void Ch3ViceBossDungeon::Enter()
 {
 	Dungeon::Enter();
 
+	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
+
+	GET_SINGLE(Scenes)->GetActiveScene()->GetDirLight().lock()->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
+
 	// Veteran Hero
 	shared_ptr<VeteranHero> pVeteranHero = nullptr;
 	{
-		pVeteranHero = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VeteranHero>(L"Forward", true, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
+		pVeteranHero = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VeteranHero>(L"Deferred", true, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
 		pVeteranHero->AddComponent(make_shared<Animator>());
 		pVeteranHero->AddComponent(make_shared<AI>());
+		pVeteranHero->AddComponent(make_shared<Movement>());
 		pVeteranHero->AddComponent(make_shared<VeteranHeroLandingScript>());
 		pVeteranHero->AddComponent(make_shared<VeteranHeroFallSkillScript>());
 		pVeteranHero->SetDirection(DIRECTION::LEFT);
+		pVeteranHero->GetTransform()->SetGlobalOffset(Vec2(0.f, 10.f));
+
+		pVeteranHero->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
 
 		shared_ptr<Selector> pRootNode = make_shared<Selector>();
 		shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
@@ -117,6 +132,33 @@ void Ch3ViceBossDungeon::Enter()
 
 		shared_ptr<Sequence> pFallSkillReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pFallSkillSequence = make_shared<Sequence>();
+
+		shared_ptr<Sequence> pComboAReadySequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pComboASequence = make_shared<Sequence>();
+		// 거리 조절-> Upper -> Slash
+
+		shared_ptr<Sequence> pComboBSequence = make_shared<Sequence>();
+		// 거리 조절 -> JumpAttack -> Landing
+
+		shared_ptr<Sequence> pComboCSequence = make_shared<Sequence>();
+		// 플레이어 방향으로 Stinger -> Slash
+
+		shared_ptr<Sequence> pComboDSequence = make_shared<Sequence>();
+		// 멀어진 후 에너지볼
+
+		shared_ptr<Sequence> pBarriorSequence = make_shared<Sequence>();
+		// 너무 가까우면 배리어
+
+		shared_ptr<Sequence> pComboESequence = make_shared<Sequence>();
+		// 콤보 A와 동일하나 검기 발생
+
+		shared_ptr<Sequence> pEnergyAtkSequence = make_shared<Sequence>();
+		// HP 50% 이하일때 준필살기 발동
+
+		shared_ptr<Sequence> pStingerRushSequence = make_shared<Sequence>();
+		// HP 25% 이하일 때 필살기 발동
+
+
 		
 		pRootNode->AddChild(pLandingReadySequence);
 		{
@@ -139,6 +181,41 @@ void Ch3ViceBossDungeon::Enter()
 			pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::IDLE));
 			pIdleSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Idle"));
 			pIdleSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
+			pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_A_READY));
+			// Random State
+		}
+
+		pRootNode->AddChild(pComboAReadySequence);
+		{
+			pComboAReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_A_READY));
+			pComboAReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttackReady", false));
+			//pComboAReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
+
+			// 거리 계산 및 분기
+			{
+				shared_ptr<Selector> pStateSelector = make_shared<Selector>();
+				{
+					shared_ptr<Sequence> pDistCheckSequence = make_shared<Sequence>();
+					pDistCheckSequence->AddChild(make_shared<IsPlayerNearCondition>(pPlayer.lock(), pVeteranHero, 100.f));
+					pDistCheckSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+					pDistCheckSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_A));
+					pStateSelector->AddChild(pDistCheckSequence);
+				}
+				pStateSelector->AddChild(make_shared<SetDirectionTowardPlayerTask>(pPlayer.lock(), pVeteranHero));
+				pComboAReadySequence->AddChild(pStateSelector);
+				pComboAReadySequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, 1000.f));
+				pComboAReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Dash", false));
+			}
+			// 플레이어와의 거리 계산 및 대쉬
+		}
+
+		pRootNode->AddChild(pComboASequence);
+		{
+			pComboASequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_A));
+			pComboASequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+			pComboASequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttack", false));
+			pComboASequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
+			pComboASequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
 		}
 
 		pRootNode->AddChild(pFallSkillReadySequence);
@@ -168,6 +245,20 @@ void Ch3ViceBossDungeon::Enter()
 		shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_Idle", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_idle.anim");
 		shared_ptr<Animation> pJumpAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_Jump", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_jump.anim");
 		shared_ptr<Animation> pFallSkillAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_FallDown", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_e_landing.anim");
+		
+		shared_ptr<Animation> pBackDashAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_BackDash", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_back_dash.anim");
+		shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_Dash", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_dash.anim");
+		
+		shared_ptr<Animation> pUpperAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_UpperAttack", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_a.anim");
+		shared_ptr<Animation> pUpperAttackReadyAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_UpperAttackReady", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_a_ready.anim");
+		
+		shared_ptr<Animation> pSlashAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_SlashAttack", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_b.anim");
+		shared_ptr<Animation> pSlashAttackReadyAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_SlashAttackReady", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_b_ready.anim");
+		
+		shared_ptr<Animation> pEnergyBallAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_EnergyBallAttack", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_c.anim");
+
+		shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_JumpAttack", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_d.anim");
+		shared_ptr<Animation> pJumpAttackReadyAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_JumpAttackReady", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_d_ready.anim");
 
 
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_LandingReady", pLandingReadyAnimation);
@@ -177,7 +268,16 @@ void Ch3ViceBossDungeon::Enter()
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_Idle", pIdleAnimation);
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_Jump", pJumpAnimation);
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_FallDown", pFallSkillAnimation);
-		pVeteranHero->GetPhysical()->GetActor<PxRigidDynamic>()->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_BackDash", pBackDashAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_Dash", pDashAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_UpperAttack", pUpperAttackAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_UpperAttackReady", pUpperAttackReadyAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_SlashAttack", pSlashAttackAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_SlashAttackReady", pSlashAttackReadyAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_EnergyBallAttack", pEnergyBallAttackAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_JumpAttack", pJumpAttackAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_JumpAttackReady", pJumpAttackReadyAnimation);
+		pVeteranHero->GetRigidBody()->RemoveGravity();;
 
 		// Animations
 		pVeteranHero->GetAnimator()->Play(L"VeteranHero_LandingThrowing", false);

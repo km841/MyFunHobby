@@ -8,6 +8,7 @@ VeteranHero::VeteranHero()
 	: m_bLandingFlag(false)
 	, m_bLandingChecked(false)
 {
+	SetMonsterState(MONSTER_STATE::PATROL);
 }
 
 VeteranHero::~VeteranHero()
@@ -32,7 +33,8 @@ void VeteranHero::Update()
 	{
 		if (MONSTER_STATE::LANDING_READY == MONSTER_STATE::LANDING_READY && !m_bLandingChecked)
 		{
-			GetRigidBody()->SetLinearVelocityForDynamic(PxVec3(0.f, 0.f, 0.f));
+			GetRigidBody()->SetVelocity(Vec3::Zero);
+			GetRigidBody()->RemoveGravity();
 			GetRigidBody()->SetLinearMaxVelocityForDynamic(2000.f);
 			m_bLandingChecked = true;
 			SetMonsterState(MONSTER_STATE::LANDING);
@@ -52,7 +54,7 @@ void VeteranHero::FinalUpdate()
 	GameObject::FinalUpdate();
 }
 
-void VeteranHero::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
+void VeteranHero::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
@@ -60,6 +62,6 @@ void VeteranHero::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
 	}
 }
 
-void VeteranHero::OnCollisionExit(shared_ptr<GameObject> pGameObject)
+void VeteranHero::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
 }
