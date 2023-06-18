@@ -43,7 +43,10 @@
 #include "Selector.h"
 #include "Movement.h"
 #include "Light.h"
+#include "ConditionToken.h"
 
+#include "IsTokenStateCondition.h"
+#include "TokenStateChangeTask.h"
 #include "TimerCondition.h"
 #include "IsMonsterStateCondition.h"
 #include "ChangeMonsterStateTask.h"
@@ -158,8 +161,6 @@ void Ch3ViceBossDungeon::Enter()
 		shared_ptr<Sequence> pStingerRushSequence = make_shared<Sequence>();
 		// HP 25% 이하일 때 필살기 발동
 
-
-		
 		pRootNode->AddChild(pLandingReadySequence);
 		{
 			pLandingReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::LANDING_READY));
@@ -189,7 +190,7 @@ void Ch3ViceBossDungeon::Enter()
 		{
 			pComboAReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_A_READY));
 			pComboAReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttackReady", false));
-			//pComboAReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
+			//pComboAReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.2f));
 
 			// 거리 계산 및 분기
 			{
@@ -203,7 +204,7 @@ void Ch3ViceBossDungeon::Enter()
 				}
 				pStateSelector->AddChild(make_shared<SetDirectionTowardPlayerTask>(pPlayer.lock(), pVeteranHero));
 				pComboAReadySequence->AddChild(pStateSelector);
-				pComboAReadySequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, 1000.f));
+				pComboAReadySequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, 700.f));
 				pComboAReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Dash", false));
 			}
 			// 플레이어와의 거리 계산 및 대쉬
@@ -211,11 +212,33 @@ void Ch3ViceBossDungeon::Enter()
 
 		pRootNode->AddChild(pComboASequence);
 		{
+			shared_ptr<ConditionToken> pToken = make_shared<ConditionToken>();
+
 			pComboASequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_A));
 			pComboASequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
-			pComboASequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttack", false));
-			pComboASequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
-			pComboASequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
+
+			shared_ptr<Selector> pAnimSelector = make_shared<Selector>();
+			{
+				shared_ptr<Sequence> pUpperAnimSequence = make_shared<Sequence>();
+				{
+					pUpperAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
+					pUpperAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttack", false));
+					pUpperAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+					pUpperAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
+					pAnimSelector->AddChild(pUpperAnimSequence);
+				}
+
+				shared_ptr<Sequence> pSlashAnimSequence = make_shared<Sequence>();
+				{
+					pSlashAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
+					pSlashAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_SlashAttack", false));
+					pSlashAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
+					pSlashAnimSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
+					pAnimSelector->AddChild(pSlashAnimSequence);
+				}
+				pComboASequence->AddChild(pAnimSelector);
+			}
 		}
 
 		pRootNode->AddChild(pFallSkillReadySequence);

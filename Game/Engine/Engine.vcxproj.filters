@@ -331,6 +331,15 @@
     <ClInclude Include="VelocityZeroForKinematicTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="ConditionToken.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="IsTokenStateCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenStateChangeTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -649,6 +658,15 @@
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
     <ClCompile Include="VelocityZeroForKinematicTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionToken.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="IsTokenStateCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenStateChangeTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>

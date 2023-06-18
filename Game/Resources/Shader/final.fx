@@ -78,7 +78,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     int iNumBlurSampling = 5;
     
     vVelocity.xy /= (float) iNumBlurSampling;
-    vVelocity.x *= 3.f;
+    vVelocity.x *= 7.f;
     int iCount = 1;
     
     for (int i = iCount; i < iNumBlurSampling; ++i)

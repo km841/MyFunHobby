@@ -67,7 +67,7 @@ void DashState::Enter()
 	PlayAnimation();
 	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
-	m_pPlayer.lock()->GetActiveSkul()->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
+	//m_pPlayer.lock()->GetActiveSkul()->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
 	m_pPlayer.lock()->ActiveEssenceWhenDashEnterTiming();
 
 	EnableAndInitDashSmokeEffect();
@@ -78,7 +78,7 @@ void DashState::Exit()
 {
 	m_tDuration.Stop();
 	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::X, 0.f);
-	m_pPlayer.lock()->GetActiveSkul()->GetMeshRenderer()->GetMaterial()->SetInt(3, 0);
+	//m_pPlayer.lock()->GetActiveSkul()->GetMeshRenderer()->GetMaterial()->SetInt(3, 0);
 }
 
 void DashState::PlayAnimation()

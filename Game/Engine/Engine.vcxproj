@@ -180,6 +180,7 @@
     <ClInclude Include="ChangeMonsterStateTask.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ConditionToken.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="ContactCallback.h" />
     <ClInclude Include="Context.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="IsMonsterStateCondition.h" />
     <ClInclude Include="IsPlayerInAttackRangeCondition.h" />
     <ClInclude Include="IsPlayerNearCondition.h" />
+    <ClInclude Include="IsTokenStateCondition.h" />
     <ClInclude Include="KnightAttackTask.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
@@ -268,6 +270,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="TimerCondition.h" />
+    <ClInclude Include="TokenStateChangeTask.h" />
     <ClInclude Include="TrackingOfMeleeTask.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="InterfaceManager.h" />
@@ -292,6 +295,7 @@
     <ClCompile Include="ChangeMonsterStateTask.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ConditionToken.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="ContactCallback.cpp" />
     <ClCompile Include="Context.cpp" />
@@ -320,6 +324,7 @@
     <ClCompile Include="IsMonsterStateCondition.cpp" />
     <ClCompile Include="IsPlayerInAttackRangeCondition.cpp" />
     <ClCompile Include="IsPlayerNearCondition.cpp" />
+    <ClCompile Include="IsTokenStateCondition.cpp" />
     <ClCompile Include="KnightAttackTask.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -381,6 +386,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="TimerCondition.cpp" />
+    <ClCompile Include="TokenStateChangeTask.cpp" />
     <ClCompile Include="TrackingOfMeleeTask.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="InterfaceManager.cpp" />
