@@ -340,6 +340,15 @@
     <ClInclude Include="TokenStateChangeTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="IsGroundCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="IsFlyingCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseRandomSelectTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -667,6 +676,15 @@
       <Filter>Object\AI\MonsterAI\Condition</Filter>
     </ClCompile>
     <ClCompile Include="TokenStateChangeTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="IsGroundCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="IsFlyingCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseRandomSelectTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>

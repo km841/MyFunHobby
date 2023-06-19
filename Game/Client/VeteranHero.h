@@ -14,6 +14,8 @@ public:
 	void LateUpdate();
 	void FinalUpdate();
 
+	bool IsGround() { return m_bGroundFlag; }
+
 public:
 	virtual void OnTriggerEnter(shared_ptr<GameObject> pGameObject);
 	virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
@@ -21,6 +23,7 @@ public:
 private:
 	bool m_bLandingFlag;
 	bool m_bLandingChecked;
+	bool m_bGroundFlag;
 
 };
 

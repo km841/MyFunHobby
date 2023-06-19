@@ -66,6 +66,9 @@
 #include "SetVelocityForDynamicObjectTask.h"
 #include "SetVelocityGoToPlayerPosTask.h"
 #include "VelocityZeroForKinematicTask.h"
+#include "IsGroundCondition.h"
+#include "IsFlyingCondition.h"
+#include "ChaseRandomSelectTask.h"
 
 #include "VeteranHeroLandingScript.h"
 #include "VeteranHeroFallSkillScript.h"
@@ -136,15 +139,20 @@ void Ch3ViceBossDungeon::Enter()
 		shared_ptr<Sequence> pFallSkillReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pFallSkillSequence = make_shared<Sequence>();
 
+		shared_ptr<Sequence> pChaseSequence = make_shared<Sequence>();
+
 		shared_ptr<Sequence> pComboAReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pComboASequence = make_shared<Sequence>();
 		// 거리 조절-> Upper -> Slash
 
+		shared_ptr<Sequence> pComboBReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pComboBSequence = make_shared<Sequence>();
 		// 거리 조절 -> JumpAttack -> Landing
 
-		shared_ptr<Sequence> pComboCSequence = make_shared<Sequence>();
-		// 플레이어 방향으로 Stinger -> Slash
+		shared_ptr<Sequence> pStingerReadySequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pStingerSequence = make_shared<Sequence>();
+		// 플레이어 방향으로 Stinger -> 뒤돌아서 Slash
+		// n초간 stinger
 
 		shared_ptr<Sequence> pComboDSequence = make_shared<Sequence>();
 		// 멀어진 후 에너지볼
@@ -166,7 +174,6 @@ void Ch3ViceBossDungeon::Enter()
 			pLandingReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::LANDING_READY));
 			pLandingReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_LandingReady"));
 			pLandingReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
-			//pLandingReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::LANDING));
 		}
 
 		pRootNode->AddChild(pLandingEndSequence);
@@ -174,7 +181,6 @@ void Ch3ViceBossDungeon::Enter()
 			pLandingEndSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::LANDING_END));
 			pLandingEndSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_LandingEnd", false));
 			pLandingEndSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
-			//pLandingReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::LANDING));
 		}
 
 		pRootNode->AddChild(pIdleSequence);
@@ -182,16 +188,14 @@ void Ch3ViceBossDungeon::Enter()
 			pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::IDLE));
 			pIdleSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Idle"));
 			pIdleSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
-			pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_A_READY));
-			// Random State
+			pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::TRACE));
+			// Random State -> 'Trace' or 'Stinger' or 'BackDash'
 		}
 
-		pRootNode->AddChild(pComboAReadySequence);
+		pRootNode->AddChild(pChaseSequence);
 		{
-			pComboAReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_A_READY));
-			pComboAReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttackReady", false));
-			//pComboAReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.2f));
-
+			pChaseSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::TRACE));
+			pChaseSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Idle"));
 			// 거리 계산 및 분기
 			{
 				shared_ptr<Selector> pStateSelector = make_shared<Selector>();
@@ -199,15 +203,23 @@ void Ch3ViceBossDungeon::Enter()
 					shared_ptr<Sequence> pDistCheckSequence = make_shared<Sequence>();
 					pDistCheckSequence->AddChild(make_shared<IsPlayerNearCondition>(pPlayer.lock(), pVeteranHero, 100.f));
 					pDistCheckSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
-					pDistCheckSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_A));
+					pDistCheckSequence->AddChild(make_shared<ChaseRandomSelectTask>(pVeteranHero));
 					pStateSelector->AddChild(pDistCheckSequence);
 				}
 				pStateSelector->AddChild(make_shared<SetDirectionTowardPlayerTask>(pPlayer.lock(), pVeteranHero));
-				pComboAReadySequence->AddChild(pStateSelector);
-				pComboAReadySequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, 700.f));
-				pComboAReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Dash", false));
+				pChaseSequence->AddChild(pStateSelector);
+				pChaseSequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, Vec3(700.f, 0.f, 0.f)));
+				pChaseSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Dash", false));
 			}
-			// 플레이어와의 거리 계산 및 대쉬
+		}
+
+		pRootNode->AddChild(pComboAReadySequence);
+		{
+			pComboAReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_A_READY));
+			pComboAReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttackReady", false));
+			pComboAReadySequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+			pComboAReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+			pComboAReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_A));
 		}
 
 		pRootNode->AddChild(pComboASequence);
@@ -238,6 +250,103 @@ void Ch3ViceBossDungeon::Enter()
 					pAnimSelector->AddChild(pSlashAnimSequence);
 				}
 				pComboASequence->AddChild(pAnimSelector);
+			}
+		}
+
+		pRootNode->AddChild(pComboBReadySequence);
+		{
+			pComboBReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_B_READY));
+			pComboBReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttackReady", false));
+			pComboBReadySequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+			pComboBReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+			pComboBReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_B));
+		}
+
+		pRootNode->AddChild(pComboBSequence);
+		{
+			shared_ptr<ConditionToken> pToken = make_shared<ConditionToken>();
+
+			pComboBSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_B));
+			pComboBSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+
+			shared_ptr<Selector> pAnimSelector = make_shared<Selector>();
+			{
+				shared_ptr<Sequence> pJumpAnimSequence = make_shared<Sequence>();
+				{
+					pJumpAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
+					pJumpAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_JumpAttack", false));
+					pJumpAnimSequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, Vec3(500.f, 700.f, 0.f)));
+					pJumpAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.25f));
+					pJumpAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
+					pAnimSelector->AddChild(pJumpAnimSequence);
+				}
+
+				shared_ptr<Sequence> pFallAnimSequence = make_shared<Sequence>();
+				{
+					pFallAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
+					pFallAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_FallDown", false));
+					shared_ptr<Selector> pGroundCheckSelector = make_shared<Selector>();
+					{
+						shared_ptr<Sequence> pGroundSequence = make_shared<Sequence>();
+						{
+							pGroundSequence->AddChild(make_shared<IsGroundCondition>(pVeteranHero));
+							pGroundSequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, Vec3(0.f, 0.f, 0.f)));
+							pGroundCheckSelector->AddChild(pGroundSequence);
+						}
+
+						shared_ptr<Sequence> pNotGroundSequence = make_shared<Sequence>();
+						{
+							pNotGroundSequence->AddChild(make_shared<IsFlyingCondition>(pVeteranHero));
+							pNotGroundSequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, Vec3(0.f, -1500.f, 0.f)));
+							pGroundCheckSelector->AddChild(pNotGroundSequence);
+						}
+						pFallAnimSequence->AddChild(pGroundCheckSelector);
+					}
+					pFallAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+					pFallAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
+					pFallAnimSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
+					pAnimSelector->AddChild(pFallAnimSequence);
+				}
+				pComboBSequence->AddChild(pAnimSelector);
+			}
+		}
+
+		pRootNode->AddChild(pStingerReadySequence);
+		{
+			pStingerReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_C_READY));
+			pStingerReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_StingerReady", false));
+			pStingerReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
+			pStingerReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_C));
+		}
+
+		pRootNode->AddChild(pStingerSequence);
+		{
+			shared_ptr<ConditionToken> pToken = make_shared<ConditionToken>();
+
+			pStingerSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_C));
+			pStingerSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+
+			shared_ptr<Selector> pAnimSelector = make_shared<Selector>();
+			{
+				shared_ptr<Sequence> pStingerAnimSequence = make_shared<Sequence>();
+				{
+					pStingerAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
+					pStingerAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Stinger", false));
+					pStingerAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+					pStingerAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
+					pAnimSelector->AddChild(pStingerAnimSequence);
+				}
+
+				shared_ptr<Sequence> pSlashAnimSequence = make_shared<Sequence>();
+				{
+					pSlashAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
+					pSlashAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_SlashAttack", false));
+					pSlashAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
+					pSlashAnimSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
+					pAnimSelector->AddChild(pSlashAnimSequence);
+				}
+				pStingerSequence->AddChild(pAnimSelector);
 			}
 		}
 
@@ -283,6 +392,8 @@ void Ch3ViceBossDungeon::Enter()
 		shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_JumpAttack", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_d.anim");
 		shared_ptr<Animation> pJumpAttackReadyAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_JumpAttackReady", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_attack_d_ready.anim");
 
+		shared_ptr<Animation> pStingerReadyAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_StingerReady", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_stinger_ready.anim");
+		shared_ptr<Animation> pStingerAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_Stinger", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_stinger.anim");
 
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_LandingReady", pLandingReadyAnimation);
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_Landing", pLandingAnimation);
@@ -300,6 +411,8 @@ void Ch3ViceBossDungeon::Enter()
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_EnergyBallAttack", pEnergyBallAttackAnimation);
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_JumpAttack", pJumpAttackAnimation);
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_JumpAttackReady", pJumpAttackReadyAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_Stinger", pStingerAnimation);
+		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_StingerReady", pStingerReadyAnimation);
 		pVeteranHero->GetRigidBody()->RemoveGravity();;
 
 		// Animations

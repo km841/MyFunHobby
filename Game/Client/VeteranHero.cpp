@@ -7,6 +7,7 @@
 VeteranHero::VeteranHero()
 	: m_bLandingFlag(false)
 	, m_bLandingChecked(false)
+	, m_bGroundFlag(false)
 {
 	SetMonsterState(MONSTER_STATE::PATROL);
 }
@@ -59,9 +60,14 @@ void VeteranHero::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
 		m_bLandingFlag = true;
+		m_bGroundFlag = true;
 	}
 }
 
 void VeteranHero::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		m_bGroundFlag = false;
+	}
 }
