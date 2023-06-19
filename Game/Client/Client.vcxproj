@@ -212,6 +212,7 @@
     <ClInclude Include="ChimeraFallParticlesScript.h" />
     <ClInclude Include="ChimeraGrabScript.h" />
     <ClInclude Include="ChimeraRoar.h" />
+    <ClInclude Include="CreateViceBossMapWallTileEvent.h" />
     <ClInclude Include="DisableCameraTrackingEvent.h" />
     <ClInclude Include="EnableCameraTrackingEvent.h" />
     <ClInclude Include="EnableChapterBossHPBarEvent.h" />
@@ -449,6 +450,7 @@
     <ClCompile Include="ChimeraFallParticlesScript.cpp" />
     <ClCompile Include="ChimeraGrabScript.cpp" />
     <ClCompile Include="ChimeraRoar.cpp" />
+    <ClCompile Include="CreateViceBossMapWallTileEvent.cpp" />
     <ClCompile Include="DisableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableChapterBossHPBarEvent.cpp" />

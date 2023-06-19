@@ -179,6 +179,7 @@
     <ClInclude Include="ChangeChimeraRandomStateTask.h" />
     <ClInclude Include="ChangeMonsterStateTask.h" />
     <ClInclude Include="ChaseRandomSelectTask.h" />
+    <ClInclude Include="CloseToTheWallCondition.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConditionToken.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FilterShaders.h" />
     <ClInclude Include="FleeSequence.h" />
+    <ClInclude Include="FlipDirectionTask.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="ForceOnObjectEvent.h" />
     <ClInclude Include="Frustum.h" />
@@ -263,6 +265,9 @@
     <ClInclude Include="Sequence.h" />
     <ClInclude Include="SetDirectionTowardPlayerTask.h" />
     <ClInclude Include="SetVelocityForDynamicObjectTask.h" />
+    <ClInclude Include="SetVelocityForKinematicObjectTask.h" />
+    <ClInclude Include="SetVelocityForKinematicOpposedDirTask.h" />
+    <ClInclude Include="SetVelocityForKinematicTowardDirTask.h" />
     <ClInclude Include="SetVelocityGoToPlayerPosTask.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
@@ -281,6 +286,9 @@
     <ClInclude Include="Utility.h" />
     <ClInclude Include="VelocityDownTask.h" />
     <ClInclude Include="VelocityZeroForKinematicTask.h" />
+    <ClInclude Include="VeteranHeroRandomStateTask.h" />
+    <ClInclude Include="VeteranHeroStingerEffectStateChangeTask.h" />
+    <ClInclude Include="VeteranHeroStingerSlashEffectStateChangeTask.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddSpineAnimationTask.cpp" />
@@ -297,6 +305,7 @@
     <ClCompile Include="ChangeChimeraRandomStateTask.cpp" />
     <ClCompile Include="ChangeMonsterStateTask.cpp" />
     <ClCompile Include="ChaseRandomSelectTask.cpp" />
+    <ClCompile Include="CloseToTheWallCondition.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConditionToken.cpp" />
@@ -314,6 +323,7 @@
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FilterShaders.cpp" />
     <ClCompile Include="FleeSequence.cpp" />
+    <ClCompile Include="FlipDirectionTask.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="ForceOnObjectEvent.cpp" />
     <ClCompile Include="Frustum.cpp" />
@@ -382,6 +392,9 @@
     <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="SetDirectionTowardPlayerTask.cpp" />
     <ClCompile Include="SetVelocityForDynamicObjectTask.cpp" />
+    <ClCompile Include="SetVelocityForKinematicObjectTask.cpp" />
+    <ClCompile Include="SetVelocityForKinematicOpposedDirTask.cpp" />
+    <ClCompile Include="SetVelocityForKinematicTowardDirTask.cpp" />
     <ClCompile Include="SetVelocityGoToPlayerPosTask.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
@@ -400,6 +413,9 @@
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="VelocityDownTask.cpp" />
     <ClCompile Include="VelocityZeroForKinematicTask.cpp" />
+    <ClCompile Include="VeteranHeroRandomStateTask.cpp" />
+    <ClCompile Include="VeteranHeroStingerEffectStateChangeTask.cpp" />
+    <ClCompile Include="VeteranHeroStingerSlashEffectStateChangeTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl" />

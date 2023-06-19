@@ -17,7 +17,7 @@ MagicSword::MagicSword(float fStayTime)
 	: GameObject(LAYER_TYPE::UNKNOWN)
 	, m_tStayTime(fStayTime)
 	, m_bActive(false)
-	, m_tDuration(2.f)
+	, m_tDuration(1.f)
 	, m_bDestroyed(false)
 {
 }

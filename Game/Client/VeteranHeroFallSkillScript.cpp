@@ -19,7 +19,7 @@ VeteranHeroFallSkillScript::VeteranHeroFallSkillScript()
 	: m_bSkillReadyFlag(false)
 	, m_bSkillFlag(false)
 	, m_tDelayTime(2.f)
-	, m_tFallStayTime(5.f)
+	, m_tFallStayTime(3.f)
 	, m_bWarningSignFlag(false)
 {
 }
@@ -137,11 +137,11 @@ void VeteranHeroFallSkillScript::CreateWarningSignAndAddedToScene()
 
 void VeteranHeroFallSkillScript::CreateMagicSwordsAndAddedToScene()
 {
-	for (int32 i = 0; i < 2; ++i)
+	for (int32 i = 0; i < 3; ++i)
 	{
 		for (int32 j = 0; j < 2; ++j)
 		{
-			shared_ptr<MagicSword> pSword = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<MagicSword>(L"Forward", L"", i ? 0.5f : 0.f);
+			shared_ptr<MagicSword> pSword = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<MagicSword>(L"Forward", L"", i * 0.3f);
 
 			float fOffset = 100.f * (i + 1);
 			Vec3 vPos = GetTransform()->GetPhysicalPosition();

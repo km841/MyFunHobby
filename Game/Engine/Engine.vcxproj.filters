@@ -331,9 +331,6 @@
     <ClInclude Include="VelocityZeroForKinematicTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
-    <ClInclude Include="ConditionToken.h">
-      <Filter>Object\AI\MonsterAI\Condition</Filter>
-    </ClInclude>
     <ClInclude Include="IsTokenStateCondition.h">
       <Filter>Object\AI\MonsterAI\Condition</Filter>
     </ClInclude>
@@ -347,6 +344,33 @@
       <Filter>Object\AI\MonsterAI\Condition</Filter>
     </ClInclude>
     <ClInclude Include="ChaseRandomSelectTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="SetVelocityForKinematicObjectTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="SetVelocityForKinematicTowardDirTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="FlipDirectionTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="VeteranHeroStingerEffectStateChangeTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="VeteranHeroStingerSlashEffectStateChangeTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseToTheWallCondition.h">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionToken.h">
+      <Filter>Object\AI\MonsterAI\Condition\Token</Filter>
+    </ClInclude>
+    <ClInclude Include="SetVelocityForKinematicOpposedDirTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="VeteranHeroRandomStateTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
   </ItemGroup>
@@ -669,9 +693,6 @@
     <ClCompile Include="VelocityZeroForKinematicTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
-    <ClCompile Include="ConditionToken.cpp">
-      <Filter>Object\AI\MonsterAI\Condition</Filter>
-    </ClCompile>
     <ClCompile Include="IsTokenStateCondition.cpp">
       <Filter>Object\AI\MonsterAI\Condition</Filter>
     </ClCompile>
@@ -685,6 +706,33 @@
       <Filter>Object\AI\MonsterAI\Condition</Filter>
     </ClCompile>
     <ClCompile Include="ChaseRandomSelectTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="SetVelocityForKinematicObjectTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="SetVelocityForKinematicTowardDirTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="FlipDirectionTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="VeteranHeroStingerEffectStateChangeTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="VeteranHeroStingerSlashEffectStateChangeTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseToTheWallCondition.cpp">
+      <Filter>Object\AI\MonsterAI\Condition</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionToken.cpp">
+      <Filter>Object\AI\MonsterAI\Condition\Token</Filter>
+    </ClCompile>
+    <ClCompile Include="SetVelocityForKinematicOpposedDirTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="VeteranHeroRandomStateTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>
@@ -742,6 +790,9 @@
     </Filter>
     <Filter Include="Resource\Spine">
       <UniqueIdentifier>{b1af827e-87d2-4e9f-8f9f-7087da842b51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AI\MonsterAI\Condition\Token">
+      <UniqueIdentifier>{d9f808b6-cf45-49c2-8115-83ab864eac9d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

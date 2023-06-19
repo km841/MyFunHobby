@@ -907,6 +907,9 @@
     <ClInclude Include="MagicSword.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
     </ClInclude>
+    <ClInclude Include="CreateViceBossMapWallTileEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1590,6 +1593,9 @@
     </ClCompile>
     <ClCompile Include="MagicSword.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateViceBossMapWallTileEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

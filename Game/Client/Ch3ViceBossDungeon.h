@@ -1,6 +1,8 @@
 #pragma once
 #include "Dungeon.h"
+class Tile;
 class Ch3ViceBossDungeon :
+	public std::enable_shared_from_this<Ch3ViceBossDungeon>,
     public Dungeon
 {
 public:
@@ -16,5 +18,11 @@ public:
 
 	virtual void Enter();
 	virtual void Exit();
+
+public:
+	void CreateWallTilesAndAddedToScene();
+
+private:
+	std::vector<shared_ptr<Tile>> m_vTiles;
 };
 

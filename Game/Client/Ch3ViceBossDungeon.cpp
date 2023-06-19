@@ -58,6 +58,7 @@
 #include "PauseDungeonEvent.h"
 #include "PlayDungeonEvent.h"
 #include "EnableChapterBossHPBarEvent.h"
+#include "CreateViceBossMapWallTileEvent.h"
 #include "ChangeChimeraRandomStateTask.h"
 #include "EnableChapterBossHPBarTask.h"
 #include "RemoveToSceneTask.h"
@@ -69,6 +70,15 @@
 #include "IsGroundCondition.h"
 #include "IsFlyingCondition.h"
 #include "ChaseRandomSelectTask.h"
+#include "SetVelocityForKinematicObjectTask.h"
+#include "SetVelocityForKinematicTowardDirTask.h"
+#include "FlipDirectionTask.h"
+#include "VeteranHeroStingerEffectStateChangeTask.h"
+#include "VeteranHeroStingerSlashEffectStateChangeTask.h"
+#include "CloseToTheWallCondition.h"
+#include "SetVelocityForKinematicOpposedDirTask.h"
+#include "VeteranHeroRandomStateTask.h"
+#include "MonsterHitShaderScript.h"
 
 #include "VeteranHeroLandingScript.h"
 #include "VeteranHeroFallSkillScript.h"
@@ -118,12 +128,13 @@ void Ch3ViceBossDungeon::Enter()
 	// Veteran Hero
 	shared_ptr<VeteranHero> pVeteranHero = nullptr;
 	{
-		pVeteranHero = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VeteranHero>(L"Deferred", true, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
+		pVeteranHero = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VeteranHero>(L"Monster_Deferred", true, ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties());
 		pVeteranHero->AddComponent(make_shared<Animator>());
 		pVeteranHero->AddComponent(make_shared<AI>());
 		pVeteranHero->AddComponent(make_shared<Movement>());
 		pVeteranHero->AddComponent(make_shared<VeteranHeroLandingScript>());
 		pVeteranHero->AddComponent(make_shared<VeteranHeroFallSkillScript>());
+		pVeteranHero->AddComponent(make_shared<MonsterHitShaderScript>());
 		pVeteranHero->SetDirection(DIRECTION::LEFT);
 		pVeteranHero->GetTransform()->SetGlobalOffset(Vec2(0.f, 10.f));
 
@@ -140,6 +151,7 @@ void Ch3ViceBossDungeon::Enter()
 		shared_ptr<Sequence> pFallSkillSequence = make_shared<Sequence>();
 
 		shared_ptr<Sequence> pChaseSequence = make_shared<Sequence>();
+		shared_ptr<Sequence> pFleeSequence = make_shared<Sequence>();
 
 		shared_ptr<Sequence> pComboAReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pComboASequence = make_shared<Sequence>();
@@ -186,9 +198,11 @@ void Ch3ViceBossDungeon::Enter()
 		pRootNode->AddChild(pIdleSequence);
 		{
 			pIdleSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::IDLE));
+			pIdleSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
 			pIdleSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Idle"));
-			pIdleSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
-			pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::TRACE));
+			//pIdleSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
+			pIdleSequence->AddChild(make_shared<VeteranHeroRandomStateTask>(pVeteranHero));
+			//pIdleSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::FLEE));
 			// Random State -> 'Trace' or 'Stinger' or 'BackDash'
 		}
 
@@ -197,10 +211,11 @@ void Ch3ViceBossDungeon::Enter()
 			pChaseSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::TRACE));
 			pChaseSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Idle"));
 			// 거리 계산 및 분기
+		
+			shared_ptr<Selector> pStateSelector = make_shared<Selector>();
 			{
-				shared_ptr<Selector> pStateSelector = make_shared<Selector>();
+				shared_ptr<Sequence> pDistCheckSequence = make_shared<Sequence>();
 				{
-					shared_ptr<Sequence> pDistCheckSequence = make_shared<Sequence>();
 					pDistCheckSequence->AddChild(make_shared<IsPlayerNearCondition>(pPlayer.lock(), pVeteranHero, 100.f));
 					pDistCheckSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
 					pDistCheckSequence->AddChild(make_shared<ChaseRandomSelectTask>(pVeteranHero));
@@ -208,8 +223,82 @@ void Ch3ViceBossDungeon::Enter()
 				}
 				pStateSelector->AddChild(make_shared<SetDirectionTowardPlayerTask>(pPlayer.lock(), pVeteranHero));
 				pChaseSequence->AddChild(pStateSelector);
-				pChaseSequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, Vec3(700.f, 0.f, 0.f)));
-				pChaseSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Dash", false));
+			}
+
+			pChaseSequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, Vec3(700.f, 0.f, 0.f)));
+			pChaseSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Dash", false));
+		}
+
+		pRootNode->AddChild(pFleeSequence);
+		{
+			pFleeSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::FLEE));
+			
+			shared_ptr<ConditionToken> pToken = make_shared<ConditionToken>();
+			shared_ptr<Selector> pTokenStateSelector = make_shared<Selector>();
+			{
+				shared_ptr<Sequence> pTokenTrueSequence = make_shared<Sequence>();
+				{
+					pTokenTrueSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
+					shared_ptr<Selector> pWallToDistanceCheckSelector = make_shared<Selector>();
+					{
+						shared_ptr<Sequence> pNearWallSequence = make_shared<Sequence>();
+						{
+							pNearWallSequence->AddChild(make_shared<CloseToTheWallCondition>(pVeteranHero));
+							pNearWallSequence->AddChild(make_shared<FlipDirectionTask>(pVeteranHero));
+							pNearWallSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
+							pNearWallSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+							pNearWallSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
+							pWallToDistanceCheckSelector->AddChild(pNearWallSequence);
+						}
+
+						shared_ptr<Sequence> pFarWallSequence = make_shared<Sequence>();
+						{
+							pFarWallSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_BackDash"));
+							pFarWallSequence->AddChild(make_shared<SetVelocityForKinematicOpposedDirTask>(pVeteranHero, Vec3(800.f, 0.f, 0.f)));
+							pWallToDistanceCheckSelector->AddChild(pFarWallSequence);
+						}
+
+						pTokenTrueSequence->AddChild(pWallToDistanceCheckSelector);
+					}
+					pTokenTrueSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.25f));
+					pTokenTrueSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
+					
+					pTokenTrueSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+
+					// 바라보는 방향으로 검기 발사하는 State 만들기
+					pTokenTrueSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
+					pTokenStateSelector->AddChild(pTokenTrueSequence);
+				}
+
+				shared_ptr<Sequence> pTokenFalseSequence = make_shared<Sequence>();
+				{
+					pTokenFalseSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
+
+					shared_ptr<Selector> pPlayerToDistanceSelector = make_shared<Selector>();
+					{
+						shared_ptr<Sequence> pPlayerNearSequence = make_shared<Sequence>();
+						{
+							pPlayerNearSequence->AddChild(make_shared<IsPlayerNearCondition>(pPlayer.lock(), pVeteranHero, 100.f));
+							pPlayerNearSequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(pPlayer.lock(), pVeteranHero));
+							pPlayerNearSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
+							pPlayerToDistanceSelector->AddChild(pPlayerNearSequence);
+						}
+
+						shared_ptr<Sequence> pPlayerFarSequence = make_shared<Sequence>();
+						{
+							pPlayerFarSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
+							pPlayerFarSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
+							pPlayerFarSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
+							pPlayerToDistanceSelector->AddChild(pPlayerFarSequence);
+						}
+
+						pTokenFalseSequence->AddChild(pPlayerToDistanceSelector);
+					}
+
+					pTokenStateSelector->AddChild(pTokenFalseSequence);
+				}
+
+				pFleeSequence->AddChild(pTokenStateSelector);
 			}
 		}
 
@@ -313,15 +402,37 @@ void Ch3ViceBossDungeon::Enter()
 
 		pRootNode->AddChild(pStingerReadySequence);
 		{
+			shared_ptr<ConditionToken> pToken = make_shared<ConditionToken>();
+
 			pStingerReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_C_READY));
+			shared_ptr<Selector> pDirFixSelector = make_shared<Selector>();
+			{
+				shared_ptr<Sequence> pUnfixedSequence = make_shared<Sequence>();
+				{
+					pUnfixedSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
+					pUnfixedSequence->AddChild(make_shared<SetDirectionTowardPlayerTask>(pPlayer.lock(), pVeteranHero));
+					pUnfixedSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
+					pDirFixSelector->AddChild(pUnfixedSequence);
+				}
+
+				shared_ptr<Sequence> pFixedSequence = make_shared<Sequence>();
+				{
+					pFixedSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
+					pDirFixSelector->AddChild(pFixedSequence);
+				}
+
+				pStingerReadySequence->AddChild(pDirFixSelector);
+			}
 			pStingerReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_StingerReady", false));
-			pStingerReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
+			pStingerReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));	
+			pStingerReadySequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
 			pStingerReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::ATTACK_C));
 		}
 
 		pRootNode->AddChild(pStingerSequence);
 		{
 			shared_ptr<ConditionToken> pToken = make_shared<ConditionToken>();
+			shared_ptr<ConditionToken> pDirToken = make_shared<ConditionToken>();
 
 			pStingerSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::ATTACK_C));
 			pStingerSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
@@ -331,7 +442,10 @@ void Ch3ViceBossDungeon::Enter()
 				shared_ptr<Sequence> pStingerAnimSequence = make_shared<Sequence>();
 				{
 					pStingerAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
+					pStingerAnimSequence->AddChild(make_shared<VeteranHeroStingerEffectStateChangeTask>(pVeteranHero, true));
+					// Effect On
 					pStingerAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Stinger", false));
+					pStingerAnimSequence->AddChild(make_shared<SetVelocityForKinematicTowardDirTask>(pVeteranHero, Vec3(1000.f, 0.f, 0.f)));
 					pStingerAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pStingerAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
 					pAnimSelector->AddChild(pStingerAnimSequence);
@@ -340,9 +454,33 @@ void Ch3ViceBossDungeon::Enter()
 				shared_ptr<Sequence> pSlashAnimSequence = make_shared<Sequence>();
 				{
 					pSlashAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
+					pSlashAnimSequence->AddChild(make_shared<VeteranHeroStingerEffectStateChangeTask>(pVeteranHero, false));
+					// EffectOff
+
+					shared_ptr<Selector> pDirFixSelector = make_shared<Selector>();
+					{
+						shared_ptr<Sequence> pUnfixedSequence = make_shared<Sequence>();
+						{
+							pUnfixedSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pDirToken, false));
+							pUnfixedSequence->AddChild(make_shared<FlipDirectionTask>(pVeteranHero));
+							pUnfixedSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pDirToken, true));
+							pUnfixedSequence->AddChild(make_shared<VeteranHeroStingerSlashEffectStateChangeTask>(pVeteranHero));
+							// SwordEffect
+							pDirFixSelector->AddChild(pUnfixedSequence);
+						}
+
+						shared_ptr<Sequence> pFixedSequence = make_shared<Sequence>();
+						{
+							pFixedSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pDirToken, true));
+							pDirFixSelector->AddChild(pFixedSequence);
+						}
+
+						pSlashAnimSequence->AddChild(pDirFixSelector);
+					}
 					pSlashAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_SlashAttack", false));
 					pSlashAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
+					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pDirToken, false));
 					pSlashAnimSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
 					pAnimSelector->AddChild(pSlashAnimSequence);
 				}
@@ -355,14 +493,14 @@ void Ch3ViceBossDungeon::Enter()
 			pFallSkillReadySequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::SKILL1_READY));
 			pFallSkillReadySequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Jump", false));
 			pFallSkillReadySequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 1.f));
-			pFallSkillReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::SKILL1));
+			//pFallSkillReadySequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::SKILL1));
 		}
 
 		pRootNode->AddChild(pFallSkillSequence);
 		{
 			pFallSkillSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::SKILL1));
 			pFallSkillSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_FallDown", false));
-			pFallSkillSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 3.f));
+			pFallSkillSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 2.f));
 			//pFallSkillSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
 		}
 
@@ -457,6 +595,8 @@ void Ch3ViceBossDungeon::Enter()
 	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pVeteranHero, MONSTER_STATE::LANDING_END));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"정의의 검을 받을 준비는 되었나?", 2.f));
+	// Create Wall
+	AddEvent(make_shared<CreateViceBossMapWallTileEvent>(pAlwaysTrueCondition, shared_from_this()));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(pAlwaysTrueCondition, PLAYER_STATE::IDLE));
@@ -470,4 +610,8 @@ void Ch3ViceBossDungeon::Enter()
 void Ch3ViceBossDungeon::Exit()
 {
 	Dungeon::Exit();
+}
+
+void Ch3ViceBossDungeon::CreateWallTilesAndAddedToScene()
+{
 }
