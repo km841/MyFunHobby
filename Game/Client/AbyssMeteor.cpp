@@ -23,9 +23,10 @@
 #include "CollisionManager.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
-AbyssMeteor::AbyssMeteor()
-	: m_fMaxDistance(500.f)
+AbyssMeteor::AbyssMeteor(const Vec3& vPos)
+	: m_fMaxDistance(1000.f)
 	, m_fImpulse(1000.f)
+	, m_vTargetPos(vPos)
 {
 }
 
@@ -87,6 +88,12 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 {
 	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
 	{
+		// vTargetPos와 가까운 타일인지 확인
+		Vec3 vTilePos = pGameObject->GetTransform()->GetPhysicalPosition();
+		Vec3 vDiff = m_vTargetPos - vTilePos;
+		if (vDiff.Length() > 300.f)
+			return;
+
 		if (IsEnable())
 		{
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
@@ -94,7 +101,7 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 			GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::WHITE_FADE_IN), 0.5f);
 			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 			GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(m_fMaxDistance, m_fMaxDistance, 0.f), Vec3(0.f, m_fImpulse, 0.f));
-			GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(m_fMaxDistance * 2.f, m_fMaxDistance * 2.f, 0.f), Vec3(0.f, m_fImpulse, 0.f), RANDOM(100, 200), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
+			GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(m_fMaxDistance * 2.f, m_fMaxDistance * 2.f, 0.f), Vec3(0.f, m_fImpulse, 0.f), static_cast<float>(RANDOM(100, 200)), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
 		}
 
 		Disable();

@@ -119,7 +119,7 @@ void AbyssOrb::Update()
 					GetTransform()->GetPhysicalPosition(),
 					GetTransform()->GetLocalScale() * 2.f,
 					Vec3(0.f, 0.f, 0.f),
-					RANDOM(3, 10), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
+					static_cast<float>(RANDOM(3, 10)), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
 
 				m_tDamageTick.Reset();
 			}

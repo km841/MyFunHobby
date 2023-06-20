@@ -311,8 +311,8 @@ struct Status
 
 	void ErodedHeavyInfantryMonsterDefaultSetting()
 	{
-		iMaxHP = 100;
-		iCurHP = 100;
+		iMaxHP = 200;
+		iCurHP = 200;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;

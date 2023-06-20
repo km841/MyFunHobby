@@ -916,6 +916,9 @@
     <ClInclude Include="EnableViceBossHPBarEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
+    <ClInclude Include="IncompletedAbyssMeteor.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssMeteor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1608,6 +1611,9 @@
     </ClCompile>
     <ClCompile Include="EnableViceBossHPBarEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="IncompletedAbyssMeteor.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssMeteor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

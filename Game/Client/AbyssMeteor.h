@@ -5,7 +5,7 @@ class AbyssMeteor :
     public PlayerProjectile
 {
 public:
-    AbyssMeteor();
+    AbyssMeteor(const Vec3& vPos);
     virtual ~AbyssMeteor();
 
 public:
@@ -29,5 +29,6 @@ private:
 private:
     float m_fMaxDistance;
     float m_fImpulse;
+    Vec3 m_vTargetPos;
 };
 

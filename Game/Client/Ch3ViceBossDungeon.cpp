@@ -265,7 +265,6 @@ void Ch3ViceBossDungeon::Enter()
 					}
 					pTokenTrueSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.25f));
 					pTokenTrueSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
-					
 					pTokenTrueSequence->AddChild(make_shared<VelocityZeroForKinematicTask>(pVeteranHero));
 
 					// 바라보는 방향으로 검기 발사하는 State 만들기

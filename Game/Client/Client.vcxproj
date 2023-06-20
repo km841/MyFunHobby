@@ -217,6 +217,7 @@
     <ClInclude Include="EnableCameraTrackingEvent.h" />
     <ClInclude Include="EnableChapterBossHPBarEvent.h" />
     <ClInclude Include="EnableViceBossHPBarEvent.h" />
+    <ClInclude Include="IncompletedAbyssMeteor.h" />
     <ClInclude Include="MagicSword.h" />
     <ClInclude Include="PauseDungeonEvent.h" />
     <ClInclude Include="PauseJumpFallState.h" />
@@ -457,6 +458,7 @@
     <ClCompile Include="EnableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableChapterBossHPBarEvent.cpp" />
     <ClCompile Include="EnableViceBossHPBarEvent.cpp" />
+    <ClCompile Include="IncompletedAbyssMeteor.cpp" />
     <ClCompile Include="MagicSword.cpp" />
     <ClCompile Include="PauseDungeonEvent.cpp" />
     <ClCompile Include="PauseJumpFallState.cpp" />

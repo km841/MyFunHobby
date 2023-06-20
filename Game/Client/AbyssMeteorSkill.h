@@ -2,6 +2,7 @@
 #include "SkulSkill.h"
 
 class AbyssMeteor;
+class IncompletedAbyssMeteor;
 class AbyssMeteorSkill :
     public SkulSkill
 {
@@ -10,7 +11,12 @@ public:
 	virtual ~AbyssMeteorSkill() = default;
 
 public:
-	shared_ptr<AbyssMeteor> CreateAbyssMeteor();
+	shared_ptr<AbyssMeteor> CreateAbyssMeteor(const Vec3& vPos);
+	shared_ptr<IncompletedAbyssMeteor> CreateIncompletedAbyssMeteor(const Vec3& vPos);
+
+private:
+	void CreateFullChargingMeteor(const Vec3& vPos);
+	void CreateInsufficientMeteor(const Vec3& vPos);
 
 public:
 	virtual void Update() override;
