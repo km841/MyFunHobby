@@ -19,6 +19,7 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "Input.h"
 
 SwapState::SwapState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -36,6 +37,13 @@ void SwapState::Update()
 	// Swap Skill
 	weak_ptr<SkulSkill> pSwapSkill = m_pPlayer.lock()->GetActiveSkul()->GetSwapSkill();
 
+	// Dash State ÀüÀÌ
+	if (IS_PRESS(KEY_TYPE::Z))
+	{
+		AddChangeStateEvent(PLAYER_STATE::DASH);
+		return;
+	}
+
 	if (pSwapSkill.lock()->IsFinished())
 	{
 		AddChangeStateEvent(PLAYER_STATE::PATH);
@@ -45,11 +53,11 @@ void SwapState::Update()
 		pSwapSkill.lock()->Update();
 	}
 
-	if (CheckGrounded())
-	{
-		m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
-		m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
-	}
+	//if (CheckGrounded())
+	//{
+	//	m_pPlayer.lock()->GetRigidBody()->RemoveGravity();
+	//	m_pPlayer.lock()->GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+	//}
 }
 
 void SwapState::Enter()

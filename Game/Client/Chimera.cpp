@@ -54,8 +54,7 @@ void Chimera::Awake()
 	CreateSpineData();
 	CreateChimeraSpritesAndAddedToScene();
 	CreateParticleGeneratorAndAddedToScene();
-	m_Status.BossMonsterDefaultSetting();
-
+	m_Status.ChapterBossMonsterDefaultSetting();
 }
 
 void Chimera::Start()

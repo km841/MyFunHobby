@@ -44,6 +44,7 @@
 #include "Movement.h"
 #include "Light.h"
 #include "ConditionToken.h"
+#include "HUD.h"
 
 #include "IsTokenStateCondition.h"
 #include "TokenStateChangeTask.h"
@@ -79,6 +80,12 @@
 #include "SetVelocityForKinematicOpposedDirTask.h"
 #include "VeteranHeroRandomStateTask.h"
 #include "MonsterHitShaderScript.h"
+#include "IfAllDeadMonsterInDungeon.h"
+#include "DungeonGateOpenEvent.h"
+#include "EnableViceBossHPBarEvent.h"
+#include "IsDeadCondition.h"
+#include "DeadEventTriggerTask.h"
+#include "RemoveObjectTask.h"
 
 #include "VeteranHeroLandingScript.h"
 #include "VeteranHeroFallSkillScript.h"
@@ -141,6 +148,7 @@ void Ch3ViceBossDungeon::Enter()
 		pVeteranHero->GetMeshRenderer()->GetMaterial()->SetInt(3, 1);
 
 		shared_ptr<Selector> pRootNode = make_shared<Selector>();
+		shared_ptr<Sequence> pDeadSequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pIdleSequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pLandingReadySequence = make_shared<Sequence>();
 		shared_ptr<Sequence> pLandingSequence = make_shared<Sequence>();
@@ -166,20 +174,15 @@ void Ch3ViceBossDungeon::Enter()
 		// 플레이어 방향으로 Stinger -> 뒤돌아서 Slash
 		// n초간 stinger
 
-		shared_ptr<Sequence> pComboDSequence = make_shared<Sequence>();
-		// 멀어진 후 에너지볼
-
-		shared_ptr<Sequence> pBarriorSequence = make_shared<Sequence>();
-		// 너무 가까우면 배리어
-
-		shared_ptr<Sequence> pComboESequence = make_shared<Sequence>();
-		// 콤보 A와 동일하나 검기 발생
-
 		shared_ptr<Sequence> pEnergyAtkSequence = make_shared<Sequence>();
 		// HP 50% 이하일때 준필살기 발동
 
-		shared_ptr<Sequence> pStingerRushSequence = make_shared<Sequence>();
-		// HP 25% 이하일 때 필살기 발동
+		pRootNode->AddChild(pDeadSequence);
+		{
+			pDeadSequence->AddChild(make_shared<IsDeadCondition>(pVeteranHero));
+			pDeadSequence->AddChild(make_shared<DeadEventTriggerTask>(pVeteranHero));
+			pDeadSequence->AddChild(make_shared<RemoveObjectTask>(pVeteranHero));
+		}
 
 		pRootNode->AddChild(pLandingReadySequence);
 		{
@@ -578,25 +581,26 @@ void Ch3ViceBossDungeon::Enter()
 	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pVeteranHero, MONSTER_STATE::LANDING_READY));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<ObjectEnableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"스켈레톤 주제에 여기까지 오다니! 마침 내가 혼자일 때 만나서\n다행이야. 개인적인 빚을 이제서야 갚아줄 수 있겠어.", 3.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"첫 모험에서 고작 스켈레톤 한 마리에게 패배했다는 소문이 퍼지자,\n아무도 날 인정해주지 않더군... 그들을 위해 무수히 많은\n사인들을 준비했는데 말이야.", 3.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"수치스러운 나날들이었다.", 1.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내가 왜 패배했을까? 곰곰이 생각해봤어. 이유는 딱 하나야.", 2.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내 방심이랄까?", 1.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"그게 아니면 내가 패배할 이유가 없잖아? 같잖은 스켈레톤 주제에 감히\n용사님을 이겨먹을 생각을 하다니.", 3.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"이제 레벨도 충분히 올렸겠다. 더 이상 봐주지 않겠어.", 2.f));
-	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"스켈레톤 주제에 여기까지 오다니! 마침 내가 혼자일 때 만나서\n다행이야. 개인적인 빚을 이제서야 갚아줄 수 있겠어.", 3.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"첫 모험에서 고작 스켈레톤 한 마리에게 패배했다는 소문이 퍼지자,\n아무도 날 인정해주지 않더군... 그들을 위해 무수히 많은\n사인들을 준비했는데 말이야.", 3.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"수치스러운 나날들이었다.", 1.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내가 왜 패배했을까? 곰곰이 생각해봤어. 이유는 딱 하나야.", 2.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내 방심이랄까?", 1.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"그게 아니면 내가 패배할 이유가 없잖아? 같잖은 스켈레톤 주제에 감히\n용사님을 이겨먹을 생각을 하다니.", 3.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"이제 레벨도 충분히 올렸겠다. 더 이상 봐주지 않겠어.", 2.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pVeteranHero, MONSTER_STATE::LANDING_END));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"정의의 검을 받을 준비는 되었나?", 2.f));
 	// Create Wall
 	AddEvent(make_shared<CreateViceBossMapWallTileEvent>(pAlwaysTrueCondition, shared_from_this()));
+	AddEvent(make_shared<EnableViceBossHPBarEvent>(pAlwaysTrueCondition, pVeteranHero));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(pAlwaysTrueCondition, PLAYER_STATE::IDLE));
@@ -604,11 +608,15 @@ void Ch3ViceBossDungeon::Enter()
 	AddEvent(make_shared<PlayDungeonEvent>(pAlwaysTrueCondition));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pVeteranHero, MONSTER_STATE::SKILL1_READY));
-	
+	AddEvent(make_shared<DungeonGateOpenEvent>(make_shared<IfAllDeadMonsterInDungeon>()));
+	AddEvent(make_shared<EnableCameraTrackingEvent>(pAlwaysTrueCondition));
+	AddEvent(make_shared<CameraUnfixEvent>(pAlwaysTrueCondition));
+	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::VICE_BOSS_HP)));
 }
 
 void Ch3ViceBossDungeon::Exit()
 {
+	GET_SINGLE(Scenes)->GetActiveScene()->GetDirLight().lock()->GetLight()->SetDiffuse(Vec3(0.7f, 0.7f, 0.7f));
 	Dungeon::Exit();
 }
 

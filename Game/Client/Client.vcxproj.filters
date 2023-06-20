@@ -910,6 +910,12 @@
     <ClInclude Include="CreateViceBossMapWallTileEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
+    <ClInclude Include="ViceBossHPHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="EnableViceBossHPBarEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1595,6 +1601,12 @@
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero</Filter>
     </ClCompile>
     <ClCompile Include="CreateViceBossMapWallTileEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="ViceBossHPHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\Dungeon\BossHPHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="EnableViceBossHPBarEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>

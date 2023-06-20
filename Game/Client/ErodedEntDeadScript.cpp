@@ -58,6 +58,7 @@ void ErodedEntDeadScript::LateUpdate()
 
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			pErodedEnt.lock()->SetDeadFlag(false);
+			//pErodedEnt.lock()->ActivateDeadEvent();
 			CreateExplosionEffectAndAddedToScene();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(pErodedEnt.lock()->GetExclamationEffect().lock(), eSceneType));
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(GetGameObject(), eSceneType));

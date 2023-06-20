@@ -216,6 +216,7 @@
     <ClInclude Include="DisableCameraTrackingEvent.h" />
     <ClInclude Include="EnableCameraTrackingEvent.h" />
     <ClInclude Include="EnableChapterBossHPBarEvent.h" />
+    <ClInclude Include="EnableViceBossHPBarEvent.h" />
     <ClInclude Include="MagicSword.h" />
     <ClInclude Include="PauseDungeonEvent.h" />
     <ClInclude Include="PauseJumpFallState.h" />
@@ -398,6 +399,7 @@
     <ClInclude Include="VeteranHero.h" />
     <ClInclude Include="VeteranHeroFallSkillScript.h" />
     <ClInclude Include="VeteranHeroLandingScript.h" />
+    <ClInclude Include="ViceBossHPHUD.h" />
     <ClInclude Include="VoodooDoll.h" />
     <ClInclude Include="WalkState.h" />
     <ClInclude Include="NPC_Witch.h" />
@@ -454,6 +456,7 @@
     <ClCompile Include="DisableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableChapterBossHPBarEvent.cpp" />
+    <ClCompile Include="EnableViceBossHPBarEvent.cpp" />
     <ClCompile Include="MagicSword.cpp" />
     <ClCompile Include="PauseDungeonEvent.cpp" />
     <ClCompile Include="PauseJumpFallState.cpp" />
@@ -641,6 +644,7 @@
     <ClCompile Include="VeteranHero.cpp" />
     <ClCompile Include="VeteranHeroFallSkillScript.cpp" />
     <ClCompile Include="VeteranHeroLandingScript.cpp" />
+    <ClCompile Include="ViceBossHPHUD.cpp" />
     <ClCompile Include="VoodooDoll.cpp" />
     <ClCompile Include="WalkState.cpp" />
     <ClCompile Include="NPC_Witch.cpp" />

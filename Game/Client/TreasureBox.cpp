@@ -68,12 +68,12 @@ void TreasureBox::Update()
 			for (uint8 i = 0; i < vDropItemKinds.size(); ++i)
 			{
 				shared_ptr<DropItem> pGameObject = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<DropItem>(
-					L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties(), Item::GetItemKindToDropItemPath(vDropItemKinds[i]), vDropItemKinds[i], i ? DROP_ITEM_INDEX::FIRST : DROP_ITEM_INDEX::SECOND);
+					L"Forward", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(50.f, 50.f, 1.f), MassProperties(), Item::GetItemKindToDropItemPath(vDropItemKinds[i]), vDropItemKinds[i], i ? DROP_ITEM_INDEX::FIRST : DROP_ITEM_INDEX::SECOND);
 				Vec3 vItemPos = vPos;
 				vItemPos.z -= 1;
 				pGameObject->GetTransform()->SetLocalPosition(vItemPos);
 
-				float fAngle = i ? 85.f : 95.f;
+				float fAngle = i ? 80.f : 100.f;
 				float fRadian = fAngle * XM_PI / 180.f;
 
 				PxVec3 vRightNormal = PxVec3(1.f, 0.f, 0.f);

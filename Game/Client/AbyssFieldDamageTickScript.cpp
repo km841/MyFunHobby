@@ -29,7 +29,7 @@ void AbyssFieldDamageTickScript::LateUpdate()
 			vMyPos,
 			vSize * 2.f,
 			Vec3(0.f, 0.f, 0.f),
-			1.f, DAMAGE_TYPE::FROM_PLAYER_MAGIC);
+			static_cast<float>(RANDOM(1, 5)), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
 
 		m_tDamageTick.Reset();
 	}

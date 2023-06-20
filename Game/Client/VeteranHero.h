@@ -26,6 +26,8 @@ public:
 
 public:
 	void SetStingerEffectState(bool bState);
+	virtual void ActivateDeadEvent(const Vec3& vDir) { }
+	virtual void ActivateDeadEvent() { }
 
 private:
 	void CreateStingerEffectAndAddedToScene();

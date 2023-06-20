@@ -84,10 +84,10 @@ void ExhibitionItem::Destroy()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	if (m_pDetailHUD.lock())
-	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pDetailHUD.lock(), eSceneType));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pDetailHUD.lock(), eSceneType));
 
 	if (m_pVignetteHUD.lock())
-	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pVignetteHUD.lock(), eSceneType));
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pVignetteHUD.lock(), eSceneType));
 }
 
 void ExhibitionItem::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
@@ -179,6 +179,4 @@ void ExhibitionItem::DrawItemDetail()
 		vCommentPos.y += 70.f;
 		FONT->DrawStringAtWorldPos(itemInfo.szExplanation, 17.f, vCommentPos, FONT_WEIGHT::BOLD, COMMENT_COLOR, FONT_ALIGN::CENTER);
 	}
-
-	
 }

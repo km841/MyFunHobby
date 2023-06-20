@@ -736,13 +736,14 @@ shared_ptr<Monster> ObjectFactory::CreateErodedEnt(const Vec3& vMonsterPos)
 	pErodedEnt->AddComponent(make_shared<ErodedEntSkillScript>());
 	pErodedEnt->AddComponent(make_shared<ErodedEntAttackScript>());
 
-	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
+	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\ErodedEnt\\";
 	std::vector<wstring> vTextureNames;
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_1.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_2.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_3.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_4.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_DarKQuartzEnt01.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_DarKQuartzEnt02.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_DarKQuartzEnt03.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_DarKQuartzEnt04.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_DarKQuartzEnt05.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_DarKQuartzEnt06.png");
 
 	pErodedEnt->SetParticleTextureNames(vTextureNames);
 
@@ -861,13 +862,16 @@ shared_ptr<Monster> ObjectFactory::CreateAlchemist(const Vec3 vMonsterPos)
 	pAlchemist->AddComponent(make_shared<Movement>());
 	pAlchemist->AddComponent(make_shared<AlchemistFlaskThrowScript>());
 
-	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\JuniorKnight\\";
+	wstring szResourcePath = L"..\\Resources\\Texture\\Sprites\\Alchemist\\";
 	std::vector<wstring> vTextureNames;
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_1.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_2.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_3.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_4.png");
-	vTextureNames.push_back(szResourcePath + L"Image_Junior_Knight_Particle_5.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist01.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist03.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist04.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist05.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist06.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist07.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist08.png");
+	vTextureNames.push_back(szResourcePath + L"Parts_Alchemist09.png");
 	pAlchemist->SetParticleTextureNames(vTextureNames);
 
 	shared_ptr<Selector> pRootNode = make_shared<Selector>();

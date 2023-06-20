@@ -69,6 +69,7 @@ void Alchemist::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 	{
 		GetRigidBody()->RemoveGravity();
 		GetRigidBody()->SetVelocity(AXIS::Y, 0.f);
+		
 	}
 
 	if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())

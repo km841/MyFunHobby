@@ -523,8 +523,8 @@ bool Scene::IsExistTileThisPos(const Vec2& vTilePos)
 
 		Vec3 vPos = pGameObject->GetTransform()->GetPhysicalPosition();
 
-		if (vTilePos.x == vPos.x &&
-			vTilePos.y == vPos.y)
+		if ((vTilePos.x == vPos.x && vTilePos.y == vPos.y) ||
+			(vTilePos.x == vPos.x && fabs(vTilePos.y - vPos.y) <= 64.f))
 			return true;
 	}
 

@@ -15,37 +15,32 @@ CameraMoveScript::~CameraMoveScript()
 
 void CameraMoveScript::LateUpdate()
 {
-	Vec3 vPos = GetTransform()->GetLocalPosition();
+	//Vec3 vPos = GetTransform()->GetLocalPosition();
 
-	if (IS_PRESS(KEY_TYPE::W))
-	{
-		vPos += GetTransform()->GetUp() * m_fSpeed * OBJECT_DELTA_TIME;
-	}
-
-	if (IS_PRESS(KEY_TYPE::S))
-	{
-		vPos -= GetTransform()->GetUp() * m_fSpeed * OBJECT_DELTA_TIME;
-	}
-
-	if (IS_PRESS(KEY_TYPE::A))
-	{
-		vPos -= GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
-	}
-
-	if (IS_PRESS(KEY_TYPE::D))
-	{
-		vPos += GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
-	}
-
-	if (IS_PRESS(KEY_TYPE::Q))
-	{
-		vPos += GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
-	}
-
-	//if (IS_PRESS(KEY_TYPE::Z))
+	//if (IS_PRESS(KEY_TYPE::W))
 	//{
-	//	vPos -= GetTransform()->GetLook() * m_fSpeed * DELTA_TIME;
+	//	vPos += GetTransform()->GetUp() * m_fSpeed * OBJECT_DELTA_TIME;
 	//}
 
-	GetTransform()->SetLocalPosition(vPos);
+	//if (IS_PRESS(KEY_TYPE::S))
+	//{
+	//	vPos -= GetTransform()->GetUp() * m_fSpeed * OBJECT_DELTA_TIME;
+	//}
+
+	//if (IS_PRESS(KEY_TYPE::A))
+	//{
+	//	vPos -= GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
+	//}
+
+	//if (IS_PRESS(KEY_TYPE::D))
+	//{
+	//	vPos += GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
+	//}
+
+	//if (IS_PRESS(KEY_TYPE::Q))
+	//{
+	//	vPos += GetTransform()->GetRight() * m_fSpeed * OBJECT_DELTA_TIME;
+	//}
+
+	//GetTransform()->SetLocalPosition(vPos);
 }

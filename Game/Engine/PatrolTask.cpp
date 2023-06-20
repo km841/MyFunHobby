@@ -68,8 +68,8 @@ BEHAVIOR_RESULT PatrolTask::Run()
 		Vec3 vMySize = m_pGameObject.lock()->GetPhysical()->GetGeometrySize();
 		Vec3 vNextPos = vCurPosition;
 
-		vNextPos.x += iDirection ? -vMySize.x - 10.f : vMySize.x + 10.f;
-		vNextPos.y -= vMySize.y + 10.f;
+		vNextPos.x += iDirection ? -vMySize.x - 5.f : vMySize.x + 5.f;
+		vNextPos.y -= vMySize.y + 5.f;
 
 		if (!GET_SINGLE(Scenes)->GetActiveScene()->IsExistTileThisPos(Conv::Vec3ToTileAlignVec2(vNextPos)))
 		{

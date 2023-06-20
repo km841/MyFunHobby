@@ -37,6 +37,7 @@
 #include "PlayerClubberShowScript.h"
 #include "BossOpeningHUD.h"
 #include "ChapterBossHPHUD.h"
+#include "ViceBossHPHUD.h"
 
 void InterfaceManager::Init()
 {
@@ -273,6 +274,16 @@ void InterfaceManager::CreateHUD()
 		pChapterBossHPHUD->GetTransform()->SetLocalScale(Vec3(356.f, 68.f, 1.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::BOSS_HP] = pChapterBossHPHUD;
+	}
+
+	// Vice Boss HP HUD
+	{
+		shared_ptr<ViceBossHPHUD> pViceBossHPHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ViceBossHPHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\Dungeon\\Ch3\\Image_Ch3_ViceBoss_HPBar.png");
+		pViceBossHPHUD->SetFrustum(false);
+		pViceBossHPHUD->Disable();
+		pViceBossHPHUD->GetTransform()->SetLocalScale(Vec3(356.f, 68.f, 1.f));
+
+		m_mInterfaceMap[INTERFACE_TYPE::VICE_BOSS_HP] = pViceBossHPHUD;
 	}
 	
 	

@@ -36,7 +36,7 @@ void LittleBoneSwapSkill::Update()
 			vMyPos,
 			vSize * 2.f,
 			Vec3(0.f, 0.f, 0.f),
-			1.f, DAMAGE_TYPE::FROM_PLAYER_MELEE);
+			static_cast<float>(RANDOM(3, 10)), DAMAGE_TYPE::FROM_PLAYER_MELEE);
 
 		m_tDamageTick.Reset();
 	}

@@ -15,6 +15,7 @@
 #include "HUD.h"
 #include "Cemetery.h"
 #include "Skul.h"
+#include "Engine.h"
 
 
 DropSkul::DropSkul(SKUL_KIND eSkulKind)
@@ -32,6 +33,7 @@ DropSkul::~DropSkul()
 void DropSkul::Awake()
 {
 	GameObject::Awake();
+	CreateDetailHUDAndAddedToScene();
 }
 
 void DropSkul::Start()
@@ -45,32 +47,27 @@ void DropSkul::Update()
 
 	if (m_bIsCollisionWithPlayer)
 	{
+		weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 		if (IS_DOWN(KEY_TYPE::F))
 		{
-			weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 			GET_SINGLE(Cemetery)->Get(m_eSkulKind)->Awake();
 			pPlayer.lock()->ObtainSkul(GET_SINGLE(Cemetery)->Get(m_eSkulKind));
-
+			pPlayer.lock()->EnableSwapActiveFlag();
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pDetailHUD.lock(), eSceneType));
+			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pVignetteHUD.lock(), eSceneType));
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
-
-			GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::DROP_SKUL)->Action();
 		}
 
-		if (m_bFixed)
-		{
-			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
-			vMyPos = GET_SINGLE(Scenes)->WorldToScreenPosition(vMyPos, GET_SINGLE(Scenes)->GetActiveScene()->GetMainCamera().lock()->GetCamera());
-			vMyPos.y += 50.f;
-
-			GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DROP_SKUL)->GetTransform()->SetLocalPosition(vMyPos);
-			GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DROP_SKUL)->Enable();
-		}
-
+		m_pDetailHUD.lock()->Enable();
+		m_pVignetteHUD.lock()->Enable();
+		DrawItemDetail();
 	}
+
 	else
 	{
-		GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::DROP_SKUL)->Disable();
+		m_pDetailHUD.lock()->Disable();
+		m_pVignetteHUD.lock()->Disable();
 	}
 }
 
@@ -82,6 +79,17 @@ void DropSkul::LateUpdate()
 void DropSkul::FinalUpdate()
 {
 	GameObject::FinalUpdate();
+}
+
+void DropSkul::Destroy()
+{
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+
+	if (m_pDetailHUD.lock())
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pDetailHUD.lock(), eSceneType));
+
+	if (m_pVignetteHUD.lock())
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pVignetteHUD.lock(), eSceneType));
 }
 
 void DropSkul::CreateTouchEffectAddedToScene()
@@ -111,4 +119,48 @@ void DropSkul::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 	{
 		m_bIsCollisionWithPlayer = false;
 	}
+}
+
+void DropSkul::DrawItemDetail()
+{
+	Vec3 vStandard = m_pDetailHUD.lock()->GetTransform()->GetWorldPosition();
+
+	// Name
+	{
+		Vec3 vNamePos = vStandard;
+		vNamePos.y += 137.5f;
+		FONT->DrawStringAtWorldPos(L"대마도사", 23.f, vNamePos, FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR, FONT_ALIGN::CENTER);
+	}
+
+	// Grade
+	{
+		Vec3 vGradePos = vStandard;
+		vGradePos.x -= 180.f;
+		vGradePos.y += 100.f;
+		FONT->DrawStringAtWorldPos(L"유니크", 17.f, vGradePos, FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR, FONT_ALIGN::CENTER);
+	}
+
+	// Comment
+	{
+		Vec3 vCommentPos = vStandard;
+		vCommentPos.y += 70.f;
+		FONT->DrawStringAtWorldPos(L"마나의 흐름을 느끼는데 살가죽은 방해가 될 뿐이다.\n- 마왕성 제 1 마도 군단장", 17.f, vCommentPos, FONT_WEIGHT::BOLD, COMMENT_COLOR, FONT_ALIGN::CENTER);
+	}
+}
+
+void DropSkul::CreateDetailHUDAndAddedToScene()
+{
+	shared_ptr<GameObject> pDetailHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<GameObject>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_PopupItem.png", LAYER_TYPE::UNKNOWN);
+	pDetailHUD->GetTransform()->SetParent(GetTransform());
+	pDetailHUD->GetTransform()->SetLocalPosition(Vec3(0.f, 200.f, 0.f));
+	pDetailHUD->Awake();
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDetailHUD, eSceneType));
+	m_pDetailHUD = pDetailHUD;
+
+	shared_ptr<GameObject> pVignetteHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<GameObject>(L"Forward", L"", LAYER_TYPE::UNKNOWN);
+	pVignetteHUD->GetTransform()->SetParent(pDetailHUD->GetTransform());
+	pVignetteHUD->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pVignetteHUD, eSceneType));
+	m_pVignetteHUD = pVignetteHUD;
 }

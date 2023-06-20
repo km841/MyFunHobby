@@ -392,8 +392,13 @@
 1
 ..\Resources\Texture\Tiles\Ch3TopTile_4.png
 768 704
+1
 0
-198
+0
+4
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Shop\Sprite_Ch3DungeonGate_Shop_Activate.png
+2240 -167
+201
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTime_1.png
 -512 128
@@ -988,4 +993,29 @@
 1
 ..\Resources\Texture\DungeonObject\DecoImage_EmptyTile_3.png
 2496 -704
-0
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_1.png
+1266.83 -153.631
+1
+..\Resources\Texture\DungeonObject\DecoImage_Lamp_1.png
+1266.83 -153.631
+1
+..\Resources\Texture\DungeonObject\DecoImage_Bottle_1.png
+1148.45 -231.401
+4
+1 1 0
+0 0 0
+200
+1262.83 -59.2309 100
+1 1 0
+0 0 0
+200
+1233.23 -109.631 100
+1 1 0
+0 0 0
+200
+1297.23 -109.631 100
+1 1 0
+0 0 0
+500
+1242.83 -196.831 100

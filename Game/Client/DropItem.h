@@ -12,6 +12,7 @@ public:
     virtual void Update();
     virtual void LateUpdate();
     virtual void FinalUpdate();
+    virtual void Destroy();
 
 public:
     void CreateTouchEffectAddedToScene();
@@ -23,9 +24,16 @@ public:
     virtual void OnTriggerExit(shared_ptr<GameObject> pGameObject);
 
 private:
+    void CreateDetailHUDAndAddedToScene();
+    void DrawItemDetail();
+
+private:
     ITEM_KIND m_eItemKind;
     bool m_bIsCollisionWithPlayer;
     bool m_bFixed;
     DROP_ITEM_INDEX m_eItemIndex;
+
+    weak_ptr<GameObject> m_pDetailHUD;
+    weak_ptr<GameObject> m_pVignetteHUD;
 };
 

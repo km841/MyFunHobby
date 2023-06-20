@@ -71,7 +71,8 @@ void InvisibleKnife::ActiveItemWhenMonsterHitTiming(shared_ptr<Monster> pMonster
 		pAnimation->SetHitFrame(1);
 	}
 
-	pMonster->GetStatus()->TakeDamage(static_cast<uint32>(1));
+	int32 iRandomDamage = RANDOM(3, 5);
+	pMonster->GetStatus()->TakeDamage(iRandomDamage);
 	if (!pMonster->GetStatus()->IsAlive())
 	{
 		pMonster->SetMonsterState(MONSTER_STATE::DEAD);
@@ -81,7 +82,7 @@ void InvisibleKnife::ActiveItemWhenMonsterHitTiming(shared_ptr<Monster> pMonster
 		if (MONSTER_TYPE::NORMAL == pMonster->GetMonsterType())
 			pMonster->SetMonsterState(MONSTER_STATE::WEAK_HIT);
 		
-		FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MAGIC, 1, vMonsterPos);
+		FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MAGIC, iRandomDamage, vMonsterPos);
 	}
 
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

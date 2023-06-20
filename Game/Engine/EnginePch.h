@@ -247,10 +247,10 @@ struct Status
 
 	void PlayerDefaultSetting()
 	{
-		iMaxHP = 100;
-		iCurHP = 100;
+		iMaxHP = 150;
+		iCurHP = 150;
 		iShield = 0;
-		iAttack = 1;
+		iAttack = 5;
 		iDefence = 1;
 		fSpeed = 400.f;
 		bAlive = true;
@@ -259,8 +259,8 @@ struct Status
 
 	void MonsterDefaultSetting()
 	{
-		iMaxHP = 10;
-		iCurHP = 10;
+		iMaxHP = 100;
+		iCurHP = 100;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -272,8 +272,8 @@ struct Status
 
 	void KnightMonsterDefaultSetting()
 	{
-		iMaxHP = 20;
-		iCurHP = 20;
+		iMaxHP = 50;
+		iCurHP = 50;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -285,8 +285,8 @@ struct Status
 
 	void AlchemistMonsterDefaultSetting()
 	{
-		iMaxHP = 20;
-		iCurHP = 20;
+		iMaxHP = 50;
+		iCurHP = 50;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -298,8 +298,8 @@ struct Status
 
 	void ErodedKnightMonsterDefaultSetting()
 	{
-		iMaxHP = 30;
-		iCurHP = 30;
+		iMaxHP = 60;
+		iCurHP = 60;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -311,8 +311,8 @@ struct Status
 
 	void ErodedHeavyInfantryMonsterDefaultSetting()
 	{
-		iMaxHP = 50;
-		iCurHP = 50;
+		iMaxHP = 100;
+		iCurHP = 100;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;
@@ -324,8 +324,21 @@ struct Status
 
 	void BossMonsterDefaultSetting()
 	{
-		iMaxHP = 100;
-		iCurHP = 100;
+		iMaxHP = 600;
+		iCurHP = 600;
+		iShield = 0;
+		iAttack = 1;
+		iDefence = 1;
+		fSpeed = 300.f;
+		bAlive = true;
+		fRecogDist = 500.f;
+		fAttackDist = 200.f;
+	}
+
+	void ChapterBossMonsterDefaultSetting()
+	{
+		iMaxHP = 1000;
+		iCurHP = 1000;
 		iShield = 0;
 		iAttack = 1;
 		iDefence = 1;

@@ -79,7 +79,7 @@ void EvilSwordKirion::CreateSlashEffectAndAddedToScene()
 	pAnimationLocalEffect->GetTransform()->SetGlobalOffset(Vec2(0.f, 0.f));
 
 	pAnimationLocalEffect->AddComponent(make_shared<Animator>());
-	pAnimationLocalEffect->AddComponent(make_shared<ObjectAttackAtHitFrameScript>(pAnimationLocalEffect, DAMAGE_TYPE::FROM_PLAYER_MAGIC, 1.f));
+	pAnimationLocalEffect->AddComponent(make_shared<ObjectAttackAtHitFrameScript>(pAnimationLocalEffect, DAMAGE_TYPE::FROM_PLAYER_MAGIC, static_cast<float>(RANDOM(2, 5))));
 
 	wstring szRandomAnim = {};
 	szRandomAnim.push_back(RANDOM('a', 'd'));

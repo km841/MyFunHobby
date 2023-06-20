@@ -1,7 +1,7 @@
 4
 ..\Resources\Texture\Map\Image_Shop_Background_Moon.png
-800 550 200
-1024 488 1
+1000 550 200
+1500 750 1
 1 1 0
 ..\Resources\Texture\Map\Image_Shop_Background_Cloud_Far.png
 800 550 180
@@ -272,7 +272,7 @@
 0
 0
 2
-..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Gold\Sprite_Ch3DungeonGate_Gold_Activate.png
+..\Resources\Texture\Sprites\Dungeon\Ch3\DungeonGate\Bone\Sprite_Ch3DungeonGate_Bone_Activate.png
 1792 396
 49
 1

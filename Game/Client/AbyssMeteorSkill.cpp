@@ -27,7 +27,7 @@ AbyssMeteorSkill::AbyssMeteorSkill(const SkillInfo& skillInfo)
 	: SkulSkill(skillInfo)
 {
 	CreateConditionFunction();
-	m_fMaxChargingTime = 5.f;
+	m_fMaxChargingTime = 2.f;
 }
 
 shared_ptr<AbyssMeteor> AbyssMeteorSkill::CreateAbyssMeteor()

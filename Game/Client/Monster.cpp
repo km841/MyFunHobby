@@ -58,6 +58,7 @@ void Monster::Start()
 void Monster::Update()
 {
 	GameObject::Update();
+
 }
 
 void Monster::LateUpdate()
