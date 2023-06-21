@@ -26,7 +26,7 @@
 DevilBerserkerAttack::DevilBerserkerAttack(shared_ptr<Skul> pSkul)
 	: SkulAttack(pSkul)
 {
-	m_fDamage = 3.f;
+	m_fDamage = 10.f;
 }
 
 DevilBerserkerAttack::~DevilBerserkerAttack()
@@ -49,6 +49,7 @@ void DevilBerserkerAttack::Update()
 		m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenHitTiming();
 
 		HitMonstersInAttackRange();
+		Stomp();
 		m_arrAttackInfo[iEnum][iOrder].pAnimation->CheckToHitFrame();
 	}
 }
@@ -67,7 +68,7 @@ void DevilBerserkerAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 {
 	shared_ptr<AnimationGlobalEffect> pHitEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationGlobalEffect>(L"Forward");
 
-	int32 iRandomX = RANDOM(50, 100);
+	int32 iRandomX = RANDOM(20, 50);
 	int32 iRandomY = RANDOM(0, 30);
 
 	int32 iRandomDegree = RANDOM(-30, 30);
@@ -77,13 +78,11 @@ void DevilBerserkerAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 	switch (eDirection)
 	{
 	case DIRECTION::RIGHT:
-		pHitEffect->SetDirection(DIRECTION::LEFT);
-		vMonsterPos.x -= iRandomX;
+		vMonsterPos.x += iRandomX;
 		vMonsterPos.y -= iRandomY;
 		break;
 	case DIRECTION::LEFT:
-		pHitEffect->SetDirection(DIRECTION::RIGHT);
-		vMonsterPos.x += iRandomX;
+		vMonsterPos.x -= iRandomX;
 		vMonsterPos.y -= iRandomY;
 		break;
 	}
@@ -94,11 +93,42 @@ void DevilBerserkerAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 	pHitEffect->GetTransform()->SetLocalPosition(vMonsterPos);
 	pHitEffect->AddComponent(make_shared<Animator>());
 
-	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"LittleBone_Hit", L"..\\Resources\\Animation\\LittleBone\\littlebone_hit.anim");
-	pHitEffect->GetAnimator()->AddAnimation(L"LittleBone_Hit", pAnimation);
-	pHitEffect->GetAnimator()->Play(L"LittleBone_Hit", false);
+	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Berserker_Hit", L"..\\Resources\\Animation\\DevilBerserker\\berserker_hit.anim");
+	pHitEffect->GetAnimator()->AddAnimation(L"Berserker_Hit", pAnimation);
+	pHitEffect->GetAnimator()->Play(L"Berserker_Hit", false);
 
 	pHitEffect->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pHitEffect, eSceneType));
+}
+
+void DevilBerserkerAttack::Stomp()
+{
+	if (m_pSkul.lock()->GetPlayer().lock()->DoesTileExistInDirection(m_pSkul.lock()->GetDirection(), 2.f))
+	{
+		Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();
+		DIRECTION eDirection = m_pSkul.lock()->GetDirection();
+
+		bool bChanged = false;
+		switch (eDirection)
+		{
+		case DIRECTION::RIGHT:
+			if (IS_PRESS(KEY_TYPE::RIGHT))
+			{
+				vMyPos.x += 30.f;
+				bChanged = true;
+			}
+			break;
+		case DIRECTION::LEFT:
+			if (IS_PRESS(KEY_TYPE::LEFT))
+			{
+				vMyPos.x -= 30.f;
+				bChanged = true;
+			}
+			break;
+		}
+
+		if (bChanged)
+			m_pSkul.lock()->GetPlayer().lock()->GetTransform()->SetPhysicalPosition(vMyPos);
+	}
 }

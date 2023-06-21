@@ -134,12 +134,18 @@ void Alchemist::ScatterParticles(const Vec3& vDir)
 		Vec3 vRightNormal = VEC3_RIGHT_NORMAL;
 
 		float fDegree = atan2(vDir.y, vDir.x) * 180.f / XM_PI;
-		//if (fDegree < 0.f)
-		//	fDegree += 180.f;
-
-		float fForce = vDir.Length();
-
-		int32 iRandomDegree = RANDOM(static_cast<int32>(fDegree - 15.f), static_cast<int32>(fDegree + 15.f));
+		float fForce = 0.f;
+		int32 iRandomDegree =0;
+		if (vDir == Vec3::Zero)
+		{
+			fForce = 500.f;
+			iRandomDegree = RANDOM(0, 360);
+		}
+		else
+		{
+			fForce = vDir.Length();
+			iRandomDegree = RANDOM(static_cast<int32>(fDegree - 15.f), static_cast<int32>(fDegree + 15.f));
+		}
 		float fRandomRadian = (iRandomDegree * XM_PI) / 180.f;
 		float fRotatedX = vRightNormal.x * cosf(fRandomRadian) - vRightNormal.y * sinf(fRandomRadian);
 		float fRotatedY = vRightNormal.x * sinf(fRandomRadian) + vRightNormal.y * cosf(fRandomRadian);

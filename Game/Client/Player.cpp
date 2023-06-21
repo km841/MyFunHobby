@@ -127,7 +127,10 @@ shared_ptr<Skul> Player::ObtainSkul(shared_ptr<Skul> pSkul)
 	{
 		shared_ptr<Skul> pDropSkul = m_pActiveSkul;
 		pSkul->SetSkulIndex(pDropSkul->GetSkulIndex());
+		pSkul->SetPlayer(Conv::BaseToDeclare<Player>(shared_from_this()));
+		m_arrSkuls[static_cast<uint8>(pDropSkul->GetSkulIndex())] = pSkul;
 		m_pActiveSkul = pSkul;
+		RefreshAnimation();
 		return pDropSkul;
 	}
 

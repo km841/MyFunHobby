@@ -36,6 +36,13 @@ shared_ptr<Skul> Cemetery::Get(SKUL_KIND eSkulType)
 	return iter->second;
 }
 
+const SkulInfo& Cemetery::GetSkulInfo(SKUL_KIND eSkulKind)
+{
+	auto iter = m_mSkulInfoMap.find(eSkulKind);
+	assert(iter != m_mSkulInfoMap.end());
+	return iter->second;
+}
+
 void Cemetery::Destroy()
 {
 	for (auto pSkul : m_mSkulMap)
@@ -47,11 +54,13 @@ void Cemetery::CreateSkul()
 	// LittleBone
 	{
 		SkulInfo skulInfo = {};
+		skulInfo.szName = L"리틀 본";
 		skulInfo.eGrade = GRADE::NORMAL;
 		skulInfo.eSkulKind = SKUL_KIND::LITTLE_BONE;
 		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
 		skulInfo.szComment = L"마왕성 경비대의 막내 스켈레톤.\n다른 스켈레톤에 비해 체구가 작아 리틀본이라 불린다.";
 		skulInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"LittleBone_Vignette", L"..\\Resources\\Texture\\Sprites\\LittleBone\\Image_LittleBone_Vignette.png");
+		m_mSkulInfoMap[SKUL_KIND::LITTLE_BONE] = skulInfo;
 
 		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>(skulInfo);
 		pLittleBone->AddComponent(make_shared<Animator>());
@@ -178,12 +187,14 @@ void Cemetery::CreateSkul()
 	// High Warlock
 	{
 		SkulInfo skulInfo = {};
+		skulInfo.szName = L"대마도사";
 		skulInfo.eGrade = GRADE::UNIQUE;
 		skulInfo.eSkulKind = SKUL_KIND::HIGH_WARLOCK;
 		skulInfo.eSkulType = SKUL_TYPE::BALANCE;
 		skulInfo.szComment = L"마나의 흐름을 느끼는데 살가죽은 방해가 될 뿐이다.\n- 마왕성 제 1 마도 군단장";
 		skulInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"HighWarlock_Vignette", L"..\\Resources\\Texture\\Sprites\\HighWarlock\\Image_HighWarlock_Vignette.png");
 		skulInfo.vVignetteTextureOffset = Vec2(5.f, 20.f);
+		m_mSkulInfoMap[SKUL_KIND::HIGH_WARLOCK] = skulInfo;
 
 		shared_ptr<HighWarlock> pHighWarlock = make_shared<HighWarlock>(skulInfo);
 		pHighWarlock->AddComponent(make_shared<Animator>());
@@ -301,13 +312,15 @@ void Cemetery::CreateSkul()
 	// Devil Berserker
 	{
 		SkulInfo skulInfo = {};
+		skulInfo.szName = L"데빌 버서커";
 		skulInfo.eGrade = GRADE::LEGENDARY;
 		skulInfo.eSkulKind = SKUL_KIND::DEVIL_BERSERKER;
 		skulInfo.eSkulType = SKUL_TYPE::POWER;
 		skulInfo.szComment = L"강력한 힘을 위해 돌이킬 수 없는 계약을 맺었던 광기의 전사";
 		skulInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_Vignette", L"..\\Resources\\Texture\\Sprites\\DevilBerserker\\Image_DevilBerserker_Vignette.png");
+		m_mSkulInfoMap[SKUL_KIND::DEVIL_BERSERKER] = skulInfo;
 
-		shared_ptr<LittleBone> pDevilBerserker = make_shared<LittleBone>(skulInfo);
+		shared_ptr<DevilBerserker> pDevilBerserker = make_shared<DevilBerserker>(skulInfo);
 		pDevilBerserker->AddComponent(make_shared<Animator>());
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
@@ -319,7 +332,7 @@ void Cemetery::CreateSkul()
 
 		pDevilBerserker->AddComponent(pMeshRenderer);
 		pDevilBerserker->AddComponent(make_shared<Transform>());
-		pDevilBerserker->GetTransform()->SetGlobalOffset(Vec2(0.f, 30.f));
+		pDevilBerserker->GetTransform()->SetGlobalOffset(Vec2(0.f, 20.f));
 
 		uint8 iNormalEnum = static_cast<uint8>(BERSERKER_STATE::NORMAL);
 		// Normal Mode Animation
@@ -327,6 +340,7 @@ void Cemetery::CreateSkul()
 			shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_Idle", L"..\\Resources\\Animation\\DevilBerserker\\berserker_idle.anim");
 			shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_Walk", L"..\\Resources\\Animation\\DevilBerserker\\berserker_walk.anim");
 			shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_Dash", L"..\\Resources\\Animation\\DevilBerserker\\berserker_dash.anim");
+			shared_ptr<Animation> pLandAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_Land", L"..\\Resources\\Animation\\DevilBerserker\\berserker_land.anim");
 			shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_JumpRise", L"..\\Resources\\Animation\\DevilBerserker\\berserker_jump_rise.anim");
 			shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_JumpFall", L"..\\Resources\\Animation\\DevilBerserker\\berserker_jump_fall.anim");
 			shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_JumpAttack", L"..\\Resources\\Animation\\DevilBerserker\\berserker_jump_attack.anim");
@@ -335,6 +349,7 @@ void Cemetery::CreateSkul()
 			pDevilBerserker->AddAnimation(PLAYER_STATE::IDLE, L"Berserker_Idle", pIdleAnimation, iNormalEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::WALK, L"Berserker_Walk", pWalkAnimation, iNormalEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::DASH, L"Berserker_Dash", pDashAnimation, iNormalEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::LAND, L"Berserker_Land", pLandAnimation, iNormalEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_RISE, L"Berserker_JumpRise", pJumpRiseAnimation, iNormalEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_FALL, L"Berserker_JumpFall", pJumpFallAnimation, iNormalEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"Berserker_JumpAttack", pJumpAttackAnimation, iNormalEnum);
@@ -346,6 +361,7 @@ void Cemetery::CreateSkul()
 			shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_Idle", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_idle.anim");
 			shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_Walk", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_walk.anim");
 			shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_Dash", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_dash.anim");
+			shared_ptr<Animation> pLandAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_Land", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_land.anim");
 			shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_JumpRise", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_jump_rise.anim");
 			shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_JumpFall", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_jump_fall.anim");
 			shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_JumpAttack", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_jump_attack.anim");
@@ -353,6 +369,7 @@ void Cemetery::CreateSkul()
 			pDevilBerserker->AddAnimation(PLAYER_STATE::IDLE, L"DevilBerserker_Idle", pIdleAnimation, iDevilEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::WALK, L"DevilBerserker_Walk", pWalkAnimation, iDevilEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::DASH, L"DevilBerserker_Dash", pDashAnimation, iDevilEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::LAND, L"DevilBerserker_Land", pLandAnimation, iDevilEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_RISE, L"DevilBerserker_JumpRise", pJumpRiseAnimation, iDevilEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_FALL, L"DevilBerserker_JumpFall", pJumpFallAnimation, iDevilEnum);
 			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"DevilBerserker_JumpAttack", pJumpAttackAnimation, iDevilEnum);
@@ -393,17 +410,24 @@ void Cemetery::CreateSkul()
 			pDevilBerserker->SetSwapSkill(pSwapSkill);
 		}
 
-		// Skull Throw Skill
+		// DevilBerserker Demonization
 		{
 			SkillInfo skillInfo = {};
 			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
-			skillInfo.fCooldown = 6.f;
-			skillInfo.fDuration = 2.f;
+			skillInfo.fCooldown = 30.f;
+			skillInfo.fDuration = 2.5f;
 			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_BoneHawl", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\HUD_BoneHawl.png");
 			skillInfo.szComment = L"현재 체력의 10%를 소모해 20초간 악마로 변하며 넓은 범위의 적에게 물리데미지를 입힙니다.";
-			skillInfo.szName = L"뼈의 울음";
+			skillInfo.szName = L"악마의 뼈";
 
 			shared_ptr<BoneHawlSkill> pBoneHawlSkill = make_shared<BoneHawlSkill>(skillInfo);
+
+			wstring szAnimationName = L"DevilBerserker_Demonization";
+			pBoneHawlSkill->SetAnimationName(szAnimationName);
+
+			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\DevilBerserker\\berserker_demonization.anim");
+			pBoneHawlSkill->SetAnimation(pSwapAnimation);
+
 			pDevilBerserker->ObtainSkill(pBoneHawlSkill);
 		}
 

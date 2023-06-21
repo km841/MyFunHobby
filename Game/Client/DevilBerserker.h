@@ -14,7 +14,10 @@ public:
 	virtual void LateUpdate() override;
 	virtual void FinalUpdate() override;
 
+	void Demonization();
+
 private:
 	BERSERKER_STATE m_eBerserkerState;
+	Timer m_tDemonizationTimer;
 };
 

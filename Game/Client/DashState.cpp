@@ -144,7 +144,7 @@ void DashState::EnableAndInitDashSmokeEffect()
 	const Vec2& vGlobalOffset = m_pPlayer.lock()->GetActiveSkul()->GetTransform()->GetGlobalOffset();
 
 	vPlayerPos.x += iDirection ? fDistance : -fDistance;
-	vPlayerPos.y -= vPlayerScale.y / 2.f;
+	vPlayerPos.y -= vPlayerScale.y / 2.f - vGlobalOffset.y;
 
 	m_pPlayer.lock()->GetDashSmokeEffect()->Enable();
 	m_pPlayer.lock()->GetDashSmokeEffect()->GetTransform()->SetGlobalOffset(vGlobalOffset);

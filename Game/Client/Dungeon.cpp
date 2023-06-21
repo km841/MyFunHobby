@@ -74,6 +74,8 @@ void Dungeon::Exit()
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::LOCAL_EFFECT);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::MONSTER_PROJECTILE);
     GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::PLAYER_PROJECTILE);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DROP_SKUL);
+    GET_SINGLE(Scenes)->GetActiveScene()->RemoveLocalGroup(LAYER_TYPE::DROP_ITEM);
 }
 
 void Dungeon::AddEvent(shared_ptr<DungeonEvent> pDungeonEvent)

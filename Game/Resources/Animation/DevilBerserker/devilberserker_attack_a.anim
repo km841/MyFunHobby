@@ -3,25 +3,25 @@ devilberserker_attack_a.anim
 ..\Resources\Texture\Sprites\DevilBerserker\Sprite_DevilBerserker_Attack_A.png
 25 0
 205 242
-20 -1
-0.1
+20 5
+0.05
 280 0
 205 242
-19 0
-0.1
+19 6
+0.05
 535 0
 205 242
-17 0
-0.1
+17 6
+0.05
 790 0
 205 242
--4 0
-0.1
+-4 6
+0.05
 1045 0
 205 242
--4 -6
-0.1
+-4 0
+0.05
 1300 0
 205 242
-25 -4
-0.1
+25 2
+0.05

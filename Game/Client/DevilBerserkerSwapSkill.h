@@ -12,5 +12,9 @@ public:
 	virtual void CreateConditionFunction() override;
 	virtual void Enter() override;
 	virtual void Exit() override;
+
+private:
+	Timer m_tUpTimer;
+	bool m_bUpFinishedFlag;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+class Skul;
 class DropSkul :
     public GameObject
 {
@@ -15,6 +16,7 @@ public:
     virtual void Destroy();
 public:
     void CreateTouchEffectAddedToScene();
+    static wstring GetSkulImage(SKUL_KIND eSkulKind);
 
 public:
     virtual void OnCollisionEnter(shared_ptr<GameObject> pGameObject);
@@ -24,6 +26,7 @@ public:
 private:
     void DrawItemDetail();
     void CreateDetailHUDAndAddedToScene();
+    void CreateDropSkulAndAddedToScene(shared_ptr<Skul> pSkul);
 
 private:
     SKUL_KIND m_eSkulKind;
