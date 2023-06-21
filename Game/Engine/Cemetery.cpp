@@ -18,6 +18,10 @@
 #include "LittleBoneAttack.h"
 #include "HighWarlockAttack.h"
 #include "AbyssOrbSkill.h"
+#include "DevilBerserker.h"
+#include "DevilBerserkerAttack.h"
+#include "DevilBerserkerSwapSkill.h"
+#include "BoneHawlSkill.h"
 
 
 void Cemetery::Init()
@@ -291,5 +295,121 @@ void Cemetery::CreateSkul()
 		pHighWarlock->SetThumnailImage(pTexture);
 
 		m_mSkulMap[SKUL_KIND::HIGH_WARLOCK] = pHighWarlock;
+	}
+
+
+	// Devil Berserker
+	{
+		SkulInfo skulInfo = {};
+		skulInfo.eGrade = GRADE::LEGENDARY;
+		skulInfo.eSkulKind = SKUL_KIND::DEVIL_BERSERKER;
+		skulInfo.eSkulType = SKUL_TYPE::POWER;
+		skulInfo.szComment = L"강력한 힘을 위해 돌이킬 수 없는 계약을 맺었던 광기의 전사";
+		skulInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_Vignette", L"..\\Resources\\Texture\\Sprites\\DevilBerserker\\Image_DevilBerserker_Vignette.png");
+
+		shared_ptr<LittleBone> pDevilBerserker = make_shared<LittleBone>(skulInfo);
+		pDevilBerserker->AddComponent(make_shared<Animator>());
+
+		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
+		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
+
+		shared_ptr<MeshRenderer> pMeshRenderer = make_shared<MeshRenderer>();
+		pMeshRenderer->SetMaterial(pMaterial);
+		pMeshRenderer->SetMesh(pMesh);
+
+		pDevilBerserker->AddComponent(pMeshRenderer);
+		pDevilBerserker->AddComponent(make_shared<Transform>());
+		pDevilBerserker->GetTransform()->SetGlobalOffset(Vec2(0.f, 30.f));
+
+		uint8 iNormalEnum = static_cast<uint8>(BERSERKER_STATE::NORMAL);
+		// Normal Mode Animation
+		{
+			shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_Idle", L"..\\Resources\\Animation\\DevilBerserker\\berserker_idle.anim");
+			shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_Walk", L"..\\Resources\\Animation\\DevilBerserker\\berserker_walk.anim");
+			shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_Dash", L"..\\Resources\\Animation\\DevilBerserker\\berserker_dash.anim");
+			shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_JumpRise", L"..\\Resources\\Animation\\DevilBerserker\\berserker_jump_rise.anim");
+			shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_JumpFall", L"..\\Resources\\Animation\\DevilBerserker\\berserker_jump_fall.anim");
+			shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_JumpAttack", L"..\\Resources\\Animation\\DevilBerserker\\berserker_jump_attack.anim");
+
+
+			pDevilBerserker->AddAnimation(PLAYER_STATE::IDLE, L"Berserker_Idle", pIdleAnimation, iNormalEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::WALK, L"Berserker_Walk", pWalkAnimation, iNormalEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::DASH, L"Berserker_Dash", pDashAnimation, iNormalEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_RISE, L"Berserker_JumpRise", pJumpRiseAnimation, iNormalEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_FALL, L"Berserker_JumpFall", pJumpFallAnimation, iNormalEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"Berserker_JumpAttack", pJumpAttackAnimation, iNormalEnum);
+		}
+
+		uint8 iDevilEnum = static_cast<uint8>(BERSERKER_STATE::DEVIL);
+		// Devil Mode Animation
+		{
+			shared_ptr<Animation> pIdleAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_Idle", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_idle.anim");
+			shared_ptr<Animation> pWalkAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_Walk", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_walk.anim");
+			shared_ptr<Animation> pDashAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_Dash", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_dash.anim");
+			shared_ptr<Animation> pJumpRiseAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_JumpRise", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_jump_rise.anim");
+			shared_ptr<Animation> pJumpFallAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_JumpFall", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_jump_fall.anim");
+			shared_ptr<Animation> pJumpAttackAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_JumpAttack", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_jump_attack.anim");
+
+			pDevilBerserker->AddAnimation(PLAYER_STATE::IDLE, L"DevilBerserker_Idle", pIdleAnimation, iDevilEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::WALK, L"DevilBerserker_Walk", pWalkAnimation, iDevilEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::DASH, L"DevilBerserker_Dash", pDashAnimation, iDevilEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_RISE, L"DevilBerserker_JumpRise", pJumpRiseAnimation, iDevilEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_FALL, L"DevilBerserker_JumpFall", pJumpFallAnimation, iDevilEnum);
+			pDevilBerserker->AddAnimation(PLAYER_STATE::JUMP_ATTACK, L"DevilBerserker_JumpAttack", pJumpAttackAnimation, iDevilEnum);
+		}
+
+		// Berserker Attack Method
+		{
+			shared_ptr<Animation> pAttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_AttackA", L"..\\Resources\\Animation\\DevilBerserker\\berserker_attack_a.anim");
+			shared_ptr<Animation> pAttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"Berserker_AttackB", L"..\\Resources\\Animation\\DevilBerserker\\berserker_attack_b.anim");
+
+			shared_ptr<Animation> pDevilMode_AttackA_Animation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_AttackA", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_attack_a.anim");
+			shared_ptr<Animation> pDevilMode_AttackB_Animation = GET_SINGLE(Resources)->Load<Animation>(L"DevilBerserker_AttackB", L"..\\Resources\\Animation\\DevilBerserker\\devilberserker_attack_b.anim");
+
+			pAttackA_Animation->SetHitFrame(4);
+			pAttackB_Animation->SetHitFrame(4);
+			pDevilMode_AttackA_Animation->SetHitFrame(3);
+			pDevilMode_AttackB_Animation->SetHitFrame(2);
+
+			shared_ptr<DevilBerserkerAttack> pDevilBerserkerAttackMethod = make_shared<DevilBerserkerAttack>(pDevilBerserker);
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pAttackA_Animation , -20.f, 90.f, 150.f, iNormalEnum });
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pDevilMode_AttackA_Animation , -20.f, 90.f, 150.f, iDevilEnum });
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pAttackB_Animation , -20.f, 90.f, 150.f, iNormalEnum });
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pDevilMode_AttackB_Animation , -20.f, 90.f, 150.f, iDevilEnum });
+
+			pDevilBerserker->SetAttackMethod(pDevilBerserkerAttackMethod);
+		}
+
+		// DevilBerserker Swap Skill
+		{
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
+			skillInfo.fCooldown = 0.f;
+			skillInfo.fDuration = 2.f;
+			skillInfo.szComment = L"교대 시 점프하여 적을 내려칩니다.";
+			skillInfo.szName = L"내려 찍기";
+
+			shared_ptr<DevilBerserkerSwapSkill> pSwapSkill = make_shared<DevilBerserkerSwapSkill>(skillInfo);
+			pDevilBerserker->SetSwapSkill(pSwapSkill);
+		}
+
+		// Skull Throw Skill
+		{
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
+			skillInfo.fCooldown = 6.f;
+			skillInfo.fDuration = 2.f;
+			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_BoneHawl", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\HUD_BoneHawl.png");
+			skillInfo.szComment = L"현재 체력의 10%를 소모해 20초간 악마로 변하며 넓은 범위의 적에게 물리데미지를 입힙니다.";
+			skillInfo.szName = L"뼈의 울음";
+
+			shared_ptr<BoneHawlSkill> pBoneHawlSkill = make_shared<BoneHawlSkill>(skillInfo);
+			pDevilBerserker->ObtainSkill(pBoneHawlSkill);
+		}
+
+		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_Thumnail", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\Image_DevilBerserker_Thumnail.png");
+		pDevilBerserker->SetThumnailImage(pTexture);
+
+		m_mSkulMap[SKUL_KIND::DEVIL_BERSERKER] = pDevilBerserker;
 	}
 }

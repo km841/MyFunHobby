@@ -209,6 +209,7 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
 		pPlayer->AddComponent(make_shared<Movement>());
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::LITTLE_BONE));
+		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::DEVIL_BERSERKER));
 		//pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::HIGH_WARLOCK));
 		//pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<ForbiddenSword>());
 		//pPlayer->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem<EvilSwordKirion>());

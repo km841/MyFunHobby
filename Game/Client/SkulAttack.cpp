@@ -127,5 +127,5 @@ void SkulAttack::AddAttackInfo(ATTACK_ORDER eAttackOrder, const AttackInfo& atta
 	assert(iAttackOrder < ATTACK_ORDER_COUNT);
 	uint8 iEnum = attackInfo.iEnum;
 	m_arrAttackInfo[iEnum][iAttackOrder] = attackInfo;
-	m_iMaxCount++;
+	m_iMaxCount = std::max(static_cast<uint8>(iAttackOrder + 1), m_iMaxCount);
 }

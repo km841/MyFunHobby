@@ -372,7 +372,7 @@ void Player::CreateDashSmokeAndAddedToScene()
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	m_pDashSmoke->AddComponent(make_shared<Transform>());
-	m_pDashSmoke->GetTransform()->SetGlobalOffset(Vec2(0.f, -10.f));
+	m_pDashSmoke->GetTransform()->SetGlobalOffset(Vec2(0.f, 10.f));
 	m_pDashSmoke->AddComponent(make_shared<Animator>());
 
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->Load<Animation>(L"DashSmoke_Small", L"..\\Resources\\Animation\\SkulCommon\\common_dashsmoke_small.anim");

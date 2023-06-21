@@ -236,6 +236,15 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Monster\VeteranHero">
       <UniqueIdentifier>{c46c0d95-1f13-4d4c-8430-e976d01239d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker">
+      <UniqueIdentifier>{862185b0-e297-46d0-8f55-e6fb02b09c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Attack">
+      <UniqueIdentifier>{b7d305e2-20cf-4fc6-9790-4c905d6a750d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill">
+      <UniqueIdentifier>{8c2ad4a4-c0d8-48ff-a2ea-27b71bb541a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -918,6 +927,18 @@
     </ClInclude>
     <ClInclude Include="IncompletedAbyssMeteor.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssMeteor</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilBerserker.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilBerserkerAttack.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilBerserkerSwapSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneHawlSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1614,6 +1635,18 @@
     </ClCompile>
     <ClCompile Include="IncompletedAbyssMeteor.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\HighWarlock\Skill\AbyssMeteor</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilBerserker.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilBerserkerAttack.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilBerserkerSwapSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneHawlSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -74,7 +74,6 @@ void LittleBone::CooldownCompletionCallback(SKILL_INDEX eSkillIndex)
 		m_pHead->Disable();
 		m_pPlayer.lock()->RefreshAnimation();
 	}
-
 }
 
 void LittleBone::CreateHeadAndAddedToScene()

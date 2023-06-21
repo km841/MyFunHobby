@@ -190,6 +190,7 @@
     <ClInclude Include="BaseCampOpeningHUD.h" />
     <ClInclude Include="BGCameraScript.h" />
     <ClInclude Include="BlackLab.h" />
+    <ClInclude Include="BoneHawlSkill.h" />
     <ClInclude Include="BoneOfMana.h" />
     <ClInclude Include="BoneReward.h" />
     <ClInclude Include="BossHPScript.h" />
@@ -213,6 +214,9 @@
     <ClInclude Include="ChimeraGrabScript.h" />
     <ClInclude Include="ChimeraRoar.h" />
     <ClInclude Include="CreateViceBossMapWallTileEvent.h" />
+    <ClInclude Include="DevilBerserker.h" />
+    <ClInclude Include="DevilBerserkerAttack.h" />
+    <ClInclude Include="DevilBerserkerSwapSkill.h" />
     <ClInclude Include="DisableCameraTrackingEvent.h" />
     <ClInclude Include="EnableCameraTrackingEvent.h" />
     <ClInclude Include="EnableChapterBossHPBarEvent.h" />
@@ -431,6 +435,7 @@
     <ClCompile Include="BaseCampOpeningHUD.cpp" />
     <ClCompile Include="BGCameraScript.cpp" />
     <ClCompile Include="BlackLab.cpp" />
+    <ClCompile Include="BoneHawlSkill.cpp" />
     <ClCompile Include="BoneOfMana.cpp" />
     <ClCompile Include="BoneReward.cpp" />
     <ClCompile Include="BossHPScript.cpp" />
@@ -454,6 +459,9 @@
     <ClCompile Include="ChimeraGrabScript.cpp" />
     <ClCompile Include="ChimeraRoar.cpp" />
     <ClCompile Include="CreateViceBossMapWallTileEvent.cpp" />
+    <ClCompile Include="DevilBerserker.cpp" />
+    <ClCompile Include="DevilBerserkerAttack.cpp" />
+    <ClCompile Include="DevilBerserkerSwapSkill.cpp" />
     <ClCompile Include="DisableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableCameraTrackingEvent.cpp" />
     <ClCompile Include="EnableChapterBossHPBarEvent.cpp" />

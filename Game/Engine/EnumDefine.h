@@ -399,6 +399,7 @@ enum class SKUL_KIND
 {
 	LITTLE_BONE,
 	HIGH_WARLOCK,
+	DEVIL_BERSERKER,
 };
 
 enum class SKUL_TYPE
@@ -437,6 +438,12 @@ enum class LITTLE_BONE_STATE
 {
 	HAS_HEAD,
 	NO_HEAD,
+};
+
+enum class BERSERKER_STATE
+{
+	NORMAL,
+	DEVIL,
 };
 
 enum class AFTERIMAGE_TYPE

@@ -72,6 +72,8 @@ struct SkulInfo
 			return L"리틀 본";
 		case SKUL_KIND::HIGH_WARLOCK:
 			return L"대마도사";
+		case SKUL_KIND::DEVIL_BERSERKER:
+			return L"데빌 버서커";
 		}
 		assert(nullptr);
 		return L"";
