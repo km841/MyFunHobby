@@ -16,6 +16,7 @@ ChimeraBreathFireEffectScript::ChimeraBreathFireEffectScript()
 	, m_vOrigin(Vec3(950.f, 490.f, 99.f))
 	, m_bOutroFlag(false)
 	, m_tBreathTick(0.075f)
+	, m_fBreathAcc(0.f)
 {
 }
 
@@ -56,6 +57,7 @@ void ChimeraBreathFireEffectScript::LateUpdate()
 
 			if (m_tBreathTick.IsFinished() && !m_tDuration.IsFinished())
 			{
+				m_fBreathAcc += WORLD_DELTA_TIME * 10.f;
 				CreateBreathProjectileAndAddedToScene(vFinalPos, vRotated);
 				m_tBreathTick.Reset();
 			}
@@ -72,6 +74,7 @@ void ChimeraBreathFireEffectScript::LateUpdate()
 
 			if (GetAnimator()->GetActiveAnimation()->IsFinished())
 			{
+				m_fBreathAcc = 0.f;
 				SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 				GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(GetGameObject(), eSceneType));
 			}
@@ -84,7 +87,7 @@ void ChimeraBreathFireEffectScript::CreateBreathProjectileAndAddedToScene(const 
 	shared_ptr<ChimeraBreathProjectile> pProjectile =
 		GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<ChimeraBreathProjectile>(L"Forward", false, ACTOR_TYPE::DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(30.f, 30.f, 30.f), MassProperties());
 	
-	pProjectile->SetDirection(DIRECTION::LEFT);
+	//pProjectile->SetDirection(DIRECTION::LEFT);
 	pProjectile->GetTransform()->SetLocalPosition(vPos);
 	pProjectile->AddComponent(make_shared<Animator>());
 	pProjectile->AddComponent(make_shared<DebugRenderer>());
@@ -103,8 +106,15 @@ void ChimeraBreathFireEffectScript::CreateBreathProjectileAndAddedToScene(const 
 
 	pProjectile->GetAnimator()->Play(L"VenomProjectile");
 	pProjectile->Awake();
-	pProjectile->GetRigidBody()->SetRotationZForDynamic(XM_PIDIV4);
-	pProjectile->GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, XM_PIDIV4));
+
+	float fRadian = atan2(vDir.y, vDir.x);
+	auto transform = pProjectile->GetPhysical()->GetActor<PxRigidDynamic>()->getGlobalPose();
+	PxQuat rotation(((PxPi / 4) * m_fBreathAcc) + (100.f * PxPi / 180.f), PxVec3(0.f, 0.f, -1.f));
+	PxTransform rotatedTransform = PxTransform(transform.p, rotation);
+	pProjectile->GetPhysical()->GetActor<PxRigidDynamic>()->setGlobalPose(rotatedTransform);
+
+	//pProjectile->GetRigidBody()->SetRotationZForDynamic(XM_PIDIV4);
+	//pProjectile->GetTransform()->SetLocalRotation(Vec3(0.f, 0.f, XM_PIDIV4));
 
 	pProjectile->GetRigidBody()->SetLinearVelocityForDynamic(Conv::Vec3ToPxVec3(vDir * 600.f));
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

@@ -67,6 +67,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
 
     int iDistortionFlag = g_int_0;
     int iAfterEffectFlag = g_int_1;
+    int iWhiteFadeFlag = g_int_2;
     
     float fAccTime = g_float_1;
     float fProgress = g_float_2;
@@ -95,10 +96,6 @@ float4 PS_Main(VS_OUT _in) : SV_Target
         float2 vDistortionUV = Distortion(_in.uv, fAccTime, fProgress);
         vColor = g_tex_0.Sample(g_sam_0, vDistortionUV);
     }
-    //else
-    //{
-    //    vColor = g_tex_0.Sample(g_sam_0, _in.uv);
-    //}
     
     if (iAfterEffectFlag)
     {
@@ -106,6 +103,13 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     }
      
     float4 vLightColor = g_tex_2.Sample(g_sam_0, _in.uv) * fFadeRatio;
-    return vColor * vLightColor;
+    float4 vTotalColor = vColor * vLightColor;
+    
+    if (iWhiteFadeFlag)
+    {
+        vTotalColor += float4(1.f, 1.f, 1.f, 1.f) * (1.f - fFadeRatio);
+    }
+    
+    return vTotalColor;
 }
 #endif

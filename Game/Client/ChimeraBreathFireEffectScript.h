@@ -17,6 +17,7 @@ private:
     Timer m_tDuration;
     Timer m_tBreathTick;
     Vec3 m_vOrigin;
+    float m_fBreathAcc;
     bool m_bOutroFlag;
 };
 

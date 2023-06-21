@@ -317,7 +317,11 @@ void Scene::EventUpdate()
 				m_fFadeEffectRatio = 1.f - (curEvent.fCurTime / curEvent.fEndTime);
 
 			else if (SCENE_FADE_EFFECT::WHITE_FADE_IN == eSceneFadeEffect)
-				m_fFadeEffectRatio = 1.f + (1.f - (curEvent.fCurTime / curEvent.fEndTime));
+			{
+				m_fFadeEffectRatio = curEvent.fCurTime / curEvent.fEndTime;
+				GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(2, 1);
+				GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(2, 1.f - curEvent.fCurTime / curEvent.fEndTime);
+			}
 
 
 			if (curEvent.fEndTime < curEvent.fCurTime)
@@ -325,6 +329,7 @@ void Scene::EventUpdate()
 				m_fFadeEffectRatio = 1.f;
 				m_eActiveSceneEvent = EVENT_TYPE::END;
 				m_vSceneEvents.erase(m_vSceneEvents.begin());
+				GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(2, 0);
 			}
 		}
 			break;

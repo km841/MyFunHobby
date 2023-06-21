@@ -57,7 +57,7 @@ void ChimeraBreathProjectile::Update()
 		GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(vMyPos, Vec3(100.f, 100.f, 0.f), Vec3::Zero, 3.f);
 		m_bDespawnFlag = false;
 	}
-	GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, 1.5f));
+	//GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, 1.5f));
 	if (GetAnimator()->GetActiveAnimation() && GetAnimator()->GetActiveAnimation()->IsFinished())
 	{
 		m_bChecked = false;
