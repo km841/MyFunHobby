@@ -940,6 +940,9 @@
     <ClInclude Include="BoneHawlSkill.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="MadRushSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1646,6 +1649,9 @@
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClCompile>
     <ClCompile Include="BoneHawlSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="MadRushSkill.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClCompile>
   </ItemGroup>

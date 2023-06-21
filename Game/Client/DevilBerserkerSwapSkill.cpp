@@ -50,10 +50,6 @@ void DevilBerserkerSwapSkill::Update()
 			m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(Vec3(0.f, -2000.f, 0.f));
 		}
 	}
-	// n초간 상승
-	//m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity()
-	// n초간 낙하
-
 }
 
 void DevilBerserkerSwapSkill::CreateConditionFunction()

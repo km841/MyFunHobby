@@ -22,6 +22,7 @@
 #include "DevilBerserkerAttack.h"
 #include "DevilBerserkerSwapSkill.h"
 #include "BoneHawlSkill.h"
+#include "MadRushSkill.h"
 
 
 void Cemetery::Init()
@@ -425,10 +426,31 @@ void Cemetery::CreateSkul()
 			wstring szAnimationName = L"DevilBerserker_Demonization";
 			pBoneHawlSkill->SetAnimationName(szAnimationName);
 
-			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->Load<Animation>(szAnimationName, L"..\\Resources\\Animation\\DevilBerserker\\berserker_demonization.anim");
+			shared_ptr<Animation> pSwapAnimation = GET_SINGLE(Resources)->LoadAnimation(szAnimationName, L"..\\Resources\\Animation\\DevilBerserker\\berserker_demonization.anim");
 			pBoneHawlSkill->SetAnimation(pSwapAnimation);
 
 			pDevilBerserker->ObtainSkill(pBoneHawlSkill);
+		}
+
+		// DevilBerserker MadRush
+		{
+			SkillInfo skillInfo = {};
+			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
+			skillInfo.fCooldown = 10.f;
+			skillInfo.fDuration = 5.f;
+			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_MadRush", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\HUD_MadRush.png");
+			skillInfo.szComment = L"미친듯이 지면을 내려 찍어 물리데미지를 입힙니다. \n버튼을 연타하여 최대 10회까지 내려찍을 수 있습니다.";
+			skillInfo.szName = L"매드 러쉬";
+
+			shared_ptr<MadRushSkill> pMadRushSkill = make_shared<MadRushSkill>(skillInfo);
+
+			wstring szAnimationName = L"DevilBerserker_Temp";
+			pMadRushSkill->SetAnimationName(szAnimationName);
+
+			shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(szAnimationName, L"..\\Resources\\Animation\\DevilBerserker\\berserker_demonization.anim");
+			pMadRushSkill->SetAnimation(pAnimation);
+
+			pDevilBerserker->ObtainSkill(pMadRushSkill);
 		}
 
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_Thumnail", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\Image_DevilBerserker_Thumnail.png");
