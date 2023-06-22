@@ -46,8 +46,10 @@ void BoneHawlSkill::Exit()
 	m_pSkul.lock()->GetPlayer().lock()->Play();
 	static_pointer_cast<DevilBerserker>(m_pSkul.lock())->Demonization();
 
-	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(0.f, 1000.f, 0.f));
-	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(1000.f, 0.f, 0.f));
+	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(0.f, 2000.f, 0.f));
+	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(2000.f, 0.f, 0.f));
+	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(0.f, 2000.f, 0.f));
+	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(2000.f, 0.f, 0.f));
 	CreateRoarEffectAndAddedToScene();
 	// CameraShake
 	// Damage

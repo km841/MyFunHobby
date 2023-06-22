@@ -22,7 +22,7 @@
 #include "DevilBerserkerAttack.h"
 #include "DevilBerserkerSwapSkill.h"
 #include "BoneHawlSkill.h"
-#include "MadRushSkill.h"
+#include "RageTackleSkill.h"
 
 
 void Cemetery::Init()
@@ -318,6 +318,7 @@ void Cemetery::CreateSkul()
 		skulInfo.eSkulKind = SKUL_KIND::DEVIL_BERSERKER;
 		skulInfo.eSkulType = SKUL_TYPE::POWER;
 		skulInfo.szComment = L"강력한 힘을 위해 돌이킬 수 없는 계약을 맺었던 광기의 전사";
+		skulInfo.vVignetteTextureOffset = Vec2(75.f, 30.f);
 		skulInfo.pVignetteTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_Vignette", L"..\\Resources\\Texture\\Sprites\\DevilBerserker\\Image_DevilBerserker_Vignette.png");
 		m_mSkulInfoMap[SKUL_KIND::DEVIL_BERSERKER] = skulInfo;
 
@@ -432,25 +433,25 @@ void Cemetery::CreateSkul()
 			pDevilBerserker->ObtainSkill(pBoneHawlSkill);
 		}
 
-		// DevilBerserker MadRush
+		// DevilBerserker RageTackle
 		{
 			SkillInfo skillInfo = {};
 			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
 			skillInfo.fCooldown = 10.f;
-			skillInfo.fDuration = 5.f;
+			skillInfo.fDuration = 6.f;
 			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_MadRush", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\HUD_MadRush.png");
-			skillInfo.szComment = L"미친듯이 지면을 내려 찍어 물리데미지를 입힙니다. \n버튼을 연타하여 최대 10회까지 내려찍을 수 있습니다.";
-			skillInfo.szName = L"매드 러쉬";
+			skillInfo.szComment = L"버튼을 누르고 있으면 바라보는 방향으로 돌진하며,\n악마의 힘이 서린 참격을 가합니다";
+			skillInfo.szName = L"레이지 태클";
 
-			shared_ptr<MadRushSkill> pMadRushSkill = make_shared<MadRushSkill>(skillInfo);
+			shared_ptr<RageTackleSkill> pRageTackle = make_shared<RageTackleSkill>(skillInfo);
 
 			wstring szAnimationName = L"DevilBerserker_Temp";
-			pMadRushSkill->SetAnimationName(szAnimationName);
+			pRageTackle->SetAnimationName(szAnimationName);
 
 			shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(szAnimationName, L"..\\Resources\\Animation\\DevilBerserker\\berserker_demonization.anim");
-			pMadRushSkill->SetAnimation(pAnimation);
+			pRageTackle->SetAnimation(pAnimation);
 
-			pDevilBerserker->ObtainSkill(pMadRushSkill);
+			pDevilBerserker->ObtainSkill(pRageTackle);
 		}
 
 		shared_ptr<Texture> pTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_Thumnail", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\Image_DevilBerserker_Thumnail.png");

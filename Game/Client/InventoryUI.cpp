@@ -302,7 +302,7 @@ void InventoryUI::CreateDarkAbilInfoUI()
 	{
 		shared_ptr<DarkAbilInfoUI> pDarkAbilInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DarkAbilInfoUI>(L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
 		pDarkAbilInfo->GetTransform()->SetParent(GetTransform());
-		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-327.f, -222.5f, -10.f));
+		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-326.f, -222.f, -10.f));
 		pDarkAbilInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pDarkAbilInfo->Awake();
@@ -316,7 +316,7 @@ void InventoryUI::CreateDarkAbilInfoUI()
 	{
 		shared_ptr<DarkAbilInfoUI> pDarkAbilInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DarkAbilInfoUI>(L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
 		pDarkAbilInfo->GetTransform()->SetParent(GetTransform());
-		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-267.f, -222.5f, -10.f));
+		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-266.f, -222.f, -10.f));
 		pDarkAbilInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pDarkAbilInfo->Awake();
@@ -330,7 +330,7 @@ void InventoryUI::CreateDarkAbilInfoUI()
 	{
 		shared_ptr<DarkAbilInfoUI> pDarkAbilInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DarkAbilInfoUI>(L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
 		pDarkAbilInfo->GetTransform()->SetParent(GetTransform());
-		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-207.f, -222.5f, -10.f));
+		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-206.f, -222.f, -10.f));
 		pDarkAbilInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pDarkAbilInfo->Awake();
@@ -344,7 +344,7 @@ void InventoryUI::CreateDarkAbilInfoUI()
 	{
 		shared_ptr<DarkAbilInfoUI> pDarkAbilInfo = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DarkAbilInfoUI>(L"InventoryInfo", L"..\\Resources\\Texture\\UI\\Inventory\\Inventory_Deactivate.png");
 		pDarkAbilInfo->GetTransform()->SetParent(GetTransform());
-		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-147.f, -222.5f, -10.f));
+		pDarkAbilInfo->GetTransform()->SetLocalPosition(Vec3(-146.f, -222.f, -10.f));
 		pDarkAbilInfo->SetDetailInfoUI(m_pDetailInfoUI);
 
 		pDarkAbilInfo->Awake();
@@ -361,7 +361,7 @@ void InventoryUI::CreateDetailInfoUI()
 	{
 		m_pDetailInfoUI = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<DetailInfoUI>(L"Forward");
 		m_pDetailInfoUI->GetTransform()->SetParent(GetTransform());
-		m_pDetailInfoUI->GetTransform()->SetLocalPosition(Vec3(222.f, -75.f, -10.f));
+		m_pDetailInfoUI->GetTransform()->SetLocalPosition(Vec3(223.f, -75.f, -10.f));
 
 		m_pDetailInfoUI->m_pInventoryUI = Conv::BaseToDeclare<InventoryUI>(shared_from_this());
 		m_pDetailInfoUI->Awake();

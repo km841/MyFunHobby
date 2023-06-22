@@ -940,7 +940,10 @@
     <ClInclude Include="BoneHawlSkill.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="MadRushSkill.h">
+    <ClInclude Include="RageTackleSkill.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="RageTackleSlashEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1651,7 +1654,10 @@
     <ClCompile Include="BoneHawlSkill.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="MadRushSkill.cpp">
+    <ClCompile Include="RageTackleSkill.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="RageTackleSlashEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
     </ClCompile>
   </ItemGroup>

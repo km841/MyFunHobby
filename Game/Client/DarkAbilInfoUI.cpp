@@ -18,6 +18,7 @@ DarkAbilInfoUI::~DarkAbilInfoUI()
 void DarkAbilInfoUI::Awake()
 {
 	InfoUI::Awake();
+	m_bUnused = true;
 }
 
 void DarkAbilInfoUI::Start()
