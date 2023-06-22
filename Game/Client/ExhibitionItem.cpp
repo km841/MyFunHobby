@@ -88,6 +88,7 @@ void ExhibitionItem::Destroy()
 
 	if (m_pVignetteHUD.lock())
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pVignetteHUD.lock(), eSceneType));
+
 }
 
 void ExhibitionItem::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
@@ -116,7 +117,7 @@ void ExhibitionItem::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 
 void ExhibitionItem::CreateDetailHUDAndAddedToScene()
 {
-	shared_ptr<GameObject> pDetailHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<GameObject>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_PopupItem.png", LAYER_TYPE::UNKNOWN);
+	shared_ptr<GameObject> pDetailHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<GameObject>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_PopupItem_Ver2.png", LAYER_TYPE::UNKNOWN);
 	Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 	vMyPos.x -= 300.f;
 	vMyPos.y += 50.f;
@@ -145,7 +146,7 @@ void ExhibitionItem::DrawItemDetail()
 	// Name
 	{
 		Vec3 vNamePos = vStandard;
-		vNamePos.y += 137.5f;
+		vNamePos.y += 87.5f;
 		FONT->DrawStringAtWorldPos(itemInfo.szName, 23.f, vNamePos, FONT_WEIGHT::ULTRA_BOLD, NAME_COLOR, FONT_ALIGN::CENTER);
 	}
 
@@ -153,7 +154,7 @@ void ExhibitionItem::DrawItemDetail()
 	{
 		Vec3 vGradePos = vStandard;
 		vGradePos.x -= 180.f;
-		vGradePos.y += 100.f;
+		vGradePos.y += 50.f;
 		wstring szGrade = {};
 		switch (itemInfo.eGrade)
 		{
@@ -176,7 +177,7 @@ void ExhibitionItem::DrawItemDetail()
 	// Comment
 	{
 		Vec3 vCommentPos = vStandard;
-		vCommentPos.y += 70.f;
+		vCommentPos.y += 20.f;
 		FONT->DrawStringAtWorldPos(itemInfo.szExplanation, 17.f, vCommentPos, FONT_WEIGHT::BOLD, COMMENT_COLOR, FONT_ALIGN::CENTER);
 	}
 }

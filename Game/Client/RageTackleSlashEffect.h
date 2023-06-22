@@ -23,12 +23,16 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
-    void MonsterTakeDamageAndImpulse(const Vec3& vPos, const Vec3& vVolume);
+
+    void MonsterTakeDamageAndImpulse(const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse);
 
     void SetSlashKind(int32 iAlpha)
     {
         m_eSlashKind = static_cast<SLASH_KIND>('e' - iAlpha);
     }
+
+private:
+    void CreateHitEffectAndAddedScene(Vec3 vMonsterPos);
 
 private:
     DECLARE_POOL(RageTackleSlashEffect);

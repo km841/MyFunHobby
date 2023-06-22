@@ -14,6 +14,7 @@ public:
 	void Update();
 	void LateUpdate();
 	void FinalUpdate();
+	void Destroy();
 
 	bool IsGround() { return m_bGroundFlag; }
 
@@ -27,10 +28,11 @@ public:
 public:
 	void SetStingerEffectState(bool bState);
 	virtual void ActivateDeadEvent(const Vec3& vDir) { }
-	virtual void ActivateDeadEvent() { }
+	virtual void ActivateDeadEvent();
 
 private:
 	void CreateStingerEffectAndAddedToScene();
+	void CreateDeadObjectAndAddedToScene();
 
 private:
 	bool m_bLandingFlag;

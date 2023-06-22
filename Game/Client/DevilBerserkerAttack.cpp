@@ -26,7 +26,7 @@
 DevilBerserkerAttack::DevilBerserkerAttack(shared_ptr<Skul> pSkul)
 	: SkulAttack(pSkul)
 {
-	m_fDamage = 10.f;
+	m_fDamage = 15.f;
 }
 
 DevilBerserkerAttack::~DevilBerserkerAttack()

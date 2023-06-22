@@ -245,6 +245,9 @@
     <Filter Include="소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill">
       <UniqueIdentifier>{8c2ad4a4-c0d8-48ff-a2ea-27b71bb541a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Object\GameObject\Monster\VeteranHero\DeadObject">
+      <UniqueIdentifier>{8eeb732e-b165-4d46-9ca7-e4962d605042}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -945,6 +948,12 @@
     </ClInclude>
     <ClInclude Include="RageTackleSlashEffect.h">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="VeteranHeroDeadObject.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero\DeadObject</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthPotion.h">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero\DeadObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1659,6 +1668,12 @@
     </ClCompile>
     <ClCompile Include="RageTackleSlashEffect.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Player\Skul\DevilBerserker\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="VeteranHeroDeadObject.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero\DeadObject</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthPotion.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero\DeadObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

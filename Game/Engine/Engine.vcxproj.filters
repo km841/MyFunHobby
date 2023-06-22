@@ -373,6 +373,9 @@
     <ClInclude Include="VeteranHeroRandomStateTask.h">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterHitFrameProcessingTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -733,6 +736,9 @@
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
     <ClCompile Include="VeteranHeroRandomStateTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHitFrameProcessingTask.cpp">
       <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>

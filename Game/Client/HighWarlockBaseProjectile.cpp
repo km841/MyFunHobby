@@ -92,8 +92,9 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 			m_bDespawn = true;
 
 			static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
-			pGameObject->GetStatus()->TakeDamage(1);
-			FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MELEE, 1.f, pGameObject->GetTransform()->GetPhysicalPosition());
+			float fDamage = static_cast<float>(RANDOM(5, 10));
+			pGameObject->GetStatus()->TakeDamage(fDamage);
+			FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MAGIC, fDamage, pGameObject->GetTransform()->GetPhysicalPosition());
 			if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
 				pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);
 
@@ -125,4 +126,53 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 
 void HighWarlockBaseProjectile::OnTriggerExit(shared_ptr<GameObject> pGameObject)
 {
+}
+
+void HighWarlockBaseProjectile::OnCollisionEnter(shared_ptr<GameObject> pGameObject)
+{
+	if (LAYER_TYPE::MONSTER == pGameObject->GetLayerType())
+	{
+		// 속도를 0으로 만들고 애니메이션 변경
+
+		weak_ptr<Monster> pMonster = static_pointer_cast<Monster>(pGameObject);
+
+		if (MONSTER_STATE::DEAD == pMonster.lock()->GetMonsterState())
+			return;
+
+		if (!m_bDespawn)
+		{
+			GetRigidBody()->SetVelocity(Vec3::Zero);
+			GetAnimator()->Play(L"HighWarlock_BaseProjectile_Despawn", false);
+			m_bDespawn = true;
+
+			static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
+			float fDamage = static_cast<float>(RANDOM(5, 10));
+			pGameObject->GetStatus()->TakeDamage(fDamage);
+			FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MAGIC, fDamage, pGameObject->GetTransform()->GetPhysicalPosition());
+			if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
+				pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);
+
+			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
+			vMyPos.z = 0.f;
+
+			Vec3 vMonsterPos = pGameObject->GetTransform()->GetPhysicalPosition();
+			vMonsterPos.z = 0.f;
+
+			Vec3 vTargetVec = vMonsterPos - vMyPos;
+
+			if (!pGameObject->GetStatus()->IsAlive())
+			{
+				vTargetVec.x *= 5.f;
+				pMonster.lock()->SetMonsterState(MONSTER_STATE::DEAD);
+				pMonster.lock()->ActivateDeadEvent(vTargetVec);
+			}
+		}
+	}
+
+	if (LAYER_TYPE::TILE == pGameObject->GetLayerType())
+	{
+		GetRigidBody()->SetVelocity(Vec3::Zero);
+		GetAnimator()->Play(L"HighWarlock_BaseProjectile_Despawn", false);
+		m_bDespawn = true;
+	}
 }

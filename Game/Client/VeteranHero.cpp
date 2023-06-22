@@ -11,6 +11,8 @@
 #include "Resources.h"
 #include "LocalEffect.h"
 #include "AnimationLocalEffect.h"
+#include "ObjectReturnToPoolEvent.h"
+#include "VeteranHeroDeadObject.h"
 
 VeteranHero::VeteranHero()
 	: m_bLandingFlag(false)
@@ -69,6 +71,13 @@ void VeteranHero::FinalUpdate()
 	GameObject::FinalUpdate();
 }
 
+void VeteranHero::Destroy()
+{
+
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(m_pStingerEffect.lock(), eSceneType));
+}
+
 void VeteranHero::CreateStingerSlashEffectAndAddedToScene()
 {
 	shared_ptr<AnimationLocalEffect> pAnimationLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<AnimationLocalEffect>(L"Forward");
@@ -115,9 +124,14 @@ void VeteranHero::SetStingerEffectState(bool bState)
 		m_pStingerEffect.lock()->Disable();
 }
 
+void VeteranHero::ActivateDeadEvent()
+{
+	CreateDeadObjectAndAddedToScene();
+}
+
 void VeteranHero::CreateStingerEffectAndAddedToScene()
 {
-	shared_ptr<LocalEffect> pLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<LocalEffect>(L"Forward");
+	shared_ptr<LocalEffect> pLocalEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<LocalEffect>(L"Forward");
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 
 	pLocalEffect->GetTransform()->SetParent(GetTransform());
@@ -135,4 +149,19 @@ void VeteranHero::CreateStingerEffectAndAddedToScene()
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pLocalEffect, eSceneType));
 
 	m_pStingerEffect = pLocalEffect;
+}
+
+void VeteranHero::CreateDeadObjectAndAddedToScene()
+{
+	shared_ptr<VeteranHeroDeadObject> pDeadObject = 
+		GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<VeteranHeroDeadObject>(L"Forward", false, ACTOR_TYPE::MONSTER_DYNAMIC, GEOMETRY_TYPE::SPHERE, Vec3(10.f, 10.f, 1.f), MassProperties(), L"..\\Resources\\Texture\\Sprites\\VeteranHero\\Sprite_VeteranHero_Dead.png");
+	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
+
+	Vec3 vPos = GetTransform()->GetPhysicalPosition();
+	vPos.z -= 0.5f;
+	vPos.y += 20.f;
+
+	pDeadObject->GetTransform()->SetLocalPosition(vPos);
+	pDeadObject->Awake();
+	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pDeadObject, eSceneType));
 }

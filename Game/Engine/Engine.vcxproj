@@ -226,6 +226,7 @@
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="MonoBehaviour.h" />
     <ClInclude Include="MonsterChangeStateEvent.h" />
+    <ClInclude Include="MonsterHitFrameProcessingTask.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="PatrolTask.h" />
     <ClInclude Include="Object.h" />
@@ -348,6 +349,7 @@
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="MonoBehaviour.cpp" />
     <ClCompile Include="MonsterChangeStateEvent.cpp" />
+    <ClCompile Include="MonsterHitFrameProcessingTask.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="PatrolTask.cpp" />
     <ClCompile Include="Object.cpp" />

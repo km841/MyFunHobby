@@ -57,20 +57,20 @@ void Ch3BaseCamp::Enter()
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING)->Action();
 
 	// NPC Spider
-	{
-		shared_ptr<NPC_Spider> pSpider = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<NPC_Spider>(L"Forward", false,
-			ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 10.f), MassProperties());
+	//{
+	//	shared_ptr<NPC_Spider> pSpider = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<NPC_Spider>(L"Forward", false,
+	//		ACTOR_TYPE::KINEMATIC, GEOMETRY_TYPE::BOX, Vec3(50.f, 50.f, 10.f), MassProperties());
 
-		pSpider->GetTransform()->SetLocalPosition(Vec3(715.f, 151.f, 100.f));
-		pSpider->AddComponent(make_shared<Animator>());
+	//	pSpider->GetTransform()->SetLocalPosition(Vec3(715.f, 151.f, 100.f));
+	//	pSpider->AddComponent(make_shared<Animator>());
 
-		shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Spider_Idle", L"..\\Resources\\Animation\\Spider\\npc_spider_idle.anim");
-		pSpider->GetAnimator()->AddAnimation(L"Spider_Idle", pAnimation);
-		pSpider->GetAnimator()->Play(L"Spider_Idle");
+	//	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"Spider_Idle", L"..\\Resources\\Animation\\Spider\\npc_spider_idle.anim");
+	//	pSpider->GetAnimator()->AddAnimation(L"Spider_Idle", pAnimation);
+	//	pSpider->GetAnimator()->Play(L"Spider_Idle");
 
-		pSpider->Awake();
-		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pSpider, SCENE_TYPE::DUNGEON));
-	}
+	//	pSpider->Awake();
+	//	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pSpider, SCENE_TYPE::DUNGEON));
+	//}
 }
 
 void Ch3BaseCamp::Exit()

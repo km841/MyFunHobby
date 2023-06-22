@@ -249,9 +249,9 @@ void InterfaceManager::CreateHUD()
 
 	// Clobber HUD
 	{
-		shared_ptr<ClobberHUD> pClobberHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ClobberHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_Player_Clobber.png");
+		shared_ptr<ClobberHUD> pClobberHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<ClobberHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\HUD_Player_Clobber_2.png");
 		pClobberHUD->SetFrustum(false);
-		pClobberHUD->GetTransform()->SetLocalPosition(Vec3(fWidth - 190.f, fHeight / 2.f - 270.f, 50.f));
+		pClobberHUD->GetTransform()->SetLocalPosition(Vec3(fWidth - 190.f, fHeight / 2.f - 305.f, 50.f));
 		pClobberHUD->AddComponent(make_shared<PlayerClubberShowScript>());
 
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_CLOBBER] = pClobberHUD;

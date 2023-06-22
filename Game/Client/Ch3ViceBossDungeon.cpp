@@ -86,6 +86,7 @@
 #include "IsDeadCondition.h"
 #include "DeadEventTriggerTask.h"
 #include "RemoveObjectTask.h"
+#include "MonsterHitFrameProcessingTask.h"
 
 #include "VeteranHeroLandingScript.h"
 #include "VeteranHeroFallSkillScript.h"
@@ -326,6 +327,7 @@ void Ch3ViceBossDungeon::Enter()
 				{
 					pUpperAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
 					pUpperAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttack", false));
+					pUpperAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10));
 					pUpperAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pUpperAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
 					pAnimSelector->AddChild(pUpperAnimSequence);
@@ -335,6 +337,7 @@ void Ch3ViceBossDungeon::Enter()
 				{
 					pSlashAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
 					pSlashAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_SlashAttack", false));
+					pSlashAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10));
 					pSlashAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
 					pSlashAnimSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
@@ -366,7 +369,8 @@ void Ch3ViceBossDungeon::Enter()
 				{
 					pJumpAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
 					pJumpAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_JumpAttack", false));
-					pJumpAnimSequence->AddChild(make_shared<SetVelocityGoToPlayerPosTask>(pPlayer.lock(), pVeteranHero, Vec3(500.f, 700.f, 0.f)));
+					pJumpAnimSequence->AddChild(make_shared<SetVelocityForKinematicTowardDirTask>(pVeteranHero, Vec3(300.f, 700.f, 0.f)));
+					pJumpAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10));
 					pJumpAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.25f));
 					pJumpAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
 					pAnimSelector->AddChild(pJumpAnimSequence);
@@ -447,6 +451,7 @@ void Ch3ViceBossDungeon::Enter()
 					pStingerAnimSequence->AddChild(make_shared<VeteranHeroStingerEffectStateChangeTask>(pVeteranHero, true));
 					// Effect On
 					pStingerAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_Stinger", false));
+					pStingerAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(200.f, 0.f, 0.f), Vec3(200.f, 100.f, 0.f), 5, 10));
 					pStingerAnimSequence->AddChild(make_shared<SetVelocityForKinematicTowardDirTask>(pVeteranHero, Vec3(1000.f, 0.f, 0.f)));
 					pStingerAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pStingerAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
@@ -480,6 +485,7 @@ void Ch3ViceBossDungeon::Enter()
 						pSlashAnimSequence->AddChild(pDirFixSelector);
 					}
 					pSlashAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_SlashAttack", false));
+					pSlashAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10));
 					pSlashAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
 					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pDirToken, false));
@@ -502,6 +508,7 @@ void Ch3ViceBossDungeon::Enter()
 		{
 			pFallSkillSequence->AddChild(make_shared<IsMonsterStateCondition>(pVeteranHero, MONSTER_STATE::SKILL1));
 			pFallSkillSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_FallDown", false));
+			pFallSkillSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(0.f, 0.f, 0.f), Vec3(100.f, 100.f, 0.f), 5, 10));
 			pFallSkillSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 2.f));
 			//pFallSkillSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
 		}
@@ -534,6 +541,12 @@ void Ch3ViceBossDungeon::Enter()
 
 		shared_ptr<Animation> pStingerReadyAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_StingerReady", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_stinger_ready.anim");
 		shared_ptr<Animation> pStingerAnimation = GET_SINGLE(Resources)->LoadAnimation(L"VeteranHero_Stinger", L"..\\Resources\\Animation\\VeteranHero\\veteran_hero_stinger.anim");
+
+		pUpperAttackAnimation->SetHitFrame(0);
+		pSlashAttackAnimation->SetHitFrame(0);
+		pFallSkillAnimation->SetHitFrame(0);
+		pJumpAttackAnimation->SetHitFrame(0);
+		pStingerAnimation->SetHitFrame(1);
 
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_LandingReady", pLandingReadyAnimation);
 		pVeteranHero->GetAnimator()->AddAnimation(L"VeteranHero_Landing", pLandingAnimation);
@@ -582,18 +595,18 @@ void Ch3ViceBossDungeon::Enter()
 	AddEvent(make_shared<ObjectEnableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"스켈레톤 주제에 여기까지 오다니! 마침 내가 혼자일 때 만나서\n다행이야. 개인적인 빚을 이제서야 갚아줄 수 있겠어.", 3.f));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"첫 모험에서 고작 스켈레톤 한 마리에게 패배했다는 소문이 퍼지자,\n아무도 날 인정해주지 않더군... 그들을 위해 무수히 많은\n사인들을 준비했는데 말이야.", 3.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"수치스러운 나날들이었다.", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내가 왜 패배했을까? 곰곰이 생각해봤어. 이유는 딱 하나야.", 2.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내 방심이랄까?", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"그게 아니면 내가 패배할 이유가 없잖아? 같잖은 스켈레톤 주제에 감히\n용사님을 이겨먹을 생각을 하다니.", 3.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"이제 레벨도 충분히 올렸겠다. 더 이상 봐주지 않겠어.", 2.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"첫 모험에서 고작 스켈레톤 한 마리에게 패배했다는 소문이 퍼지자,\n아무도 날 인정해주지 않더군... 그들을 위해 무수히 많은\n사인들을 준비했는데 말이야.", 3.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"수치스러운 나날들이었다.", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내가 왜 패배했을까? 곰곰이 생각해봤어. 이유는 딱 하나야.", 2.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"내 방심이랄까?", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"그게 아니면 내가 패배할 이유가 없잖아? 같잖은 스켈레톤 주제에 감히\n용사님을 이겨먹을 생각을 하다니.", 3.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"이제 레벨도 충분히 올렸겠다. 더 이상 봐주지 않겠어.", 2.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pVeteranHero, MONSTER_STATE::LANDING_END));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"견습 용사", L"정의의 검을 받을 준비는 되었나?", 2.f));

@@ -7,6 +7,8 @@
 #include "PlayerState.h"
 #include "Scene.h"
 #include "Scenes.h"
+#include "CollisionManager.h"
+#include "Transform.h"
 
 DevilBerserkerSwapSkill::DevilBerserkerSwapSkill(const SkillInfo& skillInfo)
 	: SkulSkill(skillInfo)
@@ -32,7 +34,8 @@ void DevilBerserkerSwapSkill::Update()
 		else
 		{
 			float fProgress = 1.f-m_tUpTimer.GetProgress();
-			m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(Vec3(600.f * fProgress, 1000.f * fProgress, 0.f));
+			uint8 iDirection = static_cast<uint8>(m_pSkul.lock()->GetDirection());
+			m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(Vec3(iDirection ? -600.f : 600.f * fProgress, 1000.f * fProgress, 0.f));
 			// »ó½Â
 		}
 	}
@@ -44,6 +47,10 @@ void DevilBerserkerSwapSkill::Update()
 			m_bUpFinishedFlag = false;
 			m_tUpTimer.Stop();
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(0.f, 1000.f, 0.f));
+			Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();
+			GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(300.f, 50.f, 0.f), Vec3(RANDOM(-300, 300), 300.f, 0.f));
+			GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(300.f, 50.f, 0.f), Vec3(RANDOM(-300, 300), 300.f, 0.f), static_cast<float>(RANDOM(10, 30)), DAMAGE_TYPE::FROM_PLAYER_MELEE);
+
 		}
 		else
 		{

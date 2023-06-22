@@ -216,6 +216,7 @@
     <ClInclude Include="CreateViceBossMapWallTileEvent.h" />
     <ClInclude Include="DevilBerserker.h" />
     <ClInclude Include="DevilBerserkerAttack.h" />
+    <ClInclude Include="HealthPotion.h" />
     <ClInclude Include="RageTackleSkill.h" />
     <ClInclude Include="DevilBerserkerSwapSkill.h" />
     <ClInclude Include="DisableCameraTrackingEvent.h" />
@@ -404,6 +405,7 @@
     <ClInclude Include="VenomBallProjectile.h" />
     <ClInclude Include="VenomSplash.h" />
     <ClInclude Include="VeteranHero.h" />
+    <ClInclude Include="VeteranHeroDeadObject.h" />
     <ClInclude Include="VeteranHeroFallSkillScript.h" />
     <ClInclude Include="VeteranHeroLandingScript.h" />
     <ClInclude Include="ViceBossHPHUD.h" />
@@ -463,6 +465,7 @@
     <ClCompile Include="CreateViceBossMapWallTileEvent.cpp" />
     <ClCompile Include="DevilBerserker.cpp" />
     <ClCompile Include="DevilBerserkerAttack.cpp" />
+    <ClCompile Include="HealthPotion.cpp" />
     <ClCompile Include="RageTackleSkill.cpp" />
     <ClCompile Include="DevilBerserkerSwapSkill.cpp" />
     <ClCompile Include="DisableCameraTrackingEvent.cpp" />
@@ -656,6 +659,7 @@
     <ClCompile Include="VenomBallProjectile.cpp" />
     <ClCompile Include="VenomSplash.cpp" />
     <ClCompile Include="VeteranHero.cpp" />
+    <ClCompile Include="VeteranHeroDeadObject.cpp" />
     <ClCompile Include="VeteranHeroFallSkillScript.cpp" />
     <ClCompile Include="VeteranHeroLandingScript.cpp" />
     <ClCompile Include="ViceBossHPHUD.cpp" />

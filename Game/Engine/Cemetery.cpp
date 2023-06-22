@@ -438,7 +438,7 @@ void Cemetery::CreateSkul()
 			SkillInfo skillInfo = {};
 			skillInfo.eSkillType = SKILL_TYPE::INSTANT;
 			skillInfo.fCooldown = 10.f;
-			skillInfo.fDuration = 6.f;
+			skillInfo.fDuration = 4.f;
 			skillInfo.pSkillTexture = GET_SINGLE(Resources)->Load<Texture>(L"DevilBerserker_MadRush", L"..\\Resources\\Texture\\HUD\\DevilBerserker\\HUD_MadRush.png");
 			skillInfo.szComment = L"버튼을 누르고 있으면 바라보는 방향으로 돌진하며,\n악마의 힘이 서린 참격을 가합니다";
 			skillInfo.szName = L"레이지 태클";

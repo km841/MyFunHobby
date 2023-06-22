@@ -40,7 +40,7 @@ void RageTackleSkill::Update()
 	if (IS_UP(KEY_TYPE::S))
 	{
 		// 종료
-		m_tDuration.SetProgress(0.9f);
+		m_tDuration.SetProgress(0.99f);
 		m_pFlashEffect.lock()->Disable();
 	}
 	else
@@ -96,7 +96,6 @@ void RageTackleSkill::Exit()
 
 void RageTackleSkill::CreateSlashEffectAndAddedToScene()
 {
-	// 클래스를 만들어서 animation local effect로 처리
 	shared_ptr<RageTackleSlashEffect> pSlashEffect = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysicalFromPool<RageTackleSlashEffect>(L"Forward");
 	pSlashEffect->GetTransform()->SetParent(m_pSkul.lock()->GetTransform());
 
