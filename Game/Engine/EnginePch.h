@@ -58,6 +58,19 @@ namespace fs = std::filesystem;
 #pragma comment(lib, "PhysX\\release\\PhysXCharacterKinematic_static_64.lib")
 #endif
 
+#include "..\\FMod\\fmod_studio.hpp"
+#include "..\\FMod\\fmod.hpp"
+#include "..\\FMod\\fmod_common.h"
+#include "..\\FMod\\fmod_codec.h"
+
+#ifdef _DEBUG
+#pragma comment(lib, "FMod\\debug\\fmodL_vc.lib")
+#pragma comment(lib, "FMod\\debug\\fmodstudioL_vc.lib")
+#else
+#pragma comment(lib, "FMod\\release\\fmod_vc.lib")
+#pragma comment(lib, "FMod\\release\\fmodstudio_vc.lib")
+#endif
+
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 using namespace Microsoft::WRL;

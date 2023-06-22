@@ -28,5 +28,6 @@ private:
     bool m_bOutroFinishedFlag;
 
     Timer m_tLoopTimer;
+    Timer m_tDamageTick;
 };
 

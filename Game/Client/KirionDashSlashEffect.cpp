@@ -70,7 +70,7 @@ void KirionDashSlashEffect::Update()
 						GetTransform()->GetLocalPosition(),
 						GetTransform()->GetLocalScale(),
 						Vec3(0.f, 0.f, 0.f),
-						RANDOM(3, 6),
+						static_cast<float>(RANDOM(3, 6)),
 						DAMAGE_TYPE::FROM_PLAYER_MAGIC
 					);
 					

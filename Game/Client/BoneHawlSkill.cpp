@@ -54,8 +54,8 @@ void BoneHawlSkill::Exit()
 	CreateRoarEffectAndAddedToScene();
 
 	Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();
-	GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(2000.f, 2000.f, 0.f), Vec3(RANDOM(-1000, 1000), 1000.f, 0.f));
-	GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(2000.f * 2.f, 2000.f * 2.f, 0.f), Vec3(RANDOM(-1000, 1000), 1000.f, 0.f), static_cast<float>(RANDOM(50, 100)), DAMAGE_TYPE::FROM_PLAYER_MELEE);
+	GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(2000.f, 2000.f, 0.f), Vec3(static_cast<float>(RANDOM(-1000, 1000)), 1000.f, 0.f));
+	GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(2000.f * 2.f, 2000.f * 2.f, 0.f), Vec3(static_cast<float>(RANDOM(-1000, 1000)), 1000.f, 0.f), static_cast<float>(RANDOM(50, 100)), DAMAGE_TYPE::FROM_PLAYER_MELEE);
 }
 
 void BoneHawlSkill::CreateRoarEffectAndAddedToScene()

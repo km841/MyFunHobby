@@ -16,6 +16,8 @@ enum class COMPONENT_TYPE : uint8
 	COLLIDER,
     AI,
     PARTICLE_SYSTEM,
+    SOUND_LISTENER,
+    SOUND_SOURCE,
 	// ...
 	MONO_BEHAVIOUR,
 	END,

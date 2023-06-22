@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "RigidBody.h"
 #include "Transform.h"
+#include "CollisionManager.h"
 
 VenomSplash::VenomSplash()
 	: GameObject(LAYER_TYPE::MONSTER_PROJECTILE)
@@ -17,6 +18,7 @@ VenomSplash::VenomSplash()
 	, m_bIntroFinishedFlag(false)
 	, m_bOutroFinishedFlag(false)
 	, m_tLoopTimer(2.5f)
+	, m_tDamageTick(0.3f)
 {
 }
 
@@ -52,14 +54,27 @@ void VenomSplash::Update()
 
 		else
 		{
+			if (!m_tDamageTick.IsRunning())
+			{
+				m_tDamageTick.Start();
+			}
+			else
+			{
+				m_tDamageTick.Update(WORLD_DELTA_TIME);
+				if (m_tDamageTick.IsFinished())
+				{
+					Vec3 vPos = GetTransform()->GetPhysicalPosition();
+					GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(vPos, Vec3(50.f, 50.f, 1.f), Vec3::Zero, 2.f);
+					m_tDamageTick.Reset();
+				}
+			}
+
+
 			if (!m_bIntroFinishedFlag && GetAnimator()->GetActiveAnimation()->IsFinished())
 			{
 				m_bIntroFinishedFlag = true;
 				GetAnimator()->Play(L"VenomSplash_Loop");
 				m_tLoopTimer.Start();
-
-
-
 			}
 
 			if (m_bIntroFinishedFlag)

@@ -93,7 +93,7 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 
 			static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
 			float fDamage = static_cast<float>(RANDOM(5, 10));
-			pGameObject->GetStatus()->TakeDamage(fDamage);
+			pGameObject->GetStatus()->TakeDamage(static_cast<int32>(fDamage));
 			FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MAGIC, fDamage, pGameObject->GetTransform()->GetPhysicalPosition());
 			if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
 				pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);
@@ -147,7 +147,7 @@ void HighWarlockBaseProjectile::OnCollisionEnter(shared_ptr<GameObject> pGameObj
 
 			static_pointer_cast<Monster>(pGameObject)->FlagAsAttacked();
 			float fDamage = static_cast<float>(RANDOM(5, 10));
-			pGameObject->GetStatus()->TakeDamage(fDamage);
+			pGameObject->GetStatus()->TakeDamage(static_cast<int32>(fDamage));
 			FONT->DrawDamage(DAMAGE_TYPE::FROM_PLAYER_MAGIC, fDamage, pGameObject->GetTransform()->GetPhysicalPosition());
 			if (MONSTER_TYPE::NORMAL == pMonster.lock()->GetMonsterType())
 				pMonster.lock()->SetMonsterState(MONSTER_STATE::WEAK_HIT);

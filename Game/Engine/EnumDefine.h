@@ -331,6 +331,7 @@ enum class OBJECT_TYPE : uint8
 	ITEM,
 	ESSENCE,
 	SPINE,
+	SOUND,
 
 	END
 };

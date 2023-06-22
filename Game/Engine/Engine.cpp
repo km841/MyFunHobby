@@ -14,6 +14,7 @@
 #include "ParticleSystem.h"
 #include "Font.h"
 #include "ObjectFactory.h"
+#include "Sounds.h"
 
 void Engine::Init(const WindowInfo& wInfo)
 {
@@ -75,7 +76,7 @@ void Engine::Init(const WindowInfo& wInfo)
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
 	GET_SINGLE(Cemetery)->Init();
 	GET_SINGLE(ObjectFactory)->Init();
-	
+	GET_SINGLE(Sounds)->Init();
 }
 
 void Engine::Update()

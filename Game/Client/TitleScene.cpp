@@ -29,6 +29,8 @@
 #include "ObjectFactory.h"
 #include "InterfaceManager.h"
 #include "HUD.h"
+#include "SoundListener.h"
+#include "SoundSource.h"
 
 
 TitleScene::TitleScene()
@@ -143,6 +145,8 @@ void TitleScene::Enter()
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
 		pGameObject->AddComponent(make_shared<CameraMoveScript>());
+		pGameObject->AddComponent(make_shared<SoundListener>());
+		
 		
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -162,6 +166,7 @@ void TitleScene::Enter()
 
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
+		
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
 		float fHeight = static_cast<float>(g_pEngine->GetHeight());
 		pGameObject->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 1.f));

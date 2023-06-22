@@ -45,7 +45,7 @@ void VenomBallProjectile::Update()
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		Vec3 vMySize = GetTransform()->GetLocalPosition();
-		GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(vMyPos, Vec3(100.f, 100.f, 0.f), Vec3::Zero, 3.f);
+		GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(vMyPos, Vec3(200.f, 200.f, 0.f), Vec3::Zero, 3.f);
 		m_bDespawnFlag = false;
 	}
 

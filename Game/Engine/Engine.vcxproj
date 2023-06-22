@@ -143,6 +143,10 @@
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)Library\Dll\fmodL.dll" "$(SolutionDir)\Output\"
+copy "$(SolutionDir)Library\Dll\fmodstudioL.dll" "$(SolutionDir)\Output\"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -272,6 +276,10 @@
     <ClInclude Include="SetVelocityGoToPlayerPosTask.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundListener.h" />
+    <ClInclude Include="Sounds.h" />
+    <ClInclude Include="SoundSource.h" />
     <ClInclude Include="SpineResource.h" />
     <ClInclude Include="SpineTextureLoader.h" />
     <ClInclude Include="StructuredBuffer.h" />
@@ -400,6 +408,10 @@
     <ClCompile Include="SetVelocityGoToPlayerPosTask.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundListener.cpp" />
+    <ClCompile Include="Sounds.cpp" />
+    <ClCompile Include="SoundSource.cpp" />
     <ClCompile Include="SpineResource.cpp" />
     <ClCompile Include="SpineTextureLoader.cpp" />
     <ClCompile Include="StructuredBuffer.cpp" />

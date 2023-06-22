@@ -16,6 +16,8 @@
 #include "ParticleSystem.h"
 #include "Tile.h"
 #include "ComponentObject.h"
+#include "SoundListener.h"
+#include "SoundSource.h"
 
 GameObject::GameObject(LAYER_TYPE eLayerType)
 	: Object(OBJECT_TYPE::GAMEOBJECT)
@@ -181,6 +183,18 @@ shared_ptr<ParticleSystem> GameObject::GetParticleSystem()
 {
 	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::PARTICLE_SYSTEM);
 	return static_pointer_cast<ParticleSystem>(pComponent);
+}
+
+shared_ptr<SoundListener> GameObject::GetSoundListener()
+{
+	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::SOUND_LISTENER);
+	return static_pointer_cast<SoundListener>(pComponent);
+}
+
+shared_ptr<SoundSource> GameObject::GetSoundSource()
+{
+	shared_ptr<Component> pComponent = GetFixedComponent(COMPONENT_TYPE::SOUND_SOURCE);
+	return static_pointer_cast<SoundSource>(pComponent);
 }
 
 void GameObject::AddComponent(shared_ptr<Component> pComponent)

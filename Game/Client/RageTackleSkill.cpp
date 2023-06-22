@@ -89,7 +89,8 @@ void RageTackleSkill::Exit()
 {
 	m_pSkul.lock()->GetPlayer().lock()->GetStatus()->fSpeed = 400.f;
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
-	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(m_pFlashEffect.lock(), eSceneType));
+	if (m_pFlashEffect.lock())
+		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(m_pFlashEffect.lock(), eSceneType));
 	m_fDepthValue = 0.f;
 	m_tSlashTick.Reset();
 }

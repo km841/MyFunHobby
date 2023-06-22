@@ -54,12 +54,14 @@
 #include "DecoObject.h"
 #include "DropEssence.h"
 
+
 /* Resources */
 #include "Animation.h"
 #include "Mesh.h"
 #include "Material.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "Sound.h";
 
 /* Components */
 #include "MeshRenderer.h"
@@ -74,6 +76,7 @@
 #include "Light.h"
 #include "AI.h"
 #include "ParticleSystem.h"
+#include "SoundSource.h"
 
 /* Items */
 #include "ForbiddenSword.h"
@@ -81,6 +84,8 @@
 
 /* Essence */
 #include "Lyweasel.h"
+
+#include "Sounds.h"
 
 
 TownScene::TownScene()
@@ -155,6 +160,11 @@ void TownScene::Enter()
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PARTICLE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::PLAYER_PROJECTILE);
 
+	GetMainCamera().lock()->AddComponent(make_shared<SoundSource>());
+	GetMainCamera().lock()->GetSoundSource()->SetClip(GET_SINGLE(Resources)->Load<Sound>(L"..\\Resources\\Sound\\Chapter3.wav", L"..\\Resources\\Sound\\Chapter3.wav"));
+	GetMainCamera().lock()->GetSoundSource()->Play();
+	
+
 	// Far Clouds
 	{
 		shared_ptr<Background> pClouds = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<Background>(
@@ -208,6 +218,7 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Collider>());
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
 		pPlayer->AddComponent(make_shared<Movement>());
+		
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::LITTLE_BONE));
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::DEVIL_BERSERKER));
 		//pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::HIGH_WARLOCK));
@@ -220,6 +231,8 @@ void TownScene::Enter()
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
 		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 150.f, 98.f));
+
+
 
 		pPlayer->SetFrustum(false);
 		AddGameObject(pPlayer);

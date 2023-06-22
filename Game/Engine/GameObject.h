@@ -15,6 +15,8 @@ class Movement;
 class Light;
 class AI;
 class ParticleSystem;
+class SoundListener;
+class SoundSource;
 
 using CollisionInfo = std::pair<COLLISION_SIDE, float>;
 class GameObject :
@@ -44,6 +46,8 @@ public:
     shared_ptr<Light>           GetLight();
     shared_ptr<AI>              GetAI();
     shared_ptr<ParticleSystem>  GetParticleSystem();
+    shared_ptr<SoundListener>   GetSoundListener();
+    shared_ptr<SoundSource>     GetSoundSource();
 
     void AddComponent(shared_ptr<Component> pComponent);
     void RemoveComponent(COMPONENT_TYPE eComponentType);

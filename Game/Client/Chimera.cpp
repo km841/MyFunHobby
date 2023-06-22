@@ -28,6 +28,7 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "RigidBody.h"
 #include "AnimationLocalEffect.h"
+#include "CollisionManager.h"
 
 Chimera* Chimera::s_pChimera = {};
 
@@ -164,7 +165,14 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 		if ("Grab_Smash" == szAnimName)
 		{
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
+			PLAYER_STATE ePlayerState = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetPlayerStateEnum();
 			
+			if (ePlayerState != PLAYER_STATE::JUMP_RISE && ePlayerState != PLAYER_STATE::JUMP_FALL)
+			{
+				Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
+				GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->TakeDamage(10);
+				FONT->DrawDamage(DAMAGE_TYPE::FROM_MONSTER, 10.f, vPlayerPos);
+			}
 		}
 	}
 		break;
@@ -184,6 +192,15 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 			for (auto& pFallingObject : vFallingObjects)
 			{
 				static_pointer_cast<ChimeraFallingObject>(pFallingObject)->SetDestroy();
+			}
+
+			PLAYER_STATE ePlayerState = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetPlayerStateEnum();
+
+			if (ePlayerState != PLAYER_STATE::JUMP_RISE && ePlayerState != PLAYER_STATE::JUMP_FALL)
+			{
+				Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
+				GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->TakeDamage(10);
+				FONT->DrawDamage(DAMAGE_TYPE::FROM_MONSTER, 10.f, vPlayerPos);
 			}
 			// Breaking
 		}

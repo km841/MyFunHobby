@@ -6,6 +6,7 @@
 #include "Material.h"
 #include "Shader.h"
 #include "Animation.h"
+#include "Sound.h"
 
 class SpineResource;
 class Resources
@@ -109,6 +110,8 @@ inline OBJECT_TYPE Resources::GetObjectType()
 		return OBJECT_TYPE::ANIMATION;
 	else if (std::is_same_v<T, SpineResource>)
 		return OBJECT_TYPE::SPINE;
+	else if (std::is_same_v<T, Sound>)
+		return OBJECT_TYPE::SOUND;
 	else
 		return OBJECT_TYPE::NONE;
 }
