@@ -147,6 +147,9 @@ void Dungeon_Shop::Exit()
 	}
 
 	m_vExhibitionItemList.clear();
+
+	SCENE_SOUND->SetBGMClip(GET_SINGLE(Resources)->Load<Sound>(L"Ch3_Bgm", L"..\\Resources\\Sound\\Chapter3.wav"));
+	SCENE_SOUND->PlayBGM();
 }
 
 void Dungeon_Shop::RenderExhibitionItemPrice()

@@ -12,6 +12,8 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "RigidBody.h"
 #include "DebugRenderer.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 VenomFall::VenomFall()
 	: GameObject(LAYER_TYPE::UNKNOWN)
@@ -46,6 +48,10 @@ void VenomFall::Update()
 		{
 			CreateVenomSplashAndAddedToScene();
 			m_bCreatedSplashFlag = true;
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomFall_Intro", L"..\\Resources\\Sound\\Chimera_VenomFall_Intro.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 
 		if (GetAnimator()->GetActiveAnimation()->IsFinished())
@@ -56,6 +62,11 @@ void VenomFall::Update()
 
 			// Timer On!
 			m_tLoopDuration.Start();
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomFall_Loop", L"..\\Resources\\Sound\\Chimera_VenomFall_Loop.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->SetLoop(true);
+			SCENE_SOUND->Play();
 		}
 	}
 	else
@@ -68,6 +79,21 @@ void VenomFall::Update()
 			{
 				GetAnimator()->Play(L"VenomFall_Outro", false);
 				m_bFinishedOutroFlag = true;
+
+				// Loop Sound
+				{
+					shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomFall_Loop", L"..\\Resources\\Sound\\Chimera_VenomFall_Loop.wav");
+					SCENE_SOUND->SetClip(pSound);
+					SCENE_SOUND->SetLoop(false);
+					SCENE_SOUND->Stop();
+				}
+
+				// Outro Sound
+				{
+					shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomFall_Loop_To_End", L"..\\Resources\\Sound\\Chimera_VenomFall_Loop_To_End.wav");
+					SCENE_SOUND->SetClip(pSound);
+					SCENE_SOUND->Play();
+				}
 			}
 		}
 

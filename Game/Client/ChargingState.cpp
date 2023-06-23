@@ -4,6 +4,11 @@
 #include "Input.h"
 #include "SkulSkill.h"
 #include "RigidBody.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Scenes.h"
+#include "Scene.h"
+#include "Resources.h"
 
 ChargingState::ChargingState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -65,6 +70,10 @@ void ChargingState::Enter()
 	tChargingDuration.SetEndTime(pActiveSkill.lock()->GetMaxChargingTime());
 	tChargingDuration.Start();
 	m_pPlayer.lock()->GetStatus()->fSpeed /= 2.f;
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Charge_Start", L"..\\Resources\\Sound\\HighWarlock_Charge_Start.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void ChargingState::Exit()

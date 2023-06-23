@@ -14,6 +14,8 @@
 #include "LocalEffect.h"
 #include "CollisionManager.h"
 #include "Player.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 ErodedKnightDeadScript::ErodedKnightDeadScript()
 	: m_tStayTimer(1.5f)
@@ -58,6 +60,11 @@ void ErodedKnightDeadScript::LateUpdate()
 
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			pErodedKnight.lock()->SetDeadFlag(false);
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Atk_Explosion_Large", L"..\\Resources\\Sound\\Atk_Explosion_Large.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			CreateExplosionEffectAndAddedToScene();
 			pErodedKnight.lock()->RemoveExclamationEffect();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(GetGameObject(), eSceneType));

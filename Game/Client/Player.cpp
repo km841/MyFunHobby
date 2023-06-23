@@ -28,6 +28,8 @@
 #include "Item.h"
 #include "Essence.h"
 #include "Monster.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 Player::Player()
 	: GameObject(LAYER_TYPE::PLAYER)
@@ -229,6 +231,10 @@ void Player::SwapCooldownUpdate()
 
 void Player::TakeDamage(uint32 iDamage)
 {
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"hit_blood", L"..\\Resources\\Sound\\hit_blood.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
+
 	m_Status.TakeDamage(iDamage);
 	static_pointer_cast<PlayerHitHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::PLAYER_HIT))->PlayHitAnimation();
 }

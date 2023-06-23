@@ -15,5 +15,6 @@ private:
 
 private:
     Timer m_tStayTimer;
+    bool m_bDeadBeginFlag;
 };
 

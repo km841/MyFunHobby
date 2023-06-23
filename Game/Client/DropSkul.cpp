@@ -16,6 +16,8 @@
 #include "Cemetery.h"
 #include "Skul.h"
 #include "Engine.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 
 DropSkul::DropSkul(SKUL_KIND eSkulKind)
@@ -50,6 +52,10 @@ void DropSkul::Update()
 		weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 		if (IS_DOWN(KEY_TYPE::F))
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Skul_Get", L"..\\Resources\\Sound\\Skul_Get.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			GET_SINGLE(Cemetery)->Get(m_eSkulKind)->Awake();
 			shared_ptr<Skul> pDropSkul = pPlayer.lock()->ObtainSkul(GET_SINGLE(Cemetery)->Get(m_eSkulKind));
 			CreateDropSkulAndAddedToScene(pDropSkul);

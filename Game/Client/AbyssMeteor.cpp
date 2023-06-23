@@ -21,6 +21,8 @@
 #include "Engine.h"
 #include "Clock.h"
 #include "CollisionManager.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 shared_ptr<GlobalEffect> AbyssMeteor::s_pSmokeEffect = nullptr;
 AbyssMeteor::AbyssMeteor(const Vec3& vPos)
@@ -41,6 +43,10 @@ void AbyssMeteor::Awake()
 	{
 		CreateSmokeEffectAndAddedScene();
 	}
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Meteor_roof", L"..\\Resources\\Sound\\HighWarlock_Meteor_roof.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->SetLoop(true);
+	SCENE_SOUND->Play();
 }
 
 void AbyssMeteor::Start()
@@ -102,6 +108,21 @@ void AbyssMeteor::OnTriggerEnter(shared_ptr<GameObject> pGameObject)
 			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 			GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(m_fMaxDistance, m_fMaxDistance, 0.f), Vec3(0.f, m_fImpulse, 0.f));
 			GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(m_fMaxDistance * 2.f, m_fMaxDistance * 2.f, 0.f), Vec3(0.f, m_fImpulse, 0.f), static_cast<float>(RANDOM(100, 200)), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
+
+			// Meteor Loop Stop
+			{
+				shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Meteor_roof", L"..\\Resources\\Sound\\HighWarlock_Meteor_roof.wav");
+				SCENE_SOUND->SetClip(pSound);
+				SCENE_SOUND->Stop();
+			}
+
+			// Meteor Explosion
+			{
+				shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Atk_Explosion_Medium", L"..\\Resources\\Sound\\Atk_Explosion_Medium.wav");
+				SCENE_SOUND->SetClip(pSound);
+				SCENE_SOUND->Play();
+			}
+
 		}
 
 		Disable();

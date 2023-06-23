@@ -15,6 +15,8 @@
 #include "HUD.h"
 #include "Engine.h"
 #include "Engrave.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 ExhibitionItem::ExhibitionItem(ITEM_KIND eItemKind, int32 iPrice)
 	: GameObject(LAYER_TYPE::DROP_ITEM)
@@ -48,6 +50,10 @@ void ExhibitionItem::Update()
 		weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 		if (IS_DOWN(KEY_TYPE::F) && pPlayer.lock()->GetClobber()->iGold >= m_iPrice)
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Item_Get", L"..\\Resources\\Sound\\Item_Get.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			m_bDestroyFlag = true;
 			pPlayer.lock()->GetClobber()->iGold -= m_iPrice;
 			pPlayer.lock()->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem(m_eItemKind));

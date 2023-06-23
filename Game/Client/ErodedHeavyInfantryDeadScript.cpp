@@ -14,9 +14,12 @@
 #include "LocalEffect.h"
 #include "CollisionManager.h"
 #include "Player.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 ErodedHeavyInfantryDeadScript::ErodedHeavyInfantryDeadScript()
 	: m_tStayTimer(1.7f)
+	, m_bDeadBeginFlag(false)
 {
 }
 
@@ -27,6 +30,18 @@ ErodedHeavyInfantryDeadScript::~ErodedHeavyInfantryDeadScript()
 void ErodedHeavyInfantryDeadScript::LateUpdate()
 {
 	weak_ptr<ErodedHeavyInfantry> pErodedInfantry = static_pointer_cast<ErodedHeavyInfantry>(GetGameObject());
+
+	if (MONSTER_STATE::DEAD == pErodedInfantry.lock()->GetMonsterState())
+	{
+		if (!m_bDeadBeginFlag)
+		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Rage_Heavy", L"..\\Resources\\Sound\\Hardmode_Chapter3_Heavy_Rage_Voice.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+			m_bDeadBeginFlag = true;
+		}
+	}
+
 
 	if (pErodedInfantry.lock()->GetDeadFlag())
 	{
@@ -59,6 +74,11 @@ void ErodedHeavyInfantryDeadScript::LateUpdate()
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			pErodedInfantry.lock()->SetDeadFlag(false);
 			CreateExplosionEffectAndAddedToScene();
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hardmode_Chapter3_Ultimate_Explosion", L"..\\Resources\\Sound\\Hardmode_Chapter3_Ultimate_Explosion.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+			m_bDeadBeginFlag = false;
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(pErodedInfantry.lock()->GetExclamationEffect().lock(), eSceneType));
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(GetGameObject(), eSceneType));
 		}

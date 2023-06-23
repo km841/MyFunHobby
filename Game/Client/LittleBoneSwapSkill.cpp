@@ -36,7 +36,7 @@ void LittleBoneSwapSkill::Update()
 			vMyPos,
 			vSize * 2.f,
 			Vec3(0.f, 0.f, 0.f),
-			static_cast<float>(RANDOM(3, 10)), DAMAGE_TYPE::FROM_PLAYER_MELEE);
+			static_cast<float>(RANDOM(3, 10)), DAMAGE_TYPE::FROM_PLAYER_MELEE, L"..\\Resources\\Sound\\Hit_Blunt_Large.wav");
 
 		m_tDamageTick.Reset();
 	}

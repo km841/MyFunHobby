@@ -14,7 +14,7 @@ BEHAVIOR_RESULT ChangeChimeraRandomStateTask::Run()
 	
 	if (!m_bChecked)
 	{
-		if (pChimera.lock()->GetStatus()->GetHPRatio() < 0.9f)
+		if (pChimera.lock()->GetStatus()->GetHPRatio() < 0.5f)
 		{
 			pChimera.lock()->SetMonsterState(MONSTER_STATE::SKILL3_READY);
 			m_bChecked = true;

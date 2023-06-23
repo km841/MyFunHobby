@@ -29,6 +29,8 @@
 #include "RigidBody.h"
 #include "AnimationLocalEffect.h"
 #include "CollisionManager.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 Chimera* Chimera::s_pChimera = {};
 
@@ -142,6 +144,10 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 		s_pChimera->SetCurAnimationName(szAnimName);
 		if ("Appear" == szAnimName)
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_In", L"..\\Resources\\Sound\\Chimera_In.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			static_pointer_cast<BossOpeningHUD>(GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::BOSS_OPENING))->SetStageKind(STAGE_KIND::BLACK_LAB);
 			GET_SINGLE(InterfaceManager)->Get(INTERFACE_TYPE::BOSS_OPENING)->Action();
 			s_pChimera->DestroyMadScientist();
@@ -149,10 +155,19 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
 		}
 
+		if ("Roar_Start" == szAnimName)
+		{
+
+		}
+
 		if ("Roar_Skill_Loop" == szAnimName)
 		{
 			s_pChimera->CreateRoarAndAddedToScene();
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_Roar", L"..\\Resources\\Sound\\Chimera_Roar.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 
 		if ("Roar_Loop" == szAnimName)
@@ -160,6 +175,10 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 			s_pChimera->CreateRoarAndAddedToScene();
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 1000.f, 0.f));
 			GET_SINGLE(Scenes)->GetActiveScene()->RegisterSceneEvent(EVENT_TYPE::ACTIVATE_DISTORTION, 0, 2.f);
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_Roar", L"..\\Resources\\Sound\\Chimera_Roar.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 
 		if ("Grab_Smash" == szAnimName)
@@ -167,12 +186,19 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
 			PLAYER_STATE ePlayerState = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetPlayerStateEnum();
 			
-			if (ePlayerState != PLAYER_STATE::JUMP_RISE && ePlayerState != PLAYER_STATE::JUMP_FALL)
+			if (ePlayerState != PLAYER_STATE::JUMP_RISE && ePlayerState != PLAYER_STATE::JUMP_FALL && ePlayerState != PLAYER_STATE::DASH)
 			{
 				Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
 				GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->TakeDamage(10);
 				FONT->DrawDamage(DAMAGE_TYPE::FROM_MONSTER, 10.f, vPlayerPos);
 			}
+		}
+
+		if ("Dead" == szAnimName)
+		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_Dead_Roar", L"..\\Resources\\Sound\\Chimera_Dead_Roar.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 	}
 		break;
@@ -196,7 +222,7 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 
 			PLAYER_STATE ePlayerState = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetPlayerStateEnum();
 
-			if (ePlayerState != PLAYER_STATE::JUMP_RISE && ePlayerState != PLAYER_STATE::JUMP_FALL)
+			if (ePlayerState != PLAYER_STATE::JUMP_RISE && ePlayerState != PLAYER_STATE::JUMP_FALL && ePlayerState != PLAYER_STATE::DASH)
 			{
 				Vec3 vPlayerPos = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform()->GetPhysicalPosition();
 				GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->TakeDamage(10);
@@ -213,6 +239,10 @@ void Chimera::Listener(spine::AnimationState* state, spine::EventType type, spin
 		{
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(1.f, Vec3(1000, 3000.f, 0.f));
 			s_pChimera->SetDeathFlag();
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_Dead_Fall", L"..\\Resources\\Sound\\Chimera_Dead_Fall.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 	}
 		break;

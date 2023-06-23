@@ -10,6 +10,8 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "RigidBody.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 ChimeraVenomBallScript::ChimeraVenomBallScript()
 	: m_iVenomBallCount(0)
@@ -33,6 +35,11 @@ void ChimeraVenomBallScript::LateUpdate()
 			m_tDuration.Start();
 			CreateVenomBallAndAddedToScene();
 			pChimera.lock()->ClearAnimation();
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomCannon_Fire", L"..\\Resources\\Sound\\Chimera_VenomCannon_Fire.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 		}
 		else
 		{

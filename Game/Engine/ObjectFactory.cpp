@@ -49,6 +49,7 @@
 #include "IncreaseAttackCountTask.h"
 #include "RandomDirectionTask.h"
 #include "VelocityDownTask.h"
+#include "PlaySoundTask.h"
 
 /* Engrave */
 #include "Rapidity.h"

@@ -12,6 +12,9 @@
 #include "Physical.h"
 #include "Clock.h"
 #include "Engine.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
 
 POOL_INIT(HighWarlockBaseProjectile);
 HighWarlockBaseProjectile::HighWarlockBaseProjectile()
@@ -112,6 +115,10 @@ void HighWarlockBaseProjectile::OnTriggerEnter(shared_ptr<GameObject> pGameObjec
 				pMonster.lock()->SetMonsterState(MONSTER_STATE::DEAD);
 				pMonster.lock()->ActivateDeadEvent(vTargetVec);
 			}
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Projectile_Fire_Small", L"..\\Resources\\Sound\\Projectile_Fire_Small.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 	}
 
@@ -166,6 +173,10 @@ void HighWarlockBaseProjectile::OnCollisionEnter(shared_ptr<GameObject> pGameObj
 				pMonster.lock()->SetMonsterState(MONSTER_STATE::DEAD);
 				pMonster.lock()->ActivateDeadEvent(vTargetVec);
 			}
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Projectile_Fire_Small", L"..\\Resources\\Sound\\Projectile_Fire_Small.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 	}
 

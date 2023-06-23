@@ -23,6 +23,8 @@
 #include "Player.h"
 #include "Light.h"
 #include "ObjectFactory.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 AbyssMeteorSkill::AbyssMeteorSkill(const SkillInfo& skillInfo)
 	: SkulSkill(skillInfo)
@@ -113,10 +115,16 @@ void AbyssMeteorSkill::Enter()
 	if (m_fChargingProgress > 0.99f)
 	{
 		CreateFullChargingMeteor(vPlayerPos);
+		shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Meteor_completed_Spawn", L"..\\Resources\\Sound\\HighWarlock_Meteor_completed_Spawn.wav");
+		SCENE_SOUND->SetClip(pSound);
+		SCENE_SOUND->Play();
 	}
 	else
 	{
 		CreateInsufficientMeteor(vPlayerPos);
+		shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Meteor_incompleted_Spawn", L"..\\Resources\\Sound\\HighWarlock_Meteor_incompleted_Spawn.wav");
+		SCENE_SOUND->SetClip(pSound);
+		SCENE_SOUND->Play();
 	}
 
 }

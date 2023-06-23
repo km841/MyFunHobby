@@ -399,10 +399,10 @@ void Cemetery::CreateSkul()
 			pDevilMode_AttackB_Animation->SetHitFrame(2);
 
 			shared_ptr<DevilBerserkerAttack> pDevilBerserkerAttackMethod = make_shared<DevilBerserkerAttack>(pDevilBerserker);
-			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pAttackA_Animation , -20.f, 90.f, 150.f, iNormalEnum });
-			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pDevilMode_AttackA_Animation , -20.f, 90.f, 150.f, iDevilEnum });
-			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pAttackB_Animation , -20.f, 90.f, 150.f, iNormalEnum });
-			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pDevilMode_AttackB_Animation , -20.f, 90.f, 150.f, iDevilEnum });
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pAttackA_Animation , -20.f, 90.f, 200.f, iNormalEnum });
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_A, AttackInfo{ pDevilMode_AttackA_Animation , -20.f, 90.f, 200.f, iDevilEnum });
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pAttackB_Animation , -20.f, 90.f, 200.f, iNormalEnum });
+			pDevilBerserkerAttackMethod->AddAttackInfo(ATTACK_ORDER::ATTACK_B, AttackInfo{ pDevilMode_AttackB_Animation , -20.f, 90.f, 200.f, iDevilEnum });
 
 			pDevilBerserker->SetAttackMethod(pDevilBerserkerAttackMethod);
 		}

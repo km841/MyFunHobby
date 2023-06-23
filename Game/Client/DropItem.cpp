@@ -15,6 +15,8 @@
 #include "HUD.h"
 #include "Engine.h"
 #include "Engrave.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 DropItem::DropItem(ITEM_KIND eItemKind, DROP_ITEM_INDEX eItemIndex)
 	: GameObject(LAYER_TYPE::DROP_ITEM)
@@ -49,6 +51,10 @@ void DropItem::Update()
 		weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
 		if (IS_DOWN(KEY_TYPE::F))
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Item_Get", L"..\\Resources\\Sound\\Item_Get.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			pPlayer.lock()->ObtainItem(GET_SINGLE(ObjectFactory)->CreateItem(m_eItemKind));
 			SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pDetailHUD.lock(), eSceneType));

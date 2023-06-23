@@ -12,6 +12,9 @@
 #include "ForceOnObjectEvent.h"
 #include "RigidBody.h"
 #include "Engine.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Resources.h"
 
 void CollisionManager::SetCollisionGroup(LAYER_TYPE iFirst, LAYER_TYPE iSecond)
 {
@@ -96,7 +99,7 @@ void CollisionManager::SetForceInPlayerAndTakeDamage(const Vec3& vPos, const Vec
 	}
 }
 
-void CollisionManager::SetForceInMonsterAndTakeDamage(const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse, float fDamage, DAMAGE_TYPE eDamageType)
+void CollisionManager::SetForceInMonsterAndTakeDamage(const Vec3& vPos, const Vec3& vVolume, const Vec3& vImpulse, float fDamage, DAMAGE_TYPE eDamageType, const wstring& szSoundPath)
 {
 	auto& vGameObjects = GET_SINGLE(Scenes)->GetActiveScene()->GetGameObjects(LAYER_TYPE::MONSTER);
 	Vec3 vLeftTop = Vec3(vPos.x - vVolume.x / 2.f, vPos.y + vVolume.y / 2.f, 0.f);
@@ -117,6 +120,13 @@ void CollisionManager::SetForceInMonsterAndTakeDamage(const Vec3& vPos, const Ve
 		if (vObjectPos.x > vLeftTop.x && vObjectPos.x < vRightBtm.x &&
 			vObjectPos.y > vRightBtm.y && vObjectPos.y < vLeftTop.y)
 		{
+			if (!szSoundPath.empty())
+			{
+				shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(szSoundPath, szSoundPath);
+				SCENE_SOUND->SetClip(pSound);
+				SCENE_SOUND->Play();
+			}
+
 			float fRandomAngular = static_cast<float>(RANDOM(-10, 10));
 			pGameObject->GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, fRandomAngular));
 

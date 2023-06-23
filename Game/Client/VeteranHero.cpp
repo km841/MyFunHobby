@@ -60,7 +60,7 @@ void VeteranHero::Update()
 			SetMonsterState(MONSTER_STATE::LANDING);
 			GetAnimator()->Play(L"VeteranHero_Landing", false);
 
-			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hero_Landing", L"..\\Resources\\Sound\\Hero_Landing.wav");
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hero_Landing", L"..\\Resources\\Sound\\AdventurerHero_HeroLanding_Wind.wav");
 			SCENE_SOUND->SetClip(pSound);
 			SCENE_SOUND->Play();
 		}
@@ -136,6 +136,10 @@ void VeteranHero::ActivateDeadEvent()
 	if (m_pStingerEffect.lock())
 		m_pStingerEffect.lock()->Disable();
 	CreateDeadObjectAndAddedToScene();
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hero_Dead", L"..\\Resources\\Sound\\AdventurerHero_Voice_Dead.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void VeteranHero::CreateStingerEffectAndAddedToScene()

@@ -12,6 +12,9 @@
 #include "Transform.h"
 #include "Clock.h"
 #include "Physical.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Resources.h"
 
 ChimeraBreathProjectile::ChimeraBreathProjectile()
 	: m_bChecked(false)
@@ -51,6 +54,10 @@ void ChimeraBreathProjectile::Update()
 			PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 
 		GetAnimator()->Play(L"VenomProjectile_Despawn", false);
+
+		shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomBreath_Despawn", L"..\\Resources\\Sound\\Chimera_VenomBreath_Despawn.wav");
+		SCENE_SOUND->SetClip(pSound);
+		SCENE_SOUND->Play();
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		Vec3 vMySize = GetTransform()->GetLocalPosition();

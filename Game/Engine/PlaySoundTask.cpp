@@ -15,7 +15,9 @@ PlaySoundTask::PlaySoundTask(shared_ptr<GameObject> pGameObject, const wstring& 
 
 BEHAVIOR_RESULT PlaySoundTask::Run()
 {
-	SCENE_SOUND->SetClip(GET_SINGLE(Resources)->Load<Sound>(m_szSoundPath, m_szSoundPath));
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(m_szSoundPath, m_szSoundPath);
+	SCENE_SOUND->SetClip(pSound);
 	SCENE_SOUND->Play();
+	
 	return BEHAVIOR_RESULT::SUCCESS;
 }

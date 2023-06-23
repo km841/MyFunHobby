@@ -13,9 +13,12 @@
 #include "ObjectReturnToPoolEvent.h"
 #include "CollisionManager.h"
 #include "Clock.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 ErodedHeavyInfantryTackleScript::ErodedHeavyInfantryTackleScript()
 	: m_tDamageTick(0.5f)
+	, m_bTackleBeginFlag(false)
 {
 }
 
@@ -27,12 +30,19 @@ void ErodedHeavyInfantryTackleScript::LateUpdate()
 {
 	if (!m_pFlashAura.lock())
 		CreateFlashAuraAndAddedToScene();
-
 	weak_ptr<Monster> pMonster = static_pointer_cast<Monster>(GetGameObject());
 
 	if (MONSTER_STATE::TACKLE_LOOP == pMonster.lock()->GetMonsterState() ||
 		MONSTER_STATE::RAGE_TACKLE_LOOP == pMonster.lock()->GetMonsterState())
 	{
+		if (!m_bTackleBeginFlag)
+		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hardmode_Chapter3_Heavy_Tackle_Impact", L"..\\Resources\\Sound\\Hardmode_Chapter3_Heavy_Tackle_Impact.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+			m_bTackleBeginFlag = true;
+		}
+
 		uint8 iDirection = static_cast<uint8>(m_pFlashAura.lock()->GetDirection());
 		m_pFlashAura.lock()->Enable();
 		m_pFlashAura.lock()->GetTransform()->SetLocalPosition(Vec3(iDirection ? -20.f : 20.f, 0.f, -1.f));

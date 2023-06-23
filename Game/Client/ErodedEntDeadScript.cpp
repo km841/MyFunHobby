@@ -14,6 +14,8 @@
 #include "LocalEffect.h"
 #include "CollisionManager.h"
 #include "Player.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 ErodedEntDeadScript::ErodedEntDeadScript()
 	: m_tStayTimer(1.5f)
@@ -60,6 +62,11 @@ void ErodedEntDeadScript::LateUpdate()
 			pErodedEnt.lock()->SetDeadFlag(false);
 			//pErodedEnt.lock()->ActivateDeadEvent();
 			CreateExplosionEffectAndAddedToScene();
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Atk_Explosion_Large", L"..\\Resources\\Sound\\Atk_Explosion_Large.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(pErodedEnt.lock()->GetExclamationEffect().lock(), eSceneType));
 			GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectReturnToPoolEvent>(GetGameObject(), eSceneType));
 		}

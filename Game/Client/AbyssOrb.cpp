@@ -13,6 +13,9 @@
 #include "DecoObject.h"
 #include "Light.h"
 #include "ObjectAddedToSceneEvent.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Resources.h"
 
 AbyssOrb::AbyssOrb()
 	: m_tLifeTimer(5.f)
@@ -35,6 +38,11 @@ void AbyssOrb::Awake()
 void AbyssOrb::Start()
 {
 	PlayerProjectile::Awake();
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Orb_completed_Roof", L"..\\Resources\\Sound\\HighWarlock_Orb_completed_Roof.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->SetLoop(true);
+	SCENE_SOUND->Play();
 }
 
 void AbyssOrb::Update()
@@ -62,6 +70,11 @@ void AbyssOrb::Update()
 				{
 					if (!m_bDespawn)
 					{
+						shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Orb_Explosion_completed", L"..\\Resources\\Sound\\HighWarlock_Orb_Explosion_completed.wav");
+						SCENE_SOUND->SetClip(pSound);
+						SCENE_SOUND->SetLoop(false);
+						SCENE_SOUND->Play();
+
 						GetAnimator()->Play(L"AbyssOrb_Despawn", false);
 						m_bDespawn = true;
 						GetRigidBody()->SetVelocity(Vec3::Zero);
@@ -80,7 +93,7 @@ void AbyssOrb::Update()
 							GetTransform()->GetPhysicalPosition(),
 							GetTransform()->GetLocalScale() * 2.f,
 							Vec3(0.f, 500.f, 0.f),
-							static_cast<float>(RANDOM(30, 50)), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
+							static_cast<float>(RANDOM(30, 50)), DAMAGE_TYPE::FROM_PLAYER_MAGIC, L"..\\Resources\\Sound\\Hit_Blunt_Large.wav");
 					}
 
 					else
@@ -91,6 +104,20 @@ void AbyssOrb::Update()
 							SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 							GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(m_pLight, eSceneType));
 							GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectRemoveToSceneEvent>(shared_from_this(), eSceneType));
+							
+							// Roof Sound Off
+							{
+								shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Orb_completed_Roof", L"..\\Resources\\Sound\\HighWarlock_Orb_completed_Roof.wav");
+								SCENE_SOUND->SetClip(pSound);
+								SCENE_SOUND->SetLoop(false);
+								SCENE_SOUND->Stop();
+							}
+
+
+							// Explosion Sound On
+							{
+
+							}
 
 						}
 					}
@@ -119,7 +146,7 @@ void AbyssOrb::Update()
 					GetTransform()->GetPhysicalPosition(),
 					GetTransform()->GetLocalScale() * 2.f,
 					Vec3(0.f, 0.f, 0.f),
-					static_cast<float>(RANDOM(3, 10)), DAMAGE_TYPE::FROM_PLAYER_MAGIC);
+					static_cast<float>(RANDOM(3, 10)), DAMAGE_TYPE::FROM_PLAYER_MAGIC, L"..\\Resources\\Sound\\Hit_Blunt_Large.wav");
 
 				m_tDamageTick.Reset();
 			}

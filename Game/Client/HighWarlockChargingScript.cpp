@@ -4,6 +4,11 @@
 #include "SkulSkill.h"
 #include "GlobalEffect.h"
 #include "Player.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Scenes.h"
+#include "Scene.h"
+#include "Resources.h"
 
 HighWarlockChargingScript::HighWarlockChargingScript(shared_ptr<HighWarlock> pHighWarlock)
 	: m_pHighWarlock(pHighWarlock)
@@ -38,6 +43,10 @@ void HighWarlockChargingScript::LateUpdate()
 
 		if (fProgress > 0.99f && !m_bCompleteFlag)
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Charged_End", L"..\\Resources\\Sound\\HighWarlock_Charge_End.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			m_pHighWarlock.lock()->CreateCompletedSmokeAndAddedToScene();
 			m_bCompleteFlag = true;
 		}

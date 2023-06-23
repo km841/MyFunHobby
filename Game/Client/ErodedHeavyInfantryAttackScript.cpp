@@ -13,6 +13,8 @@
 #include "CollisionManager.h"
 #include "Player.h"
 #include "Engine.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 ErodedHeavyInfantryAttackScript::ErodedHeavyInfantryAttackScript()
 	: m_bAttackFlag(false)
@@ -44,6 +46,10 @@ void ErodedHeavyInfantryAttackScript::LateUpdate()
 	{
 		if (GetAnimator()->GetActiveAnimation()->IsHitFrame())
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hardmode_Chapter3_Heavy_Hammer_Impact", L"..\\Resources\\Sound\\Hardmode_Chapter3_Heavy_Hammer_Impact.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 			GET_SINGLE(CollisionManager)->SetForceInLayer(
 				LAYER_TYPE::PARTICLE,
@@ -66,6 +72,10 @@ void ErodedHeavyInfantryAttackScript::LateUpdate()
 	{
 		if (GetAnimator()->GetActiveAnimation()->IsHitFrame())
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hardmode_Chapter3_Heavy_Hammer_Impact", L"..\\Resources\\Sound\\Hardmode_Chapter3_Heavy_Hammer_Impact.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 
 			Vec3 vVolume = Vec3(300.f, 600.f, 1.f);

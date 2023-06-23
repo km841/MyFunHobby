@@ -7,6 +7,8 @@
 #include "Movement.h"
 #include "Skul.h"
 #include "Player.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 
 AbyssOrbSkill::AbyssOrbSkill(const SkillInfo& skillInfo)
@@ -75,6 +77,10 @@ void AbyssOrbSkill::Enter()
 	pAbyssOrb->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();
 	GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pAbyssOrb, eSceneType));
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"HighWarlock_Orb_Spawn", L"..\\Resources\\Sound\\HighWarlock_Orb_Spawn.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void AbyssOrbSkill::Exit()

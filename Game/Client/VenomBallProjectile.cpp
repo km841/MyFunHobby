@@ -10,6 +10,9 @@
 #include "Tile.h"
 #include "CollisionManager.h"
 #include "Transform.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Resources.h"
 
 VenomBallProjectile::VenomBallProjectile()
 	: m_bChecked(false)
@@ -42,6 +45,10 @@ void VenomBallProjectile::Update()
 		GetRigidBody()->SetAngularDamping(PX_MAX_F32);
 		GetRigidBody()->SetLinearDamping(PX_MAX_F32);
 		GetAnimator()->Play(L"VenomBall_Despawn", false);
+
+		shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomCannon_Despawn", L"..\\Resources\\Sound\\Chimera_VenomCannon_Despawn.wav");
+		SCENE_SOUND->SetClip(pSound);
+		SCENE_SOUND->Play();
 
 		Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 		Vec3 vMySize = GetTransform()->GetLocalPosition();

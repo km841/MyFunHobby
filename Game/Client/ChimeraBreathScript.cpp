@@ -11,6 +11,9 @@
 #include "RigidBody.h"
 #include "LocalEffect.h"
 #include "ChimeraBreathFireEffectScript.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Resources.h"
 
 ChimeraBreathScript::ChimeraBreathScript()
 	: m_bChecked(false)
@@ -30,6 +33,10 @@ void ChimeraBreathScript::LateUpdate()
 	{
 		if (!m_bChecked)
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomBreath_Fire", L"..\\Resources\\Sound\\Chimera_VenomBreath_Fire.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			CreateBreathFireAndAddedToScene();
 			m_bChecked = true;
 		}

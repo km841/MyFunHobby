@@ -8,6 +8,9 @@
 #include "Scenes.h"
 #include "Scene.h"
 #include "Engine.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
+#include "Resources.h"
 
 ErodedEntAttackScript::ErodedEntAttackScript()
 {
@@ -25,6 +28,10 @@ void ErodedEntAttackScript::LateUpdate()
 	{
 		if (GetAnimator()->GetActiveAnimation()->IsHitFrame())
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Ent_Atk_Ready", L"..\\Resources\\Sound\\Ent_Atk_Ready.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			Vec3 vMyPos = GetTransform()->GetPhysicalPosition();
 
 			Vec3 vVolume = Vec3(300.f, 300.f, 1.f);
