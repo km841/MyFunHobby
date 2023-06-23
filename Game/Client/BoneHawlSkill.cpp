@@ -13,6 +13,10 @@
 #include "ObjectAddedToSceneEvent.h"
 #include "EventManager.h"
 #include "CollisionManager.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
 
 
 BoneHawlSkill::BoneHawlSkill(const SkillInfo& skillInfo)
@@ -39,6 +43,10 @@ void BoneHawlSkill::Enter()
 	m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->SetVelocity(Vec3::Zero);
 	m_pSkul.lock()->GetPlayer().lock()->GetRigidBody()->RemoveGravity();
 	m_pSkul.lock()->GetPlayer().lock()->Pause();
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Demonimzation", L"..\\Resources\\Sound\\Berserker_Demonization.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void BoneHawlSkill::Exit()
@@ -52,6 +60,10 @@ void BoneHawlSkill::Exit()
 	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(0.f, 2000.f, 0.f));
 	GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(2000.f, 0.f, 0.f));
 	CreateRoarEffectAndAddedToScene();
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Demonimzation_Complete", L"..\\Resources\\Sound\\Demonization_Complete.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 
 	Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();
 	GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(2000.f, 2000.f, 0.f), Vec3(static_cast<float>(RANDOM(-1000, 1000)), 1000.f, 0.f));

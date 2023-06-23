@@ -12,6 +12,10 @@
 #include "RageTackleSlashEffect.h"
 #include "Clock.h"
 #include "PlayerState.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
 
 RageTackleSkill::RageTackleSkill(const SkillInfo& skillInfo)
 	: SkulSkill(skillInfo)
@@ -61,6 +65,10 @@ void RageTackleSkill::Update()
 				GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.05f, Vec3(500.f, 0.f, 0.f));
 				CreateSlashEffectAndAddedToScene();
 				m_tSlashTick.Reset();
+
+				shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Berserker_TackleSlash", L"..\\Resources\\Sound\\Berserker_Slash.wav");
+				SCENE_SOUND->SetClip(pSound);
+				SCENE_SOUND->Play();
 			}
 		}
 		

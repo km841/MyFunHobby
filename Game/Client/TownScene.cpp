@@ -77,6 +77,7 @@
 #include "AI.h"
 #include "ParticleSystem.h"
 #include "SoundSource.h"
+#include "SoundListener.h"
 
 /* Items */
 #include "ForbiddenSword.h"
@@ -86,7 +87,7 @@
 #include "Lyweasel.h"
 
 #include "Sounds.h"
-
+#include "Skul.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -110,6 +111,7 @@ void TownScene::Start()
 void TownScene::Update()
 {
 	Scene::Update();
+	
 }
 
 void TownScene::LateUpdate()
@@ -130,6 +132,10 @@ void TownScene::Render()
 void TownScene::Enter()
 {
 	ShowCursor(false);
+
+	SCENE_SOUND->SetBGMClip(GET_SINGLE(Resources)->Load<Sound>(L"DemonCastle", L"..\\Resources\\Sound\\DemonCastle_Hardmode.wav"));
+	SCENE_SOUND->PlayBGM();
+
 	shared_ptr<Player> pPlayer = nullptr;
 	float fWidth = static_cast<float>(g_pEngine->GetWidth());
 	float fHeight = static_cast<float>(g_pEngine->GetHeight());
@@ -159,11 +165,6 @@ void TownScene::Enter()
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER_PROJECTILE, LAYER_TYPE::FALLING_OBJECT);
 	//GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::PARTICLE, LAYER_TYPE::PARTICLE);
 	GET_SINGLE(CollisionManager)->SetCollisionGroup(LAYER_TYPE::MONSTER, LAYER_TYPE::PLAYER_PROJECTILE);
-
-	GetMainCamera().lock()->AddComponent(make_shared<SoundSource>());
-	GetMainCamera().lock()->GetSoundSource()->SetClip(GET_SINGLE(Resources)->Load<Sound>(L"..\\Resources\\Sound\\Chapter3.wav", L"..\\Resources\\Sound\\Chapter3.wav"));
-	GetMainCamera().lock()->GetSoundSource()->Play();
-	
 
 	// Far Clouds
 	{
@@ -218,6 +219,9 @@ void TownScene::Enter()
 		pPlayer->AddComponent(make_shared<Collider>());
 		pPlayer->AddComponent(make_shared<DebugRenderer>());
 		pPlayer->AddComponent(make_shared<Movement>());
+		//pPlayer->AddComponent(make_shared<SoundListener>());
+		pPlayer->AddComponent(make_shared<SoundSource>());
+
 		
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::LITTLE_BONE));
 		pPlayer->ObtainSkul(GET_SINGLE(Cemetery)->Get(SKUL_KIND::DEVIL_BERSERKER));
@@ -231,9 +235,6 @@ void TownScene::Enter()
 		pPlayer->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
 		pPlayer->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f - 150.f, 98.f));
-
-
-
 		pPlayer->SetFrustum(false);
 		AddGameObject(pPlayer);
 	}

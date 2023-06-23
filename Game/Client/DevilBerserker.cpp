@@ -3,6 +3,7 @@
 #include "Clock.h"
 #include "Player.h"
 
+
 DevilBerserker::DevilBerserker(const SkulInfo& skulInfo)
 	: Skul(skulInfo)
 	, m_eBerserkerState(BERSERKER_STATE::NORMAL)

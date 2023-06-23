@@ -145,7 +145,7 @@ void TitleScene::Enter()
 		pGameObject->AddComponent(make_shared<Transform>());
 		pGameObject->AddComponent(make_shared<Camera>());
 		pGameObject->AddComponent(make_shared<CameraMoveScript>());
-		pGameObject->AddComponent(make_shared<SoundListener>());
+		//pGameObject->AddComponent(make_shared<SoundListener>());
 		
 		
 		float fWidth = static_cast<float>(g_pEngine->GetWidth());
@@ -157,6 +157,25 @@ void TitleScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::HUD, true);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::UI, true);
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, true);
+	}
+
+	// BGM
+	{
+		s_pBgm = make_shared<ComponentObject>();
+
+		s_pBgm->AddComponent(make_shared<Transform>());
+		s_pBgm->AddComponent(make_shared<SoundListener>());
+		s_pBgm->AddComponent(make_shared<SoundSource>());
+
+		float fWidth = static_cast<float>(g_pEngine->GetWidth());
+		float fHeight = static_cast<float>(g_pEngine->GetHeight());
+		s_pBgm->GetTransform()->SetLocalPosition(Vec3(fWidth / 2.f, fHeight / 2.f, 100.f));
+		s_pBgm->GetTransform()->SetLocalScale(Vec3(50.f, 50.f, 1.f));
+		s_pBgm->Awake();
+		AddGameObject(s_pBgm);
+
+		s_pBgm->GetSoundSource()->SetBGMClip(GET_SINGLE(Resources)->Load<Sound>(L"HardModeTitle_Bgm", L"..\\Resources\\Sound\\MainTitle_Hardmode.wav"));
+		s_pBgm->GetSoundSource()->PlayBGM();
 	}
 
 

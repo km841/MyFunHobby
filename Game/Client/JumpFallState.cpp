@@ -12,6 +12,10 @@
 #include "Scenes.h"
 #include "Engine.h"
 #include "GlobalEffect.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
 
 JumpFallState::JumpFallState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)

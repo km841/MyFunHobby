@@ -23,6 +23,8 @@
 #include "DevilBerserkerSwapSkill.h"
 #include "BoneHawlSkill.h"
 #include "RageTackleSkill.h"
+#include "SoundListener.h"
+#include "SoundSource.h"
 
 
 void Cemetery::Init()
@@ -65,6 +67,8 @@ void Cemetery::CreateSkul()
 
 		shared_ptr<LittleBone> pLittleBone = make_shared<LittleBone>(skulInfo);
 		pLittleBone->AddComponent(make_shared<Animator>());
+		//pLittleBone->AddComponent(make_shared<SoundListener>());
+		pLittleBone->AddComponent(make_shared<SoundSource>());
 		
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
@@ -199,6 +203,8 @@ void Cemetery::CreateSkul()
 
 		shared_ptr<HighWarlock> pHighWarlock = make_shared<HighWarlock>(skulInfo);
 		pHighWarlock->AddComponent(make_shared<Animator>());
+		//pHighWarlock->AddComponent(make_shared<SoundListener>());
+		pHighWarlock->AddComponent(make_shared<SoundSource>());
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();
@@ -324,6 +330,8 @@ void Cemetery::CreateSkul()
 
 		shared_ptr<DevilBerserker> pDevilBerserker = make_shared<DevilBerserker>(skulInfo);
 		pDevilBerserker->AddComponent(make_shared<Animator>());
+		//pDevilBerserker->AddComponent(make_shared<SoundListener>());
+		pDevilBerserker->AddComponent(make_shared<SoundSource>());
 
 		shared_ptr<Mesh> pMesh = GET_SINGLE(Resources)->LoadRectMesh();
 		shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"Deferred")->Clone();

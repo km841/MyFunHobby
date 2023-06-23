@@ -71,12 +71,12 @@ void Engine::Init(const WindowInfo& wInfo)
 
 	GET_SINGLE(Resources)->Init();
 	GET_SINGLE(InterfaceManager)->Init();
+	GET_SINGLE(Sounds)->Init();
 	GET_SINGLE(Scenes)->Init();
 	GET_SINGLE(Clock)->Init();
 	GET_SINGLE(Input)->Init(m_Window.hHwnd);
 	GET_SINGLE(Cemetery)->Init();
 	GET_SINGLE(ObjectFactory)->Init();
-	GET_SINGLE(Sounds)->Init();
 }
 
 void Engine::Update()

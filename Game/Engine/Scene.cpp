@@ -34,6 +34,7 @@
 std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> Scene::s_vGlobalObjects;
 std::vector<shared_ptr<Camera>> Scene::s_vCameras;
 std::vector<shared_ptr<Light>> Scene::s_vLights;
+shared_ptr<ComponentObject> Scene::s_pBgm;
 
 Scene::Scene(SCENE_TYPE eSceneType)
 	: m_eSceneType(eSceneType)
@@ -1018,6 +1019,12 @@ weak_ptr<ComponentObject> Scene::GetDirLight()
 	assert(!s_vLights.empty());
 	weak_ptr<Light> pDirLight = s_vLights[0];
 	return static_pointer_cast<ComponentObject>(pDirLight.lock()->GetGameObject());
+}
+
+weak_ptr<ComponentObject> Scene::GetBgm()
+{
+	assert(s_pBgm);
+	return static_pointer_cast<ComponentObject>(s_pBgm);
 }
 
 void Scene::Load(const wstring& szPath)

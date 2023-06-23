@@ -12,6 +12,9 @@
 #include "GlobalEffect.h"
 #include "Engine.h"
 #include "CollisionManager.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
+#include "Resources.h"
 
 SkulAttack::SkulAttack(shared_ptr<Skul> pSkul)
 	: m_eActiveAttackOrder(ATTACK_ORDER::ATTACK_A)
@@ -86,6 +89,10 @@ void SkulAttack::HitMonstersInAttackRange()
 				
 				pGameObject->GetStatus()->TakeDamage(static_cast<int32>(damage.second));
 				FONT->DrawDamage(damage.first, damage.second, vMonsterPos);
+
+				shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Attack_Hit", L"..\\Resources\\Sound\\Hit_Blunt_Large.wav");
+				SCENE_SOUND->SetClip(pSound);
+				SCENE_SOUND->Play();
 
 				// Monster Dead Event Occurs
 				if (!pGameObject->GetStatus()->IsAlive())

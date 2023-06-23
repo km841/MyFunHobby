@@ -17,6 +17,8 @@
 #include "Player.h"
 #include "RigidBody.h"
 #include "ObjectFactory.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
 
 LittleBoneAttack::LittleBoneAttack(shared_ptr<Skul> pSkul)
 	: SkulAttack(pSkul)
@@ -39,12 +41,28 @@ void LittleBoneAttack::Update()
 		m_pSkul.lock()->PlayAnimation(m_eActiveAttackOrder, false);
 	}
 
+
+
 	if (m_arrAttackInfo[iEnum][iOrder].pAnimation->IsHitFrame())
 	{
 		m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenHitTiming();
 
 		LittleBoneStomp();
 		HitMonstersInAttackRange();
+
+		if (iOrder)
+		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"SkulAttack1", L"..\\Resources\\Sound\\Skul_Atk1.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+		}
+		else
+		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"SkulAttack2", L"..\\Resources\\Sound\\Skul_Atk2.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+		}
+
 		m_arrAttackInfo[iEnum][iOrder].pAnimation->CheckToHitFrame();
 	}
 }
@@ -93,6 +111,8 @@ void LittleBoneAttack::CreateHitEffectAndAddedScene(Vec3 vMonsterPos)
 	shared_ptr<Animation> pAnimation = GET_SINGLE(Resources)->LoadAnimation(L"LittleBone_Hit", L"..\\Resources\\Animation\\LittleBone\\littlebone_hit.anim");
 	pHitEffect->GetAnimator()->AddAnimation(L"LittleBone_Hit", pAnimation);
 	pHitEffect->GetAnimator()->Play(L"LittleBone_Hit", false);
+
+
 
 	pHitEffect->Awake();
 	SCENE_TYPE eSceneType = GET_SINGLE(Scenes)->GetActiveScene()->GetSceneType();

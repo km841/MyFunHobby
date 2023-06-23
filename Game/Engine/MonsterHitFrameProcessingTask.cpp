@@ -5,13 +5,20 @@
 #include "CollisionManager.h"
 #include "Transform.h"
 #include "RigidBody.h"
+#include "Scenes.h"
+#include "Scene.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
+#include "Resources.h"
 
-MonsterHitFrameProcessingTask::MonsterHitFrameProcessingTask(shared_ptr<GameObject> pGameObject, const Vec3& vOffset, const Vec3& vVolume, float fDamage, float fMaxDamage)
+MonsterHitFrameProcessingTask::MonsterHitFrameProcessingTask(shared_ptr<GameObject> pGameObject, const Vec3& vOffset, const Vec3& vVolume, float fDamage, float fMaxDamage, const wstring& szHitSoundPath)
     : BehaviorTask(pGameObject)
     , m_fDamage(fDamage)
     , m_vVolume(vVolume)
     , m_vOffset(vOffset)
     , m_fMaxDamage(fMaxDamage)
+    , m_szHitSoundPath(szHitSoundPath)
 {
 }
 
@@ -37,6 +44,11 @@ BEHAVIOR_RESULT MonsterHitFrameProcessingTask::Run()
             GET_SINGLE(CollisionManager)->SetForceInPlayerAndTakeDamage(vPos, m_vVolume, Vec3::Zero, m_fDamage);
         }
 
+        if (!m_szHitSoundPath.empty())
+        {
+            SCENE_SOUND->SetClip(GET_SINGLE(Resources)->Load<Sound>(m_szHitSoundPath, m_szHitSoundPath));
+            SCENE_SOUND->Play();
+        }
         
         pActiveAnimation.lock()->CheckToHitFrame();
     }

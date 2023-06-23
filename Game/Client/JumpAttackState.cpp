@@ -6,6 +6,11 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "Input.h"
+#include "Resources.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
+#include "Scenes.h"
+#include "Scene.h"
 
 JumpAttackState::JumpAttackState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -64,6 +69,12 @@ void JumpAttackState::Enter()
 {
 	PlayAnimation();
 	m_pPlayer.lock()->ActiveItemWhenJumpAttackEnterTiming();
+
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Jump_Attack", L"..\\Resources\\Sound\\Skul_Jump_Atk.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
+	
 }
 
 void JumpAttackState::Exit()

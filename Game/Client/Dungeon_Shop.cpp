@@ -15,6 +15,9 @@
 #include "ExhibitionItem.h"
 #include "Player.h"
 #include "Clock.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
+#include "Skul.h"
 
 Dungeon_Shop::Dungeon_Shop(const wstring& szMapPath, const wstring& szScriptPath)
 	: Dungeon(DUNGEON_TYPE::SHOP, szMapPath, szScriptPath)
@@ -54,6 +57,9 @@ void Dungeon_Shop::FinalUpdate()
 void Dungeon_Shop::Enter()
 {
 	Dungeon::Enter();
+
+	SCENE_SOUND->SetBGMClip(GET_SINGLE(Resources)->Load<Sound>(L"BlackMarker", L"..\\Resources\\Sound\\BlackMarket.wav"));
+	SCENE_SOUND->PlayBGM();
 
 	// Apply Shop Objects!
 	// Pub

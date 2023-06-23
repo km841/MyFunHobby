@@ -16,6 +16,10 @@
 #include "NPC_Spider.h"
 #include "Animator.h"
 #include "Animation.h"
+#include "Player.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
+#include "Skul.h"
 
 Ch3BaseCamp::Ch3BaseCamp(const wstring& szMapPath, const wstring& szScriptPath)
 	: BaseCamp(szMapPath, szScriptPath)
@@ -55,7 +59,10 @@ void Ch3BaseCamp::Enter()
 {
 	BaseCamp::Enter();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::BASECAMP_OPENING)->Action();
-
+	//SCENE_SOUND->GetGameObject()->RemoveComponent(COMPONENT_TYPE::SOUND_LISTENER);
+	//SCENE_SOUND->GetTransform()->SetParent(GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()->GetTransform());
+	SCENE_SOUND->SetBGMClip(GET_SINGLE(Resources)->Load<Sound>(L"Ch3_Bgm", L"..\\Resources\\Sound\\Chapter3.wav"));
+	SCENE_SOUND->PlayBGM();
 	// NPC Spider
 	//{
 	//	shared_ptr<NPC_Spider> pSpider = GET_SINGLE(ObjectFactory)->CreateObjectHasPhysical<NPC_Spider>(L"Forward", false,

@@ -19,6 +19,8 @@
 #include "AfterImageDrawScript.h"
 #include "Scene.h"
 #include "GlobalEffect.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
 
 DashState::DashState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -33,6 +35,8 @@ DashState::DashState(shared_ptr<Player> pPlayer)
 void DashState::Awake()
 {
 	CreateAndAddAfterImagesToScene();
+
+	
 }
 
 void DashState::Update()
@@ -72,6 +76,9 @@ void DashState::Enter()
 
 	EnableAndInitDashSmokeEffect();
 
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Dash_Normal", L"..\\Resources\\Sound\\Default_Dash.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void DashState::Exit()

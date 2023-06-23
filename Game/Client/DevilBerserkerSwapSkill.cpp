@@ -9,6 +9,10 @@
 #include "Scenes.h"
 #include "CollisionManager.h"
 #include "Transform.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
 
 DevilBerserkerSwapSkill::DevilBerserkerSwapSkill(const SkillInfo& skillInfo)
 	: SkulSkill(skillInfo)
@@ -44,13 +48,16 @@ void DevilBerserkerSwapSkill::Update()
 	{
 		if (m_pSkul.lock()->GetPlayer().lock()->GetPlayerState().lock()->CheckGrounded())
 		{
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Berserker_Landing", L"..\\Resources\\Sound\\Berserker_Landing.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+
 			m_bUpFinishedFlag = false;
 			m_tUpTimer.Stop();
 			GET_SINGLE(Scenes)->GetActiveScene()->ShakeCameraAxis(0.1f, Vec3(0.f, 1000.f, 0.f));
 			Vec3 vMyPos = m_pSkul.lock()->GetPlayer().lock()->GetTransform()->GetPhysicalPosition();
 			GET_SINGLE(CollisionManager)->SetForceInLayer(LAYER_TYPE::PARTICLE, vMyPos, Vec3(300.f, 50.f, 0.f), Vec3(static_cast<float>(RANDOM(-300, 300)), 300.f, 0.f));
 			GET_SINGLE(CollisionManager)->SetForceInMonsterAndTakeDamage(vMyPos, Vec3(300.f, 50.f, 0.f), Vec3(static_cast<float>(RANDOM(-300, 300)), 300.f, 0.f), static_cast<float>(RANDOM(10, 30)), DAMAGE_TYPE::FROM_PLAYER_MELEE);
-
 		}
 		else
 		{

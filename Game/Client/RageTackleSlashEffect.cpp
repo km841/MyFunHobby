@@ -18,6 +18,10 @@
 #include "ObjectFactory.h"
 #include "Resources.h"
 #include "Player.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
 
 POOL_INIT(RageTackleSlashEffect);
 RageTackleSlashEffect::RageTackleSlashEffect()
@@ -79,6 +83,8 @@ void RageTackleSlashEffect::Update()
 			}
 
 			MonsterTakeDamageAndImpulse(vObjectPos, vVolume, vImpulse);
+
+			
 
 			vImpulse.y += 500.f;
 			vImpulse.x += 500.f;
@@ -156,6 +162,12 @@ void RageTackleSlashEffect::MonsterTakeDamageAndImpulse(const Vec3& vPos, const 
 				pMonster.lock()->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleAliveCount(30);
 				pMonster.lock()->GetParticleGenerator().lock()->GetParticleSystem()->SetParticleDirection(Vec3(static_cast<float>(RANDOM(0, 300)), 500.f, 0.f));
 			}
+
+			// Sound
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Berserker_Slash_Hit", L"..\\Resources\\Sound\\Hit_Sword_Large.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+			//Berserker_Slash_Hit
 		}
 	}
 }

@@ -14,6 +14,8 @@
 #include "EventManager.h"
 #include "ObjectAddedToSceneEvent.h"
 #include "MagicSword.h"
+#include "ComponentObject.h"
+#include "SoundSource.h"
 
 VeteranHeroFallSkillScript::VeteranHeroFallSkillScript()
 	: m_bSkillReadyFlag(false)
@@ -70,6 +72,11 @@ void VeteranHeroFallSkillScript::LateUpdate()
 			GetTransform()->SetPhysicalPosition(m_vFallDownPos);
 			m_bSkillFlag = true;
 			m_tFallStayTime.Start();
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hero_Landing", L"..\\Resources\\Sound\\Hero_Landing.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
+			
 
 			CreateMagicSwordsAndAddedToScene();
 			// Spawn Swords

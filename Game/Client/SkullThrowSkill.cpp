@@ -9,6 +9,12 @@
 #include "Transform.h"
 #include "RigidBody.h"
 #include "LittleBoneHead.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
+#include "Scenes.h"
+
 
 SkullThrowSkill::SkullThrowSkill(const SkillInfo& skillInfo)
 	: SkulSkill(skillInfo)
@@ -50,6 +56,10 @@ void SkullThrowSkill::Enter()
 	pHead.lock()->SetDirection(pLittleBone.lock()->GetPlayer().lock()->GetDirection());
 	pHead.lock()->GetRigidBody()->SetAngularVelocityForDynamic(PxVec3(0.f, 0.f, 10.f));
 	pHead.lock()->GetRigidBody()->RemoveGravityForDynamic();
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Skul_Throwing", L"..\\Resources\\Sound\\Skul_SkullThrowing.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void SkullThrowSkill::Exit()

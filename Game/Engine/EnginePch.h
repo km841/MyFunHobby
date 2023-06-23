@@ -782,6 +782,7 @@ bool m_bUse = false;\
 #define VEC3_RIGHT_NORMAL Vec3(1.f, 0.f, 0.f)
 #define VEC3_UP_NORMAL Vec3(0.f, 1.f, 0.f)
 #define RANDOM(minNumber, maxNumber) rand() % (maxNumber - (minNumber - 1)) + minNumber
+#define SCENE_SOUND GET_SINGLE(Scenes)->GetActiveScene()->GetBgm().lock()->GetSoundSource()
 
 // Color
 #define GRADE_COLOR Color::FromRGB(136, 96, 90)

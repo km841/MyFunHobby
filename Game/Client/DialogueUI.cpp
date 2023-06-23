@@ -2,6 +2,11 @@
 #include "DialogueUI.h"
 #include "Engine.h"
 #include "Clock.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
+#include "Scenes.h"
 
 DialogueUI::DialogueUI()
 	: m_bStartFlag(false)
@@ -49,6 +54,10 @@ void DialogueUI::Update()
 			{
 				m_iContext++;
 				m_tDuration.Reset();
+
+				shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"UI_Talk", L"..\\Resources\\Sound\\UI_Talk.wav");
+				SCENE_SOUND->SetClip(pSound);
+				SCENE_SOUND->Play();
 			}
 
 			if (m_szLine[m_iContext] == L' ')

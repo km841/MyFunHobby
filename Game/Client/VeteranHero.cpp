@@ -14,6 +14,9 @@
 #include "ObjectReturnToPoolEvent.h"
 #include "VeteranHeroDeadObject.h"
 
+#include "ComponentObject.h"
+#include "SoundSource.h"
+
 VeteranHero::VeteranHero()
 	: m_bLandingFlag(false)
 	, m_bLandingChecked(false)
@@ -48,7 +51,7 @@ void VeteranHero::Update()
 
 	if (m_bLandingFlag)
 	{
-		if (MONSTER_STATE::LANDING_READY == MONSTER_STATE::LANDING_READY && !m_bLandingChecked)
+		if (!m_bLandingChecked)
 		{
 			GetRigidBody()->SetVelocity(Vec3::Zero);
 			GetRigidBody()->RemoveGravity();
@@ -56,6 +59,10 @@ void VeteranHero::Update()
 			m_bLandingChecked = true;
 			SetMonsterState(MONSTER_STATE::LANDING);
 			GetAnimator()->Play(L"VeteranHero_Landing", false);
+
+			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Hero_Landing", L"..\\Resources\\Sound\\Hero_Landing.wav");
+			SCENE_SOUND->SetClip(pSound);
+			SCENE_SOUND->Play();
 		}
 	}
 
@@ -126,6 +133,8 @@ void VeteranHero::SetStingerEffectState(bool bState)
 
 void VeteranHero::ActivateDeadEvent()
 {
+	if (m_pStingerEffect.lock())
+		m_pStingerEffect.lock()->Disable();
 	CreateDeadObjectAndAddedToScene();
 }
 

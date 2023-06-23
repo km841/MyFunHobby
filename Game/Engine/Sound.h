@@ -13,6 +13,7 @@ public:
 	void Stop();
 	void Set3DAttributes(const Vec3& vPos, const Vec3& vVel);
 	void SetLoop(bool loop) { m_bLoop = loop; }
+	void SetVolume(float fRatio) { m_pChannel->setVolume(fRatio); }
 
 private:
 	FMOD::Sound* m_pSound;

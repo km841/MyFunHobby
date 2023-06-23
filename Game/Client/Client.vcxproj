@@ -217,6 +217,8 @@
     <ClInclude Include="DevilBerserker.h" />
     <ClInclude Include="DevilBerserkerAttack.h" />
     <ClInclude Include="HealthPotion.h" />
+    <ClInclude Include="PlayBGMEvent.h" />
+    <ClInclude Include="PlaySoundEvent.h" />
     <ClInclude Include="RageTackleSkill.h" />
     <ClInclude Include="DevilBerserkerSwapSkill.h" />
     <ClInclude Include="DisableCameraTrackingEvent.h" />
@@ -229,6 +231,7 @@
     <ClInclude Include="PauseJumpFallState.h" />
     <ClInclude Include="PlayDungeonEvent.h" />
     <ClInclude Include="RageTackleSlashEffect.h" />
+    <ClInclude Include="StopBGMEvent.h" />
     <ClInclude Include="VenomFall.h" />
     <ClInclude Include="ChimeraVenomFallScript.h" />
     <ClInclude Include="ChimeraSprite.h" />
@@ -466,6 +469,8 @@
     <ClCompile Include="DevilBerserker.cpp" />
     <ClCompile Include="DevilBerserkerAttack.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
+    <ClCompile Include="PlayBGMEvent.cpp" />
+    <ClCompile Include="PlaySoundEvent.cpp" />
     <ClCompile Include="RageTackleSkill.cpp" />
     <ClCompile Include="DevilBerserkerSwapSkill.cpp" />
     <ClCompile Include="DisableCameraTrackingEvent.cpp" />
@@ -478,6 +483,7 @@
     <ClCompile Include="PauseJumpFallState.cpp" />
     <ClCompile Include="PlayDungeonEvent.cpp" />
     <ClCompile Include="RageTackleSlashEffect.cpp" />
+    <ClCompile Include="StopBGMEvent.cpp" />
     <ClCompile Include="VenomFall.cpp" />
     <ClCompile Include="ChimeraVenomFallScript.cpp" />
     <ClCompile Include="ChimeraSprite.cpp" />

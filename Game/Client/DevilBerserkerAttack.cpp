@@ -22,6 +22,8 @@
 #include "Input.h"
 #include "AnimationGlobalEffect.h"
 #include "Animator.h"
+#include "SoundSource.h"
+#include "ComponentObject.h"
 
 DevilBerserkerAttack::DevilBerserkerAttack(shared_ptr<Skul> pSkul)
 	: SkulAttack(pSkul)
@@ -47,6 +49,10 @@ void DevilBerserkerAttack::Update()
 	if (m_arrAttackInfo[iEnum][iOrder].pAnimation->IsHitFrame())
 	{
 		m_pSkul.lock()->GetPlayer().lock()->ActiveItemWhenHitTiming();
+
+		shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"BerserkerAttack", L"..\\Resources\\Sound\\Atk_Whoosh_BigShort.wav");
+		SCENE_SOUND->SetClip(pSound);
+		SCENE_SOUND->Play();
 
 		HitMonstersInAttackRange();
 		Stomp();

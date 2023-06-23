@@ -11,6 +11,10 @@
 #include "Collider.h"
 #include "Scenes.h"
 #include "Engine.h"
+#include "Sound.h"
+#include "SoundSource.h"
+#include "Resources.h"
+#include "ComponentObject.h"
 
 JumpRiseState::JumpRiseState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -82,6 +86,10 @@ void JumpRiseState::Enter()
 {
 	PlayAnimation();
 	m_pPlayer.lock()->GetRigidBody()->ApplyGravity();
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Jump_Normal", L"..\\Resources\\Sound\\Default_Jump.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void JumpRiseState::Exit()

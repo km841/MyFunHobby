@@ -68,6 +68,9 @@
 #include "BlackLab.h"
 #include "CitadelOfFate.h"
 
+#include "SoundSource.h"
+#include "Skul.h"
+
 DungeonScene::DungeonScene()
 	: Scene(SCENE_TYPE::DUNGEON)
 {

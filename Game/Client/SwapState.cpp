@@ -20,6 +20,9 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "Input.h"
+#include "SoundSource.h"
+#include "Sound.h"
+#include "ComponentObject.h"
 
 SwapState::SwapState(shared_ptr<Player> pPlayer)
 	: PlayerState(pPlayer)
@@ -72,6 +75,10 @@ void SwapState::Enter()
 	weak_ptr<SkulSkill> pSwapSkill = m_pPlayer.lock()->GetActiveSkul()->GetSwapSkill();
 	pSwapSkill.lock()->Enter();
 	pSwapSkill.lock()->Activate();
+
+	shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Swap_Normal", L"..\\Resources\\Sound\\Default_Switch.wav");
+	SCENE_SOUND->SetClip(pSound);
+	SCENE_SOUND->Play();
 }
 
 void SwapState::Exit()

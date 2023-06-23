@@ -27,6 +27,9 @@ void SoundListener::Update()
 void SoundListener::LateUpdate()
 {
 	Vec3 vPos = GetTransform()->GetLocalPosition();
+	if (GetPhysical())
+		vPos = GetTransform()->GetPhysicalPosition();
+
 	Vec3 vLook= GetTransform()->GetLook();
 	Vec3 vUp = GetTransform()->GetUp();
 

@@ -87,9 +87,16 @@
 #include "DeadEventTriggerTask.h"
 #include "RemoveObjectTask.h"
 #include "MonsterHitFrameProcessingTask.h"
+#include "PlayBGMEvent.h"
+#include "StopBGMEvent.h"
+#include "PlaySoundEvent.h"
+#include "PlaySoundTask.h"
 
 #include "VeteranHeroLandingScript.h"
 #include "VeteranHeroFallSkillScript.h"
+
+#include "SoundSource.h"
+#include "ComponentObject.h"
 
 Ch3ViceBossDungeon::Ch3ViceBossDungeon(const wstring& szMapPath, const wstring& szScriptPath)
 	: Dungeon(DUNGEON_TYPE::VICE_BOSS, szMapPath, szScriptPath)
@@ -130,7 +137,7 @@ void Ch3ViceBossDungeon::Enter()
 	Dungeon::Enter();
 
 	weak_ptr<Player> pPlayer = GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer();
-
+	SCENE_SOUND->StopBGM();
 	GET_SINGLE(Scenes)->GetActiveScene()->GetDirLight().lock()->GetLight()->SetDiffuse(Vec3(1.f, 1.f, 1.f));
 
 	// Veteran Hero
@@ -327,7 +334,7 @@ void Ch3ViceBossDungeon::Enter()
 				{
 					pUpperAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
 					pUpperAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_UpperAttack", false));
-					pUpperAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10));
+					pUpperAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10, L"..\\Resources\\Sound\\VeteranHero_Atk_Sword_Large_Up.wav"));
 					pUpperAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pUpperAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
 					pAnimSelector->AddChild(pUpperAnimSequence);
@@ -337,7 +344,7 @@ void Ch3ViceBossDungeon::Enter()
 				{
 					pSlashAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
 					pSlashAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_SlashAttack", false));
-					pSlashAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10));
+					pSlashAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10, L"..\\Resources\\Sound\\VeteranHero_Atk_Sword_Large_Down.wav"));
 					pSlashAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
 					pSlashAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, false));
 					pSlashAnimSequence->AddChild(make_shared<ChangeMonsterStateTask>(pVeteranHero, MONSTER_STATE::IDLE));
@@ -370,7 +377,7 @@ void Ch3ViceBossDungeon::Enter()
 					pJumpAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, false));
 					pJumpAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_JumpAttack", false));
 					pJumpAnimSequence->AddChild(make_shared<SetVelocityForKinematicTowardDirTask>(pVeteranHero, Vec3(300.f, 700.f, 0.f)));
-					pJumpAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10));
+					pJumpAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10, L"..\\Resources\\Sound\\VeteranHero_Atk_Sword_Large_Up.wav"));
 					pJumpAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.25f));
 					pJumpAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
 					pAnimSelector->AddChild(pJumpAnimSequence);
@@ -380,6 +387,7 @@ void Ch3ViceBossDungeon::Enter()
 				{
 					pFallAnimSequence->AddChild(make_shared<IsTokenStateCondition>(pVeteranHero, pToken, true));
 					pFallAnimSequence->AddChild(make_shared<RunAnimateTask>(pVeteranHero, L"VeteranHero_FallDown", false));
+					pFallAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(100.f, 0.f, 0.f), Vec3(100.f, 50.f, 0.f), 5, 10, L"..\\Resources\\Sound\\Hit_Sword_Large.wav"));
 					shared_ptr<Selector> pGroundCheckSelector = make_shared<Selector>();
 					{
 						shared_ptr<Sequence> pGroundSequence = make_shared<Sequence>();
@@ -454,6 +462,7 @@ void Ch3ViceBossDungeon::Enter()
 					pStingerAnimSequence->AddChild(make_shared<MonsterHitFrameProcessingTask>(pVeteranHero, Vec3(200.f, 0.f, 0.f), Vec3(200.f, 100.f, 0.f), 5, 10));
 					pStingerAnimSequence->AddChild(make_shared<SetVelocityForKinematicTowardDirTask>(pVeteranHero, Vec3(1000.f, 0.f, 0.f)));
 					pStingerAnimSequence->AddChild(make_shared<TimerCondition>(pVeteranHero, 0.5f));
+					pStingerAnimSequence->AddChild(make_shared<PlaySoundTask>(pVeteranHero, L"..\\Resources\\Sound\\VeteranHero_Stinger.wav"));
 					pStingerAnimSequence->AddChild(make_shared<TokenStateChangeTask>(pVeteranHero, pToken, true));
 					pAnimSelector->AddChild(pStingerAnimSequence);
 				}
@@ -613,6 +622,8 @@ void Ch3ViceBossDungeon::Enter()
 	// Create Wall
 	AddEvent(make_shared<CreateViceBossMapWallTileEvent>(pAlwaysTrueCondition, shared_from_this()));
 	AddEvent(make_shared<EnableViceBossHPBarEvent>(pAlwaysTrueCondition, pVeteranHero));
+	AddEvent(make_shared<PlayBGMEvent>(pAlwaysTrueCondition, L"..\\Resources\\Sound\\Adventurer.wav"));
+	// Bgm
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
 	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(pAlwaysTrueCondition, PLAYER_STATE::IDLE));
@@ -624,6 +635,7 @@ void Ch3ViceBossDungeon::Enter()
 	AddEvent(make_shared<EnableCameraTrackingEvent>(pAlwaysTrueCondition));
 	AddEvent(make_shared<CameraUnfixEvent>(pAlwaysTrueCondition));
 	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::VICE_BOSS_HP)));
+	AddEvent(make_shared<StopBGMEvent>(pAlwaysTrueCondition));
 }
 
 void Ch3ViceBossDungeon::Exit()

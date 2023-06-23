@@ -388,6 +388,9 @@
     <ClInclude Include="SoundListener.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
+    <ClInclude Include="PlaySoundTask.h">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EnginePch.cpp">
@@ -764,6 +767,9 @@
     </ClCompile>
     <ClCompile Include="SoundSource.cpp">
       <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySoundTask.cpp">
+      <Filter>Object\AI\MonsterAI\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

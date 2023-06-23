@@ -96,6 +96,7 @@ public:
     weak_ptr<ComponentObject> GetUICamera();
     shared_ptr<Player>        GetPlayer();
     weak_ptr<ComponentObject> GetDirLight();
+    weak_ptr<ComponentObject> GetBgm();
 
 public:
     virtual void Load(const wstring& szPath);
@@ -127,4 +128,5 @@ protected:
     static std::array<std::vector<shared_ptr<GameObject>>, GLOBAL_OBJECT_TYPE_COUNT> s_vGlobalObjects;
     static std::vector<shared_ptr<Camera>>                                           s_vCameras;
     static std::vector<shared_ptr<Light>>                                            s_vLights;
+    static shared_ptr<ComponentObject>                                               s_pBgm;
 };

@@ -955,6 +955,15 @@
     <ClInclude Include="HealthPotion.h">
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero\DeadObject</Filter>
     </ClInclude>
+    <ClInclude Include="PlayBGMEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="StopBGMEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySoundEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1674,6 +1683,15 @@
     </ClCompile>
     <ClCompile Include="HealthPotion.cpp">
       <Filter>소스 파일\Game\Object\GameObject\Monster\VeteranHero\DeadObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBGMEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="StopBGMEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySoundEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
