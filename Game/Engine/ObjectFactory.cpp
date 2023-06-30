@@ -87,7 +87,7 @@ void ObjectFactory::CreateItemInfo()
 
 		itemInfo.szName = L"봉인된 검";
 		itemInfo.szComment = L"강력한 힘으로 억제되어 있는 검. 미세한 떨림이 느껴진다.";
-		itemInfo.szExplanation = L"물리공격력이 15% 증가합니다.\n10명의 적 처치 시 이 아이템은 '마검: 키리온'으로 변합니다";
+		itemInfo.szExplanation = L"물리공격력이 15% 증가합니다.\n1명의 적 처치 시 이 아이템은 '마검: 키리온'으로 변합니다";
 		m_mItemInfoMap[ITEM_KIND::FORBIDDEN_SWORD] = itemInfo;
 	}
 
@@ -138,7 +138,7 @@ void ObjectFactory::CreateItemInfo()
 
 		itemInfo.szName = L"보이지 않는 검";
 		itemInfo.szComment = L"날이 보이지 않는 검. 누군가 찔리면 영혼이 다친다고 한다.";
-		itemInfo.szExplanation = L"치명타 시 보이지 않는 검으로 찔러 추가 마법데미지를 입힙니다.\n치명타 확률이 10 % 증가합니다.";
+		itemInfo.szExplanation = L"보이지 않는 검으로 찔러 추가 마법데미지를 입힙니다.\n치명타 확률이 10 % 증가합니다.";
 		m_mItemInfoMap[ITEM_KIND::INVISIBLE_KNIFE] = itemInfo;
 	}
 

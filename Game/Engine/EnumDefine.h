@@ -220,7 +220,7 @@ enum class INTERFACE_TYPE : uint8
 	BOSS_OPENING,
 	BOSS_HP,
 	VICE_BOSS_HP,
-	SKUL_SWAP,
+	ENDING,
 	END,
 };
 
@@ -252,6 +252,7 @@ enum class HUD_TYPE : uint8
 	BOSS_OPENING,
 	BOSS_HP,
 	VICE_BOSS_HP,
+	ENDING,
 	END,
 };
 

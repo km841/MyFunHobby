@@ -217,6 +217,7 @@
     <ClInclude Include="DevilBerserker.h" />
     <ClInclude Include="DevilBerserkerAttack.h" />
     <ClInclude Include="DisableChapterBossHPBarEvent.h" />
+    <ClInclude Include="EndingHUD.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="HealthPotion.h" />
     <ClInclude Include="PlayBGMEvent.h" />
@@ -475,6 +476,7 @@
     <ClCompile Include="DevilBerserker.cpp" />
     <ClCompile Include="DevilBerserkerAttack.cpp" />
     <ClCompile Include="DisableChapterBossHPBarEvent.cpp" />
+    <ClCompile Include="EndingHUD.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
     <ClCompile Include="PlayBGMEvent.cpp" />

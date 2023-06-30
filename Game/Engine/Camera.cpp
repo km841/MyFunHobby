@@ -202,10 +202,8 @@ void Camera::Render_Deferred()
         if (LAYER_TYPE::PLAYER == pGameObject->GetLayerType())
         {
             weak_ptr<Skul> pActiveSkul = static_pointer_cast<Player>(pGameObject)->GetActiveSkul();
-            if (pActiveSkul.lock())
-            {
+            if (pActiveSkul.lock() && pActiveSkul.lock()->IsEnable())
                 pActiveSkul.lock()->GetMeshRenderer()->Render(shared_from_this());
-            }
         }
         else
             pGameObject->GetMeshRenderer()->Render(shared_from_this());

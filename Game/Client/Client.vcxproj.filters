@@ -982,6 +982,9 @@
     <ClInclude Include="SceneChangeDungeonEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
+    <ClInclude Include="EndingHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1728,6 +1731,9 @@
     </ClCompile>
     <ClCompile Include="SceneChangeDungeonEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

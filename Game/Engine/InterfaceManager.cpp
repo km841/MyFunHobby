@@ -17,6 +17,7 @@
 
 #include "InventoryUI.h"
 #include "MousePointerHUD.h"
+#include "EndingHUD.h"
 
 #include "PlayerHitHUD.h"
 #include "HealthBarHUD.h"
@@ -302,6 +303,16 @@ void InterfaceManager::CreateHUD()
 		m_mInterfaceMap[INTERFACE_TYPE::VICE_BOSS_HP] = pViceBossHPHUD;
 	}
 
+	// Ending HUD
+	{
+		shared_ptr<EndingHUD> pEndingHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<EndingHUD>(L"Forward", L"..\\Resources\\Texture\\HUD\\Title_Logo_White.png");
+		pEndingHUD->SetFrustum(false);
+		pEndingHUD->Disable();
+		pEndingHUD->GetTransform()->SetLocalPosition(Vec3(800.f, 450.f, 30.f));
+		pEndingHUD->GetTransform()->SetLocalScale(Vec3(319.f, 173.f, 1.f));
+
+		m_mInterfaceMap[INTERFACE_TYPE::ENDING] = pEndingHUD;
+	}
 
 	
 	

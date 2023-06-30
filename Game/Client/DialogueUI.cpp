@@ -55,9 +55,13 @@ void DialogueUI::Update()
 				m_iContext++;
 				m_tDuration.Reset();
 
-				shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"UI_Talk", L"..\\Resources\\Sound\\UI_Talk.wav");
-				SCENE_SOUND->SetClip(pSound);
-				SCENE_SOUND->Play();
+				if (m_szLine[m_iContext] != L'.')
+				{
+					shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"UI_Talk", L"..\\Resources\\Sound\\UI_Talk.wav");
+					SCENE_SOUND->SetClip(pSound);
+					SCENE_SOUND->Play();
+				}
+
 			}
 
 			if (m_szLine[m_iContext] == L' ')

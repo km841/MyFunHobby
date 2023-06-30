@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "EndingScene.h"
+#include "InterfaceManager.h"
+#include "HUD.h"
 
 EndingScene::EndingScene()
 	: Scene(SCENE_TYPE::ENDING)
@@ -12,7 +14,7 @@ EndingScene::~EndingScene()
 
 void EndingScene::Awake()
 {
-	Scene::Awake();
+	AwakeLocalObjects();
 }
 
 void EndingScene::Start()
@@ -42,6 +44,8 @@ void EndingScene::Render()
 
 void EndingScene::Enter()
 {
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::ENDING)->Action();
+
 
 	Awake();
 }
