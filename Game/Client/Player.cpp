@@ -107,6 +107,18 @@ void Player::ChangePlayerState(PLAYER_STATE ePlayerState)
 	m_pStateMachine->ChangePlayerState(ePlayerState);
 }
 
+void Player::Disable()
+{
+	if (m_pActiveSkul)
+		m_pActiveSkul->Disable();
+}
+
+void Player::Enable()
+{
+	if (m_pActiveSkul)
+		m_pActiveSkul->Enable();
+}
+
 
 shared_ptr<Skul> Player::ObtainSkul(shared_ptr<Skul> pSkul)
 {

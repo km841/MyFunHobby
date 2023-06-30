@@ -65,7 +65,7 @@ void VenomFall::Update()
 
 			shared_ptr<Sound> pSound = GET_SINGLE(Resources)->Load<Sound>(L"Chimera_VenomFall_Loop", L"..\\Resources\\Sound\\Chimera_VenomFall_Loop.wav");
 			SCENE_SOUND->SetClip(pSound);
-			SCENE_SOUND->SetLoop(true);
+			//SCENE_SOUND->SetLoop(true);
 			SCENE_SOUND->Play();
 		}
 	}

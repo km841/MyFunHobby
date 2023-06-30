@@ -60,6 +60,9 @@ public:
 	weak_ptr<PlayerState> GetPlayerState();
 	void				  ChangePlayerState(PLAYER_STATE ePlayerState);
 
+	virtual void Disable() override;
+	virtual void Enable() override;
+
 	// About skuls
 	shared_ptr<Skul>	  ObtainSkul(shared_ptr<Skul> pSkul);
 	void				  SwapSkul();

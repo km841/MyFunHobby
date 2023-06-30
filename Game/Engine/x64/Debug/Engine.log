@@ -1,15 +1,23 @@
 ﻿          1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
-FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\final.cso
-FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\lighting.cso
-FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\particle.cso
-FXC : warning X4717: Effects deprecated for D3DCompiler_47
-  
-  compilation object save succeeded; see C:\MyProject\Game\Output\utils.cso
+  Camera.cpp
+  CollisionManager.cpp
+  Component.cpp
+  Engine.cpp
+  EventManager.cpp
+  InfantryTackleTask.cpp
+  IsPlayerInAttackRangeCondition.cpp
+  IsPlayerNearCondition.cpp
+  KnightAttackTask.cpp
+  Light.cpp
+  Movement.cpp
+  ObjectFactory.cpp
+  PlayerChangeStateEvent.cpp
+  PlayerHitTask.cpp
+  RandomDirectionTask.cpp
+  Scene.cpp
+  SetDirectionTowardPlayerTask.cpp
+  SetVelocityGoToPlayerPosTask.cpp
+  TrackingOfMeleeTask.cpp
+  코드를 생성하고 있습니다...
   Engine.vcxproj -> C:\MyProject\Game\Output\Engine.lib

@@ -964,6 +964,24 @@
     <ClInclude Include="PlaySoundEvent.h">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClInclude>
+    <ClInclude Include="SwapSkulHUD.h">
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSwapSkulShowScript.h">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisterSceneEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="DisableChapterBossHPBarEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneChangeDungeonEvent.h">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1691,6 +1709,24 @@
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
     <ClCompile Include="PlaySoundEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="SwapSkulHUD.cpp">
+      <Filter>소스 파일\Game\Object\Interface\HUD\PlayerHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSwapSkulShowScript.cpp">
+      <Filter>소스 파일\Game\Object\GameObject\Player\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="RegisterSceneEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="DisableChapterBossHPBarEvent.cpp">
+      <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneChangeDungeonEvent.cpp">
       <Filter>소스 파일\Game\Scene\Stage\Dungeon\DungeonEvent</Filter>
     </ClCompile>
   </ItemGroup>

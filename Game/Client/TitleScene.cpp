@@ -198,7 +198,7 @@ void TitleScene::Enter()
 		pGameObject->GetCamera()->SetCullingMask(LAYER_TYPE::INTERFACE_EFFECT, false);
 	}
 
-	GetMainCamera().lock()->GetCamera()->SetLimitRect(Vec4(-300.f, 1000.f, 3000.f, -2000.f));
+	GetMainCamera().lock()->GetCamera()->SetLimitRect(Vec4(-500.f, 1000.f, 3000.f, -2000.f));
 	RegisterSceneEvent(EVENT_TYPE::SCENE_FADE_EVENT, static_cast<uint8>(SCENE_FADE_EFFECT::FADE_IN), 1.f);
 
 	// GameObject를 깨우는 작업

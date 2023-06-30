@@ -365,6 +365,22 @@ void Scene::EventUpdate()
 			}
 		}
 			break;
+
+		case EVENT_TYPE::ACTIVATE_BROKENSCREEN:
+		{
+			curEvent.fCurTime += WORLD_DELTA_TIME;
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(1, curEvent.fCurTime);
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetFloat(2, 1.f - curEvent.fCurTime / curEvent.fEndTime);
+			GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(3, 1); // BrokenScreen Flag
+
+			if (curEvent.fEndTime < curEvent.fCurTime)
+			{
+				GET_SINGLE(Resources)->Get<Material>(L"Final")->SetInt(3, 0); // BrokenScreen Flag
+				m_eActiveSceneEvent = EVENT_TYPE::END;
+				m_vSceneEvents.erase(m_vSceneEvents.begin());
+			}
+		}
+			break;
 		}
 	}
 }

@@ -25,5 +25,6 @@ void EnablePlayerHUDEvent::ExecuteEvent()
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST)->Enable();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_SECOND)->Enable();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL)->Enable();
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_SWAP)->Enable();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_CLOBBER)->Enable();
 }

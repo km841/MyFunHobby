@@ -47,7 +47,7 @@ void PlayerHealthBarShowScript::LateUpdate()
 	wstring szMaxHP = std::to_wstring(m_pHealthBar.lock()->GetPlayer().lock()->GetStatus()->iMaxHP);
 	wstring szCurHP = std::to_wstring(m_pHealthBar.lock()->GetPlayer().lock()->GetStatus()->iCurHP);
 
-	if (!GET_SINGLE(Clock)->IsPause())
+	if (GetGameObject()->IsEnable() && !GET_SINGLE(Clock)->IsPause())
 		FONT->DrawString(szCurHP + L" / " + szMaxHP, 23.f, Vec3(280.f, 87.f, 1.f), FONT_WEIGHT::BOLD, 0xffffffff);
 
 	m_fPrevHP = static_cast<float>(m_pHealthBar.lock()->GetPlayer().lock()->GetStatus()->iCurHP);

@@ -15,8 +15,6 @@ public:
     virtual void LateUpdate();
     virtual void FinalUpdate();
 
-   
-
 public:
     FORCEINLINE void             SetPlayer(shared_ptr<Player> pPlayer) { m_pPlayer = pPlayer; }
     FORCEINLINE weak_ptr<Player> GetPlayer() { return m_pPlayer; }

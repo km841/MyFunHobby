@@ -38,6 +38,9 @@
 #include "BossOpeningHUD.h"
 #include "ChapterBossHPHUD.h"
 #include "ViceBossHPHUD.h"
+#include "SwapSkulHUD.h"
+#include "PlayerSwapSkulShowScript.h"
+
 
 void InterfaceManager::Init()
 {
@@ -144,6 +147,19 @@ void InterfaceManager::CreateHUD()
 		pSkulThumnailHUD->GetTransform()->SetLocalScale(Vec3(45.f, 45.f, 0.f));
 
 		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_SKUL_THUMNAIL] = pSkulThumnailHUD;
+	}
+
+	// Skul Swap HUD
+	{
+		shared_ptr<SwapSkulHUD> pSwapSkulHUD = GET_SINGLE(ObjectFactory)->CreateObjectHasNotPhysical<SwapSkulHUD>(L"Forward");
+		pSwapSkulHUD->SetFrustum(false);
+		pSwapSkulHUD->AddComponent(make_shared<PlayerSwapSkulShowScript>());
+		pSwapSkulHUD->GetTransform()->SetParent(pInterfaceHUD->GetTransform());
+
+		pSwapSkulHUD->GetTransform()->SetLocalPosition(Vec3(-170.f, -18.f, -11.f));
+		pSwapSkulHUD->GetTransform()->SetLocalScale(Vec3(20.f, 20.f, 0.f));
+
+		m_mInterfaceMap[INTERFACE_TYPE::PLAYER_SKUL_SWAP] = pSwapSkulHUD;
 	}
 
 	// Health Bar HUD
@@ -285,6 +301,8 @@ void InterfaceManager::CreateHUD()
 
 		m_mInterfaceMap[INTERFACE_TYPE::VICE_BOSS_HP] = pViceBossHPHUD;
 	}
+
+
 	
 	
 }

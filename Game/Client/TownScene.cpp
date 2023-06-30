@@ -61,7 +61,7 @@
 #include "Material.h"
 #include "Shader.h"
 #include "Texture.h"
-#include "Sound.h";
+#include "Sound.h"
 
 /* Components */
 #include "MeshRenderer.h"
@@ -88,6 +88,7 @@
 
 #include "Sounds.h"
 #include "Skul.h"
+#include "SwapSkulHUD.h"
 
 TownScene::TownScene()
 	: Scene(SCENE_TYPE::TOWN)
@@ -243,6 +244,7 @@ void TownScene::Enter()
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST)->SetPlayer(pPlayer);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_SECOND)->SetPlayer(pPlayer);
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL)->SetPlayer(pPlayer);
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_SWAP)->SetPlayer(pPlayer);
 
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_INTERFACE));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HEALTH_BAR));
@@ -250,6 +252,7 @@ void TownScene::Enter()
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_SECOND));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL));
+	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_SWAP));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_CLOBBER));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_HIT));
 	AddGameObject(GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::MOUSE_POINTER));

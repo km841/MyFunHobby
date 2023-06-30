@@ -51,6 +51,11 @@
 #include "RemoveToSceneTask.h"
 #include "PlayBGMEvent.h"
 #include "StopBGMEvent.h"
+#include "IfAllDeadMonsterInDungeon.h"
+#include "RegisterSceneEvent.h"
+#include "DisableChapterBossHPBarEvent.h"
+#include "PlaySoundEvent.h"
+#include "SceneChangeDungeonEvent.h"
 
 
 
@@ -315,7 +320,6 @@ void Ch3BossDungeon::Enter()
 		GET_SINGLE(EventManager)->AddEvent(make_unique<ObjectAddedToSceneEvent>(pChimera, SCENE_TYPE::DUNGEON));
 	}
 
-
 	shared_ptr<IfAlwaysTrue> pAlwaysTrueCondition = make_shared<IfAlwaysTrue>();
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(pAlwaysTrueCondition, PLAYER_STATE::PAUSE_WALK));
 	AddEvent(make_shared<PauseDungeonEvent>(pAlwaysTrueCondition));
@@ -326,44 +330,44 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<CameraFixedEvent>(pAlwaysTrueCondition, Vec3(590.f, 355.f, 1.f)));
 	AddEvent(make_shared<ObjectEnableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"발 밑 조심해.", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"닿기만 해도 치명적인 약품이 한가득이야.", 2.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"결국 여기까지 왔구나.", 1.5f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"기사단장에게 이야기는 다 전해 들었어.\n자기 부하들을 어떻게 한 거냐고 흥분해서 분통을 터뜨리더군.", 3.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"너무 흥분한 것 같아서 저쪽에 있는 수조에 집어넣었어.\n열을 좀 식혀야 할 것 같았어. 조금 비좁긴 했는데,\n이곳저곳 잘라내니까 꽤 아늑해 보였어.", 4.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(6.f)));
-	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Laugh"));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"하하하하하하", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
-	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Idle"));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"실험체들을 가지고 노는 일들은 언제나 정말 재미있는 것 같아. 어땠어?\n마석과 결합된 네 동포들의 힘은? 찔러보았나? 얼리거나 불에 \n그을려 보았나? 녀석들이 언젠가 덤빌 걸 대비하여 몸에 작은 폭탄들도 \n넣어봤는데, 효과는 있었니? 어때, 재미있었지?", 6.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(7.f)));
-	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_CrazyLaugh"));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n", 6.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(7.f)));
-	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Crazy"));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Back", false));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"재미없는 녀석이구나.", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
-	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
-	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Stand", false));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(5.f)));
-	AddEvent(make_shared<ObjectEnableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"내가 재미있는 걸 보여줄게.", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
-	AddEvent(make_shared<ChangeObjectPosEvent>(pAlwaysTrueCondition, pMadScientist, Vec3(990.f, 265.f, 101.f)));
-	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_First", false));
-	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"마석의 힘을 제대로 사용하면 어떤 일이 벌어지는지.", 1.f));
-	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"닿기만 해도 치명적인 약품이 한가득이야.", 2.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"결국 여기까지 왔구나.", 1.5f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"기사단장에게 이야기는 다 전해 들었어.\n자기 부하들을 어떻게 한 거냐고 흥분해서 분통을 터뜨리더군.", 3.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(4.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"너무 흥분한 것 같아서 저쪽에 있는 수조에 집어넣었어.\n열을 좀 식혀야 할 것 같았어. 조금 비좁긴 했는데,\n이곳저곳 잘라내니까 꽤 아늑해 보였어.", 4.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(6.f)));
+	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Laugh"));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"하하하하하하", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Idle"));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"실험체들을 가지고 노는 일들은 언제나 정말 재미있는 것 같아. 어땠어?\n마석과 결합된 네 동포들의 힘은? 찔러보았나? 얼리거나 불에 \n그을려 보았나? 녀석들이 언젠가 덤빌 걸 대비하여 몸에 작은 폭탄들도 \n넣어봤는데, 효과는 있었니? 어때, 재미있었지?", 6.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(7.f)));
+	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_CrazyLaugh"));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하\n", 6.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(7.f)));
+	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Crazy"));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Back", false));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"..........................................................................................\n..........................................................................................\n..........................................................................................\n..........................................................................................\n", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(2.f)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"재미없는 녀석이구나.", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	//AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
+	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Stand", false));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(5.f)));
+	//AddEvent(make_shared<ObjectEnableEvent>(pAlwaysTrueCondition, GET_SINGLE(InterfaceManager)->Get(UI_TYPE::DIALOGUE)));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"내가 재미있는 걸 보여줄게.", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	//AddEvent(make_shared<ChangeObjectPosEvent>(pAlwaysTrueCondition, pMadScientist, Vec3(990.f, 265.f, 101.f)));
+	//AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_First", false));
+	//AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"마석의 힘을 제대로 사용하면 어떤 일이 벌어지는지.", 1.f));
+	//AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
 	AddEvent(make_shared<ChangeAnimationEvent>(pAlwaysTrueCondition, pMadScientist, L"MadScientist_Attack_Second", false));
 	AddEvent(make_shared<ActiveDialogueEvent>(pAlwaysTrueCondition, L"검은 연구소장", L"잘 봐.", 1.f));
 	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(1.f)));
@@ -384,7 +388,16 @@ void Ch3BossDungeon::Enter()
 	AddEvent(make_shared<PlayerChangeStateDungeonEvent>(make_shared<IfFinishedTimer>(2.f), PLAYER_STATE::IDLE));
 	AddEvent(make_shared<PlayDungeonEvent>(pAlwaysTrueCondition));
 	AddEvent(make_shared<MonsterChangeStateDungeonEvent>(pAlwaysTrueCondition, pChimera, MONSTER_STATE::IDLE));
-	//AddEvent(make_shared<StopBGMEvent>(pAlwaysTrueCondition));
+	AddEvent(make_shared<DisablePlayerHUDEvent>(make_shared<IfAllDeadMonsterInDungeon>()));
+	AddEvent(make_shared<DisableChapterBossHPBarEvent>(pAlwaysTrueCondition));
+	AddEvent(make_shared<StopBGMEvent>(pAlwaysTrueCondition));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(3.f)));
+	AddEvent(make_shared<PlaySoundEvent>(pAlwaysTrueCondition, L"..\\Resources\\Sound\\Hardmode_Cutscene_Ending_Normal.wav"));
+	AddEvent(make_shared<RegisterSceneEvent>(pAlwaysTrueCondition, EVENT_TYPE::ACTIVATE_BROKENSCREEN, 5.f));
+	AddEvent(make_shared<NothingEvent>(make_shared<IfFinishedTimer>(5.1f)));
+	AddEvent(make_shared<ObjectDisableEvent>(pAlwaysTrueCondition, GET_SINGLE(Scenes)->GetActiveScene()->GetPlayer()));
+	AddEvent(make_shared<SceneChangeDungeonEvent>(pAlwaysTrueCondition, SCENE_TYPE::ENDING));
+
 }
 
 void Ch3BossDungeon::Exit()

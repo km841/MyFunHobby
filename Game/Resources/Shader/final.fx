@@ -68,6 +68,7 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     int iDistortionFlag = g_int_0;
     int iAfterEffectFlag = g_int_1;
     int iWhiteFadeFlag = g_int_2;
+    int iBrokenScreenFlag = g_int_3;
     
     float fAccTime = g_float_1;
     float fProgress = g_float_2;
@@ -95,6 +96,13 @@ float4 PS_Main(VS_OUT _in) : SV_Target
     {
         float2 vDistortionUV = Distortion(_in.uv, fAccTime, fProgress);
         vColor = g_tex_0.Sample(g_sam_0, vDistortionUV);
+    }
+    
+    if (iBrokenScreenFlag)
+    {
+        float2 vBrokenUV = BrokenScreen(_in.uv, float2(1.f, 1.f), fAccTime * 1.3f);
+        vColor = g_tex_0.Sample(g_sam_0, vBrokenUV);
+        vColor *= fProgress;
     }
     
     if (iAfterEffectFlag)

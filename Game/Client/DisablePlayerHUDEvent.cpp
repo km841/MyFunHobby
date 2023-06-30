@@ -25,5 +25,6 @@ void DisablePlayerHUDEvent::ExecuteEvent()
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_FIRST)->Disable();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKILL_BOX_SECOND)->Disable();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_THUMNAIL)->Disable();
+	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_SKUL_SWAP)->Disable();
 	GET_SINGLE(InterfaceManager)->Get(HUD_TYPE::PLAYER_CLOBBER)->Disable();
 }
